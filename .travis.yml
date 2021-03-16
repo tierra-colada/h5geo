@@ -88,15 +88,15 @@ env:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-      git clone --branch 3.4 https://gitlab.com/libeigen/eigen.git $EIGEN3_ROOT
-      export PATH=$EIGEN3_ROOT:$PATH
-      git clone --branch v0.7.2 https://github.com/Neargye/magic_enum.git $magic_enum_ROOT
-      export PATH=$magic_enum_ROOT:$PATH
+      git clone --branch 3.4 https://gitlab.com/libeigen/eigen.git $EIGEN3_ROOT;
+      export PATH=$EIGEN3_ROOT:$PATH;
+      git clone --branch v0.7.2 https://github.com/Neargye/magic_enum.git $magic_enum_ROOT;
+      export PATH=$magic_enum_ROOT:$PATH;
     elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
-      git clone --branch 3.4 https://gitlab.com/libeigen/eigen.git $EIGEN3_ROOT
-      export PATH=$EIGEN3_ROOT:$PATH
-      git clone --branch v0.7.2 https://github.com/Neargye/magic_enum.git $magic_enum_ROOT
-      export PATH=$magic_enum_ROOT:$PATH
+      git clone --branch 3.4 https://gitlab.com/libeigen/eigen.git $EIGEN3_ROOT;
+      export PATH=$EIGEN3_ROOT:$PATH;
+      git clone --branch v0.7.2 https://github.com/Neargye/magic_enum.git $magic_enum_ROOT;
+      export PATH=$magic_enum_ROOT:$PATH;
 
       wget "http://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh" -O miniconda.sh;
       bash miniconda.sh -b -p $HOME/miniconda;
