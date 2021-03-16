@@ -73,25 +73,10 @@ H5BaseObject::getParent(
   return std::nullopt;
 }
 
-bool H5BaseObject::operator == (H5BaseObject& other) {
-  if (objG.getObjectInfo().getAddress() != other.getObjG().getObjectInfo().getAddress())
-    return false;
-
-  /* I would better implement this block to check file equality
-       * but `H5Fget_fileno` was introduced only since hdf5 1.12.0 */
-
-  unsigned long num, num_other;
-  herr_t err = H5Fget_fileno(getH5File().getId(false), &num);
-  if (err < 0)
-    return false;
-
-  err = H5Fget_fileno(other.getH5File().getId(false), &num_other);
-  if (err < 0)
-    return false;
-
-  return num == num_other;
+bool H5BaseObject::operator == (H5BaseObject& other) const {
+  return objG == other.getObjG();
 }
 
-bool H5BaseObject::operator != (H5BaseObject& other) {
+bool H5BaseObject::operator != (H5BaseObject& other) const {
   return !(*this == other);
 }

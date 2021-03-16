@@ -15,23 +15,11 @@ h5gt::File H5BaseContainer::getH5File(){
   return h5File;
 }
 
-bool H5BaseContainer::operator == (H5BaseContainer& other) {
-  /* I would better implement this block to check file equality
-   * but `H5Fget_fileno` was introduced only since hdf5 1.12.0 */
-
-  unsigned long num, num_other;
-  herr_t err = H5Fget_fileno(h5File.getId(false), &num);
-  if (err < 0)
-    return false;
-
-  err = H5Fget_fileno(other.getH5File().getId(false), &num_other);
-  if (err < 0)
-    return false;
-
-  return num == num_other;
+bool H5BaseContainer::operator == (H5BaseContainer& other) const {
+  return h5File == other.getH5File();
 }
 
-bool H5BaseContainer::operator != (H5BaseContainer& other) {
+bool H5BaseContainer::operator != (H5BaseContainer& other) const {
   return !(*this == other);
 }
 

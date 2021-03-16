@@ -23,8 +23,8 @@ public:
   std::string getNameWithinParentGroup();
   std::string getFullName();
 
-  bool operator == (H5BaseObject& other);
-  bool operator != (H5BaseObject& other);
+  bool operator == (H5BaseObject& other) const;
+  bool operator != (H5BaseObject& other) const;
 
 protected:
   explicit H5BaseObject(const h5gt::Group& group);

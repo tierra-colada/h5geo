@@ -33,8 +33,6 @@ if(H5GEO_SUPERBUILD)
 endif()
 
 #-------------------------------------------------------------------
-message("project: h5geo - usual build")
-
 # NORMAL BUILD
 include("cmake/include_files.cmake")
 include("cmake/src_files.cmake")

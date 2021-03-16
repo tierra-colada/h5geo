@@ -11,8 +11,8 @@ public:
   virtual ~H5BaseContainer();
   h5gt::File getH5File();
 
-  bool operator == (H5BaseContainer& other);
-  bool operator != (H5BaseContainer& other);
+  bool operator == (H5BaseContainer& other) const;
+  bool operator != (H5BaseContainer& other) const;
 
 protected:
   explicit H5BaseContainer(const h5gt::File &h5File);
