@@ -1,0 +1,21 @@
+set(include_files
+  ${CMAKE_SOURCE_DIR}/include/h5algo/h5deviation.h
+  ${CMAKE_SOURCE_DIR}/include/h5algo/h5easyhull.h
+  ${CMAKE_SOURCE_DIR}/include/h5algo/h5find.h
+  ${CMAKE_SOURCE_DIR}/include/h5algo/h5sort.h
+  ${CMAKE_SOURCE_DIR}/include/h5base/h5base.h
+  ${CMAKE_SOURCE_DIR}/include/h5base/h5basecontainer.h
+  ${CMAKE_SOURCE_DIR}/include/h5base/h5baseobject.h
+  ${CMAKE_SOURCE_DIR}/include/h5core/h5core_enum_operators.h
+  ${CMAKE_SOURCE_DIR}/include/h5core/h5core_enum.h
+  ${CMAKE_SOURCE_DIR}/include/h5core/h5core.h
+  ${CMAKE_SOURCE_DIR}/include/h5core/h5segy_headers.h
+  ${CMAKE_SOURCE_DIR}/include/h5seis/h5seis.h
+  ${CMAKE_SOURCE_DIR}/include/h5seis/h5seiscontainer.h
+  ${CMAKE_SOURCE_DIR}/include/h5surf/h5surf.h
+  ${CMAKE_SOURCE_DIR}/include/h5surf/h5surfcontainer.h
+  ${CMAKE_SOURCE_DIR}/include/h5well/h5devcurve.h
+  ${CMAKE_SOURCE_DIR}/include/h5well/h5logcurve.h
+  ${CMAKE_SOURCE_DIR}/include/h5well/h5well.h
+  ${CMAKE_SOURCE_DIR}/include/h5well/h5wellcontainer.h
+  )

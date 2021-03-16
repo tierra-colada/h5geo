@@ -1,0 +1,57 @@
+message("external project: h5gt")
+
+# SET DIRS
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/h5gt")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/h5gt-build")
+set(EP_INSTALL_DIR "${CMAKE_BINARY_DIR}/h5gt-install")
+list(APPEND CMAKE_PREFIX_PATH ${EP_SOURCE_DIR})
+
+#-----------------------------------------------------------------------------
+set(h5gt_ROOT PATH ${EP_SOURCE_DIR})
+find_package(h5gt)
+
+set(DEPENDENCIES Eigen3 ZLIB HDF5)
+
+if(NOT DEFINED h5gt_FOUND OR NOT h5gt_FOUND)
+  ExternalProject_Add(h5gt
+#    DOWNLOAD_COMMAND ""
+    GIT_REPOSITORY "https://github.com/Dimspot/h5gt.git"
+    GIT_TAG "main"
+    SOURCE_DIR ${EP_SOURCE_DIR}
+    BINARY_DIR ${EP_BINARY_DIR}
+    INSTALL_DIR ${EP_INSTALL_DIR}
+    CMAKE_CACHE_ARGS
+      # CMake settings
+      -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}
+      -DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
+      -DCMAKE_CXX_STANDARD:STRING=${CMAKE_CXX_STANDARD}
+      -DCMAKE_CXX_STANDARD_REQUIRED:BOOL=${CMAKE_CXX_STANDARD_REQUIRED}
+      -DCMAKE_CXX_EXTENSIONS:BOOL=${CMAKE_CXX_EXTENSIONS}
+      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+      # Lib settings
+      -DH5GT_USE_EIGEN:BOOL=ON
+      -DH5GT_USE_XTENSOR:BOOL=OFF
+      -DH5GT_USE_OPENCV:BOOL=OFF
+      -DH5GT_UNIT_TESTS:BOOL=ON
+      -DH5GT_EXAMPLES:BOOL=OFF
+      -DH5GT_PARALLEL_HDF5:BOOL=OFF
+      -DH5GT_BUILD_h5gtpy:BOOL=OFF
+      -DHDF5_USE_STATIC_LIBRARIES:BOOL=OFF
+      -DEigen3_ROOT:PATH=${Eigen3_ROOT}
+      -DZLIB_ROOT:PATH=${ZLIB_ROOT}
+      -DHDF5_ROOT:PATH=${HDF5_ROOT}
+    DEPENDS ${DEPENDENCIES}
+    )
+else()
+  # Add empty project that exports target h5gt
+  ExternalProject_Add(h5gt
+    SOURCE_DIR ${EP_SOURCE_DIR}
+    BINARY_DIR ${EP_BINARY_DIR}
+    INSTALL_DIR ${EP_INSTALL_DIR}
+    DOWNLOAD_COMMAND ""
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ""
+    DEPENDS ${DEPENDENCIES}
+    )
+endif()
