@@ -69,8 +69,8 @@ target_link_libraries(h5geo PUBLIC magic_enum::magic_enum)
 target_include_directories(h5geo PUBLIC ${h5gt_INCLUDE_DIRS})
 
 if(H5GEO_USE_THREADS)
-  find_package(Threads REQUIRED)
-  target_link_libraries(h5geo PRIVATE Threads::Threads)
+  find_package(TBB REQUIRED)
+  target_link_libraries(h5geo PUBLIC TBB::tbb)
 endif()
 
 if(H5GEO_BUILD_TESTS)
