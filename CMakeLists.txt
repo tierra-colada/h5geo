@@ -46,6 +46,7 @@ target_include_directories(h5geo PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
+install(TARGETS h5geo DESTINATION lib EXPORT h5geo-targets)
 
 # EXPORT DLL
 include(GenerateExportHeader)
@@ -61,12 +62,13 @@ find_package(HDF5 REQUIRED)
 find_package(h5gt REQUIRED)
 find_package(magic_enum REQUIRED)
 
-target_include_directories(h5geo PUBLIC ${EIGEN3_INCLUDE_DIRS})
+# we don't want to install third-party include dirs
+target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${EIGEN3_INCLUDE_DIRS}>)
 target_link_libraries(h5geo PUBLIC ${HDF5_C_LIBRARIES})
-target_include_directories(h5geo PUBLIC ${HDF5_INCLUDE_DIRS})
+target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${HDF5_INCLUDE_DIRS}>)
 target_compile_definitions(h5geo PUBLIC ${HDF5_DEFINITIONS})
 target_link_libraries(h5geo PUBLIC magic_enum::magic_enum)
-target_include_directories(h5geo PUBLIC ${h5gt_INCLUDE_DIRS})
+target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${h5gt_INCLUDE_DIRS}>)
 
 if(H5GEO_USE_THREADS)
   find_package(TBB REQUIRED)
@@ -77,3 +79,34 @@ if(H5GEO_BUILD_TESTS)
   include(CTest)
   add_subdirectory(tests)
 endif()
+
+#-----------------------------------------------------------------------------
+# Create config files
+#-----------------------------------------------------------------------------
+set(INCLUDE_INSTALL_DIR "include/")
+set(LIB_INSTALL_DIR "lib/")
+# set(SYSCONFIG_INSTALL_DIR "etc/h5geo/")
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/h5geo-config.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/h5geo-config.cmake"
+  INSTALL_DESTINATION "${LIB_INSTALL_DIR}/cmake/h5geo/"
+  PATH_VARS INCLUDE_INSTALL_DIR
+  )
+
+install(EXPORT h5geo-targets DESTINATION "${LIB_INSTALL_DIR}/cmake/h5geo/")
+
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/h5geo-config-version.cmake"
+  VERSION ${PROJECT_VERSION}
+  COMPATIBILITY SameMajorVersion
+  )
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/h5geo-config.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/h5geo-config-version.cmake"
+        DESTINATION "${LIB_INSTALL_DIR}/cmake/h5geo/"
+        )
+
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/" DESTINATION "include")
+
+install(TARGETS h5geo DESTINATION "lib")

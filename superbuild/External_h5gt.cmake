@@ -15,7 +15,7 @@ set(DEPENDENCIES Eigen3 ZLIB HDF5)
 if(NOT DEFINED h5gt_FOUND OR NOT h5gt_FOUND)
   ExternalProject_Add(h5gt
 #    DOWNLOAD_COMMAND ""
-    GIT_REPOSITORY "https://github.com/Dimspot/h5gt.git"
+    GIT_REPOSITORY "https://github.com/TierraColada/h5gt.git"
     GIT_TAG "main"
     SOURCE_DIR ${EP_SOURCE_DIR}
     BINARY_DIR ${EP_BINARY_DIR}
