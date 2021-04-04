@@ -1,10 +1,10 @@
 #include "../include/h5core/h5core_enum.h"
 
-#include <H5File.hpp>
-#include <H5Group.hpp>
-#include <H5DataSet.hpp>
-#include <H5DataSpace.hpp>
-#include <H5Attribute.hpp>
+#include <h5gt/H5File.hpp>
+#include <h5gt/H5Group.hpp>
+#include <h5gt/H5DataSet.hpp>
+#include <h5gt/H5DataSpace.hpp>
+#include <h5gt/H5Attribute.hpp>
 
 using namespace h5geo;
 

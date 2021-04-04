@@ -14,14 +14,14 @@ set(h5gt_FOUND FALSE)
 
 # Look for the h5gt header, first in the user-specified location and then in the system locations
 set(h5gt_INCLUDE_DOC "The directory containing the h5gt include file h5gt/H5Object.hpp")
-find_path(h5gt_INCLUDE_DIRS NAMES H5Object.hpp
+find_path(h5gt_INCLUDE_DIRS NAMES h5gt/H5Object.hpp
           PATHS ${h5gt_ROOT}
-          PATH_SUFFIXES include/h5gt include/h5gt h5gt h5gt
+          PATH_SUFFIXES include h5gt
           DOC ${h5gt_INCLUDE_DOC} NO_DEFAULT_PATH)
 if(NOT h5gt_INCLUDE_DIRS)  # now look in system locations
   find_path(h5gt_INCLUDE_DIRS NAMES H5Object.hpp
             PATHS ${h5gt_ROOT}
-            PATH_SUFFIXES include/h5gt include/h5gt h5gt h5gt
+            PATH_SUFFIXES include h5gt
             DOC ${h5gt_INCLUDE_DOC})
 endif(NOT h5gt_INCLUDE_DIRS)
 
