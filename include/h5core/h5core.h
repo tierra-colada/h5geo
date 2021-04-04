@@ -16,11 +16,11 @@
 
 #include <Eigen/Dense>
 
-#include <H5File.hpp>
-#include <H5Group.hpp>
-#include <H5DataSet.hpp>
-#include <H5DataSpace.hpp>
-#include <H5Attribute.hpp>
+#include <h5gt/H5File.hpp>
+#include <h5gt/H5Group.hpp>
+#include <h5gt/H5DataSet.hpp>
+#include <h5gt/H5DataSpace.hpp>
+#include <h5gt/H5Attribute.hpp>
 
 namespace h5geo
 {
@@ -77,7 +77,7 @@ ptrdiff_t H5GEO_EXPORT getIndexFromAttribute(
     const std::string& attributeName);
 
 /*!
- * \brief splitPathSplit path of type /path///to/where/things/happen//
+ * \brief splitPath Split path of type /path///to/where/things/happen//
  * to output vector {"path", "to", "where", "things", "happen"}.
  * Path that starts from `/` is treated as absolute
  * \param path
