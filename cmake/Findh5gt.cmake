@@ -18,19 +18,13 @@ find_path(h5gt_INCLUDE_DIRS NAMES h5gt/H5Object.hpp
           PATHS ${h5gt_ROOT}
           PATH_SUFFIXES include h5gt
           DOC ${h5gt_INCLUDE_DOC} NO_DEFAULT_PATH)
-if(NOT h5gt_INCLUDE_DIRS)  # now look in system locations
-  find_path(h5gt_INCLUDE_DIRS NAMES H5Object.hpp
-            PATHS ${h5gt_ROOT}
-            PATH_SUFFIXES include h5gt
-            DOC ${h5gt_INCLUDE_DOC})
-endif(NOT h5gt_INCLUDE_DIRS)
 
 if(h5gt_INCLUDE_DIRS)
   set(h5gt_FOUND TRUE)
 endif()
 
 if(h5gt_FOUND)
-  message(STATUS "Found h5gt: headers at ${h5gt_INCLUDE_DIRS}, libraries at ${h5gt_LIBRARIES}")
+  message(STATUS "Found h5gt: headers at ${h5gt_INCLUDE_DIRS}")
 else(h5gt_FOUND)
   message(STATUS "Could NOT find h5gt")
 endif(h5gt_FOUND)
