@@ -1,8 +1,18 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <h5well/h5wellcontainer.h>
+#include <h5geo/h5wellcontainer.h>
+#include <h5geo/h5well.h>
+#include <h5geo/h5core.h>
+#include <h5geo/h5devcurve.h>
+#include <h5geo/h5logcurve.h>
+
+#include <h5gt/H5File.hpp>
+#include <h5gt/H5Group.hpp>
+#include <h5gt/H5DataSet.hpp>
 
 #include <fstream>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 class H5WellFixture: public ::testing::Test {
 public:
@@ -12,30 +22,23 @@ public:
     static bool trig = false;
 
     if (trig){
-      wellContainer = H5WellContainer::create(
-            FILE_NAME,
-            h5gt::File::OpenOrCreate);
+      h5gt::File file(FILE_NAME, h5gt::File::OpenOrCreate);
+      wellContainer = H5WellCnt_ptr(h5geo::createWellContainer(
+                                      file, h5geo::CreationType::OPEN_OR_CREATE));
     } else {
-      wellContainer = H5WellContainer::create(
-            FILE_NAME,
-            h5gt::File::OpenOrCreate |
-            h5gt::File::Overwrite);
+      h5gt::File file(FILE_NAME, h5gt::File::OpenOrCreate |
+                      h5gt::File::Overwrite);
+      wellContainer = H5WellCnt_ptr(h5geo::createWellContainer(
+                                      file, h5geo::CreationType::CREATE_OR_OVERWRITE));
     }
 
-    if (h5geo::isFileExist("../data/well.dev")){
-      MD_X_Y_Z_TVD_DX_DY_AZ_INCL =
-          readWellFile("../data/well.dev", {305, 9}, 11);
+    /* TEST_DATA_DIR is a macro defined in CMake and it points to a dir
+     * where test data reside */
+    MD_X_Y_Z_TVD_DX_DY_AZ_INCL =
+        readWellFile(TEST_DATA_DIR"/well_dev", {305, 9}, 11);
 
-      LOG_MD_GR =
-          readWellFile("../data/well.las", {20901, 2}, 72);
-
-    } else if (h5geo::isFileExist("data/well.dev")){
-      MD_X_Y_Z_TVD_DX_DY_AZ_INCL =
-          readWellFile("data/well.dev", {305, 9}, 11);
-
-      LOG_MD_GR =
-          readWellFile("data/well.las", {20901, 2}, 72);
-    }
+    LOG_MD_GR =
+        readWellFile(TEST_DATA_DIR"/well_las", {20901, 2}, 72);
 
     wellParam.headX = 0;
     wellParam.headY = 10;
@@ -77,7 +80,7 @@ public:
   }
 
 public:
-  std::optional<H5WellContainer> wellContainer;
+  H5WellCnt_ptr wellContainer;
   WellParam wellParam;
   std::string FILE_NAME ="well.h5";
   std::string WELL_NAME ="path/to/well";
@@ -99,76 +102,98 @@ public:
 };
 
 TEST_F(H5WellFixture, createContainer){
-  ASSERT_TRUE(h5geo::isFileExist(FILE_NAME));
+  ASSERT_TRUE(fs::exists(FILE_NAME));
 }
 
 TEST_F(H5WellFixture, createWellWithDifferentCreateFlags){
-  std::optional<H5Well> well =
-      wellContainer->createWell(
-        WELL_NAME, wellParam, h5geo::CreationType::OPEN_OR_CREATE);
-  ASSERT_TRUE(well.has_value());
-  well =
-      wellContainer->createWell(
-        WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(well.has_value());
-  well =
-      wellContainer->createWell(
-        WELL_NAME, wellParam, h5geo::CreationType::CREATE_UNDER_NEW_NAME);
-  ASSERT_TRUE(well.has_value());
-  well =
-      wellContainer->createWell(
-        WELL_NAME, wellParam, h5geo::CreationType::OPEN_OR_CREATE);
-  ASSERT_TRUE(well.has_value());
+  H5Well_ptr well(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(well != nullptr);
+
+  well = H5Well_ptr(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(well != nullptr);
+
+  well = H5Well_ptr(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(well != nullptr);
+
+  well = H5Well_ptr(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
+  ASSERT_TRUE(well != nullptr);
+
+  well = H5Well_ptr(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(well != nullptr);
 }
 
 TEST_F(H5WellFixture, createDevCurveWithDifferentCreateFlags){
-  std::optional<H5Well> well =
-      wellContainer->createWell(
-        WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(well.has_value());
+  H5Well_ptr well(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(well != nullptr);
 
-  std::optional<H5DevCurve> devCurve =
-      well->createDevCurve(DEV_NAME, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE);
-  ASSERT_TRUE(devCurve.has_value());
-  devCurve =
-      well->createDevCurve(DEV_NAME, devCurveParam, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(devCurve.has_value());
-  devCurve =
-      well->createDevCurve(DEV_NAME, devCurveParam, h5geo::CreationType::CREATE_UNDER_NEW_NAME);
-  ASSERT_TRUE(devCurve.has_value());
-  devCurve =
-      well->createDevCurve(DEV_NAME, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE);
-  ASSERT_TRUE(devCurve.has_value());
+  H5DevCurve_ptr devCurve(
+        well->createDevCurve(
+          DEV_NAME, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(devCurve != nullptr);
+
+  devCurve = H5DevCurve_ptr(
+        well->createDevCurve(
+          DEV_NAME, devCurveParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(devCurve != nullptr);
+
+  devCurve = H5DevCurve_ptr(
+        well->createDevCurve(
+          DEV_NAME, devCurveParam, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
+  ASSERT_TRUE(devCurve != nullptr);
+
+  devCurve = H5DevCurve_ptr(
+        well->createDevCurve(
+          DEV_NAME, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(devCurve != nullptr);
 }
 
 TEST_F(H5WellFixture, createLogCurveWithDifferentCreateFlags){
-  std::optional<H5Well> well =
-      wellContainer->createWell(
-        WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(well.has_value());
+  H5Well_ptr well(wellContainer->createWell(
+                    WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(well != nullptr);
 
-  std::optional<H5LogCurve> logCurve =
-      well->createLogCurve(LOG_TYPE, LOG_NAME, logCurveParam, h5geo::CreationType::OPEN_OR_CREATE);
-  ASSERT_TRUE(logCurve.has_value());
-  logCurve =
-      well->createLogCurve(LOG_TYPE, LOG_NAME, logCurveParam, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(logCurve.has_value());
-  logCurve =
-      well->createLogCurve(LOG_TYPE, LOG_NAME, logCurveParam, h5geo::CreationType::CREATE_UNDER_NEW_NAME);
-  ASSERT_TRUE(logCurve.has_value());
-  logCurve =
-      well->createLogCurve(LOG_TYPE, LOG_NAME, logCurveParam, h5geo::CreationType::OPEN_OR_CREATE);
-  ASSERT_TRUE(logCurve.has_value());
+  H5LogCurve_ptr logCurve(
+        well->createLogCurve(
+          LOG_TYPE, LOG_NAME, logCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(logCurve != nullptr);
+
+  logCurve = H5LogCurve_ptr(
+        well->createLogCurve(
+          LOG_TYPE, LOG_NAME, logCurveParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(logCurve != nullptr);
+
+  logCurve = H5LogCurve_ptr(
+        well->createLogCurve(
+          LOG_TYPE, LOG_NAME, logCurveParam, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
+  ASSERT_TRUE(logCurve != nullptr);
+
+  logCurve = H5LogCurve_ptr(
+        well->createLogCurve(
+          LOG_TYPE, LOG_NAME, logCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(logCurve != nullptr);
 }
 
 TEST_F(H5WellFixture, writeReadDevCurve){
-  std::optional<H5Well> well =
-      wellContainer->createWell(
-        WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(well.has_value());
+  H5Well_ptr well(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(well != nullptr);
 
-  std::optional<H5DevCurve> devCurve =
-      well->createDevCurve(DEV_NAME, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE);
+  H5DevCurve_ptr devCurve(
+        well->createDevCurve(
+          DEV_NAME, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
 
   //  Eigen::MatrixXd MD_X_Y_Z_TVD_DX_DY_AZ_INCL = readDeviation();
 
@@ -200,7 +225,7 @@ TEST_F(H5WellFixture, MdAzIncl2MdXYTvd){
   Eigen::MatrixXd M = h5geo::MdAzIncl2MdXYTvd(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
           Eigen::all, {0, 7, 8}), x0, y0,
-        h5geo::AngleUnits::DEGREE);
+        h5geo::AngleUnits::DEGREE, false);
 
   wellContainer->getH5File().createDataSet<double>(
         "MdAzIncl2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -212,10 +237,92 @@ TEST_F(H5WellFixture, MdAzIncl2MdXYTvd){
   ASSERT_TRUE(std_dev/MD_max < 0.05); // less than 5 %
 }
 
+TEST_F(H5WellFixture, MdAzIncl2MdXYTvd_XNorth){
+  wellContainer->getH5File().createDataSet<double>(
+        "MD_X_Y_Z_TVD_DX_DY_AZ_INCL", h5gt::DataSpace(
+          {size_t(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.cols()), size_t(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows())})).
+      write_raw(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.data());
+
+  Eigen::MatrixXd M = h5geo::MdAzIncl2MdXYTvd(
+        MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
+          Eigen::all, {0, 7, 8}), y0, x0,
+        h5geo::AngleUnits::DEGREE, true);
+
+  wellContainer->getH5File().createDataSet<double>(
+        "MdAzIncl2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
+      write_raw(M.data());
+
+  double std_dev = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
+                      Eigen::all, {1, 2, 4}) - M(Eigen::all, {2, 1, 3})).norm();
+  double MD_max = MD_X_Y_Z_TVD_DX_DY_AZ_INCL(Eigen::last, 0);
+
+  ASSERT_TRUE(std_dev/MD_max < 0.05); // less than 5 %
+}
+
+TEST_F(H5WellFixture, TvdXY2MdAzIncl){
+  wellContainer->getH5File().createDataSet<double>(
+        "MD_X_Y_Z_TVD_DX_DY_AZ_INCL", h5gt::DataSpace(
+          {size_t(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.cols()), size_t(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows())})).
+      write_raw(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.data());
+
+  Eigen::MatrixXd M = h5geo::TvdXY2MdAzIncl(
+        MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
+          Eigen::all, {4, 1, 2}), x0, y0, false);
+
+  Eigen::MatrixXd MM = h5geo::MdAzIncl2MdXYTvd(
+        M, x0, y0, h5geo::AngleUnits::RADIAN, false);
+
+  wellContainer->getH5File().createDataSet<double>(
+        "TvdXY2MdAzIncl", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
+      write_raw(M.data());
+
+  double std_dev = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
+                      Eigen::all, {1, 2, 4}) - MM(Eigen::all, {1, 2, 3})).norm();
+  double MD_max = MD_X_Y_Z_TVD_DX_DY_AZ_INCL(Eigen::last, 0);
+  ASSERT_TRUE(std_dev/MD_max < 0.05); // less than 5 %
+}
+
+TEST_F(H5WellFixture, TvdXY2MdAzIncl_XNorth){
+  wellContainer->getH5File().createDataSet<double>(
+        "MD_X_Y_Z_TVD_DX_DY_AZ_INCL", h5gt::DataSpace(
+          {size_t(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.cols()), size_t(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows())})).
+      write_raw(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.data());
+
+  Eigen::MatrixXd M = h5geo::TvdXY2MdAzIncl(
+        MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
+          Eigen::all, {4, 2, 1}), y0, x0, true);
+
+  Eigen::MatrixXd MM = h5geo::MdAzIncl2MdXYTvd(
+        M, y0, x0, h5geo::AngleUnits::RADIAN, true);
+
+  wellContainer->getH5File().createDataSet<double>(
+        "TvdXY2MdAzIncl", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
+      write_raw(M.data());
+
+  double std_dev = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
+                      Eigen::all, {1, 2, 4}) - MM(Eigen::all, {2, 1, 3})).norm();
+  double MD_max = MD_X_Y_Z_TVD_DX_DY_AZ_INCL(Eigen::last, 0);
+  ASSERT_TRUE(std_dev/MD_max < 0.05); // less than 5 %
+}
+
 TEST_F(H5WellFixture, TvdXY2MdXYTvd){
   Eigen::MatrixXd M = h5geo::TvdXY2MdXYTvd(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {4, 1, 2}), x0, y0);
+          Eigen::all, {4, 1, 2}), x0, y0, false);
+
+  wellContainer->getH5File().createDataSet<double>(
+        "TvdXY2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
+      write_raw(M.data());
+
+  double std_dev = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0) - M.col(0)).norm();
+  double MD_max = MD_X_Y_Z_TVD_DX_DY_AZ_INCL(Eigen::last, 0);
+  ASSERT_TRUE(std_dev/MD_max < 0.05); // less than 5 %
+}
+
+TEST_F(H5WellFixture, TvdXY2MdXYTvd_XNorth){
+  Eigen::MatrixXd M = h5geo::TvdXY2MdXYTvd(
+        MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
+          Eigen::all, {4, 1, 2}), x0, y0, true);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdXY2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -229,7 +336,21 @@ TEST_F(H5WellFixture, TvdXY2MdXYTvd){
 TEST_F(H5WellFixture, TvdDxDy2MdXYTvd){
   Eigen::MatrixXd M = h5geo::TvdDxDy2MdXYTvd(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {4, 5, 6}), x0, y0);
+          Eigen::all, {4, 5, 6}), x0, y0, false);
+
+  wellContainer->getH5File().createDataSet<double>(
+        "TvdDxDy2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
+      write_raw(M.data());
+
+  double std_dev = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0) - M.col(0)).norm();
+  double MD_max = MD_X_Y_Z_TVD_DX_DY_AZ_INCL(Eigen::last, 0);
+  ASSERT_TRUE(std_dev/MD_max < 0.05); // less than 5 %
+}
+
+TEST_F(H5WellFixture, TvdDxDy2MdXYTvd_XNorth){
+  Eigen::MatrixXd M = h5geo::TvdDxDy2MdXYTvd(
+        MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
+          Eigen::all, {4, 5, 6}), x0, y0, true);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdDxDy2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -247,7 +368,25 @@ TEST_F(H5WellFixture, TvdssXY2MdXYTvd){
   TvdssXY.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(2);
 
   Eigen::MatrixXd M = h5geo::TvdssXY2MdXYTvd(
-        TvdssXY, x0, y0, kb);
+        TvdssXY, x0, y0, kb, false);
+
+  wellContainer->getH5File().createDataSet<double>(
+        "TvdssXY2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
+      write_raw(M.data());
+
+  double std_dev = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0) - M.col(0)).norm();
+  double MD_max = MD_X_Y_Z_TVD_DX_DY_AZ_INCL(Eigen::last, 0);
+  ASSERT_TRUE(std_dev/MD_max < 0.05); // less than 5 %
+}
+
+TEST_F(H5WellFixture, TvdssXY2MdXYTvd_XNorth){
+  Eigen::MatrixXd TvdssXY(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows(), 3);
+  TvdssXY.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + kb;
+  TvdssXY.col(1) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(1);
+  TvdssXY.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(2);
+
+  Eigen::MatrixXd M = h5geo::TvdssXY2MdXYTvd(
+        TvdssXY, x0, y0, kb, true);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdssXY2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -265,7 +404,25 @@ TEST_F(H5WellFixture, TvdssDxDy2MdXYTvd){
   TvdssDxDy.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6);
 
   Eigen::MatrixXd M = h5geo::TvdssDxDy2MdXYTvd(
-        TvdssDxDy, x0, y0, kb);
+        TvdssDxDy, x0, y0, kb, false);
+
+  wellContainer->getH5File().createDataSet<double>(
+        "TvdssDxDy2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
+      write_raw(M.data());
+
+  double std_dev = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0) - M.col(0)).norm();
+  double MD_max = MD_X_Y_Z_TVD_DX_DY_AZ_INCL(Eigen::last, 0);
+  ASSERT_TRUE(std_dev/MD_max < 0.05); // less than 5 %
+}
+
+TEST_F(H5WellFixture, TvdssDxDy2MdXYTvd_XNorth){
+  Eigen::MatrixXd TvdssDxDy(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows(), 3);
+  TvdssDxDy.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + kb;
+  TvdssDxDy.col(1) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5);
+  TvdssDxDy.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6);
+
+  Eigen::MatrixXd M = h5geo::TvdssDxDy2MdXYTvd(
+        TvdssDxDy, x0, y0, kb, true);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdssDxDy2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -277,17 +434,17 @@ TEST_F(H5WellFixture, TvdssDxDy2MdXYTvd){
 }
 
 TEST_F(H5WellFixture, writeReadLogCurve){
-  std::optional<H5Well> well =
-      wellContainer->createWell(
-        WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(well.has_value());
+  H5Well_ptr well(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(well != nullptr);
 
-  std::optional<H5LogCurve> logCurve =
-      well->createLogCurve(
-        LOG_TYPE, LOG_NAME,
-        logCurveParam, h5geo::CreationType::OPEN_OR_CREATE);
+  H5LogCurve_ptr logCurve(
+        well->createLogCurve(
+          LOG_TYPE, LOG_NAME,
+          logCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
 
-  ASSERT_TRUE(logCurve.has_value());
+  ASSERT_TRUE(logCurve != nullptr);
 
   ASSERT_TRUE(logCurve->writeCurve(h5geo::LogDataType::MD,
                                    LOG_MD_GR.col(0)));
@@ -301,21 +458,20 @@ TEST_F(H5WellFixture, writeReadLogCurve){
 }
 
 TEST_F(H5WellFixture, getWellFromCurve){
-  std::optional<H5Well> well =
-      wellContainer->createWell(
-        WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(well.has_value());
+  H5Well_ptr well(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(well != nullptr);
 
-  std::optional<H5LogCurve> logCurve =
-      well->createLogCurve(
-        LOG_TYPE, LOG_NAME,
-        logCurveParam, h5geo::CreationType::OPEN_OR_CREATE);
+  H5LogCurve_ptr logCurve(
+        well->createLogCurve(
+          LOG_TYPE, LOG_NAME,
+          logCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
 
-  std::optional<H5DevCurve> devCurve =
-      well->createDevCurve(DEV_NAME, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE);
+  H5DevCurve_ptr devCurve(
+        well->createDevCurve(DEV_NAME, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
 
-
-  ASSERT_TRUE(devCurve.has_value());
+  ASSERT_TRUE(devCurve != nullptr);
 
   ASSERT_TRUE(devCurve->getWell())
       << "Try to find well containing this curve";
@@ -329,13 +485,14 @@ TEST_F(H5WellFixture, getWellFromCurve){
 }
 
 TEST_F(H5WellFixture, activeDevCurveTest){
-  std::optional<H5Well> well =
-      wellContainer->createWell(
-        WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(well.has_value());
+  H5Well_ptr well(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(well != nullptr);
 
-  std::optional<H5DevCurve> devCurve =
-      well->createDevCurve(DEV_NAME, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE);
+  H5DevCurve_ptr devCurve(
+        well->createDevCurve(
+          DEV_NAME, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
 
   ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::MD,
                                    MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0)));
@@ -350,8 +507,8 @@ TEST_F(H5WellFixture, activeDevCurveTest){
   ASSERT_TRUE(devCurve->setActive());
   ASSERT_TRUE(devCurve->isActive());
 
-  std::optional<H5DevCurve> activeCurve = well->getActiveDevCurve();
-  ASSERT_TRUE(activeCurve.has_value());
+  H5DevCurve_ptr activeCurve(well->getActiveDevCurve());
+  ASSERT_TRUE(activeCurve != nullptr);
 
   ASSERT_TRUE(devCurve->getCurve(h5geo::DevDataType::MD).isApprox(
                 activeCurve->getCurve(h5geo::DevDataType::MD)));
@@ -373,13 +530,13 @@ TEST_F(H5WellFixture, getCurveFromDifferentWell){
   std::string logCurveType2 = "/2R/LOG/my_log_type";
   std::string logCurveName2 = "/2R/LOG/my_log_type/my_log_name";
 
-  std::optional<H5Well> well_1 =
-      wellContainer->createWell(
-        wellName1, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE);
+  H5Well_ptr well_1(
+        wellContainer->createWell(
+          wellName1, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
 
-  std::optional<H5Well> well_2 =
-      wellContainer->createWell(
-        wellName2, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE);
+  H5Well_ptr well_2(
+        wellContainer->createWell(
+          wellName2, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
 
   ASSERT_FALSE(well_1->createDevCurve(devCurveName2, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
   ASSERT_FALSE(well_1->createLogCurve(logCurveType2, logCurveName2, logCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
@@ -391,13 +548,13 @@ TEST_F(H5WellFixture, getCurveFromDifferentWell){
   ASSERT_TRUE(well_2->createDevCurve(devCurveName2, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
   ASSERT_TRUE(well_2->createLogCurve(logCurveType2, logCurveName2, logCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
 
-  ASSERT_FALSE(well_1->getDevCurve(devCurveName2).has_value());
-  ASSERT_FALSE(well_1->getLogCurve(logCurveType2, logCurveName2).has_value());
-  ASSERT_FALSE(well_2->getDevCurve(devCurveName1).has_value());
-  ASSERT_FALSE(well_2->getLogCurve(logCurveType1, logCurveName1).has_value());
+  ASSERT_FALSE(well_1->getDevCurve(devCurveName2) != nullptr);
+  ASSERT_FALSE(well_1->getLogCurve(logCurveType2, logCurveName2) != nullptr);
+  ASSERT_FALSE(well_2->getDevCurve(devCurveName1) != nullptr);
+  ASSERT_FALSE(well_2->getLogCurve(logCurveType1, logCurveName1) != nullptr);
 
-  ASSERT_TRUE(well_1->getDevCurve(devCurveName1).has_value());
-  ASSERT_TRUE(well_1->getLogCurve(logCurveType1, logCurveName1).has_value());
-  ASSERT_TRUE(well_2->getDevCurve(devCurveName2).has_value());
-  ASSERT_TRUE(well_2->getLogCurve(logCurveType2, logCurveName2).has_value());
+  ASSERT_TRUE(well_1->getDevCurve(devCurveName1) != nullptr);
+  ASSERT_TRUE(well_1->getLogCurve(logCurveType1, logCurveName1) != nullptr);
+  ASSERT_TRUE(well_2->getDevCurve(devCurveName2) != nullptr);
+  ASSERT_TRUE(well_2->getLogCurve(logCurveType2, logCurveName2) != nullptr);
 }

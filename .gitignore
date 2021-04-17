@@ -1,5 +1,6 @@
 .vscode
 build
+build-MSVC2019-Debug
 install
 install-Clang-Debug
 CMakeLists.txt.user

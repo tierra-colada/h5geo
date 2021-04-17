@@ -1,14 +1,13 @@
 set(src_files_test
   main.cxx
-  core_test.cxx
   h5surf_test.cxx
   h5well_test.cxx
   h5seis_test.cxx
   )
 
 set(resource_files
-  data/well.dev
-  data/well.las
+  data/well_dev
+  data/well_las
   )
 
 add_executable(H5GeoTest
@@ -21,6 +20,8 @@ set_target_properties(H5GeoTest PROPERTIES
 
 file(COPY "data"
   DESTINATION ${CMAKE_BINARY_DIR})
+
+add_compile_definitions(TEST_DATA_DIR="${CMAKE_BINARY_DIR}/data")
 
 target_link_libraries(H5GeoTest 
   PRIVATE ${GMOCK_BOTH_LIBRARIES}

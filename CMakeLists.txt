@@ -52,7 +52,7 @@ install(TARGETS h5geo DESTINATION lib EXPORT h5geo-targets)
 include(GenerateExportHeader)
 generate_export_header(
   h5geo
-  EXPORT_FILE_NAME ${CMAKE_CURRENT_SOURCE_DIR}/include/h5geo_export.h
+  EXPORT_FILE_NAME ${CMAKE_CURRENT_SOURCE_DIR}/include/h5geo/misc/h5geo_export.h
   )
 
 # LINK DEPENDENCIES
@@ -64,15 +64,19 @@ find_package(magic_enum REQUIRED)
 
 # we don't want to install third-party include dirs
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${EIGEN3_INCLUDE_DIRS}>)
-target_link_libraries(h5geo PUBLIC ${HDF5_C_LIBRARIES})
+target_link_libraries(h5geo PUBLIC $<BUILD_INTERFACE:${HDF5_C_LIBRARIES}>)
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${HDF5_INCLUDE_DIRS}>)
-target_compile_definitions(h5geo PUBLIC ${HDF5_DEFINITIONS})
-target_link_libraries(h5geo PUBLIC magic_enum::magic_enum)
+target_compile_definitions(h5geo PUBLIC $<BUILD_INTERFACE:${HDF5_DEFINITIONS}>)
+target_link_libraries(h5geo PUBLIC $<BUILD_INTERFACE:magic_enum::magic_enum>)
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${h5gt_INCLUDE_DIRS}>)
 
 if(H5GEO_USE_THREADS)
-  find_package(TBB REQUIRED)
-  target_link_libraries(h5geo PUBLIC TBB::tbb)
+  # on windows TBB is included by default
+  if(NOT WIN32)
+    find_package(TBB REQUIRED)
+    target_link_libraries(h5geo PUBLIC TBB::tbb)
+  endif()
+  target_compile_definitions(h5geo PUBLIC H5GEO_USE_THREADS)
 endif()
 
 if(H5GEO_BUILD_TESTS)

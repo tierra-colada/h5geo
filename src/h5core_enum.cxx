@@ -1,4 +1,4 @@
-#include "../include/h5core/h5core_enum.h"
+#include "../include/h5geo/misc/h5core_enum.h"
 
 #include <h5gt/H5File.hpp>
 #include <h5gt/H5Group.hpp>
@@ -8,7 +8,7 @@
 
 using namespace h5geo;
 
-char h5geo::getDelimiter(h5geo::Delimiter delimiter){
+char h5geo::getDelimiter(const h5geo::Delimiter& delimiter){
   if (delimiter == h5geo::Delimiter::DOT)
     return '.';
   else if (delimiter == h5geo::Delimiter::COMMA)

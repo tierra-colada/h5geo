@@ -1,4 +1,4 @@
-#include "../include/h5well/h5wellcontainer.h"
+#include "../include/h5geo/h5wellcontainer.h"
 
 H5WellContainer::H5WellContainer(const h5gt::File &h5File):
   H5BaseContainer(h5File)

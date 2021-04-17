@@ -1,15 +1,14 @@
 set(src_files
-  ${CMAKE_SOURCE_DIR}/src/h5base.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5basecontainer.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5baseobject.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5core_enum.cxx
+  ${CMAKE_SOURCE_DIR}/src/h5baseimpl.cxx
+  ${CMAKE_SOURCE_DIR}/src/h5basecontainerimpl.cxx
+  ${CMAKE_SOURCE_DIR}/src/h5baseobjectimpl.cxx
   ${CMAKE_SOURCE_DIR}/src/h5core.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5devcurve.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5logcurve.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5seis.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5seiscontainer.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5surf.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5surfcontainer.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5well.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5wellcontainer.cxx
+  ${CMAKE_SOURCE_DIR}/src/h5devcurveimpl.cxx
+  ${CMAKE_SOURCE_DIR}/src/h5logcurveimpl.cxx
+  ${CMAKE_SOURCE_DIR}/src/h5seisimpl.cxx
+  ${CMAKE_SOURCE_DIR}/src/h5seiscontainerimpl.cxx
+  ${CMAKE_SOURCE_DIR}/src/h5surfcontainerimpl.cxx
+  ${CMAKE_SOURCE_DIR}/src/h5surfimpl.cxx
+  ${CMAKE_SOURCE_DIR}/src/h5wellimpl.cxx
+  ${CMAKE_SOURCE_DIR}/src/h5wellcontainerimpl.cxx
   )

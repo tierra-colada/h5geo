@@ -1,6 +1,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <h5seis/h5seiscontainer.h>
+#include <h5geo/h5seiscontainer.h>
+#include <h5geo/h5seis.h>
+#include <h5geo/h5core.h>
+
+#include <h5gt/H5File.hpp>
+#include <h5gt/H5Group.hpp>
+#include <h5gt/H5DataSet.hpp>
+
+#include <filesystem>
+namespace fs = std::filesystem;
 
 class H5SeisFixture: public ::testing::Test {
 public:
@@ -10,14 +19,16 @@ public:
     static bool trig = false;
 
     if (trig){
-      seisContainer = H5SeisContainer::create(
-            FILE_NAME,
-            h5gt::File::OpenOrCreate);
+      h5gt::File file(FILE_NAME, h5gt::File::OpenOrCreate);
+      seisContainer = H5SeisCnt_ptr(
+            h5geo::createSeisContainer(
+              file, h5geo::CreationType::OPEN_OR_CREATE));
     } else {
-      seisContainer = H5SeisContainer::create(
-            FILE_NAME,
-            h5gt::File::OpenOrCreate |
-            h5gt::File::Overwrite);
+      h5gt::File file(FILE_NAME, h5gt::File::OpenOrCreate |
+                      h5gt::File::Overwrite);
+      seisContainer = H5SeisCnt_ptr(
+            h5geo::createSeisContainer(
+              file, h5geo::CreationType::CREATE_OR_OVERWRITE));
     }
 
     p.domain = h5geo::Domain::OWT;
@@ -37,7 +48,7 @@ public:
   }
 
 public:
-  std::optional<H5SeisContainer> seisContainer;
+  H5SeisCnt_ptr seisContainer;
   SeisParam p;
   std::string FILE_NAME = "seis.h5";
   std::string SEIS_NAME1 = "path1/to/seis";
@@ -45,48 +56,46 @@ public:
 };
 
 TEST_F(H5SeisFixture, createContainer){
-  ASSERT_TRUE(h5geo::isFileExist(FILE_NAME));
+  ASSERT_TRUE(fs::exists(FILE_NAME));
 }
 
 TEST_F(H5SeisFixture, createSeisWithDifferentCreateFlags){
-  std::optional<H5Seis> seis =
-      seisContainer->createSeis(
-        SEIS_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE);
-  bool v = seis.has_value();
-  ASSERT_TRUE(seis.has_value()) << "OPEN_OR_CREATE";
-  seis =
-      seisContainer->createSeis(
-        SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(seis.has_value()) << "CREATE_OR_OVERWRITE";
-  seis =
-      seisContainer->createSeis(
-        SEIS_NAME1, p, h5geo::CreationType::CREATE_UNDER_NEW_NAME);
-  ASSERT_TRUE(seis.has_value())  << "CREATE_UNDER_NEW_NAME";
-  seis =
-      seisContainer->createSeis(
-        SEIS_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE);
-  ASSERT_TRUE(seis.has_value())  << "OPEN_OR_CREATE";
+  H5Seis_ptr seis(
+        seisContainer->createSeis(
+          SEIS_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
+
+  seis = H5Seis_ptr(seisContainer->createSeis(
+                      SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
+
+  seis = H5Seis_ptr(seisContainer->createSeis(
+                      SEIS_NAME1, p, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
+  ASSERT_TRUE(seis != nullptr)  << "CREATE_UNDER_NEW_NAME";
+
+  seis = H5Seis_ptr(seisContainer->createSeis(
+                      SEIS_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(seis != nullptr)  << "OPEN_OR_CREATE";
 }
 
 TEST_F(H5SeisFixture, createAndGetSeis){
-  seisContainer->createSeis(SEIS_NAME1, p);
-  std::optional<H5Seis> seis = seisContainer->getSeis(SEIS_NAME1);
-  ASSERT_TRUE(seis.has_value());
+  seisContainer->createSeis(SEIS_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE);
+  H5Seis_ptr seis(seisContainer->getSeis(SEIS_NAME1));
+  ASSERT_TRUE(seis != nullptr);
 }
 
 TEST_F(H5SeisFixture, createAndGetSeisFromGroup){
   h5gt::Group group =
       seisContainer->getH5File().createGroup(SEIS_NAME2);
-  seisContainer->createSeis(group, p);
-  std::optional<H5Seis> seis = seisContainer->getSeis(SEIS_NAME2);
-  ASSERT_TRUE(seis.has_value());
+  seisContainer->createSeis(group, p, h5geo::CreationType::OPEN_OR_CREATE);
+  H5Seis_ptr seis(seisContainer->getSeis(SEIS_NAME2));
+  ASSERT_TRUE(seis != nullptr);
 }
 
 TEST_F(H5SeisFixture, writeAndGetTextHeader){
-  std::optional<H5Seis> seis =
-      seisContainer->createSeis(
-        SEIS_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE);
-  ASSERT_TRUE(seis.has_value()) << "OPEN_OR_CREATE";
+  H5Seis_ptr seis(seisContainer->createSeis(
+                    SEIS_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
 
   std::vector<std::string> txtHdr;
   for (size_t i = 0; i < 40; i++)
@@ -112,10 +121,9 @@ TEST_F(H5SeisFixture, writeAndGetTextHeader){
 }
 
 TEST_F(H5SeisFixture, writeAndGetBinHeader){
-  std::optional<H5Seis> seis =
-      seisContainer->createSeis(
-        SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(seis.has_value()) << "OPEN_OR_CREATE";
+  H5Seis_ptr seis(seisContainer->createSeis(
+                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
 
   std::vector<double> binHdrStd;
   for (size_t i = 0; i < seis->getNBinHdr(); i++)
@@ -141,10 +149,9 @@ TEST_F(H5SeisFixture, writeAndGetBinHeader){
 }
 
 TEST_F(H5SeisFixture, writeAndGetTrace){
-  std::optional<H5Seis> seis =
-      seisContainer->createSeis(
-        SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(seis.has_value()) << "OPEN_OR_CREATE";
+  H5Seis_ptr seis(seisContainer->createSeis(
+                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
 
   Eigen::MatrixXf traces = Eigen::MatrixXf::Random(
         seis->getNSamp(), seis->getNTrc());
@@ -159,7 +166,7 @@ TEST_F(H5SeisFixture, writeAndGetTrace){
       << "Read all traces and compare them with original";
 
   traces_out = seis->getTrace(
-          3, 10, 2, 5);
+        3, 10, 2, 5);
 
   ASSERT_TRUE(traces_out.isApprox(traces.block(2, 3, 5, 10)))
       << "Read all block of traces and compare them with original";
@@ -168,17 +175,16 @@ TEST_F(H5SeisFixture, writeAndGetTrace){
       << "Write single traces";
 
   traces_out = seis->getTrace(
-          20, 1, 0, seis->getNSamp());
+        20, 1, 0, seis->getNSamp());
 
   ASSERT_TRUE(traces_out.isApprox(traces.col(10)))
       << "Read single trace and compare it with original";
 }
 
 TEST_F(H5SeisFixture, writeAndGetTraceHeader){
-  std::optional<H5Seis> seis =
-      seisContainer->createSeis(
-        SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(seis.has_value()) << "OPEN_OR_CREATE";
+  H5Seis_ptr seis(seisContainer->createSeis(
+                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
 
   Eigen::MatrixXd trcHdr = Eigen::MatrixXi::Random(
         seis->getNTrc(), seis->getNTrcHdr()).cast<double>();
@@ -198,14 +204,13 @@ TEST_F(H5SeisFixture, writeAndGetTraceHeader){
   trcHdr_out = seis->getTraceHeader("CDP");
 
   ASSERT_TRUE(trcHdr_out.isApprox(trcHdr.col(40)))
-  << "Read and compare single header (CDP for example)";
+      << "Read and compare single header (CDP for example)";
 }
 
 TEST_F(H5SeisFixture, writeAndGetSortedData){
-  std::optional<H5Seis> seis =
-      seisContainer->createSeis(
-        SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  ASSERT_TRUE(seis.has_value()) << "OPEN_OR_CREATE";
+  H5Seis_ptr seis(seisContainer->createSeis(
+                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
 
   Eigen::MatrixXf traces = Eigen::MatrixXf::Random(
         seis->getNSamp(), seis->getNTrc());
@@ -242,7 +247,6 @@ TEST_F(H5SeisFixture, writeAndGetSortedData){
 
   std::cout << "hdr_sorted:\n" << hdr_sorted << std::endl;
 
-
   Eigen::MatrixXd trcHdr_out = seis->getTraceHeader(
         0, seis->getNTrc());
 
@@ -255,5 +259,5 @@ TEST_F(H5SeisFixture, writeAndGetSortedData){
   trcHdr_out = seis->getTraceHeader("CDP");
 
   ASSERT_TRUE(trcHdr_out.isApprox(trcHdr.col(40)))
-  << "Read and compare single header (CDP for example)";
+      << "Read and compare single header (CDP for example)";
 }
