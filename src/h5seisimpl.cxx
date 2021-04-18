@@ -801,7 +801,7 @@ h5geo::SeisDataType H5SeisImpl::getDataType(){
   return static_cast<h5geo::SeisDataType>(
         h5geo::getEnumFromObj(
           objG,
-          std::string{magic_enum::enum_name(h5geo::SeisAttributes::DataType)}));
+          std::string{magic_enum::enum_name(h5geo::SeisAttributes::SeisDataType)}));
 }
 
 h5geo::SurveyType H5SeisImpl::getSurveyType(){

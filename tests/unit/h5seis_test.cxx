@@ -32,6 +32,9 @@ public:
     }
 
     p.domain = h5geo::Domain::OWT;
+    p.spatialUnits = h5geo::SpatialUnits::MILLIMETER;
+    p.temporalUnits = h5geo::TemporalUnits::MILLISECOND;
+    p.dataUnits = "My_data_units";
     p.dataType = h5geo::SeisDataType::PRESTACK;
     p.surveyType = h5geo::SurveyType::TWO_D;
     p.nTrc = 30;

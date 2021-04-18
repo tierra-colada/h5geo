@@ -25,6 +25,10 @@ enum class DevDataType: unsigned;
 struct SurfParam{
   size_t nX, nY;
   double X0, Y0, dX, dY;
+  h5geo::Domain domain;
+  h5geo::SpatialUnits spatialUnits;
+  h5geo::TemporalUnits temporalUnits;
+  std::string dataUnits;
 };
 
 struct WellParam{
@@ -32,17 +36,25 @@ struct WellParam{
   std::string uwi;
 };
 
-struct LogCurveParam{
+struct DevCurveParam{
+  h5geo::SpatialUnits spatialUnits;
+  h5geo::TemporalUnits temporalUnits;
+  h5geo::AngleUnits angleUnits;
+  bool setActive = false;
   hsize_t chunkSize = 1000;
 };
 
-struct DevCurveParam{
-  bool setActive = false;
+struct LogCurveParam{
+  h5geo::SpatialUnits spatialUnits;
+  std::string dataUnits;
   hsize_t chunkSize = 1000;
 };
 
 struct SeisParam{
   h5geo::Domain domain;
+  h5geo::SpatialUnits spatialUnits;
+  h5geo::TemporalUnits temporalUnits;
+  std::string dataUnits;
   h5geo::SeisDataType dataType;
   h5geo::SurveyType surveyType;
   size_t nTrc;

@@ -58,21 +58,18 @@ enum class SurveyType : unsigned{
   THREE_D = 2
 };
 
-struct H5SeisEnums{
-  Domain domain;
-  SeisDataType dataType;
-  SurveyType surveyType;
-};
-
 enum class ContainerAttributes : unsigned{
   ContainerType = 1
 };
 
 enum class SeisAttributes : unsigned{
   Domain = 1,
-  DataType = 2,
-  SurveyType = 3,
-  SRD = 4
+  SpatialUnits = 2,
+  TemporalUnits = 3,
+  data_units = 4,
+  SeisDataType = 5,
+  SurveyType = 6,
+  SRD = 7
 };
 
 enum class SeisDatasets : unsigned{
@@ -90,8 +87,12 @@ enum class SeisGroups : unsigned{
 };
 
 enum class SurfAttributes : unsigned{
-  origin = 1,
-  spacing = 2
+  Domain = 1,
+  SpatialUnits = 2,
+  TemporalUnits = 3,
+  data_units = 4,
+  origin = 5,
+  spacing = 6
 };
 
 enum class SurfDatasets : unsigned{
@@ -110,8 +111,19 @@ enum class WellGroups : unsigned{
   ACTIVE_DEV = 3
 };
 
+enum class DevAttributes : unsigned{
+  SpatialUnits = 1,
+  TemporalUnits = 2,
+  AngleUnits = 3
+};
+
 enum class DevDatasets : unsigned{
   dev_data = 1
+};
+
+enum class LogAttributes : unsigned{
+  SpatialUnits = 1,
+  data_units = 2
 };
 
 enum class LogDatasets : unsigned{
@@ -184,7 +196,9 @@ enum class TrajectoryFormat : unsigned{
 
 enum class SpatialUnits : unsigned{
   METER = 0,
-  FOOT = 1
+  CENTIMETER = 1,
+  MILLIMETER = 2,
+  FOOT = 3
 };
 
 enum class TemporalUnits : unsigned{

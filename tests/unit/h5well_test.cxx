@@ -45,6 +45,13 @@ public:
     wellParam.kb = 2;
     wellParam.uwi = "my_uwi";
 
+    devCurveParam.spatialUnits = h5geo::SpatialUnits::METER;
+    devCurveParam.temporalUnits = h5geo::TemporalUnits::MILLISECOND;
+    devCurveParam.angleUnits = h5geo::AngleUnits::RADIAN;
+
+    logCurveParam.spatialUnits = h5geo::SpatialUnits::CENTIMETER;
+    logCurveParam.dataUnits = "kg/m2";
+
     trig = true;
   }
 
