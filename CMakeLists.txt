@@ -72,7 +72,7 @@ target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${h5gt_INCLUDE_DIRS}>)
 
 if(H5GEO_USE_THREADS)
   # on windows TBB is included by default
-  if(NOT WIN32)
+  if(NOT MSVC)
     find_package(TBB REQUIRED)
     target_link_libraries(h5geo PUBLIC TBB::tbb)
   endif()

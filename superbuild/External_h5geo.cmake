@@ -4,6 +4,10 @@ set(h5geo_DIR PATH ${CMAKE_INSTALL_PREFIX}/cmake/h5geo)
 
 set(DEPENDENCIES Eigen3 ZLIB HDF5 h5gt magic_enum)
 
+if(H5GEO_USE_THREADS AND NOT MSVC)
+  list(APPEND DEPENDENCIES TBB)
+endif()
+
 ExternalProject_Add(h5geo
   DOWNLOAD_COMMAND ""
   INSTALL_COMMAND ""
@@ -27,6 +31,7 @@ ExternalProject_Add(h5geo
     -DHDF5_ROOT:PATH=${HDF5_ROOT}
     -Dh5gt_ROOT:PATH=${h5gt_ROOT}
     -Dmagic_enum_ROOT:PATH=${magic_enum_ROOT}
+    -DTBB_ROOT:PATH=${TBB_ROOT}
     # Lib settings
     -DH5GEO_SUPERBUILD:BOOL=OFF
     -DH5GEO_USE_THREADS:BOOL=${H5GEO_USE_THREADS}
