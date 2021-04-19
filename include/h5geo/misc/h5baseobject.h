@@ -29,7 +29,8 @@ public:
 
   virtual bool operator == (H5BaseObject& other) const = 0;
   virtual bool operator != (H5BaseObject& other) const = 0;
-
 };
+
+using H5BaseObject_ptr = std::unique_ptr<H5BaseObject, h5geo::ObjectDeleter>;
 
 #endif // H5BASEOBJECT_H

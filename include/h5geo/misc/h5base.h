@@ -4,6 +4,7 @@
 #include "h5core_enum.h"
 
 #include <vector>
+#include <memory>
 
 typedef unsigned long long hsize_t ;
 
@@ -87,6 +88,9 @@ struct ObjectDeleter
     ptr->Delete();
   }
 };
+
+using H5Base_ptr = std::unique_ptr<H5Base, h5geo::ObjectDeleter>;
+
 } // h5geo
 
 

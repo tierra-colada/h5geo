@@ -15,4 +15,6 @@ public:
   virtual bool operator != (H5BaseContainer& other) const = 0;
 };
 
+using H5BaseCnt_ptr = std::unique_ptr<H5BaseContainer, h5geo::ObjectDeleter>;
+
 #endif // H5BASECONTAINER_H
