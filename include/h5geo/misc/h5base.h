@@ -89,9 +89,8 @@ struct ObjectDeleter
   }
 };
 
-using H5Base_ptr = std::unique_ptr<H5Base, h5geo::ObjectDeleter>;
-
 } // h5geo
 
+using H5Base_ptr = std::unique_ptr<H5Base, h5geo::ObjectDeleter>;
 
 #endif // H5BASE_H
