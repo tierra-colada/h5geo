@@ -1,9 +1,7 @@
 set(include_files
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5base.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5basecontainer.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5basecontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5baseimpl.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5baseobject.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5baseobjectimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_enum_operators.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_enum.h
@@ -21,6 +19,8 @@ set(include_files
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5wellcontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5wellimpl.h
 
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5basecontainer.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5baseobject.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5core.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5devcurve.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5logcurve.h

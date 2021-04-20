@@ -1,7 +1,7 @@
 #ifndef H5BASECONTAINERIMPL_H
 #define H5BASECONTAINERIMPL_H
 
-#include "h5basecontainer.h"
+#include "../h5basecontainer.h"
 #include "h5baseimpl.h"
 
 #include <h5gt/H5File.hpp>
@@ -19,6 +19,9 @@ public:
 
   virtual bool operator == (H5BaseContainer& other) const override;
   virtual bool operator != (H5BaseContainer& other) const override;
+
+  //----------- FRIEND CLASSES -----------
+  friend H5BaseContainer* h5geo::createBaseContainer(h5gt::File &h5File);
 
 protected:
   h5gt::File h5File;

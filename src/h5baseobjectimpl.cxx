@@ -73,3 +73,9 @@ H5BaseObjectImpl::getParentG(
 
   return std::nullopt;
 }
+
+H5BaseObject*
+h5geo::createBaseObject(h5gt::Group &group)
+{
+  return new H5BaseObjectImpl(group);
+}

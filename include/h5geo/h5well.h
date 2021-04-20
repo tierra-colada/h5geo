@@ -1,7 +1,7 @@
 #ifndef H5WELL_H
 #define H5WELL_H
 
-#include "misc/h5baseobject.h"
+#include "h5baseobject.h"
 
 #include <Eigen/Dense>
 

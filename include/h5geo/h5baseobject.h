@@ -1,7 +1,7 @@
 #ifndef H5BASEOBJECT_H
 #define H5BASEOBJECT_H
 
-#include "h5base.h"
+#include "misc/h5base.h"
 
 #include <string>
 
@@ -30,6 +30,12 @@ public:
   virtual bool operator == (H5BaseObject& other) const = 0;
   virtual bool operator != (H5BaseObject& other) const = 0;
 };
+
+namespace h5geo {
+  extern "C" {
+  H5GEO_EXPORT H5BaseObject* createBaseObject(h5gt::Group &group);
+  }
+}
 
 using H5BaseObject_ptr = std::unique_ptr<H5BaseObject, h5geo::ObjectDeleter>;
 

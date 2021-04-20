@@ -1,7 +1,7 @@
 #ifndef H5BASECONTAINER_H
 #define H5BASECONTAINER_H
 
-#include "h5base.h"
+#include "misc/h5base.h"
 
 class H5BaseContainer : public virtual H5Base
 {
@@ -14,6 +14,12 @@ public:
   virtual bool operator == (H5BaseContainer& other) const = 0;
   virtual bool operator != (H5BaseContainer& other) const = 0;
 };
+
+namespace h5geo {
+  extern "C" {
+  H5GEO_EXPORT H5BaseContainer* createBaseContainer(h5gt::File &h5File);
+  }
+}
 
 using H5BaseCnt_ptr = std::unique_ptr<H5BaseContainer, h5geo::ObjectDeleter>;
 

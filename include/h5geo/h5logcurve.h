@@ -1,7 +1,7 @@
 #ifndef H5LOGCURVE_H
 #define H5LOGCURVE_H
 
-#include "misc/h5baseobject.h"
+#include "h5baseobject.h"
 
 #include <Eigen/Dense>
 

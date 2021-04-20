@@ -1,7 +1,7 @@
 #ifndef H5SURF_H
 #define H5SURF_H
 
-#include "misc/h5baseobject.h"
+#include "h5baseobject.h"
 
 #include <Eigen/Dense>
 

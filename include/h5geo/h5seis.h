@@ -1,7 +1,7 @@
 #ifndef H5SEIS_H
 #define H5SEIS_H
 
-#include "misc/h5baseobject.h"
+#include "h5baseobject.h"
 
 #include <Eigen/Dense>
 

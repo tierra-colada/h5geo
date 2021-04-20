@@ -1,7 +1,7 @@
 #ifndef H5DEVCURVE_H
 #define H5DEVCURVE_H
 
-#include "misc/h5baseobject.h"
+#include "h5baseobject.h"
 
 #include <Eigen/Dense>
 

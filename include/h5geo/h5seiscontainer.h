@@ -2,7 +2,7 @@
 #define H5SEISCONTAINER_H
 
 #include "misc/h5geo_export.h"
-#include "misc/h5basecontainer.h"
+#include "h5basecontainer.h"
 
 #include <memory>
 

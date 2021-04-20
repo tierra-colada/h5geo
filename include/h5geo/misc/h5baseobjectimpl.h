@@ -1,7 +1,7 @@
 #ifndef H5BASEOBJECTIMPL_H
 #define H5BASEOBJECTIMPL_H
 
-#include "h5baseobject.h"
+#include "../h5baseobject.h"
 #include "h5baseimpl.h"
 #include "h5gt/H5Group.hpp"
 
@@ -42,6 +42,9 @@ protected:
    */
   std::optional<h5gt::Group>
   getParentG(const h5geo::ObjectType& objType);
+
+  //----------- FRIEND CLASSES -----------
+  friend H5BaseObject* h5geo::createBaseObject(h5gt::Group &group);
 
 protected:
   h5gt::Group objG;

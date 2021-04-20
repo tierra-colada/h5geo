@@ -15,3 +15,9 @@ bool H5BaseContainerImpl::operator == (H5BaseContainer& other) const {
 bool H5BaseContainerImpl::operator != (H5BaseContainer& other) const {
   return !(*this == other);
 }
+
+H5BaseContainer*
+h5geo::createBaseContainer(h5gt::File &h5File)
+{
+  return new H5BaseContainerImpl(h5File);
+}
