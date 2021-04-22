@@ -16,29 +16,27 @@ public:
 
 protected:
   static bool isContainer(
-      h5gt::File &file,
+      h5gt::File file,
       const h5geo::ContainerType& cntType);
 
-  static bool isSurfContainer(h5gt::File &file);
-  static bool isWellContainer(h5gt::File &file);
-  static bool isSeisContainer(h5gt::File &file);
-
   bool isObject(
-      h5gt::Group &group,
+      h5gt::Group group,
       const h5geo::ObjectType& objType);
 
+private:
   bool isSurf(h5gt::Group &group);
   bool isWell(h5gt::Group &group);
   bool isLogCurve(h5gt::Group &group);
   bool isDevCurve(h5gt::Group &group);
   bool isSeis(h5gt::Group &group);
 
+protected:
   static std::optional<h5gt::File> createContainer(
       std::string& fileName,
       const h5geo::ContainerType& containerType,
       h5geo::CreationType createFlag);
   static std::optional<h5gt::File> createContainer(
-      h5gt::File &h5File,
+      h5gt::File h5File,
       const h5geo::ContainerType& containerType,
       h5geo::CreationType createFlag);
 
@@ -54,7 +52,7 @@ protected:
    */
   createObject(
       std::string& objName,
-      h5gt::File& parentFile,
+      h5gt::File parentFile,
       const h5geo::ObjectType& objType,
       void* p,
       h5geo::CreationType createFlag);
@@ -71,14 +69,14 @@ protected:
    */
   createObject(
       std::string& objName,
-      h5gt::Group& parentGroup,
+      h5gt::Group parentGroup,
       const h5geo::ObjectType& objType,
       void* p,
       h5geo::CreationType createFlag);
 
   std::optional<h5gt::Group>
   createObject(
-      h5gt::Group& objG,
+      h5gt::Group objG,
       const h5geo::ObjectType& objType,
       void* p,
       h5geo::CreationType createFlag);
@@ -138,7 +136,7 @@ protected:
    * \param childG
    * \return
    */
-  bool isSuccessor(h5gt::Group& parentG, h5gt::Group& childG);
+  bool isSuccessor(h5gt::Group parentG, h5gt::Group childG);
   /*!
    * \brief isSuccessor works only with absolute path!
    * \param parent
@@ -146,6 +144,14 @@ protected:
    * \return
    */
   bool isSuccessor(const std::string& parent, const std::string& child);
+
+  //----------- FRIEND CLASSES -----------
+  friend H5SeisContainer* h5geo::openSeisContainer(
+      h5gt::File h5File);
+  friend H5SurfContainer* h5geo::openSurfContainer(
+      h5gt::File h5File);
+  friend H5WellContainer* h5geo::openWellContainer(
+      h5gt::File h5File);
 
 };
 

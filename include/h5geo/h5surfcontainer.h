@@ -15,15 +15,15 @@ protected:
 
 public:
   virtual H5Surf* getSurf(
-      std::string& name) = 0;
+      const std::string& name) = 0;
   virtual H5Surf* getSurf(
-      h5gt::Group& group) = 0;
+      h5gt::Group group) = 0;
   virtual H5Surf* createSurf(
       std::string& name,
       SurfParam &p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Surf* createSurf(
-      h5gt::Group& group,
+      h5gt::Group group,
       SurfParam &p,
       h5geo::CreationType createFlag) = 0;
 

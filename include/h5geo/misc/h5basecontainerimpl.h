@@ -21,7 +21,10 @@ public:
   virtual bool operator != (H5BaseContainer& other) const override;
 
   //----------- FRIEND CLASSES -----------
-  friend H5BaseContainer* h5geo::createBaseContainer(h5gt::File &h5File);
+  friend H5BaseContainer* h5geo::openBaseContainer(
+      h5gt::File h5File);
+  friend H5BaseContainer* h5geo::openBaseContainerByName(
+      const std::string& fileName);
 
 protected:
   h5gt::File h5File;

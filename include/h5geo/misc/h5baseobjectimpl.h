@@ -44,7 +44,7 @@ protected:
   getParentG(const h5geo::ObjectType& objType);
 
   //----------- FRIEND CLASSES -----------
-  friend H5BaseObject* h5geo::createBaseObject(h5gt::Group &group);
+  friend H5BaseObject* h5geo::openBaseObject(h5gt::Group group);
 
 protected:
   h5gt::Group objG;

@@ -41,7 +41,7 @@ H5LogCurve* H5WellImpl::getLogCurve(
 }
 
 H5LogCurve* H5WellImpl::getLogCurve(
-    h5gt::Group& group)
+    h5gt::Group group)
 {
   auto logG = getLogG();
   if (!logG.has_value())
@@ -78,7 +78,7 @@ H5DevCurve* H5WellImpl::getDevCurve(
 }
 
 H5DevCurve* H5WellImpl::getDevCurve(
-    h5gt::Group& group)
+    h5gt::Group group)
 {
   auto devG = getDevG();
   if (!devG.has_value())
@@ -132,7 +132,7 @@ H5LogCurve* H5WellImpl::createLogCurve(
 }
 
 H5LogCurve* H5WellImpl::createLogCurve(
-    h5gt::Group& group,
+    h5gt::Group group,
     LogCurveParam& p,
     h5geo::CreationType createFlag)
 {
@@ -179,7 +179,7 @@ H5DevCurve* H5WellImpl::createDevCurve(
 }
 
 H5DevCurve* H5WellImpl::createDevCurve(
-    h5gt::Group& group,
+    h5gt::Group group,
     DevCurveParam& p,
     h5geo::CreationType createFlag)
 {

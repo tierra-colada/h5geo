@@ -75,7 +75,7 @@ H5BaseObjectImpl::getParentG(
 }
 
 H5BaseObject*
-h5geo::createBaseObject(h5gt::Group &group)
+h5geo::openBaseObject(h5gt::Group group)
 {
   return new H5BaseObjectImpl(group);
 }

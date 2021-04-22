@@ -23,6 +23,12 @@ enum class CreationType: unsigned;
 enum class DevDataType: unsigned;
 }
 
+class H5BaseContainer;
+class H5BaseObject;
+class H5SeisContainer;
+class H5SurfContainer;
+class H5WellContainer;
+
 struct SurfParam{
   size_t nX, nY;
   double X0, Y0, dX, dY;
@@ -88,6 +94,31 @@ struct ObjectDeleter
     ptr->Delete();
   }
 };
+
+extern "C" {
+H5GEO_EXPORT H5BaseContainer* openBaseContainer(
+    h5gt::File h5File);
+H5GEO_EXPORT H5BaseContainer* openBaseContainerByName(
+    const std::string& fileName);
+
+H5GEO_EXPORT H5BaseObject* openBaseObject(
+    h5gt::Group group);
+
+H5GEO_EXPORT H5SeisContainer* openSeisContainer(
+    h5gt::File h5File);
+H5GEO_EXPORT H5SeisContainer* openSeisContainerByName(
+    const std::string& fileName);
+
+H5GEO_EXPORT H5SurfContainer* openSurfContainer(
+    h5gt::File h5File);
+H5GEO_EXPORT H5SurfContainer* openSurfContainerByName(
+    const std::string& fileName);
+
+H5GEO_EXPORT H5WellContainer* openWellContainer(
+    h5gt::File h5File);
+H5GEO_EXPORT H5WellContainer* openWellContainerByName(
+    const std::string& fileName);
+}
 
 } // h5geo
 

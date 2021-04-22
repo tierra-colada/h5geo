@@ -5,8 +5,7 @@
 H5SurfContainerImpl::H5SurfContainerImpl(const h5gt::File &h5File) :
   H5BaseContainerImpl(h5File){}
 
-H5Surf* H5SurfContainerImpl::getSurf(
-    std::string& name)
+H5Surf* H5SurfContainerImpl::getSurf(const std::string &name)
 {
   if (!h5File.hasObject(name, h5gt::ObjectType::Group))
     return nullptr;
@@ -16,7 +15,7 @@ H5Surf* H5SurfContainerImpl::getSurf(
 }
 
 H5Surf* H5SurfContainerImpl::getSurf(
-    h5gt::Group& group)
+    h5gt::Group group)
 {
   if (!isObject(group, h5geo::ObjectType::SURFACE))
     return nullptr;
@@ -39,7 +38,7 @@ H5Surf* H5SurfContainerImpl::createSurf(
 }
 
 H5Surf* H5SurfContainerImpl::createSurf(
-    h5gt::Group& group,
+    h5gt::Group group,
     SurfParam &p,
     h5geo::CreationType createFlag)
 {
@@ -91,4 +90,26 @@ h5geo::createSurfContainerByName(
     return nullptr;
 
   return new H5SurfContainerImpl(opt.value());
+}
+
+H5SurfContainer*
+h5geo::openSurfContainer(
+    h5gt::File h5File){
+  if (!H5BaseImpl::isContainer(h5File, h5geo::ContainerType::SURFACE))
+    return nullptr;
+
+  return new H5SurfContainerImpl(h5File);
+}
+
+H5SurfContainer*
+h5geo::openSurfContainerByName(
+    const std::string& fileName){
+  if (H5Fis_hdf5(fileName.c_str()) <= 0)
+    return nullptr;
+
+  h5gt::File h5File(
+        fileName,
+        h5gt::File::ReadWrite);
+
+  return openSurfContainer(h5File);
 }

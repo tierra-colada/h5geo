@@ -19,11 +19,11 @@ public:
       const std::string &logType,
       const std::string &logName) = 0;
   virtual H5LogCurve* getLogCurve(
-      h5gt::Group& group) = 0;
+      h5gt::Group group) = 0;
   virtual H5DevCurve* getDevCurve(
       const std::string &devName) = 0;
   virtual H5DevCurve* getDevCurve(
-      h5gt::Group& group) = 0;
+      h5gt::Group group) = 0;
 
   virtual H5LogCurve* createLogCurve(
       std::string& logType,
@@ -31,7 +31,7 @@ public:
       LogCurveParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5LogCurve* createLogCurve(
-      h5gt::Group& group,
+      h5gt::Group group,
       LogCurveParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5DevCurve* createDevCurve(
@@ -39,7 +39,7 @@ public:
       DevCurveParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5DevCurve* createDevCurve(
-      h5gt::Group& group,
+      h5gt::Group group,
       DevCurveParam& p,
       h5geo::CreationType createFlag) = 0;
 

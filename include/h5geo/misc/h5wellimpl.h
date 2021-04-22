@@ -17,11 +17,11 @@ public:
       const std::string &logType,
       const std::string &logName) override;
   virtual H5LogCurve* getLogCurve(
-      h5gt::Group& group) override;
+      h5gt::Group group) override;
   virtual H5DevCurve* getDevCurve(
       const std::string &devName) override;
   virtual H5DevCurve* getDevCurve(
-      h5gt::Group& group) override;
+      h5gt::Group group) override;
 
   virtual H5LogCurve* createLogCurve(
       std::string& logType,
@@ -29,7 +29,7 @@ public:
       LogCurveParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5LogCurve* createLogCurve(
-      h5gt::Group& group,
+      h5gt::Group group,
       LogCurveParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5DevCurve* createDevCurve(
@@ -37,7 +37,7 @@ public:
       DevCurveParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5DevCurve* createDevCurve(
-      h5gt::Group& group,
+      h5gt::Group group,
       DevCurveParam& p,
       h5geo::CreationType createFlag) override;
 

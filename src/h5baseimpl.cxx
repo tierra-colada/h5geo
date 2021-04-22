@@ -43,8 +43,7 @@ H5BaseImpl::getChildList(
   return childList;
 }
 
-bool H5BaseImpl::isContainer(
-    h5gt::File &file,
+bool H5BaseImpl::isContainer(h5gt::File file,
     const h5geo::ContainerType& cntType)
 {
   unsigned val = h5geo::getEnumFromObj(
@@ -63,8 +62,7 @@ bool H5BaseImpl::isContainer(
   }
 }
 
-bool H5BaseImpl::isObject(
-    h5gt::Group &group,
+bool H5BaseImpl::isObject(h5gt::Group group,
     const h5geo::ObjectType& objType)
 {
   switch (objType) {
@@ -257,8 +255,7 @@ H5BaseImpl::createContainer(
 }
 
 std::optional<h5gt::File>
-H5BaseImpl::createContainer(
-    h5gt::File &h5File,
+H5BaseImpl::createContainer(h5gt::File h5File,
     const h5geo::ContainerType& containerType,
     h5geo::CreationType createFlag)
 {
@@ -288,9 +285,8 @@ H5BaseImpl::createContainer(
 }
 
 std::optional<h5gt::Group>
-H5BaseImpl::createObject(
-    std::string& objName,
-    h5gt::File& parentFile,
+H5BaseImpl::createObject(std::string& objName,
+    h5gt::File parentFile,
     const h5geo::ObjectType& objType,
     void* p,
     h5geo::CreationType createFlag)
@@ -301,9 +297,8 @@ H5BaseImpl::createObject(
 }
 
 std::optional<h5gt::Group>
-H5BaseImpl::createObject(
-    std::string& objName,
-    h5gt::Group& parentGroup,
+H5BaseImpl::createObject(std::string& objName,
+    h5gt::Group parentGroup,
     const h5geo::ObjectType& objType,
     void* p,
     h5geo::CreationType createFlag)
@@ -341,7 +336,7 @@ H5BaseImpl::createObject(
 
 std::optional<h5gt::Group>
 H5BaseImpl::createObject(
-    h5gt::Group& objG,
+    h5gt::Group objG,
     const h5geo::ObjectType& objType,
     void* p,
     h5geo::CreationType createFlag)
@@ -730,7 +725,7 @@ H5BaseImpl::createSort(
 }
 
 bool H5BaseImpl::isSuccessor(
-    h5gt::Group& parentG, h5gt::Group& childG)
+    h5gt::Group parentG, h5gt::Group childG)
 {
   return isSuccessor(parentG.getPath(), childG.getPath());
 }

@@ -15,15 +15,15 @@ protected:
 
 public:
   virtual H5Seis* getSeis(
-      std::string& name) = 0;
+      const std::string& name) = 0;
   virtual H5Seis* getSeis(
-      h5gt::Group& group) = 0;
+      h5gt::Group group) = 0;
   virtual H5Seis* createSeis(
       std::string& name,
       SeisParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Seis* createSeis(
-      h5gt::Group& group,
+      h5gt::Group group,
       SeisParam& p,
       h5geo::CreationType createFlag) = 0;
 

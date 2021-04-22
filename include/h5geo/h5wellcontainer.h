@@ -15,15 +15,15 @@ protected:
 
 public:
   virtual H5Well* getWell(
-      std::string& name) = 0;
+      const std::string& name) = 0;
   virtual H5Well* getWell(
-      h5gt::Group& group) = 0;
+      h5gt::Group group) = 0;
   virtual H5Well* createWell(
       std::string& name,
       WellParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Well* createWell(
-      h5gt::Group& group,
+      h5gt::Group group,
       WellParam& p,
       h5geo::CreationType createFlag) = 0;
 
@@ -33,7 +33,7 @@ public:
 namespace h5geo {
   extern "C" {
   H5GEO_EXPORT H5WellContainer* createWellContainer(
-    h5gt::File &h5File, h5geo::CreationType createFlag);
+    h5gt::File h5File, h5geo::CreationType createFlag);
   H5GEO_EXPORT H5WellContainer* createWellContainerByName(
     std::string& fileName, h5geo::CreationType createFlag);
   }

@@ -14,15 +14,15 @@ protected:
 
 public:
   virtual H5Surf* getSurf(
-      std::string& name) override;
+      const std::string& name) override;
   virtual H5Surf* getSurf(
-      h5gt::Group& group) override;
+      h5gt::Group group) override;
   virtual H5Surf* createSurf(
       std::string& name,
       SurfParam &p,
       h5geo::CreationType createFlag) override;
   virtual H5Surf* createSurf(
-      h5gt::Group& group,
+      h5gt::Group group,
       SurfParam &p,
       h5geo::CreationType createFlag) override;
 
@@ -33,6 +33,10 @@ public:
       h5gt::File &h5File, h5geo::CreationType createFlag);
   friend H5SurfContainer* h5geo::createSurfContainerByName(
       std::string& fileName, h5geo::CreationType createFlag);
+  friend H5SurfContainer* h5geo::openSurfContainer(
+      h5gt::File h5File);
+  friend H5SurfContainer* h5geo::openSurfContainerByName(
+      const std::string& fileName);
 };
 
 #endif // H5SURFCONTAINERIMPL_H

@@ -5,8 +5,7 @@
 H5SeisContainerImpl::H5SeisContainerImpl(const h5gt::File &h5File) :
   H5BaseContainerImpl(h5File){}
 
-H5Seis* H5SeisContainerImpl::getSeis(
-    std::string& name)
+H5Seis* H5SeisContainerImpl::getSeis(const std::string &name)
 {
   if (!h5File.hasObject(name, h5gt::ObjectType::Group))
     return nullptr;
@@ -16,7 +15,7 @@ H5Seis* H5SeisContainerImpl::getSeis(
 }
 
 H5Seis* H5SeisContainerImpl::getSeis(
-    h5gt::Group& group)
+    h5gt::Group group)
 {
   if (!isObject(group, h5geo::ObjectType::SEISMIC))
     return nullptr;
@@ -39,7 +38,7 @@ H5Seis* H5SeisContainerImpl::createSeis(
 }
 
 H5Seis* H5SeisContainerImpl::createSeis(
-    h5gt::Group& group,
+    h5gt::Group group,
     SeisParam& p,
     h5geo::CreationType createFlag)
 {
@@ -91,5 +90,25 @@ h5geo::createSeisContainerByName(
     return nullptr;
 
   return new H5SeisContainerImpl(opt.value());
+}
+
+H5SeisContainer* h5geo::openSeisContainer(
+    h5gt::File h5File){
+  if (!H5BaseImpl::isContainer(h5File, h5geo::ContainerType::SEISMIC))
+    return nullptr;
+
+  return new H5SeisContainerImpl(h5File);
+}
+
+H5SeisContainer* h5geo::openSeisContainerByName(
+    const std::string& fileName){
+  if (H5Fis_hdf5(fileName.c_str()) <= 0)
+    return nullptr;
+
+  h5gt::File h5File(
+        fileName,
+        h5gt::File::ReadWrite);
+
+  return openSeisContainer(h5File);
 }
 

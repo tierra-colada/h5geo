@@ -16,15 +16,15 @@ protected:
 
 public:
   virtual H5Seis* getSeis(
-      std::string& name) override;
+      const std::string& name) override;
   virtual H5Seis* getSeis(
-      h5gt::Group& group) override;
+      h5gt::Group group) override;
   virtual H5Seis* createSeis(
       std::string& name,
       SeisParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5Seis* createSeis(
-      h5gt::Group& group,
+      h5gt::Group group,
       SeisParam& p,
       h5geo::CreationType createFlag) override;
 
@@ -35,6 +35,10 @@ public:
       h5gt::File &h5File, h5geo::CreationType createFlag);
   friend H5SeisContainer* h5geo::createSeisContainerByName(
       std::string& fileName, h5geo::CreationType createFlag);
+  friend H5SeisContainer* h5geo::openSeisContainer(
+      h5gt::File h5File);
+  friend H5SeisContainer* h5geo::openSeisContainerByName(
+      const std::string& fileName);
 };
 
 #endif // H5SEISCONTAINERIMPL_H

@@ -14,15 +14,15 @@ protected:
 
 public:
   virtual H5Well* getWell(
-      std::string& name) override;
+      const std::string& name) override;
   virtual H5Well* getWell(
-      h5gt::Group& group) override;
+      h5gt::Group group) override;
   virtual H5Well* createWell(
       std::string& name,
       WellParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5Well* createWell(
-      h5gt::Group& group,
+      h5gt::Group group,
       WellParam& p,
       h5geo::CreationType createFlag) override;
 
@@ -30,9 +30,13 @@ public:
 
   //----------- FRIEND CLASSES -----------
   friend H5WellContainer* h5geo::createWellContainer(
-      h5gt::File &h5File, h5geo::CreationType createFlag);
+      h5gt::File h5File, h5geo::CreationType createFlag);
   friend H5WellContainer* h5geo::createWellContainerByName(
       std::string& fileName, h5geo::CreationType createFlag);
+  friend H5WellContainer* h5geo::openWellContainer(
+      h5gt::File h5File);
+  friend H5WellContainer* h5geo::openWellContainerByName(
+      const std::string& fileName);
 };
 
 #endif // H5WELLCONTAINERIMPL_H

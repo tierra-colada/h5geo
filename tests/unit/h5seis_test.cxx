@@ -47,7 +47,8 @@ public:
   virtual void TearDown() override{
     // code here will be called just after the test completes
     // ok to through exceptions from here if need be
-    //    h5geo::unlinkContent(seisContainer->h5File);
+    auto h5File = seisContainer->getH5File();
+    h5geo::unlinkContent(h5File);
   }
 
 public:
