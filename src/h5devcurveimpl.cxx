@@ -97,7 +97,7 @@ std::string H5DevCurveImpl::getRelativeCurveName(){
   if (!optDevG.has_value())
     return std::string();
 
-  return h5geo::details::getRelativePath(
+  return h5geo::getRelativePath(
         optDevG->getPath(), objG.getPath(),
         h5geo::CaseSensitivity::CASE_INSENSITIVE);
 }

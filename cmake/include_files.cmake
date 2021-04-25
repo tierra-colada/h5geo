@@ -5,12 +5,12 @@ set(include_files
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5baseobjectimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_enum_operators.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_enum.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_misc.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5devcurveimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5deviation.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5easyhull.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5find.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5logcurveimpl.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5segy_headers.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5seiscontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5seisimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5sort.h

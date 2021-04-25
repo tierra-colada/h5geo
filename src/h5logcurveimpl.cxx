@@ -56,7 +56,7 @@ std::string H5LogCurveImpl::getRelativeCurveName(){
   if (!optLogG.has_value())
     return std::string();
 
-  return h5geo::details::getRelativePath(
+  return h5geo::getRelativePath(
         optLogG->getPath(), objG.getPath(),
         h5geo::CaseSensitivity::CASE_INSENSITIVE);
 }

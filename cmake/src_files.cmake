@@ -2,7 +2,6 @@ set(src_files
   ${CMAKE_SOURCE_DIR}/src/h5baseimpl.cxx
   ${CMAKE_SOURCE_DIR}/src/h5basecontainerimpl.cxx
   ${CMAKE_SOURCE_DIR}/src/h5baseobjectimpl.cxx
-  ${CMAKE_SOURCE_DIR}/src/h5core.cxx
   ${CMAKE_SOURCE_DIR}/src/h5devcurveimpl.cxx
   ${CMAKE_SOURCE_DIR}/src/h5logcurveimpl.cxx
   ${CMAKE_SOURCE_DIR}/src/h5seisimpl.cxx

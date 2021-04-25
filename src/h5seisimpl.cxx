@@ -348,7 +348,7 @@ ptrdiff_t H5SeisImpl::getBinHeaderIndex(
   if (!opt.has_value())
     return -1;
 
-  ptrdiff_t idx = h5geo::details::getIndexFromAttribute(opt.value(), hdrName);
+  ptrdiff_t idx = h5geo::getIndexFromAttribute(opt.value(), hdrName);
   if (idx >= getNBinHdr())
     return -1;
 
@@ -358,7 +358,7 @@ ptrdiff_t H5SeisImpl::getBinHeaderIndex(
 ptrdiff_t H5SeisImpl::getTraceHeaderIndex(
     const std::string& hdrName)
 {
-  ptrdiff_t idx = h5geo::details::getIndexFromAttribute(traceHeaderD, hdrName);
+  ptrdiff_t idx = h5geo::getIndexFromAttribute(traceHeaderD, hdrName);
   if (idx >= getNTrcHdr())
     return -1;
 

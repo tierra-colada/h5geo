@@ -36,7 +36,7 @@ H5BaseObjectImpl::getDatasetOpt(
 
 std::string H5BaseObjectImpl::getName() const {
   std::string objName;
-  h5geo::details::splitPathToParentAndObj(objG.getPath(), objName);
+  h5geo::splitPathToParentAndObj(objG.getPath(), objName);
   return objName;
 }
 
@@ -60,7 +60,7 @@ H5BaseObjectImpl::getParentG(
   h5gt::Group parentGroup = objG;
 
   do {
-    path = h5geo::details::splitPathToParentAndObj(
+    path = h5geo::splitPathToParentAndObj(
           parentGroup.getPath(), objName);
     if (!parentGroup.hasObject(path, h5gt::ObjectType::Group))
       return std::nullopt;

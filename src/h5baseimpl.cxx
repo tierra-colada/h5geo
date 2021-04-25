@@ -224,7 +224,7 @@ H5BaseImpl::createContainer(
       for (const auto & file : std::filesystem::directory_iterator(p_abs.parent_path()))
         fileNames.push_back(file.path().stem().generic_string());
 
-      fileName = h5geo::details::generateName(
+      fileName = h5geo::generateName(
             fileNames, p_abs.stem().generic_string());
 
       fileName = p_abs.parent_path().generic_string() + "/" +
@@ -317,7 +317,7 @@ H5BaseImpl::createObject(std::string& objName,
       h5gt::Group closestParent = objG.getParent();
       std::vector<std::string> nameList =
           closestParent.listObjectNames();
-      objName = h5geo::details::generateName(nameList, objName);
+      objName = h5geo::generateName(nameList, objName);
       objName = closestParent.getPath() + "/" + objName;
     }
     createFlag = h5geo::CreationType::OPEN_OR_CREATE;
@@ -622,7 +622,7 @@ H5BaseImpl::createBinHeader(
     const hsize_t& stdChunk)
 {
   std::vector<std::string> fullHeaderNameList, shortHeaderNameList;
-  h5geo::details::getBinHeaderNames(fullHeaderNameList, shortHeaderNameList);
+  h5geo::getBinHeaderNames(fullHeaderNameList, shortHeaderNameList);
   size_t nBinHeaderNames = fullHeaderNameList.size();
 
   std::vector<size_t> count = {size_t(nBinHeaderNames)};
@@ -671,7 +671,7 @@ H5BaseImpl::createTraceHeader(
     const hsize_t& trcChunk)
 {
   std::vector<std::string> fullHeaderNameList, shortHeaderNameList;
-  h5geo::details::getTraceHeaderNames(fullHeaderNameList, shortHeaderNameList);
+  h5geo::getTraceHeaderNames(fullHeaderNameList, shortHeaderNameList);
   size_t nTraceHeaderNames = fullHeaderNameList.size();
 
   std::vector<size_t> count = {size_t(nTraceHeaderNames), nTrc};

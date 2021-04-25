@@ -49,7 +49,7 @@ public:
     // code here will be called just after the test completes
     // ok to through exceptions from here if need be
     auto h5File = surfContainer->getH5File();
-    h5geo::unlinkContent(h5File);
+//    h5geo::unlinkContent(h5File);
   }
 
 public:

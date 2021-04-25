@@ -1,34 +1,27 @@
 #ifndef H5CORE_H
 #define H5CORE_H
 
-#include "misc/h5geo_export.h"
-#include "misc/h5core_enum.h"
-#include "misc/h5deviation.h"
-#include "misc/h5easyhull.h"
-#include "misc/h5find.h"
-#include "misc/h5sort.h"
-
-#include <type_traits>
-#include <string>
-#include <vector>
-#include <regex>
-
-#include <Eigen/Dense>
-
-#include <h5gt/H5File.hpp>
-#include <h5gt/H5Group.hpp>
-#include <h5gt/H5DataSet.hpp>
-#include <h5gt/H5DataSpace.hpp>
-#include <h5gt/H5Attribute.hpp>
+#include "misc/h5core_misc.h"
 
 namespace h5geo
 {
 
+std::vector<std::string> getRawBinHeaderNames();
+std::vector<std::string> getRawTraceHeaderNames();
+
 /*!
- * namespace `details` is not exported to DLL
+ * \brief compareStrings Return `true` if strings are equal.
+ * \param bigger
+ * \param smaller
+ * \param caseSensitivity
+ * \return
  */
-namespace details
-{
+bool compareStrings(
+    const std::string& bigger,
+    const std::string& smaller,
+    const CaseSensitivity& caseSensitivity = CaseSensitivity::CASE_INSENSITIVE);
+
+
 char getDelimiter(
     const Delimiter& delimiter);
 
@@ -91,18 +84,6 @@ std::string getRelativePath(
     const std::string& objPath,
     const CaseSensitivity& caseSensitivity = CaseSensitivity::CASE_INSENSITIVE);
 
-/*!
- * \brief compareStrings Return `true` if strings are equal.
- * \param bigger
- * \param smaller
- * \param caseSensitivity
- * \return
- */
-bool compareStrings(
-    const std::string& bigger,
-    const std::string& smaller,
-    const CaseSensitivity& caseSensitivity = CaseSensitivity::CASE_INSENSITIVE);
-
 void getTraceHeaderNames(
     std::vector<std::string> &fullHeaderNames,
     std::vector<std::string> &shortHeaderNames);
@@ -123,9 +104,6 @@ size_t getBinHeaderCount();
 ptrdiff_t getIndexFromAttribute(
     h5gt::DataSet& dataset,
     const std::string& attributeName);
-} // namespace details
-
-
 
 template<typename Object,
          typename std::enable_if<
@@ -135,16 +113,7 @@ template<typename Object,
 bool setEnumFromObj(
     Object& object,
     const std::string& attrName,
-    const unsigned& val)
-{
-  try {
-    h5gt::Attribute attr = object.getAttribute(attrName);
-    attr.write(val);
-  } catch (h5gt::Exception e) {
-    return false;
-  }
-  return true;
-}
+    const unsigned& val);
 
 template<typename Object,
          typename std::enable_if<
@@ -158,39 +127,14 @@ template<typename Object,
  * \param object
  * \param attrName
  */
-unsigned getEnumFromObj(Object& object, const std::string& attrName){
-  /* as we often use magic_enum to convert enum to string
-   * we need to remove `h5geo::` from enum name given
-   * from magic_enum () as for example:
-   * magic_enum::enum_type_name<h5geo::SurveyType>() */
-//  eraseSubStr(attrName, "h5geo::");
-
-  unsigned value;
-  if (object.hasAttribute(attrName)){
-    h5gt::Attribute attr = object.getAttribute(attrName);
-    attr.read(value);
-  } else {
-    value = 0;
-  }
-  return value;
-}
+unsigned getEnumFromObj(Object& object, const std::string& attrName);
 
 template<typename Object,
          typename std::enable_if<
            std::is_base_of<Object, h5gt::File>::value |
            std::is_base_of<Object, h5gt::Group>::value |
            std::is_base_of<Object, h5gt::DataSet>::value>::type* = nullptr>
-bool deleteAllAttributes(Object& object){
-  try {
-    std::vector<std::string> attrNameList =
-        object.listAttributeNames();
-    for (const auto& name : attrNameList)
-      object.deleteAttribute(name);
-  } catch (h5gt::Exception e) {
-    return false;
-  }
-  return true;
-}
+bool deleteAllAttributes(Object& object);
 
 template<typename Parent,
          typename std::enable_if<
@@ -204,14 +148,7 @@ template<typename Parent,
  * (like: /path/to/object)
  * \return
  */
-bool unlinkObject(Parent& parent, const std::string& objPath){
-  try {
-    parent.unlink(objPath);
-  }  catch (h5gt::Exception e) {
-    return false;
-  }
-  return true;
-}
+bool unlinkObject(Parent& parent, const std::string& objPath);
 
 template<typename Object,
          typename std::enable_if<
@@ -221,34 +158,14 @@ template<typename Object,
  * \brief unlinkContent Unlink everything in group
  * \return
  */
-bool unlinkContent(Object& object){
-  try {
-    std::vector<std::string> objNames =
-        object.listObjectNames();
-    for (const auto& name : objNames)
-      object.unlink(name);
-  } catch (h5gt::Exception e) {
-    return false;
-  }
-  return true;
-}
+bool unlinkContent(Object& object);
 
 template<typename T1, typename T2>
 bool _overwriteResizableDataset(
     h5gt::DataSet& dataset,
     const T2* v,
     size_t nH5Rows,
-    size_t nH5Cols)
-{
-  try {
-    std::vector<size_t> dims = {nH5Rows, nH5Cols};
-    dataset.resize(dims);
-    dataset.write_raw(v);
-    return true;
-  } catch (h5gt::Exception e) {
-    return false;
-  }
-}
+    size_t nH5Cols);
 
 template<typename D,
          typename std::enable_if<
@@ -262,10 +179,7 @@ template<typename D,
  */
 bool overwriteResizableDataset(
     h5gt::DataSet& dataset,
-    const Eigen::DenseBase<D>& M)
-{
-  return _overwriteResizableDataset(dataset, M.derived().data(), M.cols, M.rows());
-}
+    const Eigen::DenseBase<D>& M);
 
 template<typename T,
          typename std::enable_if<
@@ -279,10 +193,7 @@ template<typename T,
  */
 bool overwriteResizableDataset(
     h5gt::DataSet& dataset,
-    const std::vector<T>& v)
-{
-  return _overwriteResizableDataset(dataset, v.data(), 1, v.size());
-}
+    const std::vector<T>& v);
 
 template<typename T,
          typename std::enable_if<
@@ -296,10 +207,7 @@ template<typename T,
  */
 bool overwriteResizableDataset(
     h5gt::DataSet& dataset,
-    const T& v)
-{
-  return _overwriteResizableDataset(dataset, &v, 1, 1);
-}
+    const T& v);
 
 template<typename Object, typename D,
          typename std::enable_if<
@@ -320,10 +228,7 @@ template<typename Object, typename D,
 bool overwriteDataset(
     Object& node,
     std::string& datasetPath,
-    const Eigen::DenseBase<D>& M)
-{
-  return _overwriteDataset(node, datasetPath, M.derived().data(), M.cols(), M.rows());
-}
+    const Eigen::DenseBase<D>& M);
 
 template<typename Object, typename T,
          typename std::enable_if<
@@ -344,10 +249,7 @@ template<typename Object, typename T,
 bool overwriteDataset(
     Object& node,
     std::string& datasetPath,
-    const std::vector<T>& v)
-{
-  return _overwriteDataset(node, datasetPath, v.data(), 1, v.size());
-}
+    const std::vector<T>& v);
 
 template<typename Object, typename T,
          typename std::enable_if<
@@ -368,31 +270,14 @@ template<typename Object, typename T,
 bool overwriteDataset(
     Object& node,
     std::string& datasetPath,
-    const T& v)
-{
-  return _overwriteDataset(node, datasetPath, &v, 1, 1);
-}
+    const T& v);
 
 template <typename T1, typename T2>
 bool _overwriteAttribute(
     T1& holder,
     const std::string& attrName,
     const T2* v,
-    size_t nElem)
-{
-  if (holder.hasAttribute(attrName))
-    holder.deleteAttribute(attrName);
-
-  try {
-    holder.template createAttribute<T2>(
-          attrName, h5gt::DataSpace({nElem})).
-        write_raw(v);
-  }  catch (h5gt::Exception e) {
-    return false;
-  }
-
-  return true;
-}
+    size_t nElem);
 
 template<typename Object, typename D,
          typename std::enable_if<
@@ -410,10 +295,7 @@ template<typename Object, typename D,
 bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
-    const Eigen::DenseBase<D>& v)
-{
-  return _overwriteAttribute(holder, attrName, v.derived().data(), v.size());
-}
+    const Eigen::DenseBase<D>& v);
 
 template <typename Object, typename T,
           typename std::enable_if<
@@ -431,10 +313,7 @@ template <typename Object, typename T,
 bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
-    const std::vector<T>& v)
-{
-  return _overwriteAttribute(holder, attrName, v.data(), v.size());
-}
+    const std::vector<T>& v);
 
 template <typename Object, typename T,
           typename std::enable_if<
@@ -452,10 +331,7 @@ template <typename Object, typename T,
 bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
-    const T& v)
-{
-  return _overwriteAttribute(holder, attrName, &v, 1);
-}
+    const T& v);
 
 template<typename D>
 /*!
@@ -472,36 +348,7 @@ bool writeData2IndexedDataset(
     h5gt::DataSet& dataset,
     const std::string& attrName,
     const Eigen::DenseBase<D>& v,
-    bool resize = false)
-{
-  if (v.size() == 0)
-    return false;
-
-  ptrdiff_t ind = h5geo::details::getIndexFromAttribute(
-        dataset, attrName);
-
-  if (ind < 0)
-    return false;
-
-  std::vector dims = dataset.getDimensions();
-
-  if (resize == false &&
-      dims[1] < v.size())
-    return false;
-
-  if (resize == true  &&
-      dims[1] < v.size())
-    dataset.resize({dims[0], size_t(v.size())});
-
-  try {
-    dataset.select({size_t(ind), 0}, {1, size_t(v.size())}).
-        write_raw(v.derived().data());
-  } catch (h5gt::Exception e) {
-    return false;
-  }
-
-  return true;
-}
+    bool resize);
 
 template<typename T>
 /*!
@@ -514,55 +361,18 @@ template<typename T>
  */
 Eigen::VectorX<T> getDataFromIndexedDataset(
     h5gt::DataSet& dataset,
-    const std::string& attrName)
-{
-  ptrdiff_t ind = h5geo::details::getIndexFromAttribute(
-        dataset, attrName);
-
-  if (ind < 0)
-    return Eigen::VectorXd();
-
-  std::vector dims = dataset.getDimensions();
-  Eigen::VectorX<T> v(dims[1]);
-
-  try {
-    dataset.select({size_t(ind), 0}, {1, dims[1]}).
-        read(v.derived().data());
-  } catch (h5gt::Exception e) {
-    return Eigen::VectorX<T>();
-  }
-
-  return v;
-}
+    const std::string& attrName);
 
 template<typename T>
 h5gt::ElementSet
 rowCol2ElementSet(
     const T& row,
-    const Eigen::VectorX<T>& cols)
-{
-  ptrdiff_t I = cols.size();
-  std::vector<size_t> v(2*I, row);
-
-  for (ptrdiff_t i = 0; i < I; i++)
-    v[2*i+1] = cols(i);
-
-  return h5gt::ElementSet(v);
-}
+    const Eigen::VectorX<T>& cols);
 
 template<typename T>
 h5gt::ElementSet rowCol2ElementSet(
     const Eigen::VectorX<T>& rows,
-    const T& col)
-{
-  ptrdiff_t I = rows.size();
-  std::vector<size_t> v(2*I, col);
-
-  for (ptrdiff_t i = 0; i < I; i++)
-    v[2*i] = rows(i);
-
-  return h5gt::ElementSet(v);
-}
+    const T& col);
 
 template<typename T>
 /*!
@@ -574,52 +384,19 @@ template<typename T>
  */
 h5gt::ElementSet rowCol2ElementSet(
     const Eigen::VectorX<T>& rows,
-    const Eigen::VectorX<T>& cols)
-{
-  ptrdiff_t I = rows.size();
-  ptrdiff_t J = cols.size();
-
-  std::vector<size_t> v(2*I*J);
-
-  for (ptrdiff_t j = 0; j < J; j++){
-    for (ptrdiff_t i = 0; i < I; i++){
-      v[2*i + 2*j*I] = rows(i);
-      v[2*i+1 + 2*j*I] = cols(j);
-    }
-  }
-
-  return h5gt::ElementSet(v);
-}
+    const Eigen::VectorX<T>& cols);
 
 template<typename T>
 h5gt::ElementSet
 rowCol2ElementSet(
     const T& row,
-    const std::vector<T>& cols)
-{
-  size_t I = cols.size();
-  std::vector<size_t> v(2*I, row);
-
-  for (size_t i = 0; i < I; i++)
-    v[2*i+1] = cols[i];
-
-  return h5gt::ElementSet(v);
-}
+    const std::vector<T>& cols);
 
 template<typename T>
 h5gt::ElementSet
 rowCol2ElementSet(
     const std::vector<T>& rows,
-    const T& col)
-{
-  size_t I = rows.size();
-  std::vector<size_t> v(2*I, col);
-
-  for (size_t i = 0; i < I; i++)
-    v[2*i] = rows[i];
-
-  return h5gt::ElementSet(v);
-}
+    const T& col);
 
 template<typename T>
 /*!
@@ -632,22 +409,7 @@ template<typename T>
 h5gt::ElementSet
 rowCol2ElementSet(
     const std::vector<T>& rows,
-    const std::vector<T>& cols)
-{
-  size_t I = rows.size();
-  size_t J = cols.size();
-
-  std::vector<size_t> v(2*I*J);
-
-  for (size_t j = 0; j < J; j++){
-    for (size_t i = 0; i < I; i++){
-      v[2*i + 2*j*I] = rows[i];
-      v[2*i+1 + 2*j*I] = cols[i];
-    }
-  }
-
-  return h5gt::ElementSet(v);
-}
+    const std::vector<T>& cols);
 
 } // namespace h5geo
 
