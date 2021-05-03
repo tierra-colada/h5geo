@@ -124,10 +124,9 @@ before_script:
 
 script:
   - cd ${TRAVIS_BUILD_DIR}
-  - ls
-  - mkdir -p ../build && pushd ../build
+  - mkdir -p build && pushd build
   - >
-    cmake ${TRAVIS_BUILD_DIR} --warn-uninitialized --debug-output
+    cmake --warn-uninitialized --debug-output
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
     -DEigen3_ROOT:PATH=$EIGEN3_ROOT 
     -Dmagic_enum_ROOT:PATH=$magic_enum_ROOT 
@@ -136,6 +135,7 @@ script:
     -DH5GEO_USE_THREADS:BOOL=${H5GEO_USE_THREADS}
     -DH5GEO_BUILD_SHARED_LIBS:BOOL=${H5GEO_BUILD_SHARED_LIBS}
     -DH5GEO_BUILD_TESTS:BOOL=${H5GEO_BUILD_TESTS}
+    -DCMAKE_INSTALL_PREFIX:PATH=${TRAVIS_BUILD_DIR}/../install
     -G "${CMAKE_GENERATOR}" ../
   - cmake --build .
   - CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target ${TESTS_TARGET}

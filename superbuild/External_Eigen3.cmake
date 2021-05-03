@@ -3,7 +3,7 @@ message("external project: Eigen3")
 # SET DIRS
 set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/Eigen3")
 set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/Eigen3-build")
-set(EP_INSTALL_DIR "${CMAKE_BINARY_DIR}/Eigen3-install")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/Eigen3-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_SOURCE_DIR})
 
 #-----------------------------------------------------------------------------

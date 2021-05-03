@@ -3,7 +3,7 @@ message("external project: HDF5")
 # SET DIRS
 set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/hdf5")
 set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/hdf5-build")
-set(EP_INSTALL_DIR "${CMAKE_BINARY_DIR}/hdf5-install")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/hdf5-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------

@@ -3,7 +3,7 @@ message("external project: TBB")
 # SET DIRS
 set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/TBB")
 set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/TBB-build")
-set(EP_INSTALL_DIR "${CMAKE_BINARY_DIR}/TBB-install")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/TBB-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------

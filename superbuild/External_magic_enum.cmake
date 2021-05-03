@@ -3,7 +3,7 @@ message("external project: magic_enum")
 # SET DIRS
 set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/magic_enum")
 set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/magic_enum-build")
-set(EP_INSTALL_DIR "${CMAKE_BINARY_DIR}/magic_enum-install")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/magic_enum-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_SOURCE_DIR})
 
 #-----------------------------------------------------------------------------

@@ -3,7 +3,7 @@ message("external project: ZLIB")
 # SET DIRS
 set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/zlib")
 set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/zlib-build")
-set(EP_INSTALL_DIR "${CMAKE_BINARY_DIR}/zlib-install")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/zlib-install")
 list(APPEND CMAKE_PREFIX_PATH "${EP_SOURCE_DIR}")
 
 #-----------------------------------------------------------------------------
