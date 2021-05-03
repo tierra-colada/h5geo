@@ -124,7 +124,8 @@ before_script:
 
 script:
   - cd ${TRAVIS_BUILD_DIR}
-  - mkdir -p build && pushd build
+  - ls
+  - mkdir -p ../build && pushd ../build
   - >
     cmake --warn-uninitialized --debug-output
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
