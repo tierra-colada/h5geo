@@ -75,7 +75,7 @@ matrix:
       compiler: clang
       env:
         - H5GEO_SUPERBUILD=False
-        - H5GEO_USE_THREADS=True
+        - H5GEO_USE_THREADS=False
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - CMAKE_GENERATOR="Ninja"
@@ -127,7 +127,7 @@ script:
   - ls
   - mkdir -p ../build && pushd ../build
   - >
-    cmake --warn-uninitialized --debug-output
+    cmake ${TRAVIS_BUILD_DIR} --warn-uninitialized --debug-output
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
     -DEigen3_ROOT:PATH=$EIGEN3_ROOT 
     -Dmagic_enum_ROOT:PATH=$magic_enum_ROOT 
