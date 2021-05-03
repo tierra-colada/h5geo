@@ -7,7 +7,6 @@
 
 #define _USE_MATH_DEFINES   // should be before <cmath>, include 'pi' val
 #include <math.h>
-#include <cmath>
 
 class H5SeisContainer;
 

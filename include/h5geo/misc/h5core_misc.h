@@ -358,9 +358,9 @@ inline ptrdiff_t getIndexFromAttribute(
 
 template<typename Object,
          typename std::enable_if<
-           std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value |
-           std::is_base_of<Object, h5gt::DataSet>::value>::type*>
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
 inline unsigned getEnumFromObj(Object& object, const std::string& attrName){
   /* as we often use magic_enum to convert enum to string
    * we need to remove `h5geo::` from enum name given
@@ -380,9 +380,9 @@ inline unsigned getEnumFromObj(Object& object, const std::string& attrName){
 
 template<typename Object,
          typename std::enable_if<
-           std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value |
-           std::is_base_of<Object, h5gt::DataSet>::value>::type*>
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
 inline bool deleteAllAttributes(Object& object){
   try {
     std::vector<std::string> attrNameList =
@@ -397,8 +397,8 @@ inline bool deleteAllAttributes(Object& object){
 
 template<typename Parent,
          typename std::enable_if<
-           std::is_base_of<Parent, h5gt::File>::value |
-           std::is_base_of<Parent, h5gt::Group>::value>::type*>
+           std::is_same<Parent, h5gt::File>::value ||
+           std::is_same<Parent, h5gt::Group>::value>::type*>
 inline bool unlinkObject(Parent& parent, const std::string& objPath){
   try {
     parent.unlink(objPath);
@@ -410,8 +410,8 @@ inline bool unlinkObject(Parent& parent, const std::string& objPath){
 
 template<typename Object,
          typename std::enable_if<
-           std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value>::type*>
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value>::type*>
 inline bool unlinkContent(Object& object){
   try {
     std::vector<std::string> objNames =
@@ -473,8 +473,8 @@ inline bool overwriteResizableDataset(
 
 template<typename Object, typename D,
          typename std::enable_if<
-           (std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value) &
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &
            std::is_fundamental<typename D::Scalar>::value>::type*>
 inline bool overwriteDataset(
     Object& node,
@@ -486,8 +486,8 @@ inline bool overwriteDataset(
 
 template<typename Object, typename T,
          typename std::enable_if<
-           (std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value) &
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &
            std::is_fundamental<T>::value>::type*>
 inline bool overwriteDataset(
     Object& node,
@@ -499,8 +499,8 @@ inline bool overwriteDataset(
 
 template<typename Object, typename T,
          typename std::enable_if<
-           (std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value) &
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &
            std::is_fundamental<T>::value>::type*>
 inline bool overwriteDataset(
     Object& node,
@@ -533,9 +533,9 @@ inline bool _overwriteAttribute(
 
 template<typename Object, typename D,
          typename std::enable_if<
-           (std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value |
-           std::is_base_of<Object, h5gt::DataSet>::value) &
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value) &
            std::is_fundamental<typename D::Scalar>::value>::type*>
 inline bool overwriteAttribute(
     Object& holder,
@@ -547,9 +547,9 @@ inline bool overwriteAttribute(
 
 template <typename Object, typename T,
           typename std::enable_if<
-            (std::is_base_of<Object, h5gt::File>::value |
-            std::is_base_of<Object, h5gt::Group>::value |
-            std::is_base_of<Object, h5gt::DataSet>::value) &
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &
             std::is_fundamental<T>::value>::type*>
 inline bool overwriteAttribute(
     Object& holder,
@@ -561,9 +561,9 @@ inline bool overwriteAttribute(
 
 template <typename Object, typename T,
           typename std::enable_if<
-            (std::is_base_of<Object, h5gt::File>::value |
-            std::is_base_of<Object, h5gt::Group>::value |
-            std::is_base_of<Object, h5gt::DataSet>::value) &
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &
             std::is_fundamental<T>::value>::type*>
 inline bool overwriteAttribute(
     Object& holder,
@@ -578,7 +578,7 @@ inline bool writeData2IndexedDataset(
     h5gt::DataSet& dataset,
     const std::string& attrName,
     const Eigen::DenseBase<D>& v,
-    bool resize = false)
+    bool resize)
 {
   if (v.size() == 0)
     return false;

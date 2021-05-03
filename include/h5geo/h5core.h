@@ -1,7 +1,20 @@
 #ifndef H5CORE_H
 #define H5CORE_H
 
-#include "misc/h5core_misc.h"
+#include "misc/h5core_enum.h"
+
+#include <type_traits>
+#include <string>
+#include <vector>
+#include <regex>
+
+#include <Eigen/Dense>
+
+#include <h5gt/H5File.hpp>
+#include <h5gt/H5Group.hpp>
+#include <h5gt/H5DataSet.hpp>
+#include <h5gt/H5DataSpace.hpp>
+#include <h5gt/H5Attribute.hpp>
 
 namespace h5geo
 {
@@ -107,9 +120,9 @@ ptrdiff_t getIndexFromAttribute(
 
 template<typename Object,
          typename std::enable_if<
-           std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value |
-           std::is_base_of<Object, h5gt::DataSet>::value>::type* = nullptr>
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 bool setEnumFromObj(
     Object& object,
     const std::string& attrName,
@@ -117,9 +130,9 @@ bool setEnumFromObj(
 
 template<typename Object,
          typename std::enable_if<
-           std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value |
-           std::is_base_of<Object, h5gt::DataSet>::value>::type* = nullptr>
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 /*!
  * \brief getEnumFromObj Read enum from `Object's`
  * attribute as unsigned value. Return `0` if attribute
@@ -131,15 +144,15 @@ unsigned getEnumFromObj(Object& object, const std::string& attrName);
 
 template<typename Object,
          typename std::enable_if<
-           std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value |
-           std::is_base_of<Object, h5gt::DataSet>::value>::type* = nullptr>
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 bool deleteAllAttributes(Object& object);
 
 template<typename Parent,
          typename std::enable_if<
-           std::is_base_of<Parent, h5gt::File>::value |
-           std::is_base_of<Parent, h5gt::Group>::value>::type* = nullptr>
+           std::is_same<Parent, h5gt::File>::value ||
+           std::is_same<Parent, h5gt::Group>::value>::type* = nullptr>
 /*!
  * \brief unlinkObject Unlink object from container
  * \param object parent object (File or Group) relatively
@@ -152,8 +165,8 @@ bool unlinkObject(Parent& parent, const std::string& objPath);
 
 template<typename Object,
          typename std::enable_if<
-           std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value>::type* = nullptr>
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value>::type* = nullptr>
 /*!
  * \brief unlinkContent Unlink everything in group
  * \return
@@ -211,8 +224,8 @@ bool overwriteResizableDataset(
 
 template<typename Object, typename D,
          typename std::enable_if<
-           (std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value) &
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &
            std::is_fundamental<typename D::Scalar>::value>::type* = nullptr>
 /*!
  * \brief overwriteDataset If dataset exists then it will be unlinked
@@ -232,8 +245,8 @@ bool overwriteDataset(
 
 template<typename Object, typename T,
          typename std::enable_if<
-           (std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value) &
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &
            std::is_fundamental<T>::value>::type* = nullptr>
 /*!
  * \brief overwriteDataset If dataset exists then it will be unlinked
@@ -253,8 +266,8 @@ bool overwriteDataset(
 
 template<typename Object, typename T,
          typename std::enable_if<
-           (std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value) &
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &
            std::is_fundamental<T>::value>::type* = nullptr>
 /*!
  * \brief overwriteDataset If dataset exists then it will be unlinked
@@ -281,9 +294,9 @@ bool _overwriteAttribute(
 
 template<typename Object, typename D,
          typename std::enable_if<
-           (std::is_base_of<Object, h5gt::File>::value |
-           std::is_base_of<Object, h5gt::Group>::value |
-           std::is_base_of<Object, h5gt::DataSet>::value) &
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value) &
            std::is_fundamental<typename D::Scalar>::value>::type* = nullptr>
 /*!
  * \brief overwriteAttribute Delete attribute if already exist and create
@@ -299,9 +312,9 @@ bool overwriteAttribute(
 
 template <typename Object, typename T,
           typename std::enable_if<
-            (std::is_base_of<Object, h5gt::File>::value |
-            std::is_base_of<Object, h5gt::Group>::value |
-            std::is_base_of<Object, h5gt::DataSet>::value) &
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &
             std::is_fundamental<T>::value>::type* = nullptr>
 /*!
  * \brief overwriteAttribute Delete attribute if already exist and create
@@ -317,9 +330,9 @@ bool overwriteAttribute(
 
 template <typename Object, typename T,
           typename std::enable_if<
-            (std::is_base_of<Object, h5gt::File>::value |
-            std::is_base_of<Object, h5gt::Group>::value |
-            std::is_base_of<Object, h5gt::DataSet>::value) &
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &
             std::is_fundamental<T>::value>::type* = nullptr>
 /*!
  * \brief overwriteAttribute Delete attribute if already exist and create
@@ -412,6 +425,8 @@ rowCol2ElementSet(
     const std::vector<T>& cols);
 
 } // namespace h5geo
+
+#include "misc/h5core_misc.h"
 
 
 #endif // H5CORE_H
