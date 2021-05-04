@@ -112,7 +112,7 @@ before_install:
       conda install -c conda-forge mamba;
       mamba install -c conda-forge tbb zlib hdf5 ninja;
     elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 
-      echo %cd%
+      echo %cd%;
       set PATH=%PATH%;%cd%\..\install\zlib-install\bin;
       set PATH=%PATH%;%cd%\..\install\hdf5-install\bin;
       set PATH=%PATH%;%cd%\build\Debug;
