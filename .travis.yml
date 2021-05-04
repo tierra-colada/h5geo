@@ -103,11 +103,6 @@ before_install:
       export PATH=$magic_enum_ROOT:$PATH;
       git clone --branch main https://github.com/Dimspot/h5gt.git $h5gt_ROOT;
       export PATH=$h5gt_ROOT:$PATH;
-    elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 
-      set PATH=%PATH%;%CMAKE_INSTALL_PREFIX%/zlib-install/bin;
-      set PATH=%PATH%;%CMAKE_INSTALL_PREFIX%/hdf5-install/bin;
-      set PATH=%PATH%;%TRAVIS_BUILD_DIR%/build/Debug;
-
       wget "http://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh" -O miniconda.sh;
       bash miniconda.sh -b -p $HOME/miniconda;
       source $HOME/miniconda/bin/activate;
@@ -116,6 +111,12 @@ before_install:
       conda update -q conda;
       conda install -c conda-forge mamba;
       mamba install -c conda-forge tbb zlib hdf5 ninja;
+    elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then 
+      echo %CMAKE_INSTALL_PREFIX%;
+      echo %TRAVIS_BUILD_DIR%;
+      set PATH=%PATH%;%CMAKE_INSTALL_PREFIX%/zlib-install/bin;
+      set PATH=%PATH%;%CMAKE_INSTALL_PREFIX%/hdf5-install/bin;
+      set PATH=%PATH%;%TRAVIS_BUILD_DIR%/build/Debug;
     fi
 
 before_script:
