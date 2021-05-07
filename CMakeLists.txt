@@ -5,6 +5,7 @@ if(NOT DEFINED CMAKE_CXX_STANDARD)
 endif()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+message("-- Setting C++ standard - " ${CMAKE_CXX_STANDARD})
 
 cmake_policy(SET CMP0074 NEW)
 cmake_policy(SET CMP0077 NEW)
@@ -16,7 +17,7 @@ message("project: ${CMAKE_PROJECT_NAME}")
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # OPTIONS
-option(H5GEO_SUPERBUILD "Superbuild h5geo (doesn't build THREADS lib or TBB)" OFF)
+option(H5GEO_SUPERBUILD "Superbuild h5geo" OFF)
 option(H5GEO_USE_THREADS "Use threads (enable std::execution)" ON)
 option(H5GEO_BUILD_SHARED_LIBS "Build h5geo as shared lib" ON)
 option(H5GEO_BUILD_TESTS "Build tests" ON)
