@@ -1,3 +1,6 @@
+#ifndef H5DEVIATION_H
+#define H5DEVIATION_H
+
 #define _USE_MATH_DEFINES   // should be before <cmath>, include 'pi' val
 
 #include "h5core_enum.h"
@@ -734,3 +737,5 @@ Eigen::VectorX<T> h5geo::angleAndRadius(
   v(1) = radius;
   return v;
 }
+
+#endif // H5DEVIATION_H
