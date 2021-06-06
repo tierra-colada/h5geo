@@ -17,7 +17,7 @@ message("project: ${CMAKE_PROJECT_NAME}")
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/../../cmake)
 
 add_executable(h5geo_dep_test
-  "src/main.cxx"
+  "src/main.cpp"
   )
 
 set(HDF5_ROOT "C:/apps/MSVC_apps_debug/HDF5/1.12.0-zlib")

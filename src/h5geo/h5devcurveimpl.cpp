@@ -1,7 +1,7 @@
-#include "../include/h5geo/misc/h5devcurveimpl.h"
-#include "../include/h5geo/h5wellcontainer.h"
-#include "../include/h5geo/h5core.h"
-#include "../include/h5geo/misc/h5wellimpl.h"
+#include "../../include/h5geo/misc/h5devcurveimpl.h"
+#include "../../include/h5geo/h5wellcontainer.h"
+#include "../../include/h5geo/h5core.h"
+#include "../../include/h5geo/misc/h5wellimpl.h"
 
 H5DevCurveImpl::H5DevCurveImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}

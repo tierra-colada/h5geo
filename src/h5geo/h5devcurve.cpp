@@ -1,5 +1,5 @@
-#include "../include/h5geo/h5devcurve.h"
-#include "../include/h5geo/h5wellcontainer.h"
+#include "../../include/h5geo/h5devcurve.h"
+#include "../../include/h5geo/h5wellcontainer.h"
 
 H5DevCurve::H5DevCurve(const h5gt::Group &group) :
   H5BaseObject(group)

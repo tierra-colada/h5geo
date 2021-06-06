@@ -1,6 +1,6 @@
-#include "../include/h5geo/misc/h5seisimpl.h"
-#include "../include/h5geo/h5seiscontainer.h"
-#include "../include/h5geo/h5core.h"
+#include "../../include/h5geo/misc/h5seisimpl.h"
+#include "../../include/h5geo/h5seiscontainer.h"
+#include "../../include/h5geo/h5core.h"
 
 H5SeisImpl::H5SeisImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group),

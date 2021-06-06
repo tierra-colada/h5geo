@@ -21,6 +21,9 @@ option(H5GEO_SUPERBUILD "Superbuild h5geo" OFF)
 option(H5GEO_USE_THREADS "Use threads (enable std::execution)" ON)
 option(H5GEO_BUILD_SHARED_LIBS "Build h5geo as shared lib" ON)
 option(H5GEO_BUILD_TESTS "Build tests" ON)
+option(H5GEO_BUILD_h5geopy "Build python wrapper (make sure to disable HDF5_USE_STATIC_LIBRARIES)" ON)
+option(HDF5_USE_STATIC_LIBRARIES "Use static hdf5 lib" OFF)
+option(HDF5_PREFER_PARALLEL "Prefer parallel hdf5 if available" OFF)
 
 set(gtest_force_shared_crt ON CACHE BOOL "Prevent overriding the parent project's compiler/linker settings on Windows")
 
@@ -35,13 +38,13 @@ endif()
 
 #-------------------------------------------------------------------
 # NORMAL BUILD
-include("cmake/include_files.cmake")
-include("cmake/src_files.cmake")
+include("cmake/h5geo-include.cmake")
+include("cmake/h5geo-src.cmake")
 
 if(H5GEO_BUILD_SHARED_LIBS)
-  add_library(h5geo SHARED ${src_files} ${include_files})
+  add_library(h5geo SHARED ${src_files_h5geo} ${include_files_h5geo})
 else()
-  add_library(h5geo STATIC ${src_files} ${include_files})
+  add_library(h5geo STATIC ${src_files_h5geo} ${include_files_h5geo})
 endif()
 target_include_directories(h5geo PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -70,6 +73,10 @@ target_include_directories(h5geo PUBLIC ${HDF5_INCLUDE_DIRS})
 target_compile_definitions(h5geo PUBLIC ${HDF5_DEFINITIONS})
 target_link_libraries(h5geo PUBLIC $<BUILD_INTERFACE:magic_enum::magic_enum>)
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${h5gt_INCLUDE_DIRS}>)
+
+if(H5GEO_BUILD_h5geopy)
+  add_subdirectory(src/h5geopy)
+endif()
 
 if(H5GEO_USE_THREADS)
   # on windows TBB is included by default

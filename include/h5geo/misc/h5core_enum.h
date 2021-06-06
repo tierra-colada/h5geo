@@ -22,42 +22,8 @@ class Attribute;
 
 namespace h5geo
 {
-enum class ContainerType : unsigned{
-  SURFACE = 1,
-  WELL = 2,
-  SEISMIC = 3
-};
-//ENABLE_BITMASK_OPERATORS(ContainerType);
 
-enum class ObjectType: unsigned{
-  SURFACE = 1,
-  WELL = 2,
-  LOGCURVE = 3,
-  DEVCURVE = 4,
-  SEISMIC = 5
-};
-//ENABLE_BITMASK_OPERATORS(ObjectType);
-
-enum class Domain : unsigned{
-  MD = 1,
-  TVD = 2,
-  TVDSS = 4,
-  TVDSD = 8,
-  TWT = 16,
-  OWT = 32
-};
-
-enum class SeisDataType : unsigned{
-  STACK = 1,
-  PRESTACK = 2,
-  ATTRIBUTE = 3
-};
-
-enum class SurveyType : unsigned{
-  TWO_D = 1,
-  THREE_D = 2
-};
-
+//---------NEEDS_TO_BE_INCLUDED_TO_DETAIL_NAMESPACE---------
 enum class ContainerAttributes : unsigned{
   ContainerType = 1
 };
@@ -128,6 +94,44 @@ enum class LogAttributes : unsigned{
 
 enum class LogDatasets : unsigned{
   log_data = 1
+};
+
+//---------END_OF_DETAIL_NAMESPACE---------
+
+enum class ContainerType : unsigned{
+  SURFACE = 1,
+  WELL = 2,
+  SEISMIC = 3
+};
+//ENABLE_BITMASK_OPERATORS(ContainerType);
+
+enum class ObjectType: unsigned{
+  SURFACE = 1,
+  WELL = 2,
+  LOGCURVE = 3,
+  DEVCURVE = 4,
+  SEISMIC = 5
+};
+//ENABLE_BITMASK_OPERATORS(ObjectType);
+
+enum class Domain : unsigned{
+  MD = 1,
+  TVD = 2,
+  TVDSS = 4,
+  TVDSD = 8,
+  TWT = 16,
+  OWT = 32
+};
+
+enum class SeisDataType : unsigned{
+  STACK = 1,
+  PRESTACK = 2,
+  ATTRIBUTE = 3
+};
+
+enum class SurveyType : unsigned{
+  TWO_D = 1,
+  THREE_D = 2
 };
 
 enum class TxtEncoding : unsigned{

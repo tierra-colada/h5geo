@@ -1,6 +1,6 @@
-#include "../include/h5geo/misc/h5wellcontainerimpl.h"
-#include "../include/h5geo/h5well.h"
-#include "../include/h5geo/misc/h5wellimpl.h"
+#include "../../include/h5geo/misc/h5wellcontainerimpl.h"
+#include "../../include/h5geo/h5well.h"
+#include "../../include/h5geo/misc/h5wellimpl.h"
 
 H5WellContainerImpl::H5WellContainerImpl(const h5gt::File &h5File):
   H5BaseContainerImpl(h5File){}

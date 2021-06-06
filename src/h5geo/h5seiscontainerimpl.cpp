@@ -1,6 +1,6 @@
-#include "../include/h5geo/misc/h5seiscontainerimpl.h"
-#include "../include/h5geo/h5seis.h"
-#include "../include/h5geo/misc/h5seisimpl.h"
+#include "../../include/h5geo/misc/h5seiscontainerimpl.h"
+#include "../../include/h5geo/h5seis.h"
+#include "../../include/h5geo/misc/h5seisimpl.h"
 
 H5SeisContainerImpl::H5SeisContainerImpl(const h5gt::File &h5File) :
   H5BaseContainerImpl(h5File){}

@@ -1,0 +1,2 @@
+include h5geopy/${MODULE_PATTERN}
+include h5geopy/h5geopy/h5geo.pyi

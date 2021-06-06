@@ -1,6 +1,6 @@
-#include "../include/h5geo/misc/h5surfimpl.h"
-#include "../include/h5geo/h5surfcontainer.h"
-#include "../include/h5geo/h5core.h"
+#include "../../include/h5geo/misc/h5surfimpl.h"
+#include "../../include/h5geo/h5surfcontainer.h"
+#include "../../include/h5geo/h5core.h"
 
 H5SurfImpl::H5SurfImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}

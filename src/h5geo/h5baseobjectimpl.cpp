@@ -1,5 +1,5 @@
-#include "../include/h5geo/misc/h5baseobjectimpl.h"
-#include "../include/h5geo/h5core.h"
+#include "../../include/h5geo/misc/h5baseobjectimpl.h"
+#include "../../include/h5geo/h5core.h"
 
 H5BaseObjectImpl::H5BaseObjectImpl(const h5gt::Group &group) :
   objG(group){}

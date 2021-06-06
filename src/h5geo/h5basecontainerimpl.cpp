@@ -1,5 +1,5 @@
-#include "../include/h5geo/misc/h5basecontainerimpl.h"
-#include "../include/h5geo/h5core.h"
+#include "../../include/h5geo/misc/h5basecontainerimpl.h"
+#include "../../include/h5geo/h5core.h"
 
 H5BaseContainerImpl::H5BaseContainerImpl(const h5gt::File &h5File) :
   h5File(h5File){}

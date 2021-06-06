@@ -1,6 +1,6 @@
-#include "../include/h5geo/misc/h5surfcontainerimpl.h"
-#include "../include/h5geo/h5surf.h"
-#include "../include/h5geo/misc/h5surfimpl.h"
+#include "../../include/h5geo/misc/h5surfcontainerimpl.h"
+#include "../../include/h5geo/h5surf.h"
+#include "../../include/h5geo/misc/h5surfimpl.h"
 
 H5SurfContainerImpl::H5SurfContainerImpl(const h5gt::File &h5File) :
   H5BaseContainerImpl(h5File){}

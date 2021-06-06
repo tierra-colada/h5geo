@@ -1,6 +1,6 @@
-#include "../include/h5geo/misc/h5baseimpl.h"
-#include "../include/h5geo/h5core.h"
-//#include "../include/h5geo/misc/h5core_enum.h"
+#include "../../include/h5geo/misc/h5baseimpl.h"
+#include "../../include/h5geo/h5core.h"
+//#include "../../include/h5geo/misc/h5core_enum.h"
 
 #include <h5gt/H5File.hpp>
 #include <h5gt/H5Group.hpp>

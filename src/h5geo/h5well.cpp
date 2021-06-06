@@ -1,5 +1,5 @@
-#include "../include/h5geo/h5well.h"
-#include "../include/h5geo/h5wellcontainer.h"
+#include "../../include/h5geo/h5well.h"
+#include "../../include/h5geo/h5wellcontainer.h"
 
 H5Well::H5Well(const h5gt::Group &group) :
   H5BaseObject(group)
