@@ -44,6 +44,7 @@ public:
     wellParam.headY = 10;
     wellParam.kb = 2;
     wellParam.uwi = "my_uwi";
+    wellParam.spatialUnits = h5geo::SpatialUnits::METER;
 
     devCurveParam.spatialUnits = h5geo::SpatialUnits::METER;
     devCurveParam.temporalUnits = h5geo::TemporalUnits::MILLISECOND;

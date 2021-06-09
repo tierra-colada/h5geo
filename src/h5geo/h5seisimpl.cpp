@@ -801,14 +801,14 @@ h5geo::SeisDataType H5SeisImpl::getDataType(){
   return static_cast<h5geo::SeisDataType>(
         h5geo::getEnumFromObj(
           objG,
-          std::string{magic_enum::enum_name(h5geo::SeisAttributes::SeisDataType)}));
+          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SeisDataType)}));
 }
 
 h5geo::SurveyType H5SeisImpl::getSurveyType(){
   return static_cast<h5geo::SurveyType>(
         h5geo::getEnumFromObj(
           objG,
-          std::string{magic_enum::enum_name(h5geo::SeisAttributes::SurveyType)}));
+          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SurveyType)}));
 }
 
 bool H5SeisImpl::hasPKeySort(const std::string& pKeyName)
@@ -902,7 +902,7 @@ std::optional<h5gt::DataSet>
 H5SeisImpl::getBoundaryD()
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::SeisDatasets::boundary)};
+        h5geo::detail::SeisDatasets::boundary)};
 
   return getDatasetOpt(objG, name);
 }
@@ -911,7 +911,7 @@ std::optional<h5gt::DataSet>
 H5SeisImpl::getTextHeaderD()
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::SeisDatasets::text_header)};
+        h5geo::detail::SeisDatasets::text_header)};
 
   return getDatasetOpt(objG, name);
 }
@@ -920,7 +920,7 @@ std::optional<h5gt::DataSet>
 H5SeisImpl::getBinHeaderD()
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::SeisDatasets::bin_header)};
+        h5geo::detail::SeisDatasets::bin_header)};
 
   return getDatasetOpt(objG, name);
 }
@@ -941,7 +941,7 @@ std::optional<h5gt::Group>
 H5SeisImpl::getSortG()
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::SeisGroups::sort)};
+        h5geo::detail::SeisGroups::sort)};
 
   return getGroupOpt(objG, name);
 }
@@ -954,7 +954,7 @@ H5SeisImpl::getUValG()
     return std::nullopt;
 
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::SeisGroups::unique_values)};
+        h5geo::detail::SeisGroups::unique_values)};
 
   if (!opt->hasObject(name, h5gt::ObjectType::Group))
     return std::nullopt;
@@ -970,7 +970,7 @@ H5SeisImpl::getIndexesG()
     return std::nullopt;
 
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::SeisGroups::indexes)};
+        h5geo::detail::SeisGroups::indexes)};
 
   if (!opt->hasObject(name, h5gt::ObjectType::Group))
     return std::nullopt;

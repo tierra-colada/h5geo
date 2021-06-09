@@ -3,16 +3,14 @@
 
 #include "h5geo_py.h"
 
-#include <h5geo/h5basecontainer.h>
-
-using namespace h5geo;
+#include <h5geo/misc/h5basecontainerimpl.h>
 
 namespace h5geopy {
 
 void H5BaseContainer_py(
-    py::class_<H5BaseContainer,
-    std::unique_ptr<H5BaseContainer, py::nodelete>,
-    H5Base> &py_obj);
+    py::class_<H5BaseContainerImpl,
+    std::unique_ptr<H5BaseContainerImpl, py::nodelete>,
+    H5BaseImpl> &py_obj);
 
 } // h5geopy
 

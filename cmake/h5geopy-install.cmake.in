@@ -29,6 +29,14 @@ configure_file(${INIT_PY_IN} ${INIT_PY_OUT} COPYONLY)
 # configure_file(${TEST_PY_IN} ${TEST_PY_OUT} COPYONLY)
 # configure_file(${STUBS_INIT_IN} ${STUBS_INIT_OUT} COPYONLY)
 
+if(CMAKE_GENERATOR MATCHES "Visual Studio") # if(@MSVC@) -> I guess generator defines whether to add Release/Debug folder and not a compiler
+  set(_h5geo_module_dir @CMAKE_CURRENT_BINARY_DIR@/@CMAKE_BUILD_TYPE@)
+else()
+  set(_h5geo_module_dir @CMAKE_CURRENT_BINARY_DIR@)
+endif()
+
+file(GLOB_RECURSE _h5geo_modules ${_h5geo_module_dir}/${MODULE_PATTERN})
+
 file(GLOB_RECURSE _h5geo_modules @CMAKE_CURRENT_BINARY_DIR@/${MODULE_PATTERN})
 
 list(LENGTH _h5geo_modules _h5geo_modules_len)

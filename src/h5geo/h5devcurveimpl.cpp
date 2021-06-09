@@ -121,7 +121,7 @@ std::optional<h5gt::DataSet>
 H5DevCurveImpl::getDevCurveD()
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::DevDatasets::dev_data)};
+        h5geo::detail::DevDatasets::dev_data)};
 
   return getDatasetOpt(objG, name);
 }

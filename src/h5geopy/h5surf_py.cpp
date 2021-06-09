@@ -4,14 +4,14 @@ namespace h5geopy {
 
 void H5Surf_py(
     py::class_<
-    H5Surf,
-    std::unique_ptr<H5Surf, py::nodelete>,
-    H5BaseObject> &py_obj){
+    H5SurfImpl,
+    std::unique_ptr<H5SurfImpl, py::nodelete>,
+    H5BaseObjectImpl> &py_obj){
   py_obj
-      .def("writeData", &H5Surf::writeData)
-      .def("getData", &H5Surf::getData)
-      .def("getSurfContainer", &H5Surf::getSurfContainer)
-      .def("getSurfD", &H5Surf::getSurfD);
+      .def("writeData", &H5SurfImpl::writeData)
+      .def("getData", &H5SurfImpl::getData)
+      .def("getSurfContainer", &H5SurfImpl::getSurfContainer)
+      .def("getSurfD", &H5SurfImpl::getSurfD);
 }
 
 

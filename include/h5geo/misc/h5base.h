@@ -41,6 +41,7 @@ struct SurfParam{
 struct WellParam{
   double headX, headY, kb;
   std::string uwi;
+  h5geo::SpatialUnits spatialUnits;
 };
 
 struct DevCurveParam{
@@ -69,8 +70,6 @@ struct SeisParam{
   double srd = 0;
   hsize_t trcChunk = 20000;
   hsize_t stdChunk = 1000;
-  h5geo::CreationType seisCreateType =
-      h5geo::CreationType::CREATE_OR_OVERWRITE;
 };
 
 class H5Base

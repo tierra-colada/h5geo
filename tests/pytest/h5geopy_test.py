@@ -1,9 +1,42 @@
 # from h5gtpy import h5gt
-from h5geopy import h5geo
+# from h5geopy import _h5geo
 # import h5gtpy._h5gt
 
+# from pointpy import point
+# from linepy import line
+
+# import point
+# import line
+
+# import _h5gt as h5gt
+import _h5geo as h5geo
+
 if __name__ == '__main__':
-    open_flag = h5geo.CreationType.OPEN_OR_CREATE
+    # p1 = point.Point(1, 2, 3)
+    # p2 = point.Point(3, 2, 1)
+    #
+    # l = line.Line(p1, p2)
+    # lp1 = l.getPoint1()
+
+    # p1 = _h5gt.Point(1, 2, 3)
+    # p2 = _h5gt.Point(3, 2, 1)
+
+    # line = _h5geo.Line(p1, p2)
+    # lp1 = line.getPoint1()
+
+    # p1 = h5gt.Point(1,2,3)
+    # line = h5geo.Line()
+    # point = h5geo.getPoint_func(1, 2, 3)
+    #
+    # p1 = point.Point(1, 2, 3)
+    # p2 = point.Point(3, 2, 1)
+    #
+    # l = line.Line(p1, p2)
+    #
+    # point = h5geo.getPoint_func(1, 2, 3)
+
+    open_flag = h5geo.CreationType.CREATE_OR_OVERWRITE
+    # surf_container = h5geo.openSurfContainerByName('surf_container.h5')
     surf_container = h5geo.createSurfContainerByName('surf_container.h5', open_flag)
 
     surf_param = h5geo.SurfParam()
@@ -23,7 +56,16 @@ if __name__ == '__main__':
 
     surf = surf_container.createSurf("mySurf", surf_param, h5geo.CreationType.OPEN_OR_CREATE)
 
+    # test_file = h5gt.File("test_file.h5", h5gt.OpenFlag(h5gt.ReadWrite | h5gt.Create | h5gt.Truncate))
+    test_container = h5geo.H5TestContainer("test_file.h5")
+    file_back = test_container.getH5File()
+    id = file_back.getId(False)
+    print(file_back.getFileName())
+
     f = surf.getH5File()
+    id = f.getId(True)
+    str = surf.getName()
+    f.createGroup("myGroup")
     # g = surf.getObjG()
     # f = surf.getH5File_2()
 

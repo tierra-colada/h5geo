@@ -80,7 +80,7 @@ std::optional<h5gt::DataSet>
 H5LogCurveImpl::getLogCurveD()
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::LogDatasets::log_data)};
+        h5geo::detail::LogDatasets::log_data)};
 
   return getDatasetOpt(objG, name);
 }

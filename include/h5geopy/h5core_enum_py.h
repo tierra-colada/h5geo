@@ -5,8 +5,6 @@
 
 #include <h5geo/misc/h5core_enum.h>
 
-using namespace h5geo;
-
 namespace h5geopy {
 
 void ContainerType_py(py::enum_<ContainerType> &py_obj);

@@ -24,6 +24,10 @@ namespace h5geo
 {
 
 //---------NEEDS_TO_BE_INCLUDED_TO_DETAIL_NAMESPACE---------
+
+namespace detail {
+
+
 enum class ContainerAttributes : unsigned{
   ContainerType = 1
 };
@@ -66,9 +70,10 @@ enum class SurfDatasets : unsigned{
 };
 
 enum class WellAttributes : unsigned{
-  head_coord = 1,
-  KB = 2,
-  UWI = 3
+  SpatialUnits = 1,
+  head_coord = 2,
+  KB = 3,
+  UWI = 4
 };
 
 enum class WellGroups : unsigned{
@@ -96,7 +101,9 @@ enum class LogDatasets : unsigned{
   log_data = 1
 };
 
-//---------END_OF_DETAIL_NAMESPACE---------
+
+}
+
 
 enum class ContainerType : unsigned{
   SURFACE = 1,

@@ -23,5 +23,9 @@ setup(name='h5geopy',
       license='MIT',
       classifiers=classifiers,
       packages=['h5geopy'],
+	  install_requires=[
+          'numpy',
+		  'h5gtpy',
+      ],
 	  include_package_data=True
       )

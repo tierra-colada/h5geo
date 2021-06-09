@@ -1,4 +1,4 @@
-set(include_files
+set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5base.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5basecontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5baseimpl.h

@@ -3,18 +3,16 @@
 
 #include "h5geo_py.h"
 
-#include <h5geo/h5surfcontainer.h>
-#include <h5geo/h5surf.h>
-
-using namespace h5geo;
+#include <h5geo/misc/h5surfcontainerimpl.h>
+#include <h5geo/misc/h5surfimpl.h>
 
 namespace h5geopy {
 
 void H5SurfContainer_py(
     py::class_<
-    H5SurfContainer,
-    std::unique_ptr<H5SurfContainer, py::nodelete>,
-    H5BaseContainer> &py_obj);
+    H5SurfContainerImpl,
+    std::unique_ptr<H5SurfContainerImpl, py::nodelete>,
+    H5BaseContainerImpl> &py_obj);
 
 } // h5geopy
 

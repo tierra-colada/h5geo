@@ -152,6 +152,11 @@ public:
       double& orientation) = 0;
 
   virtual bool calcAndWriteBoundary() = 0;
+  /*!
+   * \brief calcAndWriteTraceHeaderLimits
+   * \param nTrcBuffer by default it is set to 10 millions of traces
+   * \return
+   */
   virtual bool calcAndWriteTraceHeaderLimits(
       const size_t& nTrcBuffer = 1e7) = 0;
 

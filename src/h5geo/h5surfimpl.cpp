@@ -41,7 +41,7 @@ std::optional<h5gt::DataSet>
 H5SurfImpl::getSurfD() const
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::SurfDatasets::surf_data)};
+        h5geo::detail::SurfDatasets::surf_data)};
 
   return getDatasetOpt(objG, name);
 }

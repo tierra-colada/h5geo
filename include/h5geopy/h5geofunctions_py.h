@@ -3,10 +3,6 @@
 
 #include "h5geo_py.h"
 
-#include <h5geo/misc/h5base.h>
-
-using namespace h5geo;
-
 namespace h5geopy {
 
 void defineAllFunctions(py::module_& m);

@@ -126,12 +126,14 @@ before_script:
     fi
   - cmake --version
   - python --version
+  - mkdir ${TRAVIS_BUILD_DIR}/../install
 
 script:
   - cd ${TRAVIS_BUILD_DIR}
   - mkdir -p build && pushd build
   - >
     cmake --warn-uninitialized --debug-output
+    -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
     -DEigen3_ROOT:PATH=$EIGEN3_ROOT 
     -Dmagic_enum_ROOT:PATH=$magic_enum_ROOT 
@@ -142,7 +144,8 @@ script:
     -DH5GEO_BUILD_TESTS:BOOL=${H5GEO_BUILD_TESTS}
     -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
     -G "${CMAKE_GENERATOR}" ../
-  - cmake --build .
+  - cmake --build . --config Release
   - CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target ${TESTS_TARGET}
+  - cmake --install . --prefix ../install --config Release
   # - popd
   # - bash tests/test_project_integration.sh;

@@ -49,7 +49,7 @@ bool H5BaseImpl::isContainer(h5gt::File file,
   unsigned val = h5geo::getEnumFromObj(
         file,
         std::string{magic_enum::enum_name(
-                    h5geo::ContainerAttributes::ContainerType)});
+                    h5geo::detail::ContainerAttributes::ContainerType)});
   switch (cntType) {
   case h5geo::ContainerType::SURFACE :
     return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::SURFACE;
@@ -85,9 +85,9 @@ bool H5BaseImpl::isSurf(
     h5gt::Group &group)
 {
   constexpr auto& attr_names =
-      magic_enum::enum_names<h5geo::SurfAttributes>();
+      magic_enum::enum_names<h5geo::detail::SurfAttributes>();
   constexpr auto& dataset_names =
-      magic_enum::enum_names<h5geo::SurfDatasets>();
+      magic_enum::enum_names<h5geo::detail::SurfDatasets>();
 
   for (const auto& name : attr_names){
     if (!group.hasAttribute(std::string{name}))
@@ -105,9 +105,9 @@ bool H5BaseImpl::isWell(
     h5gt::Group &group)
 {
   constexpr auto& attr_names =
-      magic_enum::enum_names<h5geo::WellAttributes>();
+      magic_enum::enum_names<h5geo::detail::WellAttributes>();
   constexpr auto& group_names =
-      magic_enum::enum_names<h5geo::WellGroups>();
+      magic_enum::enum_names<h5geo::detail::WellGroups>();
 
   for (const auto& name : attr_names){
     if (!group.hasAttribute(std::string{name}))
@@ -125,9 +125,9 @@ bool H5BaseImpl::isLogCurve(
     h5gt::Group &group)
 {
   constexpr auto& attr_names =
-      magic_enum::enum_names<h5geo::LogAttributes>();
+      magic_enum::enum_names<h5geo::detail::LogAttributes>();
   constexpr auto& dataset_names =
-      magic_enum::enum_names<h5geo::LogDatasets>();
+      magic_enum::enum_names<h5geo::detail::LogDatasets>();
 
   for (const auto& name : attr_names){
     if (!group.hasAttribute(std::string{name}))
@@ -145,9 +145,9 @@ bool H5BaseImpl::isDevCurve(
     h5gt::Group &group)
 {
   constexpr auto& attr_names =
-      magic_enum::enum_names<h5geo::DevAttributes>();
+      magic_enum::enum_names<h5geo::detail::DevAttributes>();
   constexpr auto& dataset_names =
-      magic_enum::enum_names<h5geo::DevDatasets>();
+      magic_enum::enum_names<h5geo::detail::DevDatasets>();
 
   for (const auto& name : attr_names){
     if (!group.hasAttribute(std::string{name}))
@@ -165,9 +165,9 @@ bool H5BaseImpl::isSeis(
     h5gt::Group &group)
 {
   constexpr auto& attr_names =
-      magic_enum::enum_names<h5geo::SeisAttributes>();
+      magic_enum::enum_names<h5geo::detail::SeisAttributes>();
   constexpr auto& dataset_names =
-      magic_enum::enum_names<h5geo::SeisDatasets>();
+      magic_enum::enum_names<h5geo::detail::SeisDatasets>();
 
   for (const auto& name : attr_names){
     if (!group.hasAttribute(std::string{name}))
@@ -180,11 +180,11 @@ bool H5BaseImpl::isSeis(
   }
 
   std::string sortG_name =
-      std::string{magic_enum::enum_name(h5geo::SeisGroups::sort)};
+      std::string{magic_enum::enum_name(h5geo::detail::SeisGroups::sort)};
   std::string indexesG_name =
-      std::string{magic_enum::enum_name(h5geo::SeisGroups::indexes)};
+      std::string{magic_enum::enum_name(h5geo::detail::SeisGroups::indexes)};
   std::string unique_valuesG_name =
-      std::string{magic_enum::enum_name(h5geo::SeisGroups::unique_values)};
+      std::string{magic_enum::enum_name(h5geo::detail::SeisGroups::unique_values)};
 
   if (!group.hasObject
       (sortG_name, h5gt::ObjectType::Group))
@@ -262,7 +262,7 @@ H5BaseImpl::createContainer(h5gt::File h5File,
   unsigned val = h5geo::getEnumFromObj(
         h5File,
         std::string{magic_enum::enum_name(
-                    h5geo::ContainerAttributes::ContainerType)});
+                    h5geo::detail::ContainerAttributes::ContainerType)});
   switch (createFlag) {
   case h5geo::CreationType::OPEN_OR_CREATE: {
     if (isContainer(h5File, containerType))
@@ -371,7 +371,7 @@ H5BaseImpl::createNewContainer(
     const h5geo::ContainerType& containerType)
 {
   std::string attrName = std::string{magic_enum::enum_name(
-              h5geo::ContainerAttributes::ContainerType)};
+              h5geo::detail::ContainerAttributes::ContainerType)};
   if (file.hasAttribute(attrName)){
     file.getAttribute(attrName).
         write(static_cast<unsigned>(containerType));
@@ -421,33 +421,33 @@ H5BaseImpl::createNewSurf(h5gt::Group &group, void* p)
   std::vector<double> spacing({param.dX, param.dY});
 
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::SurfAttributes::Domain)},
+        std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::Domain)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.domain));
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::SurfAttributes::SpatialUnits)},
+        std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::SpatialUnits)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.spatialUnits));
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::SurfAttributes::TemporalUnits)},
+        std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::TemporalUnits)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.temporalUnits));
   group.createAttribute<std::string>(
-        std::string{magic_enum::enum_name(h5geo::SurfAttributes::data_units)},
+        std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::data_units)},
         h5gt::DataSpace::From(param.dataUnits)).
       write(param.dataUnits);
   group.createAttribute<double>(
-        std::string{magic_enum::enum_name(h5geo::SurfAttributes::origin)},
+        std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::origin)},
         h5gt::DataSpace({2})).
       write(origin);
 
   group.createAttribute<double>(
-        std::string{magic_enum::enum_name(h5geo::SurfAttributes::spacing)},
+        std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::spacing)},
         h5gt::DataSpace({2})).
       write(spacing);
 
   group.createDataSet<double>(
-        std::string{magic_enum::enum_name(h5geo::SurfDatasets::surf_data)},
+        std::string{magic_enum::enum_name(h5geo::detail::SurfDatasets::surf_data)},
         h5gt::DataSpace({param.nX, param.nY}));
 
   return group;
@@ -460,20 +460,24 @@ H5BaseImpl::createNewWell(h5gt::Group &group, void* p)
   std::vector<double> head_coord({param.headY, param.headX});
 
   group.createAttribute<double>(
-        std::string{magic_enum::enum_name(h5geo::WellAttributes::head_coord)},
+        std::string{magic_enum::enum_name(h5geo::detail::WellAttributes::head_coord)},
         h5gt::DataSpace({2})).
       write(head_coord);
   group.createAttribute<double>(
-        std::string{magic_enum::enum_name(h5geo::WellAttributes::KB)},
+        std::string{magic_enum::enum_name(h5geo::detail::WellAttributes::KB)},
         h5gt::DataSpace(1)).
       write(param.kb);
   group.createAttribute<std::string>(
-        std::string{magic_enum::enum_name(h5geo::WellAttributes::UWI)},
+        std::string{magic_enum::enum_name(h5geo::detail::WellAttributes::UWI)},
         h5gt::DataSpace(1)).
       write(param.uwi);
+  group.createAttribute<unsigned>(
+        std::string{magic_enum::enum_name(h5geo::detail::WellAttributes::SpatialUnits)},
+        h5gt::DataSpace(1)).
+      write(static_cast<unsigned>(param.spatialUnits));
 
   constexpr auto& group_names =
-      magic_enum::enum_names<h5geo::WellGroups>();
+      magic_enum::enum_names<h5geo::detail::WellGroups>();
 
   for (const auto& name : group_names){
     group.createGroup(std::string{name});
@@ -494,17 +498,17 @@ H5BaseImpl::createNewLogCurve(h5gt::Group &group, void* p)
   h5gt::DataSpace dataspace(count, max_count);
 
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::LogAttributes::SpatialUnits)},
+        std::string{magic_enum::enum_name(h5geo::detail::LogAttributes::SpatialUnits)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.spatialUnits));
   group.createAttribute<std::string>(
-        std::string{magic_enum::enum_name(h5geo::LogAttributes::data_units)},
+        std::string{magic_enum::enum_name(h5geo::detail::LogAttributes::data_units)},
         h5gt::DataSpace::From(param.dataUnits)).
       write(param.dataUnits);
 
   h5gt::DataSet dataset =
       group.createDataSet<double>(
-        std::string{magic_enum::enum_name(h5geo::LogDatasets::log_data)},
+        std::string{magic_enum::enum_name(h5geo::detail::LogDatasets::log_data)},
         dataspace, h5gt::LinkCreateProps(), props);
   dataset.createAttribute<size_t>(
         std::string{magic_enum::enum_name(h5geo::LogDataType::MD)}, h5gt::DataSpace(1)).write(0);
@@ -526,21 +530,21 @@ H5BaseImpl::createNewDevCurve(h5gt::Group &group, void* p)
   h5gt::DataSpace dataspace(count, max_count);
 
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::DevAttributes::SpatialUnits)},
+        std::string{magic_enum::enum_name(h5geo::detail::DevAttributes::SpatialUnits)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.spatialUnits));
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::DevAttributes::TemporalUnits)},
+        std::string{magic_enum::enum_name(h5geo::detail::DevAttributes::TemporalUnits)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.temporalUnits));
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::DevAttributes::AngleUnits)},
+        std::string{magic_enum::enum_name(h5geo::detail::DevAttributes::AngleUnits)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.angleUnits));
 
   h5gt::DataSet dataset =
       group.createDataSet<double>(
-        std::string{magic_enum::enum_name(h5geo::DevDatasets::dev_data)},
+        std::string{magic_enum::enum_name(h5geo::detail::DevDatasets::dev_data)},
         dataspace, h5gt::LinkCreateProps(), props);
   dataset.createAttribute<size_t>(
         std::string{magic_enum::enum_name(h5geo::DevDataType::MD)},
@@ -567,31 +571,31 @@ H5BaseImpl::createNewSeis(h5gt::Group &group, void* p)
   SeisParam param = *(static_cast<SeisParam*>(p));
 
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::SeisAttributes::Domain)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::Domain)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.domain));
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::SeisAttributes::SpatialUnits)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SpatialUnits)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.spatialUnits));
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::SeisAttributes::TemporalUnits)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::TemporalUnits)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.temporalUnits));
   group.createAttribute<std::string>(
-        std::string{magic_enum::enum_name(h5geo::SeisAttributes::data_units)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::data_units)},
         h5gt::DataSpace::From(param.dataUnits)).
       write(param.dataUnits);
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::SeisAttributes::SeisDataType)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SeisDataType)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.dataType));
   group.createAttribute<unsigned>(
-        std::string{magic_enum::enum_name(h5geo::SeisAttributes::SurveyType)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SurveyType)},
         h5gt::DataSpace(1)).
       write(static_cast<unsigned>(param.surveyType));
   group.createAttribute<double>(
-        std::string{magic_enum::enum_name(h5geo::SeisAttributes::SRD)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SRD)},
         h5gt::DataSpace(1)).
       write(param.srd);
 
@@ -611,7 +615,7 @@ H5BaseImpl::createTextHeader(
 {
   char txtHdr[40][80];
   h5gt::DataSet dataset = seisGroup.createDataSet<char[80]>(
-        std::string{magic_enum::enum_name(h5geo::SeisDatasets::text_header)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisDatasets::text_header)},
         h5gt::DataSpace::FromCharArrayStrings(txtHdr));
   return dataset;
 }
@@ -633,7 +637,7 @@ H5BaseImpl::createBinHeader(
   props.setChunk(cdims);
   h5gt::DataSpace dataspace(count, max_count);
   h5gt::DataSet dataset = seisGroup.createDataSet<double>(
-        std::string{magic_enum::enum_name(h5geo::SeisDatasets::bin_header)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisDatasets::bin_header)},
         dataspace, h5gt::LinkCreateProps(), props);
   for (size_t i = 0; i < nBinHeaderNames; i++){
     h5gt::Attribute attribute = dataset.createAttribute<size_t>(
@@ -659,7 +663,7 @@ H5BaseImpl::createTrace(
   props.setChunk(cdims);
   h5gt::DataSpace dataspace(count, max_count);
   h5gt::DataSet dataset = seisGroup.createDataSet<float>(
-        std::string{magic_enum::enum_name(h5geo::SeisDatasets::trace)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisDatasets::trace)},
         dataspace, h5gt::LinkCreateProps(), props);
   return dataset;
 }
@@ -683,7 +687,7 @@ H5BaseImpl::createTraceHeader(
   props.setChunk(cdims);
   h5gt::DataSpace dataspace(count, max_count);
   h5gt::DataSet dataset = seisGroup.createDataSet<double>(
-        std::string{magic_enum::enum_name(h5geo::SeisDatasets::trace_header)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisDatasets::trace_header)},
         dataspace, h5gt::LinkCreateProps(), props);
   for (size_t i = 0; i < nTraceHeaderNames; i++){
     h5gt::Attribute attribute = dataset.createAttribute<size_t>(
@@ -706,7 +710,7 @@ H5BaseImpl::createBoundary(
   props.setChunk(cdims);
   h5gt::DataSpace dataspace(count, max_count);
   h5gt::DataSet dataset = seisGroup.createDataSet<double>(
-        std::string{magic_enum::enum_name(h5geo::SeisDatasets::boundary)},
+        std::string{magic_enum::enum_name(h5geo::detail::SeisDatasets::boundary)},
         dataspace, h5gt::LinkCreateProps(), props);
   return dataset;
 }
@@ -716,11 +720,11 @@ H5BaseImpl::createSort(
     h5gt::Group &seisGroup)
 {
   h5gt::Group sortGroup = seisGroup.createGroup(
-        std::string{magic_enum::enum_name(h5geo::SeisGroups::sort)});
+        std::string{magic_enum::enum_name(h5geo::detail::SeisGroups::sort)});
   h5gt::Group indexesGroup = sortGroup.createGroup(
-        std::string{magic_enum::enum_name(h5geo::SeisGroups::indexes)});
+        std::string{magic_enum::enum_name(h5geo::detail::SeisGroups::indexes)});
   h5gt::Group uValGroup = sortGroup.createGroup(
-        std::string{magic_enum::enum_name(h5geo::SeisGroups::unique_values)});
+        std::string{magic_enum::enum_name(h5geo::detail::SeisGroups::unique_values)});
   return sortGroup;
 }
 

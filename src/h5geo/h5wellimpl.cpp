@@ -202,7 +202,7 @@ H5DevCurve* H5WellImpl::createDevCurve(
 
 Eigen::Vector2d H5WellImpl::getHeadCoord(){
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::WellAttributes::head_coord)};
+        h5geo::detail::WellAttributes::head_coord)};
   Eigen::Vector2d v(2);
 
   if (!objG.hasAttribute(name))
@@ -214,7 +214,7 @@ Eigen::Vector2d H5WellImpl::getHeadCoord(){
 
 double H5WellImpl::getKB(){
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::WellAttributes::KB)};
+        h5geo::detail::WellAttributes::KB)};
   double x;
 
   if (!objG.hasAttribute(name))
@@ -226,7 +226,7 @@ double H5WellImpl::getKB(){
 
 std::string H5WellImpl::getUWI(){
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::WellAttributes::UWI)};
+        h5geo::detail::WellAttributes::UWI)};
   std::string uwi;
 
   if (!objG.hasAttribute(name))
@@ -240,7 +240,7 @@ bool H5WellImpl::setHeadCoord(
     const Eigen::Ref<const Eigen::Vector2d>& v)
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::WellAttributes::head_coord)};
+        h5geo::detail::WellAttributes::head_coord)};
 
   if (!objG.hasAttribute(name))
     return false;
@@ -251,7 +251,7 @@ bool H5WellImpl::setHeadCoord(
 
 bool H5WellImpl::setKB(const double& kb){
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::WellAttributes::KB)};
+        h5geo::detail::WellAttributes::KB)};
 
   if (!objG.hasAttribute(name))
     return false;
@@ -262,7 +262,7 @@ bool H5WellImpl::setKB(const double& kb){
 
 bool H5WellImpl::setUWI(const std::string& uwi){
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::WellAttributes::KB)};
+        h5geo::detail::WellAttributes::KB)};
 
   if (!objG.hasAttribute(name))
     return false;
@@ -364,7 +364,7 @@ std::optional<h5gt::Group>
 H5WellImpl::getDevG()
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::WellGroups::DEV)};
+        h5geo::detail::WellGroups::DEV)};
 
   if (!objG.hasObject(name, h5gt::ObjectType::Group))
     return std::nullopt;
@@ -376,7 +376,7 @@ std::optional<h5gt::Group>
 H5WellImpl::getActiveDevG()
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::WellGroups::ACTIVE_DEV)};
+        h5geo::detail::WellGroups::ACTIVE_DEV)};
 
   return getGroupOpt(objG, name);
 }
@@ -385,7 +385,7 @@ std::optional<h5gt::Group>
 H5WellImpl::getLogG()
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::WellGroups::LOG)};
+        h5geo::detail::WellGroups::LOG)};
 
   return getGroupOpt(objG, name);
 }
@@ -409,7 +409,7 @@ bool H5WellImpl::setActiveDevCurve(H5DevCurve& curve){
     objG.unlink(opt->getPath());
 
   objG.createLink(curve.getObjG(),
-                  std::string{magic_enum::enum_name(h5geo::WellGroups::ACTIVE_DEV)},
+                  std::string{magic_enum::enum_name(h5geo::detail::WellGroups::ACTIVE_DEV)},
                   h5gt::LinkType::Soft);
 
   return true;

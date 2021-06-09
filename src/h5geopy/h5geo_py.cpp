@@ -2,18 +2,39 @@
 #include "../../include/h5geopy/h5basecontainer_py.h"
 #include "../../include/h5geopy/h5baseobject_py.h"
 #include "../../include/h5geopy/h5core_enum_py.h"
+#include "../../include/h5geopy/h5devcurve_py.h"
 #include "../../include/h5geopy/h5geofunctions_py.h"
+#include "../../include/h5geopy/h5logcurve_py.h"
+#include "../../include/h5geopy/h5seis_py.h"
+#include "../../include/h5geopy/h5seiscontainer_py.h"
 #include "../../include/h5geopy/h5surf_py.h"
 #include "../../include/h5geopy/h5surfcontainer_py.h"
+#include "../../include/h5geopy/h5well_py.h"
+#include "../../include/h5geopy/h5wellcontainer_py.h"
+
+class H5TestContainer
+{
+public:
+//  explicit H5TestContainer(const h5gt::File &h5File) :
+//  h5File(h5File){}
+  explicit H5TestContainer(const std::string& fileName) :
+  h5File(h5gt::File(fileName, h5gt::File::ReadWrite | h5gt::File::Create | h5gt::File::Truncate)){}
+
+  virtual ~H5TestContainer() = default;
+
+  virtual h5gt::File getH5File() const{
+    return h5File;
+  }
+
+protected:
+  h5gt::File h5File;
+};
+
 
 namespace h5geopy {
 
 PYBIND11_MODULE(_h5geo, m) {
-//  py::module::import("h5gtpy._h5gt").attr("h5gt");
-//  py::object g = (py::object)py::module_::import("h5gtpy._h5gt").attr("Group");
-  py::module_::import("h5gtpy").attr("h5gt");
-  py::module_::import("h5gtpy").attr("h5gt").attr("File");
-  py::module_::import("h5gtpy").attr("h5gt").attr("Group");
+  py::module_::import("h5gtpy._h5gt");
 
   m.doc() =
       "API to work with geo-data (seismic, wells, surfaces, other in process) based on HDF5 and originally written in C++: "
@@ -50,31 +71,77 @@ PYBIND11_MODULE(_h5geo, m) {
 
   // BASE
   auto pySurfParam = py::class_<SurfParam>(m, "SurfParam");
-  auto pyBase = py::class_<H5Base, std::unique_ptr<H5Base, py::nodelete>>(m, "H5Base");
+  auto pyWellParam = py::class_<WellParam>(m, "WellParam");
+  auto pyDevCurveParam = py::class_<DevCurveParam>(m, "DevCurveParam");
+  auto pyLogCurveParam = py::class_<LogCurveParam>(m, "LogCurveParam");
+  auto pySeisParam = py::class_<SeisParam>(m, "SeisParam");
+  auto pyBase = py::class_<H5BaseImpl, std::unique_ptr<H5BaseImpl, py::nodelete>>(m, "H5Base");
 
   // BASECONTAINER
-  auto pyBaseContainer = py::class_<H5BaseContainer,
-      std::unique_ptr<H5BaseContainer, py::nodelete>,
-      H5Base>(m, "H5BaseContainer");
+  auto pyBaseContainer = py::class_<H5BaseContainerImpl,
+      std::unique_ptr<H5BaseContainerImpl, py::nodelete>,
+      H5BaseImpl>(m, "H5BaseContainer");
 
   // BASEOBJECT
-  auto pyBaseObject = py::class_<H5BaseObject,
-      std::unique_ptr<H5BaseObject, py::nodelete>,
-      H5Base>(m, "H5BaseObject");
+  auto pyBaseObject = py::class_<H5BaseObjectImpl,
+      std::unique_ptr<H5BaseObjectImpl, py::nodelete>,
+      H5BaseImpl>(m, "H5BaseObject");
 
   // SURFCONTAINER
   auto pySurfContainer =
       py::class_<
-      H5SurfContainer,
-      std::unique_ptr<H5SurfContainer, py::nodelete>,
-      H5BaseContainer>(m, "H5SurfContainer");
+      H5SurfContainerImpl,
+      std::unique_ptr<H5SurfContainerImpl, py::nodelete>,
+      H5BaseContainerImpl>(m, "H5SurfContainer");
 
   // SURF
   auto pySurf =
       py::class_<
-      H5Surf,
-      std::unique_ptr<H5Surf, py::nodelete>,
-      H5BaseObject>(m, "H5Surf");
+      H5SurfImpl,
+      std::unique_ptr<H5SurfImpl, py::nodelete>,
+      H5BaseObjectImpl>(m, "H5Surf");
+
+  // SEISCONTAINER
+  auto pySeisContainer =
+      py::class_<
+      H5SeisContainerImpl,
+      std::unique_ptr<H5SeisContainerImpl, py::nodelete>,
+      H5BaseContainerImpl>(m, "H5SeisContainer");
+
+  // SEIS
+  auto pySeis =
+      py::class_<
+      H5SeisImpl,
+      std::unique_ptr<H5SeisImpl, py::nodelete>,
+      H5BaseObjectImpl>(m, "H5Seis");
+
+  // WELLCONTAINER
+  auto pyWellContainer =
+      py::class_<
+      H5WellContainerImpl,
+      std::unique_ptr<H5WellContainerImpl, py::nodelete>,
+      H5BaseContainerImpl>(m, "H5WellContainer");
+
+  // WELL
+  auto pyWell =
+      py::class_<
+      H5WellImpl,
+      std::unique_ptr<H5WellImpl, py::nodelete>,
+      H5BaseObjectImpl>(m, "H5Well");
+
+  // DEVCURVE
+  auto pyDevCurve =
+      py::class_<
+      H5DevCurveImpl,
+      std::unique_ptr<H5DevCurveImpl, py::nodelete>,
+      H5BaseObjectImpl>(m, "H5DevCurve");
+
+  // DEVCURVE
+  auto pyLogCurve =
+      py::class_<
+      H5LogCurveImpl,
+      std::unique_ptr<H5LogCurveImpl, py::nodelete>,
+      H5BaseObjectImpl>(m, "H5LogCurve");
 
 
   /*------------------------------------------------------------*/
@@ -105,6 +172,10 @@ PYBIND11_MODULE(_h5geo, m) {
 
   // BASE
   SurfParam_py(pySurfParam);
+  WellParam_py(pyWellParam);
+  DevCurveParam_py(pyDevCurveParam);
+  LogCurveParam_py(pyLogCurveParam);
+  SeisParam_py(pySeisParam);
   H5Base_py(pyBase);
 
   // BASECONTAINER
@@ -119,9 +190,38 @@ PYBIND11_MODULE(_h5geo, m) {
   // SURF
   H5Surf_py(pySurf);
 
+  // SEISCONTAINER
+  H5SeisContainer_py(pySeisContainer);
+
+  // SEIS
+  H5Seis_py(pySeis);
+
+  // WELLCONTAINER
+  H5WellContainer_py(pyWellContainer);
+
+  // WELL
+  H5Well_py(pyWell);
+
+  // DEVCURVE
+  H5DevCurve_py(pyDevCurve);
+
+  // LOGCURVE
+  H5LogCurve_py(pyLogCurve);
+
   // DEFINE ALL FUNCTIONS (MUST BE CALLED AFTER EVETYTHING IS ALREADY DECLARED)
   defineAllFunctions(m);
 
+
+  //-----------------------------------------
+  //-----------------------------------------
+  //-----------------------------------------
+  //----------HERE IS TEST FUNC--------------
+  //-----------------------------------------
+  //-----------------------------------------
+  auto pyH5TestContainer = py::class_<H5TestContainer>(m, "H5TestContainer");
+  pyH5TestContainer
+      .def(py::init<std::string>())
+      .def("getH5File", &H5TestContainer::getH5File);
 }
 
 } // h5geopy

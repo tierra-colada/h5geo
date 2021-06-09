@@ -5,15 +5,13 @@
 
 #include <h5geo/misc/h5baseobjectimpl.h>
 
-using namespace h5geo;
-
 namespace h5geopy {
 
 void H5BaseObject_py(
     py::class_<
-    H5BaseObject,
-    std::unique_ptr<H5BaseObject, py::nodelete>,
-    H5Base> &py_obj);
+    H5BaseObjectImpl,
+    std::unique_ptr<H5BaseObjectImpl, py::nodelete>,
+    H5BaseImpl> &py_obj);
 
 } // h5geopy
 
