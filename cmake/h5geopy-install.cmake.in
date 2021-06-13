@@ -10,14 +10,14 @@ set(INIT_PY_OUT @CMAKE_CURRENT_BINARY_DIR@/h5geopy/__init__.py)
 set(STUBS_INIT_IN @CMAKE_SOURCE_DIR@/stubs/h5geopy/_h5geo-stubs/h5geo.pyi)
 set(STUBS_INIT_OUT @CMAKE_CURRENT_BINARY_DIR@/h5geopy/h5geopy/h5geo.pyi)
 
-set(WELL_DEV_IN @CMAKE_SOURCE_DIR@/tests/unit/data/well_dev)
-set(WELL_DEV_OUT @CMAKE_CURRENT_BINARY_DIR@/h5geopy/well_dev)
+set(WELL_DEV_IN @CMAKE_SOURCE_DIR@/tests/pytest/data/well_dev)
+set(WELL_DEV_OUT @CMAKE_CURRENT_BINARY_DIR@/h5geopy/tests/data/well_dev)
 
-set(WELL_LAS_IN @CMAKE_SOURCE_DIR@/tests/unit/data/well_las)
-set(WELL_LAS_OUT @CMAKE_CURRENT_BINARY_DIR@/h5geopy/well_las)
+set(WELL_LAS_IN @CMAKE_SOURCE_DIR@/tests/pytest/data/well_las)
+set(WELL_LAS_OUT @CMAKE_CURRENT_BINARY_DIR@/h5geopy/tests/data/well_las)
 
 file(GLOB_RECURSE TEST_PY_IN_LIST @CMAKE_SOURCE_DIR@/tests/pytest/*.py)
-set(TEST_PY_OUT_DIR @CMAKE_CURRENT_BINARY_DIR@/h5geopy)
+set(TEST_PY_OUT_DIR @CMAKE_CURRENT_BINARY_DIR@/h5geopy/tests)
 
 file(MAKE_DIRECTORY @CMAKE_CURRENT_BINARY_DIR@/h5geopy)
 file(MAKE_DIRECTORY @CMAKE_CURRENT_BINARY_DIR@/h5geopy/h5geopy)

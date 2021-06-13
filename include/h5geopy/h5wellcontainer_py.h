@@ -12,7 +12,8 @@ void H5WellContainer_py(
     py::class_<
     H5WellContainerImpl,
     std::unique_ptr<H5WellContainerImpl, py::nodelete>,
-    H5BaseContainerImpl> &py_obj);
+    H5BaseContainerImpl,
+    H5WellContainer> &py_obj);
 
 } // h5geopy
 

@@ -12,7 +12,8 @@ void H5SurfContainer_py(
     py::class_<
     H5SurfContainerImpl,
     std::unique_ptr<H5SurfContainerImpl, py::nodelete>,
-    H5BaseContainerImpl> &py_obj);
+    H5BaseContainerImpl,
+    H5SurfContainer> &py_obj);
 
 } // h5geopy
 

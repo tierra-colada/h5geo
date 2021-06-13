@@ -13,7 +13,10 @@ void DevCurveParam_py(py::class_<DevCurveParam> &py_obj);
 void LogCurveParam_py(py::class_<LogCurveParam> &py_obj);
 void SeisParam_py(py::class_<SeisParam> &py_obj);
 
-void H5Base_py(py::class_<H5BaseImpl, std::unique_ptr<H5BaseImpl, pybind11::nodelete> > &py_obj);
+void H5Base_py(py::class_<
+               H5BaseImpl,
+               std::unique_ptr<H5BaseImpl, pybind11::nodelete>,
+               H5Base> &py_obj);
 
 //void ObjectDeleter_py(py::class_<ObjectDeleter> &py_obj);
 

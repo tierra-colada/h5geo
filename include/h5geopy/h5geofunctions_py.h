@@ -5,7 +5,7 @@
 
 namespace h5geopy {
 
-void defineAllFunctions(py::module_& m);
+void defineGeoFunctions(py::module_& m);
 
 } // h5geopy
 

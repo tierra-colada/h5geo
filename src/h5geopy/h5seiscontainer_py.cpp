@@ -6,7 +6,8 @@ void H5SeisContainer_py(
     py::class_<
     H5SeisContainerImpl,
     std::unique_ptr<H5SeisContainerImpl, py::nodelete>,
-    H5BaseContainerImpl> &py_obj){
+    H5BaseContainerImpl,
+    H5SeisContainer> &py_obj){
   py_obj
       .def("getSeis", py::overload_cast<const std::string&>(&H5SeisContainerImpl::getSeis))
       .def("getSeis", py::overload_cast<h5gt::Group>(&H5SeisContainerImpl::getSeis))

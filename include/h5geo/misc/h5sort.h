@@ -46,8 +46,7 @@ template <typename DRaw, typename DSort>
 /*!
  * \brief sort also calculates v_sorted_ = v(ind).
  * \param v Vector (row/col)
- * \param v_sorted_ Vector (row/col). 'v_sorted_' fundamental type should be the same as
- * 'v' type.
+ * \param v_sorted_ Vector (row/col). Fundamental types of `v_sorted_` and `v` should be the same
  * \return ind
  */
 Eigen::VectorX<ptrdiff_t> sort(
@@ -134,9 +133,9 @@ Eigen::VectorX<ptrdiff_t> sort_rows(
 
 template <typename DRaw, typename TUval>
 /*!
- * \brief sort_unique find unique elements, sort them, indentify unique values
+ * \brief sort_unique find unique elements, sort them, identify unique values
  * start and end indices and return indices such that v_sorted = v(ind).
- * \param v
+ * \param v vector
  * \param uvals
  * \param uvals_from_size first col - start index, second col - number of elements.
  * Each row can be considered as v_sorted.segment(uvals_from_size.row(n))
@@ -182,7 +181,7 @@ Eigen::VectorX<ptrdiff_t> sort_unique(
 template <typename DRaw, typename TUval, typename DSort>
 /*!
  * \brief sort_unique also calculates v_sorted = v(ind).
- * \param v
+ * \param v vector
  * \param uvals
  * \param uvals_from_size
  * \param v_sorted_
@@ -203,7 +202,7 @@ Eigen::VectorX<ptrdiff_t> sort_unique(
 
 template <typename DRaw, typename TUval>
 /*!
- * \brief sort_rows_unique find unique rows, sort them, indentify unique rows
+ * \brief sort_rows_unique find unique rows, sort them, identify unique rows
  * start and end row-indices and return row-indices such that M_sorted = M(ind, Eigen::all).
  * \param M
  * \param urows

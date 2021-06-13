@@ -12,7 +12,8 @@ void H5Well_py(
     py::class_<
     H5WellImpl,
     std::unique_ptr<H5WellImpl, py::nodelete>,
-    H5BaseObjectImpl> &py_obj);
+    H5BaseObjectImpl,
+    H5Well> &py_obj);
 
 } // h5geopy
 

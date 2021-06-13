@@ -136,8 +136,10 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
 }
 
 void H5Base_py(
-    py::class_<H5BaseImpl,
-    std::unique_ptr<H5BaseImpl, py::nodelete>> &py_obj){
+    py::class_<
+    H5BaseImpl,
+    std::unique_ptr<H5BaseImpl, py::nodelete>,
+    H5Base> &py_obj){
   py_obj
       .def("Delete", &H5BaseImpl::Delete)
       .def("getChildList", &H5BaseImpl::getChildList);

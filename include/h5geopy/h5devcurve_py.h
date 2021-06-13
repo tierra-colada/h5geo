@@ -11,7 +11,8 @@ void H5DevCurve_py(
     py::class_<
     H5DevCurveImpl,
     std::unique_ptr<H5DevCurveImpl, py::nodelete>,
-    H5BaseObjectImpl> &py_obj);
+    H5BaseObjectImpl,
+    H5DevCurve> &py_obj);
 
 } // h5geopy
 

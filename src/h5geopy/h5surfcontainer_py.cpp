@@ -6,7 +6,8 @@ void H5SurfContainer_py(
     py::class_<
     H5SurfContainerImpl,
     std::unique_ptr<H5SurfContainerImpl, py::nodelete>,
-    H5BaseContainerImpl> &py_obj){
+    H5BaseContainerImpl,
+    H5SurfContainer> &py_obj){
   py_obj
       .def("getSurf", py::overload_cast<const std::string&>(&H5SurfContainerImpl::getSurf))
       .def("getSurf", py::overload_cast<h5gt::Group>(&H5SurfContainerImpl::getSurf))

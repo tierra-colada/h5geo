@@ -6,8 +6,8 @@ set(src_files_test
   )
 
 set(resource_files
-  data/well_dev
-  data/well_las
+  ../pytest/data/well_dev
+  ../pytest/data/well_las
   )
 
 add_executable(H5GeoTest
@@ -18,7 +18,7 @@ add_executable(H5GeoTest
 set_target_properties(H5GeoTest PROPERTIES
   RESOURCE "${resource_files}")
 
-file(COPY "data"
+file(COPY "../pytest/data"
   DESTINATION ${CMAKE_BINARY_DIR})
 
 add_compile_definitions(TEST_DATA_DIR="${CMAKE_BINARY_DIR}/data")

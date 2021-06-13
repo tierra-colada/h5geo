@@ -5,8 +5,9 @@ namespace h5geopy {
 void H5BaseObject_py(
     py::class_<
     H5BaseObjectImpl,
-    std::unique_ptr<H5BaseObjectImpl, py::nodelete>,
-    H5BaseImpl> &py_obj){
+    std::unique_ptr<H5BaseObjectImpl, pybind11::nodelete>,
+    H5BaseImpl,
+    H5BaseObject> &py_obj){
   py_obj
       .def("getH5File", &H5BaseObjectImpl::getH5File)
       .def("getObjG", &H5BaseObjectImpl::getObjG)

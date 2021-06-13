@@ -8,10 +8,39 @@
 # import point
 # import line
 
-# import _h5gt as h5gt
-import _h5geo as h5geo
+from h5gtpy import h5gt
+from h5geopy import h5geo
 
 if __name__ == '__main__':
+    FILE_NAME = 'tmp/well.h5'
+    WELL_NAME = 'path/to/well'
+    WELL_NAME2 = 'path/to/well2'
+    DEV_NAME = 'my_deviation'
+    LOG_TYPE = 'GK'
+    LOG_NAME = 'my_log'
+
+    wellParam = h5geo.WellParam()
+    wellParam.headX = 444363
+    wellParam.headY = 7425880
+    wellParam.kb = 50.88
+    wellParam.uwi = 'my_uwi'
+    wellParam.spatialUnits = h5geo.SpatialUnits.METER
+
+    devCurveParam = h5geo.DevCurveParam()
+    devCurveParam.spatialUnits = h5geo.SpatialUnits.METER
+    devCurveParam.temporalUnits = h5geo.TemporalUnits.MILLISECOND
+    devCurveParam.angleUnits = h5geo.AngleUnits.RADIAN
+
+
+
+    wellContainer = h5geo.createWellContainerByName(FILE_NAME, h5geo.CreationType.CREATE_OR_OVERWRITE)
+
+    well = wellContainer.createWell('well.h5', wellParam, h5geo.CreationType.CREATE_OR_OVERWRITE)
+    # well.createDevCurve('what/root', devCurveParam, h5geo.CreationType.OPEN_OR_CREATE)
+    well.createDevCurve('/from/root', devCurveParam, h5geo.CreationType.OPEN_OR_CREATE)
+
+    a = 1
+
     # p1 = point.Point(1, 2, 3)
     # p2 = point.Point(3, 2, 1)
     #

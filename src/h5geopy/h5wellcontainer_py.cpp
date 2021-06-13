@@ -6,7 +6,8 @@ void H5WellContainer_py(
     py::class_<
     H5WellContainerImpl,
     std::unique_ptr<H5WellContainerImpl, py::nodelete>,
-    H5BaseContainerImpl> &py_obj){
+    H5BaseContainerImpl,
+    H5WellContainer> &py_obj){
   py_obj
       .def("getWell", py::overload_cast<const std::string&>(&H5WellContainerImpl::getWell))
       .def("getWell", py::overload_cast<h5gt::Group>(&H5WellContainerImpl::getWell))

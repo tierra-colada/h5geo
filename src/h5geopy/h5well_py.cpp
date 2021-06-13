@@ -9,7 +9,8 @@ void H5Well_py(
     py::class_<
     H5WellImpl,
     std::unique_ptr<H5WellImpl, py::nodelete>,
-    H5BaseObjectImpl> &py_obj){
+    H5BaseObjectImpl,
+    H5Well> &py_obj){
   py_obj
       .def("getLogCurve", py::overload_cast<const std::string&, const std::string&>(&H5WellImpl::getLogCurve))
       .def("getLogCurve", py::overload_cast<h5gt::Group>(&H5WellImpl::getLogCurve))

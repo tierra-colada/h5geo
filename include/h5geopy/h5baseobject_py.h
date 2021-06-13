@@ -11,7 +11,8 @@ void H5BaseObject_py(
     py::class_<
     H5BaseObjectImpl,
     std::unique_ptr<H5BaseObjectImpl, py::nodelete>,
-    H5BaseImpl> &py_obj);
+    H5BaseImpl,
+    H5BaseObject> &py_obj);
 
 } // h5geopy
 

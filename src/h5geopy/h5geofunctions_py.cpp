@@ -9,7 +9,8 @@
 
 namespace h5geopy {
 
-void defineAllFunctions(py::module_& m){
+
+void defineGeoFunctions(py::module_& m){
   m.def("openBaseContainer", &openBaseContainer);
   m.def("openBaseContainerByName", &openBaseContainerByName);
   m.def("openBaseObject", &openBaseObject);

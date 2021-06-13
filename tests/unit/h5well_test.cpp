@@ -21,6 +21,15 @@ public:
     // code here will execute just before the test ensues
     static bool trig = false;
 
+    FILE_NAME ="well.h5";
+    WELL_NAME ="path/to/well";
+    WELL_NAME2 ="path/to/well2";
+
+    DEV_NAME = "my_deviation";
+
+    LOG_TYPE = "GK";
+    LOG_NAME = "my_log";
+
     if (trig){
       h5gt::File file(FILE_NAME, h5gt::File::OpenOrCreate);
       wellContainer = H5WellCnt_ptr(h5geo::createWellContainer(
@@ -40,9 +49,9 @@ public:
     LOG_MD_GR =
         readWellFile(TEST_DATA_DIR"/well_las", {20901, 2}, 72);
 
-    wellParam.headX = 0;
-    wellParam.headY = 10;
-    wellParam.kb = 2;
+    wellParam.headX = 444363;
+    wellParam.headY = 7425880;
+    wellParam.kb = 50.88;
     wellParam.uwi = "my_uwi";
     wellParam.spatialUnits = h5geo::SpatialUnits::METER;
 
@@ -90,23 +99,16 @@ public:
 public:
   H5WellCnt_ptr wellContainer;
   WellParam wellParam;
-  std::string FILE_NAME ="well.h5";
-  std::string WELL_NAME ="path/to/well";
-  std::string WELL_NAME2 ="path/to/wel2l";
+  std::string FILE_NAME, WELL_NAME, WELL_NAME2;
 
   DevCurveParam devCurveParam;
-  std::string DEV_NAME = "my_deviation";
+  std::string DEV_NAME;
 
   LogCurveParam logCurveParam;
-  std::string LOG_TYPE = "GK";
-  std::string LOG_NAME = "my_log";
+  std::string LOG_TYPE, LOG_NAME;
 
   Eigen::MatrixXd MD_X_Y_Z_TVD_DX_DY_AZ_INCL;
   Eigen::MatrixXd LOG_MD_GR;
-
-  double x0 = 444363;
-  double y0 = 7425880;
-  double kb = 50.88;
 };
 
 TEST_F(H5WellFixture, createContainer){
@@ -115,11 +117,6 @@ TEST_F(H5WellFixture, createContainer){
 
 TEST_F(H5WellFixture, createWellWithDifferentCreateFlags){
   H5Well_ptr well(
-        wellContainer->createWell(
-          WELL_NAME, wellParam, h5geo::CreationType::OPEN_OR_CREATE));
-  ASSERT_TRUE(well != nullptr);
-
-  well = H5Well_ptr(
         wellContainer->createWell(
           WELL_NAME, wellParam, h5geo::CreationType::OPEN_OR_CREATE));
   ASSERT_TRUE(well != nullptr);
@@ -232,7 +229,7 @@ TEST_F(H5WellFixture, MdAzIncl2MdXYTvd){
 
   Eigen::MatrixXd M = h5geo::MdAzIncl2MdXYTvd(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {0, 7, 8}), x0, y0,
+          Eigen::all, {0, 7, 8}), wellParam.headX, wellParam.headY,
         h5geo::AngleUnits::DEGREE, false);
 
   wellContainer->getH5File().createDataSet<double>(
@@ -253,7 +250,7 @@ TEST_F(H5WellFixture, MdAzIncl2MdXYTvd_XNorth){
 
   Eigen::MatrixXd M = h5geo::MdAzIncl2MdXYTvd(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {0, 7, 8}), y0, x0,
+          Eigen::all, {0, 7, 8}), wellParam.headY, wellParam.headX,
         h5geo::AngleUnits::DEGREE, true);
 
   wellContainer->getH5File().createDataSet<double>(
@@ -275,10 +272,10 @@ TEST_F(H5WellFixture, TvdXY2MdAzIncl){
 
   Eigen::MatrixXd M = h5geo::TvdXY2MdAzIncl(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {4, 1, 2}), x0, y0, false);
+          Eigen::all, {4, 1, 2}), wellParam.headX, wellParam.headY, false);
 
   Eigen::MatrixXd MM = h5geo::MdAzIncl2MdXYTvd(
-        M, x0, y0, h5geo::AngleUnits::RADIAN, false);
+        M, wellParam.headX, wellParam.headY, h5geo::AngleUnits::RADIAN, false);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdXY2MdAzIncl", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -298,10 +295,10 @@ TEST_F(H5WellFixture, TvdXY2MdAzIncl_XNorth){
 
   Eigen::MatrixXd M = h5geo::TvdXY2MdAzIncl(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {4, 2, 1}), y0, x0, true);
+          Eigen::all, {4, 2, 1}), wellParam.headY, wellParam.headX, true);
 
   Eigen::MatrixXd MM = h5geo::MdAzIncl2MdXYTvd(
-        M, y0, x0, h5geo::AngleUnits::RADIAN, true);
+        M, wellParam.headY, wellParam.headX, h5geo::AngleUnits::RADIAN, true);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdXY2MdAzIncl", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -316,7 +313,7 @@ TEST_F(H5WellFixture, TvdXY2MdAzIncl_XNorth){
 TEST_F(H5WellFixture, TvdXY2MdXYTvd){
   Eigen::MatrixXd M = h5geo::TvdXY2MdXYTvd(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {4, 1, 2}), x0, y0, false);
+          Eigen::all, {4, 1, 2}), wellParam.headX, wellParam.headY, false);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdXY2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -330,7 +327,7 @@ TEST_F(H5WellFixture, TvdXY2MdXYTvd){
 TEST_F(H5WellFixture, TvdXY2MdXYTvd_XNorth){
   Eigen::MatrixXd M = h5geo::TvdXY2MdXYTvd(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {4, 1, 2}), x0, y0, true);
+          Eigen::all, {4, 1, 2}), wellParam.headX, wellParam.headY, true);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdXY2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -344,7 +341,7 @@ TEST_F(H5WellFixture, TvdXY2MdXYTvd_XNorth){
 TEST_F(H5WellFixture, TvdDxDy2MdXYTvd){
   Eigen::MatrixXd M = h5geo::TvdDxDy2MdXYTvd(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {4, 5, 6}), x0, y0, false);
+          Eigen::all, {4, 5, 6}), wellParam.headX, wellParam.headY, false);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdDxDy2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -358,7 +355,7 @@ TEST_F(H5WellFixture, TvdDxDy2MdXYTvd){
 TEST_F(H5WellFixture, TvdDxDy2MdXYTvd_XNorth){
   Eigen::MatrixXd M = h5geo::TvdDxDy2MdXYTvd(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {4, 5, 6}), x0, y0, true);
+          Eigen::all, {4, 5, 6}), wellParam.headX, wellParam.headY, true);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdDxDy2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -371,12 +368,12 @@ TEST_F(H5WellFixture, TvdDxDy2MdXYTvd_XNorth){
 
 TEST_F(H5WellFixture, TvdssXY2MdXYTvd){
   Eigen::MatrixXd TvdssXY(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows(), 3);
-  TvdssXY.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + kb;
+  TvdssXY.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + wellParam.kb;
   TvdssXY.col(1) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(1);
   TvdssXY.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(2);
 
   Eigen::MatrixXd M = h5geo::TvdssXY2MdXYTvd(
-        TvdssXY, x0, y0, kb, false);
+        TvdssXY, wellParam.headX, wellParam.headY, wellParam.kb, false);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdssXY2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -389,12 +386,12 @@ TEST_F(H5WellFixture, TvdssXY2MdXYTvd){
 
 TEST_F(H5WellFixture, TvdssXY2MdXYTvd_XNorth){
   Eigen::MatrixXd TvdssXY(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows(), 3);
-  TvdssXY.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + kb;
+  TvdssXY.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + wellParam.kb;
   TvdssXY.col(1) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(1);
   TvdssXY.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(2);
 
   Eigen::MatrixXd M = h5geo::TvdssXY2MdXYTvd(
-        TvdssXY, x0, y0, kb, true);
+        TvdssXY, wellParam.headX, wellParam.headY, wellParam.kb, true);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdssXY2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -407,12 +404,12 @@ TEST_F(H5WellFixture, TvdssXY2MdXYTvd_XNorth){
 
 TEST_F(H5WellFixture, TvdssDxDy2MdXYTvd){
   Eigen::MatrixXd TvdssDxDy(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows(), 3);
-  TvdssDxDy.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + kb;
+  TvdssDxDy.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + wellParam.kb;
   TvdssDxDy.col(1) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5);
   TvdssDxDy.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6);
 
   Eigen::MatrixXd M = h5geo::TvdssDxDy2MdXYTvd(
-        TvdssDxDy, x0, y0, kb, false);
+        TvdssDxDy, wellParam.headX, wellParam.headY, wellParam.kb, false);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdssDxDy2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -425,12 +422,12 @@ TEST_F(H5WellFixture, TvdssDxDy2MdXYTvd){
 
 TEST_F(H5WellFixture, TvdssDxDy2MdXYTvd_XNorth){
   Eigen::MatrixXd TvdssDxDy(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows(), 3);
-  TvdssDxDy.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + kb;
+  TvdssDxDy.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + wellParam.kb;
   TvdssDxDy.col(1) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5);
   TvdssDxDy.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6);
 
   Eigen::MatrixXd M = h5geo::TvdssDxDy2MdXYTvd(
-        TvdssDxDy, x0, y0, kb, true);
+        TvdssDxDy, wellParam.headX, wellParam.headY, wellParam.kb, true);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdssDxDy2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).

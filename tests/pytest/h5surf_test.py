@@ -3,11 +3,16 @@ from h5gtpy import h5gt
 from h5geopy import h5geo
 import os.path
 import unittest
+import pathlib
 
 trig = False
 
 class h5surf_test(unittest.TestCase):
     def setUp(self):
+        self.FILE_NAME = 'tmp/surf.h5'
+        self.SURF_NAME1 = 'path1/to/surface'
+        self.SURF_NAME2 = 'path2/to/surface'
+
         global trig
         if trig:
             file = h5gt.File(self.FILE_NAME, h5gt.OpenFlag(h5gt.OpenOrCreate))
@@ -34,9 +39,9 @@ class h5surf_test(unittest.TestCase):
 
     surfContainer = None
     p = h5geo.SurfParam()
-    FILE_NAME = "surf.h5"
-    SURF_NAME1 = "path1/to/surface"
-    SURF_NAME2 = "path2/to/surface"
+    FILE_NAME = None
+    SURF_NAME1 = None
+    SURF_NAME2 = None
 
     def test_createContainer(self):
         self.assertTrue(os.path.isfile(self.FILE_NAME))
@@ -68,13 +73,14 @@ class h5surf_test(unittest.TestCase):
 
     def test_writeAndGetDataFromSurf(self):
         m = np.random.rand(self.p.nY, self.p.nX)
-        # m = np.asfortranarray(m)
-        print(m)
+        # m = np.asfortranarray(m)  # doesn't change a thing
         surf = self.surfContainer.createSurf(self.SURF_NAME1, self.p, h5geo.CreationType.CREATE_OR_OVERWRITE)
         self.assertTrue(surf.writeData(m))
 
         M = surf.getData()
         self.assertTrue(np.allclose(m, M))
 
+
 if __name__ == '__main__':
+    pathlib.Path('tmp').mkdir(exist_ok=True)
     unittest.main()

@@ -18,6 +18,10 @@ public:
     // code here will execute just before the test ensues
     static bool trig = false;
 
+    FILE_NAME = "seis.h5";
+    SEIS_NAME1 = "path1/to/seis";
+    SEIS_NAME2 = "path2/to/seis";
+
     if (trig){
       h5gt::File file(FILE_NAME, h5gt::File::OpenOrCreate);
       seisContainer = H5SeisCnt_ptr(
@@ -54,9 +58,7 @@ public:
 public:
   H5SeisCnt_ptr seisContainer;
   SeisParam p;
-  std::string FILE_NAME = "seis.h5";
-  std::string SEIS_NAME1 = "path1/to/seis";
-  std::string SEIS_NAME2 = "path2/to/seis";
+  std::string FILE_NAME, SEIS_NAME1, SEIS_NAME2;
 };
 
 TEST_F(H5SeisFixture, createContainer){

@@ -18,6 +18,10 @@ public:
     // code here will execute just before the test ensues
     static bool trig = false;
 
+    FILE_NAME = "surf.h5";
+    SURF_NAME1 = "path1/to/surface";
+    SURF_NAME2 = "path2/to/surface";
+
     if (trig){
       h5gt::File file(FILE_NAME, h5gt::File::OpenOrCreate);
       surfContainer = H5SurfCnt_ptr(
@@ -31,6 +35,8 @@ public:
               file, h5geo::CreationType::CREATE_OR_OVERWRITE));
     }
 
+    trig = true;
+
     p.X0 = 0;
     p.Y0 = 10;
     p.dX = 2;
@@ -41,8 +47,6 @@ public:
     p.spatialUnits = h5geo::SpatialUnits::CENTIMETER;
     p.temporalUnits = h5geo::TemporalUnits::MILLISECOND;
     p.dataUnits = "m/s";
-
-    trig = true;
   }
 
   virtual void TearDown() override{
@@ -55,9 +59,7 @@ public:
 public:
   H5SurfCnt_ptr surfContainer;
   SurfParam p;
-  std::string FILE_NAME = "surf.h5";
-  std::string SURF_NAME1 = "path1/to/surface";
-  std::string SURF_NAME2 = "path2/to/surface";
+  std::string FILE_NAME, SURF_NAME1,  SURF_NAME2;
 };
 
 TEST_F(H5SurfFixture, createContainer){

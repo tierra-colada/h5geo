@@ -9,7 +9,8 @@ void H5LogCurve_py(
     py::class_<
     H5LogCurveImpl,
     std::unique_ptr<H5LogCurveImpl, py::nodelete>,
-    H5BaseObjectImpl> &py_obj){
+    H5BaseObjectImpl,
+    H5LogCurve> &py_obj){
   py_obj
       .def("writeCurve", py::overload_cast<const LogDataType&, const Eigen::Ref<const Eigen::VectorXd>&>(&H5LogCurveImpl::writeCurve))
       .def("writeCurve", py::overload_cast<const std::string&, const Eigen::Ref<const Eigen::VectorXd>&>(&H5LogCurveImpl::writeCurve))

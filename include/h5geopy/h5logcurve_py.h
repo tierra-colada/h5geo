@@ -11,7 +11,8 @@ void H5LogCurve_py(
     py::class_<
     H5LogCurveImpl,
     std::unique_ptr<H5LogCurveImpl, py::nodelete>,
-    H5BaseObjectImpl> &py_obj);
+    H5BaseObjectImpl,
+    H5LogCurve> &py_obj);
 
 } // h5geopy
 

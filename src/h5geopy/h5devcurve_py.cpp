@@ -8,8 +8,9 @@ namespace h5geopy {
 void H5DevCurve_py(
     py::class_<
     H5DevCurveImpl,
-    std::unique_ptr<H5DevCurveImpl, py::nodelete>,
-    H5BaseObjectImpl> &py_obj){
+    std::unique_ptr<H5DevCurveImpl, pybind11::nodelete>,
+    H5BaseObjectImpl,
+    H5DevCurve> &py_obj){
   py_obj
       .def("writeCurve", py::overload_cast<const DevDataType&, const Eigen::Ref<const Eigen::VectorXd>&>(&H5DevCurveImpl::writeCurve))
       .def("writeCurve", py::overload_cast<const std::string&, const Eigen::Ref<const Eigen::VectorXd>&>(&H5DevCurveImpl::writeCurve))

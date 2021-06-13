@@ -61,7 +61,8 @@ void H5Seis_py(
     py::class_<
     H5SeisImpl,
     std::unique_ptr<H5SeisImpl, py::nodelete>,
-    H5BaseObjectImpl> &py_obj){
+    H5BaseObjectImpl,
+    H5Seis> &py_obj){
   py_obj
       //  WRITERS
       .def("writeTextHeader", py::overload_cast<const std::vector<std::string>&>(&H5SeisImpl::writeTextHeader),
