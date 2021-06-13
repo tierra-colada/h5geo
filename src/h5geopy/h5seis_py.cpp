@@ -77,9 +77,14 @@ void H5Seis_py(
       .def("writeBoundary", &H5SeisImpl::writeBoundary,
            py::arg("boundary"), "write boundary of 2d (a line) or 3d (usually convex hull or concave hull) seismic survey. "
 "Input argument is `MatrixX2d` where first col - `X` coord, second - `Y` coord")
-      .def("writeTrace", &H5SeisImpl::writeTrace)
+      .def("writeTrace", &H5SeisImpl::writeTrace,
+           py::arg("TRACE"),
+           py::arg_v("fromTrc", 0, "0"),
+           py::arg_v("fromSampInd", 0, "0"))
       .def("writeTraceHeader", py::overload_cast<const Eigen::Ref<const Eigen::MatrixXd>&, const size_t&, const size_t&>(&H5SeisImpl::writeTraceHeader),
-           py::arg("HDR"), py::arg_v("fromTrc", 0, "0"), py::arg_v("fromHdrInd", 0, "0"))
+           py::arg("HDR"),
+           py::arg_v("fromTrc", 0, "0"),
+           py::arg_v("fromHdrInd", 0, "0"))
       .def("writeTraceHeader", py::overload_cast<const std::string&, const Eigen::Ref<const Eigen::MatrixXd>&, const size_t&>(&H5SeisImpl::writeTraceHeader),
            py::arg("hdrName"), py::arg("hdr"), py::arg_v("fromTrc", 0, "0"))
 
