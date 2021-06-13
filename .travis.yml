@@ -120,6 +120,7 @@ before_install:
       export PATH=$PATH:$CMAKE_INSTALL_PREFIX/zlib-install/bin;
       export PATH=$PATH:$CMAKE_INSTALL_PREFIX/hdf5-install/bin;
       export PATH=$PATH:$TRAVIS_BUILD_DIR/build/Debug;
+      export PATH=$PATH:$TRAVIS_BUILD_DIR/build/Release;
     fi
 
 before_script:
@@ -149,7 +150,7 @@ script:
     -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
     -G "${CMAKE_GENERATOR}" ../
   - cmake --build . --config Release
-  - CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target ${TESTS_TARGET}
+  - CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target ${TESTS_TARGET} --config Release
   - cmake --install . --prefix ../install --config Release
   # - popd
   # - bash tests/test_project_integration.sh;

@@ -142,7 +142,7 @@ class h5seis_test(unittest.TestCase):
         self.assertTrue(seis.addPKeySort('DSREG'))
 
         trc_sorted, hdr_sorted, trc_ind = seis.getSortedData(
-            ["FFID", "CDP", "DSREG"],
+            ['FFID', 'CDP', 'DSREG'],
             [2, 1, 4],
             [4, 5, 5])
 
