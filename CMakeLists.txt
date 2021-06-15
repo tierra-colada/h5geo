@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15.0)
+cmake_minimum_required(VERSION 3.16.0)
 
 if(NOT DEFINED CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
@@ -9,10 +9,12 @@ message("-- Setting C++ standard - " ${CMAKE_CXX_STANDARD})
 
 cmake_policy(SET CMP0074 NEW)
 cmake_policy(SET CMP0077 NEW)
+cmake_policy(SET CMP0087 NEW) # add generator expressions to `install` command
 
 set(COMMON_PROJECT_VERSION 0.1.0)
 project(h5geo VERSION ${COMMON_PROJECT_VERSION} LANGUAGES C CXX)
-message("project: ${CMAKE_PROJECT_NAME}")
+
+message("project: ${CMAKE_PROJECT_NAME} ${COMMON_PROJECT_VERSION}")
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 

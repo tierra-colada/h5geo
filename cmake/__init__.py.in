@@ -1,1 +1,3 @@
+${PYTHON_INIT_PATH_VAR}
+
 from h5geopy import _h5geo as h5geo

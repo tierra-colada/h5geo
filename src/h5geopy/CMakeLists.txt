@@ -1,5 +1,12 @@
 project(h5geopy VERSION ${COMMON_PROJECT_VERSION} LANGUAGES C CXX)
-message("project: ${PROJECT_NAME}")
+
+message("project: ${PROJECT_NAME} ${COMMON_PROJECT_VERSION}")
+
+set(HDF5_RUNTIME_DIR "" CACHE PATH "hdf5 runtime is a dependency of h5geopy")
+set(H5GEO_RUNTIME_DIR "" CACHE PATH "h5geo runtime is a dependency of h5geopy
+  (usually you don't need to set it)")
+option(COPY_H5GEOPY_RUNTIME_DEPS "Copy hdf5 and h5geo runtime to python site-packages
+  (otherwise it will simply add to ENV PATH these dirs in `__init__.py`)" ON)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -12,7 +19,7 @@ FetchContent_Declare(
 if(NOT pybind11_POPULATED)
   FetchContent_Populate(pybind11)
   add_subdirectory(${pybind11_SOURCE_DIR} ${pybind11_BINARY_DIR} EXCLUDE_FROM_ALL)  # we need to exclude pybind11 from installation
-  message("PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
+  message(STATUS "PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
 endif()
 
 file(GLOB_RECURSE h5geopy_src
@@ -37,12 +44,21 @@ else()
   message(FATAL_ERROR "To build h5geopy shared hdf5 lib must be found!")
 endif()
 
+
 #-----------------------------------------------------------------------------
 # Install `h5geopy` as python package
 #-----------------------------------------------------------------------------
-configure_file(${CMAKE_SOURCE_DIR}/cmake/h5geopy-install.cmake.in 
+configure_file(${CMAKE_SOURCE_DIR}/cmake/h5geopy-install.cmake.in
   ${CMAKE_CURRENT_BINARY_DIR}/h5geopy-install.cmake
   @ONLY
   )
 
-install(SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/h5geopy-install.cmake)
+# $<CONFIG> at the end of filename is necessary for multiconfig generators
+# such as MSVC or Ninja multiconfig (gives error without it:
+# "Evaluation file to be written multiple times with different content."
+file(GENERATE
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/h5geopy-install-$<CONFIG>.cmake
+  INPUT ${CMAKE_CURRENT_BINARY_DIR}/h5geopy-install.cmake
+  )
+
+install(SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/h5geopy-install-$<CONFIG>.cmake)

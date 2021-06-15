@@ -45,7 +45,6 @@ class h5seis_test(unittest.TestCase):
     def test_createContainer(self):
         self.assertTrue(os.path.isfile(self.FILE_NAME))
 
-
     def test_createSeisWithDifferentCreateFlags(self):
         seis = self.seisContainer.createSeis(self.SEIS_NAME1, self.p, h5geo.CreationType.OPEN_OR_CREATE)
         self.assertFalse(seis is None)

@@ -2,3 +2,5 @@ include h5geopy/${MODULE_PATTERN}
 include h5geopy/tests/*.py
 include h5geopy/tests/data/*
 include h5geopy/h5geopy/h5geo.pyi
+
+${ADD_TO_MANIFEST}
