@@ -21,6 +21,7 @@ class h5well_test(unittest.TestCase):
             file = h5gt.File(self.FILE_NAME, h5gt.OpenFlag(h5gt.OpenOrCreate))
             self.wellContainer = h5geo.createWellContainer(file, h5geo.CreationType.OPEN_OR_CREATE)
         else:
+            pathlib.Path('tmp').mkdir(exist_ok=True)
             file = h5gt.File(self.FILE_NAME, h5gt.OpenFlag(h5gt.OpenOrCreate | h5gt.Overwrite))
             self.wellContainer = h5geo.createWellContainer(file, h5geo.CreationType.CREATE_OR_OVERWRITE)
 
@@ -421,5 +422,4 @@ class h5well_test(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    pathlib.Path('tmp').mkdir(exist_ok=True)
     unittest.main()

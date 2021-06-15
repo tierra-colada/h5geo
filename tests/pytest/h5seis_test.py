@@ -18,6 +18,7 @@ class h5seis_test(unittest.TestCase):
             file = h5gt.File(self.FILE_NAME, h5gt.OpenFlag(h5gt.OpenOrCreate))
             self.seisContainer = h5geo.createSeisContainer(file, h5geo.CreationType.OPEN_OR_CREATE)
         else:
+            pathlib.Path('tmp').mkdir(exist_ok=True)
             file = h5gt.File(self.FILE_NAME, h5gt.OpenFlag(h5gt.OpenOrCreate | h5gt.Overwrite))
             self.seisContainer = h5geo.createSeisContainer(file, h5geo.CreationType.CREATE_OR_OVERWRITE)
 
@@ -156,5 +157,4 @@ class h5seis_test(unittest.TestCase):
         self.assertTrue(np.allclose(trcHdr[:, 40], trcHdr_out))
 
 if __name__ == '__main__':
-    pathlib.Path('tmp').mkdir(exist_ok=True)
     unittest.main()
