@@ -1,8 +1,8 @@
 set(src_files_test
   main.cpp
-  h5surf_test.cpp
-  h5well_test.cpp
-  h5seis_test.cpp
+  test_h5surf.cpp
+  test_h5well.cpp
+  test_h5seis.cpp
   )
 
 set(resource_files

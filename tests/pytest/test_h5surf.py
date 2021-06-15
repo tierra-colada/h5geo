@@ -7,7 +7,7 @@ import pathlib
 
 trig = False
 
-class h5surf_test(unittest.TestCase):
+class test_h5surf(unittest.TestCase):
     def setUp(self):
         self.FILE_NAME = 'tmp/surf.h5'
         self.SURF_NAME1 = 'path1/to/surface'

@@ -74,6 +74,9 @@ set(MANIFEST_OUT @CMAKE_CURRENT_BINARY_DIR@/MANIFEST.in)
 set(INIT_PY_IN @CMAKE_SOURCE_DIR@/cmake/__init__.py.in)
 set(INIT_PY_OUT ${H5GEOPY_DIR}/__init__.py)
 
+set(INIT_PY_IN_TEST @CMAKE_SOURCE_DIR@/cmake/__init__.py.in.test)
+set(INIT_PY_OUT_TEST ${H5GTPY_DIR}/tests/__init__.py)
+
 set(STUBS_INIT_IN @CMAKE_SOURCE_DIR@/stubs/h5geopy/_h5geo-stubs/h5geo.pyi)
 set(STUBS_INIT_OUT ${H5GEOPY_DIR}/h5geopy/h5geo.pyi)
 
@@ -135,6 +138,7 @@ endif()
 configure_file(${SETUP_PY_IN} ${SETUP_PY_OUT})
 configure_file(${MANIFEST_IN} ${MANIFEST_OUT})
 configure_file(${INIT_PY_IN} ${INIT_PY_OUT})
+configure_file(${INIT_PY_IN_TEST} ${INIT_PY_OUT_TEST} COPYONLY)
 configure_file(${STUBS_INIT_IN} ${STUBS_INIT_OUT} COPYONLY)
 configure_file(${WELL_DEV_IN} ${WELL_DEV_OUT} COPYONLY)
 configure_file(${WELL_LAS_IN} ${WELL_LAS_OUT} COPYONLY)

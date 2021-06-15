@@ -7,7 +7,7 @@ import pathlib
 
 trig = False
 
-class h5seis_test(unittest.TestCase):
+class test_h5seis(unittest.TestCase):
     def setUp(self):
         self.FILE_NAME = 'tmp/seis.h5'
         self.SEIS_NAME1 = 'path1/to/seis'

@@ -7,7 +7,7 @@ import pathlib
 
 trig = False
 
-class h5well_test(unittest.TestCase):
+class test_h5well(unittest.TestCase):
     def setUp(self):
         self.FILE_NAME = 'tmp/well.h5'
         self.WELL_NAME = 'path/to/well'
@@ -43,8 +43,11 @@ class h5well_test(unittest.TestCase):
         self.logCurveParam.spatialUnits = h5geo.SpatialUnits.CENTIMETER
         self.logCurveParam.dataUnits = 'kg/m2'
 
-        self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL = np.loadtxt('data/well_dev', skiprows=11)
-        self.LOG_MD_GR = np.loadtxt('data/well_las', skiprows=72)
+        path_to_current_file = os.path.realpath(__file__)
+        current_directory = os.path.dirname(path_to_current_file)
+
+        self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL = np.loadtxt(current_directory + '/data/well_dev', skiprows=11)
+        self.LOG_MD_GR = np.loadtxt(current_directory + '/data/well_las', skiprows=72)
 
     def tearDown(self):
         h5File = self.wellContainer.getH5File()
