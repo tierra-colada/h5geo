@@ -75,7 +75,7 @@ set(INIT_PY_IN @CMAKE_SOURCE_DIR@/cmake/__init__.py.in)
 set(INIT_PY_OUT ${H5GEOPY_DIR}/__init__.py)
 
 set(INIT_PY_IN_TEST @CMAKE_SOURCE_DIR@/cmake/__init__.py.in.test)
-set(INIT_PY_OUT_TEST ${H5GTPY_DIR}/tests/__init__.py)
+set(INIT_PY_OUT_TEST ${H5GEOPY_DIR}/tests/__init__.py)
 
 set(STUBS_INIT_IN @CMAKE_SOURCE_DIR@/stubs/h5geopy/_h5geo-stubs/h5geo.pyi)
 set(STUBS_INIT_OUT ${H5GEOPY_DIR}/h5geopy/h5geo.pyi)
