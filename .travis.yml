@@ -12,7 +12,7 @@ matrix:
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
         - HDF5_RUNTIME_DIR=""
-        - COPY_H5GTPY_RUNTIME_DEPS=False
+        - COPY_H5GEOPY_RUNTIME_DEPS=False
         - CMAKE_GENERATOR="Ninja"
         - TESTS_TARGET="test"
         - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
@@ -33,7 +33,7 @@ matrix:
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
         - HDF5_RUNTIME_DIR=""
-        - COPY_H5GTPY_RUNTIME_DEPS=True
+        - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Ninja"
         - TESTS_TARGET="test"
         - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
@@ -54,7 +54,7 @@ matrix:
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
         - HDF5_RUNTIME_DIR=""
-        - COPY_H5GTPY_RUNTIME_DEPS=True
+        - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Ninja"
         - TESTS_TARGET="test"
         - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
@@ -72,7 +72,7 @@ matrix:
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
         - HDF5_RUNTIME_DIR="C:/Tools/miniconda3/Library/bin"
-        - COPY_H5GTPY_RUNTIME_DEPS=True
+        - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
         - TESTS_TARGET="RUN_TESTS"
         - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
@@ -85,7 +85,7 @@ matrix:
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
         - HDF5_RUNTIME_DIR="C:/Tools/miniconda3/Library/bin"
-        - COPY_H5GTPY_RUNTIME_DEPS=False
+        - COPY_H5GEOPY_RUNTIME_DEPS=False
         - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
         - TESTS_TARGET="RUN_TESTS"
         - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
@@ -100,7 +100,7 @@ matrix:
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
         - HDF5_RUNTIME_DIR=""
-        - COPY_H5GTPY_RUNTIME_DEPS=True
+        - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Ninja"
         - TESTS_TARGET="test"
         - PYTEST_COMMAND=""
@@ -170,6 +170,9 @@ script:
     -DH5GEO_SUPERBUILD:BOOL=${H5GEO_SUPERBUILD}
     -DH5GEO_USE_THREADS:BOOL=${H5GEO_USE_THREADS}
     -DH5GEO_BUILD_SHARED_LIBS:BOOL=${H5GEO_BUILD_SHARED_LIBS}
+    -DH5GEO_BUILD_h5geopy:BOOL=${H5GEO_BUILD_h5geopy}
+    -DHDF5_RUNTIME_DIR:PATH=${HDF5_RUNTIME_DIR}
+    -DCOPY_H5GEOPY_RUNTIME_DEPS:BOOL=${COPY_H5GEOPY_RUNTIME_DEPS}
     -DH5GEO_BUILD_TESTS:BOOL=${H5GEO_BUILD_TESTS}
     -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
     -G "${CMAKE_GENERATOR}" ../
