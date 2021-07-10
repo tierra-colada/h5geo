@@ -695,7 +695,6 @@ bool H5SeisImpl::calcAndWriteBoundary(){
 
   Eigen::MatrixX2d boundary;
 
-
   if (getDataType() == h5geo::SeisDataType::STACK &&
       getSurveyType() == h5geo::SurveyType::TWO_D){
     boundary = calcBoundaryStk2D();
@@ -721,7 +720,7 @@ bool H5SeisImpl::calcAndWriteBoundary(){
   }
   std::vector<size_t> dims{2, (size_t)boundary.rows()};
   opt->resize({2, (size_t)boundary.rows()});
-  opt->write(boundary.data());
+  opt->write_raw(boundary.data());
 
   return true;
 }
@@ -733,7 +732,8 @@ bool H5SeisImpl::calcAndWriteTraceHeaderLimits(
   Eigen::VectorXd hdr, minHdr(nHdr), maxHdr(nHdr);
   for (size_t i = 0; i < nHdr; i++){
     size_t fromTrc = 0;
-    double min = INFINITY, max = -INFINITY;
+    double min = std::numeric_limits<double>::infinity(),
+        max = -std::numeric_limits<double>::infinity();
     do {
       hdr = getTraceHeader(
             fromTrc, nTrcBuffer, i, 1);
