@@ -34,6 +34,21 @@ bool compareStrings(
     const std::string& smaller,
     const CaseSensitivity& caseSensitivity = CaseSensitivity::CASE_INSENSITIVE);
 
+/*!
+ * \brief eraseSubStr First Occurrence of given  substring from main string.
+ * \param mainStr
+ * \param toErase
+ */
+void eraseSubStr(
+    std::string & mainStr, const std::string & toErase);
+
+/*!
+ * \brief eraseAllSubStr Erase all Occurrences of given substring from main string.
+ * \param mainStr
+ * \param toErase
+ */
+void eraseAllSubStr(
+    std::string & mainStr, const std::string & toErase);
 
 char getDelimiter(
     const Delimiter& delimiter);

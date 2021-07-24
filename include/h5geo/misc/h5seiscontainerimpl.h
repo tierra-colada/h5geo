@@ -38,7 +38,7 @@ public:
   friend H5SeisContainer* h5geo::openSeisContainer(
       h5gt::File h5File);
   friend H5SeisContainer* h5geo::openSeisContainerByName(
-      const std::string& fileName);
+      std::string& fileName);
 };
 
 #endif // H5SEISCONTAINERIMPL_H

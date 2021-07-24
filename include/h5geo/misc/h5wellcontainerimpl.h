@@ -36,7 +36,7 @@ public:
   friend H5WellContainer* h5geo::openWellContainer(
       h5gt::File h5File);
   friend H5WellContainer* h5geo::openWellContainerByName(
-      const std::string& fileName);
+      std::string& fileName);
 };
 
 #endif // H5WELLCONTAINERIMPL_H

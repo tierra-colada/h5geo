@@ -69,24 +69,33 @@ TEST_F(H5SurfFixture, createContainer){
 TEST_F(H5SurfFixture, createSurfWithDifferentCreateFlags){
   H5Surf_ptr surf(
         surfContainer->createSurf(
-          SURF_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE));
-  ASSERT_TRUE(surf != nullptr);
+          SURF_NAME1, p, h5geo::CreationType::OPEN));
+  ASSERT_TRUE(surf == nullptr) << "OPEN";
 
-  surf = H5Surf_ptr(
-        surfContainer->createSurf(
+  surf = H5Surf_ptr(surfContainer->createSurf(
+                      SURF_NAME1, p, h5geo::CreationType::CREATE));
+  ASSERT_TRUE(surf != nullptr) << "CREATE";
+
+  surf = H5Surf_ptr(surfContainer->createSurf(
+                      SURF_NAME1, p, h5geo::CreationType::OPEN));
+  ASSERT_TRUE(surf != nullptr) << "OPEN";
+
+  surf = H5Surf_ptr(surfContainer->createSurf(
+                      SURF_NAME1, p, h5geo::CreationType::CREATE));
+  ASSERT_TRUE(surf == nullptr) << "CREATE";
+
+  surf = H5Surf_ptr(surfContainer->createSurf(
+                      SURF_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(surf != nullptr) << "OPEN_OR_CREATE";
+
+  surf = H5Surf_ptr(surfContainer->createSurf(
           SURF_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-  ASSERT_TRUE(surf != nullptr);
+  ASSERT_TRUE(surf != nullptr) << "CREATE_OR_OVERWRITE";
 
-  surf = H5Surf_ptr(
-        surfContainer->createSurf(
-          SURF_NAME1, p, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
-  ASSERT_TRUE(surf != nullptr);
-
-  surf = H5Surf_ptr(
-        surfContainer->createSurf(
-          SURF_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE));
-  ASSERT_TRUE(surf != nullptr);
-
+  std::string seisName_tmp = SURF_NAME1;
+  surf = H5Surf_ptr(surfContainer->createSurf(
+          seisName_tmp, p, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
+  ASSERT_TRUE(surf != nullptr && seisName_tmp.compare(SURF_NAME1)) << "CREATE_UNDER_NEW_NAME";
 }
 
 TEST_F(H5SurfFixture, createAndGetSurf){

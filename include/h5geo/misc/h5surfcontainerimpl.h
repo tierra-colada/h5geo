@@ -36,7 +36,7 @@ public:
   friend H5SurfContainer* h5geo::openSurfContainer(
       h5gt::File h5File);
   friend H5SurfContainer* h5geo::openSurfContainerByName(
-      const std::string& fileName);
+      std::string& fileName);
 };
 
 #endif // H5SURFCONTAINERIMPL_H

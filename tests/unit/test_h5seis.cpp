@@ -65,23 +65,82 @@ TEST_F(H5SeisFixture, createContainer){
   ASSERT_TRUE(fs::exists(FILE_NAME));
 }
 
+TEST_F(H5SeisFixture, createContainerWithDifferentCreateFlags){
+  std::string fileName = "seis_dif_flag.h5";
+  std::string fileName_tmp = fileName;
+
+  std::remove(fileName.c_str());
+
+  H5SeisCnt_ptr seisCnt = H5SeisCnt_ptr(
+        h5geo::createSeisContainerByName(
+          fileName, h5geo::CreationType::OPEN));
+  ASSERT_TRUE(seisCnt == nullptr) << "OPEN";
+
+  seisCnt = H5SeisCnt_ptr(
+        h5geo::createSeisContainerByName(
+          fileName, h5geo::CreationType::CREATE));
+  ASSERT_TRUE(seisCnt != nullptr) << "CREATE";
+
+  seisCnt = H5SeisCnt_ptr(
+        h5geo::createSeisContainerByName(
+          fileName, h5geo::CreationType::OPEN));
+  ASSERT_TRUE(seisCnt != nullptr) << "OPEN";
+
+  seisCnt = H5SeisCnt_ptr(
+        h5geo::createSeisContainerByName(
+          fileName, h5geo::CreationType::CREATE));
+  ASSERT_TRUE(seisCnt == nullptr) << "CREATE";
+
+  seisCnt = H5SeisCnt_ptr(
+        h5geo::createSeisContainerByName(
+          fileName, h5geo::CreationType::OPEN_OR_CREATE));
+  ASSERT_TRUE(seisCnt != nullptr) << "OPEN_OR_CREATE";
+
+  /* h5gt cannot Truncate/Overwrite h5 file if it is already open */
+//  seisCnt = H5SeisCnt_ptr(
+//        h5geo::createSeisContainerByName(
+//          fileName, h5geo::CreationType::CREATE_OR_OVERWRITE));
+//  ASSERT_TRUE(seisCnt != nullptr) << "CREATE_OR_OVERWRITE";
+
+  seisCnt = H5SeisCnt_ptr(
+        h5geo::createSeisContainerByName(
+          fileName_tmp, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
+  ASSERT_TRUE(seisCnt != nullptr && fileName_tmp.compare(fileName)) << "CREATE_UNDER_NEW_NAME";
+
+  std::remove(fileName.c_str());
+  std::remove(fileName_tmp.c_str());
+}
+
 TEST_F(H5SeisFixture, createSeisWithDifferentCreateFlags){
   H5Seis_ptr seis(
         seisContainer->createSeis(
-          SEIS_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE));
+          SEIS_NAME1, p, h5geo::CreationType::OPEN));
+  ASSERT_TRUE(seis == nullptr) << "OPEN";
+
+  seis = H5Seis_ptr(seisContainer->createSeis(
+                      SEIS_NAME1, p, h5geo::CreationType::CREATE));
+  ASSERT_TRUE(seis != nullptr) << "CREATE";
+
+  seis = H5Seis_ptr(seisContainer->createSeis(
+                      SEIS_NAME1, p, h5geo::CreationType::OPEN));
+  ASSERT_TRUE(seis != nullptr) << "OPEN";
+
+  seis = H5Seis_ptr(seisContainer->createSeis(
+                      SEIS_NAME1, p, h5geo::CreationType::CREATE));
+  ASSERT_TRUE(seis == nullptr) << "CREATE";
+
+  seis = H5Seis_ptr(seisContainer->createSeis(
+                      SEIS_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE));
   ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
 
   seis = H5Seis_ptr(seisContainer->createSeis(
                       SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
 
+  std::string seisName_tmp = SEIS_NAME1;
   seis = H5Seis_ptr(seisContainer->createSeis(
-                      SEIS_NAME1, p, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
-  ASSERT_TRUE(seis != nullptr)  << "CREATE_UNDER_NEW_NAME";
-
-  seis = H5Seis_ptr(seisContainer->createSeis(
-                      SEIS_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE));
-  ASSERT_TRUE(seis != nullptr)  << "OPEN_OR_CREATE";
+                      seisName_tmp, p, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
+  ASSERT_TRUE(seis != nullptr && seisName_tmp.compare(SEIS_NAME1)) << "CREATE_UNDER_NEW_NAME";
 }
 
 TEST_F(H5SeisFixture, createAndGetSeis){

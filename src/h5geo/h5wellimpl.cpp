@@ -50,7 +50,7 @@ H5LogCurve* H5WellImpl::getLogCurve(
   if (!isSuccessor(logG.value(), group))
     return nullptr;
 
-  if (!isObject(group, h5geo::ObjectType::LOGCURVE))
+  if (!isGeoObject(group, h5geo::ObjectType::LOGCURVE))
     return nullptr;
 
   return new H5LogCurveImpl(group);
@@ -87,7 +87,7 @@ H5DevCurve* H5WellImpl::getDevCurve(
   if (!isSuccessor(devG.value(), group))
     return nullptr;
 
-  if (!isObject(group, h5geo::ObjectType::DEVCURVE))
+  if (!isGeoObject(group, h5geo::ObjectType::DEVCURVE))
     return nullptr;
 
   return new H5DevCurveImpl(group);

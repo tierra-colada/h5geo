@@ -15,11 +15,15 @@ public:
                const h5geo::ObjectType& objType) override;
 
 protected:
-  static bool isContainer(
+  static bool isGeoContainer(
+      h5gt::File file);
+  static bool isGeoContainer(
       h5gt::File file,
       const h5geo::ContainerType& cntType);
 
-  bool isObject(
+  bool isGeoObject(
+      h5gt::Group group);
+  bool isGeoObject(
       h5gt::Group group,
       const h5geo::ObjectType& objType);
 

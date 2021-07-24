@@ -17,7 +17,7 @@ H5Surf* H5SurfContainerImpl::getSurf(const std::string &name)
 H5Surf* H5SurfContainerImpl::getSurf(
     h5gt::Group group)
 {
-  if (!isObject(group, h5geo::ObjectType::SURFACE))
+  if (!isGeoObject(group, h5geo::ObjectType::SURFACE))
     return nullptr;
 
   return new H5SurfImpl(group);
@@ -95,21 +95,11 @@ h5geo::createSurfContainerByName(
 H5SurfContainer*
 h5geo::openSurfContainer(
     h5gt::File h5File){
-  if (!H5BaseImpl::isContainer(h5File, h5geo::ContainerType::SURFACE))
-    return nullptr;
-
-  return new H5SurfContainerImpl(h5File);
+  return createSurfContainer(h5File, h5geo::CreationType::OPEN);
 }
 
 H5SurfContainer*
 h5geo::openSurfContainerByName(
-    const std::string& fileName){
-  if (H5Fis_hdf5(fileName.c_str()) <= 0)
-    return nullptr;
-
-  h5gt::File h5File(
-        fileName,
-        h5gt::File::ReadWrite);
-
-  return openSurfContainer(h5File);
+    std::string& fileName){
+  return createSurfContainerByName(fileName, h5geo::CreationType::OPEN);
 }

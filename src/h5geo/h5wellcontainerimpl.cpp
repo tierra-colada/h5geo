@@ -18,7 +18,7 @@ H5Well* H5WellContainerImpl::getWell(
 H5Well* H5WellContainerImpl::getWell(
     h5gt::Group group)
 {
-  if (!isObject(group, h5geo::ObjectType::WELL))
+  if (!isGeoObject(group, h5geo::ObjectType::WELL))
     return nullptr;
 
   return new H5WellImpl(group);
@@ -95,21 +95,11 @@ h5geo::createWellContainerByName(
 
 H5WellContainer*
 h5geo::openWellContainer(h5gt::File h5File){
-  if (!H5BaseImpl::isContainer(h5File, h5geo::ContainerType::WELL))
-    return nullptr;
-
-  return new H5WellContainerImpl(h5File);
+  return createWellContainer(h5File, h5geo::CreationType::OPEN);
 }
 
 H5WellContainer*
-h5geo::openWellContainerByName(const std::string& fileName){
-  if (H5Fis_hdf5(fileName.c_str()) <= 0)
-    return nullptr;
-
-  h5gt::File h5File(
-        fileName,
-        h5gt::File::ReadWrite);
-
-  return openWellContainer(h5File);
+h5geo::openWellContainerByName(std::string& fileName){
+  return createWellContainerByName(fileName, h5geo::CreationType::OPEN);
 }
 

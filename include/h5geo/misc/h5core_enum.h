@@ -227,9 +227,11 @@ enum class AngleUnits : unsigned{
  * \brief The CreationType enum
  */
 enum class CreationType : unsigned{
-  OPEN_OR_CREATE = 1, /*!< Open if exist or Create New */
-  CREATE_OR_OVERWRITE = 2, /*!< Create if not exist or Overwrite (Overwrite == delete existing and create new) */
-  CREATE_UNDER_NEW_NAME = 3 /*!< Always create under New Unique Name */
+  OPEN = 1, /*!< Open if exist */
+  CREATE = 2, /*!< Create if not exist */
+  OPEN_OR_CREATE = 3, /*!< Open if exist or Create New */
+  CREATE_OR_OVERWRITE = 4, /*!< Create if not exist or Overwrite (Overwrite == delete existing and create new) */
+  CREATE_UNDER_NEW_NAME = 5 /*!< Always create under New Unique Name */
 };
 
 enum class CaseSensitivity : unsigned{

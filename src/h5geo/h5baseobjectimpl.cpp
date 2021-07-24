@@ -66,7 +66,7 @@ H5BaseObjectImpl::getParentG(
       return std::nullopt;
 
     parentGroup = parentGroup.getGroup(path);
-    if (isObject(parentGroup, objType))
+    if (isGeoObject(parentGroup, objType))
       return parentGroup;
 
   } while (!objName.empty());

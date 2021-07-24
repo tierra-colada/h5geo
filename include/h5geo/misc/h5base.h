@@ -106,17 +106,17 @@ H5GEO_EXPORT H5BaseObject* openBaseObject(
 H5GEO_EXPORT H5SeisContainer* openSeisContainer(
     h5gt::File h5File);
 H5GEO_EXPORT H5SeisContainer* openSeisContainerByName(
-    const std::string& fileName);
+    std::string& fileName);
 
 H5GEO_EXPORT H5SurfContainer* openSurfContainer(
     h5gt::File h5File);
 H5GEO_EXPORT H5SurfContainer* openSurfContainerByName(
-    const std::string& fileName);
+    std::string& fileName);
 
 H5GEO_EXPORT H5WellContainer* openWellContainer(
     h5gt::File h5File);
 H5GEO_EXPORT H5WellContainer* openWellContainerByName(
-    const std::string& fileName);
+    std::string& fileName);
 }
 
 } // h5geo
