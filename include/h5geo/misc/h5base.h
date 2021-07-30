@@ -6,6 +6,8 @@
 #include <vector>
 #include <memory>
 
+#include <iostream>
+
 typedef unsigned long long hsize_t ;
 
 namespace std {
@@ -75,7 +77,7 @@ struct SeisParam{
 class H5Base
 {
 protected:
-  virtual ~H5Base() = default;;
+  virtual ~H5Base() = default;
 
 public:
   virtual void Delete() = 0;

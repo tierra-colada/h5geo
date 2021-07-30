@@ -53,7 +53,7 @@ bool H5BaseImpl::isGeoContainer(h5gt::File file){
 }
 
 bool H5BaseImpl::isGeoContainer(h5gt::File file,
-    const h5geo::ContainerType& cntType)
+                                const h5geo::ContainerType& cntType)
 {
   unsigned val = h5geo::getEnumFromObj(
         file,
@@ -81,7 +81,7 @@ bool H5BaseImpl::isGeoObject(h5gt::Group group){
 }
 
 bool H5BaseImpl::isGeoObject(h5gt::Group group,
-    const h5geo::ObjectType& objType)
+                             const h5geo::ObjectType& objType)
 {
   switch (objType) {
   case h5geo::ObjectType::SURFACE :
@@ -224,14 +224,14 @@ H5BaseImpl::createContainer(
     const h5geo::ContainerType& containerType,
     h5geo::CreationType createFlag)
 {
-    if (fileName.empty() &&
-        createFlag != h5geo::CreationType::CREATE_UNDER_NEW_NAME){
-      return std::nullopt;
-    } else if (fileName.empty() &&
-               createFlag == h5geo::CreationType::CREATE_UNDER_NEW_NAME){
-      fileName = std::string{magic_enum::enum_name(containerType)} + ".h5";
-    }
-    bool fileExist = fs::exists(fileName);
+  if (fileName.empty() &&
+      createFlag != h5geo::CreationType::CREATE_UNDER_NEW_NAME){
+    return std::nullopt;
+  } else if (fileName.empty() &&
+             createFlag == h5geo::CreationType::CREATE_UNDER_NEW_NAME){
+    fileName = std::string{magic_enum::enum_name(containerType)} + ".h5";
+  }
+  bool fileExist = fs::exists(fileName);
 
   try {
 
@@ -286,8 +286,8 @@ H5BaseImpl::createContainer(
 
 std::optional<h5gt::File>
 H5BaseImpl::createContainer(h5gt::File h5File,
-    const h5geo::ContainerType& containerType,
-    h5geo::CreationType createFlag)
+                            const h5geo::ContainerType& containerType,
+                            h5geo::CreationType createFlag)
 {
   switch (createFlag) {
   case h5geo::CreationType::OPEN: {
@@ -319,10 +319,10 @@ H5BaseImpl::createContainer(h5gt::File h5File,
 
 std::optional<h5gt::Group>
 H5BaseImpl::createObject(std::string& objName,
-    h5gt::File parentFile,
-    const h5geo::ObjectType& objType,
-    void* p,
-    h5geo::CreationType createFlag)
+                         h5gt::File parentFile,
+                         const h5geo::ObjectType& objType,
+                         void* p,
+                         h5geo::CreationType createFlag)
 {
   h5gt::Group parentGroup = parentFile.getGroup("/");
   return createObject(
@@ -331,10 +331,10 @@ H5BaseImpl::createObject(std::string& objName,
 
 std::optional<h5gt::Group>
 H5BaseImpl::createObject(std::string& objName,
-    h5gt::Group parentGroup,
-    const h5geo::ObjectType& objType,
-    void* p,
-    h5geo::CreationType createFlag)
+                         h5gt::Group parentGroup,
+                         const h5geo::ObjectType& objType,
+                         void* p,
+                         h5geo::CreationType createFlag)
 {
   if (objName.empty() &&
       createFlag != h5geo::CreationType::CREATE_UNDER_NEW_NAME){
@@ -414,7 +414,7 @@ H5BaseImpl::createNewContainer(
     const h5geo::ContainerType& containerType)
 {
   std::string attrName = std::string{magic_enum::enum_name(
-              h5geo::detail::ContainerAttributes::ContainerType)};
+        h5geo::detail::ContainerAttributes::ContainerType)};
   if (file.hasAttribute(attrName)){
     auto attr = file.getAttribute(attrName);
     if (!attr.getDataType().isTypeEqual(h5gt::AtomicType<unsigned>()) ||

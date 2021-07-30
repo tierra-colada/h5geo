@@ -70,7 +70,7 @@ H5SurfContainerImpl::getSurfList() {
 
 H5SurfContainer*
 h5geo::createSurfContainer(
-    h5gt::File &h5File, h5geo::CreationType createFlag)
+    h5gt::File h5File, h5geo::CreationType createFlag)
 {
   auto opt = H5SurfContainerImpl::createContainer(
         h5File, h5geo::ContainerType::SURFACE, createFlag);

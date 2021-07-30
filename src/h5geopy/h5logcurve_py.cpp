@@ -8,7 +8,7 @@ namespace h5geopy {
 void H5LogCurve_py(
     py::class_<
     H5LogCurveImpl,
-    std::unique_ptr<H5LogCurveImpl, py::nodelete>,
+    std::unique_ptr<H5LogCurveImpl, ObjectDeleter>,
     H5BaseObjectImpl,
     H5LogCurve> &py_obj){
   py_obj

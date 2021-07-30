@@ -30,7 +30,7 @@ public:
 
   //----------- FRIEND CLASSES -----------
   friend H5SurfContainer* h5geo::createSurfContainer(
-      h5gt::File &h5File, h5geo::CreationType createFlag);
+      h5gt::File h5File, h5geo::CreationType createFlag);
   friend H5SurfContainer* h5geo::createSurfContainerByName(
       std::string& fileName, h5geo::CreationType createFlag);
   friend H5SurfContainer* h5geo::openSurfContainer(

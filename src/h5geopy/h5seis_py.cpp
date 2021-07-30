@@ -60,7 +60,7 @@ checkSampleLimits(H5SeisImpl* self, const size_t& fromSampInd, size_t& nSamp)
 void H5Seis_py(
     py::class_<
     H5SeisImpl,
-    std::unique_ptr<H5SeisImpl, py::nodelete>,
+    std::unique_ptr<H5SeisImpl, ObjectDeleter>,
     H5BaseObjectImpl,
     H5Seis> &py_obj){
   py_obj

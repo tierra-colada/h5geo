@@ -113,6 +113,7 @@ public:
 
 TEST_F(H5WellFixture, createContainer){
   ASSERT_TRUE(fs::exists(FILE_NAME));
+  wellContainer->Delete();
 }
 
 TEST_F(H5WellFixture, createWellWithDifferentCreateFlags){

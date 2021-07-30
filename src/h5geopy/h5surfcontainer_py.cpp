@@ -5,7 +5,7 @@ namespace h5geopy {
 void H5SurfContainer_py(
     py::class_<
     H5SurfContainerImpl,
-    std::unique_ptr<H5SurfContainerImpl, py::nodelete>,
+    std::unique_ptr<H5SurfContainerImpl, ObjectDeleter>,
     H5BaseContainerImpl,
     H5SurfContainer> &py_obj){
   py_obj

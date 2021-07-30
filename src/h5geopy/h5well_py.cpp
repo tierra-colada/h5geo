@@ -8,7 +8,7 @@ namespace h5geopy {
 void H5Well_py(
     py::class_<
     H5WellImpl,
-    std::unique_ptr<H5WellImpl, py::nodelete>,
+    std::unique_ptr<H5WellImpl, ObjectDeleter>,
     H5BaseObjectImpl,
     H5Well> &py_obj){
   py_obj

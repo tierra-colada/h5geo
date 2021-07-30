@@ -11,7 +11,7 @@ namespace h5geopy {
 void H5WellContainer_py(
     py::class_<
     H5WellContainerImpl,
-    std::unique_ptr<H5WellContainerImpl, py::nodelete>,
+    std::unique_ptr<H5WellContainerImpl, ObjectDeleter>,
     H5BaseContainerImpl,
     H5WellContainer> &py_obj);
 

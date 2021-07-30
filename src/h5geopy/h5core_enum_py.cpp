@@ -136,6 +136,8 @@ void AngleUnits_py(py::enum_<AngleUnits> &py_obj){
 
 void CreationType_py(py::enum_<CreationType> &py_obj){
   py_obj
+      .value("OPEN", CreationType::OPEN)
+      .value("CREATE", CreationType::CREATE)
       .value("OPEN_OR_CREATE", CreationType::OPEN_OR_CREATE)
       .value("CREATE_OR_OVERWRITE", CreationType::CREATE_OR_OVERWRITE)
       .value("CREATE_UNDER_NEW_NAME", CreationType::CREATE_UNDER_NEW_NAME);

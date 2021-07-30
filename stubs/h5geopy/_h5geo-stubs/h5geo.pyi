@@ -75,7 +75,8 @@ __all__ = [
     "sort",
     "sort_rows",
     "sort_rows_unique",
-    "sort_unique"
+    "sort_unique",
+    "traj2ALL"
 ]
 
 
@@ -188,6 +189,10 @@ class CreationType():
     """
     Members:
 
+      OPEN
+
+      CREATE
+
       OPEN_OR_CREATE
 
       CREATE_OR_OVERWRITE
@@ -216,10 +221,12 @@ class CreationType():
         """
         :type: int
         """
-    CREATE_OR_OVERWRITE: h5geopy._h5geo.CreationType # value = <CreationType.CREATE_OR_OVERWRITE: 2>
-    CREATE_UNDER_NEW_NAME: h5geopy._h5geo.CreationType # value = <CreationType.CREATE_UNDER_NEW_NAME: 3>
-    OPEN_OR_CREATE: h5geopy._h5geo.CreationType # value = <CreationType.OPEN_OR_CREATE: 1>
-    __members__: dict # value = {'OPEN_OR_CREATE': <CreationType.OPEN_OR_CREATE: 1>, 'CREATE_OR_OVERWRITE': <CreationType.CREATE_OR_OVERWRITE: 2>, 'CREATE_UNDER_NEW_NAME': <CreationType.CREATE_UNDER_NEW_NAME: 3>}
+    CREATE: h5geopy._h5geo.CreationType # value = <CreationType.CREATE: 2>
+    CREATE_OR_OVERWRITE: h5geopy._h5geo.CreationType # value = <CreationType.CREATE_OR_OVERWRITE: 4>
+    CREATE_UNDER_NEW_NAME: h5geopy._h5geo.CreationType # value = <CreationType.CREATE_UNDER_NEW_NAME: 5>
+    OPEN: h5geopy._h5geo.CreationType # value = <CreationType.OPEN: 1>
+    OPEN_OR_CREATE: h5geopy._h5geo.CreationType # value = <CreationType.OPEN_OR_CREATE: 3>
+    __members__: dict # value = {'OPEN': <CreationType.OPEN: 1>, 'CREATE': <CreationType.CREATE: 2>, 'OPEN_OR_CREATE': <CreationType.OPEN_OR_CREATE: 3>, 'CREATE_OR_OVERWRITE': <CreationType.CREATE_OR_OVERWRITE: 4>, 'CREATE_UNDER_NEW_NAME': <CreationType.CREATE_UNDER_NEW_NAME: 5>}
     pass
 class Delimiter():
     """
@@ -1363,7 +1370,7 @@ class H5Seis(H5BaseObject, H5Base, _H5Seis, _H5BaseObject, _H5Base):
         write boundary of 2d (a line) or 3d (usually convex hull or concave hull) seismic survey. Input argument is `MatrixX2d` where first col - `X` coord, second - `Y` coord
         """
     def writeTextHeader(self, txtHdr: typing.List[str]) -> bool: ...
-    def writeTrace(self, arg0: numpy.ndarray[numpy.float32, _Shape[m, n]], arg1: int, arg2: int) -> bool: ...
+    def writeTrace(self, TRACE: numpy.ndarray[numpy.float32, _Shape[m, n]], fromTrc: int = 0, fromSampInd: int = 0) -> bool: ...
     @typing.overload
     def writeTraceHeader(self, HDR: numpy.ndarray[numpy.float64, _Shape[m, n]], fromTrc: int = 0, fromHdrInd: int = 0) -> bool: ...
     @typing.overload
@@ -1598,10 +1605,10 @@ def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.nd
 def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
     pass
 @typing.overload
-def sort(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, 1]]]:
+def sort(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
     pass
 @typing.overload
-def sort(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
+def sort(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, 1]]]:
     pass
 @typing.overload
 def sort_rows(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
@@ -1614,10 +1621,10 @@ def sort_rows(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> numpy.ndarray[nu
 def sort_rows(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, n]]]:
     pass
 @typing.overload
-def sort_rows(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
+def sort_rows(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]]]:
     pass
 @typing.overload
-def sort_rows(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]]]:
+def sort_rows(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
     pass
 @typing.overload
 def sort_rows_unique(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
@@ -1630,10 +1637,10 @@ def sort_rows_unique(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tu
 def sort_rows_unique(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float32, _Shape[m, n]]]:
     pass
 @typing.overload
-def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
+def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float64, _Shape[m, n]]]:
     pass
 @typing.overload
-def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float64, _Shape[m, n]]]:
+def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
     pass
 @typing.overload
 def sort_unique(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
@@ -1650,4 +1657,12 @@ def sort_unique(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[n
     pass
 @typing.overload
 def sort_unique(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
+    pass
+@typing.overload
+def traj2ALL(M: numpy.ndarray[numpy.float32, _Shape[m, n]], x0: float, y0: float, kb: float, angleUnits: AngleUnits, trajFormat: TrajectoryFormat, XNorth: bool) -> numpy.ndarray[numpy.float32, _Shape[m, n]]:
+    """
+    Convert matrix `M` of any trajectory format to `MD_X_Y_Z_TVD_DX_DY_AZ_INCL` (Z the same as TVDSS). Set `XNorth` to `True` if `X` axis points to the North
+    """
+@typing.overload
+def traj2ALL(M: numpy.ndarray[numpy.float64, _Shape[m, n]], x0: float, y0: float, kb: float, angleUnits: AngleUnits, trajFormat: TrajectoryFormat, XNorth: bool) -> numpy.ndarray[numpy.float64, _Shape[m, n]]:
     pass

@@ -15,10 +15,10 @@ void SeisParam_py(py::class_<SeisParam> &py_obj);
 
 void H5Base_py(py::class_<
                H5BaseImpl,
-               std::unique_ptr<H5BaseImpl, pybind11::nodelete>,
+               std::unique_ptr<H5BaseImpl, ObjectDeleter>,
                H5Base> &py_obj);
 
-//void ObjectDeleter_py(py::class_<ObjectDeleter> &py_obj);
+void ObjectDeleter_py(py::class_<ObjectDeleter> &py_obj);
 
 } // h5geopy
 

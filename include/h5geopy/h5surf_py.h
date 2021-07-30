@@ -11,7 +11,7 @@ namespace h5geopy {
 void H5Surf_py(
     py::class_<
     H5SurfImpl,
-    std::unique_ptr<H5SurfImpl, py::nodelete>,
+    std::unique_ptr<H5SurfImpl, ObjectDeleter>,
     H5BaseObjectImpl,
     H5Surf> &py_obj);
 

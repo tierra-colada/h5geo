@@ -42,6 +42,14 @@ Eigen::MatrixX<typename D::Scalar> TvdssDxDy2ALL(
     const T& x0, const T& y0, const T& kb,
     const bool& XNorth);
 
+template<typename D, typename T>
+Eigen::MatrixX<typename D::Scalar> traj2ALL(
+    const Eigen::DenseBase<D> &M,
+    const T& x0, const T& y0, const T& kb,
+    const h5geo::AngleUnits& angleUnits,
+    const h5geo::TrajectoryFormat& trajFormat,
+    const bool& XNorth);
+
 /* */
 template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> MdAzIncl2MdXYTvd(
@@ -427,6 +435,30 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2ALL(
   M_OUT.col(7) = M_MdAzIncl.col(1); // AZ
   M_OUT.col(8) = M_MdAzIncl.col(2); // INCL
   return M_OUT;
+}
+
+template<typename D, typename T>
+Eigen::MatrixX<typename D::Scalar> h5geo::traj2ALL(
+    const Eigen::DenseBase<D> &M,
+    const T& x0, const T& y0, const T& kb,
+    const h5geo::AngleUnits& angleUnits,
+    const h5geo::TrajectoryFormat& trajFormat,
+    const bool& XNorth)
+{
+  switch (trajFormat) {
+  case h5geo::TrajectoryFormat::MD_AZIM_INCL:
+    return h5geo::MdAzIncl2ALL(M, x0, y0, kb, angleUnits, XNorth);
+  case h5geo::TrajectoryFormat::TVDSS_DX_DY:
+    return h5geo::TvdssDxDy2ALL(M, x0, y0, kb, XNorth);
+  case h5geo::TrajectoryFormat::TVDSS_X_Y:
+    return h5geo::TvdssXY2ALL(M, x0, y0, kb, XNorth);
+  case h5geo::TrajectoryFormat::TVD_DX_DY:
+    return h5geo::TvdDxDy2ALL(M, x0, y0, kb, XNorth);
+  case h5geo::TrajectoryFormat::TVD_X_Y:
+    return h5geo::TvdXY2ALL(M, x0, y0, kb, XNorth);
+  default:
+    return Eigen::MatrixX<typename D::Scalar>();
+  }
 }
 
 template<typename D, typename T>

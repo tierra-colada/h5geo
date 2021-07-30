@@ -50,52 +50,52 @@ PYBIND11_MODULE(_h5geo, m) {
   py::class_<
       H5Base,
       std::unique_ptr<H5Base,
-      py::nodelete>>(m, "_H5Base");
+      ObjectDeleter>>(m, "_H5Base");
   py::class_<
       H5BaseContainer,
-      std::unique_ptr<H5BaseContainer, py::nodelete>,
+      std::unique_ptr<H5BaseContainer, ObjectDeleter>,
       H5Base>(m, "_H5BaseContainer");
   py::class_<
       H5BaseObject,
-      std::unique_ptr<H5BaseObject, py::nodelete>,
+      std::unique_ptr<H5BaseObject, ObjectDeleter>,
       H5Base>(m, "_H5BaseObject");
 
   // _SURF
   py::class_<
       H5SurfContainer,
-      std::unique_ptr<H5SurfContainer, py::nodelete>,
+      std::unique_ptr<H5SurfContainer, ObjectDeleter>,
       H5BaseContainer>(m, "_H5SurfContainer");
   py::class_<
       H5Surf,
-      std::unique_ptr<H5Surf, py::nodelete>,
+      std::unique_ptr<H5Surf, ObjectDeleter>,
       H5BaseObject>(m, "_H5Surf");
 
   // _SEIS
   py::class_<
       H5SeisContainer,
-      std::unique_ptr<H5SeisContainer, py::nodelete>,
+      std::unique_ptr<H5SeisContainer, ObjectDeleter>,
       H5BaseContainer>(m, "_H5SeisContainer");
   py::class_<
       H5Seis,
-      std::unique_ptr<H5Seis, py::nodelete>,
+      std::unique_ptr<H5Seis, ObjectDeleter>,
       H5BaseObject>(m, "_H5Seis");
 
   // _WELL
   py::class_<
       H5WellContainer,
-      std::unique_ptr<H5WellContainer, py::nodelete>,
+      std::unique_ptr<H5WellContainer, ObjectDeleter>,
       H5BaseContainer>(m, "_H5WellContainer");
   py::class_<
       H5Well,
-      std::unique_ptr<H5Well, py::nodelete>,
+      std::unique_ptr<H5Well, ObjectDeleter>,
       H5BaseObject>(m, "_H5Well");
   py::class_<
       H5DevCurve,
-      std::unique_ptr<H5DevCurve, py::nodelete>,
+      std::unique_ptr<H5DevCurve, ObjectDeleter>,
       H5BaseObject>(m, "_H5DevCurve");
   py::class_<
       H5LogCurve,
-      std::unique_ptr<H5LogCurve, py::nodelete>,
+      std::unique_ptr<H5LogCurve, ObjectDeleter>,
       H5BaseObject>(m, "_H5LogCurve");
 
   /*----------END OF `nullptr` PROBLEM---------*/
@@ -123,6 +123,9 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyCaseSensitivity = py::enum_<CaseSensitivity>(m, "CaseSensitivity", py::arithmetic());
   auto pyDelimiter = py::enum_<Delimiter>(m, "Delimiter", py::arithmetic());
 
+  // DELETER
+  auto pyObjectDeleter = py::class_<ObjectDeleter>(m, "ObjectDeleter");
+
   // BASE
   auto pySurfParam = py::class_<SurfParam>(m, "SurfParam");
   auto pyWellParam = py::class_<WellParam>(m, "WellParam");
@@ -131,20 +134,20 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pySeisParam = py::class_<SeisParam>(m, "SeisParam");
   auto pyBase = py::class_<
       H5BaseImpl,
-      std::unique_ptr<H5BaseImpl, py::nodelete>,
+      std::unique_ptr<H5BaseImpl, ObjectDeleter>,
       H5Base>(m, "H5Base");
 
   // BASECONTAINER
   auto pyBaseContainer = py::class_<
       H5BaseContainerImpl,
-      std::unique_ptr<H5BaseContainerImpl, py::nodelete>,
+      std::unique_ptr<H5BaseContainerImpl, ObjectDeleter>,
       H5BaseImpl,
       H5BaseContainer>(m, "H5BaseContainer");
 
   // BASEOBJECT
   auto pyBaseObject = py::class_<
       H5BaseObjectImpl,
-      std::unique_ptr<H5BaseObjectImpl, py::nodelete>,
+      std::unique_ptr<H5BaseObjectImpl, ObjectDeleter>,
       H5BaseImpl,
       H5BaseObject>(m, "H5BaseObject");
 
@@ -152,7 +155,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pySurfContainer =
       py::class_<
       H5SurfContainerImpl,
-      std::unique_ptr<H5SurfContainerImpl, py::nodelete>,
+      std::unique_ptr<H5SurfContainerImpl, ObjectDeleter>,
       H5BaseContainerImpl,
       H5SurfContainer>(m, "H5SurfContainer");
 
@@ -160,7 +163,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pySurf =
       py::class_<
       H5SurfImpl,
-      std::unique_ptr<H5SurfImpl, py::nodelete>,
+      std::unique_ptr<H5SurfImpl, ObjectDeleter>,
       H5BaseObjectImpl,
       H5Surf>(m, "H5Surf");
 
@@ -168,7 +171,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pySeisContainer =
       py::class_<
       H5SeisContainerImpl,
-      std::unique_ptr<H5SeisContainerImpl, py::nodelete>,
+      std::unique_ptr<H5SeisContainerImpl, ObjectDeleter>,
       H5BaseContainerImpl,
       H5SeisContainer>(m, "H5SeisContainer");
 
@@ -176,7 +179,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pySeis =
       py::class_<
       H5SeisImpl,
-      std::unique_ptr<H5SeisImpl, py::nodelete>,
+      std::unique_ptr<H5SeisImpl, ObjectDeleter>,
       H5BaseObjectImpl,
       H5Seis>(m, "H5Seis");
 
@@ -184,7 +187,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyWellContainer =
       py::class_<
       H5WellContainerImpl,
-      std::unique_ptr<H5WellContainerImpl, py::nodelete>,
+      std::unique_ptr<H5WellContainerImpl, ObjectDeleter>,
       H5BaseContainerImpl,
       H5WellContainer>(m, "H5WellContainer");
 
@@ -192,7 +195,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyWell =
       py::class_<
       H5WellImpl,
-      std::unique_ptr<H5WellImpl, py::nodelete>,
+      std::unique_ptr<H5WellImpl, ObjectDeleter>,
       H5BaseObjectImpl,
       H5Well>(m, "H5Well");
 
@@ -200,7 +203,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyDevCurve =
       py::class_<
       H5DevCurveImpl,
-      std::unique_ptr<H5DevCurveImpl, py::nodelete>,
+      std::unique_ptr<H5DevCurveImpl, ObjectDeleter>,
       H5BaseObjectImpl,
       H5DevCurve>(m, "H5DevCurve");
 
@@ -208,7 +211,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyLogCurve =
       py::class_<
       H5LogCurveImpl,
-      std::unique_ptr<H5LogCurveImpl, py::nodelete>,
+      std::unique_ptr<H5LogCurveImpl, ObjectDeleter>,
       H5BaseObjectImpl,
       H5LogCurve>(m, "H5LogCurve");
 
@@ -238,6 +241,9 @@ PYBIND11_MODULE(_h5geo, m) {
   CreationType_py(pyCreationType);
   CaseSensitivity_py(pyCaseSensitivity);
   Delimiter_py(pyDelimiter);
+
+  // DELETER
+  ObjectDeleter_py(pyObjectDeleter);
 
   // BASE
   SurfParam_py(pySurfParam);

@@ -53,6 +53,19 @@ D TvdssXY2ALL(
 }
 
 template<typename D>
+D traj2ALL(
+    const py::EigenDRef<const D> M,
+    const typename D::Scalar& x0,
+    const typename D::Scalar& y0,
+    const typename D::Scalar& kb,
+    const h5geo::AngleUnits& angleUnits,
+    const h5geo::TrajectoryFormat& trajFormat,
+    const bool& XNorth)
+{
+  return h5geo::traj2ALL(M, x0, y0, kb, angleUnits, trajFormat, XNorth);
+}
+
+template<typename D>
 D TvdssDxDy2ALL(
     const py::EigenDRef<const D> M,
     const typename D::Scalar& x0,
@@ -200,6 +213,16 @@ void defineDeviationFunctions(py::module_& m){
   m.def("TvdDxDy2ALL", &ext::TvdssXY2ALL<Eigen::MatrixXd>,
         py::arg("M"), py::arg("x0"), py::arg("y0"), py::arg("kb"),
         py::arg("XNorth"));
+
+  m.def("traj2ALL", &ext::traj2ALL<Eigen::MatrixXf>,
+        py::arg("M"), py::arg("x0"), py::arg("y0"), py::arg("kb"),
+        py::arg("angleUnits"), py::arg("trajFormat"), py::arg("XNorth"),
+        "Convert matrix `M` of any trajectory format "
+"to `MD_X_Y_Z_TVD_DX_DY_AZ_INCL` (Z the same as TVDSS). Set `XNorth` to `True` "
+"if `X` axis points to the North");
+  m.def("traj2ALL", &ext::traj2ALL<Eigen::MatrixXd>,
+        py::arg("M"), py::arg("x0"), py::arg("y0"), py::arg("kb"),
+        py::arg("angleUnits"), py::arg("trajFormat"), py::arg("XNorth"));
 
   m.def("TvdssDxDy2ALL", &ext::TvdssDxDy2ALL<Eigen::MatrixXf>,
         py::arg("M"), py::arg("x0"), py::arg("y0"), py::arg("kb"),
