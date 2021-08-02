@@ -44,8 +44,8 @@ public:
     p.nX = 10;
     p.nY = 20;
     p.domain = h5geo::Domain::TVD;
-    p.spatialUnits = h5geo::SpatialUnits::CENTIMETER;
-    p.temporalUnits = h5geo::TemporalUnits::MILLISECOND;
+    p.spatialUnits = "millimeter";
+    p.temporalUnits = "millisecond";
     p.dataUnits = "m/s";
   }
 

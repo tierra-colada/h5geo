@@ -478,14 +478,14 @@ H5BaseImpl::createNewSurf(h5gt::Group &group, void* p)
           std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::Domain)},
           h5gt::DataSpace(1)).
         write(static_cast<unsigned>(param.domain));
-    group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::SpatialUnits)},
-          h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.spatialUnits));
-    group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::TemporalUnits)},
-          h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.temporalUnits));
+    group.createAttribute<std::string>(
+          std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::spatial_units)},
+          h5gt::DataSpace::From(param.spatialUnits)).
+        write(param.spatialUnits);
+    group.createAttribute<std::string>(
+          std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::temporal_units)},
+          h5gt::DataSpace::From(param.temporalUnits)).
+        write(param.temporalUnits);
     group.createAttribute<std::string>(
           std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::data_units)},
           h5gt::DataSpace::From(param.dataUnits)).
@@ -533,10 +533,10 @@ H5BaseImpl::createNewWell(h5gt::Group &group, void* p)
           std::string{magic_enum::enum_name(h5geo::detail::WellAttributes::UWI)},
           h5gt::DataSpace(1)).
         write(param.uwi);
-    group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::WellAttributes::SpatialUnits)},
-          h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.spatialUnits));
+    group.createAttribute<std::string>(
+          std::string{magic_enum::enum_name(h5geo::detail::WellAttributes::spatial_units)},
+          h5gt::DataSpace::From(param.spatialUnits)).
+        write(param.spatialUnits);
 
     constexpr auto& group_names =
         magic_enum::enum_names<h5geo::detail::WellGroups>();
@@ -565,10 +565,10 @@ H5BaseImpl::createNewLogCurve(h5gt::Group &group, void* p)
 
   try {
 
-    group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::LogAttributes::SpatialUnits)},
-          h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.spatialUnits));
+    group.createAttribute<std::string>(
+          std::string{magic_enum::enum_name(h5geo::detail::LogAttributes::spatial_units)},
+          h5gt::DataSpace::From(param.spatialUnits)).
+        write(param.spatialUnits);
     group.createAttribute<std::string>(
           std::string{magic_enum::enum_name(h5geo::detail::LogAttributes::data_units)},
           h5gt::DataSpace::From(param.dataUnits)).
@@ -603,18 +603,18 @@ H5BaseImpl::createNewDevCurve(h5gt::Group &group, void* p)
 
   try {
 
-    group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::DevAttributes::SpatialUnits)},
-          h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.spatialUnits));
-    group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::DevAttributes::TemporalUnits)},
-          h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.temporalUnits));
-    group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::DevAttributes::AngleUnits)},
-          h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.angleUnits));
+    group.createAttribute<std::string>(
+          std::string{magic_enum::enum_name(h5geo::detail::DevAttributes::spatial_units)},
+          h5gt::DataSpace::From(param.spatialUnits)).
+        write(param.spatialUnits);
+    group.createAttribute<std::string>(
+          std::string{magic_enum::enum_name(h5geo::detail::DevAttributes::temporal_units)},
+          h5gt::DataSpace::From(param.temporalUnits)).
+        write(param.temporalUnits);
+    group.createAttribute<std::string>(
+          std::string{magic_enum::enum_name(h5geo::detail::DevAttributes::angle_units)},
+          h5gt::DataSpace::From(param.angleUnits)).
+        write(param.angleUnits);
 
     h5gt::DataSet dataset =
         group.createDataSet<double>(
@@ -655,18 +655,6 @@ H5BaseImpl::createNewSeis(h5gt::Group &group, void* p)
           h5gt::DataSpace(1)).
         write(static_cast<unsigned>(param.domain));
     group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SpatialUnits)},
-          h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.spatialUnits));
-    group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::TemporalUnits)},
-          h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.temporalUnits));
-    group.createAttribute<std::string>(
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::data_units)},
-          h5gt::DataSpace::From(param.dataUnits)).
-        write(param.dataUnits);
-    group.createAttribute<unsigned>(
           std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SeisDataType)},
           h5gt::DataSpace(1)).
         write(static_cast<unsigned>(param.dataType));
@@ -678,6 +666,18 @@ H5BaseImpl::createNewSeis(h5gt::Group &group, void* p)
           std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SRD)},
           h5gt::DataSpace(1)).
         write(param.srd);
+    group.createAttribute<std::string>(
+          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::spatial_units)},
+          h5gt::DataSpace::From(param.spatialUnits)).
+        write(param.spatialUnits);
+    group.createAttribute<std::string>(
+          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::temporal_units)},
+          h5gt::DataSpace::From(param.temporalUnits)).
+        write(param.temporalUnits);
+    group.createAttribute<std::string>(
+          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::data_units)},
+          h5gt::DataSpace::From(param.dataUnits)).
+        write(param.dataUnits);
 
     createTextHeader(group);
     createBinHeader(group, param.stdChunk);

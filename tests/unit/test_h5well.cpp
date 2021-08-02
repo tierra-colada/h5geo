@@ -53,13 +53,13 @@ public:
     wellParam.headY = 7425880;
     wellParam.kb = 50.88;
     wellParam.uwi = "my_uwi";
-    wellParam.spatialUnits = h5geo::SpatialUnits::METER;
+    wellParam.spatialUnits = "meter";
 
-    devCurveParam.spatialUnits = h5geo::SpatialUnits::METER;
-    devCurveParam.temporalUnits = h5geo::TemporalUnits::MILLISECOND;
-    devCurveParam.angleUnits = h5geo::AngleUnits::RADIAN;
+    devCurveParam.spatialUnits = "meter";
+    devCurveParam.temporalUnits = "millisecond";
+    devCurveParam.angleUnits = "radian";
 
-    logCurveParam.spatialUnits = h5geo::SpatialUnits::CENTIMETER;
+    logCurveParam.spatialUnits = "cm";
     logCurveParam.dataUnits = "kg/m2";
 
     trig = true;
@@ -113,7 +113,6 @@ public:
 
 TEST_F(H5WellFixture, createContainer){
   ASSERT_TRUE(fs::exists(FILE_NAME));
-  wellContainer->Delete();
 }
 
 TEST_F(H5WellFixture, createWellWithDifferentCreateFlags){

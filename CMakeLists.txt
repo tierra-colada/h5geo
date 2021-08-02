@@ -67,6 +67,7 @@ find_package(ZLIB REQUIRED)
 find_package(HDF5 REQUIRED)
 find_package(h5gt REQUIRED)
 find_package(magic_enum REQUIRED)
+find_package(units REQUIRED)
 
 # we don't want to install third-party include dirs
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${EIGEN3_INCLUDE_DIRS}>)
@@ -75,6 +76,7 @@ target_include_directories(h5geo PUBLIC ${HDF5_INCLUDE_DIRS})
 target_compile_definitions(h5geo PUBLIC ${HDF5_DEFINITIONS})
 target_link_libraries(h5geo PUBLIC $<BUILD_INTERFACE:magic_enum::magic_enum>)
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${h5gt_INCLUDE_DIRS}>)
+target_link_libraries(h5geo PUBLIC units-static)
 
 if(H5GEO_BUILD_h5geopy)
   add_subdirectory(src/h5geopy)

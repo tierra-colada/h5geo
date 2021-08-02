@@ -35,38 +35,30 @@ struct SurfParam{
   size_t nX, nY;
   double X0, Y0, dX, dY;
   h5geo::Domain domain;
-  h5geo::SpatialUnits spatialUnits;
-  h5geo::TemporalUnits temporalUnits;
-  std::string dataUnits;
+  std::string spatialUnits, temporalUnits, dataUnits;
 };
 
 struct WellParam{
   double headX, headY, kb;
-  std::string uwi;
-  h5geo::SpatialUnits spatialUnits;
+  std::string spatialUnits, uwi;
 };
 
 struct DevCurveParam{
-  h5geo::SpatialUnits spatialUnits;
-  h5geo::TemporalUnits temporalUnits;
-  h5geo::AngleUnits angleUnits;
+  std::string spatialUnits, temporalUnits, angleUnits;
   bool setActive = false;
   hsize_t chunkSize = 1000;
 };
 
 struct LogCurveParam{
-  h5geo::SpatialUnits spatialUnits;
-  std::string dataUnits;
+  std::string dataUnits, spatialUnits;
   hsize_t chunkSize = 1000;
 };
 
 struct SeisParam{
   h5geo::Domain domain;
-  h5geo::SpatialUnits spatialUnits;
-  h5geo::TemporalUnits temporalUnits;
-  std::string dataUnits;
   h5geo::SeisDataType dataType;
   h5geo::SurveyType surveyType;
+  std::string spatialUnits, temporalUnits, dataUnits;
   size_t nTrc;
   size_t nSamp;
   double srd = 0;

@@ -34,12 +34,12 @@ enum class ContainerAttributes : unsigned{
 
 enum class SeisAttributes : unsigned{
   Domain = 1,
-  SpatialUnits = 2,
-  TemporalUnits = 3,
-  data_units = 4,
-  SeisDataType = 5,
-  SurveyType = 6,
-  SRD = 7
+  SeisDataType = 2,
+  SurveyType = 3,
+  SRD = 4,
+  spatial_units = 5,
+  temporal_units = 6,
+  data_units = 7
 };
 
 enum class SeisDatasets : unsigned{
@@ -58,8 +58,8 @@ enum class SeisGroups : unsigned{
 
 enum class SurfAttributes : unsigned{
   Domain = 1,
-  SpatialUnits = 2,
-  TemporalUnits = 3,
+  spatial_units = 2,
+  temporal_units = 3,
   data_units = 4,
   origin = 5,
   spacing = 6
@@ -70,7 +70,7 @@ enum class SurfDatasets : unsigned{
 };
 
 enum class WellAttributes : unsigned{
-  SpatialUnits = 1,
+  spatial_units = 1,
   head_coord = 2,
   KB = 3,
   UWI = 4
@@ -83,9 +83,9 @@ enum class WellGroups : unsigned{
 };
 
 enum class DevAttributes : unsigned{
-  SpatialUnits = 1,
-  TemporalUnits = 2,
-  AngleUnits = 3
+  spatial_units = 1,
+  temporal_units = 2,
+  angle_units = 3
 };
 
 enum class DevDatasets : unsigned{
@@ -93,7 +93,7 @@ enum class DevDatasets : unsigned{
 };
 
 enum class LogAttributes : unsigned{
-  SpatialUnits = 1,
+  spatial_units = 1,
   data_units = 2
 };
 

@@ -15,8 +15,8 @@ void SurfParam_py(py::class_<SurfParam> &py_obj){
         double,
         double,
         Domain,
-        SpatialUnits,
-        TemporalUnits,
+        std::string,
+        std::string,
         std::string>(),
         py::arg("nX"), py::arg("nY"),
         py::arg("X0"), py::arg("Y0"),
@@ -45,7 +45,7 @@ void WellParam_py(py::class_<WellParam> &py_obj){
         double,
         double,
         std::string,
-        SpatialUnits>(),
+        std::string>(),
         py::arg("headX"), py::arg("headY"),
         py::arg("kb"), py::arg("uwi"),
         py::arg("spatialUnits"))
@@ -62,9 +62,9 @@ void DevCurveParam_py(py::class_<DevCurveParam> &py_obj){
         py::init<>())
       .def(
         py::init<
-        SpatialUnits,
-        TemporalUnits,
-        AngleUnits,
+        std::string,
+        std::string,
+        std::string,
         bool,
         hsize_t>(),
         py::arg("spatialUnits"), py::arg("temporalUnits"),
@@ -83,7 +83,7 @@ void LogCurveParam_py(py::class_<LogCurveParam> &py_obj){
         py::init<>())
       .def(
         py::init<
-        SpatialUnits,
+        std::string,
         std::string,
         hsize_t>(),
         py::arg("spatialUnits"),
@@ -101,22 +101,22 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
       .def(
         py::init<
         Domain,
-        SpatialUnits,
-        TemporalUnits,
-        std::string,
         SeisDataType,
         SurveyType,
+        std::string,
+        std::string,
+        std::string,
         size_t,
         size_t,
         double,
         hsize_t,
         hsize_t>(),
         py::arg("domain"),
+        py::arg("dataType"),
+        py::arg("surveyType"),
         py::arg("spatialUnits"),
         py::arg("temporalUnits"),
         py::arg("dataUnits"),
-        py::arg("dataType"),
-        py::arg("surveyType"),
         py::arg("nTrc"),
         py::arg("nSamp"),
         py::arg_v("srd", 0),
