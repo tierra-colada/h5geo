@@ -25,6 +25,12 @@ public:
   virtual Eigen::VectorXd getCurve(
       const std::string& name) override;
 
+  virtual bool setSpatialUnits(const std::string& str) override;
+  virtual bool setDataUnits(const std::string& str) override;
+
+  virtual std::string getSpatialUnits() override;
+  virtual std::string getDataUnits() override;
+
   virtual std::string getRelativeCurveName() override;
 
   virtual H5WellContainer* getWellContainer() override;

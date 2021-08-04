@@ -11,6 +11,23 @@ void H5Surf_py(
   py_obj
       .def("writeData", &H5SurfImpl::writeData)
       .def("getData", &H5SurfImpl::getData)
+
+      .def("setDomain", &H5SurfImpl::setDomain)
+      .def("setSpatialUnits", &H5SurfImpl::setSpatialUnits)
+      .def("setTemporalUnits", &H5SurfImpl::setTemporalUnits)
+      .def("setDataUnits", &H5SurfImpl::setDataUnits)
+      .def("setOrigin", py::overload_cast<const std::vector<double>&>(&H5SurfImpl::setOrigin))
+      .def("setOrigin", py::overload_cast<const Eigen::Ref<const Eigen::Vector2d>&>(&H5SurfImpl::setOrigin))
+      .def("setSpacing", py::overload_cast<const std::vector<double>&>(&H5SurfImpl::setSpacing))
+      .def("setSpacing", py::overload_cast<const Eigen::Ref<const Eigen::Vector2d>&>(&H5SurfImpl::setSpacing))
+
+      .def("getDomain", &H5SurfImpl::getDomain)
+      .def("getSpatialUnits", &H5SurfImpl::getSpatialUnits)
+      .def("getTemporalUnits", &H5SurfImpl::getTemporalUnits)
+      .def("getDataUnits", &H5SurfImpl::getDataUnits)
+      .def("getOrigin", &H5SurfImpl::getOrigin)
+      .def("getSpacing", &H5SurfImpl::getSpacing)
+
       .def("getSurfContainer", &H5SurfImpl::getSurfContainer)
       .def("getSurfD", &H5SurfImpl::getSurfD);
 }

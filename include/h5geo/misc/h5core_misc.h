@@ -385,6 +385,105 @@ template<typename Object,
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline bool setEnumFromObj(Object& object, const std::string& attrName, const unsigned& val){
+  if (!object.hasAttribute(attrName))
+    return false;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if ((!dtype.isTypeEqual(h5gt::AtomicType<unsigned>()) ||
+      !dtype.isTypeEqual(h5gt::AtomicType<int>())) &&
+      attr.getMemSpace().getElementCount() != 1)
+    return false;
+
+  attr.write(val);
+  return true;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline bool setStringFromObj(Object& object, const std::string& attrName, const std::string& str){
+  if (!object.hasAttribute(attrName))
+    return false;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<std::string>()) ||
+      attr.getMemSpace().getElementCount() != 1)
+    return false;
+
+  attr.write(str);
+  return true;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline bool setFloatFromObj(Object& object, const std::string& attrName, const double& val){
+  if (!object.hasAttribute(attrName))
+    return false;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if ((!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      !dtype.isTypeEqual(h5gt::AtomicType<double>())) &&
+      attr.getMemSpace().getElementCount() != 1)
+    return false;
+
+  attr.write(val);
+  return true;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline bool setFloatVecFromObj(Object& object, const std::string& attrName, const std::vector<double>& v){
+  if (!object.hasAttribute(attrName))
+    return false;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if ((!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      !dtype.isTypeEqual(h5gt::AtomicType<double>())) &&
+      attr.getMemSpace().getElementCount() != v.size())
+    return false;
+
+  attr.write(v);
+  return true;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline bool setFloatVecFromObj(Object& object, const std::string& attrName, const Eigen::Ref<const Eigen::VectorXd>& v){
+  if (!object.hasAttribute(attrName))
+    return false;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if ((!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      !dtype.isTypeEqual(h5gt::AtomicType<double>())) &&
+      attr.getMemSpace().getElementCount() != v.size())
+    return false;
+
+  attr.write_raw(v.data());
+  return true;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
 inline unsigned getEnumFromObj(Object& object, const std::string& attrName){
   /* as we often use magic_enum to convert enum to string
    * we need to remove `h5geo::` from enum name given
@@ -392,13 +491,100 @@ inline unsigned getEnumFromObj(Object& object, const std::string& attrName){
    * magic_enum::enum_type_name<h5geo::SurveyType>() */
 //  eraseSubStr(attrName, "h5geo::");
 
-  unsigned value;
-  if (object.hasAttribute(attrName)){
-    h5gt::Attribute attr = object.getAttribute(attrName);
-    attr.read(value);
-  } else {
-    value = 0;
-  }
+  unsigned value = 0;
+  if (!object.hasAttribute(attrName))
+    return value;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if ((!dtype.isTypeEqual(h5gt::AtomicType<unsigned>()) ||
+      !dtype.isTypeEqual(h5gt::AtomicType<int>())) &&
+      attr.getMemSpace().getElementCount() != 1)
+    return value;
+
+  attr.read(value);
+  return value;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline std::string getStringFromObj(Object& object, const std::string& attrName){
+  std::string str;
+  if (!object.hasAttribute(attrName))
+    return str;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<std::string>()) ||
+      attr.getMemSpace().getElementCount() != 1)
+      return str;
+
+  attr.read(str);
+  return str;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline double getFloatFromObj(Object& object, const std::string& attrName){
+  double value = NAN;
+  if (!object.hasAttribute(attrName))
+    return value;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if ((!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      !dtype.isTypeEqual(h5gt::AtomicType<double>())) &&
+      attr.getMemSpace().getElementCount() != 1)
+    return value;
+
+  attr.read(value);
+  return value;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline std::vector<double> getFloatVecFromObj(Object& object, const std::string& attrName){
+  std::vector<double> value;
+  if (!object.hasAttribute(attrName))
+    return value;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      !dtype.isTypeEqual(h5gt::AtomicType<double>()))
+    return value;
+
+  attr.read(value);
+  return value;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline Eigen::VectorXd getEigenFloatVecFromObj(Object& object, const std::string& attrName){
+  Eigen::VectorXd value;
+  if (!object.hasAttribute(attrName))
+    return value;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      !dtype.isTypeEqual(h5gt::AtomicType<double>()))
+    return value;
+
+  value.resize(attr.getMemSpace().getElementCount());
+  attr.read(value.data());
   return value;
 }
 

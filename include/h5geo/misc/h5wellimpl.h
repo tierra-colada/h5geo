@@ -41,13 +41,15 @@ public:
       DevCurveParam& p,
       h5geo::CreationType createFlag) override;
 
+  virtual bool setSpatialUnits(const std::string& str) override;
+  virtual bool setHeadCoord(const Eigen::Ref<const Eigen::Vector2d>& v) override;
+  virtual bool setKB(const double& val) override;
+  virtual bool setUWI(const std::string& str) override;
+
+  virtual std::string getSpatialUnits() override;
   virtual Eigen::Vector2d getHeadCoord() override;
   virtual double getKB() override;
   virtual std::string getUWI() override;
-
-  virtual bool setHeadCoord(const Eigen::Ref<const Eigen::Vector2d>& v) override;
-  virtual bool setKB(const double& kb) override;
-  virtual bool setUWI(const std::string& uwi) override;
 
   virtual H5DevCurve* getActiveDevCurve() override;
   virtual std::vector<H5DevCurve*> getDevCurveList() override;

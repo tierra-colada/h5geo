@@ -148,6 +148,46 @@ template<typename Object,
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+bool setStringFromObj(
+    Object& object,
+    const std::string& attrName,
+    const std::string& str);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+bool setFloatFromObj(
+    Object& object,
+    const std::string& attrName,
+    const double& val);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+bool setFloatVecFromObj(
+    Object& object,
+    const std::string& attrName,
+    const std::vector<double>& v);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+bool setFloatVecFromObj(
+    Object& object,
+    const std::string& attrName,
+    const Eigen::Ref<const Eigen::VectorXd>& v);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 /*!
  * \brief getEnumFromObj Read enum from `Object's`
  * attribute as unsigned value. Return `0` if attribute
@@ -156,6 +196,42 @@ template<typename Object,
  * \param attrName
  */
 unsigned getEnumFromObj(Object& object, const std::string& attrName);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+/*!
+ * \brief getStringFromObj Read string from `Object's`
+ * attribute. Return `std::string()` (empty string) if attribute
+ * not exists.
+ * \param object
+ * \param attrName
+ * \return
+ */
+std::string getStringFromObj(Object& object, const std::string& attrName);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+double getFloatFromObj(Object& object, const std::string& attrName);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+std::vector<double> getFloatVecFromObj(Object& object, const std::string& attrName);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+Eigen::VectorXd getEigenFloatVecFromObj(Object& object, const std::string& attrName);
 
 template<typename Object,
          typename std::enable_if<

@@ -178,8 +178,21 @@ public:
   virtual bool checkSampleLimits(
       const size_t& fromSampInd, size_t& nSamp) override;
 
+  virtual bool setDomain(const h5geo::Domain& val) override;
+  virtual bool setDataType(const h5geo::SeisDataType& val) override;
+  virtual bool setSurveyType(const h5geo::SurveyType& val) override;
+  virtual bool setSRD(const double& val) override;
+  virtual bool setSpatialUnits(const std::string& str) override;
+  virtual bool setTemporalUnits(const std::string& str) override;
+  virtual bool setDataUnits(const std::string& str) override;
+
+  virtual h5geo::Domain getDomain() override;
   virtual h5geo::SeisDataType getDataType() override;
   virtual h5geo::SurveyType getSurveyType() override;
+  virtual double getSRD() override;
+  virtual std::string getSpatialUnits() override;
+  virtual std::string getTemporalUnits() override;
+  virtual std::string getDataUnits() override;
 
   virtual bool hasPKeySort(const std::string& pKeyName) override;
   virtual bool removePKeySort(const std::string& pKeyName) override;

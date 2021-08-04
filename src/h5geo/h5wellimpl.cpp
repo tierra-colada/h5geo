@@ -200,75 +200,58 @@ H5DevCurve* H5WellImpl::createDevCurve(
   return new H5DevCurveImpl(opt.value());
 }
 
-Eigen::Vector2d H5WellImpl::getHeadCoord(){
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::WellAttributes::head_coord)};
-  Eigen::Vector2d v(2);
-
-  if (!objG.hasAttribute(name))
-    return Eigen::Vector2d();
-
-  objG.getAttribute(name).read(v.data());
-  return v;
-}
-
-double H5WellImpl::getKB(){
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::WellAttributes::KB)};
-  double x;
-
-  if (!objG.hasAttribute(name))
-    return NAN;
-
-  objG.getAttribute(name).read(x);
-  return x;
-}
-
-std::string H5WellImpl::getUWI(){
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::WellAttributes::UWI)};
-  std::string uwi;
-
-  if (!objG.hasAttribute(name))
-    return std::string();
-
-  objG.getAttribute(name).read(uwi);
-  return uwi;
+bool H5WellImpl::setSpatialUnits(const std::string& str){
+  return h5geo::setStringFromObj(
+        objG,
+        std::string{h5geo::detail::spatial_units},
+        str);
 }
 
 bool H5WellImpl::setHeadCoord(
     const Eigen::Ref<const Eigen::Vector2d>& v)
 {
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::WellAttributes::head_coord)};
-
-  if (!objG.hasAttribute(name))
-    return false;
-
-  objG.getAttribute(name).write_raw(v.data());
-  return true;
+  return h5geo::setFloatVecFromObj(
+        objG,
+        std::string{h5geo::detail::head_coord},
+        v);
 }
 
-bool H5WellImpl::setKB(const double& kb){
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::WellAttributes::KB)};
-
-  if (!objG.hasAttribute(name))
-    return false;
-
-  objG.getAttribute(name).write(kb);
-  return true;
+bool H5WellImpl::setKB(const double& val){
+  return h5geo::setFloatFromObj(
+        objG,
+        std::string{h5geo::detail::KB},
+        val);
 }
 
-bool H5WellImpl::setUWI(const std::string& uwi){
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::WellAttributes::KB)};
+bool H5WellImpl::setUWI(const std::string& str){
+  return h5geo::setStringFromObj(
+        objG,
+        std::string{h5geo::detail::UWI},
+        str);
+}
 
-  if (!objG.hasAttribute(name))
-    return false;
+std::string H5WellImpl::getSpatialUnits(){
+  return h5geo::getStringFromObj(
+        objG,
+        std::string{h5geo::detail::spatial_units});
+}
 
-  objG.getAttribute(name).write(uwi);
-  return true;
+Eigen::Vector2d H5WellImpl::getHeadCoord(){
+  return h5geo::getEigenFloatVecFromObj(
+        objG,
+        std::string{h5geo::detail::head_coord});
+}
+
+double H5WellImpl::getKB(){
+  return h5geo::getFloatFromObj(
+        objG,
+        std::string{h5geo::detail::KB});
+}
+
+std::string H5WellImpl::getUWI(){
+  return h5geo::getStringFromObj(
+        objG,
+        std::string{h5geo::detail::UWI});
 }
 
 H5DevCurve* H5WellImpl::getActiveDevCurve(){

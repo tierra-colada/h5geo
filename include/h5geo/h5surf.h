@@ -18,6 +18,22 @@ public:
 
   virtual Eigen::MatrixXd getData() const = 0;
 
+  virtual bool setDomain(const h5geo::Domain& domain) = 0;
+  virtual bool setSpatialUnits(const std::string& str) = 0;
+  virtual bool setTemporalUnits(const std::string& str) = 0;
+  virtual bool setDataUnits(const std::string& str) = 0;
+  virtual bool setOrigin(const std::vector<double>& v) = 0;
+  virtual bool setOrigin(const Eigen::Ref<const Eigen::Vector2d>& v) = 0;
+  virtual bool setSpacing(const std::vector<double>& v) = 0;
+  virtual bool setSpacing(const Eigen::Ref<const Eigen::Vector2d>& v) = 0;
+
+  virtual h5geo::Domain getDomain() = 0;
+  virtual std::string getSpatialUnits() = 0;
+  virtual std::string getTemporalUnits() = 0;
+  virtual std::string getDataUnits() = 0;
+  virtual Eigen::Vector2d getOrigin() = 0;
+  virtual Eigen::Vector2d getSpacing() = 0;
+
   virtual H5SurfContainer* getSurfContainer() const = 0;
 
   virtual std::optional<h5gt::DataSet> getSurfD() const = 0;

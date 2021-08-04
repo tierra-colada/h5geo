@@ -56,9 +56,7 @@ bool H5BaseImpl::isGeoContainer(h5gt::File file,
                                 const h5geo::ContainerType& cntType)
 {
   unsigned val = h5geo::getEnumFromObj(
-        file,
-        std::string{magic_enum::enum_name(
-                    h5geo::detail::ContainerAttributes::ContainerType)});
+        file, std::string{h5geo::detail::ContainerType});
   switch (cntType) {
   case h5geo::ContainerType::SURFACE:
     return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::SURFACE;
@@ -102,17 +100,12 @@ bool H5BaseImpl::isGeoObject(h5gt::Group group,
 bool H5BaseImpl::isSurf(
     h5gt::Group &group)
 {
-  constexpr auto& attr_names =
-      magic_enum::enum_names<h5geo::detail::SurfAttributes>();
-  constexpr auto& dataset_names =
-      magic_enum::enum_names<h5geo::detail::SurfDatasets>();
-
-  for (const auto& name : attr_names){
+  for (const auto& name : h5geo::detail::surf_attrs){
     if (!group.hasAttribute(std::string{name}))
       return false;
   }
 
-  for (const auto& name : dataset_names){
+  for (const auto& name : h5geo::detail::surf_dsets){
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
       return false;
   }
@@ -122,17 +115,12 @@ bool H5BaseImpl::isSurf(
 bool H5BaseImpl::isWell(
     h5gt::Group &group)
 {
-  constexpr auto& attr_names =
-      magic_enum::enum_names<h5geo::detail::WellAttributes>();
-  constexpr auto& group_names =
-      magic_enum::enum_names<h5geo::detail::WellGroups>();
-
-  for (const auto& name : attr_names){
+  for (const auto& name : h5geo::detail::well_attrs){
     if (!group.hasAttribute(std::string{name}))
       return false;
   }
 
-  for (const auto& name : group_names){
+  for (const auto& name : h5geo::detail::well_groups){
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Group))
       return false;
   }
@@ -142,17 +130,12 @@ bool H5BaseImpl::isWell(
 bool H5BaseImpl::isLogCurve(
     h5gt::Group &group)
 {
-  constexpr auto& attr_names =
-      magic_enum::enum_names<h5geo::detail::LogAttributes>();
-  constexpr auto& dataset_names =
-      magic_enum::enum_names<h5geo::detail::LogDatasets>();
-
-  for (const auto& name : attr_names){
+  for (const auto& name : h5geo::detail::log_attrs){
     if (!group.hasAttribute(std::string{name}))
       return false;
   }
 
-  for (const auto& name : dataset_names){
+  for (const auto& name : h5geo::detail::log_dsets){
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
       return false;
   }
@@ -162,17 +145,12 @@ bool H5BaseImpl::isLogCurve(
 bool H5BaseImpl::isDevCurve(
     h5gt::Group &group)
 {
-  constexpr auto& attr_names =
-      magic_enum::enum_names<h5geo::detail::DevAttributes>();
-  constexpr auto& dataset_names =
-      magic_enum::enum_names<h5geo::detail::DevDatasets>();
-
-  for (const auto& name : attr_names){
+  for (const auto& name : h5geo::detail::dev_attrs){
     if (!group.hasAttribute(std::string{name}))
       return false;
   }
 
-  for (const auto& name : dataset_names){
+  for (const auto& name : h5geo::detail::dev_dsets){
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
       return false;
   }
@@ -182,27 +160,22 @@ bool H5BaseImpl::isDevCurve(
 bool H5BaseImpl::isSeis(
     h5gt::Group &group)
 {
-  constexpr auto& attr_names =
-      magic_enum::enum_names<h5geo::detail::SeisAttributes>();
-  constexpr auto& dataset_names =
-      magic_enum::enum_names<h5geo::detail::SeisDatasets>();
-
-  for (const auto& name : attr_names){
+  for (const auto& name : h5geo::detail::seis_attrs){
     if (!group.hasAttribute(std::string{name}))
       return false;
   }
 
-  for (const auto& name : dataset_names){
+  for (const auto& name : h5geo::detail::seis_dsets){
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
       return false;
   }
 
   std::string sortG_name =
-      std::string{magic_enum::enum_name(h5geo::detail::SeisGroups::sort)};
+      std::string{h5geo::detail::sort};
   std::string indexesG_name =
-      std::string{magic_enum::enum_name(h5geo::detail::SeisGroups::indexes)};
+      std::string{h5geo::detail::indexes};
   std::string unique_valuesG_name =
-      std::string{magic_enum::enum_name(h5geo::detail::SeisGroups::unique_values)};
+      std::string{h5geo::detail::unique_values};
 
   if (!group.hasObject
       (sortG_name, h5gt::ObjectType::Group))
@@ -413,12 +386,13 @@ H5BaseImpl::createNewContainer(
     h5gt::File &file,
     const h5geo::ContainerType& containerType)
 {
-  std::string attrName = std::string{magic_enum::enum_name(
-        h5geo::detail::ContainerAttributes::ContainerType)};
+  std::string attrName = std::string{h5geo::detail::ContainerType};
   if (file.hasAttribute(attrName)){
     auto attr = file.getAttribute(attrName);
-    if (!attr.getDataType().isTypeEqual(h5gt::AtomicType<unsigned>()) ||
-        attr.getStorageSize() != 1){
+    auto dtype = attr.getDataType();
+    if ((!dtype.isTypeEqual(h5gt::AtomicType<unsigned>()) &&
+        !dtype.isTypeEqual(h5gt::AtomicType<int>())) ||
+        attr.getMemSpace().getElementCount() != 1){
       file.deleteAttribute(attrName); // after deletion `attr` is unavailable!
       file.createAttribute<unsigned>(
             attrName, h5gt::DataSpace(1)).

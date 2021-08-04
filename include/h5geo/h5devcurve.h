@@ -31,6 +31,14 @@ public:
   virtual Eigen::VectorXd getCurve(
       const std::string& name) = 0;
 
+  virtual bool setSpatialUnits(const std::string& str) = 0;
+  virtual bool setTemporalUnits(const std::string& str) = 0;
+  virtual bool setAngleUnits(const std::string& str) = 0;
+
+  virtual std::string getSpatialUnits() = 0;
+  virtual std::string getTemporalUnits() = 0;
+  virtual std::string getAngleUnits() = 0;
+
   virtual std::string getRelativeCurveName() = 0;
 
   virtual H5WellContainer* getWellContainer() = 0;

@@ -797,18 +797,98 @@ bool H5SeisImpl::checkSampleLimits(
   return true;
 }
 
+bool H5SeisImpl::setDomain(const h5geo::Domain& val){
+  return h5geo::setEnumFromObj(
+        objG,
+        std::string{h5geo::detail::Domain},
+        static_cast<unsigned>(val));
+}
+
+bool H5SeisImpl::setDataType(const h5geo::SeisDataType& val){
+  return h5geo::setEnumFromObj(
+        objG,
+        std::string{h5geo::detail::SeisDataType},
+        static_cast<unsigned>(val));
+}
+
+bool H5SeisImpl::setSurveyType(const h5geo::SurveyType& val){
+  return h5geo::setEnumFromObj(
+        objG,
+        std::string{h5geo::detail::SurveyType},
+        static_cast<unsigned>(val));
+}
+
+bool H5SeisImpl::setSRD(const double& val){
+  return h5geo::setFloatFromObj(
+        objG,
+        std::string{h5geo::detail::SRD},
+        val);
+}
+
+bool H5SeisImpl::setSpatialUnits(const std::string& str){
+  return h5geo::setStringFromObj(
+        objG,
+        std::string{h5geo::detail::spatial_units},
+        str);
+}
+
+bool H5SeisImpl::setTemporalUnits(const std::string& str){
+  return h5geo::setStringFromObj(
+        objG,
+        std::string{h5geo::detail::temporal_units},
+        str);
+}
+
+bool H5SeisImpl::setDataUnits(const std::string& str){
+  return h5geo::setStringFromObj(
+        objG,
+        std::string{h5geo::detail::data_units},
+        str);
+}
+
+h5geo::Domain H5SeisImpl::getDomain(){
+  return static_cast<h5geo::Domain>(
+        h5geo::getEnumFromObj(
+          objG,
+          std::string{h5geo::detail::Domain}));
+}
+
 h5geo::SeisDataType H5SeisImpl::getDataType(){
   return static_cast<h5geo::SeisDataType>(
         h5geo::getEnumFromObj(
           objG,
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SeisDataType)}));
+          std::string{h5geo::detail::SeisDataType}));
 }
 
 h5geo::SurveyType H5SeisImpl::getSurveyType(){
   return static_cast<h5geo::SurveyType>(
         h5geo::getEnumFromObj(
           objG,
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SurveyType)}));
+          std::string{h5geo::detail::SurveyType}));
+}
+
+double H5SeisImpl::getSRD(){
+  return h5geo::getFloatFromObj(
+        objG,
+        std::string{h5geo::detail::SRD});
+}
+
+std::string H5SeisImpl::getSpatialUnits(){
+  return h5geo::getStringFromObj(
+        objG,
+        std::string{h5geo::detail::spatial_units});
+}
+
+std::string H5SeisImpl::getTemporalUnits(){
+  return h5geo::getStringFromObj(
+        objG,
+        std::string{h5geo::detail::temporal_units});
+}
+
+std::string H5SeisImpl::getDataUnits(){
+  return h5geo::getStringFromObj(
+        objG,
+        std::string{h5geo::detail::data_units});
 }
 
 bool H5SeisImpl::hasPKeySort(const std::string& pKeyName)

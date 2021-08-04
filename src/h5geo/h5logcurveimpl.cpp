@@ -45,6 +45,32 @@ Eigen::VectorXd H5LogCurveImpl::getCurve(
         opt.value(), name);
 }
 
+bool H5LogCurveImpl::setSpatialUnits(const std::string& str){
+  return h5geo::setStringFromObj(
+        objG,
+        std::string{h5geo::detail::spatial_units},
+        str);
+}
+
+bool H5LogCurveImpl::setDataUnits(const std::string& str){
+  return h5geo::setStringFromObj(
+        objG,
+        std::string{h5geo::detail::data_units},
+        str);
+}
+
+std::string H5LogCurveImpl::getSpatialUnits(){
+  return h5geo::getStringFromObj(
+        objG,
+        std::string{h5geo::detail::spatial_units});
+}
+
+std::string H5LogCurveImpl::getDataUnits(){
+  return h5geo::getStringFromObj(
+        objG,
+        std::string{h5geo::detail::data_units});
+}
+
 std::string H5LogCurveImpl::getRelativeCurveName(){
   auto optWellG = getParentG(h5geo::ObjectType::WELL);
   if (!optWellG.has_value())

@@ -181,6 +181,22 @@ void H5Seis_py(
       .def("getDataType", &H5SeisImpl::getDataType)
       .def("getSurveyType", &H5SeisImpl::getSurveyType)
 
+      .def("setDomain", &H5SeisImpl::setDomain)
+      .def("setDataType", &H5SeisImpl::setDataType)
+      .def("setSurveyType", &H5SeisImpl::setSurveyType)
+      .def("setSRD", &H5SeisImpl::setSRD)
+      .def("setSpatialUnits", &H5SeisImpl::setSpatialUnits)
+      .def("setTemporalUnits", &H5SeisImpl::setTemporalUnits)
+      .def("setDataUnits", &H5SeisImpl::setDataUnits)
+
+      .def("getDomain", &H5SeisImpl::getDomain)
+      .def("getDataType", &H5SeisImpl::getDataType)
+      .def("getSurveyType", &H5SeisImpl::getSurveyType)
+      .def("getSRD", &H5SeisImpl::getSRD)
+      .def("getSpatialUnits", &H5SeisImpl::getSpatialUnits)
+      .def("getTemporalUnits", &H5SeisImpl::getTemporalUnits)
+      .def("getDataUnits", &H5SeisImpl::getDataUnits)
+
       .def("hasPKeySort", &H5SeisImpl::hasPKeySort,
            py::arg("pKeyName"))
       .def("removePKeySort", &H5SeisImpl::removePKeySort,

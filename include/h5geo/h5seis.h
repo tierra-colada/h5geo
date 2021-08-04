@@ -182,8 +182,21 @@ public:
   virtual bool checkSampleLimits(
       const size_t& fromSampInd, size_t& nSamp) = 0;
 
+  virtual bool setDomain(const h5geo::Domain& domain) = 0;
+  virtual bool setDataType(const h5geo::SeisDataType& seisType) = 0;
+  virtual bool setSurveyType(const h5geo::SurveyType& surveyType) = 0;
+  virtual bool setSRD(const double& val) = 0;
+  virtual bool setSpatialUnits(const std::string& str) = 0;
+  virtual bool setTemporalUnits(const std::string& str) = 0;
+  virtual bool setDataUnits(const std::string& str) = 0;
+
+  virtual h5geo::Domain getDomain() = 0;
   virtual h5geo::SeisDataType getDataType() = 0;
   virtual h5geo::SurveyType getSurveyType() = 0;
+  virtual double getSRD() = 0;
+  virtual std::string getSpatialUnits() = 0;
+  virtual std::string getTemporalUnits() = 0;
+  virtual std::string getDataUnits() = 0;
 
   virtual bool hasPKeySort(const std::string& pKeyName) = 0;
   virtual bool removePKeySort(const std::string& pKeyName) = 0;

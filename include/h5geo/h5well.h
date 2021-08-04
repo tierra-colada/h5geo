@@ -43,13 +43,15 @@ public:
       DevCurveParam& p,
       h5geo::CreationType createFlag) = 0;
 
+  virtual bool setSpatialUnits(const std::string& str) = 0;
+  virtual bool setHeadCoord(const Eigen::Ref<const Eigen::Vector2d>& v) = 0;
+  virtual bool setKB(const double& val) = 0;
+  virtual bool setUWI(const std::string& str) = 0;
+
+  virtual std::string getSpatialUnits() = 0;
   virtual Eigen::Vector2d getHeadCoord() = 0;
   virtual double getKB() = 0;
   virtual std::string getUWI() = 0;
-
-  virtual bool setHeadCoord(const Eigen::Ref<const Eigen::Vector2d>& v) = 0;
-  virtual bool setKB(const double& kb) = 0;
-  virtual bool setUWI(const std::string& uwi) = 0;
 
   virtual H5DevCurve* getActiveDevCurve() = 0;
   virtual std::vector<H5DevCurve*> getDevCurveList() = 0;
