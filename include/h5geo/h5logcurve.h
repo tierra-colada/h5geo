@@ -22,9 +22,11 @@ public:
       const Eigen::Ref<const Eigen::VectorXd>& v) = 0;
 
   virtual Eigen::VectorXd getCurve(
-      const h5geo::LogDataType& name) = 0;
+      const h5geo::LogDataType& name,
+      const std::string& units = "") = 0;
   virtual Eigen::VectorXd getCurve(
-      const std::string& name) = 0;
+      const std::string& name,
+      const std::string& units = "") = 0;
 
   virtual bool setSpatialUnits(const std::string& str) = 0;
   virtual bool setDataUnits(const std::string& str) = 0;

@@ -27,7 +27,8 @@ void H5Well_py(
       .def("setUWI", &H5WellImpl::setUWI)
 
       .def("getSpatialUnits", &H5WellImpl::getSpatialUnits)
-      .def("getHeadCoord", &H5WellImpl::getHeadCoord)
+      .def("getHeadCoord", &H5WellImpl::getHeadCoord,
+           py::arg_v("spatialUnits", "", "str()"))
       .def("getKB", &H5WellImpl::getKB)
       .def("getUWI", &H5WellImpl::getUWI)
 

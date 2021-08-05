@@ -35,7 +35,7 @@ struct SurfParam{
   size_t nX, nY;
   double X0, Y0, dX, dY;
   h5geo::Domain domain;
-  std::string spatialUnits, temporalUnits, dataUnits;
+  std::string spatialUnits, dataUnits;
 };
 
 struct WellParam{

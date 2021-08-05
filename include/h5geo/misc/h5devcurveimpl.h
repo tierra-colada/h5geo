@@ -26,9 +26,11 @@ public:
   virtual size_t getNCurves() override;
   virtual size_t getNSamp() override;
   virtual Eigen::VectorXd getCurve(
-      const h5geo::DevDataType& name) override;
+      const h5geo::DevDataType& name,
+      const std::string& units = "") override;
   virtual Eigen::VectorXd getCurve(
-      const std::string& name) override;
+      const std::string& name,
+      const std::string& units = "") override;
 
   virtual bool setSpatialUnits(const std::string& str) override;
   virtual bool setTemporalUnits(const std::string& str) override;

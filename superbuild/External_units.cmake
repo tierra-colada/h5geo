@@ -1,21 +1,22 @@
-message("external project: ZLIB")
+message("external project: units")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/zlib")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/zlib-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/zlib-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/units")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/units-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/units-install")
 list(APPEND CMAKE_PREFIX_PATH "${EP_SOURCE_DIR}")
 
 #-----------------------------------------------------------------------------
-set(ZLIB_ROOT PATH ${EP_INSTALL_DIR})
-find_package(ZLIB)
+set(units_ROOT PATH ${EP_INSTALL_DIR})
+set(units_DIR PATH ${EP_INSTALL_DIR}/lib/cmake/units)
+find_package(units)
 
 set(DEPENDENCIES "")
 
-if(NOT DEFINED ZLIB_FOUND OR NOT ZLIB_FOUND)
-  ExternalProject_Add(ZLIB
-    GIT_REPOSITORY "https://github.com/madler/zlib.git"
-    GIT_TAG "v1.2.11"
+if(NOT DEFINED units_FOUND OR NOT units_FOUND)
+  ExternalProject_Add(units
+    GIT_REPOSITORY "https://github.com/LLNL/units"
+    GIT_TAG "v0.4.0"
     SOURCE_DIR ${EP_SOURCE_DIR}
     BINARY_DIR ${EP_BINARY_DIR}
     INSTALL_DIR ${EP_INSTALL_DIR}
@@ -32,11 +33,17 @@ if(NOT DEFINED ZLIB_FOUND OR NOT ZLIB_FOUND)
       -DINSTALL_LIB_DIR:PATH=<INSTALL_DIR>/lib
       -DINSTALL_MAN_DIR:PATH=<INSTALL_DIR>/share/man
       -DINSTALL_PKGCONFIG_DIR:PATH=<INSTALL_DIR>/share/pkgconfig
+      # Lib settings
+      -DUNITS_BUILD_FUZZ_TARGETS:BOOL=OFF
+      -DUNITS_BUILD_SHARED_LIBRARY:BOOL=OFF
+      -DUNITS_BUILD_STATIC_LIBRARY:BOOL=ON
+      -DUNITS_ENABLE_TESTS:BOOL=OFF
+      -DUNITS_HEADER_ONLY:BOOL=OFF
     DEPENDS ${DEPENDENCIES}
     )
 else()
-  # Add empty project that exports target ZLIB
-  ExternalProject_Add(ZLIB
+  # Add empty project that exports target units
+  ExternalProject_Add(units
     SOURCE_DIR ${EP_SOURCE_DIR}
     BINARY_DIR ${EP_BINARY_DIR}
     INSTALL_DIR ${EP_INSTALL_DIR}

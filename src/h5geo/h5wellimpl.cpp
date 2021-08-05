@@ -4,6 +4,8 @@
 #include "../../include/h5geo/misc/h5devcurveimpl.h"
 #include "../../include/h5geo/misc/h5logcurveimpl.h"
 
+#include <units.hpp>
+
 H5WellImpl::H5WellImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
@@ -236,16 +238,37 @@ std::string H5WellImpl::getSpatialUnits(){
         std::string{h5geo::detail::spatial_units});
 }
 
-Eigen::Vector2d H5WellImpl::getHeadCoord(){
-  return h5geo::getEigenFloatVecFromObj(
+Eigen::VectorXd H5WellImpl::getHeadCoord(const std::string& spatialUnits){
+  Eigen::VectorXd v = h5geo::getEigenFloatVecFromObj(
         objG,
         std::string{h5geo::detail::head_coord});
+
+  if (!spatialUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(getSpatialUnits()),
+          units::unit_from_string(spatialUnits));
+    if (!isnan(coef))
+      return v*coef;
+
+    return Eigen::VectorXd();
+  }
+
+  return v;
 }
 
-double H5WellImpl::getKB(){
-  return h5geo::getFloatFromObj(
+double H5WellImpl::getKB(const std::string& spatialUnits){
+  double val = h5geo::getFloatFromObj(
         objG,
         std::string{h5geo::detail::KB});
+
+  if (!spatialUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(getSpatialUnits()),
+          units::unit_from_string(spatialUnits));
+    return val*coef;
+  }
+
+  return val;
 }
 
 std::string H5WellImpl::getUWI(){

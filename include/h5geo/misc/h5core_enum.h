@@ -85,10 +85,9 @@ constexpr auto unique_values = magic_enum::enum_name<h5geo::detail::SeisGroups::
 enum class SurfAttributes : unsigned{
   Domain = 1,
   spatial_units = 2,
-  temporal_units = 3,
-  data_units = 4,
-  origin = 5,
-  spacing = 6
+  data_units = 3,
+  origin = 4,
+  spacing = 5
 };
 
 constexpr auto& surf_attrs =

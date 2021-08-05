@@ -15,8 +15,16 @@ void H5LogCurve_py(
       .def("writeCurve", py::overload_cast<const LogDataType&, const Eigen::Ref<const Eigen::VectorXd>&>(&H5LogCurveImpl::writeCurve))
       .def("writeCurve", py::overload_cast<const std::string&, const Eigen::Ref<const Eigen::VectorXd>&>(&H5LogCurveImpl::writeCurve))
 
-      .def("getCurve", py::overload_cast<const LogDataType&>(&H5LogCurveImpl::getCurve))
-      .def("getCurve", py::overload_cast<const std::string&>(&H5LogCurveImpl::getCurve))
+      .def("getCurve", py::overload_cast<const LogDataType&, const std::string&>(&H5LogCurveImpl::getCurve),
+           py::arg("name"), py::arg_v("units", "", "str()"))
+      .def("getCurve", py::overload_cast<const std::string&, const std::string&>(&H5LogCurveImpl::getCurve),
+           py::arg("name"), py::arg_v("units", "", "str()"))
+
+      .def("setSpatialUnits", &H5LogCurve::setSpatialUnits)
+      .def("setDataUnits", &H5LogCurve::setDataUnits)
+
+      .def("getSpatialUnits", &H5LogCurve::getSpatialUnits)
+      .def("getDataUnits", &H5LogCurve::getDataUnits)
 
       .def("getRelativeCurveName", &H5LogCurveImpl::getRelativeCurveName)
 

@@ -21,9 +21,11 @@ public:
       const Eigen::Ref<const Eigen::VectorXd>& v) override;
 
   virtual Eigen::VectorXd getCurve(
-      const h5geo::LogDataType& name) override;
+      const h5geo::LogDataType& name,
+      const std::string& units = "") override;
   virtual Eigen::VectorXd getCurve(
-      const std::string& name) override;
+      const std::string& name,
+      const std::string& units = "") override;
 
   virtual bool setSpatialUnits(const std::string& str) override;
   virtual bool setDataUnits(const std::string& str) override;

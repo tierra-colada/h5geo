@@ -20,8 +20,18 @@ void H5DevCurve_py(
 
       .def("getNCurves", &H5DevCurveImpl::getNCurves)
       .def("getNSamp", &H5DevCurveImpl::getNSamp)
-      .def("getCurve", py::overload_cast<const DevDataType&>(&H5DevCurveImpl::getCurve))
-      .def("getCurve", py::overload_cast<const std::string&>(&H5DevCurveImpl::getCurve))
+      .def("getCurve", py::overload_cast<const DevDataType&, const std::string&>(&H5DevCurveImpl::getCurve),
+           py::arg("name"), py::arg_v("units", "", "str()"))
+      .def("getCurve", py::overload_cast<const std::string&, const std::string&>(&H5DevCurveImpl::getCurve),
+           py::arg("name"), py::arg_v("units", "", "str()"))
+
+      .def("setSpatialUnits", &H5DevCurve::setSpatialUnits)
+      .def("setTemporalUnits", &H5DevCurve::setTemporalUnits)
+      .def("setAngleUnits", &H5DevCurve::setAngleUnits)
+
+      .def("getSpatialUnits", &H5DevCurve::getSpatialUnits)
+      .def("getTemporalUnits", &H5DevCurve::getTemporalUnits)
+      .def("getAngleUnits", &H5DevCurve::getAngleUnits)
 
       .def("getRelativeCurveName", &H5DevCurveImpl::getRelativeCurveName)
 

@@ -2,7 +2,7 @@ message("external project: h5geo")
 
 set(h5geo_DIR PATH ${CMAKE_INSTALL_PREFIX}/cmake/h5geo)
 
-set(DEPENDENCIES Eigen3 ZLIB HDF5 h5gt magic_enum)
+set(DEPENDENCIES Eigen3 ZLIB HDF5 h5gt magic_enum units)
 
 if(H5GEO_USE_THREADS AND NOT MSVC)
   list(APPEND DEPENDENCIES TBB)

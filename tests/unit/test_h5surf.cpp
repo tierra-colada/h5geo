@@ -45,7 +45,6 @@ public:
     p.nY = 20;
     p.domain = h5geo::Domain::TVD;
     p.spatialUnits = "millimeter";
-    p.temporalUnits = "millisecond";
     p.dataUnits = "m/s";
   }
 
@@ -121,6 +120,6 @@ TEST_F(H5SurfFixture, writeAndGetDataFromSurf){
           SURF_NAME2, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(surf != nullptr);
   ASSERT_TRUE(surf->writeData(m));
-  Eigen::MatrixXd M = surf->getData();
-  ASSERT_TRUE(m.isApprox(M));
+  Eigen::MatrixXd M = surf->getData("mm/sec");
+  ASSERT_TRUE(m.isApprox(M/1000));
 }

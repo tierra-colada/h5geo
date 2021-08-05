@@ -30,6 +30,7 @@ __all__ = [
     "LogDataType",
     "MdAzIncl2ALL",
     "MdAzIncl2MdXYTvd",
+    "ObjectDeleter",
     "ObjectType",
     "SegyEndian",
     "SegyFormat",
@@ -275,14 +276,14 @@ class DevCurveParam():
     @typing.overload
     def __init__(self) -> None: ...
     @typing.overload
-    def __init__(self, spatialUnits: SpatialUnits, temporalUnits: TemporalUnits, angleUnits: AngleUnits, setActive: bool = False, chunkSize: int = 1000) -> None: ...
+    def __init__(self, spatialUnits: str, temporalUnits: str, angleUnits: str, setActive: bool = False, chunkSize: int = 1000) -> None: ...
     @property
-    def angleUnits(self) -> AngleUnits:
+    def angleUnits(self) -> str:
         """
-        :type: AngleUnits
+        :type: str
         """
     @angleUnits.setter
-    def angleUnits(self, arg0: AngleUnits) -> None:
+    def angleUnits(self, arg0: str) -> None:
         pass
     @property
     def chunkSize(self) -> int:
@@ -301,20 +302,20 @@ class DevCurveParam():
     def setActive(self, arg0: bool) -> None:
         pass
     @property
-    def spatialUnits(self) -> SpatialUnits:
+    def spatialUnits(self) -> str:
         """
-        :type: SpatialUnits
+        :type: str
         """
     @spatialUnits.setter
-    def spatialUnits(self, arg0: SpatialUnits) -> None:
+    def spatialUnits(self, arg0: str) -> None:
         pass
     @property
-    def temporalUnits(self) -> TemporalUnits:
+    def temporalUnits(self) -> str:
         """
-        :type: TemporalUnits
+        :type: str
         """
     @temporalUnits.setter
-    def temporalUnits(self, arg0: TemporalUnits) -> None:
+    def temporalUnits(self, arg0: str) -> None:
         pass
     pass
 class DevDataType():
@@ -441,7 +442,7 @@ class LogCurveParam():
     @typing.overload
     def __init__(self) -> None: ...
     @typing.overload
-    def __init__(self, spatialUnits: SpatialUnits, dataUnits: str, chunkSize: int = 1000) -> None: ...
+    def __init__(self, spatialUnits: str, dataUnits: str, chunkSize: int = 1000) -> None: ...
     @property
     def chunkSize(self) -> int:
         """
@@ -459,12 +460,12 @@ class LogCurveParam():
     def dataUnits(self, arg0: str) -> None:
         pass
     @property
-    def spatialUnits(self) -> SpatialUnits:
+    def spatialUnits(self) -> str:
         """
-        :type: SpatialUnits
+        :type: str
         """
     @spatialUnits.setter
-    def spatialUnits(self, arg0: SpatialUnits) -> None:
+    def spatialUnits(self, arg0: str) -> None:
         pass
     pass
 class LogDataType():
@@ -500,6 +501,9 @@ class LogDataType():
     MD: h5geopy._h5geo.LogDataType # value = <LogDataType.MD: 1>
     VAL: h5geopy._h5geo.LogDataType # value = <LogDataType.VAL: 2>
     __members__: dict # value = {'MD': <LogDataType.MD: 1>, 'VAL': <LogDataType.VAL: 2>}
+    pass
+class ObjectDeleter():
+    def __call__(self, arg0: _H5Base) -> None: ...
     pass
 class ObjectType():
     """
@@ -656,7 +660,7 @@ class SeisParam():
     @typing.overload
     def __init__(self) -> None: ...
     @typing.overload
-    def __init__(self, domain: Domain, spatialUnits: SpatialUnits, temporalUnits: TemporalUnits, dataUnits: str, dataType: SeisDataType, surveyType: SurveyType, nTrc: int, nSamp: int, srd: float = 0, trcChunk: int = 20000, stdChunk: int = 1000) -> None: ...
+    def __init__(self, domain: Domain, dataType: SeisDataType, surveyType: SurveyType, spatialUnits: str, temporalUnits: str, dataUnits: str, nTrc: int, nSamp: int, srd: float = 0, trcChunk: int = 20000, stdChunk: int = 1000) -> None: ...
     @property
     def dataType(self) -> SeisDataType:
         """
@@ -698,12 +702,12 @@ class SeisParam():
     def nTrc(self, arg0: int) -> None:
         pass
     @property
-    def spatialUnits(self) -> SpatialUnits:
+    def spatialUnits(self) -> str:
         """
-        :type: SpatialUnits
+        :type: str
         """
     @spatialUnits.setter
-    def spatialUnits(self, arg0: SpatialUnits) -> None:
+    def spatialUnits(self, arg0: str) -> None:
         pass
     @property
     def srd(self) -> float:
@@ -730,12 +734,12 @@ class SeisParam():
     def surveyType(self, arg0: SurveyType) -> None:
         pass
     @property
-    def temporalUnits(self) -> TemporalUnits:
+    def temporalUnits(self) -> str:
         """
-        :type: TemporalUnits
+        :type: str
         """
     @temporalUnits.setter
-    def temporalUnits(self, arg0: TemporalUnits) -> None:
+    def temporalUnits(self, arg0: str) -> None:
         pass
     @property
     def trcChunk(self) -> int:
@@ -790,7 +794,7 @@ class SurfParam():
     @typing.overload
     def __init__(self) -> None: ...
     @typing.overload
-    def __init__(self, nX: int, nY: int, X0: float, Y0: float, dX: float, dY: float, domain: Domain, spatialUnits: SpatialUnits, temporalUnits: TemporalUnits, dataUnits: str) -> None: ...
+    def __init__(self, nX: int, nY: int, X0: float, Y0: float, dX: float, dY: float, domain: Domain, spatialUnits: str, dataUnits: str) -> None: ...
     @property
     def X0(self) -> float:
         """
@@ -856,20 +860,12 @@ class SurfParam():
     def nY(self, arg0: int) -> None:
         pass
     @property
-    def spatialUnits(self) -> SpatialUnits:
+    def spatialUnits(self) -> str:
         """
-        :type: SpatialUnits
+        :type: str
         """
     @spatialUnits.setter
-    def spatialUnits(self, arg0: SpatialUnits) -> None:
-        pass
-    @property
-    def temporalUnits(self) -> TemporalUnits:
-        """
-        :type: TemporalUnits
-        """
-    @temporalUnits.setter
-    def temporalUnits(self, arg0: TemporalUnits) -> None:
+    def spatialUnits(self, arg0: str) -> None:
         pass
     pass
 class SurveyType():
@@ -1113,7 +1109,7 @@ class WellParam():
     @typing.overload
     def __init__(self) -> None: ...
     @typing.overload
-    def __init__(self, headX: float, headY: float, kb: float, uwi: str, spatialUnits: SpatialUnits) -> None: ...
+    def __init__(self, headX: float, headY: float, kb: float, uwi: str, spatialUnits: str) -> None: ...
     @property
     def headX(self) -> float:
         """
@@ -1139,12 +1135,12 @@ class WellParam():
     def kb(self, arg0: float) -> None:
         pass
     @property
-    def spatialUnits(self) -> SpatialUnits:
+    def spatialUnits(self) -> str:
         """
-        :type: SpatialUnits
+        :type: str
         """
     @spatialUnits.setter
-    def spatialUnits(self, arg0: SpatialUnits) -> None:
+    def spatialUnits(self, arg0: str) -> None:
         pass
     @property
     def uwi(self) -> str:
@@ -1208,18 +1204,24 @@ class _H5SurfContainer(_H5BaseContainer, _H5Base):
 class _H5DevCurve(_H5BaseObject, _H5Base):
     pass
 class H5DevCurve(H5BaseObject, H5Base, _H5DevCurve, _H5BaseObject, _H5Base):
+    def getAngleUnits(self) -> str: ...
     @typing.overload
-    def getCurve(self, arg0: DevDataType) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
+    def getCurve(self, name: DevDataType, units: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
     @typing.overload
-    def getCurve(self, arg0: str) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
+    def getCurve(self, name: str, units: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
     def getDevCurveD(self) -> typing.Optional[h5gtpy._h5gt.DataSet]: ...
     def getNCurves(self) -> int: ...
     def getNSamp(self) -> int: ...
     def getRelativeCurveName(self) -> str: ...
+    def getSpatialUnits(self) -> str: ...
+    def getTemporalUnits(self) -> str: ...
     def getWell(self) -> _H5Well: ...
     def getWellContainer(self) -> _H5WellContainer: ...
     def isActive(self) -> bool: ...
     def setActive(self) -> bool: ...
+    def setAngleUnits(self, arg0: str) -> bool: ...
+    def setSpatialUnits(self, arg0: str) -> bool: ...
+    def setTemporalUnits(self, arg0: str) -> bool: ...
     @typing.overload
     def writeCurve(self, arg0: DevDataType, arg1: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> bool: ...
     @typing.overload
@@ -1227,13 +1229,17 @@ class H5DevCurve(H5BaseObject, H5Base, _H5DevCurve, _H5BaseObject, _H5Base):
     pass
 class H5LogCurve(H5BaseObject, H5Base, _H5LogCurve, _H5BaseObject, _H5Base):
     @typing.overload
-    def getCurve(self, arg0: LogDataType) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
+    def getCurve(self, name: LogDataType, units: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
     @typing.overload
-    def getCurve(self, arg0: str) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
+    def getCurve(self, name: str, units: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
+    def getDataUnits(self) -> str: ...
     def getLogCurveD(self) -> typing.Optional[h5gtpy._h5gt.DataSet]: ...
     def getRelativeCurveName(self) -> str: ...
+    def getSpatialUnits(self) -> str: ...
     def getWell(self) -> _H5Well: ...
     def getWellContainer(self) -> _H5WellContainer: ...
+    def setDataUnits(self, arg0: str) -> bool: ...
+    def setSpatialUnits(self, arg0: str) -> bool: ...
     @typing.overload
     def writeCurve(self, arg0: LogDataType, arg1: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> bool: ...
     @typing.overload
@@ -1278,17 +1284,19 @@ class H5Seis(H5BaseObject, H5Base, _H5Seis, _H5BaseObject, _H5Base):
     @typing.overload
     def getBinHeader(self) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
     @typing.overload
-    def getBinHeader(self, hdrName: str) -> float: ...
+    def getBinHeader(self, hdrName: str, unitsFrom: str = str(), unitsTo: str = str()) -> float: ...
     def getBinHeaderD(self) -> typing.Optional[h5gtpy._h5gt.DataSet]: ...
     def getBinHeaderIndex(self, hdrName: str) -> int: ...
     def getBoundaryD(self) -> typing.Optional[h5gtpy._h5gt.DataSet]: ...
     def getDataType(self) -> SeisDataType: ...
-    def getFirstSample(self, trcInd: int) -> float: 
+    def getDataUnits(self) -> str: ...
+    def getDomain(self) -> Domain: ...
+    def getFirstSample(self, trcInd: int, units: str = str()) -> float: 
         """
         in units according to `Domain` (`METER` or `SECOND` or else...)
         """
     def getIndexesG(self) -> typing.Optional[h5gtpy._h5gt.Group]: ...
-    def getLastSample(self, trcInd: int) -> float: 
+    def getLastSample(self, trcInd: int, units: str = str()) -> float: 
         """
         in units according to `Domain` (`METER` or `SECOND` or else...)
         """
@@ -1316,24 +1324,27 @@ class H5Seis(H5BaseObject, H5Base, _H5Seis, _H5BaseObject, _H5Base):
         """
         get primary key names (usually they are used in sorting)
         """
-    def getSampRate(self) -> float: 
+    def getSRD(self) -> float: ...
+    def getSampRate(self, units: str = str()) -> float: 
         """
         in units according to `Domain` (`METER` or `SECOND` or else...)
         """
-    def getSamples(self, trcInd: int) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: 
+    def getSamples(self, trcInd: int, units: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: 
         """
         in units according to `Domain` (`METER` or `SECOND` or else...)
         """
     def getSeisContainer(self) -> _H5SeisContainer: ...
     def getSortG(self) -> typing.Optional[h5gtpy._h5gt.Group]: ...
-    def getSortedData(self, keyList: typing.List[str], minList: typing.List[float], maxList: typing.List[float], fromSampInd: int = 0, nSamp: int = sys.maxint) -> typing.Tuple[numpy.ndarray[numpy.float32, _Shape[m, n]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.uint64, _Shape[m, 1]]]: 
+    def getSortedData(self, keyList: typing.List[str], minList: typing.List[float], maxList: typing.List[float], fromSampInd: int = 0, nSamp: int = sys.maxint, dataUnits: str = str()) -> typing.Tuple[numpy.ndarray[numpy.float32, _Shape[m, n]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.uint64, _Shape[m, 1]]]: 
         """
         Get sorted data based on precalculated primary sort keys (e.g. before using it you should prepare primary sort keys with `addPKeySort(...)` method).Return `TRACE` (traces matrix), `HDR` (hdr matrix) and `idx` (vector of trace indexes read)
         """
+    def getSpatialUnits(self) -> str: ...
     def getSurveyType(self) -> SurveyType: ...
+    def getTemporalUnits(self) -> str: ...
     def getTextHeader(self) -> typing.List[str]: ...
     def getTextHeaderD(self) -> typing.Optional[h5gtpy._h5gt.DataSet]: ...
-    def getTrace(self, fromTrc: int, nTrc: int = 1, fromSampInd: int = 0, nSamp: int = sys.maxint) -> numpy.ndarray[numpy.float32, _Shape[m, n]]: 
+    def getTrace(self, fromTrc: int, nTrc: int = 1, fromSampInd: int = 0, nSamp: int = sys.maxint, dataUnits: str = str()) -> numpy.ndarray[numpy.float32, _Shape[m, n]]: 
         """
         Get block of traces. If `nTrc` or `nSamp` exceed max values then these values are changed to max allowed (that is why they are not `const`)
         """
@@ -1344,21 +1355,28 @@ class H5Seis(H5BaseObject, H5Base, _H5Seis, _H5BaseObject, _H5Base):
         Get block of trace headers. If `nTrc` or `nHdr` exceed max values then these values are changed to max allowed (that is why they are not `const`)
         """
     @typing.overload
-    def getTraceHeader(self, hdrName: str, fromTrc: int = 0, nTrc: int = sys.maxint) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
+    def getTraceHeader(self, hdrName: str, fromTrc: int = 0, nTrc: int = sys.maxint, unitsFrom: str = str(), unitsTo: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
     def getTraceHeaderD(self) -> typing.Optional[h5gtpy._h5gt.DataSet]: ...
     def getTraceHeaderIndex(self, hdrName: str) -> int: ...
     @typing.overload
     def getTraceHeaderMax(self) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
     @typing.overload
-    def getTraceHeaderMax(self, hdrName: str) -> float: ...
+    def getTraceHeaderMax(self, hdrName: str, unitsFrom: str = str(), unitsTo: str = str()) -> float: ...
     @typing.overload
     def getTraceHeaderMin(self) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
     @typing.overload
-    def getTraceHeaderMin(self, hdrName: str) -> float: ...
+    def getTraceHeaderMin(self, hdrName: str, unitsFrom: str = str(), unitsTo: str = str()) -> float: ...
     def getTracePKeyIndexes(self, pName: str, pMin: float, pMax: float) -> numpy.ndarray[numpy.uint64, _Shape[m, 1]]: ...
     def getUValG(self) -> typing.Optional[h5gtpy._h5gt.Group]: ...
     def hasPKeySort(self, pKeyName: str) -> bool: ...
     def removePKeySort(self, pKeyName: str) -> bool: ...
+    def setDataType(self, arg0: SeisDataType) -> bool: ...
+    def setDataUnits(self, arg0: str) -> bool: ...
+    def setDomain(self, arg0: Domain) -> bool: ...
+    def setSRD(self, arg0: float) -> bool: ...
+    def setSpatialUnits(self, arg0: str) -> bool: ...
+    def setSurveyType(self, arg0: SurveyType) -> bool: ...
+    def setTemporalUnits(self, arg0: str) -> bool: ...
     @typing.overload
     def writeBinHeader(self, binHdr: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> bool: ...
     @typing.overload
@@ -1388,9 +1406,25 @@ class H5SeisContainer(H5BaseContainer, H5Base, _H5SeisContainer, _H5BaseContaine
     def getSeisList(self) -> typing.List[_H5Seis]: ...
     pass
 class H5Surf(H5BaseObject, H5Base, _H5Surf, _H5BaseObject, _H5Base):
-    def getData(self) -> numpy.ndarray[numpy.float64, _Shape[m, n]]: ...
+    def getData(self, dataUnits: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, n]]: ...
+    def getDataUnits(self) -> str: ...
+    def getDomain(self) -> Domain: ...
+    def getOrigin(self, spatialUnits: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
+    def getSpacing(self, spatialUnits: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
+    def getSpatialUnits(self) -> str: ...
     def getSurfContainer(self) -> _H5SurfContainer: ...
     def getSurfD(self) -> typing.Optional[h5gtpy._h5gt.DataSet]: ...
+    def setDataUnits(self, arg0: str) -> bool: ...
+    def setDomain(self, arg0: Domain) -> bool: ...
+    @typing.overload
+    def setOrigin(self, arg0: numpy.ndarray[numpy.float64, _Shape[2, 1]]) -> bool: ...
+    @typing.overload
+    def setOrigin(self, arg0: typing.List[float]) -> bool: ...
+    @typing.overload
+    def setSpacing(self, arg0: numpy.ndarray[numpy.float64, _Shape[2, 1]]) -> bool: ...
+    @typing.overload
+    def setSpacing(self, arg0: typing.List[float]) -> bool: ...
+    def setSpatialUnits(self, arg0: str) -> bool: ...
     def writeData(self, arg0: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> bool: ...
     pass
 class H5SurfContainer(H5BaseContainer, H5Base, _H5SurfContainer, _H5BaseContainer, _H5Base):
@@ -1422,8 +1456,8 @@ class H5Well(H5BaseObject, H5Base, _H5Well, _H5BaseObject, _H5Base):
     def getDevCurveList(self) -> typing.List[_H5DevCurve]: ...
     def getDevCurveNameList(self) -> typing.List[str]: ...
     def getDevG(self) -> typing.Optional[h5gtpy._h5gt.Group]: ...
-    def getHeadCoord(self) -> numpy.ndarray[numpy.float64, _Shape[2, 1]]: ...
-    def getKB(self) -> float: ...
+    def getHeadCoord(self, spatialUnits: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
+    def getKB(self, arg0: str) -> float: ...
     @typing.overload
     def getLogCurve(self, arg0: h5gtpy._h5gt.Group) -> _H5LogCurve: ...
     @typing.overload
@@ -1433,10 +1467,12 @@ class H5Well(H5BaseObject, H5Base, _H5Well, _H5BaseObject, _H5Base):
     def getLogG(self) -> typing.Optional[h5gtpy._h5gt.Group]: ...
     def getLogTypeG(self, arg0: str) -> typing.Optional[h5gtpy._h5gt.Group]: ...
     def getLogTypeNameList(self) -> typing.List[str]: ...
+    def getSpatialUnits(self) -> str: ...
     def getUWI(self) -> str: ...
     def getWellContainer(self) -> _H5WellContainer: ...
     def setHeadCoord(self, arg0: numpy.ndarray[numpy.float64, _Shape[2, 1]]) -> bool: ...
     def setKB(self, arg0: float) -> bool: ...
+    def setSpatialUnits(self, arg0: str) -> bool: ...
     def setUWI(self, arg0: str) -> bool: ...
     pass
 class H5WellContainer(H5BaseContainer, H5Base, _H5WellContainer, _H5BaseContainer, _H5Base):
@@ -1595,14 +1631,14 @@ def quickHull2D(M: numpy.ndarray[numpy.float32, _Shape[m, 2]]) -> numpy.ndarray[
 def quickHull2D(M: numpy.ndarray[numpy.float64, _Shape[m, 2]]) -> numpy.ndarray[numpy.float64, _Shape[m, 2]]:
     pass
 @typing.overload
-def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]]]:
+def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
     """
     return indices such that `v_sorted = v(ind)`. Input parameter `v` is a vector
 
     return indices such that `v_sorted = v(ind)` and also return `v_sorted`. Input parameter `v` is a vector
     """
 @typing.overload
-def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
+def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]]]:
     pass
 @typing.overload
 def sort(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
@@ -1637,10 +1673,10 @@ def sort_rows_unique(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tu
 def sort_rows_unique(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float32, _Shape[m, n]]]:
     pass
 @typing.overload
-def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float64, _Shape[m, n]]]:
+def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
     pass
 @typing.overload
-def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
+def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float64, _Shape[m, n]]]:
     pass
 @typing.overload
 def sort_unique(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
@@ -1653,10 +1689,10 @@ def sort_unique(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[n
 def sort_unique(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float32, _Shape[m, 1]]]:
     pass
 @typing.overload
-def sort_unique(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float64, _Shape[m, 1]]]:
+def sort_unique(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
     pass
 @typing.overload
-def sort_unique(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
+def sort_unique(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float64, _Shape[m, 1]]]:
     pass
 @typing.overload
 def traj2ALL(M: numpy.ndarray[numpy.float32, _Shape[m, n]], x0: float, y0: float, kb: float, angleUnits: AngleUnits, trajFormat: TrajectoryFormat, XNorth: bool) -> numpy.ndarray[numpy.float32, _Shape[m, n]]:

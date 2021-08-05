@@ -31,8 +31,7 @@ class test_h5surf(unittest.TestCase):
         self.p.nX = 10
         self.p.nY = 20
         self.p.domain = h5geo.Domain.TVD
-        self.p.spatialUnits = h5geo.SpatialUnits.CENTIMETER
-        self.p.temporalUnits = h5geo.TemporalUnits.MILLISECOND
+        self.p.spatialUnits = 'cm'
         self.p.dataUnits = "m/s"
 
     def tearDown(self):

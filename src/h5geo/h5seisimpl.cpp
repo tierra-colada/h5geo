@@ -2,6 +2,8 @@
 #include "../../include/h5geo/h5seiscontainer.h"
 #include "../../include/h5geo/h5core.h"
 
+#include <units.hpp>
+
 H5SeisImpl::H5SeisImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group),
   traceD(objG.getDataSet("trace")),
@@ -188,7 +190,9 @@ Eigen::VectorXd H5SeisImpl::getBinHeader()
 }
 
 double H5SeisImpl::getBinHeader(
-    const std::string& hdrName)
+    const std::string& hdrName,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
   auto opt = getBinHeaderD();
   if (!opt.has_value())
@@ -201,12 +205,21 @@ double H5SeisImpl::getBinHeader(
 
   double hdr;
   opt->select({size_t(ind)}, {1}).read(hdr);
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(unitsTo));
+    return hdr*coef;
+  }
+
   return hdr;
 }
 
 Eigen::MatrixXf H5SeisImpl::getTrace(
     const size_t& fromTrc, size_t nTrc,
-    const size_t& fromSampInd, size_t nSamp)
+    const size_t& fromSampInd, size_t nSamp,
+    const std::string& dataUnits)
 {
   if (!checkTraceLimits(fromTrc, nTrc))
     return Eigen::MatrixXf();
@@ -220,6 +233,17 @@ Eigen::MatrixXf H5SeisImpl::getTrace(
   std::vector<size_t> count({nTrc, nSamp});
 
   traceD.select(offset, count).read(TRACE.data());
+
+  if (!dataUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(getDataUnits()),
+          units::unit_from_string(dataUnits));
+    if (!isnan(coef))
+      return TRACE*coef;
+
+    return Eigen::MatrixXf();
+  }
+
   return TRACE;
 }
 
@@ -247,10 +271,24 @@ Eigen::MatrixXd H5SeisImpl::getTraceHeader(
 Eigen::VectorXd H5SeisImpl::getTraceHeader(
     const std::string& hdrName,
     const size_t& fromTrc,
-    const size_t& nTrc)
+    const size_t& nTrc,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
   size_t ind = getTraceHeaderIndex(hdrName);
-  return getTraceHeader(fromTrc, nTrc, ind, 1);
+  Eigen::VectorXd hdr = getTraceHeader(fromTrc, nTrc, ind, 1);
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(unitsTo));
+    if (!isnan(coef))
+      return hdr*coef;
+
+    return Eigen::VectorXd();
+  }
+
+  return hdr;
 }
 
 Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
@@ -260,7 +298,8 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
     const std::vector<double>& minList,
     const std::vector<double>& maxList,
     size_t fromSampInd,
-    size_t nSamp)
+    size_t nSamp,
+    const std::string& dataUnits)
 {
   if (keyList.empty() || minList.empty() || maxList.empty())
     return Eigen::VectorX<size_t>();
@@ -338,6 +377,13 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
           traceIndexes(i), 1, fromSampInd, nSamp);
   }
 
+  if (!dataUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(getDataUnits()),
+          units::unit_from_string(dataUnits));
+    TRACE *= coef;
+  }
+
   return traceIndexes;
 }
 
@@ -409,7 +455,9 @@ Eigen::VectorX<size_t> H5SeisImpl::getTracePKeyIndexes(
   return tracePKeyIndexes;
 }
 
-Eigen::VectorXd H5SeisImpl::getSamples(const size_t& trcInd){
+Eigen::VectorXd H5SeisImpl::getSamples(
+    const size_t& trcInd,
+    const std::string& units){
   double firstSamp = getFirstSample(trcInd);
 
   if (isnan(firstSamp))
@@ -427,24 +475,76 @@ Eigen::VectorXd H5SeisImpl::getSamples(const size_t& trcInd){
 
   Eigen::VectorXd samp = Eigen::ArrayXd::LinSpaced(
         nSamp, firstSamp, (nSamp-1)*sampRate+firstSamp);
+
+  if (!units.empty()){
+    double coef;
+    if (getDomain() == h5geo::Domain::OWT |
+        getDomain() == h5geo::Domain::TWT)
+      coef = units::convert(
+            units::unit_from_string(getTemporalUnits()),
+            units::unit_from_string(units));
+    else
+      coef = units::convert(
+            units::unit_from_string(getSpatialUnits()),
+            units::unit_from_string(units));
+    if (!isnan(coef))
+      return samp*coef;
+
+    return Eigen::VectorXd();
+  }
+
   return samp;
 }
 
-double H5SeisImpl::getFirstSample(const size_t& trcInd){
-  Eigen::VectorXd firstSamp = getTraceHeader("DELRECT", trcInd, 1);
+double H5SeisImpl::getFirstSample(
+    const size_t& trcInd,
+    const std::string& units){
+  // DELRECT - Delay Recording time
+  Eigen::VectorXd firstSamp = getTraceHeader(
+        "DELRECT", trcInd, 1);
 
   if (firstSamp.size() == 0)
     return NAN;
 
+  if (!units.empty()){
+    double coef;
+    if (getDomain() == h5geo::Domain::OWT |
+        getDomain() == h5geo::Domain::TWT)
+      coef = units::convert(
+            units::unit_from_string(getTemporalUnits()),
+            units::unit_from_string(units));
+    else
+      coef = units::convert(
+            units::unit_from_string(getSpatialUnits()),
+            units::unit_from_string(units));
+    return firstSamp(0)*coef;
+  }
+
   return firstSamp(0);
 }
 
-double H5SeisImpl::getLastSample(const size_t& trcInd){
-  return getSamples(trcInd)(Eigen::last);
+double H5SeisImpl::getLastSample(
+    const size_t& trcInd, const std::string& units){
+  return getSamples(trcInd, units)(Eigen::last);
 }
 
-double H5SeisImpl::getSampRate(){
+double H5SeisImpl::getSampRate(const std::string& units){
   double sampRate = getBinHeader("SAMP_RATE");
+
+  if (!units.empty()){
+    double coef;
+    if (getDomain() == h5geo::Domain::OWT |
+        getDomain() == h5geo::Domain::TWT)
+      coef = units::convert(
+            units::unit_from_string(getTemporalUnits()),
+            units::unit_from_string(units));
+    else
+      coef = units::convert(
+            units::unit_from_string(getSpatialUnits()),
+            units::unit_from_string(units));
+    return sampRate*coef;
+  }
+
   return sampRate;
 }
 
@@ -506,7 +606,9 @@ Eigen::VectorXd H5SeisImpl::getTraceHeaderMax(){
 }
 
 double H5SeisImpl::getTraceHeaderMin(
-    const std::string& hdrName)
+    const std::string& hdrName,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
   int ind = getTraceHeaderIndex(hdrName);
 
@@ -518,11 +620,20 @@ double H5SeisImpl::getTraceHeaderMin(
   if (ind >= hdr.size())
     return NAN;
 
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(unitsTo));
+    return hdr(ind)*coef;
+  }
+
   return hdr(ind);
 }
 
 double H5SeisImpl::getTraceHeaderMax(
-    const std::string& hdrName)
+    const std::string& hdrName,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
   int ind = getTraceHeaderIndex(hdrName);
 
@@ -533,6 +644,13 @@ double H5SeisImpl::getTraceHeaderMax(
 
   if (ind >= hdr.size())
     return NAN;
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(unitsTo));
+    return hdr(ind)*coef;
+  }
 
   return hdr(ind);
 }

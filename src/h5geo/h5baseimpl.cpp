@@ -457,10 +457,6 @@ H5BaseImpl::createNewSurf(h5gt::Group &group, void* p)
           h5gt::DataSpace::From(param.spatialUnits)).
         write(param.spatialUnits);
     group.createAttribute<std::string>(
-          std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::temporal_units)},
-          h5gt::DataSpace::From(param.temporalUnits)).
-        write(param.temporalUnits);
-    group.createAttribute<std::string>(
           std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::data_units)},
           h5gt::DataSpace::From(param.dataUnits)).
         write(param.dataUnits);

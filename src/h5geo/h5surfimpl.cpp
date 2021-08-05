@@ -2,6 +2,8 @@
 #include "../../include/h5geo/h5surfcontainer.h"
 #include "../../include/h5geo/h5core.h"
 
+#include <units.hpp>
+
 H5SurfImpl::H5SurfImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
@@ -19,7 +21,7 @@ bool H5SurfImpl::writeData(
   return true;
 }
 
-Eigen::MatrixXd H5SurfImpl::getData() const{
+Eigen::MatrixXd H5SurfImpl::getData(const std::string& dataUnits){
   auto opt = getSurfD();
   if (!opt.has_value())
     return Eigen::MatrixXd();
@@ -27,6 +29,16 @@ Eigen::MatrixXd H5SurfImpl::getData() const{
   std::vector<size_t> dims(opt->getDimensions());
   Eigen::MatrixXd M(dims[1], dims[0]);
   opt->read(M.data());
+
+  if (!dataUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(getDataUnits()),
+          units::unit_from_string(dataUnits));
+    if (!isnan(coef))
+      return M*coef;
+
+    return Eigen::MatrixXd();
+  }
 
   return M;
 }
@@ -42,13 +54,6 @@ bool H5SurfImpl::setSpatialUnits(const std::string& str){
   return h5geo::setStringFromObj(
         objG,
         std::string{h5geo::detail::spatial_units},
-        str);
-}
-
-bool H5SurfImpl::setTemporalUnits(const std::string& str){
-  return h5geo::setStringFromObj(
-        objG,
-        std::string{h5geo::detail::temporal_units},
         str);
 }
 
@@ -100,28 +105,46 @@ std::string H5SurfImpl::getSpatialUnits(){
         std::string{h5geo::detail::spatial_units});
 }
 
-std::string H5SurfImpl::getTemporalUnits(){
-  return h5geo::getStringFromObj(
-        objG,
-        std::string{h5geo::detail::temporal_units});
-}
-
 std::string H5SurfImpl::getDataUnits(){
   return h5geo::getStringFromObj(
         objG,
         std::string{h5geo::detail::data_units});
 }
 
-Eigen::Vector2d H5SurfImpl::getOrigin(){
-  return h5geo::getEigenFloatVecFromObj(
+Eigen::VectorXd H5SurfImpl::getOrigin(const std::string& spatialUnits){
+  Eigen::VectorXd v = h5geo::getEigenFloatVecFromObj(
         objG,
         std::string{h5geo::detail::origin});
+
+  if (!spatialUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(getSpatialUnits()),
+          units::unit_from_string(spatialUnits));
+    if (!isnan(coef))
+      return v*coef;
+
+    return Eigen::VectorXd();
+  }
+
+  return v;
 }
 
-Eigen::Vector2d H5SurfImpl::getSpacing(){
-  return h5geo::getEigenFloatVecFromObj(
+Eigen::VectorXd H5SurfImpl::getSpacing(const std::string& spatialUnits){
+  Eigen::VectorXd v = h5geo::getEigenFloatVecFromObj(
         objG,
         std::string{h5geo::detail::spacing});
+
+  if (!spatialUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(getSpatialUnits()),
+          units::unit_from_string(spatialUnits));
+    if (!isnan(coef))
+      return v*coef;
+
+    return Eigen::VectorXd();
+  }
+
+  return v;
 }
 
 

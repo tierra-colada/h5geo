@@ -16,12 +16,11 @@ void SurfParam_py(py::class_<SurfParam> &py_obj){
         double,
         Domain,
         std::string,
-        std::string,
         std::string>(),
         py::arg("nX"), py::arg("nY"),
         py::arg("X0"), py::arg("Y0"),
         py::arg("dX"), py::arg("dY"),
-        py::arg("domain"), py::arg("spatialUnits"), py::arg("temporalUnits"),
+        py::arg("domain"), py::arg("spatialUnits"),
         py::arg("dataUnits"))
       .def_readwrite("nX", &SurfParam::nX)
       .def_readwrite("nY", &SurfParam::nY)
@@ -31,7 +30,6 @@ void SurfParam_py(py::class_<SurfParam> &py_obj){
       .def_readwrite("dY", &SurfParam::dY)
       .def_readwrite("domain", &SurfParam::domain)
       .def_readwrite("spatialUnits", &SurfParam::spatialUnits)
-      .def_readwrite("temporalUnits", &SurfParam::temporalUnits)
       .def_readwrite("dataUnits", &SurfParam::dataUnits);
 }
 

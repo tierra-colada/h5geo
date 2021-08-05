@@ -32,7 +32,6 @@ PYBIND11_MODULE(_h5geo, m) {
   /*-------------------------DECLARATION-------------------------*/
   /*-------------------------------------------------------------*/
 
-
   /* `nullptr` problem: I use interface classes (base classes are abstract).
    * Factory functions (and methods) may create `nullptr` instead of `H5Base *`
    * pointer for example. If this happens then python doesn't know how to treat
@@ -42,7 +41,6 @@ PYBIND11_MODULE(_h5geo, m) {
    * Secondly I decided to include these abstract classes to bind class hierarchy
    * (you can see that every `py_class_<SomeClassImpl, ..., SomeClass>` has a corresponding
    * abstract class as parent. I do this to keep polymorphism (though this may be excessive) */
-
 
   /*----------EMPTY DECLARATION OF ABSTRACT CLASSES (NEEDED TO OVERCOME `nullptr` PROBLEM---------*/
 
@@ -123,7 +121,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyCaseSensitivity = py::enum_<CaseSensitivity>(m, "CaseSensitivity", py::arithmetic());
   auto pyDelimiter = py::enum_<Delimiter>(m, "Delimiter", py::arithmetic());
 
-  // DELETER
+  // _DELETER
   auto pyObjectDeleter = py::class_<ObjectDeleter>(m, "ObjectDeleter");
 
   // BASE

@@ -52,7 +52,9 @@ public:
   virtual std::vector<std::string> getTextHeader() = 0;
   virtual Eigen::VectorXd getBinHeader() = 0;
   virtual double getBinHeader(
-      const std::string& hdrName) = 0;
+      const std::string& hdrName,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
   /*!
    * \brief getTrace Get block of traces. If `nTrc` or
    * `nSamp` exceed max values then these values are
@@ -61,13 +63,15 @@ public:
    * \param nTrc
    * \param fromSampInd
    * \param nSamp
+   * \param dataUnits
    * \return
    */
   virtual Eigen::MatrixXf getTrace(
       const size_t& fromTrc,
       size_t nTrc = 1,
       const size_t& fromSampInd = 0,
-      size_t nSamp = std::numeric_limits<size_t>::max()) = 0;
+      size_t nSamp = std::numeric_limits<size_t>::max(),
+      const std::string& dataUnits = "") = 0;
   /*!
    * \brief getTraceHeader Get block of trace headers.
    * If `nTrc` or `nHdr` exceed max values then these
@@ -77,6 +81,8 @@ public:
    * \param nTrc
    * \param fromHdr
    * \param nHdr
+   * \param unitsFrom
+   * \param unitsTo
    * \return
    */
   virtual Eigen::MatrixXd getTraceHeader(
@@ -87,7 +93,9 @@ public:
   virtual Eigen::VectorXd getTraceHeader(
       const std::string& hdrName,
       const size_t& fromTrc = 0,
-      const size_t& nTrc = std::numeric_limits<size_t>::max()) = 0;
+      const size_t& nTrc = std::numeric_limits<size_t>::max(),
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
   /*!
    * \brief readSortedData Get sorted data based on precalculated
    * primary sort keys (e.g. before using it you should prepare
@@ -112,7 +120,8 @@ public:
       const std::vector<double>& minList,
       const std::vector<double>& maxList,
       size_t fromSampInd = 0,
-      size_t nSamp = std::numeric_limits<size_t>::max()) = 0;
+      size_t nSamp = std::numeric_limits<size_t>::max(),
+      const std::string& dataUnits = "") = 0;
 
   virtual ptrdiff_t getBinHeaderIndex(const std::string& hdrName) = 0;
   virtual ptrdiff_t getTraceHeaderIndex(const std::string& hdrName) = 0;
@@ -121,13 +130,20 @@ public:
       const double& pMin, const double& pMax) = 0;
 
   /*! in millisec or meters !*/
-  virtual Eigen::VectorXd getSamples(const size_t& trcInd) = 0;
+  virtual Eigen::VectorXd getSamples(
+      const size_t& trcInd,
+      const std::string& units = "") = 0;
   /*! in millisec or meters !*/
-  virtual double getFirstSample(const size_t& trcInd) = 0;
+  virtual double getFirstSample(
+      const size_t& trcInd,
+      const std::string& units = "") = 0;
   /*! in millisec or meters !*/
-  virtual double getLastSample(const size_t& trcInd) = 0;
+  virtual double getLastSample(
+      const size_t& trcInd,
+      const std::string& units = "") = 0;
   /*! in millisec or meters !*/
-  virtual double getSampRate() = 0;
+  virtual double getSampRate(
+      const std::string& units = "") = 0;
   virtual size_t getNSamp() = 0;
   virtual size_t getNTrc() = 0;
   /*! usually 78 !*/
@@ -137,8 +153,14 @@ public:
   virtual std::vector<std::string> getPKeyNames() = 0;
   virtual Eigen::VectorXd getTraceHeaderMin() = 0;
   virtual Eigen::VectorXd getTraceHeaderMax() = 0;
-  virtual double getTraceHeaderMin(const std::string& hdrName) = 0;
-  virtual double getTraceHeaderMax(const std::string& hdrName) = 0;
+  virtual double getTraceHeaderMin(
+      const std::string& hdrName,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
+  virtual double getTraceHeaderMax(
+      const std::string& hdrName,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
 
   virtual Eigen::MatrixX2d calcBoundaryStk2D() = 0;
   virtual Eigen::MatrixX2d calcConvexHullBoundary() = 0;

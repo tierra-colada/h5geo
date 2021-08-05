@@ -47,8 +47,8 @@ public:
   virtual bool setUWI(const std::string& str) override;
 
   virtual std::string getSpatialUnits() override;
-  virtual Eigen::Vector2d getHeadCoord() override;
-  virtual double getKB() override;
+  virtual Eigen::VectorXd getHeadCoord(const std::string& spatialUnits = "") override;
+  virtual double getKB(const std::string& spatialUnits = "") override;
   virtual std::string getUWI() override;
 
   virtual H5DevCurve* getActiveDevCurve() override;

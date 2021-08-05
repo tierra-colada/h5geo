@@ -53,7 +53,9 @@ public:
   virtual std::vector<std::string> getTextHeader() override;
   virtual Eigen::VectorXd getBinHeader() override;
   virtual double getBinHeader(
-      const std::string& hdrName) override;
+      const std::string& hdrName,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") override;
   /*!
    * \brief getTrace Get block of traces. If `nTrc` or
    * `nSamp` exceed max values then these values are
@@ -68,7 +70,8 @@ public:
       const size_t& fromTrc,
       size_t nTrc = 1,
       const size_t& fromSampInd = 0,
-      size_t nSamp = std::numeric_limits<size_t>::max()) override;
+      size_t nSamp = std::numeric_limits<size_t>::max(),
+      const std::string& dataUnits = "") override;
   /*!
    * \brief getTraceHeader Get block of trace headers.
    * If `nTrc` or `nHdr` exceed max values then these
@@ -88,7 +91,9 @@ public:
   virtual Eigen::VectorXd getTraceHeader(
       const std::string& hdrName,
       const size_t& fromTrc = 0,
-      const size_t& nTrc = std::numeric_limits<size_t>::max()) override;
+      const size_t& nTrc = std::numeric_limits<size_t>::max(),
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") override;
   /*!
    * \brief readSortedData Get sorted data based on precalculated
    * primary sort keys (e.g. before using it you should prepare
@@ -113,7 +118,8 @@ public:
       const std::vector<double>& minList,
       const std::vector<double>& maxList,
       size_t fromSampInd = 0,
-      size_t nSamp = std::numeric_limits<size_t>::max()) override;
+      size_t nSamp = std::numeric_limits<size_t>::max(),
+      const std::string& dataUnits = "") override;
 
   virtual ptrdiff_t getBinHeaderIndex(const std::string& hdrName) override;
   virtual ptrdiff_t getTraceHeaderIndex(const std::string& hdrName) override;
@@ -122,13 +128,19 @@ public:
       const double& pMin, const double& pMax) override;
 
   /*! in millisec or meters !*/
-  virtual Eigen::VectorXd getSamples(const size_t& trcInd) override;
+  virtual Eigen::VectorXd getSamples(
+      const size_t& trcInd,
+      const std::string& units = "") override;
   /*! in millisec or meters !*/
-  virtual double getFirstSample(const size_t& trcInd) override;
+  virtual double getFirstSample(
+      const size_t& trcInd,
+      const std::string& units = "") override;
   /*! in millisec or meters !*/
-  virtual double getLastSample(const size_t& trcInd) override;
+  virtual double getLastSample(
+      const size_t& trcInd,
+      const std::string& units = "") override;
   /*! in millisec or meters !*/
-  virtual double getSampRate() override;
+  virtual double getSampRate(const std::string& units = "") override;
   virtual size_t getNSamp() override;
   virtual size_t getNTrc() override;
   /*! usually 78 !*/
@@ -138,8 +150,14 @@ public:
   virtual std::vector<std::string> getPKeyNames() override;
   virtual Eigen::VectorXd getTraceHeaderMin() override;
   virtual Eigen::VectorXd getTraceHeaderMax() override;
-  virtual double getTraceHeaderMin(const std::string& hdrName) override;
-  virtual double getTraceHeaderMax(const std::string& hdrName) override;
+  virtual double getTraceHeaderMin(
+      const std::string& hdrName,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") override;
+  virtual double getTraceHeaderMax(
+      const std::string& hdrName,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") override;
 
   virtual Eigen::MatrixX2d calcBoundaryStk2D() override;
   virtual Eigen::MatrixX2d calcConvexHullBoundary() override;

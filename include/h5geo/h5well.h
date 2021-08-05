@@ -49,8 +49,8 @@ public:
   virtual bool setUWI(const std::string& str) = 0;
 
   virtual std::string getSpatialUnits() = 0;
-  virtual Eigen::Vector2d getHeadCoord() = 0;
-  virtual double getKB() = 0;
+  virtual Eigen::VectorXd getHeadCoord(const std::string& spatialUnits = "") = 0;
+  virtual double getKB(const std::string& spatialUnits = "") = 0;
   virtual std::string getUWI() = 0;
 
   virtual H5DevCurve* getActiveDevCurve() = 0;
