@@ -159,14 +159,12 @@ before_script:
   - cmake --version
   - python --version
   - mkdir ${TRAVIS_BUILD_DIR}/../install
-  - if [[ NOT $H5GEO_SUPERBUILD ]]; then 
-      mkdir ${units_ROOT}/build
-      mkdir ${units_ROOT}/install
-      cd ${units_ROOT}/build
-      cmake .. -DUNITS_BUILD_FUZZ_TARGETS=OFF -DUNITS_BUILD_SHARED_LIBRARY=OFF -DUNITS_BUILD_STATIC_LIBRARY=ON -DUNITS_ENABLE_TESTS=OFF -DUNITS_HEADER_ONLY=OFF -DCMAKE_BUILD_TYPE=Release
-      cmake --build . --config Release
-      cmake --install . --config Release --prefix ${units_ROOT}/install
-    fi
+  - mkdir ${units_ROOT}/build
+  - mkdir ${units_ROOT}/install
+  - cd ${units_ROOT}/build
+  - cmake .. -DUNITS_BUILD_FUZZ_TARGETS=OFF -DUNITS_BUILD_SHARED_LIBRARY=OFF -DUNITS_BUILD_STATIC_LIBRARY=ON -DUNITS_ENABLE_TESTS=OFF -DUNITS_HEADER_ONLY=OFF -DCMAKE_BUILD_TYPE=Release
+  - cmake --build . --config Release
+  - cmake --install . --config Release --prefix ${units_ROOT}/install
 
 script:
   - cd ${TRAVIS_BUILD_DIR}
