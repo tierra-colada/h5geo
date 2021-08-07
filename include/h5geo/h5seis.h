@@ -32,8 +32,11 @@ public:
    */
   virtual bool writeBinHeader(const std::vector<double>& binHdrVec) = 0;
   virtual bool writeBinHeader(const Eigen::VectorXd& binHdrVec) = 0;
-  virtual bool writeBinHeader(const std::string& hdrName,
-      const double& value) = 0;
+  virtual bool writeBinHeader(
+      const std::string& hdrName,
+      const double& value,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
   virtual bool writeBoundary(const Eigen::MatrixX2d& boundary) = 0;
   virtual bool writeTrace(
       const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
@@ -46,7 +49,9 @@ public:
   virtual bool writeTraceHeader(
       const std::string& hdrName,
       const Eigen::Ref<const Eigen::MatrixXd>& hdr,
-      const size_t& fromTrc = 0) = 0;
+      const size_t& fromTrc = 0,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
 
 //  GETTERS
   virtual std::vector<std::string> getTextHeader() = 0;
@@ -207,7 +212,7 @@ public:
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
   virtual bool setDataType(const h5geo::SeisDataType& seisType) = 0;
   virtual bool setSurveyType(const h5geo::SurveyType& surveyType) = 0;
-  virtual bool setSRD(const double& val) = 0;
+  virtual bool setSRD(const double& val, const std::string& spatialUnits = "") = 0;
   virtual bool setSpatialUnits(const std::string& str) = 0;
   virtual bool setTemporalUnits(const std::string& str) = 0;
   virtual bool setDataUnits(const std::string& str) = 0;

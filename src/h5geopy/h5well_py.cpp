@@ -22,8 +22,10 @@ void H5Well_py(
       .def("createDevCurve", py::overload_cast<h5gt::Group, DevCurveParam&, CreationType>(&H5WellImpl::createDevCurve))
 
       .def("setSpatialUnits", &H5WellImpl::setSpatialUnits)
-      .def("setHeadCoord", &H5WellImpl::setHeadCoord)
-      .def("setKB", &H5WellImpl::setKB)
+      .def("setHeadCoord", &H5WellImpl::setHeadCoord,
+           py::arg("xy"), py::arg_v("spatialUnits", "", "str()"))
+      .def("setKB", &H5WellImpl::setKB,
+           py::arg("val"), py::arg_v("spatialUnits", "", "str()"))
       .def("setUWI", &H5WellImpl::setUWI)
 
       .def("getSpatialUnits", &H5WellImpl::getSpatialUnits)

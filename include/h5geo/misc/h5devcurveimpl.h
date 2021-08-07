@@ -15,10 +15,12 @@ protected:
 public:
   virtual bool writeCurve(
       const h5geo::DevDataType& name,
-      const Eigen::Ref<const Eigen::VectorXd>& v) override;
+      const Eigen::Ref<const Eigen::VectorXd>& v,
+      const std::string& units = "") override;
   virtual bool writeCurve(
       const std::string& name,
-      const Eigen::Ref<const Eigen::VectorXd>& v) override;
+      const Eigen::Ref<const Eigen::VectorXd>& v,
+      const std::string& units = "") override;
 
   virtual bool setActive() override;
   virtual bool isActive() override;

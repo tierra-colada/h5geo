@@ -12,8 +12,14 @@ void H5DevCurve_py(
     H5BaseObjectImpl,
     H5DevCurve> &py_obj){
   py_obj
-      .def("writeCurve", py::overload_cast<const DevDataType&, const Eigen::Ref<const Eigen::VectorXd>&>(&H5DevCurveImpl::writeCurve))
-      .def("writeCurve", py::overload_cast<const std::string&, const Eigen::Ref<const Eigen::VectorXd>&>(&H5DevCurveImpl::writeCurve))
+      .def("writeCurve", py::overload_cast<const DevDataType&,
+           const Eigen::Ref<const Eigen::VectorXd>&, const std::string&>(
+             &H5DevCurveImpl::writeCurve),
+           py::arg("name"), py::arg("data"), py::arg_v("units", "", "str()"))
+      .def("writeCurve", py::overload_cast<const std::string&,
+           const Eigen::Ref<const Eigen::VectorXd>&, const std::string&>(
+             &H5DevCurveImpl::writeCurve),
+           py::arg("name"), py::arg("data"), py::arg_v("units", "", "str()"))
 
       .def("setActive", &H5DevCurveImpl::setActive)
       .def("isActive", &H5DevCurveImpl::isActive)

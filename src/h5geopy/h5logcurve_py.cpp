@@ -12,8 +12,14 @@ void H5LogCurve_py(
     H5BaseObjectImpl,
     H5LogCurve> &py_obj){
   py_obj
-      .def("writeCurve", py::overload_cast<const LogDataType&, const Eigen::Ref<const Eigen::VectorXd>&>(&H5LogCurveImpl::writeCurve))
-      .def("writeCurve", py::overload_cast<const std::string&, const Eigen::Ref<const Eigen::VectorXd>&>(&H5LogCurveImpl::writeCurve))
+      .def("writeCurve", py::overload_cast<const LogDataType&,
+           const Eigen::Ref<const Eigen::VectorXd>&, const std::string&>(
+             &H5LogCurveImpl::writeCurve),
+           py::arg("name"), py::arg("data"), py::arg_v("units", "", "str()"))
+      .def("writeCurve", py::overload_cast<const std::string&,
+           const Eigen::Ref<const Eigen::VectorXd>&, const std::string&>(
+             &H5LogCurveImpl::writeCurve),
+           py::arg("name"), py::arg("data"), py::arg_v("units", "", "str()"))
 
       .def("getCurve", py::overload_cast<const LogDataType&, const std::string&>(&H5LogCurveImpl::getCurve),
            py::arg("name"), py::arg_v("units", "", "str()"))

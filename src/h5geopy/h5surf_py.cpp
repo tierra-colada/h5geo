@@ -9,7 +9,9 @@ void H5Surf_py(
     H5BaseObjectImpl,
     H5Surf> &py_obj){
   py_obj
-      .def("writeData", &H5SurfImpl::writeData)
+      .def("writeData", &H5SurfImpl::writeData,
+           py::arg("data"),
+           py::arg_v("dataUnits", "", "str()"))
       .def("getData", &H5SurfImpl::getData,
            py::arg_v("dataUnits", "", "str()"))
 

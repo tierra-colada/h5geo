@@ -44,8 +44,12 @@ public:
       h5geo::CreationType createFlag) = 0;
 
   virtual bool setSpatialUnits(const std::string& str) = 0;
-  virtual bool setHeadCoord(const Eigen::Ref<const Eigen::Vector2d>& v) = 0;
-  virtual bool setKB(const double& val) = 0;
+  virtual bool setHeadCoord(
+      const Eigen::Ref<const Eigen::Vector2d>& v,
+      const std::string& spatialUnits = "") = 0;
+  virtual bool setKB(
+      const double& val,
+      const std::string& spatialUnits = "") = 0;
   virtual bool setUWI(const std::string& str) = 0;
 
   virtual std::string getSpatialUnits() = 0;

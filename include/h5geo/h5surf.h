@@ -14,7 +14,8 @@ protected:
 
 public:
   virtual bool writeData(
-      const Eigen::Ref<const Eigen::MatrixXd>& M) = 0;
+      const Eigen::Ref<const Eigen::MatrixXd>& M,
+      const std::string& dataUnits = "") = 0;
 
   virtual Eigen::MatrixXd getData(const std::string& dataUnits = "") = 0;
 

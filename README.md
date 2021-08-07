@@ -18,6 +18,7 @@
 * [h5gt](https://github.com/tierra-colada/h5gt) (header only)
 * [Eigen3](https://gitlab.com/libeigen/eigen) (header only)
 * [magic-enum](https://github.com/Neargye/magic_enum) (header only)
+* [units](https://github.com/LLNL/units) (for now it must be built as static library)
 * optionally: [tbb](https://github.com/oneapi-src/oneTBB) (MSVC compiler includes it by default)
 * optionally: [h5gtpy](https://github.com/tierra-colada/h5gt) (needed only when building with python support `-DH5GEO_BUILD_h5geopy=ON`)
 

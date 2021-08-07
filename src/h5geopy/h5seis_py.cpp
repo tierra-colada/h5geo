@@ -72,8 +72,10 @@ void H5Seis_py(
            py::arg("binHdr"))
       .def("writeBinHeader", py::overload_cast<const Eigen::VectorXd&>(&H5SeisImpl::writeBinHeader),
            py::arg("binHdr"))
-      .def("writeBinHeader", py::overload_cast<const std::string&, const double&>(&H5SeisImpl::writeBinHeader),
-           py::arg("hdrName"), py::arg("value"))
+      .def("writeBinHeader", py::overload_cast<const std::string&, const double&,
+           const std::string&, const std::string&>(&H5SeisImpl::writeBinHeader),
+           py::arg("hdrName"), py::arg("value"),
+           py::arg_v("unitsFrom", "", "str()"), py::arg_v("unitsTo", "", "str()"))
 
       .def("writeBoundary", &H5SeisImpl::writeBoundary,
            py::arg("boundary"), "write boundary of 2d (a line) or 3d (usually convex hull or concave hull) seismic survey. "
@@ -86,8 +88,10 @@ void H5Seis_py(
            py::arg("HDR"),
            py::arg_v("fromTrc", 0, "0"),
            py::arg_v("fromHdrInd", 0, "0"))
-      .def("writeTraceHeader", py::overload_cast<const std::string&, const Eigen::Ref<const Eigen::MatrixXd>&, const size_t&>(&H5SeisImpl::writeTraceHeader),
-           py::arg("hdrName"), py::arg("hdr"), py::arg_v("fromTrc", 0, "0"))
+      .def("writeTraceHeader", py::overload_cast<const std::string&, const Eigen::Ref<const Eigen::MatrixXd>&, const size_t&,
+           const std::string&, const std::string&>(&H5SeisImpl::writeTraceHeader),
+           py::arg("hdrName"), py::arg("hdr"), py::arg_v("fromTrc", 0, "0"),
+           py::arg_v("unitsFrom", "", "str()"), py::arg_v("unitsTo", "", "str()"))
 
       //  GETTERS
       .def("getTextHeader", &H5SeisImpl::getTextHeader)
@@ -189,7 +193,8 @@ void H5Seis_py(
       .def("setDomain", &H5SeisImpl::setDomain)
       .def("setDataType", &H5SeisImpl::setDataType)
       .def("setSurveyType", &H5SeisImpl::setSurveyType)
-      .def("setSRD", &H5SeisImpl::setSRD)
+      .def("setSRD", &H5SeisImpl::setSRD,
+           py::arg("value"), py::arg_v("units", "", "str()"))
       .def("setSpatialUnits", &H5SeisImpl::setSpatialUnits)
       .def("setTemporalUnits", &H5SeisImpl::setTemporalUnits)
       .def("setDataUnits", &H5SeisImpl::setDataUnits)

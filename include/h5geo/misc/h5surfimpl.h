@@ -14,7 +14,8 @@ protected:
 
 public:
   virtual bool writeData(
-      const Eigen::Ref<const Eigen::MatrixXd>& M) override;
+      const Eigen::Ref<const Eigen::MatrixXd>& M,
+      const std::string& dataUnits = "") override;
 
   virtual Eigen::MatrixXd getData(const std::string& dataUnits = "") override;
 

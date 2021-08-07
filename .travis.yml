@@ -187,8 +187,8 @@ script:
     -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
     -G "${CMAKE_GENERATOR}" ../
   - cmake --build . --config Release
-  - CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target ${TESTS_TARGET}
-  - cmake --install . --prefix ../install
+  - CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target ${TESTS_TARGET} --config Release
+  - cmake --install . --prefix ../install --config Release
   - ${PYTEST_COMMAND}
   # - popd
   # - bash tests/test_project_integration.sh;

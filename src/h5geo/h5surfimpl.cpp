@@ -8,7 +8,8 @@ H5SurfImpl::H5SurfImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
 bool H5SurfImpl::writeData(
-    const Eigen::Ref<const Eigen::MatrixXd>& M)
+    const Eigen::Ref<const Eigen::MatrixXd>& M,
+    const std::string& dataUnits)
 {
   auto opt = getSurfD();
   if (!opt.has_value())
@@ -16,6 +17,15 @@ bool H5SurfImpl::writeData(
 
   if (M.size() != opt->getElementCount())
     return false;
+
+  if (!dataUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(dataUnits),
+          units::unit_from_string(getDataUnits()));
+    Eigen::MatrixXd MM = M*coef;
+    opt->write_raw(MM.data());
+    return true;
+  }
 
   opt->write_raw(M.data());
   return true;

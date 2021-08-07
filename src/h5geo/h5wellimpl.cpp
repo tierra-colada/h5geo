@@ -210,15 +210,39 @@ bool H5WellImpl::setSpatialUnits(const std::string& str){
 }
 
 bool H5WellImpl::setHeadCoord(
-    const Eigen::Ref<const Eigen::Vector2d>& v)
+    const Eigen::Ref<const Eigen::Vector2d>& v,
+    const std::string& spatialUnits)
 {
+  if (!spatialUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(spatialUnits),
+          units::unit_from_string(getSpatialUnits()));
+    Eigen::Vector2d vv = v*coef;
+    return h5geo::setFloatVecFromObj(
+          objG,
+          std::string{h5geo::detail::head_coord},
+          vv);
+  }
+
   return h5geo::setFloatVecFromObj(
         objG,
         std::string{h5geo::detail::head_coord},
         v);
 }
 
-bool H5WellImpl::setKB(const double& val){
+bool H5WellImpl::setKB(
+    const double& val,
+    const std::string& spatialUnits){
+  if (!spatialUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(spatialUnits),
+          units::unit_from_string(getSpatialUnits()));
+    return h5geo::setFloatFromObj(
+          objG,
+          std::string{h5geo::detail::KB},
+          val*coef);
+  }
+
   return h5geo::setFloatFromObj(
         objG,
         std::string{h5geo::detail::KB},

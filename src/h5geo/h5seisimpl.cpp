@@ -84,7 +84,9 @@ bool H5SeisImpl::writeBinHeader(
 
 bool H5SeisImpl::writeBinHeader(
     const std::string& hdrName,
-    const double& value)
+    const double& value,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
   auto opt = getBinHeaderD();
   if (!opt.has_value())
@@ -94,6 +96,14 @@ bool H5SeisImpl::writeBinHeader(
 
   if (ind < 0)
     return false;
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(unitsTo));
+    opt->select({size_t(ind)}, {1}).write(value*coef);
+    return true;
+  }
 
   opt->select({size_t(ind)}, {1}).write(value);
   return true;
@@ -150,9 +160,19 @@ bool H5SeisImpl::writeTraceHeader(
 bool H5SeisImpl::writeTraceHeader(
     const std::string& hdrName,
     const Eigen::Ref<const Eigen::MatrixXd>& hdr,
-    const size_t& fromTrc)
+    const size_t& fromTrc,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
   size_t ind = getTraceHeaderIndex(hdrName);
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(unitsTo));
+    return writeTraceHeader(hdr*coef, fromTrc, ind);
+  }
+
   return writeTraceHeader(hdr, fromTrc, ind);
 }
 
@@ -936,7 +956,17 @@ bool H5SeisImpl::setSurveyType(const h5geo::SurveyType& val){
         static_cast<unsigned>(val));
 }
 
-bool H5SeisImpl::setSRD(const double& val){
+bool H5SeisImpl::setSRD(const double& val, const std::string& spatialUnits){
+  if (!spatialUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(spatialUnits),
+          units::unit_from_string(getSpatialUnits()));
+    return h5geo::setFloatFromObj(
+          objG,
+          std::string{h5geo::detail::SRD},
+          val*coef);
+  }
+
   return h5geo::setFloatFromObj(
         objG,
         std::string{h5geo::detail::SRD},

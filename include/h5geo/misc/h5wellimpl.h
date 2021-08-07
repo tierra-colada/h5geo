@@ -42,8 +42,12 @@ public:
       h5geo::CreationType createFlag) override;
 
   virtual bool setSpatialUnits(const std::string& str) override;
-  virtual bool setHeadCoord(const Eigen::Ref<const Eigen::Vector2d>& v) override;
-  virtual bool setKB(const double& val) override;
+  virtual bool setHeadCoord(
+      const Eigen::Ref<const Eigen::Vector2d>& v,
+      const std::string& spatialUnits = "") override;
+  virtual bool setKB(
+      const double& val,
+      const std::string& spatialUnits = "") override;
   virtual bool setUWI(const std::string& str) override;
 
   virtual std::string getSpatialUnits() override;

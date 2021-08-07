@@ -10,19 +10,41 @@ H5DevCurveImpl::H5DevCurveImpl(const h5gt::Group &group) :
 
 bool H5DevCurveImpl::writeCurve(
     const h5geo::DevDataType& name,
-    const Eigen::Ref<const Eigen::VectorXd>& v)
+    const Eigen::Ref<const Eigen::VectorXd>& v,
+    const std::string& units)
 {
   return writeCurve(
-        std::string{magic_enum::enum_name(name)}, v);
+        std::string{magic_enum::enum_name(name)}, v, units);
 }
 
 bool H5DevCurveImpl::writeCurve(
     const std::string& name,
-    const Eigen::Ref<const Eigen::VectorXd>& v)
+    const Eigen::Ref<const Eigen::VectorXd>& v,
+    const std::string& units)
 {
   auto opt = getDevCurveD();
   if (!opt.has_value())
     return false;
+
+  if (!units.empty()){
+    double coef;
+    if (name == h5geo::OWT)
+      coef = units::convert(
+            units::unit_from_string(getTemporalUnits()),
+            units::unit_from_string(units));
+    else
+      coef = units::convert(
+            units::unit_from_string(getSpatialUnits()),
+            units::unit_from_string(units));
+
+    Eigen::VectorXd vv = v*coef;
+
+    return h5geo::writeData2IndexedDataset(
+          opt.value(),
+          name,
+          vv,
+          true);
+  }
 
   return h5geo::writeData2IndexedDataset(
         opt.value(),
