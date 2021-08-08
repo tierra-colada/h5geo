@@ -7,6 +7,7 @@
 
 #include <math.h>
 #include <Eigen/Dense>
+#include <units.hpp>
 
 namespace h5geo
 {
@@ -15,7 +16,7 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> MdAzIncl2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
-    const h5geo::AngleUnits& angleUnits,
+    const std::string& angleUnits,
     const bool& XNorth);
 
 template<typename D, typename T>
@@ -46,7 +47,7 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> traj2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
-    const h5geo::AngleUnits& angleUnits,
+    const std::string& angleUnits,
     const h5geo::TrajectoryFormat& trajFormat,
     const bool& XNorth);
 
@@ -55,7 +56,7 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> MdAzIncl2MdXYTvd(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0,
-    const h5geo::AngleUnits& angleUnits,
+    const std::string& angleUnits,
     const bool& XNorth);
 
 template<typename D, typename T>
@@ -122,23 +123,30 @@ inline T _betaAngle(
     T I2,
     T A1,
     T A2,
-    const h5geo::AngleUnits& angleUnits)
+    const std::string& angleUnits)
 {
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    I1 = I1/180.0*M_PI;
-    I2 = I2/180.0*M_PI;
-    A1 = A1/180.0*M_PI;
-    A2 = A2/180.0*M_PI;
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    I1 *= coef;
+    I2 *= coef;
+    A1 *= coef;
+    A2 *= coef;
   }
 
   return acos(cos(I2-I1) - (sin(I1)*sin(I2)*(1 - cos(A2-A1))));
 }
 
 template<typename T>
-inline T _ratioFactor(T B, const h5geo::AngleUnits& angleUnits)
+inline T _ratioFactor(T B, const std::string& angleUnits)
 {
-  if (angleUnits == h5geo::AngleUnits::DEGREE)
-    B = B/180.0*M_PI;
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    B *= coef;
+  }
 
   if (B == 0)
     return 1 + pow(B,2)/12 + pow(B,4)/120 + pow(B,6)/20160; // or it is possible to simply return 1
@@ -154,13 +162,16 @@ inline T _deltaEast(
     T A1,
     T A2,
     const T& RF,
-    const h5geo::AngleUnits& angleUnits)
+    const std::string& angleUnits)
 {
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    I1 = I1/180.0*M_PI;
-    I2 = I2/180.0*M_PI;
-    A1 = A1/180.0*M_PI;
-    A2 = A2/180.0*M_PI;
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    I1 *= coef;
+    I2 *= coef;
+    A1 *= coef;
+    A2 *= coef;
   }
 
   return dMD/2 * (sin(I1)*sin(A1) + sin(I2)*sin(A2))*RF;
@@ -174,13 +185,16 @@ inline T _deltaNorth(
     T A1,
     T A2,
     const T& RF,
-    const h5geo::AngleUnits& angleUnits)
+    const std::string& angleUnits)
 {
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    I1 = I1/180.0*M_PI;
-    I2 = I2/180.0*M_PI;
-    A1 = A1/180.0*M_PI;
-    A2 = A2/180.0*M_PI;
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    I1 *= coef;
+    I2 *= coef;
+    A1 *= coef;
+    A2 *= coef;
   }
 
   return dMD/2 * (sin(I1)*cos(A1) + sin(I2)*cos(A2))*RF;
@@ -192,11 +206,14 @@ inline T _deltaZ(
     T I1,
     T I2,
     const T& RF,
-    const h5geo::AngleUnits& angleUnits)
+    const std::string& angleUnits)
 {
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    I1 = I1/180.0*M_PI;
-    I2 = I2/180.0*M_PI;
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    I1 *= coef;
+    I2 *= coef;
   }
 
   return dMD/2 * (cos(I1) + cos(I2))*RF;
@@ -210,13 +227,16 @@ inline T _dMDFromDeltaEast(
     T A1,
     T A2,
     const T& RF,
-    const h5geo::AngleUnits& angleUnits)
+    const std::string& angleUnits)
 {
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    I1 = I1/180.0*M_PI;
-    I2 = I2/180.0*M_PI;
-    A1 = A1/180.0*M_PI;
-    A2 = A2/180.0*M_PI;
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    I1 *= coef;
+    I2 *= coef;
+    A1 *= coef;
+    A2 *= coef;
   }
 
   return 2*dE / ((sin(I1)*sin(A1) + sin(I2)*sin(A2))*RF);
@@ -230,13 +250,16 @@ inline T _dMDFromDeltaNorth(
     T A1,
     T A2,
     const T& RF,
-    const h5geo::AngleUnits& angleUnits)
+    const std::string& angleUnits)
 {
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    I1 = I1/180.0*M_PI;
-    I2 = I2/180.0*M_PI;
-    A1 = A1/180.0*M_PI;
-    A2 = A2/180.0*M_PI;
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    I1 *= coef;
+    I2 *= coef;
+    A1 *= coef;
+    A2 *= coef;
   }
 
   return 2*dN / ((sin(I1)*cos(A1) + sin(I2)*cos(A2))*RF);
@@ -248,11 +271,14 @@ inline T _dMDFromDeltaZ(
     T I1,
     T I2,
     const T& RF,
-    const h5geo::AngleUnits& angleUnits)
+    const std::string& angleUnits)
 {
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    I1 = I1/180.0*M_PI;
-    I2 = I2/180.0*M_PI;
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    I1 *= coef;
+    I2 *= coef;
   }
 
   return 2*dZ / ((cos(I1) + cos(I2))*RF);
@@ -263,10 +289,13 @@ inline T _fa(
     const T& arc,
     const T& chord,
     T a,
-    const h5geo::AngleUnits& angleUnits)
+    const std::string& angleUnits)
 {
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    a = a/180.0*M_PI;
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    a *= coef;
   }
 
   return chord*a-2*arc*sin(a/2);
@@ -277,10 +306,13 @@ inline T _dfa(
     const T& arc,
     const T& chord,
     T a,
-    const h5geo::AngleUnits& angleUnits)
+    const std::string& angleUnits)
 {
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    a = a/180.0*M_PI;
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    a *= coef;
   }
 
   return chord-arc*cos(a/2);
@@ -290,10 +322,13 @@ template<typename T>
 inline T _ddfa(
     const T& arc,
     T a,
-    const h5geo::AngleUnits& angleUnits)
+    const std::string& angleUnits)
 {
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    a = a/180.0*M_PI;
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    a *= coef;
   }
 
   return arc*sin(a/2)/2;
@@ -309,7 +344,7 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
-    const h5geo::AngleUnits& angleUnits,
+    const std::string& angleUnits,
     const bool& XNorth)
 {
   if (M.cols() != 3)
@@ -326,9 +361,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2ALL(
   M_OUT.col(4) = M_MdXYTvd.col(3); // TVD
   M_OUT.col(5) = M_MdXYTvd.col(1).array() - x0; // DX
   M_OUT.col(6) = M_MdXYTvd.col(2).array() - y0; // DY
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    M_OUT.col(7) = M.col(1)/180.0*M_PI; // AZ
-    M_OUT.col(8) = M.col(2)/180.0*M_PI; // INCL
+
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
+    M_OUT.col(7) = M.col(1)*coef; // AZ
+    M_OUT.col(8) = M.col(2)*coef; // INCL
   } else {
     M_OUT.col(7) = M.col(1); // AZ
     M_OUT.col(8) = M.col(2); // INCL
@@ -441,7 +480,7 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::traj2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
-    const h5geo::AngleUnits& angleUnits,
+    const std::string& angleUnits,
     const h5geo::TrajectoryFormat& trajFormat,
     const bool& XNorth)
 {
@@ -465,17 +504,17 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2MdXYTvd(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0,
-    const h5geo::AngleUnits& angleUnits,
+    const std::string& angleUnits,
     const bool& XNorth)
 {
   if (M.cols() != 3)
     return Eigen::MatrixX<typename D::Scalar>();
 
-  double deg2rad_coef;
-  if (angleUnits == h5geo::AngleUnits::DEGREE){
-    deg2rad_coef = 1.0/180.0*M_PI;
-  } else {
-    deg2rad_coef = 1;
+  double coef = 1;
+  if (!angleUnits.empty()){
+    coef = units::convert(
+          units::unit_from_string(angleUnits),
+          units::unit_from_string("radian"));
   }
 
   Eigen::MatrixX<typename D::Scalar> M_OUT(M.rows(), 4);
@@ -484,31 +523,31 @@ Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2MdXYTvd(
 
   for (size_t i = 0; i < M.rows(); i++){
     if (i == 0){
-      A1 = M(0, 1) * deg2rad_coef;
-      A2 = M(0, 1) * deg2rad_coef;
-      I1 = M(0, 2) * deg2rad_coef;
-      I2 = M(0, 2) * deg2rad_coef;
+      A1 = M(0, 1) * coef;
+      A2 = M(0, 1) * coef;
+      I1 = M(0, 2) * coef;
+      I2 = M(0, 2) * coef;
       dMD = M(0, 0);
     } else {
-      A1 = M(i, 1) * deg2rad_coef;
-      A2 = M(i-1, 1) * deg2rad_coef;
-      I1 = M(i, 2) * deg2rad_coef;
-      I2 = M(i-1, 2) * deg2rad_coef;
+      A1 = M(i, 1) * coef;
+      A2 = M(i-1, 1) * coef;
+      I1 = M(i, 2) * coef;
+      I2 = M(i-1, 2) * coef;
       dMD = M(i, 0) - M(i-1, 0);
     }
 
-    B = _betaAngle(I1, I2, A1, A2, h5geo::AngleUnits::RADIAN);
-    RF = _ratioFactor(B, h5geo::AngleUnits::RADIAN);
+    B = _betaAngle(I1, I2, A1, A2, "");
+    RF = _ratioFactor(B, "");
 
     if (XNorth){
-      dx = _deltaNorth(dMD, I1, I2, A1, A2, RF, h5geo::AngleUnits::RADIAN);
-      dy = _deltaEast(dMD, I1, I2, A1, A2, RF, h5geo::AngleUnits::RADIAN);
+      dx = _deltaNorth(dMD, I1, I2, A1, A2, RF, "");
+      dy = _deltaEast(dMD, I1, I2, A1, A2, RF, "");
     } else {
-      dx = _deltaEast(dMD, I1, I2, A1, A2, RF, h5geo::AngleUnits::RADIAN);
-      dy = _deltaNorth(dMD, I1, I2, A1, A2, RF, h5geo::AngleUnits::RADIAN);
+      dx = _deltaEast(dMD, I1, I2, A1, A2, RF, "");
+      dy = _deltaNorth(dMD, I1, I2, A1, A2, RF, "");
     }
 
-    dz = _deltaZ(dMD, I1, I2, RF, h5geo::AngleUnits::RADIAN);
+    dz = _deltaZ(dMD, I1, I2, RF, "");
 
     if (i == 0){
       M_OUT(0, 1) = x0 + dx;
@@ -668,10 +707,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2MdAzIncl(
       I2 = atan2(sqrt(pow(dx,2)+pow(dy,2)), dz);
     }
 
-    B = _betaAngle(I1, I2, A1, A2, h5geo::AngleUnits::RADIAN);
-    RF = _ratioFactor(B, h5geo::AngleUnits::RADIAN);
+    B = _betaAngle(I1, I2, A1, A2, "");
+    RF = _ratioFactor(B, "");
 
-    dMD = _dMDFromDeltaZ(dz, I1, I2, RF, h5geo::AngleUnits::RADIAN);
+    dMD = _dMDFromDeltaZ(dz, I1, I2, RF, "");
 
     if (i == 0)
       M_OUT(0, 0) = dMD;
@@ -731,21 +770,21 @@ Eigen::VectorX<T> h5geo::angleAndRadius(
   T a_max = 2*M_PI;
   T a0, a1, f, df, ddf;
   for (a0 = a_min; a0 < a_max; a0 = a0+0.1){
-    f = _fa(arcLen, chordLen, a0, h5geo::AngleUnits::RADIAN);
-    ddf = _ddfa(arcLen, a0, h5geo::AngleUnits::RADIAN);
+    f = _fa(arcLen, chordLen, a0, "");
+    ddf = _ddfa(arcLen, a0, "");
     if (f*ddf > 0)
       break;
   }
 
-  df = _dfa(arcLen, chordLen, a0, h5geo::AngleUnits::RADIAN);
+  df = _dfa(arcLen, chordLen, a0, "");
   if (df == 0)
     return Eigen::VectorX<T>();
 
   a1 = a0 - f/df;
   size_t i = 1, ii = 0;
   while (abs(f) > eps && i < max_iter){
-    f = _fa(arcLen, chordLen, a0, h5geo::AngleUnits::RADIAN);
-    df = _dfa(arcLen, chordLen, a0, h5geo::AngleUnits::RADIAN);
+    f = _fa(arcLen, chordLen, a0, "");
+    df = _dfa(arcLen, chordLen, a0, "");
     if (df == 0)
       return Eigen::VectorX<T>();
 

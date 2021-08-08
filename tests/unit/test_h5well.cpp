@@ -230,7 +230,7 @@ TEST_F(H5WellFixture, MdAzIncl2MdXYTvd){
   Eigen::MatrixXd M = h5geo::MdAzIncl2MdXYTvd(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
           Eigen::all, {0, 7, 8}), wellParam.headX, wellParam.headY,
-        h5geo::AngleUnits::DEGREE, false);
+        "degree", false);
 
   wellContainer->getH5File().createDataSet<double>(
         "MdAzIncl2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -251,7 +251,7 @@ TEST_F(H5WellFixture, MdAzIncl2MdXYTvd_XNorth){
   Eigen::MatrixXd M = h5geo::MdAzIncl2MdXYTvd(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
           Eigen::all, {0, 7, 8}), wellParam.headY, wellParam.headX,
-        h5geo::AngleUnits::DEGREE, true);
+        "degree", true);
 
   wellContainer->getH5File().createDataSet<double>(
         "MdAzIncl2MdXYTvd", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -275,7 +275,7 @@ TEST_F(H5WellFixture, TvdXY2MdAzIncl){
           Eigen::all, {4, 1, 2}), wellParam.headX, wellParam.headY, false);
 
   Eigen::MatrixXd MM = h5geo::MdAzIncl2MdXYTvd(
-        M, wellParam.headX, wellParam.headY, h5geo::AngleUnits::RADIAN, false);
+        M, wellParam.headX, wellParam.headY, "degree", false);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdXY2MdAzIncl", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -298,7 +298,7 @@ TEST_F(H5WellFixture, TvdXY2MdAzIncl_XNorth){
           Eigen::all, {4, 2, 1}), wellParam.headY, wellParam.headX, true);
 
   Eigen::MatrixXd MM = h5geo::MdAzIncl2MdXYTvd(
-        M, wellParam.headY, wellParam.headX, h5geo::AngleUnits::RADIAN, true);
+        M, wellParam.headY, wellParam.headX, "degree", true);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdXY2MdAzIncl", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).

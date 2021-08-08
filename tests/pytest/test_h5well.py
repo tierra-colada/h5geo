@@ -136,7 +136,7 @@ class test_h5well(unittest.TestCase):
 
         M = h5geo.MdAzIncl2MdXYTvd(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, [0, 7, 8]],
                                    self.wellParam.headX, self.wellParam.headY,
-                                   h5geo.AngleUnits.DEGREE, False)
+                                   'degree', False)
 
         # self.wellContainer.getH5File().createDataSet(
         #     'MdAzIncl2MdXYTvd', [M.shape[1], M.shape[0]],
@@ -156,7 +156,7 @@ class test_h5well(unittest.TestCase):
         # here I set XNorth to True
         M = h5geo.MdAzIncl2MdXYTvd(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, [0, 7, 8]],
                                    self.wellParam.headY, self.wellParam.headX,
-                                   h5geo.AngleUnits.DEGREE, True)
+                                   'degree', True)
 
         # self.wellContainer.getH5File().createDataSet(
         #     'MdAzIncl2MdXYTvd', [M.shape[1], M.shape[0]],
@@ -178,7 +178,7 @@ class test_h5well(unittest.TestCase):
                                  self.wellParam.headX, self.wellParam.headY,
                                  False)
 
-        MM = h5geo.MdAzIncl2MdXYTvd(M, self.wellParam.headX, self.wellParam.headY, h5geo.AngleUnits.RADIAN, False)
+        MM = h5geo.MdAzIncl2MdXYTvd(M, self.wellParam.headX, self.wellParam.headY, 'radian', False)
 
         # self.wellContainer.getH5File().createDataSet(
         #     'MdAzIncl2MdXYTvd', [M.shape[1], M.shape[0]],
@@ -199,7 +199,7 @@ class test_h5well(unittest.TestCase):
                                  self.wellParam.headX, self.wellParam.headY,
                                  True)
 
-        MM = h5geo.MdAzIncl2MdXYTvd(M, self.wellParam.headX, self.wellParam.headY, h5geo.AngleUnits.RADIAN, True)
+        MM = h5geo.MdAzIncl2MdXYTvd(M, self.wellParam.headX, self.wellParam.headY, 'radian', True)
 
         # self.wellContainer.getH5File().createDataSet(
         #     'MdAzIncl2MdXYTvd', [M.shape[1], M.shape[0]],

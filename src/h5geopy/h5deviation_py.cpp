@@ -13,7 +13,7 @@ D MdAzIncl2ALL(
     const typename D::Scalar& x0,
     const typename D::Scalar& y0,
     const typename D::Scalar& kb,
-    const h5geo::AngleUnits& angleUnits,
+    const std::string& angleUnits,
     const bool& XNorth)
 {
   return h5geo::MdAzIncl2ALL(M, x0, y0, kb, angleUnits, XNorth);
@@ -58,7 +58,7 @@ D traj2ALL(
     const typename D::Scalar& x0,
     const typename D::Scalar& y0,
     const typename D::Scalar& kb,
-    const h5geo::AngleUnits& angleUnits,
+    const std::string& angleUnits,
     const h5geo::TrajectoryFormat& trajFormat,
     const bool& XNorth)
 {
@@ -82,7 +82,7 @@ D MdAzIncl2MdXYTvd(
     const py::EigenDRef<const D> M,
     const typename D::Scalar& x0,
     const typename D::Scalar& y0,
-    const h5geo::AngleUnits& angleUnits,
+    const std::string& angleUnits,
     const bool& XNorth)
 {
   return h5geo::MdAzIncl2MdXYTvd(M, x0, y0, angleUnits, XNorth);

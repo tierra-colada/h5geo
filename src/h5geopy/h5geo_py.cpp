@@ -114,9 +114,6 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyDevDataType = py::enum_<DevDataType>(m, "DevDataType", py::arithmetic());
   auto pyWellType = py::enum_<WellType>(m, "WellType", py::arithmetic());
   auto pyTrajectoryFormat = py::enum_<TrajectoryFormat>(m, "TrajectoryFormat", py::arithmetic());
-  auto pySpatialUnits = py::enum_<SpatialUnits>(m, "SpatialUnits", py::arithmetic());
-  auto pyTemporalUnits = py::enum_<TemporalUnits>(m, "TemporalUnits", py::arithmetic());
-  auto pyAngleUnits = py::enum_<AngleUnits>(m, "AngleUnits", py::arithmetic());
   auto pyCreationType = py::enum_<CreationType>(m, "CreationType", py::arithmetic());
   auto pyCaseSensitivity = py::enum_<CaseSensitivity>(m, "CaseSensitivity", py::arithmetic());
   auto pyDelimiter = py::enum_<Delimiter>(m, "Delimiter", py::arithmetic());
@@ -233,9 +230,6 @@ PYBIND11_MODULE(_h5geo, m) {
   DevDataType_py(pyDevDataType);
   WellType_py(pyWellType);
   TrajectoryFormat_py(pyTrajectoryFormat);
-  SpatialUnits_py(pySpatialUnits);
-  TemporalUnits_py(pyTemporalUnits);
-  AngleUnits_py(pyAngleUnits);
   CreationType_py(pyCreationType);
   CaseSensitivity_py(pyCaseSensitivity);
   Delimiter_py(pyDelimiter);

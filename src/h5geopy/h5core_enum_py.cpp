@@ -113,27 +113,6 @@ void TrajectoryFormat_py(py::enum_<TrajectoryFormat> &py_obj){
       .value("TVDSS_DX_DY", TrajectoryFormat::TVDSS_DX_DY);
 }
 
-void SpatialUnits_py(py::enum_<SpatialUnits> &py_obj){
-  py_obj
-      .value("METER", SpatialUnits::METER)
-      .value("CENTIMETER", SpatialUnits::CENTIMETER)
-      .value("MILLIMETER", SpatialUnits::MILLIMETER)
-      .value("FOOT", SpatialUnits::FOOT);
-}
-
-void TemporalUnits_py(py::enum_<TemporalUnits> &py_obj){
-  py_obj
-      .value("SECOND", TemporalUnits::SECOND)
-      .value("MILLISECOND", TemporalUnits::MILLISECOND)
-      .value("MICROSECOND", TemporalUnits::MICROSECOND);
-}
-
-void AngleUnits_py(py::enum_<AngleUnits> &py_obj){
-  py_obj
-      .value("DEGREE", AngleUnits::DEGREE)
-      .value("RADIAN", AngleUnits::RADIAN);
-}
-
 void CreationType_py(py::enum_<CreationType> &py_obj){
   py_obj
       .value("OPEN", CreationType::OPEN)

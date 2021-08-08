@@ -7,7 +7,6 @@ import sys
 _Shape = typing.Tuple[int, ...]
 
 __all__ = [
-    "AngleUnits",
     "CaseSensitivity",
     "ContainerType",
     "CreationType",
@@ -36,10 +35,8 @@ __all__ = [
     "SegyFormat",
     "SeisDataType",
     "SeisParam",
-    "SpatialUnits",
     "SurfParam",
     "SurveyType",
-    "TemporalUnits",
     "TrajectoryFormat",
     "TvdDxDy2ALL",
     "TvdDxDy2MdAzIncl",
@@ -81,40 +78,6 @@ __all__ = [
 ]
 
 
-class AngleUnits():
-    """
-    Members:
-
-      DEGREE
-
-      RADIAN
-    """
-    def __eq__(self, other: object) -> bool: ...
-    def __ge__(self, other: object) -> bool: ...
-    def __getstate__(self) -> int: ...
-    def __gt__(self, other: object) -> bool: ...
-    def __hash__(self) -> int: ...
-    def __init__(self, value: int) -> None: ...
-    def __int__(self) -> int: ...
-    def __le__(self, other: object) -> bool: ...
-    def __lt__(self, other: object) -> bool: ...
-    def __ne__(self, other: object) -> bool: ...
-    def __repr__(self) -> str: ...
-    def __setstate__(self, state: int) -> None: ...
-    @property
-    def name(self) -> str:
-        """
-        :type: str
-        """
-    @property
-    def value(self) -> int:
-        """
-        :type: int
-        """
-    DEGREE: h5geopy._h5geo.AngleUnits # value = <AngleUnits.DEGREE: 0>
-    RADIAN: h5geopy._h5geo.AngleUnits # value = <AngleUnits.RADIAN: 1>
-    __members__: dict # value = {'DEGREE': <AngleUnits.DEGREE: 0>, 'RADIAN': <AngleUnits.RADIAN: 1>}
-    pass
 class CaseSensitivity():
     """
     Members:
@@ -750,46 +713,6 @@ class SeisParam():
     def trcChunk(self, arg0: int) -> None:
         pass
     pass
-class SpatialUnits():
-    """
-    Members:
-
-      METER
-
-      CENTIMETER
-
-      MILLIMETER
-
-      FOOT
-    """
-    def __eq__(self, other: object) -> bool: ...
-    def __ge__(self, other: object) -> bool: ...
-    def __getstate__(self) -> int: ...
-    def __gt__(self, other: object) -> bool: ...
-    def __hash__(self) -> int: ...
-    def __init__(self, value: int) -> None: ...
-    def __int__(self) -> int: ...
-    def __le__(self, other: object) -> bool: ...
-    def __lt__(self, other: object) -> bool: ...
-    def __ne__(self, other: object) -> bool: ...
-    def __repr__(self) -> str: ...
-    def __setstate__(self, state: int) -> None: ...
-    @property
-    def name(self) -> str:
-        """
-        :type: str
-        """
-    @property
-    def value(self) -> int:
-        """
-        :type: int
-        """
-    CENTIMETER: h5geopy._h5geo.SpatialUnits # value = <SpatialUnits.CENTIMETER: 1>
-    FOOT: h5geopy._h5geo.SpatialUnits # value = <SpatialUnits.FOOT: 3>
-    METER: h5geopy._h5geo.SpatialUnits # value = <SpatialUnits.METER: 0>
-    MILLIMETER: h5geopy._h5geo.SpatialUnits # value = <SpatialUnits.MILLIMETER: 2>
-    __members__: dict # value = {'METER': <SpatialUnits.METER: 0>, 'CENTIMETER': <SpatialUnits.CENTIMETER: 1>, 'MILLIMETER': <SpatialUnits.MILLIMETER: 2>, 'FOOT': <SpatialUnits.FOOT: 3>}
-    pass
 class SurfParam():
     @typing.overload
     def __init__(self) -> None: ...
@@ -901,43 +824,6 @@ class SurveyType():
     THREE_D: h5geopy._h5geo.SurveyType # value = <SurveyType.THREE_D: 2>
     TWO_D: h5geopy._h5geo.SurveyType # value = <SurveyType.TWO_D: 1>
     __members__: dict # value = {'TWO_D': <SurveyType.TWO_D: 1>, 'THREE_D': <SurveyType.THREE_D: 2>}
-    pass
-class TemporalUnits():
-    """
-    Members:
-
-      SECOND
-
-      MILLISECOND
-
-      MICROSECOND
-    """
-    def __eq__(self, other: object) -> bool: ...
-    def __ge__(self, other: object) -> bool: ...
-    def __getstate__(self) -> int: ...
-    def __gt__(self, other: object) -> bool: ...
-    def __hash__(self) -> int: ...
-    def __init__(self, value: int) -> None: ...
-    def __int__(self) -> int: ...
-    def __le__(self, other: object) -> bool: ...
-    def __lt__(self, other: object) -> bool: ...
-    def __ne__(self, other: object) -> bool: ...
-    def __repr__(self) -> str: ...
-    def __setstate__(self, state: int) -> None: ...
-    @property
-    def name(self) -> str:
-        """
-        :type: str
-        """
-    @property
-    def value(self) -> int:
-        """
-        :type: int
-        """
-    MICROSECOND: h5geopy._h5geo.TemporalUnits # value = <TemporalUnits.MICROSECOND: 2>
-    MILLISECOND: h5geopy._h5geo.TemporalUnits # value = <TemporalUnits.MILLISECOND: 1>
-    SECOND: h5geopy._h5geo.TemporalUnits # value = <TemporalUnits.SECOND: 0>
-    __members__: dict # value = {'SECOND': <TemporalUnits.SECOND: 0>, 'MILLISECOND': <TemporalUnits.MILLISECOND: 1>, 'MICROSECOND': <TemporalUnits.MICROSECOND: 2>}
     pass
 class TrajectoryFormat():
     """
@@ -1223,9 +1109,9 @@ class H5DevCurve(H5BaseObject, H5Base, _H5DevCurve, _H5BaseObject, _H5Base):
     def setSpatialUnits(self, arg0: str) -> bool: ...
     def setTemporalUnits(self, arg0: str) -> bool: ...
     @typing.overload
-    def writeCurve(self, arg0: DevDataType, arg1: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> bool: ...
+    def writeCurve(self, name: DevDataType, data: numpy.ndarray[numpy.float64, _Shape[m, 1]], units: str = str()) -> bool: ...
     @typing.overload
-    def writeCurve(self, arg0: str, arg1: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> bool: ...
+    def writeCurve(self, name: str, data: numpy.ndarray[numpy.float64, _Shape[m, 1]], units: str = str()) -> bool: ...
     pass
 class H5LogCurve(H5BaseObject, H5Base, _H5LogCurve, _H5BaseObject, _H5Base):
     @typing.overload
@@ -1241,9 +1127,9 @@ class H5LogCurve(H5BaseObject, H5Base, _H5LogCurve, _H5BaseObject, _H5Base):
     def setDataUnits(self, arg0: str) -> bool: ...
     def setSpatialUnits(self, arg0: str) -> bool: ...
     @typing.overload
-    def writeCurve(self, arg0: LogDataType, arg1: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> bool: ...
+    def writeCurve(self, name: LogDataType, data: numpy.ndarray[numpy.float64, _Shape[m, 1]], units: str = str()) -> bool: ...
     @typing.overload
-    def writeCurve(self, arg0: str, arg1: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> bool: ...
+    def writeCurve(self, name: str, data: numpy.ndarray[numpy.float64, _Shape[m, 1]], units: str = str()) -> bool: ...
     pass
 class H5Seis(H5BaseObject, H5Base, _H5Seis, _H5BaseObject, _H5Base):
     def addPKeySort(self, pKeyName: str) -> bool: ...
@@ -1373,7 +1259,7 @@ class H5Seis(H5BaseObject, H5Base, _H5Seis, _H5BaseObject, _H5Base):
     def setDataType(self, arg0: SeisDataType) -> bool: ...
     def setDataUnits(self, arg0: str) -> bool: ...
     def setDomain(self, arg0: Domain) -> bool: ...
-    def setSRD(self, arg0: float) -> bool: ...
+    def setSRD(self, value: float, units: str = str()) -> bool: ...
     def setSpatialUnits(self, arg0: str) -> bool: ...
     def setSurveyType(self, arg0: SurveyType) -> bool: ...
     def setTemporalUnits(self, arg0: str) -> bool: ...
@@ -1382,7 +1268,7 @@ class H5Seis(H5BaseObject, H5Base, _H5Seis, _H5BaseObject, _H5Base):
     @typing.overload
     def writeBinHeader(self, binHdr: typing.List[float]) -> bool: ...
     @typing.overload
-    def writeBinHeader(self, hdrName: str, value: float) -> bool: ...
+    def writeBinHeader(self, hdrName: str, value: float, unitsFrom: str = str(), unitsTo: str = str()) -> bool: ...
     def writeBoundary(self, boundary: numpy.ndarray[numpy.float64, _Shape[m, 2]]) -> bool: 
         """
         write boundary of 2d (a line) or 3d (usually convex hull or concave hull) seismic survey. Input argument is `MatrixX2d` where first col - `X` coord, second - `Y` coord
@@ -1392,7 +1278,7 @@ class H5Seis(H5BaseObject, H5Base, _H5Seis, _H5BaseObject, _H5Base):
     @typing.overload
     def writeTraceHeader(self, HDR: numpy.ndarray[numpy.float64, _Shape[m, n]], fromTrc: int = 0, fromHdrInd: int = 0) -> bool: ...
     @typing.overload
-    def writeTraceHeader(self, hdrName: str, hdr: numpy.ndarray[numpy.float64, _Shape[m, n]], fromTrc: int = 0) -> bool: ...
+    def writeTraceHeader(self, hdrName: str, hdr: numpy.ndarray[numpy.float64, _Shape[m, n]], fromTrc: int = 0, unitsFrom: str = str(), unitsTo: str = str()) -> bool: ...
     pass
 class H5SeisContainer(H5BaseContainer, H5Base, _H5SeisContainer, _H5BaseContainer, _H5Base):
     @typing.overload
@@ -1425,7 +1311,7 @@ class H5Surf(H5BaseObject, H5Base, _H5Surf, _H5BaseObject, _H5Base):
     @typing.overload
     def setSpacing(self, arg0: typing.List[float]) -> bool: ...
     def setSpatialUnits(self, arg0: str) -> bool: ...
-    def writeData(self, arg0: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> bool: ...
+    def writeData(self, data: numpy.ndarray[numpy.float64, _Shape[m, n]], dataUnits: str = str()) -> bool: ...
     pass
 class H5SurfContainer(H5BaseContainer, H5Base, _H5SurfContainer, _H5BaseContainer, _H5Base):
     @typing.overload
@@ -1470,8 +1356,8 @@ class H5Well(H5BaseObject, H5Base, _H5Well, _H5BaseObject, _H5Base):
     def getSpatialUnits(self) -> str: ...
     def getUWI(self) -> str: ...
     def getWellContainer(self) -> _H5WellContainer: ...
-    def setHeadCoord(self, arg0: numpy.ndarray[numpy.float64, _Shape[2, 1]]) -> bool: ...
-    def setKB(self, arg0: float) -> bool: ...
+    def setHeadCoord(self, xy: numpy.ndarray[numpy.float64, _Shape[2, 1]], spatialUnits: str = str()) -> bool: ...
+    def setKB(self, val: float, spatialUnits: str = str()) -> bool: ...
     def setSpatialUnits(self, arg0: str) -> bool: ...
     def setUWI(self, arg0: str) -> bool: ...
     pass
@@ -1487,20 +1373,20 @@ class H5WellContainer(H5BaseContainer, H5Base, _H5WellContainer, _H5BaseContaine
     def getWellList(self) -> typing.List[_H5Well]: ...
     pass
 @typing.overload
-def MdAzIncl2ALL(M: numpy.ndarray[numpy.float32, _Shape[m, n]], x0: float, y0: float, kb: float, angleUnits: AngleUnits, XNorth: bool) -> numpy.ndarray[numpy.float32, _Shape[m, n]]:
+def MdAzIncl2ALL(M: numpy.ndarray[numpy.float32, _Shape[m, n]], x0: float, y0: float, kb: float, angleUnits: str, XNorth: bool) -> numpy.ndarray[numpy.float32, _Shape[m, n]]:
     """
     Convert matrix `M` (whose columns represent MD Az Incl respectively)to `MD_X_Y_Z_TVD_DX_DY_AZ_INCL` (Z the same as TVDSS). Set `XNorth` to `True` if `X` axis points to the North
     """
 @typing.overload
-def MdAzIncl2ALL(M: numpy.ndarray[numpy.float64, _Shape[m, n]], x0: float, y0: float, kb: float, angleUnits: AngleUnits, XNorth: bool) -> numpy.ndarray[numpy.float64, _Shape[m, n]]:
+def MdAzIncl2ALL(M: numpy.ndarray[numpy.float64, _Shape[m, n]], x0: float, y0: float, kb: float, angleUnits: str, XNorth: bool) -> numpy.ndarray[numpy.float64, _Shape[m, n]]:
     pass
 @typing.overload
-def MdAzIncl2MdXYTvd(M: numpy.ndarray[numpy.float32, _Shape[m, n]], x0: float, y0: float, angleUnits: AngleUnits, XNorth: bool) -> numpy.ndarray[numpy.float32, _Shape[m, n]]:
+def MdAzIncl2MdXYTvd(M: numpy.ndarray[numpy.float32, _Shape[m, n]], x0: float, y0: float, angleUnits: str, XNorth: bool) -> numpy.ndarray[numpy.float32, _Shape[m, n]]:
     """
     Convert matrix `M` (whose columns represent MD Az Incl respectively)to `MD_X_Y_TVD`. Set `XNorth` to `True` if `X` axis points to the North
     """
 @typing.overload
-def MdAzIncl2MdXYTvd(M: numpy.ndarray[numpy.float64, _Shape[m, n]], x0: float, y0: float, angleUnits: AngleUnits, XNorth: bool) -> numpy.ndarray[numpy.float64, _Shape[m, n]]:
+def MdAzIncl2MdXYTvd(M: numpy.ndarray[numpy.float64, _Shape[m, n]], x0: float, y0: float, angleUnits: str, XNorth: bool) -> numpy.ndarray[numpy.float64, _Shape[m, n]]:
     pass
 @typing.overload
 def TvdDxDy2ALL(M: numpy.ndarray[numpy.float32, _Shape[m, n]], x0: float, y0: float, kb: float, XNorth: bool) -> numpy.ndarray[numpy.float32, _Shape[m, n]]:
@@ -1631,14 +1517,14 @@ def quickHull2D(M: numpy.ndarray[numpy.float32, _Shape[m, 2]]) -> numpy.ndarray[
 def quickHull2D(M: numpy.ndarray[numpy.float64, _Shape[m, 2]]) -> numpy.ndarray[numpy.float64, _Shape[m, 2]]:
     pass
 @typing.overload
-def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
+def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]]]:
     """
     return indices such that `v_sorted = v(ind)`. Input parameter `v` is a vector
 
     return indices such that `v_sorted = v(ind)` and also return `v_sorted`. Input parameter `v` is a vector
     """
 @typing.overload
-def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]]]:
+def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
     pass
 @typing.overload
 def sort(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
@@ -1647,20 +1533,20 @@ def sort(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> numpy.ndarray[numpy.i
 def sort(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, 1]]]:
     pass
 @typing.overload
-def sort_rows(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
+def sort_rows(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, n]]]:
     """
     sorts the rows of a matrix in ascending order based on the elements in the first column. When the first column contains repeated elements, sortrows sorts according to the values in the next column and repeats this behavior for succeeding equal values. M_sorted = M(ind, Eigen::all)
 
     sorts the rows of a matrix in ascending order based on the elements in the first column. When the first column contains repeated elements, sortrows sorts according to the values in the next column and repeats this behavior for succeeding equal values. also calculates M_sorted = M(ind, Eigen::all)
     """
 @typing.overload
-def sort_rows(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, n]]]:
-    pass
-@typing.overload
-def sort_rows(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]]]:
+def sort_rows(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
     pass
 @typing.overload
 def sort_rows(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
+    pass
+@typing.overload
+def sort_rows(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]]]:
     pass
 @typing.overload
 def sort_rows_unique(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
@@ -1673,20 +1559,20 @@ def sort_rows_unique(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tu
 def sort_rows_unique(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float32, _Shape[m, n]]]:
     pass
 @typing.overload
-def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
-    pass
-@typing.overload
 def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float64, _Shape[m, n]]]:
     pass
 @typing.overload
-def sort_unique(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
+def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
+    pass
+@typing.overload
+def sort_unique(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float32, _Shape[m, 1]]]:
     """
     find unique elements, sort them, identify unique values start and end indices and return indices `ind` such that v_sorted = v(ind), `uvals` vector and two column matrix `uvals_from_size` wherefirst col - start index, second col - number of elements. Each row can be considered as v_sorted.segment(uvals_from_size.row(n)) gives the same unique value uval.
 
     find unique elements, sort them, identify unique values start and end indices and return indices `ind` such that v_sorted = v(ind), `uvals` vector and two column matrix `uvals_from_size` wherefirst col - start index, second col - number of elements. Each row can be considered as v_sorted.segment(uvals_from_size.row(n)) gives the same unique value uval. Also return `v_sorted`
     """
 @typing.overload
-def sort_unique(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float32, _Shape[m, 1]]]:
+def sort_unique(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
     pass
 @typing.overload
 def sort_unique(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
@@ -1695,10 +1581,10 @@ def sort_unique(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[n
 def sort_unique(v: numpy.ndarray[numpy.float64, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float64, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float64, _Shape[m, 1]]]:
     pass
 @typing.overload
-def traj2ALL(M: numpy.ndarray[numpy.float32, _Shape[m, n]], x0: float, y0: float, kb: float, angleUnits: AngleUnits, trajFormat: TrajectoryFormat, XNorth: bool) -> numpy.ndarray[numpy.float32, _Shape[m, n]]:
+def traj2ALL(M: numpy.ndarray[numpy.float32, _Shape[m, n]], x0: float, y0: float, kb: float, angleUnits: str, trajFormat: TrajectoryFormat, XNorth: bool) -> numpy.ndarray[numpy.float32, _Shape[m, n]]:
     """
     Convert matrix `M` of any trajectory format to `MD_X_Y_Z_TVD_DX_DY_AZ_INCL` (Z the same as TVDSS). Set `XNorth` to `True` if `X` axis points to the North
     """
 @typing.overload
-def traj2ALL(M: numpy.ndarray[numpy.float64, _Shape[m, n]], x0: float, y0: float, kb: float, angleUnits: AngleUnits, trajFormat: TrajectoryFormat, XNorth: bool) -> numpy.ndarray[numpy.float64, _Shape[m, n]]:
+def traj2ALL(M: numpy.ndarray[numpy.float64, _Shape[m, n]], x0: float, y0: float, kb: float, angleUnits: str, trajFormat: TrajectoryFormat, XNorth: bool) -> numpy.ndarray[numpy.float64, _Shape[m, n]]:
     pass

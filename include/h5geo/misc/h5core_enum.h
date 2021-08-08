@@ -324,24 +324,6 @@ enum class TrajectoryFormat : unsigned{
   TVDSS_DX_DY = 4
 };
 
-enum class SpatialUnits : unsigned{
-  METER = 0,
-  CENTIMETER = 1,
-  MILLIMETER = 2,
-  FOOT = 3
-};
-
-enum class TemporalUnits : unsigned{
-  SECOND = 0,
-  MILLISECOND = 1,
-  MICROSECOND = 2
-};
-
-enum class AngleUnits : unsigned{
-  DEGREE = 0,
-  RADIAN = 1
-};
-
 /*!
  * \brief The CreationType enum
  */
