@@ -391,8 +391,8 @@ inline bool setEnumFromObj(Object& object, const std::string& attrName, const un
 
   h5gt::Attribute attr = object.getAttribute(attrName);
   auto dtype = attr.getDataType();
-  if ((!dtype.isTypeEqual(h5gt::AtomicType<unsigned>()) ||
-      !dtype.isTypeEqual(h5gt::AtomicType<int>())) &&
+  if (!(dtype.isTypeEqual(h5gt::AtomicType<unsigned>()) ||
+      dtype.isTypeEqual(h5gt::AtomicType<int>())) ||
       attr.getMemSpace().getElementCount() != 1)
     return false;
 
@@ -430,8 +430,8 @@ inline bool setFloatFromObj(Object& object, const std::string& attrName, const d
 
   h5gt::Attribute attr = object.getAttribute(attrName);
   auto dtype = attr.getDataType();
-  if ((!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      !dtype.isTypeEqual(h5gt::AtomicType<double>())) &&
+  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      dtype.isTypeEqual(h5gt::AtomicType<double>())) ||
       attr.getMemSpace().getElementCount() != 1)
     return false;
 
@@ -450,8 +450,8 @@ inline bool setFloatVecFromObj(Object& object, const std::string& attrName, cons
 
   h5gt::Attribute attr = object.getAttribute(attrName);
   auto dtype = attr.getDataType();
-  if ((!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      !dtype.isTypeEqual(h5gt::AtomicType<double>())) &&
+  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      dtype.isTypeEqual(h5gt::AtomicType<double>())) ||
       attr.getMemSpace().getElementCount() != v.size())
     return false;
 
@@ -470,8 +470,8 @@ inline bool setFloatVecFromObj(Object& object, const std::string& attrName, cons
 
   h5gt::Attribute attr = object.getAttribute(attrName);
   auto dtype = attr.getDataType();
-  if ((!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      !dtype.isTypeEqual(h5gt::AtomicType<double>())) &&
+  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      dtype.isTypeEqual(h5gt::AtomicType<double>())) ||
       attr.getMemSpace().getElementCount() != v.size())
     return false;
 
@@ -497,8 +497,8 @@ inline unsigned getEnumFromObj(Object& object, const std::string& attrName){
 
   h5gt::Attribute attr = object.getAttribute(attrName);
   auto dtype = attr.getDataType();
-  if ((!dtype.isTypeEqual(h5gt::AtomicType<unsigned>()) ||
-      !dtype.isTypeEqual(h5gt::AtomicType<int>())) &&
+  if (!(dtype.isTypeEqual(h5gt::AtomicType<unsigned>()) ||
+      dtype.isTypeEqual(h5gt::AtomicType<int>())) ||
       attr.getMemSpace().getElementCount() != 1)
     return value;
 
@@ -538,8 +538,8 @@ inline double getFloatFromObj(Object& object, const std::string& attrName){
 
   h5gt::Attribute attr = object.getAttribute(attrName);
   auto dtype = attr.getDataType();
-  if ((!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      !dtype.isTypeEqual(h5gt::AtomicType<double>())) &&
+  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      dtype.isTypeEqual(h5gt::AtomicType<double>())) ||
       attr.getMemSpace().getElementCount() != 1)
     return value;
 
@@ -559,8 +559,8 @@ inline std::vector<double> getFloatVecFromObj(Object& object, const std::string&
 
   h5gt::Attribute attr = object.getAttribute(attrName);
   auto dtype = attr.getDataType();
-  if (!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      !dtype.isTypeEqual(h5gt::AtomicType<double>()))
+  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      dtype.isTypeEqual(h5gt::AtomicType<double>())))
     return value;
 
   attr.read(value);
@@ -579,8 +579,8 @@ inline Eigen::VectorXd getEigenFloatVecFromObj(Object& object, const std::string
 
   h5gt::Attribute attr = object.getAttribute(attrName);
   auto dtype = attr.getDataType();
-  if (!dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      !dtype.isTypeEqual(h5gt::AtomicType<double>()))
+  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
+      dtype.isTypeEqual(h5gt::AtomicType<double>())))
     return value;
 
   value.resize(attr.getMemSpace().getElementCount());

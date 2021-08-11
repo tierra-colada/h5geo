@@ -275,7 +275,7 @@ TEST_F(H5WellFixture, TvdXY2MdAzIncl){
           Eigen::all, {4, 1, 2}), wellParam.headX, wellParam.headY, false);
 
   Eigen::MatrixXd MM = h5geo::MdAzIncl2MdXYTvd(
-        M, wellParam.headX, wellParam.headY, "degree", false);
+        M, wellParam.headX, wellParam.headY, "radian", false);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdXY2MdAzIncl", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
@@ -298,7 +298,7 @@ TEST_F(H5WellFixture, TvdXY2MdAzIncl_XNorth){
           Eigen::all, {4, 2, 1}), wellParam.headY, wellParam.headX, true);
 
   Eigen::MatrixXd MM = h5geo::MdAzIncl2MdXYTvd(
-        M, wellParam.headY, wellParam.headX, "degree", true);
+        M, wellParam.headY, wellParam.headX, "radian", true);
 
   wellContainer->getH5File().createDataSet<double>(
         "TvdXY2MdAzIncl", h5gt::DataSpace({size_t(M.cols()), size_t(M.rows())})).
