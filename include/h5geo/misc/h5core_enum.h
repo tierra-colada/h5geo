@@ -213,15 +213,13 @@ constexpr auto OWT = magic_enum::enum_name<h5geo::Domain::OWT>();
 
 enum class SeisDataType : unsigned{
   STACK = 1,
-  PRESTACK = 2,
-  ATTRIBUTE = 3
+  PRESTACK = 2
 };
 
 constexpr auto& seis_dtypes =
     magic_enum::enum_names<h5geo::SeisDataType>();
 constexpr auto STACK = magic_enum::enum_name<h5geo::SeisDataType::STACK>();
 constexpr auto PRESTACK = magic_enum::enum_name<h5geo::SeisDataType::PRESTACK>();
-constexpr auto ATTRIBUTE = magic_enum::enum_name<h5geo::SeisDataType::ATTRIBUTE>();
 
 enum class SurveyType : unsigned{
   TWO_D = 1,

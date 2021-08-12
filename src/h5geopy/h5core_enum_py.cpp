@@ -31,8 +31,7 @@ void Domain_py(py::enum_<Domain> &py_obj){
 void SeisDataType_py(py::enum_<SeisDataType> &py_obj){
   py_obj
       .value("STACK", SeisDataType::STACK)
-      .value("PRESTACK", SeisDataType::PRESTACK)
-      .value("ATTRIBUTE", SeisDataType::ATTRIBUTE);
+      .value("PRESTACK", SeisDataType::PRESTACK);
 }
 
 void SurveyType_py(py::enum_<SurveyType> &py_obj){
