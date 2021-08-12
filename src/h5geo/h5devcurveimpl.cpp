@@ -30,12 +30,12 @@ bool H5DevCurveImpl::writeCurve(
     double coef;
     if (name == h5geo::OWT)
       coef = units::convert(
-            units::unit_from_string(getTemporalUnits()),
-            units::unit_from_string(units));
+            units::unit_from_string(units),
+            units::unit_from_string(getTemporalUnits()));
     else
       coef = units::convert(
-            units::unit_from_string(getSpatialUnits()),
-            units::unit_from_string(units));
+            units::unit_from_string(units),
+            units::unit_from_string(getSpatialUnits()));
 
     Eigen::VectorXd vv = v*coef;
 
