@@ -18,7 +18,7 @@ H5Well* H5WellContainerImpl::getWell(
 H5Well* H5WellContainerImpl::getWell(
     h5gt::Group group)
 {
-  if (!isGeoObject(group, h5geo::ObjectType::WELL))
+  if (!isGeoObjectByType(group, h5geo::ObjectType::WELL))
     return nullptr;
 
   return new H5WellImpl(group);

@@ -26,6 +26,16 @@ void defineGeoFunctions(py::module_& m){
   m.def("createWellContainerByName", &createWellContainerByName);
   m.def("createSeisContainer", &createSeisContainer);
   m.def("createSeisContainerByName", &createSeisContainerByName);
+
+  m.def("isGeoContainer", &isGeoContainer);
+  m.def("isGeoContainerByType", &isGeoContainerByType);
+  m.def("isGeoObject", &isGeoObject);
+  m.def("isGeoObjectByType", &isGeoObjectByType);
+  m.def("isSurf", &isSurf);
+  m.def("isWell", &isWell);
+  m.def("isLogCurve", &isLogCurve);
+  m.def("isDevCurve", &isDevCurve);
+  m.def("isSeis", &isSeis);
 }
 
 

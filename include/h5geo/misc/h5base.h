@@ -111,6 +111,25 @@ H5GEO_EXPORT H5WellContainer* openWellContainer(
     h5gt::File h5File);
 H5GEO_EXPORT H5WellContainer* openWellContainerByName(
     std::string& fileName);
+
+H5GEO_EXPORT bool isGeoContainer(
+    h5gt::File file);
+H5GEO_EXPORT bool isGeoContainerByType(
+    h5gt::File file,
+    const h5geo::ContainerType& cntType);
+
+H5GEO_EXPORT bool isGeoObject(
+    h5gt::Group group);
+H5GEO_EXPORT bool isGeoObjectByType(
+    h5gt::Group group,
+    const h5geo::ObjectType& objType);
+
+H5GEO_EXPORT bool isSurf(h5gt::Group &group);
+H5GEO_EXPORT bool isWell(h5gt::Group &group);
+H5GEO_EXPORT bool isLogCurve(h5gt::Group &group);
+H5GEO_EXPORT bool isDevCurve(h5gt::Group &group);
+H5GEO_EXPORT bool isSeis(h5gt::Group &group);
+
 }
 
 } // h5geo

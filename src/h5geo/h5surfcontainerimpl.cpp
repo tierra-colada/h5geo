@@ -17,7 +17,7 @@ H5Surf* H5SurfContainerImpl::getSurf(const std::string &name)
 H5Surf* H5SurfContainerImpl::getSurf(
     h5gt::Group group)
 {
-  if (!isGeoObject(group, h5geo::ObjectType::SURFACE))
+  if (!isGeoObjectByType(group, h5geo::ObjectType::SURFACE))
     return nullptr;
 
   return new H5SurfImpl(group);

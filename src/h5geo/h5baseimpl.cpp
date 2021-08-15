@@ -26,7 +26,7 @@ H5BaseImpl::getChildList(
       continue;
 
     h5gt::Group childG = group.getGroup(name);
-    if (isGeoObject(childG, objType)){
+    if (h5geo::isGeoObjectByType(childG, objType)){
       childList.push_back(childG);
     } else {
       std::vector<h5gt::Group> subChildList = getChildList(childG, objType);
@@ -41,154 +41,6 @@ H5BaseImpl::getChildList(
     }
   }
   return childList;
-}
-
-bool H5BaseImpl::isGeoContainer(h5gt::File file){
-  constexpr auto& cntTypes = magic_enum::enum_values<h5geo::ContainerType>();
-  for (const auto &cntType : cntTypes)
-    if (isGeoContainer(file, cntType))
-      return true;
-
-  return false;
-}
-
-bool H5BaseImpl::isGeoContainer(h5gt::File file,
-                                const h5geo::ContainerType& cntType)
-{
-  unsigned val = h5geo::getEnumFromObj(
-        file, std::string{h5geo::detail::ContainerType});
-  switch (cntType) {
-  case h5geo::ContainerType::SURFACE:
-    return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::SURFACE;
-  case h5geo::ContainerType::WELL:
-    return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::WELL;
-  case h5geo::ContainerType::SEISMIC:
-    return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::SEISMIC;
-  default:
-    return false;
-  }
-}
-
-bool H5BaseImpl::isGeoObject(h5gt::Group group){
-  constexpr auto& objTypes = magic_enum::enum_values<h5geo::ObjectType>();
-  for (const auto &objType : objTypes)
-    if (isGeoObject(group, objType))
-      return true;
-
-  return false;
-}
-
-bool H5BaseImpl::isGeoObject(h5gt::Group group,
-                             const h5geo::ObjectType& objType)
-{
-  switch (objType) {
-  case h5geo::ObjectType::SURFACE :
-    return isSurf(group);
-  case h5geo::ObjectType::WELL :
-    return isWell(group);
-  case h5geo::ObjectType::LOGCURVE :
-    return isLogCurve(group);
-  case h5geo::ObjectType::DEVCURVE :
-    return isDevCurve(group);
-  case h5geo::ObjectType::SEISMIC :
-    return isSeis(group);
-  default:
-    return false;
-  }
-}
-
-bool H5BaseImpl::isSurf(
-    h5gt::Group &group)
-{
-  for (const auto& name : h5geo::detail::surf_attrs){
-    if (!group.hasAttribute(std::string{name}))
-      return false;
-  }
-
-  for (const auto& name : h5geo::detail::surf_dsets){
-    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
-      return false;
-  }
-  return true;
-}
-
-bool H5BaseImpl::isWell(
-    h5gt::Group &group)
-{
-  for (const auto& name : h5geo::detail::well_attrs){
-    if (!group.hasAttribute(std::string{name}))
-      return false;
-  }
-
-  for (const auto& name : h5geo::detail::well_groups){
-    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Group))
-      return false;
-  }
-  return true;
-}
-
-bool H5BaseImpl::isLogCurve(
-    h5gt::Group &group)
-{
-  for (const auto& name : h5geo::detail::log_attrs){
-    if (!group.hasAttribute(std::string{name}))
-      return false;
-  }
-
-  for (const auto& name : h5geo::detail::log_dsets){
-    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
-      return false;
-  }
-  return true;
-}
-
-bool H5BaseImpl::isDevCurve(
-    h5gt::Group &group)
-{
-  for (const auto& name : h5geo::detail::dev_attrs){
-    if (!group.hasAttribute(std::string{name}))
-      return false;
-  }
-
-  for (const auto& name : h5geo::detail::dev_dsets){
-    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
-      return false;
-  }
-  return true;
-}
-
-bool H5BaseImpl::isSeis(
-    h5gt::Group &group)
-{
-  for (const auto& name : h5geo::detail::seis_attrs){
-    if (!group.hasAttribute(std::string{name}))
-      return false;
-  }
-
-  for (const auto& name : h5geo::detail::seis_dsets){
-    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
-      return false;
-  }
-
-  std::string sortG_name =
-      std::string{h5geo::detail::sort};
-  std::string indexesG_name =
-      std::string{h5geo::detail::indexes};
-  std::string unique_valuesG_name =
-      std::string{h5geo::detail::unique_values};
-
-  if (!group.hasObject
-      (sortG_name, h5gt::ObjectType::Group))
-    return false;
-
-  h5gt::Group sortG = group.getGroup(sortG_name);
-  if (!sortG.hasObject(indexesG_name, h5gt::ObjectType::Group))
-    return false;
-
-  if (!sortG.hasObject(unique_valuesG_name, h5gt::ObjectType::Group))
-    return false;
-
-  return true;
 }
 
 std::optional<h5gt::File>
@@ -264,20 +116,20 @@ H5BaseImpl::createContainer(h5gt::File h5File,
 {
   switch (createFlag) {
   case h5geo::CreationType::OPEN: {
-    if (isGeoContainer(h5File, containerType))
+    if (h5geo::isGeoContainerByType(h5File, containerType))
       return h5File;
 
     return std::nullopt;
   } case h5geo::CreationType::CREATE: {
-    if (isGeoContainer(h5File))
+    if (h5geo::isGeoContainer(h5File))
       return std::nullopt;
 
     return createNewContainer(h5File, containerType);
   } case h5geo::CreationType::OPEN_OR_CREATE: {
-    if (isGeoContainer(h5File, containerType))
+    if (h5geo::isGeoContainerByType(h5File, containerType))
       return h5File;
 
-    if (isGeoContainer(h5File))
+    if (h5geo::isGeoContainer(h5File))
       return std::nullopt;
 
     return createNewContainer(h5File, containerType);
@@ -350,20 +202,20 @@ H5BaseImpl::createObject(
 {
   switch (createFlag) {
   case h5geo::CreationType::OPEN: {
-    if (isGeoObject(objG, objType))
+    if (h5geo::isGeoObjectByType(objG, objType))
       return objG;
 
     return std::nullopt;
   } case h5geo::CreationType::CREATE: {
-    if (isGeoObject(objG))
+    if (h5geo::isGeoObject(objG))
       return std::nullopt;
 
     return createNewObject(objG, objType, p);
   } case h5geo::CreationType::OPEN_OR_CREATE: {
-    if (isGeoObject(objG, objType))
+    if (h5geo::isGeoObjectByType(objG, objType))
       return objG;
 
-    if (isGeoObject(objG))
+    if (h5geo::isGeoObject(objG))
       return std::nullopt;
 
     return createNewObject(objG, objType, p);
@@ -830,6 +682,155 @@ bool H5BaseImpl::isSuccessor(
   if (childAbsPath.substr(0, parentAbsPath.size()).find(parentAbsPath) == std::string::npos) {
     return false;
   }
+
+  return true;
+}
+
+/*---------------------H5GEO---------------------*/
+bool h5geo::isGeoContainer(h5gt::File file){
+  constexpr auto& cntTypes = magic_enum::enum_values<h5geo::ContainerType>();
+  for (const auto &cntType : cntTypes)
+    if (h5geo::isGeoContainerByType(file, cntType))
+      return true;
+
+  return false;
+}
+
+bool h5geo::isGeoContainerByType(h5gt::File file,
+                                const h5geo::ContainerType& cntType)
+{
+  unsigned val = h5geo::getEnumFromObj(
+        file, std::string{h5geo::detail::ContainerType});
+  switch (cntType) {
+  case h5geo::ContainerType::SURFACE:
+    return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::SURFACE;
+  case h5geo::ContainerType::WELL:
+    return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::WELL;
+  case h5geo::ContainerType::SEISMIC:
+    return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::SEISMIC;
+  default:
+    return false;
+  }
+}
+
+bool h5geo::isGeoObject(h5gt::Group group){
+  constexpr auto& objTypes = magic_enum::enum_values<h5geo::ObjectType>();
+  for (const auto &objType : objTypes)
+    if (h5geo::isGeoObjectByType(group, objType))
+      return true;
+
+  return false;
+}
+
+bool h5geo::isGeoObjectByType(h5gt::Group group,
+                        const h5geo::ObjectType& objType)
+{
+  switch (objType) {
+  case h5geo::ObjectType::SURFACE :
+    return h5geo::isSurf(group);
+  case h5geo::ObjectType::WELL :
+    return h5geo::isWell(group);
+  case h5geo::ObjectType::LOGCURVE :
+    return h5geo::isLogCurve(group);
+  case h5geo::ObjectType::DEVCURVE :
+    return h5geo::isDevCurve(group);
+  case h5geo::ObjectType::SEISMIC :
+    return h5geo::isSeis(group);
+  default:
+    return false;
+  }
+}
+
+bool h5geo::isSurf(
+    h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::surf_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::surf_dsets){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
+      return false;
+  }
+  return true;
+}
+
+bool h5geo::isWell(
+    h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::well_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::well_groups){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Group))
+      return false;
+  }
+  return true;
+}
+
+bool h5geo::isLogCurve(
+    h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::log_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::log_dsets){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
+      return false;
+  }
+  return true;
+}
+
+bool h5geo::isDevCurve(
+    h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::dev_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::dev_dsets){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
+      return false;
+  }
+  return true;
+}
+
+bool h5geo::isSeis(
+    h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::seis_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::seis_dsets){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
+      return false;
+  }
+
+  std::string sortG_name =
+      std::string{h5geo::detail::sort};
+  std::string indexesG_name =
+      std::string{h5geo::detail::indexes};
+  std::string unique_valuesG_name =
+      std::string{h5geo::detail::unique_values};
+
+  if (!group.hasObject
+      (sortG_name, h5gt::ObjectType::Group))
+    return false;
+
+  h5gt::Group sortG = group.getGroup(sortG_name);
+  if (!sortG.hasObject(indexesG_name, h5gt::ObjectType::Group))
+    return false;
+
+  if (!sortG.hasObject(unique_valuesG_name, h5gt::ObjectType::Group))
+    return false;
 
   return true;
 }

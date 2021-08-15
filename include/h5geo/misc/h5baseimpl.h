@@ -15,26 +15,6 @@ public:
                const h5geo::ObjectType& objType) override;
 
 protected:
-  static bool isGeoContainer(
-      h5gt::File file);
-  static bool isGeoContainer(
-      h5gt::File file,
-      const h5geo::ContainerType& cntType);
-
-  bool isGeoObject(
-      h5gt::Group group);
-  bool isGeoObject(
-      h5gt::Group group,
-      const h5geo::ObjectType& objType);
-
-private:
-  bool isSurf(h5gt::Group &group);
-  bool isWell(h5gt::Group &group);
-  bool isLogCurve(h5gt::Group &group);
-  bool isDevCurve(h5gt::Group &group);
-  bool isSeis(h5gt::Group &group);
-
-protected:
   static std::optional<h5gt::File> createContainer(
       std::string& fileName,
       const h5geo::ContainerType& containerType,
