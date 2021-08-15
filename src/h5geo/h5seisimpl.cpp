@@ -349,7 +349,7 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
   if (traceIndexes.size() <= 0)
     return Eigen::VectorX<size_t>();
 
-  h5gt::ElementSet hdrElSet = h5geo::rowCol2ElementSet(
+  h5gt::ElementSet hdrElSet = h5geo::rowsCols2ElementSet(
         headerIndex, traceIndexes);
 
   Eigen::MatrixXd tmpHDR(

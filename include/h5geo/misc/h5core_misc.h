@@ -843,9 +843,10 @@ inline Eigen::VectorX<T> getDataFromIndexedDataset(
   return v;
 }
 
-template<typename T>
-inline h5gt::ElementSet
-rowCol2ElementSet(
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type*>
+inline h5gt::ElementSet rowCols2ElementSet(
     const T& row,
     const Eigen::VectorX<T>& cols)
 {
@@ -858,8 +859,10 @@ rowCol2ElementSet(
   return h5gt::ElementSet(v);
 }
 
-template<typename T>
-inline h5gt::ElementSet rowCol2ElementSet(
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type*>
+inline h5gt::ElementSet rowsCol2ElementSet(
     const Eigen::VectorX<T>& rows,
     const T& col)
 {
@@ -872,8 +875,10 @@ inline h5gt::ElementSet rowCol2ElementSet(
   return h5gt::ElementSet(v);
 }
 
-template<typename T>
-inline h5gt::ElementSet rowCol2ElementSet(
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type*>
+inline h5gt::ElementSet rowsCols2ElementSet(
     const Eigen::VectorX<T>& rows,
     const Eigen::VectorX<T>& cols)
 {
@@ -882,19 +887,20 @@ inline h5gt::ElementSet rowCol2ElementSet(
 
   std::vector<size_t> v(2*I*J);
 
-  for (ptrdiff_t j = 0; j < J; j++){
-    for (ptrdiff_t i = 0; i < I; i++){
-      v[2*i + 2*j*I] = rows(i);
-      v[2*i+1 + 2*j*I] = cols(j);
+  for (ptrdiff_t i = 0; i < I; i++){
+    for (ptrdiff_t j = 0; j < J; j++){
+      v[2*j + 2*i*J] = rows(i);
+      v[2*j+1 + 2*i*J] = cols(j);
     }
   }
 
   return h5gt::ElementSet(v);
 }
 
-template<typename T>
-inline h5gt::ElementSet
-rowCol2ElementSet(
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type*>
+inline h5gt::ElementSet rowCols2ElementSet(
     const T& row,
     const std::vector<T>& cols)
 {
@@ -907,9 +913,10 @@ rowCol2ElementSet(
   return h5gt::ElementSet(v);
 }
 
-template<typename T>
-inline h5gt::ElementSet
-rowCol2ElementSet(
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type*>
+inline h5gt::ElementSet rowsCol2ElementSet(
     const std::vector<T>& rows,
     const T& col)
 {
@@ -922,9 +929,10 @@ rowCol2ElementSet(
   return h5gt::ElementSet(v);
 }
 
-template<typename T>
-inline h5gt::ElementSet
-rowCol2ElementSet(
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type*>
+inline h5gt::ElementSet rowsCols2ElementSet(
     const std::vector<T>& rows,
     const std::vector<T>& cols)
 {
@@ -933,10 +941,10 @@ rowCol2ElementSet(
 
   std::vector<size_t> v(2*I*J);
 
-  for (size_t j = 0; j < J; j++){
-    for (size_t i = 0; i < I; i++){
-      v[2*i + 2*j*I] = rows[i];
-      v[2*i+1 + 2*j*I] = cols[i];
+  for (size_t i = 0; i < I; i++){
+    for (size_t j = 0; j < J; j++){
+      v[2*j + 2*i*J] = rows[i];
+      v[2*j+1 + 2*i*J] = cols[j];
     }
   }
 

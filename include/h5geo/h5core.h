@@ -467,51 +467,59 @@ Eigen::VectorX<T> getDataFromIndexedDataset(
     h5gt::DataSet& dataset,
     const std::string& attrName);
 
-template<typename T>
-h5gt::ElementSet
-rowCol2ElementSet(
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type* = nullptr>
+h5gt::ElementSet rowCols2ElementSet(
     const T& row,
     const Eigen::VectorX<T>& cols);
 
-template<typename T>
-h5gt::ElementSet rowCol2ElementSet(
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type* = nullptr>
+h5gt::ElementSet rowsCol2ElementSet(
     const Eigen::VectorX<T>& rows,
     const T& col);
 
-template<typename T>
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type* = nullptr>
 /*!
- * \brief rowCol2ElementSet select rectilinear block of elements, i.e.
+ * \brief rowsCols2ElementSet select rectilinear block of elements, i.e.
  * uses double loop to select every possible row-col intersection
  * \param rows
  * \param cols
  * \return
  */
-h5gt::ElementSet rowCol2ElementSet(
+h5gt::ElementSet rowsCols2ElementSet(
     const Eigen::VectorX<T>& rows,
     const Eigen::VectorX<T>& cols);
 
-template<typename T>
-h5gt::ElementSet
-rowCol2ElementSet(
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type* = nullptr>
+h5gt::ElementSet rowCols2ElementSet(
     const T& row,
     const std::vector<T>& cols);
 
-template<typename T>
-h5gt::ElementSet
-rowCol2ElementSet(
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type* = nullptr>
+h5gt::ElementSet rowsCol2ElementSet(
     const std::vector<T>& rows,
     const T& col);
 
-template<typename T>
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type* = nullptr>
 /*!
- * \brief rowCol2ElementSet select rectilinear block of elements, i.e.
+ * \brief rowsCols2ElementSet select rectilinear block of elements, i.e.
  * uses double loop to select every possible row-col intersection
  * \param rows
  * \param cols
  * \return
  */
-h5gt::ElementSet
-rowCol2ElementSet(
+h5gt::ElementSet rowsCols2ElementSet(
     const std::vector<T>& rows,
     const std::vector<T>& cols);
 
