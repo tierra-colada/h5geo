@@ -4,7 +4,6 @@
 #include "h5core_enum.h"
 #include "h5deviation.h"
 #include "h5easyhull.h"
-#include "h5find.h"
 #include "h5sort.h"
 
 #include <type_traits>
@@ -841,6 +840,22 @@ inline Eigen::VectorX<T> getDataFromIndexedDataset(
   }
 
   return v;
+}
+
+template<typename T>
+inline Eigen::VectorX<ptrdiff_t> find_index(
+    Eigen::DenseBase<T> const & M){
+  Eigen::VectorX<ptrdiff_t> ind(M.size());
+  ptrdiff_t ii = 0;
+  for (ptrdiff_t i = 0; i < M.size(); i++){
+    if (M(i) != 0){
+      ind(ii) = i;
+      ii++;
+    }
+  }
+  ind.conservativeResize(ii);
+
+  return ind;
 }
 
 template<typename T,

@@ -467,6 +467,18 @@ Eigen::VectorX<T> getDataFromIndexedDataset(
     h5gt::DataSet& dataset,
     const std::string& attrName);
 
+template<typename T>
+/*!
+ * \brief find_index find all non-zero elements's indices.
+ * Possible usage:
+ * Eigen::VectorX<ptrdiff_t> ind = find_index(M.array() > 20)
+ * M.array() > 20 returns bool matrix and then we find non-zero indices
+ * \param M
+ * \return ind indices of nonzero elements
+ */
+Eigen::VectorX<ptrdiff_t> find_index(
+    Eigen::DenseBase<T> const & M);
+
 template<typename T,
          typename std::enable_if<
            std::is_arithmetic<T>::value>::type* = nullptr>
