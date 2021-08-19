@@ -31,13 +31,13 @@ void H5DevCurve_py(
       .def("getCurve", py::overload_cast<const std::string&, const std::string&>(&H5DevCurveImpl::getCurve),
            py::arg("name"), py::arg_v("units", "", "str()"))
 
-      .def("setSpatialUnits", &H5DevCurve::setSpatialUnits)
-      .def("setTemporalUnits", &H5DevCurve::setTemporalUnits)
-      .def("setAngleUnits", &H5DevCurve::setAngleUnits)
+      .def("setSpatialUnits", &H5DevCurveImpl::setSpatialUnits)
+      .def("setTemporalUnits", &H5DevCurveImpl::setTemporalUnits)
+      .def("setAngleUnits", &H5DevCurveImpl::setAngleUnits)
 
-      .def("getSpatialUnits", &H5DevCurve::getSpatialUnits)
-      .def("getTemporalUnits", &H5DevCurve::getTemporalUnits)
-      .def("getAngleUnits", &H5DevCurve::getAngleUnits)
+      .def("getSpatialUnits", &H5DevCurveImpl::getSpatialUnits)
+      .def("getTemporalUnits", &H5DevCurveImpl::getTemporalUnits)
+      .def("getAngleUnits", &H5DevCurveImpl::getAngleUnits)
 
       .def("getRelativeCurveName", &H5DevCurveImpl::getRelativeCurveName)
 

@@ -26,11 +26,11 @@ void H5LogCurve_py(
       .def("getCurve", py::overload_cast<const std::string&, const std::string&>(&H5LogCurveImpl::getCurve),
            py::arg("name"), py::arg_v("units", "", "str()"))
 
-      .def("setSpatialUnits", &H5LogCurve::setSpatialUnits)
-      .def("setDataUnits", &H5LogCurve::setDataUnits)
+      .def("setSpatialUnits", &H5LogCurveImpl::setSpatialUnits)
+      .def("setDataUnits", &H5LogCurveImpl::setDataUnits)
 
-      .def("getSpatialUnits", &H5LogCurve::getSpatialUnits)
-      .def("getDataUnits", &H5LogCurve::getDataUnits)
+      .def("getSpatialUnits", &H5LogCurveImpl::getSpatialUnits)
+      .def("getDataUnits", &H5LogCurveImpl::getDataUnits)
 
       .def("getRelativeCurveName", &H5LogCurveImpl::getRelativeCurveName)
 
