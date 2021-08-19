@@ -30,9 +30,9 @@ enum class ContainerAttributes : unsigned{
   ContainerType = 1
 };
 
-constexpr auto& cnt_attrs =
+inline constexpr auto& cnt_attrs =
     magic_enum::enum_names<h5geo::detail::ContainerAttributes>();
-constexpr auto ContainerType = magic_enum::enum_name<h5geo::detail::ContainerAttributes::ContainerType>();
+inline constexpr auto ContainerType = magic_enum::enum_name<h5geo::detail::ContainerAttributes::ContainerType>();
 
 enum class SeisAttributes : unsigned{
   Domain = 1,
@@ -44,15 +44,15 @@ enum class SeisAttributes : unsigned{
   data_units = 7
 };
 
-constexpr auto& seis_attrs =
+inline constexpr auto& seis_attrs =
     magic_enum::enum_names<h5geo::detail::SeisAttributes>();
-constexpr auto Domain = magic_enum::enum_name<h5geo::detail::SeisAttributes::Domain>();
-constexpr auto SeisDataType = magic_enum::enum_name<h5geo::detail::SeisAttributes::SeisDataType>();
-constexpr auto SurveyType = magic_enum::enum_name<h5geo::detail::SeisAttributes::SurveyType>();
-constexpr auto SRD = magic_enum::enum_name<h5geo::detail::SeisAttributes::SRD>();
-constexpr auto spatial_units = magic_enum::enum_name<h5geo::detail::SeisAttributes::spatial_units>();
-constexpr auto temporal_units = magic_enum::enum_name<h5geo::detail::SeisAttributes::temporal_units>();
-constexpr auto data_units = magic_enum::enum_name<h5geo::detail::SeisAttributes::data_units>();
+inline constexpr auto Domain = magic_enum::enum_name<h5geo::detail::SeisAttributes::Domain>();
+inline constexpr auto SeisDataType = magic_enum::enum_name<h5geo::detail::SeisAttributes::SeisDataType>();
+inline constexpr auto SurveyType = magic_enum::enum_name<h5geo::detail::SeisAttributes::SurveyType>();
+inline constexpr auto SRD = magic_enum::enum_name<h5geo::detail::SeisAttributes::SRD>();
+inline constexpr auto spatial_units = magic_enum::enum_name<h5geo::detail::SeisAttributes::spatial_units>();
+inline constexpr auto temporal_units = magic_enum::enum_name<h5geo::detail::SeisAttributes::temporal_units>();
+inline constexpr auto data_units = magic_enum::enum_name<h5geo::detail::SeisAttributes::data_units>();
 
 enum class SeisDatasets : unsigned{
   text_header = 1,
@@ -62,13 +62,13 @@ enum class SeisDatasets : unsigned{
   boundary = 5
 };
 
-constexpr auto& seis_dsets =
+inline constexpr auto& seis_dsets =
     magic_enum::enum_names<h5geo::detail::SeisDatasets>();
-constexpr auto text_header = magic_enum::enum_name<h5geo::detail::SeisDatasets::text_header>();
-constexpr auto bin_header = magic_enum::enum_name<h5geo::detail::SeisDatasets::bin_header>();
-constexpr auto trace_header = magic_enum::enum_name<h5geo::detail::SeisDatasets::trace_header>();
-constexpr auto trace = magic_enum::enum_name<h5geo::detail::SeisDatasets::trace>();
-constexpr auto boundary = magic_enum::enum_name<h5geo::detail::SeisDatasets::boundary>();
+inline constexpr auto text_header = magic_enum::enum_name<h5geo::detail::SeisDatasets::text_header>();
+inline constexpr auto bin_header = magic_enum::enum_name<h5geo::detail::SeisDatasets::bin_header>();
+inline constexpr auto trace_header = magic_enum::enum_name<h5geo::detail::SeisDatasets::trace_header>();
+inline constexpr auto trace = magic_enum::enum_name<h5geo::detail::SeisDatasets::trace>();
+inline constexpr auto boundary = magic_enum::enum_name<h5geo::detail::SeisDatasets::boundary>();
 
 enum class SeisGroups : unsigned{
   sort = 1,
@@ -76,11 +76,11 @@ enum class SeisGroups : unsigned{
   unique_values = 3
 };
 
-constexpr auto& seis_groups =
+inline constexpr auto& seis_groups =
     magic_enum::enum_names<h5geo::detail::SeisGroups>();
-constexpr auto sort = magic_enum::enum_name<h5geo::detail::SeisGroups::sort>();
-constexpr auto indexes = magic_enum::enum_name<h5geo::detail::SeisGroups::indexes>();
-constexpr auto unique_values = magic_enum::enum_name<h5geo::detail::SeisGroups::unique_values>();
+inline constexpr auto sort = magic_enum::enum_name<h5geo::detail::SeisGroups::sort>();
+inline constexpr auto indexes = magic_enum::enum_name<h5geo::detail::SeisGroups::indexes>();
+inline constexpr auto unique_values = magic_enum::enum_name<h5geo::detail::SeisGroups::unique_values>();
 
 enum class SurfAttributes : unsigned{
   Domain = 1,
@@ -90,18 +90,18 @@ enum class SurfAttributes : unsigned{
   spacing = 5
 };
 
-constexpr auto& surf_attrs =
+inline constexpr auto& surf_attrs =
     magic_enum::enum_names<h5geo::detail::SurfAttributes>();
-constexpr auto origin = magic_enum::enum_name<h5geo::detail::SurfAttributes::origin>();
-constexpr auto spacing = magic_enum::enum_name<h5geo::detail::SurfAttributes::spacing>();
+inline constexpr auto origin = magic_enum::enum_name<h5geo::detail::SurfAttributes::origin>();
+inline constexpr auto spacing = magic_enum::enum_name<h5geo::detail::SurfAttributes::spacing>();
 
 enum class SurfDatasets : unsigned{
   surf_data = 1
 };
 
-constexpr auto& surf_dsets =
+inline constexpr auto& surf_dsets =
     magic_enum::enum_names<h5geo::detail::SurfDatasets>();
-constexpr auto surf_data = magic_enum::enum_name<h5geo::detail::SurfDatasets::surf_data>();
+inline constexpr auto surf_data = magic_enum::enum_name<h5geo::detail::SurfDatasets::surf_data>();
 
 enum class WellAttributes : unsigned{
   spatial_units = 1,
@@ -110,11 +110,11 @@ enum class WellAttributes : unsigned{
   UWI = 4
 };
 
-constexpr auto& well_attrs =
+inline constexpr auto& well_attrs =
     magic_enum::enum_names<h5geo::detail::WellAttributes>();
-constexpr auto head_coord = magic_enum::enum_name<h5geo::detail::WellAttributes::head_coord>();
-constexpr auto KB = magic_enum::enum_name<h5geo::detail::WellAttributes::KB>();
-constexpr auto UWI = magic_enum::enum_name<h5geo::detail::WellAttributes::UWI>();
+inline constexpr auto head_coord = magic_enum::enum_name<h5geo::detail::WellAttributes::head_coord>();
+inline constexpr auto KB = magic_enum::enum_name<h5geo::detail::WellAttributes::KB>();
+inline constexpr auto UWI = magic_enum::enum_name<h5geo::detail::WellAttributes::UWI>();
 
 enum class WellGroups : unsigned{
   LOG = 1,
@@ -122,11 +122,11 @@ enum class WellGroups : unsigned{
   ACTIVE_DEV = 3
 };
 
-constexpr auto& well_groups =
+inline constexpr auto& well_groups =
     magic_enum::enum_names<h5geo::detail::WellGroups>();
-constexpr auto LOG = magic_enum::enum_name<h5geo::detail::WellGroups::LOG>();
-constexpr auto DEV = magic_enum::enum_name<h5geo::detail::WellGroups::DEV>();
-constexpr auto ACTIVE_DEV = magic_enum::enum_name<h5geo::detail::WellGroups::ACTIVE_DEV>();
+inline constexpr auto LOG = magic_enum::enum_name<h5geo::detail::WellGroups::LOG>();
+inline constexpr auto DEV = magic_enum::enum_name<h5geo::detail::WellGroups::DEV>();
+inline constexpr auto ACTIVE_DEV = magic_enum::enum_name<h5geo::detail::WellGroups::ACTIVE_DEV>();
 
 enum class DevAttributes : unsigned{
   spatial_units = 1,
@@ -134,33 +134,33 @@ enum class DevAttributes : unsigned{
   angle_units = 3
 };
 
-constexpr auto& dev_attrs =
+inline constexpr auto& dev_attrs =
     magic_enum::enum_names<h5geo::detail::DevAttributes>();
-constexpr auto angle_units = magic_enum::enum_name<h5geo::detail::DevAttributes::angle_units>();
+inline constexpr auto angle_units = magic_enum::enum_name<h5geo::detail::DevAttributes::angle_units>();
 
 enum class DevDatasets : unsigned{
   dev_data = 1
 };
 
-constexpr auto& dev_dsets =
+inline constexpr auto& dev_dsets =
     magic_enum::enum_names<h5geo::detail::DevDatasets>();
-constexpr auto dev_data = magic_enum::enum_name<h5geo::detail::DevDatasets::dev_data>();
+inline constexpr auto dev_data = magic_enum::enum_name<h5geo::detail::DevDatasets::dev_data>();
 
 enum class LogAttributes : unsigned{
   spatial_units = 1,
   data_units = 2
 };
 
-constexpr auto& log_attrs =
+inline constexpr auto& log_attrs =
     magic_enum::enum_names<h5geo::detail::LogAttributes>();
 
 enum class LogDatasets : unsigned{
   log_data = 1
 };
 
-constexpr auto& log_dsets =
+inline constexpr auto& log_dsets =
     magic_enum::enum_names<h5geo::detail::LogDatasets>();
-constexpr auto log_data = magic_enum::enum_name<h5geo::detail::LogDatasets::log_data>();
+inline constexpr auto log_data = magic_enum::enum_name<h5geo::detail::LogDatasets::log_data>();
 
 
 }
@@ -173,11 +173,11 @@ enum class ContainerType : unsigned{
 };
 //ENABLE_BITMASK_OPERATORS(ContainerType);
 
-constexpr auto& cnt_types =
+inline constexpr auto& cnt_types =
     magic_enum::enum_names<h5geo::ContainerType>();
-constexpr auto SURFACE = magic_enum::enum_name<h5geo::ContainerType::SURFACE>();
-constexpr auto WELL = magic_enum::enum_name<h5geo::ContainerType::WELL>();
-constexpr auto SEISMIC = magic_enum::enum_name<h5geo::ContainerType::SEISMIC>();
+inline constexpr auto SURFACE = magic_enum::enum_name<h5geo::ContainerType::SURFACE>();
+inline constexpr auto WELL = magic_enum::enum_name<h5geo::ContainerType::WELL>();
+inline constexpr auto SEISMIC = magic_enum::enum_name<h5geo::ContainerType::SEISMIC>();
 
 enum class ObjectType: unsigned{
   SURFACE = 1,
@@ -188,10 +188,10 @@ enum class ObjectType: unsigned{
 };
 //ENABLE_BITMASK_OPERATORS(ObjectType);
 
-constexpr auto& obj_types =
+inline constexpr auto& obj_types =
     magic_enum::enum_names<h5geo::ObjectType>();
-constexpr auto LOGCURVE = magic_enum::enum_name<h5geo::ObjectType::LOGCURVE>();
-constexpr auto DEVCURVE = magic_enum::enum_name<h5geo::ObjectType::DEVCURVE>();
+inline constexpr auto LOGCURVE = magic_enum::enum_name<h5geo::ObjectType::LOGCURVE>();
+inline constexpr auto DEVCURVE = magic_enum::enum_name<h5geo::ObjectType::DEVCURVE>();
 
 enum class Domain : unsigned{
   MD = 1,
@@ -202,54 +202,54 @@ enum class Domain : unsigned{
   OWT = 32
 };
 
-constexpr auto& domains =
+inline constexpr auto& domains =
     magic_enum::enum_names<h5geo::Domain>();
-constexpr auto MD = magic_enum::enum_name<h5geo::Domain::MD>();
-constexpr auto TVD = magic_enum::enum_name<h5geo::Domain::TVD>();
-constexpr auto TVDSS = magic_enum::enum_name<h5geo::Domain::TVDSS>();
-constexpr auto TVDSD = magic_enum::enum_name<h5geo::Domain::TVDSD>();
-constexpr auto TWT = magic_enum::enum_name<h5geo::Domain::TWT>();
-constexpr auto OWT = magic_enum::enum_name<h5geo::Domain::OWT>();
+inline constexpr auto MD = magic_enum::enum_name<h5geo::Domain::MD>();
+inline constexpr auto TVD = magic_enum::enum_name<h5geo::Domain::TVD>();
+inline constexpr auto TVDSS = magic_enum::enum_name<h5geo::Domain::TVDSS>();
+inline constexpr auto TVDSD = magic_enum::enum_name<h5geo::Domain::TVDSD>();
+inline constexpr auto TWT = magic_enum::enum_name<h5geo::Domain::TWT>();
+inline constexpr auto OWT = magic_enum::enum_name<h5geo::Domain::OWT>();
 
 enum class SeisDataType : unsigned{
   STACK = 1,
   PRESTACK = 2
 };
 
-constexpr auto& seis_dtypes =
+inline constexpr auto& seis_dtypes =
     magic_enum::enum_names<h5geo::SeisDataType>();
-constexpr auto STACK = magic_enum::enum_name<h5geo::SeisDataType::STACK>();
-constexpr auto PRESTACK = magic_enum::enum_name<h5geo::SeisDataType::PRESTACK>();
+inline constexpr auto STACK = magic_enum::enum_name<h5geo::SeisDataType::STACK>();
+inline constexpr auto PRESTACK = magic_enum::enum_name<h5geo::SeisDataType::PRESTACK>();
 
 enum class SurveyType : unsigned{
   TWO_D = 1,
   THREE_D = 2
 };
 
-constexpr auto& survey_types =
+inline constexpr auto& survey_types =
     magic_enum::enum_names<h5geo::SurveyType>();
-constexpr auto TWO_D = magic_enum::enum_name<h5geo::SurveyType::TWO_D>();
-constexpr auto THREE_D = magic_enum::enum_name<h5geo::SurveyType::THREE_D>();
+inline constexpr auto TWO_D = magic_enum::enum_name<h5geo::SurveyType::TWO_D>();
+inline constexpr auto THREE_D = magic_enum::enum_name<h5geo::SurveyType::THREE_D>();
 
 enum class TxtEncoding : unsigned{
   ASCII = 0,
   EBCDIC = 1
 };
 
-constexpr auto& txt_encodings =
+inline constexpr auto& txt_encodings =
     magic_enum::enum_names<h5geo::TxtEncoding>();
-constexpr auto ASCII = magic_enum::enum_name<h5geo::TxtEncoding::ASCII>();
-constexpr auto EBCDIC = magic_enum::enum_name<h5geo::TxtEncoding::EBCDIC>();
+inline constexpr auto ASCII = magic_enum::enum_name<h5geo::TxtEncoding::ASCII>();
+inline constexpr auto EBCDIC = magic_enum::enum_name<h5geo::TxtEncoding::EBCDIC>();
 
 enum class SegyEndian : unsigned{
   Little = 0,
   Big = 1
 };
 
-constexpr auto& segy_endians =
+inline constexpr auto& segy_endians =
     magic_enum::enum_names<h5geo::SegyEndian>();
-constexpr auto Little = magic_enum::enum_name<h5geo::SegyEndian::Little>();
-constexpr auto Big = magic_enum::enum_name<h5geo::SegyEndian::Big>();
+inline constexpr auto Little = magic_enum::enum_name<h5geo::SegyEndian::Little>();
+inline constexpr auto Big = magic_enum::enum_name<h5geo::SegyEndian::Big>();
 
 enum class SegyFormat : unsigned{
   FourByte_IBM = 0,
@@ -257,11 +257,11 @@ enum class SegyFormat : unsigned{
   FourByte_integer = 2
 };
 
-constexpr auto& segy_formats =
+inline constexpr auto& segy_formats =
     magic_enum::enum_names<h5geo::SegyFormat>();
-constexpr auto FourByte_IBM = magic_enum::enum_name<h5geo::SegyFormat::FourByte_IBM>();
-constexpr auto FourByte_IEEE = magic_enum::enum_name<h5geo::SegyFormat::FourByte_IEEE>();
-constexpr auto FourByte_integer = magic_enum::enum_name<h5geo::SegyFormat::FourByte_integer>();
+inline constexpr auto FourByte_IBM = magic_enum::enum_name<h5geo::SegyFormat::FourByte_IBM>();
+inline constexpr auto FourByte_IEEE = magic_enum::enum_name<h5geo::SegyFormat::FourByte_IEEE>();
+inline constexpr auto FourByte_integer = magic_enum::enum_name<h5geo::SegyFormat::FourByte_integer>();
 
 enum class WellDataType : unsigned{
   WELL = 1,
@@ -275,16 +275,16 @@ enum class WellDataType : unsigned{
   WELL_TIE = 9
 };
 
-constexpr auto& well_dtypes =
+inline constexpr auto& well_dtypes =
     magic_enum::enum_names<h5geo::WellDataType>();
-constexpr auto DEV = magic_enum::enum_name<h5geo::WellDataType::DEV>();
-constexpr auto LOG = magic_enum::enum_name<h5geo::WellDataType::LOG>();
-constexpr auto INTERVAL_VEL = magic_enum::enum_name<h5geo::WellDataType::INTERVAL_VEL>();
-constexpr auto AVG_VEL = magic_enum::enum_name<h5geo::WellDataType::AVG_VEL>();
-constexpr auto RMS_VEL = magic_enum::enum_name<h5geo::WellDataType::RMS_VEL>();
-constexpr auto FWAL = magic_enum::enum_name<h5geo::WellDataType::FWAL>();
-constexpr auto CHECKSHOTS = magic_enum::enum_name<h5geo::WellDataType::CHECKSHOTS>();
-constexpr auto WELL_TIE = magic_enum::enum_name<h5geo::WellDataType::WELL_TIE>();
+inline constexpr auto DEV = magic_enum::enum_name<h5geo::WellDataType::DEV>();
+inline constexpr auto LOG = magic_enum::enum_name<h5geo::WellDataType::LOG>();
+inline constexpr auto INTERVAL_VEL = magic_enum::enum_name<h5geo::WellDataType::INTERVAL_VEL>();
+inline constexpr auto AVG_VEL = magic_enum::enum_name<h5geo::WellDataType::AVG_VEL>();
+inline constexpr auto RMS_VEL = magic_enum::enum_name<h5geo::WellDataType::RMS_VEL>();
+inline constexpr auto FWAL = magic_enum::enum_name<h5geo::WellDataType::FWAL>();
+inline constexpr auto CHECKSHOTS = magic_enum::enum_name<h5geo::WellDataType::CHECKSHOTS>();
+inline constexpr auto WELL_TIE = magic_enum::enum_name<h5geo::WellDataType::WELL_TIE>();
 
 enum class WellName : unsigned{
   FROM_LAS = 0,
