@@ -473,33 +473,45 @@ H5BaseImpl::createNewSeis(h5gt::Group &group, void* p)
   try {
 
     group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::Domain)},
+          std::string{h5geo::detail::Domain},
           h5gt::DataSpace(1)).
         write(static_cast<unsigned>(param.domain));
     group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SeisDataType)},
+          std::string{h5geo::detail::SeisDataType},
           h5gt::DataSpace(1)).
         write(static_cast<unsigned>(param.dataType));
     group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SurveyType)},
+          std::string{h5geo::detail::SurveyType},
           h5gt::DataSpace(1)).
         write(static_cast<unsigned>(param.surveyType));
     group.createAttribute<double>(
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::SRD)},
+          std::string{h5geo::detail::SRD},
           h5gt::DataSpace(1)).
         write(param.srd);
     group.createAttribute<std::string>(
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::spatial_units)},
+          std::string{h5geo::detail::spatial_units},
           h5gt::DataSpace::From(param.spatialUnits)).
         write(param.spatialUnits);
     group.createAttribute<std::string>(
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::temporal_units)},
+          std::string{h5geo::detail::temporal_units},
           h5gt::DataSpace::From(param.temporalUnits)).
         write(param.temporalUnits);
     group.createAttribute<std::string>(
-          std::string{magic_enum::enum_name(h5geo::detail::SeisAttributes::data_units)},
+          std::string{h5geo::detail::data_units},
           h5gt::DataSpace::From(param.dataUnits)).
         write(param.dataUnits);
+    group.createAttribute<double>(
+          std::string{h5geo::detail::orientation},
+          h5gt::DataSpace(1)).
+        write(param.orientation);
+    group.createAttribute<double>(
+          std::string{h5geo::detail::bin},
+          h5gt::DataSpace(2)).
+        write_raw(param.bin.data());
+    group.createAttribute<double>(
+          std::string{h5geo::detail::origin},
+          h5gt::DataSpace(2)).
+        write_raw(param.origin.data());
 
     createTextHeader(group);
     createBinHeader(group, param.stdChunk);
@@ -699,7 +711,7 @@ bool h5geo::isGeoContainer(h5gt::File file){
 bool h5geo::isGeoContainerByType(h5gt::File file,
                                 const h5geo::ContainerType& cntType)
 {
-  unsigned val = h5geo::getEnumFromObj(
+  unsigned val = h5geo::readEnumAttribute(
         file, std::string{h5geo::detail::ContainerType});
   switch (cntType) {
   case h5geo::ContainerType::SURFACE:

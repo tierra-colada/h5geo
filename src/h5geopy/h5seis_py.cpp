@@ -198,6 +198,9 @@ void H5Seis_py(
       .def("setSpatialUnits", &H5SeisImpl::setSpatialUnits)
       .def("setTemporalUnits", &H5SeisImpl::setTemporalUnits)
       .def("setDataUnits", &H5SeisImpl::setDataUnits)
+      .def("setOrientation", &H5SeisImpl::setOrientation)
+      .def("setOrigin", &H5SeisImpl::setOrigin)
+      .def("setBinSize", &H5SeisImpl::setBinSize)
 
       .def("getDomain", &H5SeisImpl::getDomain)
       .def("getDataType", &H5SeisImpl::getDataType)
@@ -206,6 +209,9 @@ void H5Seis_py(
       .def("getSpatialUnits", &H5SeisImpl::getSpatialUnits)
       .def("getTemporalUnits", &H5SeisImpl::getTemporalUnits)
       .def("getDataUnits", &H5SeisImpl::getDataUnits)
+      .def("getOrientation", &H5SeisImpl::getOrientation)
+      .def("getOrigin", &H5SeisImpl::getOrigin)
+      .def("getBinSize", &H5SeisImpl::getBinSize)
 
       .def("hasPKeySort", &H5SeisImpl::hasPKeySort,
            py::arg("pKeyName"))

@@ -170,8 +170,8 @@ public:
   virtual Eigen::MatrixX2d calcBoundaryStk2D() = 0;
   virtual Eigen::MatrixX2d calcConvexHullBoundary() = 0;
   virtual bool calcBinOriginOrientation3DStk(
-      Eigen::Ref<Eigen::Vector2d> bin,
-      Eigen::Ref<Eigen::Vector2d> origin,
+      Eigen::Ref<Eigen::VectorXd> bin,
+      Eigen::Ref<Eigen::VectorXd> origin,
       double& orientation) = 0;
   virtual bool calcBinOriginOrientation3DStk(
       std::vector<double>& bin,
@@ -216,6 +216,9 @@ public:
   virtual bool setSpatialUnits(const std::string& str) = 0;
   virtual bool setTemporalUnits(const std::string& str) = 0;
   virtual bool setDataUnits(const std::string& str) = 0;
+  virtual bool setOrientation(double orientation) = 0;
+  virtual bool setOrigin(Eigen::Ref<Eigen::VectorXd> origin) = 0;
+  virtual bool setBinSize(Eigen::Ref<Eigen::VectorXd> bin) = 0;
 
   virtual h5geo::Domain getDomain() = 0;
   virtual h5geo::SeisDataType getDataType() = 0;
@@ -224,6 +227,9 @@ public:
   virtual std::string getSpatialUnits() = 0;
   virtual std::string getTemporalUnits() = 0;
   virtual std::string getDataUnits() = 0;
+  virtual double getOrientation() = 0;
+  virtual Eigen::VectorXd getOrigin() = 0;
+  virtual Eigen::VectorXd getBinSize() = 0;
 
   virtual bool hasPKeySort(const std::string& pKeyName) = 0;
   virtual bool removePKeySort(const std::string& pKeyName) = 0;

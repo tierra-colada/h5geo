@@ -167,8 +167,8 @@ public:
   virtual Eigen::MatrixX2d calcBoundaryStk2D() override;
   virtual Eigen::MatrixX2d calcConvexHullBoundary() override;
   virtual bool calcBinOriginOrientation3DStk(
-      Eigen::Ref<Eigen::Vector2d> bin,
-      Eigen::Ref<Eigen::Vector2d> origin,
+      Eigen::Ref<Eigen::VectorXd> bin,
+      Eigen::Ref<Eigen::VectorXd> origin,
       double& orientation) override;
   virtual bool calcBinOriginOrientation3DStk(
       std::vector<double>& bin,
@@ -208,6 +208,9 @@ public:
   virtual bool setSpatialUnits(const std::string& str) override;
   virtual bool setTemporalUnits(const std::string& str) override;
   virtual bool setDataUnits(const std::string& str) override;
+  virtual bool setOrientation(double orientation) override;
+  virtual bool setOrigin(Eigen::Ref<Eigen::VectorXd> origin) override;
+  virtual bool setBinSize(Eigen::Ref<Eigen::VectorXd> bin) override;
 
   virtual h5geo::Domain getDomain() override;
   virtual h5geo::SeisDataType getDataType() override;
@@ -216,6 +219,9 @@ public:
   virtual std::string getSpatialUnits() override;
   virtual std::string getTemporalUnits() override;
   virtual std::string getDataUnits() override;
+  virtual double getOrientation() override;
+  virtual Eigen::VectorXd getOrigin() override;
+  virtual Eigen::VectorXd getBinSize() override;
 
   virtual bool hasPKeySort(const std::string& pKeyName) override;
   virtual bool removePKeySort(const std::string& pKeyName) override;

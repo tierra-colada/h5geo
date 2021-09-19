@@ -133,40 +133,40 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
 }
 
 bool H5DevCurveImpl::setSpatialUnits(const std::string& str){
-  return h5geo::setStringFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::spatial_units},
         str);
 }
 
 bool H5DevCurveImpl::setTemporalUnits(const std::string& str){
-  return h5geo::setStringFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::temporal_units},
         str);
 }
 
 bool H5DevCurveImpl::setAngleUnits(const std::string& str){
-  return h5geo::setStringFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::angle_units},
         str);
 }
 
 std::string H5DevCurveImpl::getSpatialUnits(){
-  return h5geo::getStringFromObj(
+  return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::spatial_units});
 }
 
 std::string H5DevCurveImpl::getTemporalUnits(){
-  return h5geo::getStringFromObj(
+  return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::temporal_units});
 }
 
 std::string H5DevCurveImpl::getAngleUnits(){
-  return h5geo::getStringFromObj(
+  return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::angle_units});
 }

@@ -203,7 +203,7 @@ H5DevCurve* H5WellImpl::createDevCurve(
 }
 
 bool H5WellImpl::setSpatialUnits(const std::string& str){
-  return h5geo::setStringFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::spatial_units},
         str);
@@ -218,13 +218,13 @@ bool H5WellImpl::setHeadCoord(
           units::unit_from_string(spatialUnits),
           units::unit_from_string(getSpatialUnits()));
     Eigen::Vector2d vv = v*coef;
-    return h5geo::setFloatVecFromObj(
+    return h5geo::overwriteAttribute(
           objG,
           std::string{h5geo::detail::head_coord},
           vv);
   }
 
-  return h5geo::setFloatVecFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::head_coord},
         v);
@@ -237,33 +237,33 @@ bool H5WellImpl::setKB(
     double coef = units::convert(
           units::unit_from_string(spatialUnits),
           units::unit_from_string(getSpatialUnits()));
-    return h5geo::setFloatFromObj(
+    return h5geo::overwriteAttribute(
           objG,
           std::string{h5geo::detail::KB},
           val*coef);
   }
 
-  return h5geo::setFloatFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::KB},
         val);
 }
 
 bool H5WellImpl::setUWI(const std::string& str){
-  return h5geo::setStringFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::UWI},
         str);
 }
 
 std::string H5WellImpl::getSpatialUnits(){
-  return h5geo::getStringFromObj(
+  return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::spatial_units});
 }
 
 Eigen::VectorXd H5WellImpl::getHeadCoord(const std::string& spatialUnits){
-  Eigen::VectorXd v = h5geo::getEigenFloatVecFromObj(
+  Eigen::VectorXd v = h5geo::readDoubleEigenVecAttribute(
         objG,
         std::string{h5geo::detail::head_coord});
 
@@ -281,7 +281,7 @@ Eigen::VectorXd H5WellImpl::getHeadCoord(const std::string& spatialUnits){
 }
 
 double H5WellImpl::getKB(const std::string& spatialUnits){
-  double val = h5geo::getFloatFromObj(
+  double val = h5geo::readDoubleAttribute(
         objG,
         std::string{h5geo::detail::KB});
 
@@ -296,7 +296,7 @@ double H5WellImpl::getKB(const std::string& spatialUnits){
 }
 
 std::string H5WellImpl::getUWI(){
-  return h5geo::getStringFromObj(
+  return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::UWI});
 }

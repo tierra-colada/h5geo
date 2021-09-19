@@ -138,106 +138,6 @@ template<typename Object,
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-bool setEnumFromObj(
-    Object& object,
-    const std::string& attrName,
-    const unsigned& val);
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-bool setStringFromObj(
-    Object& object,
-    const std::string& attrName,
-    const std::string& str);
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-bool setFloatFromObj(
-    Object& object,
-    const std::string& attrName,
-    const double& val);
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-bool setFloatVecFromObj(
-    Object& object,
-    const std::string& attrName,
-    const std::vector<double>& v);
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-bool setFloatVecFromObj(
-    Object& object,
-    const std::string& attrName,
-    const Eigen::Ref<const Eigen::VectorXd>& v);
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-/*!
- * \brief getEnumFromObj Read enum from `Object's`
- * attribute as unsigned value. Return `0` if attribute
- * not exists.
- * \param object
- * \param attrName
- */
-unsigned getEnumFromObj(Object& object, const std::string& attrName);
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-/*!
- * \brief getStringFromObj Read string from `Object's`
- * attribute. Return `std::string()` (empty string) if attribute
- * not exists.
- * \param object
- * \param attrName
- * \return
- */
-std::string getStringFromObj(Object& object, const std::string& attrName);
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-double getFloatFromObj(Object& object, const std::string& attrName);
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-std::vector<double> getFloatVecFromObj(Object& object, const std::string& attrName);
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-Eigen::VectorXd getEigenFloatVecFromObj(Object& object, const std::string& attrName);
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 bool deleteAllAttributes(Object& object);
 
 template<typename Parent,
@@ -273,7 +173,7 @@ bool _overwriteResizableDataset(
 
 template<typename D,
          typename std::enable_if<
-           std::is_fundamental<typename D::Scalar>::value>::type* = nullptr>
+           std::is_arithmetic<typename D::Scalar>::value>::type* = nullptr>
 /*!
  * \brief overwriteResizableDataset Try to resize and write matrix to dataset.
  * Matrix internally cast its type to DataSet's type
@@ -287,7 +187,7 @@ bool overwriteResizableDataset(
 
 template<typename T,
          typename std::enable_if<
-           std::is_fundamental<T>::value>::type* = nullptr>
+           std::is_arithmetic<T>::value>::type* = nullptr>
 /*!
  * \brief overwriteResizableDataset Try to resize and write matrix to dataset.
  * Matrix internally cast its type to DataSet's type
@@ -301,7 +201,7 @@ bool overwriteResizableDataset(
 
 template<typename T,
          typename std::enable_if<
-           std::is_fundamental<T>::value>::type* = nullptr>
+           std::is_arithmetic<T>::value>::type* = nullptr>
 /*!
  * \brief overwriteResizableDataset Try to resize and write matrix to dataset.
  * Matrix internally cast its type to DataSet's type
@@ -316,8 +216,8 @@ bool overwriteResizableDataset(
 template<typename Object, typename D,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &
-           std::is_fundamental<typename D::Scalar>::value>::type* = nullptr>
+           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_arithmetic<typename D::Scalar>::value>::type* = nullptr>
 /*!
  * \brief overwriteDataset If dataset exists then it will be unlinked
  * and then created again.
@@ -337,8 +237,8 @@ bool overwriteDataset(
 template<typename Object, typename T,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &
-           std::is_fundamental<T>::value>::type* = nullptr>
+           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_arithmetic<T>::value>::type* = nullptr>
 /*!
  * \brief overwriteDataset If dataset exists then it will be unlinked
  * and then created again.
@@ -358,8 +258,8 @@ bool overwriteDataset(
 template<typename Object, typename T,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &
-           std::is_fundamental<T>::value>::type* = nullptr>
+           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_arithmetic<T>::value>::type* = nullptr>
 /*!
  * \brief overwriteDataset If dataset exists then it will be unlinked
  * and then created again.
@@ -377,21 +277,79 @@ bool overwriteDataset(
     const T& v);
 
 template <typename T1, typename T2>
-bool _overwriteAttribute(
+bool _readAttribute(
     T1& holder,
     const std::string& attrName,
-    const T2* v,
+    T2* v,
     size_t nElem);
 
 template<typename Object, typename D,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value) &
-           std::is_fundamental<typename D::Scalar>::value>::type* = nullptr>
+           std::is_same<Object, h5gt::DataSet>::value) &&
+           std::is_arithmetic<typename D::Scalar>::value>::type* = nullptr>
 /*!
- * \brief overwriteAttribute Delete attribute if already exist and create
- * new one. Write data to it
+ * \brief readAttribute Read attribute only if it exist and
+ * its type is the same as passed buffer
+ * \param holder h5gt::Object that contains given attribute
+ * \param attrName
+ * \param v
+ */
+bool readAttribute(
+    Object& holder,
+    const std::string& attrName,
+    Eigen::DenseBase<D>& v);
+
+template <typename Object, typename T,
+          typename std::enable_if<
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_arithmetic<T>::value>::type* = nullptr>
+bool readAttribute(
+    Object& holder,
+    const std::string& attrName,
+    std::vector<T>& v);
+
+template <typename Object, typename T,
+          typename std::enable_if<
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_arithmetic<T>::value>::type* = nullptr>
+bool readAttribute(
+    Object& holder,
+    const std::string& attrName,
+    T& v);
+
+template <typename T1, typename T2>
+bool _overwriteAttribute(
+    T1& holder,
+    const std::string& attrName,
+    const T2* v,
+    size_t nElem);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+bool overwriteAttribute(
+    Object& holder,
+    const std::string& attrName,
+    const std::string& str);
+
+template<typename Object, typename D,
+         typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value) &&
+           std::is_arithmetic<typename D::Scalar>::value>::type* = nullptr>
+/*!
+ * \brief overwriteAttribute Create attribute if not exist.
+ *  Delete attribute if type or size is different
+ *  and create new one and write data to it
  * \param holder h5gt::Object that contains given attribute
  * \param attrName
  * \param v
@@ -405,15 +363,8 @@ template <typename Object, typename T,
           typename std::enable_if<
             (std::is_same<Object, h5gt::File>::value ||
             std::is_same<Object, h5gt::Group>::value ||
-            std::is_same<Object, h5gt::DataSet>::value) &
-            std::is_fundamental<T>::value>::type* = nullptr>
-/*!
- * \brief overwriteAttribute Delete attribute if already exist and create
- * new one. Write data to it
- * \param holder h5gt::Object that contains given attribute
- * \param attrName
- * \param v
- */
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_arithmetic<T>::value>::type* = nullptr>
 bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
@@ -423,19 +374,84 @@ template <typename Object, typename T,
           typename std::enable_if<
             (std::is_same<Object, h5gt::File>::value ||
             std::is_same<Object, h5gt::Group>::value ||
-            std::is_same<Object, h5gt::DataSet>::value) &
-            std::is_fundamental<T>::value>::type* = nullptr>
-/*!
- * \brief overwriteAttribute Delete attribute if already exist and create
- * new one. Write data to it
- * \param holder h5gt::Object that contains given attribute
- * \param attrName
- * \param v
- */
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_arithmetic<T>::value>::type* = nullptr>
 bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
     const T& v);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+/*!
+ * \brief readEnumAttribute Read enum from `Object's`
+ * attribute as unsigned value. Return `0` if attribute
+ * not exists.
+ * \param object
+ * \param attrName
+ */
+unsigned readEnumAttribute(Object& object, const std::string& attrName);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+/*!
+ * \brief readStringAttribute Read string from `Object's`
+ * attribute. Return `std::string()` (empty string) if attribute
+ * not exists.
+ * \param object
+ * \param attrName
+ * \return
+ */
+std::string readStringAttribute(Object& object, const std::string& attrName);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+float readFloatAttribute(Object& object, const std::string& attrName);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+double readDoubleAttribute(Object& object, const std::string& attrName);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+std::vector<float> readFloatVecAttribute(Object& object, const std::string& attrName);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+std::vector<double> readDoubleVecAttribute(Object& object, const std::string& attrName);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+Eigen::VectorXf readFloatEigenVecAttribute(Object& object, const std::string& attrName);
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+Eigen::VectorXd readDoubleEigenVecAttribute(Object& object, const std::string& attrName);
+
 
 template<typename D>
 /*!
@@ -445,7 +461,7 @@ template<typename D>
  * \param dataset
  * \param v
  * \param attrName
- * \param resize
+ * \param resize resize if needed. Use it only for resizable dataset!
  * \return
  */
 bool writeData2IndexedDataset(

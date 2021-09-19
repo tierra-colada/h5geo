@@ -695,8 +695,8 @@ Eigen::MatrixX2d H5SeisImpl::calcConvexHullBoundary(){
 }
 
 bool H5SeisImpl::calcBinOriginOrientation3DStk(
-    Eigen::Ref<Eigen::Vector2d> bin,
-    Eigen::Ref<Eigen::Vector2d> origin,
+    Eigen::Ref<Eigen::VectorXd> bin,
+    Eigen::Ref<Eigen::VectorXd> origin,
     double& orientation)
 {
   double minIL = getTraceHeaderMin("INLINE");
@@ -845,15 +845,12 @@ bool H5SeisImpl::calcAndWriteBoundary(){
 
     if (getDataType() == h5geo::SeisDataType::STACK &&
         getSurveyType() == h5geo::SurveyType::THREE_D){
-      std::vector<double> bin, origin;
       double orientation = 0;
+      Eigen::Vector2d bin, origin;
       calcBinOriginOrientation3DStk(bin, origin, orientation);
-      if (!objG.hasAttribute("bin"))
-        objG.createAttribute<double>("bin", h5gt::DataSpace::From(bin)).write(bin);
-      if (!objG.hasAttribute("origin"))
-        objG.createAttribute<double>("origin", h5gt::DataSpace::From(origin)).write(origin);
-      if (!objG.hasAttribute("orientation"))
-        objG.createAttribute<double>("orientation", h5gt::DataSpace(1)).write(orientation);
+      setBinSize(bin);
+      setOrigin(origin);
+      setOrientation(orientation);
     }
   }
   std::vector<size_t> dims{2, (size_t)boundary.rows()};
@@ -936,21 +933,21 @@ bool H5SeisImpl::checkSampleLimits(
 }
 
 bool H5SeisImpl::setDomain(const h5geo::Domain& val){
-  return h5geo::setEnumFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::Domain},
         static_cast<unsigned>(val));
 }
 
 bool H5SeisImpl::setDataType(const h5geo::SeisDataType& val){
-  return h5geo::setEnumFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::SeisDataType},
         static_cast<unsigned>(val));
 }
 
 bool H5SeisImpl::setSurveyType(const h5geo::SurveyType& val){
-  return h5geo::setEnumFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::SurveyType},
         static_cast<unsigned>(val));
@@ -961,80 +958,114 @@ bool H5SeisImpl::setSRD(const double& val, const std::string& spatialUnits){
     double coef = units::convert(
           units::unit_from_string(spatialUnits),
           units::unit_from_string(getSpatialUnits()));
-    return h5geo::setFloatFromObj(
+    return h5geo::overwriteAttribute(
           objG,
           std::string{h5geo::detail::SRD},
           val*coef);
   }
 
-  return h5geo::setFloatFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::SRD},
         val);
 }
 
 bool H5SeisImpl::setSpatialUnits(const std::string& str){
-  return h5geo::setStringFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::spatial_units},
         str);
 }
 
 bool H5SeisImpl::setTemporalUnits(const std::string& str){
-  return h5geo::setStringFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::temporal_units},
         str);
 }
 
 bool H5SeisImpl::setDataUnits(const std::string& str){
-  return h5geo::setStringFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::data_units},
         str);
 }
 
+bool H5SeisImpl::setOrientation(double orientation)
+{
+  return h5geo::overwriteAttribute(objG, "orientation", orientation);
+}
+
+bool H5SeisImpl::setOrigin(Eigen::Ref<Eigen::VectorXd> origin)
+{
+  return h5geo::overwriteAttribute(objG, "origin", origin);
+}
+
+bool H5SeisImpl::setBinSize(Eigen::Ref<Eigen::VectorXd> bin)
+{
+  return h5geo::overwriteAttribute(objG, "bin", bin);
+}
+
 h5geo::Domain H5SeisImpl::getDomain(){
   return static_cast<h5geo::Domain>(
-        h5geo::getEnumFromObj(
+        h5geo::readEnumAttribute(
           objG,
           std::string{h5geo::detail::Domain}));
 }
 
 h5geo::SeisDataType H5SeisImpl::getDataType(){
   return static_cast<h5geo::SeisDataType>(
-        h5geo::getEnumFromObj(
+        h5geo::readEnumAttribute(
           objG,
           std::string{h5geo::detail::SeisDataType}));
 }
 
 h5geo::SurveyType H5SeisImpl::getSurveyType(){
   return static_cast<h5geo::SurveyType>(
-        h5geo::getEnumFromObj(
+        h5geo::readEnumAttribute(
           objG,
           std::string{h5geo::detail::SurveyType}));
 }
 
 double H5SeisImpl::getSRD(){
-  return h5geo::getFloatFromObj(
+  return h5geo::readDoubleAttribute(
         objG,
         std::string{h5geo::detail::SRD});
 }
 
 std::string H5SeisImpl::getSpatialUnits(){
-  return h5geo::getStringFromObj(
+  return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::spatial_units});
 }
 
 std::string H5SeisImpl::getTemporalUnits(){
-  return h5geo::getStringFromObj(
+  return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::temporal_units});
 }
 
+
+double H5SeisImpl::getOrientation(){
+  return h5geo::readDoubleAttribute(
+        objG,
+        std::string{h5geo::detail::orientation});
+}
+
+Eigen::VectorXd H5SeisImpl::getOrigin(){
+  return h5geo::readDoubleEigenVecAttribute(
+        objG,
+        std::string{h5geo::detail::origin});
+}
+
+Eigen::VectorXd H5SeisImpl::getBinSize(){
+  return h5geo::readDoubleEigenVecAttribute(
+        objG,
+        std::string{h5geo::detail::bin});
+}
+
 std::string H5SeisImpl::getDataUnits(){
-  return h5geo::getStringFromObj(
+  return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::data_units});
 }

@@ -384,214 +384,6 @@ template<typename Object,
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline bool setEnumFromObj(Object& object, const std::string& attrName, const unsigned& val){
-  if (!object.hasAttribute(attrName))
-    return false;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!(dtype.isTypeEqual(h5gt::AtomicType<unsigned>()) ||
-      dtype.isTypeEqual(h5gt::AtomicType<int>())) ||
-      attr.getMemSpace().getElementCount() != 1)
-    return false;
-
-  attr.write(val);
-  return true;
-}
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline bool setStringFromObj(Object& object, const std::string& attrName, const std::string& str){
-  if (!object.hasAttribute(attrName))
-    return false;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!dtype.isTypeEqual(h5gt::AtomicType<std::string>()) ||
-      attr.getMemSpace().getElementCount() != 1)
-    return false;
-
-  attr.write(str);
-  return true;
-}
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline bool setFloatFromObj(Object& object, const std::string& attrName, const double& val){
-  if (!object.hasAttribute(attrName))
-    return false;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      dtype.isTypeEqual(h5gt::AtomicType<double>())) ||
-      attr.getMemSpace().getElementCount() != 1)
-    return false;
-
-  attr.write(val);
-  return true;
-}
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline bool setFloatVecFromObj(Object& object, const std::string& attrName, const std::vector<double>& v){
-  if (!object.hasAttribute(attrName))
-    return false;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      dtype.isTypeEqual(h5gt::AtomicType<double>())) ||
-      attr.getMemSpace().getElementCount() != v.size())
-    return false;
-
-  attr.write(v);
-  return true;
-}
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline bool setFloatVecFromObj(Object& object, const std::string& attrName, const Eigen::Ref<const Eigen::VectorXd>& v){
-  if (!object.hasAttribute(attrName))
-    return false;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      dtype.isTypeEqual(h5gt::AtomicType<double>())) ||
-      attr.getMemSpace().getElementCount() != v.size())
-    return false;
-
-  attr.write_raw(v.data());
-  return true;
-}
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline unsigned getEnumFromObj(Object& object, const std::string& attrName){
-  /* as we often use magic_enum to convert enum to string
-   * we need to remove `h5geo::` from enum name given
-   * from magic_enum () as for example:
-   * magic_enum::enum_type_name<h5geo::SurveyType>() */
-//  eraseSubStr(attrName, "h5geo::");
-
-  unsigned value = 0;
-  if (!object.hasAttribute(attrName))
-    return value;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!(dtype.isTypeEqual(h5gt::AtomicType<unsigned>()) ||
-      dtype.isTypeEqual(h5gt::AtomicType<int>())) ||
-      attr.getMemSpace().getElementCount() != 1)
-    return value;
-
-  attr.read(value);
-  return value;
-}
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline std::string getStringFromObj(Object& object, const std::string& attrName){
-  std::string str;
-  if (!object.hasAttribute(attrName))
-    return str;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!dtype.isTypeEqual(h5gt::AtomicType<std::string>()) ||
-      attr.getMemSpace().getElementCount() != 1)
-      return str;
-
-  attr.read(str);
-  return str;
-}
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline double getFloatFromObj(Object& object, const std::string& attrName){
-  double value = NAN;
-  if (!object.hasAttribute(attrName))
-    return value;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      dtype.isTypeEqual(h5gt::AtomicType<double>())) ||
-      attr.getMemSpace().getElementCount() != 1)
-    return value;
-
-  attr.read(value);
-  return value;
-}
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline std::vector<double> getFloatVecFromObj(Object& object, const std::string& attrName){
-  std::vector<double> value;
-  if (!object.hasAttribute(attrName))
-    return value;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      dtype.isTypeEqual(h5gt::AtomicType<double>())))
-    return value;
-
-  attr.read(value);
-  return value;
-}
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline Eigen::VectorXd getEigenFloatVecFromObj(Object& object, const std::string& attrName){
-  Eigen::VectorXd value;
-  if (!object.hasAttribute(attrName))
-    return value;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!(dtype.isTypeEqual(h5gt::AtomicType<float>()) ||
-      dtype.isTypeEqual(h5gt::AtomicType<double>())))
-    return value;
-
-  value.resize(attr.getMemSpace().getElementCount());
-  attr.read(value.data());
-  return value;
-}
-
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type*>
 inline bool deleteAllAttributes(Object& object){
   try {
     std::vector<std::string> attrNameList =
@@ -652,7 +444,7 @@ inline bool _overwriteResizableDataset(
 
 template<typename D,
          typename std::enable_if<
-           std::is_fundamental<typename D::Scalar>::value>::type*>
+           std::is_arithmetic<typename D::Scalar>::value>::type*>
 inline bool overwriteResizableDataset(
     h5gt::DataSet& dataset,
     const Eigen::DenseBase<D>& M)
@@ -662,7 +454,7 @@ inline bool overwriteResizableDataset(
 
 template<typename T,
          typename std::enable_if<
-           std::is_fundamental<T>::value>::type*>
+           std::is_arithmetic<T>::value>::type*>
 inline bool overwriteResizableDataset(
     h5gt::DataSet& dataset,
     const std::vector<T>& v)
@@ -672,7 +464,7 @@ inline bool overwriteResizableDataset(
 
 template<typename T,
          typename std::enable_if<
-           std::is_fundamental<T>::value>::type*>
+           std::is_arithmetic<T>::value>::type*>
 inline bool overwriteResizableDataset(
     h5gt::DataSet& dataset,
     const T& v)
@@ -683,8 +475,8 @@ inline bool overwriteResizableDataset(
 template<typename Object, typename D,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &
-           std::is_fundamental<typename D::Scalar>::value>::type*>
+           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_arithmetic<typename D::Scalar>::value>::type*>
 inline bool overwriteDataset(
     Object& node,
     std::string& datasetPath,
@@ -696,8 +488,8 @@ inline bool overwriteDataset(
 template<typename Object, typename T,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &
-           std::is_fundamental<T>::value>::type*>
+           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_arithmetic<T>::value>::type*>
 inline bool overwriteDataset(
     Object& node,
     std::string& datasetPath,
@@ -709,8 +501,8 @@ inline bool overwriteDataset(
 template<typename Object, typename T,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &
-           std::is_fundamental<T>::value>::type*>
+           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_arithmetic<T>::value>::type*>
 inline bool overwriteDataset(
     Object& node,
     std::string& datasetPath,
@@ -720,23 +512,21 @@ inline bool overwriteDataset(
 }
 
 template <typename T1, typename T2>
-inline bool _overwriteAttribute(
-    T1& holder,
+inline bool _readAttribute(T1& holder,
     const std::string& attrName,
-    const T2* v,
+    T2 *v,
     size_t nElem)
 {
-  if (holder.hasAttribute(attrName))
-    holder.deleteAttribute(attrName);
-
-  try {
-    holder.template createAttribute<T2>(
-          attrName, h5gt::DataSpace({nElem})).
-        write_raw(v);
-  }  catch (h5gt::Exception e) {
+  if (!holder.hasAttribute(attrName))
     return false;
-  }
 
+  h5gt::Attribute attr = holder.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<T2>()) ||
+      attr.getMemSpace().getElementCount() != nElem)
+    return false;
+
+  attr.read(v);
   return true;
 }
 
@@ -744,8 +534,100 @@ template<typename Object, typename D,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value) &
-           std::is_fundamental<typename D::Scalar>::value>::type*>
+           std::is_same<Object, h5gt::DataSet>::value) &&
+           std::is_arithmetic<typename D::Scalar>::value>::type*>
+inline bool readAttribute(Object& holder,
+    const std::string& attrName,
+    Eigen::DenseBase<D> &v)
+{
+  return _readAttribute(holder, attrName, v.derived().data(), v.size());
+}
+
+template <typename Object, typename T,
+          typename std::enable_if<
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_arithmetic<T>::value>::type*>
+inline bool readAttribute(Object& holder,
+    const std::string& attrName,
+    std::vector<T> &v)
+{
+  return _readAttribute(holder, attrName, v.data(), v.size());
+}
+
+template <typename Object, typename T,
+          typename std::enable_if<
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_arithmetic<T>::value>::type*>
+inline bool readAttribute(Object& holder,
+    const std::string& attrName,
+    T &v)
+{
+  return _readAttribute(holder, attrName, &v, 1);
+}
+
+template <typename T1, typename T2>
+inline bool _overwriteAttribute(
+    T1& holder,
+    const std::string& attrName,
+    const T2* v,
+    size_t nElem)
+{
+  if (!holder.hasAttribute(attrName))
+    holder.createAttribute<T2>(
+          attrName, h5gt::DataSpace({nElem}));
+
+  h5gt::Attribute attr = holder.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<T2>()) ||
+      attr.getMemSpace().getElementCount() != nElem){
+    try {
+      holder.deleteAttribute(attrName);
+      attr = holder.createAttribute<T2>(
+            attrName, h5gt::DataSpace({nElem}));
+    }  catch (h5gt::Exception e) {
+      return false;
+    }
+    return false;
+  }
+
+  attr.write(v);
+  return true;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline bool overwriteAttribute(
+    Object& holder,
+    const std::string& attrName,
+    const std::string& str)
+{
+  if (!holder.hasAttribute(attrName))
+    holder.createAttribute<std::string>(
+          attrName, h5gt::DataSpace::From(str));
+
+  h5gt::Attribute attr = holder.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<std::string>()) ||
+      attr.getMemSpace().getElementCount() != 1)
+    return false;
+
+  attr.write(str);
+  return true;
+}
+
+template<typename Object, typename D,
+         typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value) &&
+           std::is_arithmetic<typename D::Scalar>::value>::type*>
 inline bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
@@ -758,8 +640,8 @@ template <typename Object, typename T,
           typename std::enable_if<
             (std::is_same<Object, h5gt::File>::value ||
             std::is_same<Object, h5gt::Group>::value ||
-            std::is_same<Object, h5gt::DataSet>::value) &
-            std::is_fundamental<T>::value>::type*>
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_arithmetic<T>::value>::type*>
 inline bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
@@ -772,14 +654,151 @@ template <typename Object, typename T,
           typename std::enable_if<
             (std::is_same<Object, h5gt::File>::value ||
             std::is_same<Object, h5gt::Group>::value ||
-            std::is_same<Object, h5gt::DataSet>::value) &
-            std::is_fundamental<T>::value>::type*>
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_arithmetic<T>::value>::type*>
 inline bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
     const T& v)
 {
   return _overwriteAttribute(holder, attrName, &v, 1);
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline unsigned readEnumAttribute(Object& object, const std::string& attrName){
+  /* as we often use magic_enum to convert enum to string
+   * we need to remove `h5geo::` from enum name given
+   * from magic_enum () as for example:
+   * magic_enum::enum_type_name<h5geo::SurveyType>() */
+//  eraseSubStr(attrName, "h5geo::");
+
+  unsigned value = 0;
+  readAttribute(object, attrName, value);
+  return value;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline std::string readStringAttribute(Object& object, const std::string& attrName){
+  std::string str;
+  if (!object.hasAttribute(attrName))
+    return str;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<std::string>()) ||
+      attr.getMemSpace().getElementCount() != 1)
+      return str;
+
+  attr.read(str);
+  return str;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline float readFloatAttribute(Object& object, const std::string& attrName){
+  float value = NAN;
+  readAttribute(object, attrName, value);
+  return value;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline double readDoubleAttribute(Object& object, const std::string& attrName){
+  double value = NAN;
+  readAttribute(object, attrName, value);
+  return value;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline std::vector<float> readFloatVecAttribute(Object& object, const std::string& attrName){
+  std::vector<float> value;
+  if (!object.hasAttribute(attrName))
+    return value;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<float>()))
+    return value;
+
+  attr.read(value);
+  return value;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline std::vector<double> readDoubleVecAttribute(Object& object, const std::string& attrName){
+  std::vector<double> value;
+  if (!object.hasAttribute(attrName))
+    return value;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<double>()))
+    return value;
+
+  attr.read(value);
+  return value;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline Eigen::VectorXf readFloatEigenVecAttribute(Object& object, const std::string& attrName){
+  Eigen::VectorXf value;
+  if (!object.hasAttribute(attrName))
+    return value;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<float>()))
+    return value;
+
+  value.resize(attr.getMemSpace().getElementCount());
+  attr.read(value.data());
+  return value;
+}
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline Eigen::VectorXd readDoubleEigenVecAttribute(Object& object, const std::string& attrName){
+  Eigen::VectorXd value;
+  if (!object.hasAttribute(attrName))
+    return value;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<double>()))
+    return value;
+
+  value.resize(attr.getMemSpace().getElementCount());
+  attr.read(value.data());
+  return value;
 }
 
 template<typename D>

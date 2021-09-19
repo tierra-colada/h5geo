@@ -41,7 +41,10 @@ enum class SeisAttributes : unsigned{
   SRD = 4,
   spatial_units = 5,
   temporal_units = 6,
-  data_units = 7
+  data_units = 7,
+  orientation = 8,
+  bin = 9,
+  origin = 10
 };
 
 inline constexpr auto& seis_attrs =
@@ -53,6 +56,9 @@ inline constexpr auto SRD = magic_enum::enum_name<h5geo::detail::SeisAttributes:
 inline constexpr auto spatial_units = magic_enum::enum_name<h5geo::detail::SeisAttributes::spatial_units>();
 inline constexpr auto temporal_units = magic_enum::enum_name<h5geo::detail::SeisAttributes::temporal_units>();
 inline constexpr auto data_units = magic_enum::enum_name<h5geo::detail::SeisAttributes::data_units>();
+inline constexpr auto orientation = magic_enum::enum_name<h5geo::detail::SeisAttributes::orientation>();
+inline constexpr auto bin = magic_enum::enum_name<h5geo::detail::SeisAttributes::bin>();
+inline constexpr auto origin = magic_enum::enum_name<h5geo::detail::SeisAttributes::origin>();
 
 enum class SeisDatasets : unsigned{
   text_header = 1,
@@ -92,7 +98,6 @@ enum class SurfAttributes : unsigned{
 
 inline constexpr auto& surf_attrs =
     magic_enum::enum_names<h5geo::detail::SurfAttributes>();
-inline constexpr auto origin = magic_enum::enum_name<h5geo::detail::SurfAttributes::origin>();
 inline constexpr auto spacing = magic_enum::enum_name<h5geo::detail::SurfAttributes::spacing>();
 
 enum class SurfDatasets : unsigned{

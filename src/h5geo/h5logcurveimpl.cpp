@@ -91,27 +91,27 @@ Eigen::VectorXd H5LogCurveImpl::getCurve(
 }
 
 bool H5LogCurveImpl::setSpatialUnits(const std::string& str){
-  return h5geo::setStringFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::spatial_units},
         str);
 }
 
 bool H5LogCurveImpl::setDataUnits(const std::string& str){
-  return h5geo::setStringFromObj(
+  return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::data_units},
         str);
 }
 
 std::string H5LogCurveImpl::getSpatialUnits(){
-  return h5geo::getStringFromObj(
+  return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::spatial_units});
 }
 
 std::string H5LogCurveImpl::getDataUnits(){
-  return h5geo::getStringFromObj(
+  return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::data_units});
 }

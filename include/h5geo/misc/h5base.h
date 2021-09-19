@@ -6,7 +6,7 @@
 #include <vector>
 #include <memory>
 
-#include <iostream>
+#include <Eigen/Dense>
 
 typedef unsigned long long hsize_t ;
 
@@ -61,7 +61,9 @@ struct SeisParam{
   std::string spatialUnits, temporalUnits, dataUnits;
   size_t nTrc;
   size_t nSamp;
-  double srd = 0;
+  double srd = 0, orientation = 0;
+  Eigen::VectorXd bin = Eigen::VectorXd::Zero(2);
+  Eigen::VectorXd origin = Eigen::VectorXd::Zero(2);
   hsize_t trcChunk = 20000;
   hsize_t stdChunk = 1000;
 };

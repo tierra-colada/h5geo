@@ -107,6 +107,9 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
         size_t,
         size_t,
         double,
+        double,
+        Eigen::VectorXd,
+        Eigen::VectorXd,
         hsize_t,
         hsize_t>(),
         py::arg("domain"),
@@ -118,6 +121,9 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
         py::arg("nTrc"),
         py::arg("nSamp"),
         py::arg_v("srd", 0),
+        py::arg_v("orientation", 0),
+        py::arg_v("bin", Eigen::VectorXd::Zero(2)),
+        py::arg_v("origin", Eigen::VectorXd::Zero(2)),
         py::arg_v("trcChunk", 20000),
         py::arg_v("stdChunk", 1000))
       .def_readwrite("domain", &SeisParam::domain)
