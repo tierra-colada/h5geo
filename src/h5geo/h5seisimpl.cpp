@@ -331,7 +331,7 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
 
   // define trace and header indexes, convert them to ElementSet
   // and read preliminary PKey indexed headers
-  Eigen::VectorX<size_t> traceIndexes = getTracePKeyIndexes(
+  Eigen::VectorX<size_t> traceIndexes = getPKeyIndexes(
         keyList[0], minList[0], maxList[0]);
 
   if (traceIndexes.size() <= 0)
@@ -429,50 +429,6 @@ ptrdiff_t H5SeisImpl::getTraceHeaderIndex(
     return -1;
 
   return idx;
-}
-
-Eigen::VectorX<size_t> H5SeisImpl::getTracePKeyIndexes(
-    const std::string& pName,
-    const double& pMin, const double& pMax)
-{
-  auto optUValG = getUValG();
-  if (!optUValG.has_value())
-    return Eigen::VectorX<size_t>();
-
-  auto optIndexesG = getIndexesG();
-  if (!optIndexesG.has_value())
-    return Eigen::VectorX<size_t>();
-
-  if (!optIndexesG->exist(pName) ||
-      optIndexesG->getObjectType(pName) != h5gt::ObjectType::Group)
-    return Eigen::VectorX<size_t>();
-
-  h5gt::Group pGroup = optIndexesG->getGroup(pName);
-  std::vector<double> uHeader(pGroup.getNumberObjects());
-  optUValG->getDataSet(pName).read(uHeader);
-  std::vector<std::string> pDatasetsNames;
-  pDatasetsNames.reserve(pGroup.getNumberObjects());
-  for (size_t i = 0; i < uHeader.size(); i++){
-    if (uHeader[i] >= pMin &&
-        uHeader[i] <= pMax){
-      pDatasetsNames.push_back(std::to_string(i));
-    }
-  }
-  pDatasetsNames.shrink_to_fit();
-
-  size_t pKeyCount = 0;
-  for (size_t i = 0; i < pDatasetsNames.size(); i++)
-    pKeyCount = pGroup.getDataSet(pDatasetsNames[i]).getElementCount() + pKeyCount;
-
-  /* tracePKeyIndexes and hdrColVec defines header data that needs to be extracted from h5-file */
-  Eigen::VectorX<size_t> tracePKeyIndexes(pKeyCount);
-  size_t n = 0;
-  for (const std::string& name : pDatasetsNames){
-    pGroup.getDataSet(name).read(&tracePKeyIndexes(n));
-    n = pGroup.getDataSet(name).getElementCount() + n;
-  }
-
-  return tracePKeyIndexes;
 }
 
 Eigen::VectorXd H5SeisImpl::getSamples(
@@ -597,6 +553,94 @@ size_t H5SeisImpl::getNTextHdrRows(){
     return 0;
 
   return opt->getDimensions()[0];
+}
+
+Eigen::VectorX<size_t> H5SeisImpl::getPKeyIndexes(
+    const std::string& pName,
+    const double& pMin, const double& pMax)
+{
+  auto optUValG = getUValG();
+  if (!optUValG.has_value())
+    return Eigen::VectorX<size_t>();
+
+  auto optIndexesG = getIndexesG();
+  if (!optIndexesG.has_value())
+    return Eigen::VectorX<size_t>();
+
+  if (!optIndexesG->exist(pName) ||
+      optIndexesG->getObjectType(pName) != h5gt::ObjectType::Group)
+    return Eigen::VectorX<size_t>();
+
+  h5gt::Group pGroup = optIndexesG->getGroup(pName);
+  std::vector<double> uHeader(pGroup.getNumberObjects());
+  optUValG->getDataSet(pName).read(uHeader);
+  std::vector<std::string> pDatasetsNames;
+  pDatasetsNames.reserve(pGroup.getNumberObjects());
+  for (size_t i = 0; i < uHeader.size(); i++){
+    if (uHeader[i] >= pMin &&
+        uHeader[i] <= pMax){
+      pDatasetsNames.push_back(std::to_string(i));
+    }
+  }
+  pDatasetsNames.shrink_to_fit();
+
+  size_t pKeyCount = 0;
+  for (size_t i = 0; i < pDatasetsNames.size(); i++)
+    pKeyCount = pGroup.getDataSet(pDatasetsNames[i]).getElementCount() + pKeyCount;
+
+  /* tracePKeyIndexes and hdrColVec defines header data that needs to be extracted from h5-file */
+  Eigen::VectorX<size_t> tracePKeyIndexes(pKeyCount);
+  size_t n = 0;
+  for (const std::string& name : pDatasetsNames){
+    pGroup.getDataSet(name).read(&tracePKeyIndexes(n));
+    n = pGroup.getDataSet(name).getElementCount() + n;
+  }
+
+  return tracePKeyIndexes;
+}
+
+Eigen::VectorXd H5SeisImpl::getPKeyValues(
+    const std::string& pkey,
+    const std::string& unitsFrom,
+    const std::string& unitsTo){
+  auto uvalG = getUValG();
+  if (!uvalG.has_value())
+    return Eigen::VectorXd();
+
+  if (!uvalG->hasObject(pkey, h5gt::ObjectType::Dataset))
+    return Eigen::VectorXd();
+
+  Eigen::VectorXd v(
+        uvalG->getDataSet(pkey).
+        getMemSpace().
+        getElementCount());
+
+  uvalG->getDataSet(pkey).read(v.data());
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(unitsTo));
+    if (!isnan(coef))
+      return v*coef;
+
+    return Eigen::VectorXd();
+  }
+
+  return v;
+}
+
+size_t H5SeisImpl::getPKeySize(const std::string& pkey){
+  auto uvalG = getUValG();
+  if (!uvalG.has_value())
+    return 0;
+
+  if (!uvalG->hasObject(pkey, h5gt::ObjectType::Dataset))
+    return 0;
+
+  return uvalG->getDataSet(pkey).
+      getMemSpace().
+      getElementCount();
 }
 
 std::vector<std::string> H5SeisImpl::getPKeyNames(){
@@ -991,19 +1035,38 @@ bool H5SeisImpl::setDataUnits(const std::string& str){
         str);
 }
 
-bool H5SeisImpl::setOrientation(double orientation)
-{
-  return h5geo::overwriteAttribute(objG, "orientation", orientation);
+bool H5SeisImpl::setOrientation(double orientation){
+  return h5geo::overwriteAttribute(objG, std::string{h5geo::detail::orientation}, orientation);
 }
 
-bool H5SeisImpl::setOrigin(Eigen::Ref<Eigen::VectorXd> origin)
-{
-  return h5geo::overwriteAttribute(objG, "origin", origin);
+bool H5SeisImpl::setOrigin(
+    Eigen::Ref<Eigen::VectorXd> origin, const std::string& spatialUnits){
+  if (!spatialUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(spatialUnits),
+          units::unit_from_string(getSpatialUnits()));
+    return h5geo::overwriteAttribute(
+          objG,
+          std::string{h5geo::detail::origin},
+          Eigen::VectorXd(origin*coef));
+  }
+
+  return h5geo::overwriteAttribute(objG, std::string{h5geo::detail::origin}, origin);
 }
 
-bool H5SeisImpl::setBinSize(Eigen::Ref<Eigen::VectorXd> bin)
-{
-  return h5geo::overwriteAttribute(objG, "bin", bin);
+bool H5SeisImpl::setBinSize(
+    Eigen::Ref<Eigen::VectorXd> bin, const std::string& spatialUnits){
+  if (!spatialUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(spatialUnits),
+          units::unit_from_string(getSpatialUnits()));
+    return h5geo::overwriteAttribute(
+          objG,
+          std::string{h5geo::detail::bin},
+          Eigen::VectorXd(bin*coef));
+  }
+
+  return h5geo::overwriteAttribute(objG, std::string{h5geo::detail::bin}, bin);
 }
 
 h5geo::Domain H5SeisImpl::getDomain(){

@@ -120,8 +120,6 @@ void H5Seis_py(
            py::arg("hdrName"))
       .def("getTraceHeaderIndex", &H5SeisImpl::getTraceHeaderIndex,
            py::arg("hdrName"))
-      .def("getTracePKeyIndexes", &H5SeisImpl::getTracePKeyIndexes,
-           py::arg("pName"), py::arg("pMin"), py::arg("pMax"))
       .def("getSamples", &H5SeisImpl::getSamples,
            py::arg("trcInd"), py::arg_v("units", "", "str()"),
            "in units according to `Domain` (`METER` or `SECOND` or else...)")
@@ -144,6 +142,12 @@ void H5Seis_py(
            "get number of bin headers")
       .def("getNTextHdrRows", &H5SeisImpl::getNTextHdrRows,
            "get number lines of text header")
+      .def("getPKeyIndexes", &H5SeisImpl::getPKeyIndexes,
+           py::arg("pName"), py::arg("pMin"), py::arg("pMax"))
+      .def("getPKeyValues", &H5SeisImpl::getPKeyValues,
+           py::arg("pkey"), py::arg_v("unitsFrom", "", "str()"), py::arg_v("unitsTo", "", "str()"))
+      .def("getPKeySize", &H5SeisImpl::getPKeySize,
+           py::arg("pName"))
       .def("getPKeyNames", &H5SeisImpl::getPKeyNames,
            "get primary key names (usually they are used in sorting)")
       .def("getTraceHeaderMin", py::overload_cast<>(&H5SeisImpl::getTraceHeaderMin))

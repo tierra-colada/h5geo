@@ -130,9 +130,6 @@ public:
 
   virtual ptrdiff_t getBinHeaderIndex(const std::string& hdrName) = 0;
   virtual ptrdiff_t getTraceHeaderIndex(const std::string& hdrName) = 0;
-  virtual Eigen::VectorX<size_t> getTracePKeyIndexes(
-      const std::string& pName,
-      const double& pMin, const double& pMax) = 0;
 
   /*! in millisec or meters !*/
   virtual Eigen::VectorXd getSamples(
@@ -155,6 +152,14 @@ public:
   virtual size_t getNTrcHdr() = 0;
   virtual size_t getNBinHdr() = 0;
   virtual size_t getNTextHdrRows() = 0;
+  virtual Eigen::VectorX<size_t> getPKeyIndexes(
+      const std::string& pName,
+      const double& pMin, const double& pMax) = 0;
+  virtual Eigen::VectorXd getPKeyValues(
+      const std::string& pkey,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
+  virtual size_t getPKeySize(const std::string& pkey) = 0;
   virtual std::vector<std::string> getPKeyNames() = 0;
   virtual Eigen::VectorXd getTraceHeaderMin() = 0;
   virtual Eigen::VectorXd getTraceHeaderMax() = 0;
@@ -217,8 +222,8 @@ public:
   virtual bool setTemporalUnits(const std::string& str) = 0;
   virtual bool setDataUnits(const std::string& str) = 0;
   virtual bool setOrientation(double orientation) = 0;
-  virtual bool setOrigin(Eigen::Ref<Eigen::VectorXd> origin) = 0;
-  virtual bool setBinSize(Eigen::Ref<Eigen::VectorXd> bin) = 0;
+  virtual bool setOrigin(Eigen::Ref<Eigen::VectorXd> origin, const std::string& spatialUnits = "") = 0;
+  virtual bool setBinSize(Eigen::Ref<Eigen::VectorXd> bin, const std::string& spatialUnits = "") = 0;
 
   virtual h5geo::Domain getDomain() = 0;
   virtual h5geo::SeisDataType getDataType() = 0;
