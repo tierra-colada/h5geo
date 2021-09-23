@@ -164,7 +164,14 @@ before_script:
   - cmake --version
   - python --version
   - mkdir ${CMAKE_INSTALL_PREFIX}
-  - if [[ "$TRAVIS_OS_NAME" == "linux" || "$TRAVIS_OS_NAME" == "osx"]]; then 
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
+      mkdir ${UNITS_SRC}/build
+      cd ${UNITS_SRC}/build
+      cmake .. -DUNITS_BUILD_FUZZ_TARGETS=OFF -DUNITS_BUILD_SHARED_LIBRARY=OFF -DUNITS_BUILD_STATIC_LIBRARY=ON -DUNITS_ENABLE_TESTS=OFF -DUNITS_HEADER_ONLY=OFF -DCMAKE_BUILD_TYPE=Release
+      cmake --build . --config Release
+      cmake --install . --config Release --prefix ${CMAKE_INSTALL_PREFIX}
+    fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
       mkdir ${UNITS_SRC}/build
       cd ${UNITS_SRC}/build
       cmake .. -DUNITS_BUILD_FUZZ_TARGETS=OFF -DUNITS_BUILD_SHARED_LIBRARY=OFF -DUNITS_BUILD_STATIC_LIBRARY=ON -DUNITS_ENABLE_TESTS=OFF -DUNITS_HEADER_ONLY=OFF -DCMAKE_BUILD_TYPE=Release
