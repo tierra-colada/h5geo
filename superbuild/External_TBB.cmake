@@ -1,45 +1,97 @@
 message("external project: TBB")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/TBB")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/TBB-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/TBB-install")
-list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
+set(TBB_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/TBB-install")
+set(TBB_ROOT ${TBB_INSTALL_DIR})
+list(APPEND CMAKE_PREFIX_PATH ${TBB_INSTALL_DIR})
 
-#-----------------------------------------------------------------------------
-set(TBB_ROOT PATH ${EP_INSTALL_DIR})
-find_package(TBB)
+set(tbb_ver "2019_20191006oss")
+if (WIN32)
+  set(tbb_file "tbb${tbb_ver}_win.zip")
+  set(tbb_md5 "a061a7c9821a374023201e8592860730")
+elseif (APPLE)
+  set(tbb_file "tbb${tbb_ver}_mac.tgz")
+  set(tbb_md5 "43a0d6409317ee94f047622fd489a6c8")
+else ()
+  set(tbb_file "tbb${tbb_ver}_lin.tgz")
+  set(tbb_md5 "b5025847fa47040b4d2da8d6bdba0224")
+endif ()
 
-set(DEPENDENCIES "")
+#------------------------------------------------------------------------------
+ExternalProject_Add(TBB
+  URL https://github.com/oneapi-src/oneTBB/releases/download/2019_U9/${tbb_file}
+  URL_MD5 ${tbb_md5}
+  DOWNLOAD_DIR ${CMAKE_BINARY_DIR}
+  SOURCE_DIR ${TBB_INSTALL_DIR}
+  BUILD_IN_SOURCE 1
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND ""
+  INSTALL_COMMAND ""
+  )
 
-if(NOT DEFINED TBB_FOUND OR NOT TBB_FOUND)
-  ExternalProject_Add(TBB
-    GIT_REPOSITORY "https://github.com/oneapi-src/oneTBB.git"
-    GIT_TAG "v2021.2.0-rc"
-    SOURCE_DIR ${EP_SOURCE_DIR}
-    BINARY_DIR ${EP_BINARY_DIR}
-    INSTALL_DIR ${EP_INSTALL_DIR}
-    CMAKE_CACHE_ARGS
-      # CMake settings
-      -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}
-      -DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
-      -DCMAKE_CXX_STANDARD:STRING=${CMAKE_CXX_STANDARD}
-      -DCMAKE_CXX_STANDARD_REQUIRED:BOOL=${CMAKE_CXX_STANDARD_REQUIRED}
-      -DCMAKE_CXX_EXTENSIONS:BOOL=${CMAKE_CXX_EXTENSIONS}
-      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-      # Lib settings
-    DEPENDS ${DEPENDENCIES}
-    )
+if(CMAKE_SIZEOF_VOID_P EQUAL 8) # 64-bit
+  set(tbb_archdir intel64)
 else()
-  # Add empty project that exports target TBB
-  ExternalProject_Add(TBB
-    SOURCE_DIR ${EP_SOURCE_DIR}
-    BINARY_DIR ${EP_BINARY_DIR}
-    INSTALL_DIR ${EP_INSTALL_DIR}
-    DOWNLOAD_COMMAND ""
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    INSTALL_COMMAND ""
-    DEPENDS ${DEPENDENCIES}
-    )
+  set(tbb_archdir ia32)
 endif()
+
+if (WIN32)
+  if (NOT MSVC_VERSION VERSION_GREATER_EQUAL 1900)
+    message(FATAL_ERROR "At least Visual Studio 2015 is required")
+  elseif (NOT MSVC_VERSION VERSION_GREATER 1900)
+    set(tbb_vsdir vc14)
+  elseif (NOT MSVC_VERSION VERSION_GREATER 1919)
+    # VS2017 is expected to be binary compatible with VS2015
+    set(tbb_vsdir vc14)
+  elseif (NOT MSVC_VERSION VERSION_GREATER 1929)
+    # VS2019 is expected to be binary compatible with VS2015
+    set(tbb_vsdir vc14)
+  elseif (tbb_enabled)
+    message(FATAL_ERROR "TBB does not support your Visual Studio compiler. [MSVC_VERSION: ${MSVC_VERSION}]")
+  endif ()
+  set(tbb_libdir lib/${tbb_archdir}/${tbb_vsdir})
+  set(tbb_bindir bin/${tbb_archdir}/${tbb_vsdir})
+elseif (APPLE)
+  set(tbb_libdir "lib")
+  set(tbb_bindir "bin")
+else ()
+  set(tbb_libdir "lib/${tbb_archdir}/gcc4.8")
+  set(tbb_bindir "bin")
+  set(tbb_libsuffix "${CMAKE_SHARED_LIBRARY_SUFFIX}")
+endif ()
+
+if (NOT WIN32)
+  set(tbb_lib_prefix "lib")
+else ()
+  set(tbb_lib_prefix "")
+endif ()
+
+if (NOT tbb_libsuffix)
+  set(tbb_libsuffix ${CMAKE_SHARED_LIBRARY_SUFFIX})
+  if (WIN32)
+    set(tbb_libsuffix ${CMAKE_IMPORT_LIBRARY_SUFFIX})
+  endif ()
+endif ()
+
+# TODO: apply this patch
+# if (UNIX AND NOT APPLE)
+  # superbuild_apply_patch(tbb gcc5x-warning-fix
+    # "Tell TBB about GCC 5.1 stdlib support")
+# endif()
+
+#------------------------------------------------------------------------------
+
+set(TBB_INCLUDE_DIR "${TBB_INSTALL_DIR}/tbb${tbb_ver}/include")
+set(TBB_LIBRARY_DEBUG "${TBB_INSTALL_DIR}/tbb${tbb_ver}/${tbb_libdir}/${tbb_lib_prefix}tbb_debug${tbb_libsuffix}")
+set(TBB_LIBRARY_RELEASE "${TBB_INSTALL_DIR}/tbb${tbb_ver}/${tbb_libdir}/${tbb_lib_prefix}tbb${tbb_libsuffix}")
+
+set(TBB_MALLOC_INCLUDE_DIR "${TBB_INSTALL_DIR}/tbb${tbb_ver}/include/tbb")
+set(TBB_MALLOC_LIBRARY_DEBUG "${TBB_INSTALL_DIR}/tbb${tbb_ver}/${tbb_libdir}/${tbb_lib_prefix}tbbmalloc_debug${tbb_libsuffix}")
+set(TBB_MALLOC_LIBRARY_RELEASE "${TBB_INSTALL_DIR}/tbb${tbb_ver}/${tbb_libdir}/${tbb_lib_prefix}tbbmalloc${tbb_libsuffix}")
+
+set(TBB_MALLOC_PROXY_INCLUDE_DIR "${TBB_INSTALL_DIR}/tbb${tbb_ver}/include/tbb")
+set(TBB_MALLOC_PROXY_LIBRARY_DEBUG "${TBB_INSTALL_DIR}/tbb${tbb_ver}/${tbb_libdir}/${tbb_lib_prefix}tbbmalloc_proxy_debug${tbb_libsuffix}")
+set(TBB_MALLOC_PROXY_LIBRARY_RELEASE "${TBB_INSTALL_DIR}/tbb${tbb_ver}/${tbb_libdir}/${tbb_lib_prefix}tbbmalloc_proxy${tbb_libsuffix}")
+
+set(TBB_BIN_DIR "${TBB_INSTALL_DIR}/tbb${tbb_ver}/${tbb_bindir}")
+set(TBB_LIB_DIR "${TBB_INSTALL_DIR}/tbb${tbb_ver}/${tbb_libdir}")

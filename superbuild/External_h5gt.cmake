@@ -4,17 +4,16 @@ message("external project: h5gt")
 set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/h5gt")
 set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/h5gt-build")
 set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/h5gt-install")
-list(APPEND CMAKE_PREFIX_PATH ${EP_SOURCE_DIR})
+list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
-set(h5gt_ROOT PATH ${EP_SOURCE_DIR})
+set(h5gt_ROOT PATH ${EP_INSTALL_DIR})
 find_package(h5gt)
 
 set(DEPENDENCIES Eigen3 ZLIB HDF5)
 
 if(NOT DEFINED h5gt_FOUND OR NOT h5gt_FOUND)
   ExternalProject_Add(h5gt
-#    DOWNLOAD_COMMAND ""
     GIT_REPOSITORY "https://github.com/TierraColada/h5gt.git"
     GIT_TAG "main"
     SOURCE_DIR ${EP_SOURCE_DIR}

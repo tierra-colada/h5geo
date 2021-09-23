@@ -2,7 +2,7 @@
 #include "../../include/h5geo/h5surfcontainer.h"
 #include "../../include/h5geo/h5core.h"
 
-#include <units.hpp>
+#include <units/units.hpp>
 
 H5SurfImpl::H5SurfImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}

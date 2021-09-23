@@ -62,12 +62,12 @@ generate_export_header(
   )
 
 # LINK DEPENDENCIES
-find_package(Eigen3 3.3 REQUIRED)
+find_package(Eigen3 REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(HDF5 REQUIRED)
 find_package(h5gt REQUIRED)
 find_package(magic_enum REQUIRED)
-find_package(units REQUIRED)
+find_package(UNITS REQUIRED)
 
 # we don't want to install third-party include dirs
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${EIGEN3_INCLUDE_DIRS}>)
@@ -76,22 +76,17 @@ target_include_directories(h5geo PUBLIC ${HDF5_INCLUDE_DIRS})
 target_compile_definitions(h5geo PUBLIC ${HDF5_DEFINITIONS})
 target_link_libraries(h5geo PUBLIC $<BUILD_INTERFACE:magic_enum::magic_enum>)
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${h5gt_INCLUDE_DIRS}>)
-if(H5GEO_BUILD_SHARED_LIBS)
-  target_link_libraries(h5geo PUBLIC units-shared)
-else()
-  target_link_libraries(h5geo PUBLIC units-static)
-endif()
+target_include_directories(h5geo PUBLIC ${UNITS_INCLUDE_DIRS})
+target_link_libraries(h5geo PUBLIC ${UNITS_LIBRARIES})
 
 if(H5GEO_BUILD_h5geopy)
   add_subdirectory(src/h5geopy)
 endif()
 
 if(H5GEO_USE_THREADS)
-  # on windows TBB is included by default
-  if(NOT MSVC)
-    find_package(TBB REQUIRED)
-    target_link_libraries(h5geo PUBLIC TBB::tbb)
-  endif()
+  find_package(TBB REQUIRED)
+  target_include_directories(h5geo PUBLIC ${TBB_INCLUDE_DIRS})
+  target_link_libraries(h5geo PUBLIC ${TBB_LIBRARIES})
   target_compile_definitions(h5geo PUBLIC H5GEO_USE_THREADS)
 endif()
 

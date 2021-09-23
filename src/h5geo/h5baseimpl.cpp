@@ -75,8 +75,14 @@ H5BaseImpl::createContainer(
         fileName = h5geo::generateName(
               fileNames, p.stem().generic_string());
 
-        fileName = p.parent_path().generic_string() + "/" +
-            fileName + p.extension().generic_string();
+        // it no parent path then we don't want to make new filename as `/name` (think how UNIX would feel)
+        if (p.has_parent_path()){
+            fileName = p.parent_path().generic_string() + "/" +
+                       fileName + p.extension().generic_string();
+        } else {
+            fileName = fileName + p.extension().generic_string();
+        }
+
         fileExist = false;  // now when the `fileName` is unique we change  `fileExist` to `false`
       }
       createFlag = h5geo::CreationType::CREATE;

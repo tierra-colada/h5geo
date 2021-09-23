@@ -4,7 +4,7 @@
 #include "../../include/h5geo/misc/h5devcurveimpl.h"
 #include "../../include/h5geo/misc/h5logcurveimpl.h"
 
-#include <units.hpp>
+#include <units/units.hpp>
 
 H5WellImpl::H5WellImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}

@@ -1,15 +1,14 @@
-message("external project: units")
+message("external project: UNITS")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/units")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/units-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/units-install")
-list(APPEND CMAKE_PREFIX_PATH "${EP_SOURCE_DIR}")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/UNITS")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/UNITS-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/UNITS-install")
+list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
-set(units_ROOT PATH ${EP_INSTALL_DIR})
-set(units_DIR PATH ${EP_INSTALL_DIR}/lib/cmake/units)
-find_package(units)
+set(UNITS_ROOT PATH ${EP_INSTALL_DIR})
+find_package(UNITS)
 
 set(DEPENDENCIES "")
 
@@ -21,10 +20,10 @@ else()
   set(UNITS_BUILD_STATIC_LIBRARY ON)
 endif()
 
-if(NOT DEFINED units_FOUND OR NOT units_FOUND)
-  ExternalProject_Add(units
+if(NOT DEFINED UNITS_FOUND OR NOT UNITS_FOUND)
+  ExternalProject_Add(UNITS
     GIT_REPOSITORY "https://github.com/LLNL/units"
-    GIT_TAG "v0.4.0"
+    GIT_TAG "v0.5.0"
     SOURCE_DIR ${EP_SOURCE_DIR}
     BINARY_DIR ${EP_BINARY_DIR}
     INSTALL_DIR ${EP_INSTALL_DIR}
@@ -36,12 +35,13 @@ if(NOT DEFINED units_FOUND OR NOT units_FOUND)
       -DCMAKE_CXX_STANDARD_REQUIRED:BOOL=${CMAKE_CXX_STANDARD_REQUIRED}
       -DCMAKE_CXX_EXTENSIONS:BOOL=${CMAKE_CXX_EXTENSIONS}
       -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-      -DINSTALL_BIN_DIR:PATH=<INSTALL_DIR>/bin
-      -DINSTALL_INC_DIR:PATH=<INSTALL_DIR>/include
-      -DINSTALL_LIB_DIR:PATH=<INSTALL_DIR>/lib
-      -DINSTALL_MAN_DIR:PATH=<INSTALL_DIR>/share/man
-      -DINSTALL_PKGCONFIG_DIR:PATH=<INSTALL_DIR>/share/pkgconfig
+#      -DINSTALL_BIN_DIR:PATH=<INSTALL_DIR>/bin
+#      -DINSTALL_INC_DIR:PATH=<INSTALL_DIR>/include
+#      -DINSTALL_LIB_DIR:PATH=<INSTALL_DIR>/lib
+#      -DINSTALL_MAN_DIR:PATH=<INSTALL_DIR>/share/man
+#      -DINSTALL_PKGCONFIG_DIR:PATH=<INSTALL_DIR>/share/pkgconfig
       # Lib settings
+      -DUNITS_BUILD_CONVERTER_APP:BOOL=OFF
       -DUNITS_BUILD_FUZZ_TARGETS:BOOL=OFF
       -DUNITS_BUILD_SHARED_LIBRARY:BOOL=${UNITS_BUILD_SHARED_LIBRARY}
       -DUNITS_BUILD_STATIC_LIBRARY:BOOL=${UNITS_BUILD_STATIC_LIBRARY}
@@ -50,8 +50,8 @@ if(NOT DEFINED units_FOUND OR NOT units_FOUND)
     DEPENDS ${DEPENDENCIES}
     )
 else()
-  # Add empty project that exports target units
-  ExternalProject_Add(units
+  # Add empty project that exports target UNITS
+  ExternalProject_Add(UNITS
     SOURCE_DIR ${EP_SOURCE_DIR}
     BINARY_DIR ${EP_BINARY_DIR}
     INSTALL_DIR ${EP_INSTALL_DIR}

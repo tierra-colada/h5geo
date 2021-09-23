@@ -577,7 +577,7 @@ inline bool _overwriteAttribute(
     size_t nElem)
 {
   if (!holder.hasAttribute(attrName))
-    holder.createAttribute<T2>(
+    holder.template createAttribute<T2>(
           attrName, h5gt::DataSpace({nElem}));
 
   h5gt::Attribute attr = holder.getAttribute(attrName);
@@ -586,7 +586,7 @@ inline bool _overwriteAttribute(
       attr.getMemSpace().getElementCount() != nElem){
     try {
       holder.deleteAttribute(attrName);
-      attr = holder.createAttribute<T2>(
+      attr = holder.template createAttribute<T2>(
             attrName, h5gt::DataSpace({nElem}));
     }  catch (h5gt::Exception e) {
       return false;
@@ -609,7 +609,7 @@ inline bool overwriteAttribute(
     const std::string& str)
 {
   if (!holder.hasAttribute(attrName))
-    holder.createAttribute<std::string>(
+    holder.template createAttribute<std::string>(
           attrName, h5gt::DataSpace::From(str));
 
   h5gt::Attribute attr = holder.getAttribute(attrName);

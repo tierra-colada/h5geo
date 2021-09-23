@@ -2,7 +2,7 @@
 #include "../../include/h5geo/h5seiscontainer.h"
 #include "../../include/h5geo/h5core.h"
 
-#include <units.hpp>
+#include <units/units.hpp>
 
 H5SeisImpl::H5SeisImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group),

@@ -13,9 +13,10 @@ include("External_ZLIB.cmake")
 include("External_HDF5.cmake")
 include("External_h5gt.cmake")
 include("External_magic_enum.cmake")
-include("External_units.cmake")
-include("External_h5geo.cmake")
+include("External_UNITS.cmake")
 
-if(H5GEO_USE_THREADS AND NOT MSVC)
+if(H5GEO_USE_THREADS)
   include("External_TBB.cmake")
 endif()
+
+include("External_h5geo.cmake")

@@ -7,7 +7,7 @@
 
 #include <math.h>
 #include <Eigen/Dense>
-#include <units.hpp>
+#include <units/units.hpp>
 
 namespace h5geo
 {

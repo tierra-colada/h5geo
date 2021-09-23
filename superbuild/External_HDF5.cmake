@@ -15,7 +15,7 @@ set(DEPENDENCIES ZLIB)
 if(NOT DEFINED HDF5_FOUND OR NOT HDF5_FOUND)
   ExternalProject_Add(HDF5
     GIT_REPOSITORY "https://github.com/HDFGroup/hdf5.git"
-    GIT_TAG "1.12/master"
+    GIT_TAG "hdf5-1_12_1"
     SOURCE_DIR ${EP_SOURCE_DIR}
     BINARY_DIR ${EP_BINARY_DIR}
     INSTALL_DIR ${EP_INSTALL_DIR}
