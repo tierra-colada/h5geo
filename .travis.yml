@@ -1,5 +1,7 @@
 language: cpp
 
+# python wrapper needs shared dependencies!
+
 matrix:
   include:
     - os: linux
@@ -164,6 +166,11 @@ before_script:
   - cmake --version
   - python --version
   - mkdir ${CMAKE_INSTALL_PREFIX}
+  - mkdir ${h5gt_SRC}/build
+  - cd ${h5gt_SRC}/build
+  - cmake .. -DCMAKE_BUILD_TYPE=Release -DH5GT_UNIT_TESTS:BOOL=OFF -DH5GT_EXAMPLES:BOOL=OFF -DH5GT_BUILD_h5gtpy=ON -DHDF5_RUNTIME_DIR=${HDF5_RUNTIME_DIR}
+  - cmake --build . --config Release -j
+  - cmake --install . --config Release --prefix ${CMAKE_INSTALL_PREFIX}
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
       mkdir $UNITS_SRC/build;
       cd $UNITS_SRC/build;
