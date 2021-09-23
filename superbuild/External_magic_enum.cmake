@@ -15,7 +15,7 @@ set(DEPENDENCIES "")
 if(NOT DEFINED magic_enum_FOUND OR NOT magic_enum_FOUND)
   ExternalProject_Add(magic_enum
     GIT_REPOSITORY "https://github.com/Neargye/magic_enum.git"
-    GIT_TAG "v0.7.2"
+    GIT_TAG "v0.7.3"
     SOURCE_DIR ${EP_SOURCE_DIR}
     BINARY_DIR ${EP_BINARY_DIR}
     INSTALL_DIR ${EP_INSTALL_DIR}

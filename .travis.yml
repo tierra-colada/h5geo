@@ -110,23 +110,22 @@ env:
   - EIGEN3_ROOT=${TRAVIS_BUILD_DIR}/../eigen
   - magic_enum_ROOT=${TRAVIS_BUILD_DIR}/../magic_enum
   - h5gt_ROOT=${TRAVIS_BUILD_DIR}/../h5gt
-  - units_ROOT=${TRAVIS_BUILD_DIR}/../units
-  - units_DIR=${units_ROOT}/install/lib/cmake/units
+  - UNITS_ROOT=${TRAVIS_BUILD_DIR}/../units
   - CMAKE_INSTALL_PREFIX=${TRAVIS_BUILD_DIR}/../install
 
 before_install:
-  - git clone --branch v0.4.0 https://github.com/LLNL/units.git $units_ROOT;
+  - git clone --branch v0.5.0 https://github.com/LLNL/units.git $UNITS_ROOT;
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-      git clone --branch 3.4.0-rc1 https://gitlab.com/libeigen/eigen.git $EIGEN3_ROOT;
+      git clone --branch 3.4.0 https://gitlab.com/libeigen/eigen.git $EIGEN3_ROOT;
       export PATH=$EIGEN3_ROOT:$PATH;
-      git clone --branch v0.7.2 https://github.com/Neargye/magic_enum.git $magic_enum_ROOT;
+      git clone --branch v0.7.3 https://github.com/Neargye/magic_enum.git $magic_enum_ROOT;
       export PATH=$magic_enum_ROOT:$PATH;
       git clone --branch main https://github.com/Dimspot/h5gt.git $h5gt_ROOT;
       export PATH=$h5gt_ROOT:$PATH;
     elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
-      git clone --branch 3.4.0-rc1 https://gitlab.com/libeigen/eigen.git $EIGEN3_ROOT;
+      git clone --branch 3.4.0 https://gitlab.com/libeigen/eigen.git $EIGEN3_ROOT;
       export PATH=$EIGEN3_ROOT:$PATH;
-      git clone --branch v0.7.2 https://github.com/Neargye/magic_enum.git $magic_enum_ROOT;
+      git clone --branch v0.7.3 https://github.com/Neargye/magic_enum.git $magic_enum_ROOT;
       export PATH=$magic_enum_ROOT:$PATH;
       git clone --branch main https://github.com/Dimspot/h5gt.git $h5gt_ROOT;
       export PATH=$h5gt_ROOT:$PATH;
@@ -159,12 +158,12 @@ before_script:
   - cmake --version
   - python --version
   - mkdir ${TRAVIS_BUILD_DIR}/../install
-  - mkdir ${units_ROOT}/build
-  - mkdir ${units_ROOT}/install
-  - cd ${units_ROOT}/build
+  - mkdir ${UNITS_ROOT}/build
+  - mkdir ${UNITS_ROOT}/install
+  - cd ${UNITS_ROOT}/build
   - cmake .. -DUNITS_BUILD_FUZZ_TARGETS=OFF -DUNITS_BUILD_SHARED_LIBRARY=OFF -DUNITS_BUILD_STATIC_LIBRARY=ON -DUNITS_ENABLE_TESTS=OFF -DUNITS_HEADER_ONLY=OFF -DCMAKE_BUILD_TYPE=Release
   - cmake --build . --config Release
-  - cmake --install . --config Release --prefix ${units_ROOT}/install
+  - cmake --install . --config Release --prefix ${UNITS_ROOT}/install
 
 script:
   - cd ${TRAVIS_BUILD_DIR}
@@ -176,7 +175,6 @@ script:
     -DEigen3_ROOT:PATH=$EIGEN3_ROOT 
     -Dmagic_enum_ROOT:PATH=$magic_enum_ROOT 
     -Dh5gt_ROOT:PATH=$h5gt_ROOT
-    -Dunits_DIR=$h5gt_DIR
     -DH5GEO_SUPERBUILD:BOOL=${H5GEO_SUPERBUILD}
     -DH5GEO_USE_THREADS:BOOL=${H5GEO_USE_THREADS}
     -DH5GEO_BUILD_SHARED_LIBS:BOOL=${H5GEO_BUILD_SHARED_LIBS}
