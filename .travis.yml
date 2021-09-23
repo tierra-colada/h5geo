@@ -164,7 +164,7 @@ before_script:
   - cmake --version
   - python --version
   - mkdir ${CMAKE_INSTALL_PREFIX}
-  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then 
+  - if [[ "$TRAVIS_OS_NAME" NOT "windows" ]]; then 
       mkdir ${UNITS_SRC}/build
       cd ${UNITS_SRC}/build
       cmake .. -DUNITS_BUILD_FUZZ_TARGETS=OFF -DUNITS_BUILD_SHARED_LIBRARY=OFF -DUNITS_BUILD_STATIC_LIBRARY=ON -DUNITS_ENABLE_TESTS=OFF -DUNITS_HEADER_ONLY=OFF -DCMAKE_BUILD_TYPE=Release
