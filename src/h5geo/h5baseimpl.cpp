@@ -824,6 +824,11 @@ bool h5geo::isSeis(
 {
     std::cout << "isSeis START" << std::endl;
     std::cout << "group.getPath():\t" << group.getPath() << std::endl;
+
+    std::vector<std::string> attrNames = group.listAttributeNames();
+    for (const auto& name : attrNames)
+        std::cout << name << std::endl;
+
   for (const auto& name : h5geo::detail::seis_attrs){
       std::cout << std::string{name} << std::endl;
     if (!group.hasAttribute(std::string{name}))
