@@ -823,11 +823,13 @@ bool h5geo::isSeis(
     h5gt::Group &group)
 {
   for (const auto& name : h5geo::detail::seis_attrs){
+      std::cout << std::string{name} << std::endl;
     if (!group.hasAttribute(std::string{name}))
       return false;
   }
 
   for (const auto& name : h5geo::detail::seis_dsets){
+      std::cout << std::string{name} << std::endl;
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
       return false;
   }
@@ -838,6 +840,10 @@ bool h5geo::isSeis(
       std::string{h5geo::detail::indexes};
   std::string unique_valuesG_name =
       std::string{h5geo::detail::unique_values};
+
+  std::cout << sortG_name << std::endl;
+  std::cout << indexesG_name << std::endl;
+  std::cout << unique_valuesG_name << std::endl;
 
   if (!group.hasObject
       (sortG_name, h5gt::ObjectType::Group))
