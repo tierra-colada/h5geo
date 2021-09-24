@@ -44,11 +44,6 @@ public:
     p.nTrc = 30;
     p.nSamp = 10;
     p.srd = 20;
-    p.bin = {0,0};
-    p.orientation = 0;
-    p.origin = {0,0};
-    p.stdChunk = 10;
-    p.trcChunk = 1000;
 
     trig = true;
   }
@@ -130,6 +125,12 @@ TEST_F(H5SeisFixture, createSeisWithDifferentCreateFlags){
 
   std::cout << "SEIS_NAME1:\t" << SEIS_NAME1 << std::endl;
   std::cout << "seis->getObjG().getPath():\t" << seis->getObjG().getPath() << std::endl;
+
+  seis->getH5File().flush();
+
+  seis = H5Seis_ptr(seisContainer->createSeis(
+      seis->getObjG(), p, h5geo::CreationType::OPEN));
+  ASSERT_TRUE(seis != nullptr) << "OPEN";
 
   seis = H5Seis_ptr(seisContainer->createSeis(
                       SEIS_NAME1, p, h5geo::CreationType::OPEN));
