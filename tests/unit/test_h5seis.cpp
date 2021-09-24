@@ -114,6 +114,11 @@ TEST_F(H5SeisFixture, createContainerWithDifferentCreateFlags){
 TEST_F(H5SeisFixture, createSeisWithDifferentCreateFlags){
     std::cout << "createSeisWithDifferentCreateFlags START" << std::endl;
 
+    std::cout << "std::string{h5geo::detail::ContainerType}:\t" << std::string{h5geo::detail::ContainerType} << std::endl;
+    std::cout << "std::string(h5geo::detail::ContainerType):\t" << std::string(h5geo::detail::ContainerType) << std::endl;
+    std::cout << "std::string{h5geo::detail::Domain}:\t" << std::string{h5geo::detail::Domain} << std::endl;
+    std::cout << "std::string(h5geo::detail::Domain):\t" << std::string(h5geo::detail::Domain) << std::endl;
+
   H5Seis_ptr seis(
         seisContainer->createSeis(
           SEIS_NAME1, p, h5geo::CreationType::OPEN));
