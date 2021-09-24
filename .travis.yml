@@ -75,20 +75,9 @@ matrix:
         - H5GEO_BUILD_h5geopy=True
         - HDF5_RUNTIME_DIR="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
         - COPY_H5GEOPY_RUNTIME_DEPS=True
-        - CMAKE_GENERATOR="Visual Studio 16 2019"
+        - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
         - TESTS_TARGET="RUN_TESTS"
         - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
-        - MSBUILD_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"
-
-      install:
-        - choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
-        - choco install dotnetcore-sdk
-        - dotnet restore
-      script:
-        - export PATH=$MSBUILD_PATH:$PATH
-        - MSBuild.exe -p:Configuration=Release -p:Platform=x64 CppProject/CppProject.vcxproj
-        - dotnet build --configuration Release
-        - dotnet test DotNetProject.Tests/bin/Release/netcoreapp3.1/DotNetProject.Tests.dll
 
     # - os: windows
     #   env:
@@ -189,7 +178,7 @@ before_script:
       mkdir ${h5gt_SRC}/build;
       cd ${h5gt_SRC}/build;
       cmake .. -DCMAKE_BUILD_TYPE=Release -DH5GT_UNIT_TESTS:BOOL=OFF -DH5GT_EXAMPLES:BOOL=OFF -DH5GT_BUILD_h5gtpy=ON -DHDF5_RUNTIME_DIR=${HDF5_RUNTIME_DIR};
-      cmake --build . --config Release -j;
+      cmake --build . --config Release;
       cmake --install . --config Release --prefix ${CMAKE_INSTALL_PREFIX};
     elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
       mkdir $UNITS_SRC/build;
@@ -200,7 +189,7 @@ before_script:
       mkdir ${h5gt_SRC}/build;
       cd ${h5gt_SRC}/build;
       cmake .. -DCMAKE_BUILD_TYPE=Release -DH5GT_UNIT_TESTS:BOOL=OFF -DH5GT_EXAMPLES:BOOL=OFF -DH5GT_BUILD_h5gtpy=ON -DHDF5_RUNTIME_DIR=${HDF5_RUNTIME_DIR};
-      cmake --build . --config Release -j;
+      cmake --build . --config Release;
       cmake --install . --config Release --prefix ${CMAKE_INSTALL_PREFIX};
     fi
 
@@ -224,7 +213,7 @@ script:
     -DH5GEO_BUILD_TESTS:BOOL=${H5GEO_BUILD_TESTS}
     -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
     -G "${CMAKE_GENERATOR}" ../
-  - cmake --build . --config Release -j
+  - cmake --build . --config Release
   # INSTALL before running test to simplify `h5geo` bin dir addition to PATH env
   - cmake --install . --prefix ../install --config Release
   - CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target ${TESTS_TARGET} --config Release

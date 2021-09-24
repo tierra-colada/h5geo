@@ -822,6 +822,8 @@ bool h5geo::isDevCurve(
 bool h5geo::isSeis(
     h5gt::Group &group)
 {
+    std::cout << "isSeis START" << std::endl;
+    std::cout << "group.getPath():\t" << group.getPath() << std::endl;
   for (const auto& name : h5geo::detail::seis_attrs){
       std::cout << std::string{name} << std::endl;
     if (!group.hasAttribute(std::string{name}))
