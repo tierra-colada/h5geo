@@ -73,24 +73,35 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR=""
+        - HDF5_RUNTIME_DIR="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
         - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
         - TESTS_TARGET="RUN_TESTS"
         - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
+        - MSBUILD_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"
 
-    - os: windows
-      env:
-        - H5GEO_SUPERBUILD=True
-        - H5GEO_USE_THREADS=True
-        - H5GEO_BUILD_SHARED_LIBS=True
-        - H5GEO_BUILD_TESTS=True
-        - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR=""
-        - COPY_H5GEOPY_RUNTIME_DEPS=False
-        - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
-        - TESTS_TARGET="RUN_TESTS"
-        - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
+      install:
+        - choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
+        - choco install dotnetcore-sdk
+        - dotnet restore
+      script:
+        - export PATH=$MSBUILD_PATH:$PATH
+        - MSBuild.exe -p:Configuration=Release -p:Platform=x64 CppProject/CppProject.vcxproj
+        - dotnet build --configuration Release
+        - dotnet test DotNetProject.Tests/bin/Release/netcoreapp3.1/DotNetProject.Tests.dll
+
+    # - os: windows
+    #   env:
+    #     - H5GEO_SUPERBUILD=True
+    #     - H5GEO_USE_THREADS=True
+    #     - H5GEO_BUILD_SHARED_LIBS=True
+    #     - H5GEO_BUILD_TESTS=True
+    #     - H5GEO_BUILD_h5geopy=True
+    #     - HDF5_RUNTIME_DIR="C:/Users/travis/build/tierra-colada/h5geo/install/hdf5-install/bin"
+    #     - COPY_H5GEOPY_RUNTIME_DEPS=False
+    #     - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
+    #     - TESTS_TARGET="RUN_TESTS"
+    #     - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
 
     # - os: osx
     #   osx_image: xcode12.2
