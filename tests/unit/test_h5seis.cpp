@@ -123,8 +123,14 @@ TEST_F(H5SeisFixture, createSeisWithDifferentCreateFlags){
                       SEIS_NAME1, p, h5geo::CreationType::CREATE));
   ASSERT_TRUE(seis != nullptr) << "CREATE";
 
-  std::vector<std::string> attrNames = seis->getObjG().listAttributeNames();
-  for (const auto& name : attrNames)
+  std::vector<std::string> seisCntAttrNames = seisContainer->getH5File().listAttributeNames();
+  std::cout << "seisCntAttrNames:" << std::endl;
+  for (const auto& name : seisCntAttrNames)
+      std::cout << name << std::endl;
+
+  std::vector<std::string> seisAttrNames = seis->getObjG().listAttributeNames();
+  std::cout << "seisAttrNames:" << std::endl;
+  for (const auto& name : seisAttrNames)
       std::cout << name << std::endl;
 
   std::cout << "SEIS_NAME1:\t" << SEIS_NAME1 << std::endl;

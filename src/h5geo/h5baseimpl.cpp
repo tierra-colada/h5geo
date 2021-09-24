@@ -307,29 +307,29 @@ H5BaseImpl::createNewSurf(h5gt::Group &group, void* p)
   try {
 
     group.createAttribute<unsigned>(
-          std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::Domain)},
+          std::string{h5geo::detail::Domain},
           h5gt::DataSpace(1)).
         write(static_cast<unsigned>(param.domain));
     group.createAttribute<std::string>(
-          std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::spatial_units)},
+          std::string{h5geo::detail::spatial_units},
           h5gt::DataSpace::From(param.spatialUnits)).
         write(param.spatialUnits);
     group.createAttribute<std::string>(
-          std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::data_units)},
+          std::string{h5geo::detail::data_units},
           h5gt::DataSpace::From(param.dataUnits)).
         write(param.dataUnits);
     group.createAttribute<double>(
-          std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::origin)},
+          std::string{h5geo::detail::origin},
           h5gt::DataSpace({2})).
         write(origin);
 
     group.createAttribute<double>(
-          std::string{magic_enum::enum_name(h5geo::detail::SurfAttributes::spacing)},
+          std::string{h5geo::detail::spacing},
           h5gt::DataSpace({2})).
         write(spacing);
 
     group.createDataSet<double>(
-          std::string{magic_enum::enum_name(h5geo::detail::SurfDatasets::surf_data)},
+          std::string{h5geo::detail::surf_data},
           h5gt::DataSpace({param.nX, param.nY}));
 
     return group;
@@ -825,18 +825,17 @@ bool h5geo::isSeis(
     std::cout << "isSeis START" << std::endl;
     std::cout << "group.getPath():\t" << group.getPath() << std::endl;
 
+    std::cout << "seisAttrNames:" << std::endl;
     std::vector<std::string> attrNames = group.listAttributeNames();
     for (const auto& name : attrNames)
         std::cout << name << std::endl;
 
   for (const auto& name : h5geo::detail::seis_attrs){
-      std::cout << std::string{name} << std::endl;
     if (!group.hasAttribute(std::string{name}))
       return false;
   }
 
   for (const auto& name : h5geo::detail::seis_dsets){
-      std::cout << std::string{name} << std::endl;
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
       return false;
   }
@@ -847,10 +846,6 @@ bool h5geo::isSeis(
       std::string{h5geo::detail::indexes};
   std::string unique_valuesG_name =
       std::string{h5geo::detail::unique_values};
-
-  std::cout << sortG_name << std::endl;
-  std::cout << indexesG_name << std::endl;
-  std::cout << unique_valuesG_name << std::endl;
 
   if (!group.hasObject
       (sortG_name, h5gt::ObjectType::Group))
