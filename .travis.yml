@@ -25,87 +25,87 @@ matrix:
             - ninja-build
             - libtbb-dev
 
-    - os: linux
-      dist: focal
-      compiler: clang
-      env:
-        - H5GEO_SUPERBUILD=False
-        - H5GEO_USE_THREADS=True
-        - H5GEO_BUILD_SHARED_LIBS=True
-        - H5GEO_BUILD_TESTS=True
-        - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR=""
-        - COPY_H5GEOPY_RUNTIME_DEPS=True
-        - CMAKE_GENERATOR="Ninja"
-        - TESTS_TARGET="test"
-        - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
-      addons:
-        apt:
-          packages:
-            - libhdf5-dev
-            - ninja-build
-            - libtbb-dev
+    # - os: linux
+    #   dist: focal
+    #   compiler: clang
+    #   env:
+    #     - H5GEO_SUPERBUILD=False
+    #     - H5GEO_USE_THREADS=True
+    #     - H5GEO_BUILD_SHARED_LIBS=True
+    #     - H5GEO_BUILD_TESTS=True
+    #     - H5GEO_BUILD_h5geopy=True
+    #     - HDF5_RUNTIME_DIR=""
+    #     - COPY_H5GEOPY_RUNTIME_DEPS=True
+    #     - CMAKE_GENERATOR="Ninja"
+    #     - TESTS_TARGET="test"
+    #     - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
+    #   addons:
+    #     apt:
+    #       packages:
+    #         - libhdf5-dev
+    #         - ninja-build
+    #         - libtbb-dev
 
-    - os: linux
-      dist: focal
-      compiler: clang
-      env:
-        - H5GEO_SUPERBUILD=False
-        - H5GEO_USE_THREADS=False
-        - H5GEO_BUILD_SHARED_LIBS=True
-        - H5GEO_BUILD_TESTS=True
-        - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR=""
-        - COPY_H5GEOPY_RUNTIME_DEPS=True
-        - CMAKE_GENERATOR="Ninja"
-        - TESTS_TARGET="test"
-        - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
-      addons:
-        apt:
-          packages:
-            - libhdf5-dev
-            - ninja-build
+    # - os: linux
+    #   dist: focal
+    #   compiler: clang
+    #   env:
+    #     - H5GEO_SUPERBUILD=False
+    #     - H5GEO_USE_THREADS=False
+    #     - H5GEO_BUILD_SHARED_LIBS=True
+    #     - H5GEO_BUILD_TESTS=True
+    #     - H5GEO_BUILD_h5geopy=True
+    #     - HDF5_RUNTIME_DIR=""
+    #     - COPY_H5GEOPY_RUNTIME_DEPS=True
+    #     - CMAKE_GENERATOR="Ninja"
+    #     - TESTS_TARGET="test"
+    #     - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
+    #   addons:
+    #     apt:
+    #       packages:
+    #         - libhdf5-dev
+    #         - ninja-build
 
-    - os: windows
-      env:
-        - H5GEO_SUPERBUILD=True
-        - H5GEO_USE_THREADS=True
-        - H5GEO_BUILD_SHARED_LIBS=True
-        - H5GEO_BUILD_TESTS=True
-        - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
-        - COPY_H5GEOPY_RUNTIME_DEPS=True
-        - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
-        - TESTS_TARGET="RUN_TESTS"
-        - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
+    # - os: windows
+    #   env:
+    #     - H5GEO_SUPERBUILD=True
+    #     - H5GEO_USE_THREADS=True
+    #     - H5GEO_BUILD_SHARED_LIBS=True
+    #     - H5GEO_BUILD_TESTS=True
+    #     - H5GEO_BUILD_h5geopy=True
+    #     - HDF5_RUNTIME_DIR="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
+    #     - COPY_H5GEOPY_RUNTIME_DEPS=True
+    #     - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
+    #     - TESTS_TARGET="RUN_TESTS"
+    #     - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
 
-    - os: windows
-      env:
-        - H5GEO_SUPERBUILD=True
-        - H5GEO_USE_THREADS=True
-        - H5GEO_BUILD_SHARED_LIBS=True
-        - H5GEO_BUILD_TESTS=True
-        - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR="C:/Users/travis/build/tierra-colada/h5geo/install/hdf5-install/bin"
-        - COPY_H5GEOPY_RUNTIME_DEPS=False
-        - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
-        - TESTS_TARGET="RUN_TESTS"
-        - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
+    # - os: windows
+    #   env:
+    #     - H5GEO_SUPERBUILD=True
+    #     - H5GEO_USE_THREADS=True
+    #     - H5GEO_BUILD_SHARED_LIBS=True
+    #     - H5GEO_BUILD_TESTS=True
+    #     - H5GEO_BUILD_h5geopy=True
+    #     - HDF5_RUNTIME_DIR="C:/Users/travis/build/tierra-colada/h5geo/install/hdf5-install/bin"
+    #     - COPY_H5GEOPY_RUNTIME_DEPS=False
+    #     - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
+    #     - TESTS_TARGET="RUN_TESTS"
+    #     - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
 
-    - os: osx
-      osx_image: xcode12.2
-      compiler: clang
-      env:
-        - H5GEO_SUPERBUILD=False
-        - H5GEO_USE_THREADS=False
-        - H5GEO_BUILD_SHARED_LIBS=True
-        - H5GEO_BUILD_TESTS=True
-        - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR=""
-        - COPY_H5GEOPY_RUNTIME_DEPS=True
-        - CMAKE_GENERATOR="Ninja"
-        - TESTS_TARGET="test"
-        - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
+    # - os: osx
+    #   osx_image: xcode12.2
+    #   compiler: clang
+    #   env:
+    #     - H5GEO_SUPERBUILD=False
+    #     - H5GEO_USE_THREADS=False
+    #     - H5GEO_BUILD_SHARED_LIBS=True
+    #     - H5GEO_BUILD_TESTS=True
+    #     - H5GEO_BUILD_h5geopy=True
+    #     - HDF5_RUNTIME_DIR=""
+    #     - COPY_H5GEOPY_RUNTIME_DEPS=True
+    #     - CMAKE_GENERATOR="Ninja"
+    #     - TESTS_TARGET="test"
+    #     - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
 
 env:
   global:
@@ -172,22 +172,22 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then 
       mkdir $UNITS_SRC/build;
       cd $UNITS_SRC/build;
-      cmake .. \
-        -DUNITS_BUILD_FUZZ_TARGETS:BOOL=OFF \
-        -DUNITS_BUILD_SHARED_LIBRARY:BOOL=ON \
-        -DUNITS_BUILD_STATIC_LIBRARY:BOOL=OFF \
-        -DUNITS_ENABLE_TESTS:BOOL=OFF \
-        -DUNITS_HEADER_ONLY:BOOL=OFF \
+      cmake ..
+        -DUNITS_BUILD_FUZZ_TARGETS:BOOL=OFF
+        -DUNITS_BUILD_SHARED_LIBRARY:BOOL=ON
+        -DUNITS_BUILD_STATIC_LIBRARY:BOOL=OFF
+        -DUNITS_ENABLE_TESTS:BOOL=OFF
+        -DUNITS_HEADER_ONLY:BOOL=OFF
         -DCMAKE_BUILD_TYPE=Release;
       cmake --build . --config Release;
       cmake --install . --config Release --prefix $CMAKE_INSTALL_PREFIX;
       mkdir ${h5gt_SRC}/build;
       cd ${h5gt_SRC}/build;
-      cmake .. \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DH5GT_UNIT_TESTS:BOOL=OFF \
-        -DH5GT_EXAMPLES:BOOL=OFF \
-        -DH5GT_BUILD_h5gtpy:BOOL=ON \
+      cmake ..
+        -DCMAKE_BUILD_TYPE=Release
+        -DH5GT_UNIT_TESTS:BOOL=OFF
+        -DH5GT_EXAMPLES:BOOL=OFF
+        -DH5GT_BUILD_h5gtpy:BOOL=ON
         -DHDF5_RUNTIME_DIR:PATH=${HDF5_RUNTIME_DIR};
       cmake --build . --config Release;
       cmake --install . --config Release --prefix ${CMAKE_INSTALL_PREFIX};
