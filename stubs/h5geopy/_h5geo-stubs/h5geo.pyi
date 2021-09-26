@@ -1143,7 +1143,7 @@ class H5Seis(H5BaseObject, H5Base, _H5Seis, _H5BaseObject, _H5Base):
 
         calculate and write min and max values for each header. This is needed by some operations. By default trace buffer is set `nTrcBuffer` to 10 millions of traces
         """
-    def calcBinOriginOrientation3DStk(self) -> typing.Tuple[numpy.ndarray[numpy.float64, _Shape[2, 1]], numpy.ndarray[numpy.float64, _Shape[2, 1]], float, bool]: 
+    def calcSpacingOriginOrientation3DStk(self) -> typing.Tuple[numpy.ndarray[numpy.float64, _Shape[2, 1]], numpy.ndarray[numpy.float64, _Shape[2, 1]], float, bool]: 
         """
         calculate `bin` (along `INLINE` and `XLINE` respectively)`, `origin` (`XY` point coordinate where sorted: 1) INLINE->min, 2) CDP_X->min, 3) CDP_Y->min),`orientation` an azimuth along `INLINE` (in radians). All these parameters are needed when displaying in VTK scene.Also returns `bool val` set to true if successful.
         """

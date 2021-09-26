@@ -4,13 +4,19 @@
 #include "h5geo_export.h"
 #include "h5core_enum_operators.h"
 
-#include <type_traits>  // for enum class operators
+#include <type_traits> // for enum class operators
 #include <string>
 #include <map>
 
 #define MAGIC_ENUM_RANGE_MIN 0
 #define MAGIC_ENUM_RANGE_MAX 256
 #include <magic_enum.hpp>
+
+/* DONT use `magic_enum::enum_name<Enum::val>()`!!!
+ * Use only `magic_enum::enum_name(Enum::val)` and `magic_enum::enum_names<EnumClass>()`
+ * If can't decide look in `magic_enum` examples and stricly follow them!
+ * Otherwise you will get very odd test fails with VS 2017 for example
+ * (don't know why) */
 
 namespace h5gt
 {
@@ -43,7 +49,7 @@ enum class SeisAttributes : unsigned{
   temporal_units = 6,
   data_units = 7,
   orientation = 8,
-  bin = 9,
+  spacing = 9,
   origin = 10
 };
 
@@ -57,7 +63,7 @@ inline constexpr auto spatial_units = magic_enum::enum_name(h5geo::detail::SeisA
 inline constexpr auto temporal_units = magic_enum::enum_name(h5geo::detail::SeisAttributes::temporal_units);
 inline constexpr auto data_units = magic_enum::enum_name(h5geo::detail::SeisAttributes::data_units);
 inline constexpr auto orientation = magic_enum::enum_name(h5geo::detail::SeisAttributes::orientation);
-inline constexpr auto bin = magic_enum::enum_name(h5geo::detail::SeisAttributes::bin);
+inline constexpr auto spacing = magic_enum::enum_name(h5geo::detail::SeisAttributes::spacing);
 inline constexpr auto origin = magic_enum::enum_name(h5geo::detail::SeisAttributes::origin);
 
 enum class SeisDatasets : unsigned{
@@ -98,7 +104,6 @@ enum class SurfAttributes : unsigned{
 
 inline constexpr auto& surf_attrs =
     magic_enum::enum_names<h5geo::detail::SurfAttributes>();
-inline constexpr auto spacing = magic_enum::enum_name(h5geo::detail::SurfAttributes::spacing);
 
 enum class SurfDatasets : unsigned{
   surf_data = 1

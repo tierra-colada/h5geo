@@ -38,7 +38,9 @@ public:
       const double& value,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
-  virtual bool writeBoundary(const Eigen::MatrixX2d& boundary) override;
+  virtual bool writeBoundary(
+      Eigen::Ref<Eigen::MatrixX2d> M,
+      const std::string& spatialUnits = "") override;
   virtual bool writeTrace(
       const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
       const size_t& fromTrc = 0,
@@ -171,12 +173,12 @@ public:
 
   virtual Eigen::MatrixX2d calcBoundaryStk2D() override;
   virtual Eigen::MatrixX2d calcConvexHullBoundary() override;
-  virtual bool calcBinOriginOrientation3DStk(
-      Eigen::Ref<Eigen::VectorXd> bin,
-      Eigen::Ref<Eigen::VectorXd> origin,
+  virtual bool calcSpacingOriginOrientation3DStk(
+      Eigen::Ref<Eigen::Vector2d> spacing,
+      Eigen::Ref<Eigen::Vector2d> origin,
       double& orientation) override;
-  virtual bool calcBinOriginOrientation3DStk(
-      std::vector<double>& bin,
+  virtual bool calcSpacingOriginOrientation3DStk(
+      std::vector<double>& spacing,
       std::vector<double>& origin,
       double& orientation) override;
 
@@ -209,24 +211,27 @@ public:
   virtual bool setDomain(const h5geo::Domain& val) override;
   virtual bool setDataType(const h5geo::SeisDataType& val) override;
   virtual bool setSurveyType(const h5geo::SurveyType& val) override;
-  virtual bool setSRD(const double& val, const std::string& spatialUnits = "") override;
+  virtual bool setSRD(double val, const std::string& spatialUnits = "") override;
   virtual bool setSpatialUnits(const std::string& str) override;
   virtual bool setTemporalUnits(const std::string& str) override;
   virtual bool setDataUnits(const std::string& str) override;
   virtual bool setOrientation(double orientation) override;
-  virtual bool setOrigin(Eigen::Ref<Eigen::VectorXd> origin, const std::string& spatialUnits = "") override;
-  virtual bool setBinSize(Eigen::Ref<Eigen::VectorXd> bin, const std::string& spatialUnits = "") override;
+  virtual bool setOrigin(
+      Eigen::Ref<Eigen::VectorXd> origin, const std::string& spatialUnits = "") override;
+  virtual bool setSpacing(
+      Eigen::Ref<Eigen::VectorXd> spacing, const std::string& spatialUnits = "") override;
 
   virtual h5geo::Domain getDomain() override;
   virtual h5geo::SeisDataType getDataType() override;
   virtual h5geo::SurveyType getSurveyType() override;
-  virtual double getSRD() override;
+  virtual double getSRD(const std::string& spatialUnits = "") override;
   virtual std::string getSpatialUnits() override;
   virtual std::string getTemporalUnits() override;
   virtual std::string getDataUnits() override;
   virtual double getOrientation() override;
-  virtual Eigen::VectorXd getOrigin() override;
-  virtual Eigen::VectorXd getBinSize() override;
+  virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") override;
+  virtual Eigen::VectorXd getSpacing(const std::string& spatialUnits = "") override;
+  virtual Eigen::MatrixXd getBoundary(const std::string& spatialUnits = "") override;
 
   virtual bool hasPKeySort(const std::string& pKeyName) override;
   virtual bool removePKeySort(const std::string& pKeyName) override;

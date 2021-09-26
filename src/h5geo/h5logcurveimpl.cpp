@@ -10,7 +10,7 @@ H5LogCurveImpl::H5LogCurveImpl(const h5gt::Group &group) :
 
 bool H5LogCurveImpl::writeCurve(
     const h5geo::LogDataType& name,
-    const Eigen::Ref<const Eigen::VectorXd>& v,
+    Eigen::Ref<Eigen::VectorXd> v,
     const std::string& units)
 {
   return writeCurve(std::string{magic_enum::enum_name(name)}, v, units);
@@ -18,7 +18,7 @@ bool H5LogCurveImpl::writeCurve(
 
 bool H5LogCurveImpl::writeCurve(
     const std::string& name,
-    const Eigen::Ref<const Eigen::VectorXd>& v,
+    Eigen::Ref<Eigen::VectorXd> v,
     const std::string& units)
 {
   auto opt = getLogCurveD();
@@ -36,12 +36,12 @@ bool H5LogCurveImpl::writeCurve(
             units::unit_from_string(units),
             units::unit_from_string(getDataUnits()));
 
-    Eigen::VectorXd vv = v*coef;
+    v *= coef;
 
     return h5geo::writeData2IndexedDataset(
           opt.value(),
           name,
-          vv,
+          v,
           true);
   }
 

@@ -6,8 +6,6 @@
 #include <vector>
 #include <memory>
 
-#include <Eigen/Dense>
-
 typedef unsigned long long hsize_t ;
 
 namespace std {
@@ -33,13 +31,14 @@ class H5WellContainer;
 
 struct SurfParam{
   size_t nX, nY;
+  double orientation = 0;
   double X0, Y0, dX, dY;
   h5geo::Domain domain;
   std::string spatialUnits, dataUnits;
 };
 
 struct WellParam{
-  double headX, headY, kb;
+  double headX, headY, kb = 0;
   std::string spatialUnits, uwi;
 };
 
@@ -62,8 +61,7 @@ struct SeisParam{
   size_t nTrc;
   size_t nSamp;
   double srd = 0, orientation = 0;
-  Eigen::VectorXd bin = Eigen::VectorXd::Zero(2);
-  Eigen::VectorXd origin = Eigen::VectorXd::Zero(2);
+  double X0, Y0, dX, dY;
   hsize_t trcChunk = 20000;
   hsize_t stdChunk = 1000;
 };

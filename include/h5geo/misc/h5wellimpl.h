@@ -43,10 +43,10 @@ public:
 
   virtual bool setSpatialUnits(const std::string& str) override;
   virtual bool setHeadCoord(
-      const Eigen::Ref<const Eigen::Vector2d>& v,
+      Eigen::Ref<Eigen::Vector2d> v,
       const std::string& spatialUnits = "") override;
   virtual bool setKB(
-      const double& val,
+      double& val,
       const std::string& spatialUnits = "") override;
   virtual bool setUWI(const std::string& str) override;
 

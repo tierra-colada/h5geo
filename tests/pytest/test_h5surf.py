@@ -73,7 +73,7 @@ class test_h5surf(unittest.TestCase):
 
     def test_writeAndGetDataFromSurf(self):
         m = np.random.rand(self.p.nY, self.p.nX)
-        # m = np.asfortranarray(m)  # doesn't change a thing
+        m = np.asfortranarray(m)
         surf = self.surfContainer.createSurf(self.SURF_NAME1, self.p, h5geo.CreationType.CREATE_OR_OVERWRITE)
         self.assertTrue(surf.writeData(m))
 

@@ -10,7 +10,7 @@ H5DevCurveImpl::H5DevCurveImpl(const h5gt::Group &group) :
 
 bool H5DevCurveImpl::writeCurve(
     const h5geo::DevDataType& name,
-    const Eigen::Ref<const Eigen::VectorXd>& v,
+    Eigen::Ref<Eigen::VectorXd> v,
     const std::string& units)
 {
   return writeCurve(
@@ -19,7 +19,7 @@ bool H5DevCurveImpl::writeCurve(
 
 bool H5DevCurveImpl::writeCurve(
     const std::string& name,
-    const Eigen::Ref<const Eigen::VectorXd>& v,
+    Eigen::Ref<Eigen::VectorXd> v,
     const std::string& units)
 {
   auto opt = getDevCurveD();
@@ -37,12 +37,12 @@ bool H5DevCurveImpl::writeCurve(
             units::unit_from_string(units),
             units::unit_from_string(getSpatialUnits()));
 
-    Eigen::VectorXd vv = v*coef;
+    v *= coef;
 
     return h5geo::writeData2IndexedDataset(
           opt.value(),
           name,
-          vv,
+          v,
           true);
   }
 

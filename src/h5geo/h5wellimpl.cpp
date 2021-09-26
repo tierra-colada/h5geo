@@ -210,43 +210,22 @@ bool H5WellImpl::setSpatialUnits(const std::string& str){
 }
 
 bool H5WellImpl::setHeadCoord(
-    const Eigen::Ref<const Eigen::Vector2d>& v,
+    Eigen::Ref<Eigen::Vector2d> v,
     const std::string& spatialUnits)
 {
-  if (!spatialUnits.empty()){
-    double coef = units::convert(
-          units::unit_from_string(spatialUnits),
-          units::unit_from_string(getSpatialUnits()));
-    Eigen::Vector2d vv = v*coef;
-    return h5geo::overwriteAttribute(
-          objG,
-          std::string{h5geo::detail::head_coord},
-          vv);
-  }
-
   return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::head_coord},
-        v);
+      objG,
+      std::string{h5geo::detail::head_coord},
+      v, spatialUnits, getSpatialUnits());
 }
 
 bool H5WellImpl::setKB(
-    const double& val,
+    double& val,
     const std::string& spatialUnits){
-  if (!spatialUnits.empty()){
-    double coef = units::convert(
-          units::unit_from_string(spatialUnits),
-          units::unit_from_string(getSpatialUnits()));
-    return h5geo::overwriteAttribute(
-          objG,
-          std::string{h5geo::detail::KB},
-          val*coef);
-  }
-
   return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::KB},
-        val);
+      objG,
+      std::string{h5geo::detail::head_coord},
+      val, spatialUnits, getSpatialUnits());
 }
 
 bool H5WellImpl::setUWI(const std::string& str){
@@ -263,36 +242,17 @@ std::string H5WellImpl::getSpatialUnits(){
 }
 
 Eigen::VectorXd H5WellImpl::getHeadCoord(const std::string& spatialUnits){
-  Eigen::VectorXd v = h5geo::readDoubleEigenVecAttribute(
-        objG,
-        std::string{h5geo::detail::head_coord});
-
-  if (!spatialUnits.empty()){
-    double coef = units::convert(
-          units::unit_from_string(getSpatialUnits()),
-          units::unit_from_string(spatialUnits));
-    if (!isnan(coef))
-      return v*coef;
-
-    return Eigen::VectorXd();
-  }
-
-  return v;
+  return h5geo::readDoubleEigenVecAttribute(
+      objG,
+      std::string{h5geo::detail::head_coord},
+      getSpatialUnits(), spatialUnits);
 }
 
 double H5WellImpl::getKB(const std::string& spatialUnits){
-  double val = h5geo::readDoubleAttribute(
-        objG,
-        std::string{h5geo::detail::KB});
-
-  if (!spatialUnits.empty()){
-    double coef = units::convert(
-          units::unit_from_string(getSpatialUnits()),
-          units::unit_from_string(spatialUnits));
-    return val*coef;
-  }
-
-  return val;
+  return h5geo::readDoubleAttribute(
+      objG,
+      std::string{h5geo::detail::KB},
+      getSpatialUnits(), spatialUnits);
 }
 
 std::string H5WellImpl::getUWI(){

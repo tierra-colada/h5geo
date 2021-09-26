@@ -425,52 +425,133 @@ inline bool unlinkContent(Object& object){
   return true;
 }
 
-template<typename T1, typename T2>
-inline bool _overwriteResizableDataset(
-    h5gt::DataSet& dataset,
-    const T2* v,
+template<typename Object, typename T,
+         typename std::enable_if<
+             std::is_same<Object, h5gt::File>::value ||
+             std::is_same<Object, h5gt::Group>::value>::type*>
+bool _overwriteResizableDataset(
+    Object& node,
+    const std::string& datasetPath,
+    T* M,
     size_t nH5Rows,
-    size_t nH5Cols)
+    size_t nH5Cols,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
+  if(!node.hasObject(datasetPath, h5gt::ObjectType::Dataset))
+    return false;
+
+  h5gt::DataSet dset = node.getDataSet(datasetPath);
+  auto dtype = dset.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<T>())){
+    return false;
+  }
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+        units::unit_from_string(unitsFrom),
+        units::unit_from_string(unitsTo));
+    for(size_t i = 0; i < nH5Rows*nH5Cols; i++)
+      M[i] *= coef;
+  }
+
   try {
     std::vector<size_t> dims = {nH5Rows, nH5Cols};
-    dataset.resize(dims);
-    dataset.write_raw(v);
+    dset.resize(dims);
+    dset.write_raw(M);
     return true;
   } catch (h5gt::Exception e) {
     return false;
   }
 }
 
-template<typename D,
+template<typename Object, typename D,
          typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &&
            std::is_arithmetic<typename D::Scalar>::value>::type*>
-inline bool overwriteResizableDataset(
-    h5gt::DataSet& dataset,
-    const Eigen::DenseBase<D>& M)
+bool overwriteResizableDataset(
+    Object& node,
+    const std::string& datasetPath,
+    Eigen::DenseBase<D>& M,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _overwriteResizableDataset(dataset, M.derived().data(), M.cols, M.rows());
+  return _overwriteResizableDataset(
+      node, datasetPath, M.derived().data(), M.cols(), M.rows(), unitsFrom, unitsTo);
 }
 
-template<typename T,
+template<typename Object, typename T,
          typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &&
            std::is_arithmetic<T>::value>::type*>
 inline bool overwriteResizableDataset(
-    h5gt::DataSet& dataset,
-    const std::vector<T>& v)
+    Object& node,
+    const std::string& datasetPath,
+    std::vector<T>& v,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _overwriteResizableDataset(dataset, v.data(), 1, v.size());
+  return _overwriteResizableDataset(
+      node, datasetPath, v.data(), 1, v.size(), unitsFrom, unitsTo);
 }
 
-template<typename T,
+template<typename Object, typename T,
          typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &&
            std::is_arithmetic<T>::value>::type*>
 inline bool overwriteResizableDataset(
-    h5gt::DataSet& dataset,
-    const T& v)
+    Object& node,
+    const std::string& datasetPath,
+    T& v,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _overwriteResizableDataset(dataset, &v, 1, 1);
+  return _overwriteResizableDataset(
+      node, datasetPath, &v, 1, 1, unitsFrom, unitsTo);
 }
+
+template<typename Object, typename T,
+         typename std::enable_if<
+             std::is_same<Object, h5gt::File>::value ||
+             std::is_same<Object, h5gt::Group>::value>::type*>
+inline bool _overwriteDataset(
+    Object& node,
+    const std::string& datasetPath,
+    T* M,
+    size_t nH5Rows,
+    size_t nH5Cols,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
+{
+  if(node.hasObject(datasetPath, h5gt::ObjectType::Dataset)){
+    h5gt::DataSet dset = node.getDataSet(datasetPath);
+    auto dtype = dset.getDataType();
+    if (!dtype.isTypeEqual(h5gt::AtomicType<T>()) ||
+        dset.getMemSpace().getElementCount() != nH5Rows*nH5Cols){
+      node.unlink(datasetPath);
+      node.template createDataSet<T>(
+          datasetPath, h5gt::DataSpace({nH5Rows, nH5Cols}));
+    }
+  } else {
+    node.template createDataSet<T>(
+        datasetPath, h5gt::DataSpace({nH5Rows, nH5Cols}));
+  }
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+        units::unit_from_string(unitsFrom),
+        units::unit_from_string(unitsTo));
+    for(size_t i = 0; i < nH5Rows*nH5Cols; i++)
+      M[i] *= coef;
+  }
+
+  node.getDataSet(datasetPath).write_raw(M);
+  return true;
+}
+
 
 template<typename Object, typename D,
          typename std::enable_if<
@@ -479,10 +560,13 @@ template<typename Object, typename D,
            std::is_arithmetic<typename D::Scalar>::value>::type*>
 inline bool overwriteDataset(
     Object& node,
-    std::string& datasetPath,
-    const Eigen::DenseBase<D>& M)
+    const std::string& datasetPath,
+    Eigen::DenseBase<D>& M,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _overwriteDataset(node, datasetPath, M.derived().data(), M.cols(), M.rows());
+  return _overwriteDataset(
+      node, datasetPath, M.derived().data(), M.cols(), M.rows(), unitsFrom, unitsTo);
 }
 
 template<typename Object, typename T,
@@ -492,10 +576,13 @@ template<typename Object, typename T,
            std::is_arithmetic<T>::value>::type*>
 inline bool overwriteDataset(
     Object& node,
-    std::string& datasetPath,
-    const std::vector<T>& v)
+    const std::string& datasetPath,
+    std::vector<T>& v,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _overwriteDataset(node, datasetPath, v.data(), 1, v.size());
+  return _overwriteDataset(
+      node, datasetPath, v.data(), 1, v.size(), unitsFrom, unitsTo);
 }
 
 template<typename Object, typename T,
@@ -505,28 +592,134 @@ template<typename Object, typename T,
            std::is_arithmetic<T>::value>::type*>
 inline bool overwriteDataset(
     Object& node,
-    std::string& datasetPath,
-    const T& v)
+    const std::string& datasetPath,
+    T& v,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _overwriteDataset(node, datasetPath, &v, 1, 1);
+  return _overwriteDataset(
+      node, datasetPath, &v, 1, 1, unitsFrom, unitsTo);
 }
 
-template <typename T1, typename T2>
-inline bool _readAttribute(T1& holder,
+template <typename Object, typename T>
+inline bool _readDataset(
+    Object& node,
+    const std::string& datasetPath,
+    T* M,
+    size_t nElem,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
+{
+  if (!node.hasObject(datasetPath, h5gt::ObjectType::Dataset))
+    return false;
+
+  h5gt::DataSet dset = node.getDataSet(datasetPath);
+  auto dtype = dset.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<T>()) ||
+      dset.getMemSpace().getElementCount() != nElem)
+    return false;
+
+  dset.read(M);
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+        units::unit_from_string(unitsFrom),
+        units::unit_from_string(unitsTo));
+    for(size_t i = 0; i < nElem; i++)
+      M[i] *= coef;
+  }
+
+  return true;
+}
+
+template<typename Object, typename D,
+         typename std::enable_if<
+             (std::is_same<Object, h5gt::File>::value ||
+              std::is_same<Object, h5gt::Group>::value ||
+              std::is_same<Object, h5gt::DataSet>::value) &&
+             std::is_arithmetic<typename D::Scalar>::value>::type*>
+inline bool readDataset(
+    Object& node,
+    const std::string& datasetPath,
+    Eigen::DenseBase<D>& M,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
+{
+  // we don't want to resize vector if no data to read
+  if (!node.hasObject(datasetPath, h5gt::ObjectType::Dataset))
+    return false;
+
+  h5gt::DataSet dset = node.getDataSet(datasetPath);
+  auto dtype = dset.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<typename D::Scalar>()))
+    return false;
+
+  std::vector<size_t> dims = dset.getDimensions();
+  M.derived().resize(dims[1], dims[0]); // resize the derived object
+  return _readDataset(node, datasetPath, M.derived().data(), M.size(), unitsFrom, unitsTo);
+}
+
+template<typename Object,
+         typename std::enable_if<
+             std::is_same<Object, h5gt::File>::value ||
+             std::is_same<Object, h5gt::Group>::value ||
+             std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline Eigen::MatrixXf readFloatEigenMtxDataset(
+    Object& node,
+    const std::string& datasetPath,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
+{
+  Eigen::MatrixXf M;
+  readDataset(node, datasetPath, M, unitsFrom, unitsTo);
+  return M;
+}
+
+template<typename Object,
+         typename std::enable_if<
+             std::is_same<Object, h5gt::File>::value ||
+             std::is_same<Object, h5gt::Group>::value ||
+             std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline Eigen::MatrixXd readDoubleEigenMtxDataset(
+    Object& node,
+    const std::string& datasetPath,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
+{
+  Eigen::MatrixXd M;
+  readDataset(node, datasetPath, M, unitsFrom, unitsTo);
+  return M;
+}
+
+
+template <typename Object, typename T>
+inline bool _readAttribute(
+    Object& holder,
     const std::string& attrName,
-    T2 *v,
-    size_t nElem)
+    T *v,
+    size_t nElem,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
   if (!holder.hasAttribute(attrName))
     return false;
 
   h5gt::Attribute attr = holder.getAttribute(attrName);
   auto dtype = attr.getDataType();
-  if (!dtype.isTypeEqual(h5gt::AtomicType<T2>()) ||
+  if (!dtype.isTypeEqual(h5gt::AtomicType<T>()) ||
       attr.getMemSpace().getElementCount() != nElem)
     return false;
 
   attr.read(v);
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+        units::unit_from_string(unitsFrom),
+        units::unit_from_string(unitsTo));
+    for(size_t i = 0; i < nElem; i++)
+      v[i] *= coef;
+  }
+
   return true;
 }
 
@@ -536,11 +729,25 @@ template<typename Object, typename D,
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value) &&
            std::is_arithmetic<typename D::Scalar>::value>::type*>
-inline bool readAttribute(Object& holder,
+inline bool readAttribute(
+    Object& holder,
     const std::string& attrName,
-    Eigen::DenseBase<D> &v)
+    Eigen::DenseBase<D> &v,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _readAttribute(holder, attrName, v.derived().data(), v.size());
+  // we don't want to resize vector if no data to read
+  if (!holder.hasAttribute(attrName))
+    return false;
+
+  h5gt::Attribute attr = holder.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<typename D::Scalar>()))
+    return false;
+
+  v.resize(holder.getAttribute(attrName).getMemSpace().getElementCount());
+  return _readAttribute(
+      holder, attrName, v.derived().data(), v.size(), unitsFrom, unitsTo);
 }
 
 template <typename Object, typename T,
@@ -549,11 +756,25 @@ template <typename Object, typename T,
             std::is_same<Object, h5gt::Group>::value ||
             std::is_same<Object, h5gt::DataSet>::value) &&
             std::is_arithmetic<T>::value>::type*>
-inline bool readAttribute(Object& holder,
+inline bool readAttribute(
+    Object& holder,
     const std::string& attrName,
-    std::vector<T> &v)
+    std::vector<T> &v,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _readAttribute(holder, attrName, v.data(), v.size());
+  // we don't want to resize vector if no data to read
+  if (!holder.hasAttribute(attrName))
+    return false;
+
+  h5gt::Attribute attr = holder.getAttribute(attrName);
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(h5gt::AtomicType<T>()))
+    return false;
+
+  v.resize(holder.getAttribute(attrName).getMemSpace().getElementCount());
+  return _readAttribute(
+      holder, attrName, v.data(), v.size(), unitsFrom, unitsTo);
 }
 
 template <typename Object, typename T,
@@ -561,37 +782,51 @@ template <typename Object, typename T,
             (std::is_same<Object, h5gt::File>::value ||
             std::is_same<Object, h5gt::Group>::value ||
             std::is_same<Object, h5gt::DataSet>::value) &&
-            std::is_arithmetic<T>::value>::type*>
-inline bool readAttribute(Object& holder,
+             std::is_arithmetic<T>::value>::type*>
+inline bool readAttribute(
+    Object& holder,
     const std::string& attrName,
-    T &v)
+    T &v,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _readAttribute(holder, attrName, &v, 1);
+  return _readAttribute(
+      holder, attrName, &v, 1, unitsFrom, unitsTo);
 }
 
-template <typename T1, typename T2>
+template <typename Object, typename T>
 inline bool _overwriteAttribute(
-    T1& holder,
+    Object& holder,
     const std::string& attrName,
-    const T2* v,
-    size_t nElem)
+    T* v,
+    size_t nElem,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
   if (!holder.hasAttribute(attrName))
-    holder.template createAttribute<T2>(
+    holder.template createAttribute<T>(
           attrName, h5gt::DataSpace({nElem}));
 
   h5gt::Attribute attr = holder.getAttribute(attrName);
   auto dtype = attr.getDataType();
-  if (!dtype.isTypeEqual(h5gt::AtomicType<T2>()) ||
+  if (!dtype.isTypeEqual(h5gt::AtomicType<T>()) ||
       attr.getMemSpace().getElementCount() != nElem){
     try {
       holder.deleteAttribute(attrName);
-      attr = holder.template createAttribute<T2>(
+      attr = holder.template createAttribute<T>(
             attrName, h5gt::DataSpace({nElem}));
     }  catch (h5gt::Exception e) {
       return false;
     }
     return false;
+  }
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+        units::unit_from_string(unitsFrom),
+        units::unit_from_string(unitsTo));
+    for(size_t i = 0; i < nElem; i++)
+      v[i] *= coef;
   }
 
   attr.write(v);
@@ -631,9 +866,12 @@ template<typename Object, typename D,
 inline bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
-    const Eigen::DenseBase<D>& v)
+    Eigen::DenseBase<D>& v,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _overwriteAttribute(holder, attrName, v.derived().data(), v.size());
+  return _overwriteAttribute(
+      holder, attrName, v.derived().data(), v.size(), unitsFrom, unitsTo);
 }
 
 template <typename Object, typename T,
@@ -645,9 +883,12 @@ template <typename Object, typename T,
 inline bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
-    const std::vector<T>& v)
+    std::vector<T>& v,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _overwriteAttribute(holder, attrName, v.data(), v.size());
+  return _overwriteAttribute(
+      holder, attrName, v.data(), v.size(), unitsFrom, unitsTo);
 }
 
 template <typename Object, typename T,
@@ -659,9 +900,12 @@ template <typename Object, typename T,
 inline bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
-    const T& v)
+    T& v,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
 {
-  return _overwriteAttribute(holder, attrName, &v, 1);
+  return _overwriteAttribute(
+      holder, attrName, &v, 1, unitsFrom, unitsTo);
 }
 
 template<typename Object,
@@ -706,9 +950,12 @@ template<typename Object,
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline float readFloatAttribute(Object& object, const std::string& attrName){
+inline float readFloatAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom,
+    const std::string& unitsTo){
   float value = NAN;
-  readAttribute(object, attrName, value);
+  readAttribute(object, attrName, value, unitsFrom, unitsTo);
   return value;
 }
 
@@ -717,9 +964,13 @@ template<typename Object,
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline double readDoubleAttribute(Object& object, const std::string& attrName){
+inline double readDoubleAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
+{
   double value = NAN;
-  readAttribute(object, attrName, value);
+  readAttribute(object, attrName, value, unitsFrom, unitsTo);
   return value;
 }
 
@@ -728,17 +979,12 @@ template<typename Object,
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline std::vector<float> readFloatVecAttribute(Object& object, const std::string& attrName){
+inline std::vector<float> readFloatVecAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom,
+    const std::string& unitsTo){
   std::vector<float> value;
-  if (!object.hasAttribute(attrName))
-    return value;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!dtype.isTypeEqual(h5gt::AtomicType<float>()))
-    return value;
-
-  attr.read(value);
+  readAttribute(object, attrName, value, unitsFrom, unitsTo);
   return value;
 }
 
@@ -747,17 +993,12 @@ template<typename Object,
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline std::vector<double> readDoubleVecAttribute(Object& object, const std::string& attrName){
+inline std::vector<double> readDoubleVecAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom,
+    const std::string& unitsTo){
   std::vector<double> value;
-  if (!object.hasAttribute(attrName))
-    return value;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!dtype.isTypeEqual(h5gt::AtomicType<double>()))
-    return value;
-
-  attr.read(value);
+  readAttribute(object, attrName, value, unitsFrom, unitsTo);
   return value;
 }
 
@@ -766,18 +1007,12 @@ template<typename Object,
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline Eigen::VectorXf readFloatEigenVecAttribute(Object& object, const std::string& attrName){
+inline Eigen::VectorXf readFloatEigenVecAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom,
+    const std::string& unitsTo){
   Eigen::VectorXf value;
-  if (!object.hasAttribute(attrName))
-    return value;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!dtype.isTypeEqual(h5gt::AtomicType<float>()))
-    return value;
-
-  value.resize(attr.getMemSpace().getElementCount());
-  attr.read(value.data());
+  readAttribute(object, attrName, value, unitsFrom, unitsTo);
   return value;
 }
 
@@ -786,18 +1021,12 @@ template<typename Object,
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type*>
-inline Eigen::VectorXd readDoubleEigenVecAttribute(Object& object, const std::string& attrName){
+inline Eigen::VectorXd readDoubleEigenVecAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom,
+    const std::string& unitsTo){
   Eigen::VectorXd value;
-  if (!object.hasAttribute(attrName))
-    return value;
-
-  h5gt::Attribute attr = object.getAttribute(attrName);
-  auto dtype = attr.getDataType();
-  if (!dtype.isTypeEqual(h5gt::AtomicType<double>()))
-    return value;
-
-  value.resize(attr.getMemSpace().getElementCount());
-  attr.read(value.data());
+  readAttribute(object, attrName, value, unitsFrom, unitsTo);
   return value;
 }
 

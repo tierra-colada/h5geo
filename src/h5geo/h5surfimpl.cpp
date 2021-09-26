@@ -8,27 +8,18 @@ H5SurfImpl::H5SurfImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
 bool H5SurfImpl::writeData(
-    const Eigen::Ref<const Eigen::MatrixXd>& M,
+    Eigen::Ref<Eigen::MatrixXd> M,
     const std::string& dataUnits)
 {
   auto opt = getSurfD();
   if (!opt.has_value())
     return false;
 
-  if (M.size() != opt->getElementCount())
-    return false;
-
-  if (!dataUnits.empty()){
-    double coef = units::convert(
-          units::unit_from_string(dataUnits),
-          units::unit_from_string(getDataUnits()));
-    Eigen::MatrixXd MM = M*coef;
-    opt->write_raw(MM.data());
-    return true;
-  }
-
-  opt->write_raw(M.data());
-  return true;
+  return h5geo::overwriteDataset(
+        objG,
+        opt->getPath(),
+        M,
+        dataUnits, getDataUnits());
 }
 
 Eigen::MatrixXd H5SurfImpl::getData(const std::string& dataUnits){
@@ -36,28 +27,18 @@ Eigen::MatrixXd H5SurfImpl::getData(const std::string& dataUnits){
   if (!opt.has_value())
     return Eigen::MatrixXd();
 
-  std::vector<size_t> dims(opt->getDimensions());
-  Eigen::MatrixXd M(dims[1], dims[0]);
-  opt->read(M.data());
-
-  if (!dataUnits.empty()){
-    double coef = units::convert(
-          units::unit_from_string(getDataUnits()),
-          units::unit_from_string(dataUnits));
-    if (!isnan(coef))
-      return M*coef;
-
-    return Eigen::MatrixXd();
-  }
-
-  return M;
+  return h5geo::readDoubleEigenMtxDataset(
+        objG,
+        opt->getPath(),
+        getDataUnits(), dataUnits);
 }
 
 bool H5SurfImpl::setDomain(const h5geo::Domain& val){
+  unsigned v = static_cast<unsigned>(val);
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::Domain},
-        static_cast<unsigned>(val));
+        v);
 }
 
 bool H5SurfImpl::setSpatialUnits(const std::string& str){
@@ -74,32 +55,43 @@ bool H5SurfImpl::setDataUnits(const std::string& str){
         str);
 }
 
-bool H5SurfImpl::setOrigin(const std::vector<double>& v){
+bool H5SurfImpl::setOrientation(double orientation){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::orientation},
+        orientation);
+}
+
+bool H5SurfImpl::setOrigin(
+    std::vector<double>& v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::origin},
-        v);
+        v, spatialUnits, getSpatialUnits());
 }
 
-bool H5SurfImpl::setOrigin(const Eigen::Ref<const Eigen::Vector2d>& v){
+bool H5SurfImpl::setOrigin(
+    Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::origin},
-        v);
+        v, spatialUnits, getSpatialUnits());
 }
 
-bool H5SurfImpl::setSpacing(const std::vector<double>& v){
+bool H5SurfImpl::setSpacing(
+    std::vector<double>& v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::spacing},
-        v);
+        v, spatialUnits, getSpatialUnits());
 }
 
-bool H5SurfImpl::setSpacing(const Eigen::Ref<const Eigen::Vector2d>& v){
+bool H5SurfImpl::setSpacing(
+    Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::spacing},
-        v);
+        v, spatialUnits, getSpatialUnits());
 }
 
 h5geo::Domain H5SurfImpl::getDomain(){
@@ -121,40 +113,24 @@ std::string H5SurfImpl::getDataUnits(){
         std::string{h5geo::detail::data_units});
 }
 
-Eigen::VectorXd H5SurfImpl::getOrigin(const std::string& spatialUnits){
-  Eigen::VectorXd v = h5geo::readDoubleEigenVecAttribute(
+double H5SurfImpl::getOrientation(){
+  return h5geo::readDoubleAttribute(
         objG,
-        std::string{h5geo::detail::origin});
+        std::string{h5geo::detail::orientation});
+}
 
-  if (!spatialUnits.empty()){
-    double coef = units::convert(
-          units::unit_from_string(getSpatialUnits()),
-          units::unit_from_string(spatialUnits));
-    if (!isnan(coef))
-      return v*coef;
-
-    return Eigen::VectorXd();
-  }
-
-  return v;
+Eigen::VectorXd H5SurfImpl::getOrigin(const std::string& spatialUnits){
+  return h5geo::readDoubleEigenVecAttribute(
+        objG,
+        std::string{h5geo::detail::origin},
+        getSpatialUnits(), spatialUnits);
 }
 
 Eigen::VectorXd H5SurfImpl::getSpacing(const std::string& spatialUnits){
-  Eigen::VectorXd v = h5geo::readDoubleEigenVecAttribute(
+  return h5geo::readDoubleEigenVecAttribute(
         objG,
-        std::string{h5geo::detail::spacing});
-
-  if (!spatialUnits.empty()){
-    double coef = units::convert(
-          units::unit_from_string(getSpatialUnits()),
-          units::unit_from_string(spatialUnits));
-    if (!isnan(coef))
-      return v*coef;
-
-    return Eigen::VectorXd();
-  }
-
-  return v;
+        std::string{h5geo::detail::spacing},
+        getSpatialUnits(), spatialUnits);
 }
 
 

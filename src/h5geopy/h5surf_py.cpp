@@ -18,20 +18,43 @@ void H5Surf_py(
       .def("setDomain", &H5SurfImpl::setDomain)
       .def("setSpatialUnits", &H5SurfImpl::setSpatialUnits)
       .def("setDataUnits", &H5SurfImpl::setDataUnits)
-      .def("setOrigin", py::overload_cast<const std::vector<double>&>(&H5SurfImpl::setOrigin))
-      .def("setOrigin", py::overload_cast<const Eigen::Ref<const Eigen::Vector2d>&>(&H5SurfImpl::setOrigin))
-      .def("setSpacing", py::overload_cast<const std::vector<double>&>(&H5SurfImpl::setSpacing))
-      .def("setSpacing", py::overload_cast<const Eigen::Ref<const Eigen::Vector2d>&>(&H5SurfImpl::setSpacing))
+      .def("setOrientation", &H5SurfImpl::setOrientation)
+      .def("setOrigin", py::overload_cast<
+           std::vector<double>&,
+           const std::string&>(
+             &H5SurfImpl::setOrigin),
+           py::arg("xy"),
+           py::arg_v("spatialUnits", "", "str()"))
+      .def("setOrigin", py::overload_cast<
+           Eigen::Ref<Eigen::Vector2d>,
+           const std::string&>(
+             &H5SurfImpl::setOrigin),
+           py::arg("xy"),
+           py::arg_v("spatialUnits", "", "str()"))
+      .def("setSpacing", py::overload_cast<
+           std::vector<double>&,
+           const std::string&>(
+             &H5SurfImpl::setSpacing),
+           py::arg("xy"),
+           py::arg_v("spatialUnits", "", "str()"))
+      .def("setSpacing", py::overload_cast<
+           Eigen::Ref<Eigen::Vector2d>,
+           const std::string&>(
+             &H5SurfImpl::setSpacing),
+           py::arg("xy"),
+           py::arg_v("spatialUnits", "", "str()"))
 
       .def("getDomain", &H5SurfImpl::getDomain)
       .def("getSpatialUnits", &H5SurfImpl::getSpatialUnits)
       .def("getDataUnits", &H5SurfImpl::getDataUnits)
+      .def("getOrientation", &H5SurfImpl::getOrientation)
       .def("getOrigin", &H5SurfImpl::getOrigin,
            py::arg_v("spatialUnits", "", "str()"))
       .def("getSpacing", &H5SurfImpl::getSpacing,
            py::arg_v("spatialUnits", "", "str()"))
 
       .def("getSurfContainer", &H5SurfImpl::getSurfContainer)
+
       .def("getSurfD", &H5SurfImpl::getSurfD);
 }
 

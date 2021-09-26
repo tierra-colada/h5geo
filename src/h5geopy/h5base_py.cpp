@@ -14,13 +14,19 @@ void SurfParam_py(py::class_<SurfParam> &py_obj){
         double,
         double,
         double,
+        double,
         Domain,
         std::string,
         std::string>(),
-        py::arg("nX"), py::arg("nY"),
-        py::arg("X0"), py::arg("Y0"),
-        py::arg("dX"), py::arg("dY"),
-        py::arg("domain"), py::arg("spatialUnits"),
+        py::arg("nX"),
+        py::arg("nY"),
+        py::arg("X0"),
+        py::arg("Y0"),
+        py::arg("dX"),
+        py::arg("dY"),
+        py::arg_v("orientation", 0, "0"),
+        py::arg("domain"),
+        py::arg("spatialUnits"),
         py::arg("dataUnits"))
       .def_readwrite("nX", &SurfParam::nX)
       .def_readwrite("nY", &SurfParam::nY)
@@ -28,6 +34,7 @@ void SurfParam_py(py::class_<SurfParam> &py_obj){
       .def_readwrite("Y0", &SurfParam::Y0)
       .def_readwrite("dX", &SurfParam::dX)
       .def_readwrite("dY", &SurfParam::dY)
+      .def_readwrite("orientation", &SurfParam::orientation)
       .def_readwrite("domain", &SurfParam::domain)
       .def_readwrite("spatialUnits", &SurfParam::spatialUnits)
       .def_readwrite("dataUnits", &SurfParam::dataUnits);
@@ -44,8 +51,10 @@ void WellParam_py(py::class_<WellParam> &py_obj){
         double,
         std::string,
         std::string>(),
-        py::arg("headX"), py::arg("headY"),
-        py::arg("kb"), py::arg("uwi"),
+        py::arg("headX"),
+        py::arg("headY"),
+        py::arg_v("kb", 0, "0"),
+        py::arg("uwi"),
         py::arg("spatialUnits"))
       .def_readwrite("headX", &WellParam::headX)
       .def_readwrite("headY", &WellParam::headY)
@@ -108,8 +117,10 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
         size_t,
         double,
         double,
-        Eigen::VectorXd,
-        Eigen::VectorXd,
+        double,
+        double,
+        double,
+        double,
         hsize_t,
         hsize_t>(),
         py::arg("domain"),
@@ -120,12 +131,14 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
         py::arg("dataUnits"),
         py::arg("nTrc"),
         py::arg("nSamp"),
-        py::arg_v("srd", 0),
-        py::arg_v("orientation", 0),
-        py::arg_v("bin", Eigen::VectorXd::Zero(2)),
-        py::arg_v("origin", Eigen::VectorXd::Zero(2)),
-        py::arg_v("trcChunk", 20000),
-        py::arg_v("stdChunk", 1000))
+        py::arg("X0"),
+        py::arg("Y0"),
+        py::arg("dX"),
+        py::arg("dY"),
+        py::arg_v("srd", 0, "0"),
+        py::arg_v("orientation", 0, "0"),
+        py::arg_v("trcChunk", 20000, "20000"),
+        py::arg_v("stdChunk", 1000, "1000"))
       .def_readwrite("domain", &SeisParam::domain)
       .def_readwrite("spatialUnits", &SeisParam::spatialUnits)
       .def_readwrite("temporalUnits", &SeisParam::temporalUnits)
@@ -134,6 +147,10 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
       .def_readwrite("surveyType", &SeisParam::surveyType)
       .def_readwrite("nTrc", &SeisParam::nTrc)
       .def_readwrite("nSamp", &SeisParam::nSamp)
+      .def_readwrite("X0", &SeisParam::X0)
+      .def_readwrite("Y0", &SeisParam::Y0)
+      .def_readwrite("dX", &SeisParam::dX)
+      .def_readwrite("dY", &SeisParam::dY)
       .def_readwrite("srd", &SeisParam::srd)
       .def_readwrite("trcChunk", &SeisParam::trcChunk)
       .def_readwrite("stdChunk", &SeisParam::stdChunk);

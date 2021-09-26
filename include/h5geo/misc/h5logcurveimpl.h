@@ -15,11 +15,11 @@ protected:
 public:
   virtual bool writeCurve(
       const h5geo::LogDataType& name,
-      const Eigen::Ref<const Eigen::VectorXd>& v,
+      Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") override;
   virtual bool writeCurve(
       const std::string& name,
-      const Eigen::Ref<const Eigen::VectorXd>& v,
+      Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") override;
 
   virtual Eigen::VectorXd getCurve(

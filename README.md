@@ -72,6 +72,8 @@ To run them:
 python -m unittest discover h5geopy.tests
 ```
 
+Note: `h5geopy` (as well as `h5geo`) uses fortran memory order (columnwise). Thus you should allocate numpy with `numpy.asfortranarray` or `order='F'` as numpy uses `C` order by default.
+
 ## Integrating with VS Code
 There is stub file `h5geopy/h5geo.pyi`. You need to set VS Code setting `"python.analysis.stubPath": "some/relative/path/to/stub-storage"`: where `stub-storage` is supposed to contain folder `h5geopy` with `h5geo.pyi` file.
 

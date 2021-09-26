@@ -12,19 +12,35 @@ void H5LogCurve_py(
     H5BaseObjectImpl,
     H5LogCurve> &py_obj){
   py_obj
-      .def("writeCurve", py::overload_cast<const LogDataType&,
-           const Eigen::Ref<const Eigen::VectorXd>&, const std::string&>(
+      .def("writeCurve", py::overload_cast<
+           const LogDataType&,
+           Eigen::Ref<Eigen::VectorXd>,
+           const std::string&>(
              &H5LogCurveImpl::writeCurve),
-           py::arg("name"), py::arg("data"), py::arg_v("units", "", "str()"))
-      .def("writeCurve", py::overload_cast<const std::string&,
-           const Eigen::Ref<const Eigen::VectorXd>&, const std::string&>(
+           py::arg("name"),
+           py::arg("data"),
+           py::arg_v("units", "", "str()"))
+      .def("writeCurve", py::overload_cast<
+           const std::string&,
+           Eigen::Ref<Eigen::VectorXd>,
+           const std::string&>(
              &H5LogCurveImpl::writeCurve),
-           py::arg("name"), py::arg("data"), py::arg_v("units", "", "str()"))
+           py::arg("name"),
+           py::arg("data"),
+           py::arg_v("units", "", "str()"))
 
-      .def("getCurve", py::overload_cast<const LogDataType&, const std::string&>(&H5LogCurveImpl::getCurve),
-           py::arg("name"), py::arg_v("units", "", "str()"))
-      .def("getCurve", py::overload_cast<const std::string&, const std::string&>(&H5LogCurveImpl::getCurve),
-           py::arg("name"), py::arg_v("units", "", "str()"))
+      .def("getCurve", py::overload_cast<
+           const LogDataType&,
+           const std::string&>(
+             &H5LogCurveImpl::getCurve),
+           py::arg("name"),
+           py::arg_v("units", "", "str()"))
+      .def("getCurve", py::overload_cast<
+           const std::string&,
+           const std::string&>(
+             &H5LogCurveImpl::getCurve),
+           py::arg("name"),
+           py::arg_v("units", "", "str()"))
 
       .def("setSpatialUnits", &H5LogCurveImpl::setSpatialUnits)
       .def("setDataUnits", &H5LogCurveImpl::setDataUnits)

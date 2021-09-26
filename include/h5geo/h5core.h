@@ -164,124 +164,156 @@ template<typename Object,
  */
 bool unlinkContent(Object& object);
 
-template<typename T1, typename T2>
+template<typename Object, typename T,
+         typename std::enable_if<
+             std::is_same<Object, h5gt::File>::value ||
+             std::is_same<Object, h5gt::Group>::value>::type* = nullptr>
 bool _overwriteResizableDataset(
-    h5gt::DataSet& dataset,
-    const T2* v,
+    Object& node,
+    const std::string& datasetPath,
+    T* M,
     size_t nH5Rows,
-    size_t nH5Cols);
-
-template<typename D,
-         typename std::enable_if<
-           std::is_arithmetic<typename D::Scalar>::value>::type* = nullptr>
-/*!
- * \brief overwriteResizableDataset Try to resize and write matrix to dataset.
- * Matrix internally cast its type to DataSet's type
- * \param dataset
- * \param M
- * \return
- */
-bool overwriteResizableDataset(
-    h5gt::DataSet& dataset,
-    const Eigen::DenseBase<D>& M);
-
-template<typename T,
-         typename std::enable_if<
-           std::is_arithmetic<T>::value>::type* = nullptr>
-/*!
- * \brief overwriteResizableDataset Try to resize and write matrix to dataset.
- * Matrix internally cast its type to DataSet's type
- * \param dataset
- * \param M
- * \return
- */
-bool overwriteResizableDataset(
-    h5gt::DataSet& dataset,
-    const std::vector<T>& v);
-
-template<typename T,
-         typename std::enable_if<
-           std::is_arithmetic<T>::value>::type* = nullptr>
-/*!
- * \brief overwriteResizableDataset Try to resize and write matrix to dataset.
- * Matrix internally cast its type to DataSet's type
- * \param dataset
- * \param M
- * \return
- */
-bool overwriteResizableDataset(
-    h5gt::DataSet& dataset,
-    const T& v);
+    size_t nH5Cols,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template<typename Object, typename D,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value) &&
            std::is_arithmetic<typename D::Scalar>::value>::type* = nullptr>
-/*!
- * \brief overwriteDataset If dataset exists then it will be unlinked
- * and then created again.
- * If path to dataset doesn't exist then it will create it.
- * Write matrix to a created dataset.
- * \param node Reference node for dataset
- * \param datasetPath May contain / symbol wich is treated as
- * path/to/datasetPath
- * \param M
- * \return
- */
-bool overwriteDataset(
+bool overwriteResizableDataset(
     Object& node,
-    std::string& datasetPath,
-    const Eigen::DenseBase<D>& M);
+    const std::string& datasetPath,
+    Eigen::DenseBase<D>& M,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template<typename Object, typename T,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value) &&
            std::is_arithmetic<T>::value>::type* = nullptr>
-/*!
- * \brief overwriteDataset If dataset exists then it will be unlinked
- * and then created again.
- * If path to dataset doesn't exist then it will create it.
- * Write matrix to a created dataset.
- * \param node Reference node for dataset
- * \param datasetPath May contain / symbol wich is treated as
- * path/to/datasetPath
- * \param M
- * \return
- */
-bool overwriteDataset(
+bool overwriteResizableDataset(
     Object& node,
-    std::string& datasetPath,
-    const std::vector<T>& v);
+    const std::string& datasetPath,
+    std::vector<T>& v,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template<typename Object, typename T,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value) &&
            std::is_arithmetic<T>::value>::type* = nullptr>
-/*!
- * \brief overwriteDataset If dataset exists then it will be unlinked
- * and then created again.
- * If path to dataset doesn't exist then it will create it.
- * Write matrix to a created dataset.
- * \param node Reference node for dataset
- * \param datasetPath May contain / symbol wich is treated as
- * path/to/datasetPath
- * \param M
- * \return
- */
+bool overwriteResizableDataset(
+    Object& node,
+    const std::string& datasetPath,
+    T& v,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
+
+template<typename Object, typename T,
+         typename std::enable_if<
+             std::is_same<Object, h5gt::File>::value ||
+             std::is_same<Object, h5gt::Group>::value>::type* = nullptr>
+bool _overwriteDataset(
+    Object& node,
+    const std::string& datasetPath,
+    T* M,
+    size_t nH5Rows,
+    size_t nH5Cols,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
+
+template<typename Object, typename D,
+         typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_arithmetic<typename D::Scalar>::value>::type* = nullptr>
 bool overwriteDataset(
     Object& node,
-    std::string& datasetPath,
-    const T& v);
+    const std::string& datasetPath,
+    Eigen::DenseBase<D>& M,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
-template <typename T1, typename T2>
+template<typename Object, typename T,
+         typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_arithmetic<T>::value>::type* = nullptr>
+bool overwriteDataset(
+    Object& node,
+    const std::string& datasetPath,
+    std::vector<T>& v,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
+
+template<typename Object, typename T,
+         typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_arithmetic<T>::value>::type* = nullptr>
+bool overwriteDataset(
+    Object& node,
+    const std::string& datasetPath,
+    T& v,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
+
+template <typename Object, typename T>
+bool _readDataset(
+    Object& node,
+    const std::string& datasetPath,
+    T* M,
+    size_t nElem,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
+
+template<typename Object, typename D,
+         typename std::enable_if<
+             (std::is_same<Object, h5gt::File>::value ||
+              std::is_same<Object, h5gt::Group>::value ||
+              std::is_same<Object, h5gt::DataSet>::value) &&
+             std::is_arithmetic<typename D::Scalar>::value>::type* = nullptr>
+bool readDataset(
+    Object& node,
+    const std::string& datasetPath,
+    Eigen::DenseBase<D>& M,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
+
+template<typename Object,
+         typename std::enable_if<
+             std::is_same<Object, h5gt::File>::value ||
+             std::is_same<Object, h5gt::Group>::value ||
+             std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+Eigen::MatrixXf readFloatEigenMtxDataset(
+    Object& node,
+    const std::string& datasetPath,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
+
+template<typename Object,
+         typename std::enable_if<
+             std::is_same<Object, h5gt::File>::value ||
+             std::is_same<Object, h5gt::Group>::value ||
+             std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+Eigen::MatrixXd readDoubleEigenMtxDataset(
+    Object& node,
+    const std::string& datasetPath,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
+
+template <typename Object, typename T>
 bool _readAttribute(
-    T1& holder,
+    Object& holder,
     const std::string& attrName,
-    T2* v,
-    size_t nElem);
+    T* v,
+    size_t nElem,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template<typename Object, typename D,
          typename std::enable_if<
@@ -299,7 +331,9 @@ template<typename Object, typename D,
 bool readAttribute(
     Object& holder,
     const std::string& attrName,
-    Eigen::DenseBase<D>& v);
+    Eigen::DenseBase<D>& v,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template <typename Object, typename T,
           typename std::enable_if<
@@ -310,7 +344,9 @@ template <typename Object, typename T,
 bool readAttribute(
     Object& holder,
     const std::string& attrName,
-    std::vector<T>& v);
+    std::vector<T>& v,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template <typename Object, typename T,
           typename std::enable_if<
@@ -321,14 +357,18 @@ template <typename Object, typename T,
 bool readAttribute(
     Object& holder,
     const std::string& attrName,
-    T& v);
+    T& v,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
-template <typename T1, typename T2>
+template <typename Object, typename T>
 bool _overwriteAttribute(
-    T1& holder,
+    Object& holder,
     const std::string& attrName,
-    const T2* v,
-    size_t nElem);
+    T* v,
+    size_t nElem,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template<typename Object,
          typename std::enable_if<
@@ -357,7 +397,9 @@ template<typename Object, typename D,
 bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
-    const Eigen::DenseBase<D>& v);
+    Eigen::DenseBase<D>& v,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template <typename Object, typename T,
           typename std::enable_if<
@@ -368,7 +410,9 @@ template <typename Object, typename T,
 bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
-    const std::vector<T>& v);
+    std::vector<T>& v,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template <typename Object, typename T,
           typename std::enable_if<
@@ -379,7 +423,9 @@ template <typename Object, typename T,
 bool overwriteAttribute(
     Object& holder,
     const std::string& attrName,
-    const T& v);
+    T& v,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template<typename Object,
          typename std::enable_if<
@@ -415,42 +461,60 @@ template<typename Object,
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-float readFloatAttribute(Object& object, const std::string& attrName);
+float readFloatAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-double readDoubleAttribute(Object& object, const std::string& attrName);
+double readDoubleAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-std::vector<float> readFloatVecAttribute(Object& object, const std::string& attrName);
+std::vector<float> readFloatVecAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-std::vector<double> readDoubleVecAttribute(Object& object, const std::string& attrName);
+std::vector<double> readDoubleVecAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-Eigen::VectorXf readFloatEigenVecAttribute(Object& object, const std::string& attrName);
+Eigen::VectorXf readFloatEigenVecAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
            std::is_same<Object, h5gt::Group>::value ||
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-Eigen::VectorXd readDoubleEigenVecAttribute(Object& object, const std::string& attrName);
+Eigen::VectorXd readDoubleEigenVecAttribute(
+    Object& object, const std::string& attrName,
+    const std::string& unitsFrom = "",
+    const std::string& unitsTo = "");
 
 
 template<typename D>

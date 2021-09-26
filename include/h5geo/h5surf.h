@@ -14,7 +14,7 @@ protected:
 
 public:
   virtual bool writeData(
-      const Eigen::Ref<const Eigen::MatrixXd>& M,
+      Eigen::Ref<Eigen::MatrixXd> M,
       const std::string& dataUnits = "") = 0;
 
   virtual Eigen::MatrixXd getData(const std::string& dataUnits = "") = 0;
@@ -22,14 +22,20 @@ public:
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
   virtual bool setSpatialUnits(const std::string& str) = 0;
   virtual bool setDataUnits(const std::string& str) = 0;
-  virtual bool setOrigin(const std::vector<double>& v) = 0;
-  virtual bool setOrigin(const Eigen::Ref<const Eigen::Vector2d>& v) = 0;
-  virtual bool setSpacing(const std::vector<double>& v) = 0;
-  virtual bool setSpacing(const Eigen::Ref<const Eigen::Vector2d>& v) = 0;
+  virtual bool setOrientation(double orientation) = 0;
+  virtual bool setOrigin(
+      std::vector<double>& v, const std::string& spatialUnits = "") = 0;
+  virtual bool setOrigin(
+      Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") = 0;
+  virtual bool setSpacing(
+      std::vector<double>& v, const std::string& spatialUnits = "") = 0;
+  virtual bool setSpacing(
+      Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") = 0;
 
   virtual h5geo::Domain getDomain() = 0;
   virtual std::string getSpatialUnits() = 0;
   virtual std::string getDataUnits() = 0;
+  virtual double getOrientation() = 0;
   virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") = 0;
   virtual Eigen::VectorXd getSpacing(const std::string& spatialUnits = "") = 0;
 
