@@ -86,7 +86,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR="C:/Users/travis/build/tierra-colada/h5geo/install/hdf5-install/bin"
+        - HDF5_RUNTIME_DIR="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
         - COPY_H5GEOPY_RUNTIME_DEPS=False
         - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
         - TESTS_TARGET="RUN_TESTS"
@@ -106,6 +106,11 @@ matrix:
         - CMAKE_GENERATOR="Ninja"
         - TESTS_TARGET="test"
         - PYTEST_COMMAND="python -m unittest discover h5geopy.tests"
+        - ALLOW_FAILURE=true
+
+  allow_failures:
+    - os: osx
+    - env: ALLOW_FAILURE=true
 
 env:
   global:
