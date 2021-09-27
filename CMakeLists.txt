@@ -67,7 +67,7 @@ find_package(ZLIB REQUIRED)
 find_package(HDF5 REQUIRED)
 find_package(h5gt REQUIRED)
 find_package(magic_enum REQUIRED)
-find_package(UNITS REQUIRED)
+find_package(units REQUIRED)
 
 # we don't want to install third-party include dirs
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${EIGEN3_INCLUDE_DIRS}>)

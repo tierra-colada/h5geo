@@ -2,7 +2,7 @@ message("external project: h5geo")
 
 set(h5geo_DIR PATH "${CMAKE_INSTALL_PREFIX}/cmake/h5geo")
 
-set(DEPENDENCIES Eigen3 ZLIB HDF5 h5gt magic_enum UNITS)
+set(DEPENDENCIES Eigen3 ZLIB HDF5 h5gt magic_enum units)
 
 if(H5GEO_USE_THREADS)
   list(APPEND DEPENDENCIES TBB)
@@ -31,9 +31,9 @@ ExternalProject_Add(h5geo
     -DHDF5_ROOT:PATH=${HDF5_ROOT}
     -Dh5gt_ROOT:PATH=${h5gt_ROOT}
     -Dmagic_enum_ROOT:PATH=${magic_enum_ROOT}
-    -DUNITS_ROOT:PATH=${UNITS_ROOT}
-    -DTBB_ROOT:PATH=${TBB_ROOT}
-    -DTBB_ROOT_DIR:PATH=${TBB_ROOT}
+    -Dunits_ROOT:PATH=${units_ROOT}
+    -DTBB_ROOT:PATH=${TBB_INSTALL_DIR}
+    -DTBB_ROOT_DIR:PATH=${TBB_INSTALL_DIR}
     -DTBB_LIBRARY:PATH=${TBB_LIB_DIR}
     -DTBB_INCLUDE_DIRS:PATH=${TBB_INCLUDE_DIR}
     # Lib settings

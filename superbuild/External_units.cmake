@@ -1,14 +1,14 @@
-message("external project: UNITS")
+message("external project: units")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/UNITS")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/UNITS-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/UNITS-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/units")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/units-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/units-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
-set(UNITS_ROOT PATH ${EP_INSTALL_DIR})
-find_package(UNITS)
+set(units_ROOT PATH ${EP_INSTALL_DIR})
+find_package(units)
 
 set(DEPENDENCIES "")
 
@@ -20,8 +20,8 @@ else()
   set(UNITS_BUILD_STATIC_LIBRARY ON)
 endif()
 
-if(NOT DEFINED UNITS_FOUND OR NOT UNITS_FOUND)
-  ExternalProject_Add(UNITS
+if(NOT DEFINED units_FOUND OR NOT units_FOUND)
+  ExternalProject_Add(units
     GIT_REPOSITORY "https://github.com/LLNL/units"
     GIT_TAG "v0.5.0"
     SOURCE_DIR ${EP_SOURCE_DIR}
@@ -45,8 +45,8 @@ if(NOT DEFINED UNITS_FOUND OR NOT UNITS_FOUND)
     DEPENDS ${DEPENDENCIES}
     )
 else()
-  # Add empty project that exports target UNITS
-  ExternalProject_Add(UNITS
+  # Add empty project that exports target units
+  ExternalProject_Add(units
     SOURCE_DIR ${EP_SOURCE_DIR}
     BINARY_DIR ${EP_BINARY_DIR}
     INSTALL_DIR ${EP_INSTALL_DIR}
