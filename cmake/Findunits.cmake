@@ -6,12 +6,12 @@
 #
 # Defines:
 #
-#   units_FOUND         True if units was found, else false
+#   UNITS_FOUND         True if units was found, else false (must be uppercase only!)
 #   UNITS_INCLUDE_DIRS  The directories containing the header files
 #   UNITS_LIBRARIES     Units libraries
 
 
-set(units_FOUND FALSE)
+set(UNITS_FOUND FALSE)
 
 # Look for the units header, first in the user-specified location and then in the system locations
 set(UNITS_INCLUDE_DOC "The directory containing the units include file units/H5Object.hpp")
@@ -32,7 +32,7 @@ find_library(UNITS_LIBRARIES
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(UNITS
-  FOUND_VAR units_FOUND
+  FOUND_VAR UNITS_FOUND
   REQUIRED_VARS
     UNITS_INCLUDE_DIRS
     UNITS_LIBRARIES

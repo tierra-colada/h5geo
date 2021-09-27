@@ -20,7 +20,7 @@ else()
   set(UNITS_BUILD_STATIC_LIBRARY ON)
 endif()
 
-if(NOT DEFINED units_FOUND OR NOT units_FOUND)
+if(NOT DEFINED UNITS_FOUND OR NOT UNITS_FOUND)
   ExternalProject_Add(units
     GIT_REPOSITORY "https://github.com/LLNL/units"
     GIT_TAG "v0.5.0"
