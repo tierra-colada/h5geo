@@ -8,6 +8,7 @@ list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
 set(units_ROOT PATH ${EP_INSTALL_DIR})
+set(units_DIR PATH ${units_ROOT}/lib/cmake/units)
 find_package(units)
 
 set(DEPENDENCIES "")

@@ -6,7 +6,7 @@
 #
 # Defines:
 #
-#   UNITS_FOUND         True if units was found, else false (must be uppercase only!)
+#   UNITS_FOUND         True if units was found, else false (must be uppercase only as well as filename!)
 #   UNITS_INCLUDE_DIRS  The directories containing the header files
 #   UNITS_LIBRARIES     Units libraries
 

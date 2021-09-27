@@ -31,7 +31,7 @@ ExternalProject_Add(h5geo
     -DHDF5_ROOT:PATH=${HDF5_ROOT}
     -Dh5gt_ROOT:PATH=${h5gt_ROOT}
     -Dmagic_enum_ROOT:PATH=${magic_enum_ROOT}
-    -Dunits_ROOT:PATH=${units_ROOT}
+    -Dunits_DIR:PATH=${units_DIR}
     -DTBB_ROOT:PATH=${TBB_INSTALL_DIR}
     -DTBB_ROOT_DIR:PATH=${TBB_INSTALL_DIR}
     -DTBB_LIBRARY:PATH=${TBB_LIB_DIR}
