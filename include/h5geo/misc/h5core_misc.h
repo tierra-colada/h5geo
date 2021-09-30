@@ -442,6 +442,9 @@ bool _overwriteResizableDataset(
     return false;
 
   h5gt::DataSet dset = node.getDataSet(datasetPath);
+  if (!dset.getCreateProps().isChunked())
+    return false;
+
   auto dtype = dset.getDataType();
   if (!dtype.isTypeEqual(h5gt::AtomicType<T>())){
     return false;
