@@ -71,6 +71,11 @@ void splitHeaderNames(
     std::vector<std::string> &fullHeaderNames,
     std::vector<std::string> &shortHeaderNames);
 
+void splitHeaderBytes(
+    const std::vector<std::string> &headerNamesToSplit,
+    std::vector<int> &bytesStart,
+    std::vector<int> &nBytes);
+
 /*!
  * \brief splitPath Split path of type /path///to/where/things/happen//
  * to output vector {"path", "to", "where", "things", "happen"}.
@@ -118,6 +123,13 @@ void getTraceHeaderNames(
 void getBinHeaderNames(
     std::vector<std::string> &fullHeaderNames,
     std::vector<std::string> &shortHeaderNames);
+
+void getTraceHeaderBytes(
+    std::vector<int> &bytesStart,
+    std::vector<int> &nBytes);
+void getBinHeaderBytes(
+    std::vector<int> &bytesStart,
+    std::vector<int> &nBytes);
 
 size_t getTraceHeaderCount();
 size_t getBinHeaderCount();

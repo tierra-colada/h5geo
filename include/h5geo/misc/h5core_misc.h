@@ -22,6 +22,7 @@
 namespace h5geo
 {
 
+// strings are intensionally TAB delimited
 inline std::vector<std::string> getRawBinHeaderNames()
 {
   return
@@ -59,6 +60,7 @@ inline std::vector<std::string> getRawBinHeaderNames()
   };
 }
 
+// strings are intensionally TAB delimited
 inline std::vector<std::string> getRawTraceHeaderNames()
 {
   return
@@ -254,6 +256,19 @@ inline void splitHeaderNames(const std::vector<std::string> &headerNamesToSplit,
   }
 }
 
+inline void splitHeaderBytes(
+    const std::vector<std::string> &headerNamesToSplit,
+    std::vector<int> &bytesStart,
+    std::vector<int> &nBytes){
+  bytesStart.clear();
+  nBytes.clear();
+  for (size_t i = 0; i < headerNamesToSplit.size(); i++){
+    std::vector<std::string> v = splitString(headerNamesToSplit[i], "\t");
+    bytesStart.push_back(std::stoi(v.end()[-2]));
+    nBytes.push_back(std::stoi(v.end()[-1]));
+  }
+}
+
 inline std::vector<std::string> splitPath(
     std::string path)
 {
@@ -353,6 +368,22 @@ inline void getBinHeaderNames(std::vector<std::string> &fullHeaderNames, std::ve
   std::vector<std::string> binHeaderNames = getRawBinHeaderNames();
 
   splitHeaderNames(binHeaderNames, fullHeaderNames, shortHeaderNames);
+}
+
+inline void getTraceHeaderBytes(
+    std::vector<int> &bytesStart,
+    std::vector<int> &nBytes){
+  std::vector<std::string> traceHeaderNames = getRawTraceHeaderNames();
+
+  splitHeaderBytes(traceHeaderNames, bytesStart, nBytes);
+}
+
+inline void getBinHeaderBytes(
+    std::vector<int> &bytesStart,
+    std::vector<int> &nBytes){
+  std::vector<std::string> binHeaderNames = getRawBinHeaderNames();
+
+  splitHeaderBytes(binHeaderNames, bytesStart, nBytes);
 }
 
 inline size_t getTraceHeaderCount(){
