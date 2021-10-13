@@ -772,6 +772,9 @@ bool H5SeisImpl::calcSpacingOriginOrientation3DStk(
         keyList, minList, maxList,
         0, 0);
 
+  if (HDR.rows() <= 1)
+    return false;
+
   origin(0) = HDR(0, 1);
   origin(1) = HDR(0, 2);
 
@@ -787,6 +790,9 @@ bool H5SeisImpl::calcSpacingOriginOrientation3DStk(
         TRACE, HDR,
         keyList, minList, maxList,
         0, 0);
+
+  if (HDR.rows() <= 1)
+    return false;
 
   double dx_xL = ( HDR(Eigen::last-1, 1)-HDR(0, 1) ) / ( HDR.rows()-1 );
   double dy_xL = ( HDR(Eigen::last-1, 2)-HDR(0, 2) ) / ( HDR.rows()-1 );
@@ -836,6 +842,9 @@ bool H5SeisImpl::calcSpacingOriginOrientation3DStk(
         keyList, minList, maxList,
         0, 0);
 
+  if (HDR.rows() <= 1)
+    return false;
+
   origin.resize(2);
   origin[0] = HDR(0, 1);
   origin[1] = HDR(0, 2);
@@ -852,6 +861,9 @@ bool H5SeisImpl::calcSpacingOriginOrientation3DStk(
         TRACE, HDR,
         keyList, minList, maxList,
         0, 0);
+
+  if (HDR.rows() <= 1)
+    return false;
 
   double dx_xL = ( HDR(Eigen::last, 1)-HDR(0, 1) ) / ( HDR.rows()-1 );
   double dy_xL = ( HDR(Eigen::last, 2)-HDR(0, 2) ) / ( HDR.rows()-1 );
@@ -890,7 +902,8 @@ bool H5SeisImpl::calcAndWriteBoundary(){
         getSurveyType() == h5geo::SurveyType::THREE_D){
       double orientation = 0;
       Eigen::Vector2d spacing, origin;
-      calcSpacingOriginOrientation3DStk(spacing, origin, orientation);
+      if (!calcSpacingOriginOrientation3DStk(spacing, origin, orientation))
+        return false;
       setSpacing(spacing);
       setOrigin(origin);
       setOrientation(orientation);
