@@ -330,3 +330,25 @@ TEST_F(H5SeisFixture, writeAndGetSortedData){
   ASSERT_TRUE(trcHdr_out.isApprox(trcHdr.col(40)))
       << "Read and compare single header (CDP for example)";
 }
+
+TEST_F(H5SeisFixture, writeAndGetOrientationSpacingOrigin){
+  H5Seis_ptr seis(seisContainer->createSeis(
+                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+
+  double orientation = 1;
+  Eigen::VectorXd origin(2), spacing(2);
+  origin << 11, 12;
+  spacing << 21, 22;
+
+  seis->setOrientation(orientation);
+  seis->setOrigin(origin);
+  seis->setSpacing(spacing);
+
+  double orientationOut = seis->getOrientation();
+  Eigen::VectorXd originOut = seis->getOrigin();
+  Eigen::VectorXd spacingOut = seis->getSpacing();
+
+  ASSERT_TRUE(orientation == orientationOut);
+  ASSERT_TRUE(origin.isApprox(originOut));
+  ASSERT_TRUE(spacing.isApprox(spacingOut));
+}

@@ -1,6 +1,10 @@
 #ifndef H5CORE_ENUM_H
 #define H5CORE_ENUM_H
 
+#ifndef H5GT_USE_EIGEN
+#define H5GT_USE_EIGEN // should be defined before including h5gt
+#endif
+
 #include "h5geo_export.h"
 #include "h5core_enum_operators.h"
 

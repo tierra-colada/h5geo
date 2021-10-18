@@ -1,6 +1,10 @@
 #ifndef H5CORE_ENUM_OPERATORS_H
 #define H5CORE_ENUM_OPERATORS_H
 
+#ifndef H5GT_USE_EIGEN
+#define H5GT_USE_EIGEN // should be defined before including h5gt
+#endif
+
 #include <type_traits>
 
 #define ENABLE_BITMASK_OPERATORS(x)  \

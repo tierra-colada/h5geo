@@ -1,6 +1,10 @@
 #ifndef H5CORE_MISC_H
 #define H5CORE_MISC_H
 
+#ifndef H5GT_USE_EIGEN
+#define H5GT_USE_EIGEN // should be defined before including h5gt
+#endif
+
 #include "h5core_enum.h"
 #include "h5deviation.h"
 #include "h5easyhull.h"
@@ -779,7 +783,7 @@ inline bool readAttribute(
   if (!dtype.isTypeEqual(h5gt::AtomicType<typename D::Scalar>()))
     return false;
 
-  v.resize(holder.getAttribute(attrName).getMemSpace().getElementCount());
+  v.derived().resize(holder.getAttribute(attrName).getMemSpace().getElementCount());
   return _readAttribute(
       holder, attrName, v.derived().data(), v.size(), unitsFrom, unitsTo);
 }

@@ -1,6 +1,10 @@
 #ifndef H5CORE_H
 #define H5CORE_H
 
+#ifndef H5GT_USE_EIGEN
+#define H5GT_USE_EIGEN // should be defined before including h5gt
+#endif
+
 #include "misc/h5core_enum.h"
 
 #include <type_traits>

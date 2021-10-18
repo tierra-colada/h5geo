@@ -133,19 +133,15 @@ public:
   virtual ptrdiff_t getBinHeaderIndex(const std::string& hdrName) = 0;
   virtual ptrdiff_t getTraceHeaderIndex(const std::string& hdrName) = 0;
 
-  /*! in millisec or meters !*/
   virtual Eigen::VectorXd getSamples(
       const size_t& trcInd,
       const std::string& units = "") = 0;
-  /*! in millisec or meters !*/
   virtual double getFirstSample(
       const size_t& trcInd,
       const std::string& units = "") = 0;
-  /*! in millisec or meters !*/
   virtual double getLastSample(
       const size_t& trcInd,
       const std::string& units = "") = 0;
-  /*! in millisec or meters !*/
   virtual double getSampRate(
       const std::string& units = "") = 0;
   virtual size_t getNSamp() = 0;
