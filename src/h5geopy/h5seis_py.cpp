@@ -12,12 +12,13 @@ getSortedData(
     const std::vector<double>& maxList,
     size_t fromSampInd = 0,
     size_t nSamp = std::numeric_limits<size_t>::max(),
+    bool readTraceByTrace = true,
     const std::string& dataUnits = "")
 {
   Eigen::MatrixXf TRACE;
   Eigen::MatrixXd HDR;
   Eigen::VectorX<size_t> idx = self->getSortedData(
-        TRACE, HDR, keyList, minList, maxList, fromSampInd, nSamp, dataUnits);
+        TRACE, HDR, keyList, minList, maxList, fromSampInd, nSamp, readTraceByTrace, dataUnits);
   return std::make_tuple(std::move(TRACE), std::move(HDR), std::move(idx));
 }
 
@@ -166,6 +167,7 @@ void H5Seis_py(
            py::arg("maxList"),
            py::arg_v("fromSampInd", 0, "0"),
            py::arg_v("nSamp", std::numeric_limits<size_t>::max(), "sys.maxint"),
+           py::arg_v("readTraceByTrace", true, "True"),
            py::arg_v("dataUnits", "", "str()"),
            "Get sorted data based on precalculated primary sort keys (e.g. before using it you should prepare primary sort keys with `addPKeySort(...)` method)."
 "Return `TRACE` (traces matrix), `HDR` (hdr matrix) and `idx` (vector of trace indexes read)")

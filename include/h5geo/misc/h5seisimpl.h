@@ -116,6 +116,8 @@ public:
    * (from 0 to getNSamp())
    * \param nSamp Number of samples to read (if 0 then
    * 'TRACE' will be empty). By default all samples
+   * \param readTraceByTrace whether to read h5 in row or col order
+   * \param dataUnits you will get data transformed to these units
    * \return vector of trace indexes read
    */
   virtual Eigen::VectorX<size_t> getSortedData(
@@ -126,6 +128,7 @@ public:
       const std::vector<double>& maxList,
       size_t fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
+      bool readTraceByTrace = true,
       const std::string& dataUnits = "") override;
 
   virtual ptrdiff_t getBinHeaderIndex(const std::string& hdrName) override;

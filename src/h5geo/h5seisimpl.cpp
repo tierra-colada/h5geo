@@ -320,6 +320,7 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
     const std::vector<double>& maxList,
     size_t fromSampInd,
     size_t nSamp,
+    bool readTraceByTrace,
     const std::string& dataUnits)
 {
   if (keyList.empty() || minList.empty() || maxList.empty())
@@ -391,11 +392,18 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
     return traceIndexes;
 
   checkSampleLimits(fromSampInd, nSamp);
-  TRACE.resize(nSamp, HDR.rows());
-  Eigen::VectorX<float> tmpTrace(nSamp);
-  for (ptrdiff_t i = 0; i < traceIndexes.size(); i++){
-    TRACE.col(i) = H5SeisImpl::getTrace(
-          traceIndexes(i), 1, fromSampInd, nSamp);
+  if (readTraceByTrace){
+    TRACE.resize(nSamp, HDR.rows());
+    for (ptrdiff_t i = 0; i < traceIndexes.size(); i++){
+      TRACE.col(i) = H5SeisImpl::getTrace(
+            traceIndexes(i), 1, fromSampInd, nSamp);
+    }
+  } else {
+    TRACE.resize(HDR.rows(), nSamp);
+    for (size_t i = 0; i < nSamp; i++){
+      h5gt::ElementSet elSet = h5geo::rowsCol2ElementSet(traceIndexes, i);
+      traceD.select(elSet).read(TRACE.col(i).data());
+    }
   }
 
   if (!dataUnits.empty()){
