@@ -575,33 +575,31 @@ template<typename T>
 Eigen::VectorX<ptrdiff_t> find_index(
     Eigen::DenseBase<T> const & M);
 
-template<typename T,
+template<typename D, typename T,
          typename std::enable_if<
            std::is_arithmetic<T>::value>::type* = nullptr>
 h5gt::ElementSet rowCols2ElementSet(
     const T& row,
-    const Eigen::VectorX<T>& cols);
+    const Eigen::DenseBase<D>& cols);
 
-template<typename T,
+template<typename D, typename T,
          typename std::enable_if<
            std::is_arithmetic<T>::value>::type* = nullptr>
 h5gt::ElementSet rowsCol2ElementSet(
-    const Eigen::VectorX<T>& rows,
+    const Eigen::DenseBase<D>& rows,
     const T& col);
 
-template<typename T,
-         typename std::enable_if<
-           std::is_arithmetic<T>::value>::type* = nullptr>
+template<typename D>
 /*!
  * \brief rowsCols2ElementSet select rectilinear block of elements, i.e.
  * uses double loop to select every possible row-col intersection
- * \param rows
- * \param cols
+ * \param rows vector
+ * \param cols vector
  * \return
  */
 h5gt::ElementSet rowsCols2ElementSet(
-    const Eigen::VectorX<T>& rows,
-    const Eigen::VectorX<T>& cols);
+    const Eigen::DenseBase<D>& rows,
+    const Eigen::DenseBase<D>& cols);
 
 template<typename T,
          typename std::enable_if<

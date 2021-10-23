@@ -76,7 +76,7 @@ void H5Seis_py(
              &H5SeisImpl::writeBinHeader),
            py::arg("binHdr"))
       .def("writeBinHeader", py::overload_cast<
-           const Eigen::VectorXd&>(
+           const Eigen::Ref<const Eigen::VectorXd>&>(
              &H5SeisImpl::writeBinHeader),
            py::arg("binHdr"))
       .def("writeBinHeader", py::overload_cast<
@@ -142,12 +142,15 @@ void H5Seis_py(
            const size_t&,
            size_t,
            const size_t&,
-           size_t>(
+           size_t,const std::vector<std::string>&,
+           const std::vector<std::string>&>(
              &H5SeisImpl::getTraceHeader),
            py::arg("fromTrc"),
            py::arg_v("nTrc", 1, "1"),
            py::arg_v("fromHdr", 0, "0"),
            py::arg_v("nHdr", std::numeric_limits<size_t>::max(), "sys.maxint"),
+           py::arg_v("unitsFrom", std::vector<std::string>(), "list()"),
+           py::arg_v("unitsTo", std::vector<std::string>(), "list()"),
            "Get block of trace headers. If `nTrc` or `nHdr` exceed max values then these values are changed to max allowed (that is why they are not `const`)")
       .def("getTraceHeader", py::overload_cast<
            const std::string&,
@@ -161,6 +164,26 @@ void H5Seis_py(
            py::arg_v("nTrc", std::numeric_limits<size_t>::max(), "sys.maxint"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
+      .def("getTraceHeader", py::overload_cast<
+           const std::vector<size_t>&,
+           const std::vector<size_t>&,
+           const std::vector<std::string>&,
+           const std::vector<std::string>&>(
+             &H5SeisImpl::getTraceHeader),
+           py::arg("trcInd"),
+           py::arg("trcHdrInd"),
+           py::arg_v("unitsFrom", std::vector<std::string>(), "list()"),
+           py::arg_v("unitsTo", std::vector<std::string>(), "list()"))
+      .def("getTraceHeader", py::overload_cast<
+           const std::vector<std::string>&,
+           const std::vector<size_t>&,
+           const std::vector<std::string>&,
+           const std::vector<std::string>&>(
+             &H5SeisImpl::getTraceHeader),
+           py::arg("hdrNames"),
+           py::arg("trcHdrInd"),
+           py::arg_v("unitsFrom", std::vector<std::string>(), "list()"),
+           py::arg_v("unitsTo", std::vector<std::string>(), "list()"))
       .def("getSortedData", &ext::getSortedData,
            py::arg("keyList"),
            py::arg("minList"),

@@ -32,7 +32,8 @@ public:
    * \return
    */
   virtual bool writeBinHeader(const std::vector<double>& binHdrVec) override;
-  virtual bool writeBinHeader(const Eigen::VectorXd& binHdrVec) override;
+  virtual bool writeBinHeader(
+      const Eigen::Ref<const Eigen::VectorXd>& binHdrVec) override;
   virtual bool writeBinHeader(
       const std::string& hdrName,
       const double& value,
@@ -94,13 +95,35 @@ public:
       const size_t& fromTrc,
       size_t nTrc = 1,
       const size_t& fromHdr = 0,
-      size_t nHdr = std::numeric_limits<size_t>::max()) override;
+      size_t nHdr = std::numeric_limits<size_t>::max(),
+      const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
+      const std::vector<std::string>& unitsTo = std::vector<std::string>()) override;
   virtual Eigen::VectorXd getTraceHeader(
       const std::string& hdrName,
       const size_t& fromTrc = 0,
       const size_t& nTrc = std::numeric_limits<size_t>::max(),
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
+  virtual Eigen::MatrixXd getTraceHeader(
+      const std::vector<size_t>& trcInd,
+      const std::vector<size_t>& trcHdrInd,
+      const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
+      const std::vector<std::string>& unitsTo = std::vector<std::string>()) override;
+  virtual Eigen::MatrixXd getTraceHeader(
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcHdrInd,
+      const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
+      const std::vector<std::string>& unitsTo = std::vector<std::string>()) override;
+  virtual Eigen::MatrixXd getTraceHeader(
+      const std::vector<std::string>& hdrNames,
+      const std::vector<size_t>& trcInd,
+      const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
+      const std::vector<std::string>& unitsTo = std::vector<std::string>()) override;
+  virtual Eigen::MatrixXd getTraceHeader(
+      const std::vector<std::string>& hdrNames,
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+      const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
+      const std::vector<std::string>& unitsTo = std::vector<std::string>()) override;
   /*!
    * \brief readSortedData Get sorted data based on precalculated
    * primary sort keys (e.g. before using it you should prepare

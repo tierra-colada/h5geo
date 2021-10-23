@@ -1144,12 +1144,12 @@ inline Eigen::VectorX<ptrdiff_t> find_index(
   return ind;
 }
 
-template<typename T,
+template<typename D, typename T,
          typename std::enable_if<
            std::is_arithmetic<T>::value>::type*>
 inline h5gt::ElementSet rowCols2ElementSet(
     const T& row,
-    const Eigen::VectorX<T>& cols)
+    const Eigen::DenseBase<D>&  cols)
 {
   ptrdiff_t I = cols.size();
   std::vector<size_t> v(2*I, row);
@@ -1160,11 +1160,11 @@ inline h5gt::ElementSet rowCols2ElementSet(
   return h5gt::ElementSet(v);
 }
 
-template<typename T,
+template<typename D, typename T,
          typename std::enable_if<
            std::is_arithmetic<T>::value>::type*>
 inline h5gt::ElementSet rowsCol2ElementSet(
-    const Eigen::VectorX<T>& rows,
+    const Eigen::DenseBase<D>& rows,
     const T& col)
 {
   ptrdiff_t I = rows.size();
@@ -1176,12 +1176,10 @@ inline h5gt::ElementSet rowsCol2ElementSet(
   return h5gt::ElementSet(v);
 }
 
-template<typename T,
-         typename std::enable_if<
-           std::is_arithmetic<T>::value>::type*>
+template<typename D>
 inline h5gt::ElementSet rowsCols2ElementSet(
-    const Eigen::VectorX<T>& rows,
-    const Eigen::VectorX<T>& cols)
+    const Eigen::DenseBase<D>& rows,
+    const Eigen::DenseBase<D>& cols)
 {
   ptrdiff_t I = rows.size();
   ptrdiff_t J = cols.size();

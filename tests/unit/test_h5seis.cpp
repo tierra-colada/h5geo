@@ -314,6 +314,10 @@ TEST_F(H5SeisFixture, writeAndGetSortedData){
         {2, 1, 4},
         {4, 5, 5});
 
+  Eigen::VectorX<size_t> trcHdrInd(3);
+  trcHdrInd << 0,1,2;
+  seis->getTraceHeader(trc_ind, trcHdrInd);
+
   std::cout << "hdr_sorted:\n" << hdr_sorted << std::endl;
 
   Eigen::MatrixXd trcHdr_out = seis->getTraceHeader(

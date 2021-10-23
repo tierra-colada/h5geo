@@ -69,7 +69,7 @@ bool H5SeisImpl::writeBinHeader(
 }
 
 bool H5SeisImpl::writeBinHeader(
-    const Eigen::VectorXd& binHdrVec)
+    const Eigen::Ref<const Eigen::VectorXd>& binHdrVec)
 {
   auto opt = getBinHeaderD();
   if (!opt.has_value())
@@ -272,7 +272,9 @@ Eigen::MatrixXd H5SeisImpl::getTraceHeader(
     const size_t& fromTrc,
     size_t nTrc,
     const size_t& fromHdr,
-    size_t nHdr)
+    size_t nHdr,
+    const std::vector<std::string>& unitsFrom,
+    const std::vector<std::string>& unitsTo)
 {
   if (!checkTraceLimits(fromTrc, nTrc))
     return Eigen::VectorXd();
@@ -286,6 +288,20 @@ Eigen::MatrixXd H5SeisImpl::getTraceHeader(
   std::vector<size_t> count({nHdr, nTrc});
 
   traceHeaderD.select(offset, count).read(HDR.data());
+
+  if (unitsFrom.size() == HDR.cols() &&
+      unitsTo.size() == HDR.cols()){
+    for (size_t i = 0; i < HDR.cols(); i++){
+      if (!unitsFrom[i].empty() && !unitsTo[i].empty()){
+        double coef = units::convert(
+              units::unit_from_string(unitsFrom[i]),
+              units::unit_from_string(unitsTo[i]));
+        if (!isnan(coef))
+          HDR.col(i) = HDR.col(i)*coef;
+      }
+    }
+  }
+
   return HDR;
 }
 
@@ -297,19 +313,106 @@ Eigen::VectorXd H5SeisImpl::getTraceHeader(
     const std::string& unitsTo)
 {
   size_t ind = getTraceHeaderIndex(hdrName);
-  Eigen::VectorXd hdr = getTraceHeader(fromTrc, nTrc, ind, 1);
-
-  if (!unitsFrom.empty() && !unitsTo.empty()){
-    double coef = units::convert(
-          units::unit_from_string(unitsFrom),
-          units::unit_from_string(unitsTo));
-    if (!isnan(coef))
-      return hdr*coef;
-
-    return Eigen::VectorXd();
-  }
+  Eigen::VectorXd hdr = getTraceHeader(
+        fromTrc, nTrc, ind, 1,
+        std::vector<std::string>({unitsFrom}),
+        std::vector<std::string>({unitsTo}));
 
   return hdr;
+}
+
+Eigen::MatrixXd H5SeisImpl::getTraceHeader(
+    const std::vector<size_t>& trcInd,
+    const std::vector<size_t>& trcHdrInd,
+    const std::vector<std::string>& unitsFrom,
+    const std::vector<std::string>& unitsTo)
+{
+  Eigen::MatrixXd HDR(trcInd.size(), trcHdrInd.size());
+  h5gt::ElementSet elSet =
+      h5geo::rowsCols2ElementSet(trcHdrInd, trcInd);
+  traceHeaderD.select(elSet).read(HDR.data());
+
+  if (unitsFrom.size() == HDR.cols() &&
+      unitsTo.size() == HDR.cols()){
+    for (size_t i = 0; i < HDR.cols(); i++){
+      if (!unitsFrom[i].empty() && !unitsTo[i].empty()){
+        double coef = units::convert(
+              units::unit_from_string(unitsFrom[i]),
+              units::unit_from_string(unitsTo[i]));
+        if (!isnan(coef))
+          HDR.col(i) = HDR.col(i)*coef;
+      }
+    }
+  }
+
+  return HDR;
+}
+
+Eigen::MatrixXd H5SeisImpl::getTraceHeader(
+    const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+    const Eigen::Ref<const Eigen::VectorX<size_t>>& trcHdrInd,
+    const std::vector<std::string>& unitsFrom,
+    const std::vector<std::string>& unitsTo)
+{
+  Eigen::MatrixXd HDR(trcInd.size(), trcHdrInd.size());
+  h5gt::ElementSet elSet =
+      h5geo::rowsCols2ElementSet(trcHdrInd, trcInd);
+  traceHeaderD.select(elSet).read(HDR.data());
+
+  if (unitsFrom.size() == HDR.cols() &&
+      unitsTo.size() == HDR.cols()){
+    for (size_t i = 0; i < HDR.cols(); i++){
+      if (!unitsFrom[i].empty() && !unitsTo[i].empty()){
+        double coef = units::convert(
+              units::unit_from_string(unitsFrom[i]),
+              units::unit_from_string(unitsTo[i]));
+        if (!isnan(coef))
+          HDR.col(i) = HDR.col(i)*coef;
+      }
+    }
+  }
+
+  return HDR;
+}
+
+Eigen::MatrixXd H5SeisImpl::getTraceHeader(
+    const std::vector<std::string>& hdrNames,
+    const std::vector<size_t>& trcInd,
+    const std::vector<std::string>& unitsFrom,
+    const std::vector<std::string>& unitsTo)
+{
+  if (hdrNames.empty())
+    return Eigen::MatrixXd();
+
+  std::vector<size_t> hdrInd(hdrNames.size());
+  for (size_t i = 0; i < hdrNames.size(); i++){
+    hdrInd[i] = getTraceHeaderIndex(hdrNames[i]);
+  }
+  return getTraceHeader(
+        trcInd,
+        hdrInd,
+        unitsFrom,
+        unitsTo);
+}
+
+Eigen::MatrixXd H5SeisImpl::getTraceHeader(
+    const std::vector<std::string>& hdrNames,
+    const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+    const std::vector<std::string>& unitsFrom,
+    const std::vector<std::string>& unitsTo)
+{
+  if (hdrNames.empty())
+    return Eigen::MatrixXd();
+
+  Eigen::VectorX<size_t> hdrInd(hdrNames.size());
+  for (size_t i = 0; i < hdrNames.size(); i++){
+    hdrInd(i) = getTraceHeaderIndex(hdrNames[i]);
+  }
+  return getTraceHeader(
+        trcInd,
+        hdrInd,
+        unitsFrom,
+        unitsTo);
 }
 
 Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
