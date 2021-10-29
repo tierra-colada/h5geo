@@ -94,6 +94,56 @@ bool H5MapImpl::setSpacing(
         v, spatialUnits, getSpatialUnits());
 }
 
+bool H5MapImpl::addAttribute(H5Map* map, std::string name){
+  if (this->getH5File() != map->getH5File())
+    return false;
+
+  if (name.empty())
+    name = map->getName();
+
+  if (objG.hasObject(name, h5gt::ObjectType::Group))
+    return false;
+
+  objG.createLink(map->getObjG(), name, h5gt::LinkType::Soft);
+  return true;
+}
+
+bool H5MapImpl::addExternalAttribute(H5Map* map, std::string name){
+  if (this->getH5File() == map->getH5File())
+    return false;
+
+  if (name.empty())
+    name = map->getName();
+
+  if (objG.hasObject(name, h5gt::ObjectType::Group))
+    return false;
+
+  objG.createLink(map->getObjG(), name, h5gt::LinkType::External);
+  return true;
+}
+
+bool H5MapImpl::removeAttribute(const std::string& name){
+  if (name.empty())
+    return false;
+
+  if (!objG.hasObject(name, h5gt::ObjectType::Group))
+    return false;
+
+  objG.unlink(name);
+  return true;
+}
+
+H5Map* H5MapImpl::getAttribute(const std::string& name){
+  if (!objG.hasObject(name, h5gt::ObjectType::Group))
+    return nullptr;
+
+  h5gt::Group group = objG.getGroup(name);
+  if (!isGeoObjectByType(group, h5geo::ObjectType::MAP))
+    return nullptr;
+
+  return new H5MapImpl(group);
+}
+
 h5geo::Domain H5MapImpl::getDomain(){
   return static_cast<h5geo::Domain>(
         h5geo::readEnumAttribute(

@@ -44,6 +44,17 @@ void H5Map_py(
            py::arg("xy"),
            py::arg_v("spatialUnits", "", "str()"))
 
+      .def("addAttribute", &H5MapImpl::addAttribute,
+           py::arg("map"),
+           py::arg_v("name", "", "str()"))
+      .def("addExternalAttribute", &H5MapImpl::addExternalAttribute,
+           py::arg("map"),
+           py::arg_v("name", "", "str()"))
+      .def("removeAttribute", &H5MapImpl::removeAttribute,
+           py::arg("name"))
+      .def("getAttribute", &H5MapImpl::getAttribute,
+           py::arg("name"))
+
       .def("getDomain", &H5MapImpl::getDomain)
       .def("getSpatialUnits", &H5MapImpl::getSpatialUnits)
       .def("getDataUnits", &H5MapImpl::getDataUnits)

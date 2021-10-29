@@ -32,6 +32,11 @@ public:
   virtual bool setSpacing(
       Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") override;
 
+  virtual bool addAttribute(H5Map* map, std::string name = "") override;
+  virtual bool addExternalAttribute(H5Map* map, std::string name = "") override;
+  virtual bool removeAttribute(const std::string& name) override;
+  virtual H5Map* getAttribute(const std::string& name) override;
+
   virtual h5geo::Domain getDomain() override;
   virtual std::string getSpatialUnits() override;
   virtual std::string getDataUnits() override;
