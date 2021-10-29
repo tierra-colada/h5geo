@@ -98,7 +98,7 @@ inline constexpr auto sort = magic_enum::enum_name(h5geo::detail::SeisGroups::so
 inline constexpr auto indexes = magic_enum::enum_name(h5geo::detail::SeisGroups::indexes);
 inline constexpr auto unique_values = magic_enum::enum_name(h5geo::detail::SeisGroups::unique_values);
 
-enum class SurfAttributes : unsigned{
+enum class MapAttributes : unsigned{
   Domain = 1,
   spatial_units = 2,
   data_units = 3,
@@ -106,16 +106,16 @@ enum class SurfAttributes : unsigned{
   spacing = 5
 };
 
-inline constexpr auto& surf_attrs =
-    magic_enum::enum_names<h5geo::detail::SurfAttributes>();
+inline constexpr auto& map_attrs =
+    magic_enum::enum_names<h5geo::detail::MapAttributes>();
 
-enum class SurfDatasets : unsigned{
-  surf_data = 1
+enum class MapDatasets : unsigned{
+  map_data = 1
 };
 
-inline constexpr auto& surf_dsets =
-    magic_enum::enum_names<h5geo::detail::SurfDatasets>();
-inline constexpr auto surf_data = magic_enum::enum_name(h5geo::detail::SurfDatasets::surf_data);
+inline constexpr auto& map_dsets =
+    magic_enum::enum_names<h5geo::detail::MapDatasets>();
+inline constexpr auto map_data = magic_enum::enum_name(h5geo::detail::MapDatasets::map_data);
 
 enum class WellAttributes : unsigned{
   spatial_units = 1,
@@ -181,7 +181,7 @@ inline constexpr auto log_data = magic_enum::enum_name(h5geo::detail::LogDataset
 
 
 enum class ContainerType : unsigned{
-  SURFACE = 1,
+  MAP = 1,
   WELL = 2,
   SEISMIC = 3
 };
@@ -189,12 +189,12 @@ enum class ContainerType : unsigned{
 
 inline constexpr auto& cnt_types =
     magic_enum::enum_names<h5geo::ContainerType>();
-inline constexpr auto SURFACE = magic_enum::enum_name(h5geo::ContainerType::SURFACE);
+inline constexpr auto MAP = magic_enum::enum_name(h5geo::ContainerType::MAP);
 inline constexpr auto WELL = magic_enum::enum_name(h5geo::ContainerType::WELL);
 inline constexpr auto SEISMIC = magic_enum::enum_name(h5geo::ContainerType::SEISMIC);
 
 enum class ObjectType: unsigned{
-  SURFACE = 1,
+  MAP = 1,
   WELL = 2,
   LOGCURVE = 3,
   DEVCURVE = 4,

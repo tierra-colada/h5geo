@@ -1,6 +1,6 @@
 set(src_files_test
   main.cpp
-  test_h5surf.cpp
+  test_h5map.cpp
   test_h5well.cpp
   test_h5seis.cpp
   test_h5core.cpp

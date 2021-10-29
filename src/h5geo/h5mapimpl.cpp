@@ -1,17 +1,17 @@
-#include "../../include/h5geo/misc/h5surfimpl.h"
-#include "../../include/h5geo/h5surfcontainer.h"
+#include "../../include/h5geo/misc/h5mapimpl.h"
+#include "../../include/h5geo/h5mapcontainer.h"
 #include "../../include/h5geo/h5core.h"
 
 #include <units/units.hpp>
 
-H5SurfImpl::H5SurfImpl(const h5gt::Group &group) :
+H5MapImpl::H5MapImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
-bool H5SurfImpl::writeData(
+bool H5MapImpl::writeData(
     Eigen::Ref<Eigen::MatrixXd> M,
     const std::string& dataUnits)
 {
-  auto opt = getSurfD();
+  auto opt = getMapD();
   if (!opt.has_value())
     return false;
 
@@ -22,8 +22,8 @@ bool H5SurfImpl::writeData(
         dataUnits, getDataUnits());
 }
 
-Eigen::MatrixXd H5SurfImpl::getData(const std::string& dataUnits){
-  auto opt = getSurfD();
+Eigen::MatrixXd H5MapImpl::getData(const std::string& dataUnits){
+  auto opt = getMapD();
   if (!opt.has_value())
     return Eigen::MatrixXd();
 
@@ -33,7 +33,7 @@ Eigen::MatrixXd H5SurfImpl::getData(const std::string& dataUnits){
         getDataUnits(), dataUnits);
 }
 
-bool H5SurfImpl::setDomain(const h5geo::Domain& val){
+bool H5MapImpl::setDomain(const h5geo::Domain& val){
   unsigned v = static_cast<unsigned>(val);
   return h5geo::overwriteAttribute(
         objG,
@@ -41,28 +41,28 @@ bool H5SurfImpl::setDomain(const h5geo::Domain& val){
         v);
 }
 
-bool H5SurfImpl::setSpatialUnits(const std::string& str){
+bool H5MapImpl::setSpatialUnits(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::spatial_units},
         str);
 }
 
-bool H5SurfImpl::setDataUnits(const std::string& str){
+bool H5MapImpl::setDataUnits(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::data_units},
         str);
 }
 
-bool H5SurfImpl::setOrientation(double orientation){
+bool H5MapImpl::setOrientation(double orientation){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::orientation},
         orientation);
 }
 
-bool H5SurfImpl::setOrigin(
+bool H5MapImpl::setOrigin(
     std::vector<double>& v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
         objG,
@@ -70,7 +70,7 @@ bool H5SurfImpl::setOrigin(
         v, spatialUnits, getSpatialUnits());
 }
 
-bool H5SurfImpl::setOrigin(
+bool H5MapImpl::setOrigin(
     Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
         objG,
@@ -78,7 +78,7 @@ bool H5SurfImpl::setOrigin(
         v, spatialUnits, getSpatialUnits());
 }
 
-bool H5SurfImpl::setSpacing(
+bool H5MapImpl::setSpacing(
     std::vector<double>& v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
         objG,
@@ -86,7 +86,7 @@ bool H5SurfImpl::setSpacing(
         v, spatialUnits, getSpatialUnits());
 }
 
-bool H5SurfImpl::setSpacing(
+bool H5MapImpl::setSpacing(
     Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
         objG,
@@ -94,39 +94,39 @@ bool H5SurfImpl::setSpacing(
         v, spatialUnits, getSpatialUnits());
 }
 
-h5geo::Domain H5SurfImpl::getDomain(){
+h5geo::Domain H5MapImpl::getDomain(){
   return static_cast<h5geo::Domain>(
         h5geo::readEnumAttribute(
           objG,
           std::string{h5geo::detail::Domain}));
 }
 
-std::string H5SurfImpl::getSpatialUnits(){
+std::string H5MapImpl::getSpatialUnits(){
   return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::spatial_units});
 }
 
-std::string H5SurfImpl::getDataUnits(){
+std::string H5MapImpl::getDataUnits(){
   return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::data_units});
 }
 
-double H5SurfImpl::getOrientation(){
+double H5MapImpl::getOrientation(){
   return h5geo::readDoubleAttribute(
         objG,
         std::string{h5geo::detail::orientation});
 }
 
-Eigen::VectorXd H5SurfImpl::getOrigin(const std::string& spatialUnits){
+Eigen::VectorXd H5MapImpl::getOrigin(const std::string& spatialUnits){
   return h5geo::readDoubleEigenVecAttribute(
         objG,
         std::string{h5geo::detail::origin},
         getSpatialUnits(), spatialUnits);
 }
 
-Eigen::VectorXd H5SurfImpl::getSpacing(const std::string& spatialUnits){
+Eigen::VectorXd H5MapImpl::getSpacing(const std::string& spatialUnits){
   return h5geo::readDoubleEigenVecAttribute(
         objG,
         std::string{h5geo::detail::spacing},
@@ -134,17 +134,17 @@ Eigen::VectorXd H5SurfImpl::getSpacing(const std::string& spatialUnits){
 }
 
 
-H5SurfContainer* H5SurfImpl::getSurfContainer() const{
+H5MapContainer* H5MapImpl::getMapContainer() const{
   h5gt::File file = getH5File();
-  return h5geo::createSurfContainer(
+  return h5geo::createMapContainer(
         file, h5geo::CreationType::OPEN_OR_CREATE);
 }
 
 std::optional<h5gt::DataSet>
-H5SurfImpl::getSurfD() const
+H5MapImpl::getMapD() const
 {
   std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::SurfDatasets::surf_data)};
+        h5geo::detail::MapDatasets::map_data)};
 
   return getDatasetOpt(objG, name);
 }

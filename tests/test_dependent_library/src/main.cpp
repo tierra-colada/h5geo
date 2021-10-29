@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include <h5surf/h5surfcontainer.h>
+#include <h5map/h5mapcontainer.h>
 
 int main() 
 { 
-  auto surfContainer = H5SurfContainer::create("surf_container.h5", h5gt::File::OpenOrCreate);
+  auto mapContainer = H5MapContainer::create("map_container.h5", h5gt::File::OpenOrCreate);
   return 0; 
 }

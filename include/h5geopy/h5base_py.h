@@ -7,7 +7,7 @@
 
 namespace h5geopy {
 
-void SurfParam_py(py::class_<SurfParam> &py_obj);
+void MapParam_py(py::class_<MapParam> &py_obj);
 void WellParam_py(py::class_<WellParam> &py_obj);
 void DevCurveParam_py(py::class_<DevCurveParam> &py_obj);
 void LogCurveParam_py(py::class_<LogCurveParam> &py_obj);

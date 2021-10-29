@@ -30,10 +30,10 @@ enum class DevDataType: unsigned;
 class H5BaseContainer;
 class H5BaseObject;
 class H5SeisContainer;
-class H5SurfContainer;
+class H5MapContainer;
 class H5WellContainer;
 
-struct SurfParam{
+struct MapParam{
   size_t nX, nY;
   double orientation = 0;
   double X0, Y0, dX, dY;
@@ -106,9 +106,9 @@ H5GEO_EXPORT H5SeisContainer* openSeisContainer(
 H5GEO_EXPORT H5SeisContainer* openSeisContainerByName(
     std::string& fileName);
 
-H5GEO_EXPORT H5SurfContainer* openSurfContainer(
+H5GEO_EXPORT H5MapContainer* openMapContainer(
     h5gt::File h5File);
-H5GEO_EXPORT H5SurfContainer* openSurfContainerByName(
+H5GEO_EXPORT H5MapContainer* openMapContainerByName(
     std::string& fileName);
 
 H5GEO_EXPORT H5WellContainer* openWellContainer(
@@ -128,7 +128,7 @@ H5GEO_EXPORT bool isGeoObjectByType(
     h5gt::Group group,
     const h5geo::ObjectType& objType);
 
-H5GEO_EXPORT bool isSurf(h5gt::Group &group);
+H5GEO_EXPORT bool isMap(h5gt::Group &group);
 H5GEO_EXPORT bool isWell(h5gt::Group &group);
 H5GEO_EXPORT bool isLogCurve(h5gt::Group &group);
 H5GEO_EXPORT bool isDevCurve(h5gt::Group &group);

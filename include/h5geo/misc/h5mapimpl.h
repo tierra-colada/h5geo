@@ -1,16 +1,16 @@
-#ifndef H5SURFIMPL_H
-#define H5SURFIMPL_H
+#ifndef H5MAPIMPL_H
+#define H5MAPIMPL_H
 
-#include "../h5surf.h"
+#include "../h5map.h"
 #include "h5baseobjectimpl.h"
 
-class H5SurfImpl :
-    public virtual H5Surf,
+class H5MapImpl :
+    public virtual H5Map,
     public virtual H5BaseObjectImpl
 {
 protected:
-  explicit H5SurfImpl(const h5gt::Group &group);
-  virtual ~H5SurfImpl() = default;
+  explicit H5MapImpl(const h5gt::Group &group);
+  virtual ~H5MapImpl() = default;
 
 public:
   virtual bool writeData(
@@ -39,12 +39,12 @@ public:
   virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") override;
   virtual Eigen::VectorXd getSpacing(const std::string& spatialUnits = "") override;
 
-  virtual H5SurfContainer* getSurfContainer() const override;
+  virtual H5MapContainer* getMapContainer() const override;
 
-  virtual std::optional<h5gt::DataSet> getSurfD() const override;
+  virtual std::optional<h5gt::DataSet> getMapD() const override;
 
   //----------- FRIEND CLASSES -----------
-  friend class H5SurfContainerImpl;
+  friend class H5MapContainerImpl;
 };
 
-#endif // H5SURFIMPL_H
+#endif // H5MAPIMPL_H

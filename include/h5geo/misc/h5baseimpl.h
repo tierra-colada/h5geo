@@ -76,7 +76,7 @@ private:
       const h5geo::ObjectType& objType,
       void* p);
   std::optional<h5gt::Group>
-  createNewSurf(h5gt::Group &group, void* p);
+  createNewMap(h5gt::Group &group, void* p);
   std::optional<h5gt::Group>
   createNewWell(h5gt::Group &group, void* p);
   std::optional<h5gt::Group>
@@ -132,7 +132,7 @@ protected:
   //----------- FRIEND CLASSES -----------
   friend H5SeisContainer* h5geo::openSeisContainer(
       h5gt::File h5File);
-  friend H5SurfContainer* h5geo::openSurfContainer(
+  friend H5MapContainer* h5geo::openMapContainer(
       h5gt::File h5File);
   friend H5WellContainer* h5geo::openWellContainer(
       h5gt::File h5File);

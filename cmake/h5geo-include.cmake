@@ -13,8 +13,8 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5seiscontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5seisimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5sort.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5surfcontainerimpl.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5surfimpl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5mapcontainerimpl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5mapimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5wellcontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5wellimpl.h
 
@@ -25,8 +25,8 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5logcurve.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5seis.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5seiscontainer.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/h5surfcontainer.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/h5surf.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5mapcontainer.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5map.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5well.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5wellcontainer.h
   )

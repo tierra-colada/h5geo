@@ -10,8 +10,8 @@
 #include "../../include/h5geopy/h5seis_py.h"
 #include "../../include/h5geopy/h5seiscontainer_py.h"
 #include "../../include/h5geopy/h5sort_py.h"
-#include "../../include/h5geopy/h5surf_py.h"
-#include "../../include/h5geopy/h5surfcontainer_py.h"
+#include "../../include/h5geopy/h5map_py.h"
+#include "../../include/h5geopy/h5mapcontainer_py.h"
 #include "../../include/h5geopy/h5well_py.h"
 #include "../../include/h5geopy/h5wellcontainer_py.h"
 
@@ -22,7 +22,7 @@ PYBIND11_MODULE(_h5geo, m) {
   py::module_::import("h5gtpy._h5gt");
 
   m.doc() =
-      "API to work with geo-data (seismic, wells, surfaces, other in process) based on HDF5 and originally written in C++: "
+      "API to work with geo-data (seismic, wells, maps, other in process) based on HDF5 and originally written in C++: "
   "https://github.com/tierra-colada/h5geo";
 
 
@@ -58,15 +58,15 @@ PYBIND11_MODULE(_h5geo, m) {
       std::unique_ptr<H5BaseObject, ObjectDeleter>,
       H5Base>(m, "_H5BaseObject");
 
-  // _SURF
+  // _MAP
   py::class_<
-      H5SurfContainer,
-      std::unique_ptr<H5SurfContainer, ObjectDeleter>,
-      H5BaseContainer>(m, "_H5SurfContainer");
+      H5MapContainer,
+      std::unique_ptr<H5MapContainer, ObjectDeleter>,
+      H5BaseContainer>(m, "_H5MapContainer");
   py::class_<
-      H5Surf,
-      std::unique_ptr<H5Surf, ObjectDeleter>,
-      H5BaseObject>(m, "_H5Surf");
+      H5Map,
+      std::unique_ptr<H5Map, ObjectDeleter>,
+      H5BaseObject>(m, "_H5Map");
 
   // _SEIS
   py::class_<
@@ -122,7 +122,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyObjectDeleter = py::class_<ObjectDeleter>(m, "ObjectDeleter");
 
   // BASE
-  auto pySurfParam = py::class_<SurfParam>(m, "SurfParam");
+  auto pyMapParam = py::class_<MapParam>(m, "MapParam");
   auto pyWellParam = py::class_<WellParam>(m, "WellParam");
   auto pyDevCurveParam = py::class_<DevCurveParam>(m, "DevCurveParam");
   auto pyLogCurveParam = py::class_<LogCurveParam>(m, "LogCurveParam");
@@ -146,21 +146,21 @@ PYBIND11_MODULE(_h5geo, m) {
       H5BaseImpl,
       H5BaseObject>(m, "H5BaseObject");
 
-  // SURFCONTAINER
-  auto pySurfContainer =
+  // MAPCONTAINER
+  auto pyMapContainer =
       py::class_<
-      H5SurfContainerImpl,
-      std::unique_ptr<H5SurfContainerImpl, ObjectDeleter>,
+      H5MapContainerImpl,
+      std::unique_ptr<H5MapContainerImpl, ObjectDeleter>,
       H5BaseContainerImpl,
-      H5SurfContainer>(m, "H5SurfContainer");
+      H5MapContainer>(m, "H5MapContainer");
 
-  // SURF
-  auto pySurf =
+  // MAP
+  auto pyMap =
       py::class_<
-      H5SurfImpl,
-      std::unique_ptr<H5SurfImpl, ObjectDeleter>,
+      H5MapImpl,
+      std::unique_ptr<H5MapImpl, ObjectDeleter>,
       H5BaseObjectImpl,
-      H5Surf>(m, "H5Surf");
+      H5Map>(m, "H5Map");
 
   // SEISCONTAINER
   auto pySeisContainer =
@@ -238,7 +238,7 @@ PYBIND11_MODULE(_h5geo, m) {
   ObjectDeleter_py(pyObjectDeleter);
 
   // BASE
-  SurfParam_py(pySurfParam);
+  MapParam_py(pyMapParam);
   WellParam_py(pyWellParam);
   DevCurveParam_py(pyDevCurveParam);
   LogCurveParam_py(pyLogCurveParam);
@@ -251,11 +251,11 @@ PYBIND11_MODULE(_h5geo, m) {
   // BASEOBJECT
   H5BaseObject_py(pyBaseObject);
 
-  // SURFCONTAINER
-  H5SurfContainer_py(pySurfContainer);
+  // MAPCONTAINER
+  H5MapContainer_py(pyMapContainer);
 
-  // SURF
-  H5Surf_py(pySurf);
+  // MAP
+  H5Map_py(pyMap);
 
   // SEISCONTAINER
   H5SeisContainer_py(pySeisContainer);

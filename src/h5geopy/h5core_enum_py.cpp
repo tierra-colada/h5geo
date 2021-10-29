@@ -4,14 +4,14 @@ namespace h5geopy {
 
 void ContainerType_py(py::enum_<ContainerType> &py_obj){
   py_obj
-      .value("SURFACE", ContainerType::SURFACE)
+      .value("MAP", ContainerType::MAP)
       .value("WELL", ContainerType::WELL)
       .value("SEISMIC", ContainerType::SEISMIC);
 }
 
 void ObjectType_py(py::enum_<ObjectType> &py_obj){
   py_obj
-      .value("SURFACE", ObjectType::SURFACE)
+      .value("MAP", ObjectType::MAP)
       .value("WELL", ObjectType::WELL)
       .value("LOGCURVE", ObjectType::LOGCURVE)
       .value("DEVCURVE", ObjectType::DEVCURVE)

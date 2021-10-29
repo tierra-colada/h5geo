@@ -2,7 +2,7 @@
 
 namespace h5geopy {
 
-void SurfParam_py(py::class_<SurfParam> &py_obj){
+void MapParam_py(py::class_<MapParam> &py_obj){
   py_obj
       .def(
         py::init<>())
@@ -28,16 +28,16 @@ void SurfParam_py(py::class_<SurfParam> &py_obj){
         py::arg("domain"),
         py::arg("spatialUnits"),
         py::arg("dataUnits"))
-      .def_readwrite("nX", &SurfParam::nX)
-      .def_readwrite("nY", &SurfParam::nY)
-      .def_readwrite("X0", &SurfParam::X0)
-      .def_readwrite("Y0", &SurfParam::Y0)
-      .def_readwrite("dX", &SurfParam::dX)
-      .def_readwrite("dY", &SurfParam::dY)
-      .def_readwrite("orientation", &SurfParam::orientation)
-      .def_readwrite("domain", &SurfParam::domain)
-      .def_readwrite("spatialUnits", &SurfParam::spatialUnits)
-      .def_readwrite("dataUnits", &SurfParam::dataUnits);
+      .def_readwrite("nX", &MapParam::nX)
+      .def_readwrite("nY", &MapParam::nY)
+      .def_readwrite("X0", &MapParam::X0)
+      .def_readwrite("Y0", &MapParam::Y0)
+      .def_readwrite("dX", &MapParam::dX)
+      .def_readwrite("dY", &MapParam::dY)
+      .def_readwrite("orientation", &MapParam::orientation)
+      .def_readwrite("domain", &MapParam::domain)
+      .def_readwrite("spatialUnits", &MapParam::spatialUnits)
+      .def_readwrite("dataUnits", &MapParam::dataUnits);
 }
 
 void WellParam_py(py::class_<WellParam> &py_obj){

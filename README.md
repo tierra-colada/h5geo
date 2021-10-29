@@ -4,7 +4,7 @@
 **h5geo** provides API to work with geo-data that is based on [HDF5](https://www.hdfgroup.org/solutions/hdf5/) containers via [h5gt](https://travis-ci.com/tierra-colada/h5geo) header only library. For now **h5geo** provides API to work with:
 * seismic data
 * wells (deviations and logs)
-* surfaces
+* maps
 
 **h5geo** also includes **h5geopy** project wich is a python wrapper. 
 

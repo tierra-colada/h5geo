@@ -1,16 +1,16 @@
-#ifndef H5SURF_H
-#define H5SURF_H
+#ifndef H5MAP_H
+#define H5MAP_H
 
 #include "h5baseobject.h"
 
 #include <Eigen/Dense>
 
-class H5SurfContainer;
+class H5MapContainer;
 
-class H5Surf : public virtual H5BaseObject
+class H5Map : public virtual H5BaseObject
 {
 protected:
-  virtual ~H5Surf() = default;
+  virtual ~H5Map() = default;
 
 public:
   virtual bool writeData(
@@ -39,11 +39,11 @@ public:
   virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") = 0;
   virtual Eigen::VectorXd getSpacing(const std::string& spatialUnits = "") = 0;
 
-  virtual H5SurfContainer* getSurfContainer() const = 0;
+  virtual H5MapContainer* getMapContainer() const = 0;
 
-  virtual std::optional<h5gt::DataSet> getSurfD() const = 0;
+  virtual std::optional<h5gt::DataSet> getMapD() const = 0;
 };
 
-using H5Surf_ptr = std::unique_ptr<H5Surf, h5geo::ObjectDeleter>;
+using H5Map_ptr = std::unique_ptr<H5Map, h5geo::ObjectDeleter>;
 
-#endif // H5SURF_H
+#endif // H5MAP_H

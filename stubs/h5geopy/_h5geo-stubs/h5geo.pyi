@@ -1,4 +1,4 @@
-"""API to work with geo-data (seismic, wells, surfaces, other in process) based on HDF5 and originally written in C++: https://github.com/tierra-colada/h5geo"""
+"""API to work with geo-data (seismic, wells, maps, other in process) based on HDF5 and originally written in C++: https://github.com/tierra-colada/h5geo"""
 import h5geopy._h5geo
 import typing
 import h5gtpy._h5gt
@@ -21,8 +21,8 @@ __all__ = [
     "H5LogCurve",
     "H5Seis",
     "H5SeisContainer",
-    "H5Surf",
-    "H5SurfContainer",
+    "H5Map",
+    "H5MapContainer",
     "H5Well",
     "H5WellContainer",
     "LogCurveParam",
@@ -35,7 +35,7 @@ __all__ = [
     "SegyFormat",
     "SeisDataType",
     "SeisParam",
-    "SurfParam",
+    "MapParam",
     "SurveyType",
     "TrajectoryFormat",
     "TvdDxDy2ALL",
@@ -57,8 +57,8 @@ __all__ = [
     "WellType",
     "createSeisContainer",
     "createSeisContainerByName",
-    "createSurfContainer",
-    "createSurfContainerByName",
+    "createMapContainer",
+    "createMapContainerByName",
     "createWellContainer",
     "createWellContainerByName",
     "openBaseContainer",
@@ -66,7 +66,7 @@ __all__ = [
     "openBaseObject",
     "openSeisContainer",
     "openSeisContainerByName",
-    "openSurfContainerByName",
+    "openMapContainerByName",
     "openWellContainer",
     "openWellContainerByName",
     "quickHull2D",
@@ -116,7 +116,7 @@ class ContainerType():
     """
     Members:
 
-      SURFACE
+      MAP
 
       WELL
 
@@ -145,9 +145,9 @@ class ContainerType():
         :type: int
         """
     SEISMIC: h5geopy._h5geo.ContainerType # value = <ContainerType.SEISMIC: 3>
-    SURFACE: h5geopy._h5geo.ContainerType # value = <ContainerType.SURFACE: 1>
+    MAP: h5geopy._h5geo.ContainerType # value = <ContainerType.MAP: 1>
     WELL: h5geopy._h5geo.ContainerType # value = <ContainerType.WELL: 2>
-    __members__: dict # value = {'SURFACE': <ContainerType.SURFACE: 1>, 'WELL': <ContainerType.WELL: 2>, 'SEISMIC': <ContainerType.SEISMIC: 3>}
+    __members__: dict # value = {'MAP': <ContainerType.MAP: 1>, 'WELL': <ContainerType.WELL: 2>, 'SEISMIC': <ContainerType.SEISMIC: 3>}
     pass
 class CreationType():
     """
@@ -392,7 +392,7 @@ class _H5Seis(_H5BaseObject, _H5Base):
     pass
 class _H5BaseContainer(_H5Base):
     pass
-class _H5Surf(_H5BaseObject, _H5Base):
+class _H5Map(_H5BaseObject, _H5Base):
     pass
 class H5BaseContainer(H5Base, _H5BaseContainer, _H5Base):
     def getH5File(self) -> h5gtpy._h5gt.File: ...
@@ -472,7 +472,7 @@ class ObjectType():
     """
     Members:
 
-      SURFACE
+      MAP
 
       WELL
 
@@ -507,9 +507,9 @@ class ObjectType():
     DEVCURVE: h5geopy._h5geo.ObjectType # value = <ObjectType.DEVCURVE: 4>
     LOGCURVE: h5geopy._h5geo.ObjectType # value = <ObjectType.LOGCURVE: 3>
     SEISMIC: h5geopy._h5geo.ObjectType # value = <ObjectType.SEISMIC: 5>
-    SURFACE: h5geopy._h5geo.ObjectType # value = <ObjectType.SURFACE: 1>
+    MAP: h5geopy._h5geo.ObjectType # value = <ObjectType.MAP: 1>
     WELL: h5geopy._h5geo.ObjectType # value = <ObjectType.WELL: 2>
-    __members__: dict # value = {'SURFACE': <ObjectType.SURFACE: 1>, 'WELL': <ObjectType.WELL: 2>, 'LOGCURVE': <ObjectType.LOGCURVE: 3>, 'DEVCURVE': <ObjectType.DEVCURVE: 4>, 'SEISMIC': <ObjectType.SEISMIC: 5>}
+    __members__: dict # value = {'MAP': <ObjectType.MAP: 1>, 'WELL': <ObjectType.WELL: 2>, 'LOGCURVE': <ObjectType.LOGCURVE: 3>, 'DEVCURVE': <ObjectType.DEVCURVE: 4>, 'SEISMIC': <ObjectType.SEISMIC: 5>}
     pass
 class SegyEndian():
     """
@@ -713,7 +713,7 @@ class SeisParam():
     def trcChunk(self, arg0: int) -> None:
         pass
     pass
-class SurfParam():
+class MapParam():
     @typing.overload
     def __init__(self) -> None: ...
     @typing.overload
@@ -1085,7 +1085,7 @@ class WellType():
     pass
 class _H5SeisContainer(_H5BaseContainer, _H5Base):
     pass
-class _H5SurfContainer(_H5BaseContainer, _H5Base):
+class _H5MapContainer(_H5BaseContainer, _H5Base):
     pass
 class _H5DevCurve(_H5BaseObject, _H5Base):
     pass
@@ -1291,15 +1291,15 @@ class H5SeisContainer(H5BaseContainer, H5Base, _H5SeisContainer, _H5BaseContaine
     def getSeis(self, arg0: str) -> _H5Seis: ...
     def getSeisList(self) -> typing.List[_H5Seis]: ...
     pass
-class H5Surf(H5BaseObject, H5Base, _H5Surf, _H5BaseObject, _H5Base):
+class H5Map(H5BaseObject, H5Base, _H5Map, _H5BaseObject, _H5Base):
     def getData(self, dataUnits: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, n]]: ...
     def getDataUnits(self) -> str: ...
     def getDomain(self) -> Domain: ...
     def getOrigin(self, spatialUnits: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
     def getSpacing(self, spatialUnits: str = str()) -> numpy.ndarray[numpy.float64, _Shape[m, 1]]: ...
     def getSpatialUnits(self) -> str: ...
-    def getSurfContainer(self) -> _H5SurfContainer: ...
-    def getSurfD(self) -> typing.Optional[h5gtpy._h5gt.DataSet]: ...
+    def getMapContainer(self) -> _H5MapContainer: ...
+    def getMapD(self) -> typing.Optional[h5gtpy._h5gt.DataSet]: ...
     def setDataUnits(self, arg0: str) -> bool: ...
     def setDomain(self, arg0: Domain) -> bool: ...
     @typing.overload
@@ -1313,16 +1313,16 @@ class H5Surf(H5BaseObject, H5Base, _H5Surf, _H5BaseObject, _H5Base):
     def setSpatialUnits(self, arg0: str) -> bool: ...
     def writeData(self, data: numpy.ndarray[numpy.float64, _Shape[m, n]], dataUnits: str = str()) -> bool: ...
     pass
-class H5SurfContainer(H5BaseContainer, H5Base, _H5SurfContainer, _H5BaseContainer, _H5Base):
+class H5MapContainer(H5BaseContainer, H5Base, _H5MapContainer, _H5BaseContainer, _H5Base):
     @typing.overload
-    def createSurf(self, arg0: h5gtpy._h5gt.Group, arg1: SurfParam, arg2: CreationType) -> _H5Surf: ...
+    def createMap(self, arg0: h5gtpy._h5gt.Group, arg1: MapParam, arg2: CreationType) -> _H5Map: ...
     @typing.overload
-    def createSurf(self, arg0: str, arg1: SurfParam, arg2: CreationType) -> _H5Surf: ...
+    def createMap(self, arg0: str, arg1: MapParam, arg2: CreationType) -> _H5Map: ...
     @typing.overload
-    def getSurf(self, arg0: h5gtpy._h5gt.Group) -> _H5Surf: ...
+    def getMap(self, arg0: h5gtpy._h5gt.Group) -> _H5Map: ...
     @typing.overload
-    def getSurf(self, arg0: str) -> _H5Surf: ...
-    def getSurfList(self) -> typing.List[_H5Surf]: ...
+    def getMap(self, arg0: str) -> _H5Map: ...
+    def getMapList(self) -> typing.List[_H5Map]: ...
     pass
 class H5Well(H5BaseObject, H5Base, _H5Well, _H5BaseObject, _H5Base):
     @typing.overload
@@ -1484,9 +1484,9 @@ def createSeisContainer(arg0: h5gtpy._h5gt.File, arg1: CreationType) -> _H5SeisC
     pass
 def createSeisContainerByName(arg0: str, arg1: CreationType) -> _H5SeisContainer:
     pass
-def createSurfContainer(arg0: h5gtpy._h5gt.File, arg1: CreationType) -> _H5SurfContainer:
+def createMapContainer(arg0: h5gtpy._h5gt.File, arg1: CreationType) -> _H5MapContainer:
     pass
-def createSurfContainerByName(arg0: str, arg1: CreationType) -> _H5SurfContainer:
+def createMapContainerByName(arg0: str, arg1: CreationType) -> _H5MapContainer:
     pass
 def createWellContainer(arg0: h5gtpy._h5gt.File, arg1: CreationType) -> _H5WellContainer:
     pass
@@ -1502,7 +1502,7 @@ def openSeisContainer(arg0: h5gtpy._h5gt.File) -> _H5SeisContainer:
     pass
 def openSeisContainerByName(arg0: str) -> _H5SeisContainer:
     pass
-def openSurfContainerByName(arg0: str) -> _H5SurfContainer:
+def openMapContainerByName(arg0: str) -> _H5MapContainer:
     pass
 def openWellContainer(arg0: h5gtpy._h5gt.File) -> _H5WellContainer:
     pass

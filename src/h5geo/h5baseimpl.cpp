@@ -282,8 +282,8 @@ H5BaseImpl::createNewObject(
     void* p)
 {
   switch (objType) {
-  case h5geo::ObjectType::SURFACE :
-    return createNewSurf(group, p);
+  case h5geo::ObjectType::MAP :
+    return createNewMap(group, p);
   case h5geo::ObjectType::WELL :
     return createNewWell(group, p);
   case h5geo::ObjectType::LOGCURVE :
@@ -298,9 +298,9 @@ H5BaseImpl::createNewObject(
 }
 
 std::optional<h5gt::Group>
-H5BaseImpl::createNewSurf(h5gt::Group &group, void* p)
+H5BaseImpl::createNewMap(h5gt::Group &group, void* p)
 {
-  SurfParam param = *(static_cast<SurfParam*>(p));
+  MapParam param = *(static_cast<MapParam*>(p));
   std::vector<double> origin({param.X0, param.Y0});
   std::vector<double> spacing({param.dX, param.dY});
 
@@ -332,7 +332,7 @@ H5BaseImpl::createNewSurf(h5gt::Group &group, void* p)
         write(param.orientation);
 
     group.createDataSet<double>(
-          std::string{h5geo::detail::surf_data},
+          std::string{h5geo::detail::map_data},
           h5gt::DataSpace({param.nX, param.nY}));
 
     return group;
@@ -725,8 +725,8 @@ bool h5geo::isGeoContainerByType(h5gt::File file,
   unsigned val = h5geo::readEnumAttribute(
         file, std::string{h5geo::detail::ContainerType});
   switch (cntType) {
-  case h5geo::ContainerType::SURFACE:
-    return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::SURFACE;
+  case h5geo::ContainerType::MAP:
+    return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::MAP;
   case h5geo::ContainerType::WELL:
     return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::WELL;
   case h5geo::ContainerType::SEISMIC:
@@ -749,8 +749,8 @@ bool h5geo::isGeoObjectByType(h5gt::Group group,
                               const h5geo::ObjectType& objType)
 {
   switch (objType) {
-  case h5geo::ObjectType::SURFACE :
-    return h5geo::isSurf(group);
+  case h5geo::ObjectType::MAP :
+    return h5geo::isMap(group);
   case h5geo::ObjectType::WELL :
     return h5geo::isWell(group);
   case h5geo::ObjectType::LOGCURVE :
@@ -764,15 +764,15 @@ bool h5geo::isGeoObjectByType(h5gt::Group group,
   }
 }
 
-bool h5geo::isSurf(
+bool h5geo::isMap(
     h5gt::Group &group)
 {
-  for (const auto& name : h5geo::detail::surf_attrs){
+  for (const auto& name : h5geo::detail::map_attrs){
     if (!group.hasAttribute(std::string{name}))
       return false;
   }
 
-  for (const auto& name : h5geo::detail::surf_dsets){
+  for (const auto& name : h5geo::detail::map_dsets){
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
       return false;
   }
