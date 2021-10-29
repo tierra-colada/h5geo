@@ -144,8 +144,6 @@ TEST_F(H5MapFixture, addAndGetAttribute){
   ASSERT_TRUE(map1->addAttribute(map2, "myAttr"));
   ASSERT_TRUE(map1->getAttribute("myAttr") != nullptr);
   ASSERT_TRUE(map1->removeAttribute("myAttr"));
-
-  map2->Delete();
 }
 
 TEST_F(H5MapFixture, addAndGetExternalAttribute){
@@ -158,6 +156,4 @@ TEST_F(H5MapFixture, addAndGetExternalAttribute){
   ASSERT_TRUE(map1->addExternalAttribute(map2, "myAttr"));
   ASSERT_TRUE(map1->getAttribute("myAttr") != nullptr);
   ASSERT_TRUE(map1->removeAttribute("myAttr"));
-
-  map2->Delete();
 }
