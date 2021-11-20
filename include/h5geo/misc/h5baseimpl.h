@@ -120,7 +120,7 @@ protected:
    * \param childG
    * \return
    */
-  bool isSuccessor(h5gt::Group parentG, h5gt::Group childG);
+  bool isSuccessor(h5gt::Group& parentG, h5gt::Group& childG);
   /*!
    * \brief isSuccessor works only with absolute path!
    * \param parent

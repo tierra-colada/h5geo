@@ -50,7 +50,7 @@ public:
 
   //----------- FRIEND CLASSES -----------
   friend class H5MapContainerImpl;
-  friend H5BaseObject* h5geo::openObject(h5gt::Group group);
+  friend H5Map* h5geo::openMap(h5gt::Group group);
 };
 
 #endif // H5MAPIMPL_H

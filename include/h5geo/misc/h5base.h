@@ -32,6 +32,12 @@ class H5BaseObject;
 class H5SeisContainer;
 class H5MapContainer;
 class H5WellContainer;
+class H5Seis;
+class H5Map;
+class H5Well;
+class H5DevCurve;
+class H5LogCurve;
+
 
 struct MapParam{
   size_t nX, nY;
@@ -142,13 +148,10 @@ H5GEO_EXPORT bool isGeoContainerByType(
 H5GEO_EXPORT H5BaseObject* openObject(
     h5gt::Group group);
 
-H5GEO_EXPORT H5BaseObject* openBaseObject(
-    h5gt::Group group);
-
 H5GEO_EXPORT bool isGeoObject(
-    h5gt::Group group);
+    h5gt::Group& group);
 H5GEO_EXPORT bool isGeoObjectByType(
-    h5gt::Group group,
+    h5gt::Group& group,
     const h5geo::ObjectType& objType);
 
 H5GEO_EXPORT bool isMap(h5gt::Group &group);

@@ -276,7 +276,7 @@ protected:
 
   //----------- FRIEND CLASSES -----------
   friend class H5SeisContainerImpl;
-  friend H5BaseObject* h5geo::openObject(h5gt::Group group);
+  friend H5Seis* h5geo::openSeis(h5gt::Group group);
 };
 
 #endif // H5SEISIMPL_H

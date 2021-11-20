@@ -49,6 +49,12 @@ public:
   virtual std::optional<h5gt::DataSet> getMapD() const = 0;
 };
 
+namespace h5geo {
+  extern "C" {
+  H5GEO_EXPORT H5Map* openMap(h5gt::Group group);
+  }
+}
+
 using H5Map_ptr = std::unique_ptr<H5Map, h5geo::ObjectDeleter>;
 
 #endif // H5MAP_H

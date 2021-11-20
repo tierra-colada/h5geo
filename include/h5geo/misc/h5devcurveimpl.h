@@ -51,7 +51,7 @@ public:
 
   //----------- FRIEND CLASSES -----------
   friend class H5WellImpl;
-  friend H5BaseObject* h5geo::openObject(h5gt::Group group);
+  friend H5DevCurve* h5geo::openDevCurve(h5gt::Group group);
 };
 
 #endif // H5DEVCURVEIMPL_H

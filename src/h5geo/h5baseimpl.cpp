@@ -1,4 +1,9 @@
 #include "../../include/h5geo/misc/h5baseimpl.h"
+#include "../../include/h5geo/misc/h5mapimpl.h"
+#include "../../include/h5geo/misc/h5devcurveimpl.h"
+#include "../../include/h5geo/misc/h5logcurveimpl.h"
+#include "../../include/h5geo/misc/h5wellimpl.h"
+#include "../../include/h5geo/misc/h5seisimpl.h"
 #include "../../include/h5geo/h5core.h"
 //#include "../../include/h5geo/misc/h5core_enum.h"
 
@@ -687,8 +692,7 @@ H5BaseImpl::createSort(
   }
 }
 
-bool H5BaseImpl::isSuccessor(
-    h5gt::Group parentG, h5gt::Group childG)
+bool H5BaseImpl::isSuccessor(h5gt::Group &parentG, h5gt::Group &childG)
 {
   return isSuccessor(parentG.getPath(), childG.getPath());
 }
@@ -736,7 +740,7 @@ bool h5geo::isGeoContainerByType(h5gt::File file,
   }
 }
 
-bool h5geo::isGeoObject(h5gt::Group group){
+bool h5geo::isGeoObject(h5gt::Group& group){
   constexpr auto& objTypes = magic_enum::enum_values<h5geo::ObjectType>();
   for (const auto &objType : objTypes)
     if (h5geo::isGeoObjectByType(group, objType))
@@ -745,7 +749,7 @@ bool h5geo::isGeoObject(h5gt::Group group){
   return false;
 }
 
-bool h5geo::isGeoObjectByType(h5gt::Group group,
+bool h5geo::isGeoObjectByType(h5gt::Group& group,
                               const h5geo::ObjectType& objType)
 {
   switch (objType) {
@@ -856,4 +860,26 @@ bool h5geo::isSeis(
     return false;
 
   return true;
+}
+
+H5BaseObject* h5geo::openObject(h5gt::Group group)
+{
+  H5BaseObject* obj = nullptr;
+  obj = openSeis(group);
+  if (obj)
+    return obj;
+  obj = openMap(group);
+  if (obj)
+    return obj;
+  obj = openWell(group);
+  if (obj)
+    return obj;
+  obj = openDevCurve(group);
+  if (obj)
+    return obj;
+  obj = openLogCurve(group);
+  if (obj)
+    return obj;
+  obj = openBaseObject(group);
+  return obj;
 }

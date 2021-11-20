@@ -1418,3 +1418,10 @@ H5SeisImpl::getIndexesG()
 
   return opt->getGroup(name);
 }
+
+H5Seis* h5geo::openSeis(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::SEISMIC))
+    return new H5SeisImpl(group);
+
+  return nullptr;
+}

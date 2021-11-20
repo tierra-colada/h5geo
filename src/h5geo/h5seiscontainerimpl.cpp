@@ -20,10 +20,7 @@ H5Seis* H5SeisContainerImpl::getSeis(const std::string &name)
 H5Seis* H5SeisContainerImpl::getSeis(
     h5gt::Group group)
 {
-  if (!isGeoObjectByType(group, h5geo::ObjectType::SEISMIC))
-    return nullptr;
-
-  return new H5SeisImpl(group);
+  return h5geo::openSeis(group);
 }
 
 H5Seis* H5SeisContainerImpl::createSeis(

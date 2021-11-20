@@ -51,6 +51,12 @@ public:
   virtual std::optional<h5gt::DataSet> getDevCurveD() = 0;
 };
 
+namespace h5geo {
+  extern "C" {
+  H5GEO_EXPORT H5DevCurve* openDevCurve(h5gt::Group group);
+  }
+}
+
 using H5DevCurve_ptr = std::unique_ptr<H5DevCurve, h5geo::ObjectDeleter>;
 
 #endif // H5DEVCURVE_H

@@ -45,7 +45,6 @@ protected:
 
   //----------- FRIEND CLASSES -----------
   friend H5BaseObject* h5geo::openBaseObject(h5gt::Group group);
-  friend H5BaseObject* h5geo::openObject(h5gt::Group group);
 
 protected:
   h5gt::Group objG;

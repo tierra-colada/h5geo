@@ -2,10 +2,12 @@
 
 #include <h5geo/h5mapcontainer.h>
 #include <h5geo/h5map.h>
-#include <h5geo/h5wellcontainer.h>
-#include <h5geo/h5well.h>
 #include <h5geo/h5seiscontainer.h>
 #include <h5geo/h5seis.h>
+#include <h5geo/h5wellcontainer.h>
+#include <h5geo/h5well.h>
+#include <h5geo/h5devcurve.h>
+#include <h5geo/h5logcurve.h>
 #include <h5geo/h5core.h>
 
 namespace h5geopy {
@@ -60,6 +62,11 @@ void defineGeoFunctions(py::module_& m){
   m.def("openWellContainerByName", &openWellContainerByName);
   m.def("openObject", &openObject);
   m.def("openBaseObject", &openBaseObject);
+  m.def("openSeis", &openSeis);
+  m.def("openMap", &openMap);
+  m.def("openWell", &openWell);
+  m.def("openDevCurve", &openDevCurve);
+  m.def("openLogCurve", &openLogCurve);
 
   m.def("createMapContainer", &createMapContainer);
   m.def("createMapContainerByName", &createMapContainerByName);

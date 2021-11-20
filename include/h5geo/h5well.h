@@ -72,6 +72,12 @@ public:
   virtual std::optional<h5gt::Group> getLogTypeG(const std::string& logType) = 0;
 };
 
+namespace h5geo {
+  extern "C" {
+  H5GEO_EXPORT H5Well* openWell(h5gt::Group group);
+  }
+}
+
 using H5Well_ptr = std::unique_ptr<H5Well, h5geo::ObjectDeleter>;
 
 #endif // H5WELL_H

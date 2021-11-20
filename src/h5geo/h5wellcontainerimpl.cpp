@@ -21,10 +21,7 @@ H5Well* H5WellContainerImpl::getWell(
 H5Well* H5WellContainerImpl::getWell(
     h5gt::Group group)
 {
-  if (!isGeoObjectByType(group, h5geo::ObjectType::WELL))
-    return nullptr;
-
-  return new H5WellImpl(group);
+  return h5geo::openWell(group);
 }
 
 H5Well* H5WellContainerImpl::createWell(

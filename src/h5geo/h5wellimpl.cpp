@@ -52,10 +52,7 @@ H5LogCurve* H5WellImpl::getLogCurve(
   if (!isSuccessor(logG.value(), group))
     return nullptr;
 
-  if (!isGeoObjectByType(group, h5geo::ObjectType::LOGCURVE))
-    return nullptr;
-
-  return new H5LogCurveImpl(group);
+  return h5geo::openLogCurve(group);
 }
 
 H5DevCurve* H5WellImpl::getDevCurve(
@@ -89,10 +86,7 @@ H5DevCurve* H5WellImpl::getDevCurve(
   if (!isSuccessor(devG.value(), group))
     return nullptr;
 
-  if (!isGeoObjectByType(group, h5geo::ObjectType::DEVCURVE))
-    return nullptr;
-
-  return new H5DevCurveImpl(group);
+  return h5geo::openDevCurve(group);
 }
 
 H5LogCurve* H5WellImpl::createLogCurve(
@@ -403,4 +397,11 @@ bool H5WellImpl::setActiveDevCurve(H5DevCurve& curve){
                   h5gt::LinkType::Soft);
 
   return true;
+}
+
+H5Well* h5geo::openWell(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::WELL))
+    return new H5WellImpl(group);
+
+  return nullptr;
 }

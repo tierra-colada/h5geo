@@ -20,10 +20,7 @@ H5Map* H5MapContainerImpl::getMap(const std::string &name)
 H5Map* H5MapContainerImpl::getMap(
     h5gt::Group group)
 {
-  if (!isGeoObjectByType(group, h5geo::ObjectType::MAP))
-    return nullptr;
-
-  return new H5MapImpl(group);
+  return h5geo::openMap(group);
 }
 
 H5Map* H5MapContainerImpl::createMap(

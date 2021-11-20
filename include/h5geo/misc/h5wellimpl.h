@@ -76,7 +76,7 @@ private:
   friend class H5WellContainerImpl;
   friend class H5LogCurveImpl;
   friend class H5DevCurveImpl;
-  friend H5BaseObject* h5geo::openObject(h5gt::Group group);
+  friend H5Well* h5geo::openWell(h5gt::Group group);
 };
 
 #endif // H5WELLIMPL_H

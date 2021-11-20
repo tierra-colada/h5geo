@@ -279,6 +279,12 @@ public:
   virtual std::optional<h5gt::Group> getIndexesG() = 0;
 };
 
+namespace h5geo {
+  extern "C" {
+  H5GEO_EXPORT H5Seis* openSeis(h5gt::Group group);
+  }
+}
+
 using H5Seis_ptr = std::unique_ptr<H5Seis, h5geo::ObjectDeleter>;
 
 #endif // H5SEIS_H
