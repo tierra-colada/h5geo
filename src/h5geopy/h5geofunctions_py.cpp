@@ -48,14 +48,18 @@ getBinHeaderBytes()
 
 
 void defineGeoFunctions(py::module_& m){
+  m.def("openContainer", &openContainer);
+  m.def("openContainerByName", &openContainerByName);
   m.def("openBaseContainer", &openBaseContainer);
   m.def("openBaseContainerByName", &openBaseContainerByName);
-  m.def("openBaseObject", &openBaseObject);
   m.def("openSeisContainer", &openSeisContainer);
   m.def("openSeisContainerByName", &openSeisContainerByName);
+  m.def("openMapContainer", &openMapContainer);
   m.def("openMapContainerByName", &openMapContainerByName);
   m.def("openWellContainer", &openWellContainer);
   m.def("openWellContainerByName", &openWellContainerByName);
+  m.def("openObject", &openObject);
+  m.def("openBaseObject", &openBaseObject);
 
   m.def("createMapContainer", &createMapContainer);
   m.def("createMapContainerByName", &createMapContainerByName);

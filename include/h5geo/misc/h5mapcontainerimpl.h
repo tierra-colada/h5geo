@@ -35,8 +35,6 @@ public:
       std::string& fileName, h5geo::CreationType createFlag);
   friend H5MapContainer* h5geo::openMapContainer(
       h5gt::File h5File);
-  friend H5MapContainer* h5geo::openMapContainerByName(
-      std::string& fileName);
 };
 
 #endif // H5MAPCONTAINERIMPL_H

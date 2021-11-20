@@ -93,34 +93,57 @@ struct ObjectDeleter
 };
 
 extern "C" {
+
+//----------- CONTAINERS -----------
+/// Check if the file can be treated as
+/// H5SeisContainer/H5MapContaier/H5WellContainer etc
+/// and create appropriate object.
+/// Use dynamic_cast<> to cast it to the correct type.
+H5GEO_EXPORT H5BaseContainer* openContainer(
+    h5gt::File h5File);
+
+/// Check if the file can be treated as
+/// H5SeisContainer/H5MapContaier/H5WellContainer etc
+/// and create appropriate object.
+/// Use dynamic_cast<> to cast it to the correct type.
+H5GEO_EXPORT H5BaseContainer* openContainerByName(
+    const std::string& fileName);
+
 H5GEO_EXPORT H5BaseContainer* openBaseContainer(
     h5gt::File h5File);
 H5GEO_EXPORT H5BaseContainer* openBaseContainerByName(
     const std::string& fileName);
 
-H5GEO_EXPORT H5BaseObject* openBaseObject(
-    h5gt::Group group);
-
 H5GEO_EXPORT H5SeisContainer* openSeisContainer(
     h5gt::File h5File);
 H5GEO_EXPORT H5SeisContainer* openSeisContainerByName(
-    std::string& fileName);
+    const std::string& fileName);
 
 H5GEO_EXPORT H5MapContainer* openMapContainer(
     h5gt::File h5File);
 H5GEO_EXPORT H5MapContainer* openMapContainerByName(
-    std::string& fileName);
+    const std::string& fileName);
 
 H5GEO_EXPORT H5WellContainer* openWellContainer(
     h5gt::File h5File);
 H5GEO_EXPORT H5WellContainer* openWellContainerByName(
-    std::string& fileName);
+    const std::string& fileName);
 
 H5GEO_EXPORT bool isGeoContainer(
     h5gt::File file);
 H5GEO_EXPORT bool isGeoContainerByType(
     h5gt::File file,
     const h5geo::ContainerType& cntType);
+
+//----------- OBJECTS -----------
+/// Check if the group can be treated as H5Seis/H5Map/H5Well etc
+/// and create appropriate object.
+/// Use dynamic_cast<> to cast it to the correct type.
+H5GEO_EXPORT H5BaseObject* openObject(
+    h5gt::Group group);
+
+H5GEO_EXPORT H5BaseObject* openBaseObject(
+    h5gt::Group group);
 
 H5GEO_EXPORT bool isGeoObject(
     h5gt::Group group);

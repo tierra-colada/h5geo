@@ -25,6 +25,7 @@ public:
       h5gt::File h5File);
   friend H5BaseContainer* h5geo::openBaseContainerByName(
       const std::string& fileName);
+  friend H5BaseContainer* h5geo::openContainer(h5gt::File h5File);
 
 protected:
   h5gt::File h5File;

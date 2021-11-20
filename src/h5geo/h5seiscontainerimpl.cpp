@@ -2,6 +2,9 @@
 #include "../../include/h5geo/h5seis.h"
 #include "../../include/h5geo/misc/h5seisimpl.h"
 
+#include <filesystem>
+namespace fs = std::filesystem;
+
 H5SeisContainerImpl::H5SeisContainerImpl(const h5gt::File &h5File) :
   H5BaseContainerImpl(h5File){}
 
@@ -98,7 +101,14 @@ H5SeisContainer* h5geo::openSeisContainer(
 }
 
 H5SeisContainer* h5geo::openSeisContainerByName(
-    std::string& fileName){
-  return createSeisContainerByName(fileName, h5geo::CreationType::OPEN);
+    const std::string& fileName){
+  if (fs::exists(fileName) && H5Fis_hdf5(fileName.c_str()) > 0){
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+
+    return h5geo::openSeisContainer(h5File);
+  }
+  return nullptr;
 }
 

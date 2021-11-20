@@ -2,6 +2,8 @@
 #include <gmock/gmock.h>
 #include <h5geo/h5mapcontainer.h>
 #include <h5geo/h5map.h>
+#include <h5geo/h5seis.h>
+#include <h5geo/h5well.h>
 #include <h5geo/h5core.h>
 
 #include <h5gt/H5File.hpp>
@@ -105,6 +107,20 @@ TEST_F(H5MapFixture, createMapWithDifferentCreateFlags){
   map = H5Map_ptr(mapContainer1->createMap(
           seisName_tmp, p, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
   ASSERT_TRUE(map != nullptr && seisName_tmp.compare(MAP_NAME1)) << "CREATE_UNDER_NEW_NAME";
+}
+
+TEST_F(H5MapFixture, openObject){
+  H5Map_ptr map(
+        mapContainer1->createMap(
+          MAP_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(map != nullptr) << "Create map from container1";
+
+  h5gt::Group group = mapContainer1->getH5File().getGroup(MAP_NAME1);
+  H5BaseObject* baseObject = h5geo::openObject(group);
+  ASSERT_TRUE(baseObject != nullptr) << "Base object is not NULLPTR";
+  ASSERT_TRUE(dynamic_cast<H5Seis*>(baseObject) == nullptr) << "Base object is not SEIS";
+  ASSERT_TRUE(dynamic_cast<H5Well*>(baseObject) == nullptr) << "Base object is not WELL";
+  ASSERT_TRUE(dynamic_cast<H5Map*>(baseObject) != nullptr) << "Base object is MAP";
 }
 
 TEST_F(H5MapFixture, createAndGetMap){

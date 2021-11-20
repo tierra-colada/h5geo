@@ -2,6 +2,9 @@
 #include "../../include/h5geo/h5map.h"
 #include "../../include/h5geo/misc/h5mapimpl.h"
 
+#include <filesystem>
+namespace fs = std::filesystem;
+
 H5MapContainerImpl::H5MapContainerImpl(const h5gt::File &h5File) :
   H5BaseContainerImpl(h5File){}
 
@@ -100,6 +103,13 @@ h5geo::openMapContainer(
 
 H5MapContainer*
 h5geo::openMapContainerByName(
-    std::string& fileName){
-  return createMapContainerByName(fileName, h5geo::CreationType::OPEN);
+    const std::string& fileName){
+  if (fs::exists(fileName) && H5Fis_hdf5(fileName.c_str()) > 0){
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+
+    return h5geo::openMapContainer(h5File);
+  }
+  return nullptr;
 }

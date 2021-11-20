@@ -2,6 +2,9 @@
 #include "../../include/h5geo/h5well.h"
 #include "../../include/h5geo/misc/h5wellimpl.h"
 
+#include <filesystem>
+namespace fs = std::filesystem;
+
 H5WellContainerImpl::H5WellContainerImpl(const h5gt::File &h5File):
   H5BaseContainerImpl(h5File){}
 
@@ -99,7 +102,13 @@ h5geo::openWellContainer(h5gt::File h5File){
 }
 
 H5WellContainer*
-h5geo::openWellContainerByName(std::string& fileName){
-  return createWellContainerByName(fileName, h5geo::CreationType::OPEN);
-}
+h5geo::openWellContainerByName(const std::string& fileName){
+  if (fs::exists(fileName) && H5Fis_hdf5(fileName.c_str()) > 0){
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+
+    return h5geo::openWellContainer(h5File);
+  }
+  return nullptr;}
 
