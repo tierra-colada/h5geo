@@ -915,7 +915,15 @@ bool H5SeisImpl::calcSpacingOriginOrientation3DStk(
   spacing(1) = bin_xL;
 
   double cos_alpha_iL = dx_iL/bin_iL;
-  orientation = 180*std::acos(cos_alpha_iL)/M_PI; // orientation in degrees
+  orientation = std::acos(cos_alpha_iL);
+
+  std::string angleUnits = getAngleUnits();
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+        units::unit_from_string("radian"),
+        units::unit_from_string(angleUnits));
+    orientation *= coef;
+  }
 
   return true;
 }
@@ -987,7 +995,15 @@ bool H5SeisImpl::calcSpacingOriginOrientation3DStk(
   spacing[1] = bin_xL;
 
   double cos_alpha_iL = dx_iL/bin_iL;
-  orientation = 180*std::acos(cos_alpha_iL)/M_PI; // orientation in degrees
+  orientation = std::acos(cos_alpha_iL);
+
+  std::string angleUnits = getAngleUnits();
+  if (!angleUnits.empty()){
+    double coef = units::convert(
+        units::unit_from_string("radian"),
+        units::unit_from_string(angleUnits));
+    orientation *= coef;
+  }
 
   return true;
 }
@@ -1144,6 +1160,13 @@ bool H5SeisImpl::setTemporalUnits(const std::string& str){
         str);
 }
 
+bool H5SeisImpl::setAngleUnits(const std::string& str){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::angle_units},
+        str);
+}
+
 bool H5SeisImpl::setDataUnits(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
@@ -1151,11 +1174,11 @@ bool H5SeisImpl::setDataUnits(const std::string& str){
         str);
 }
 
-bool H5SeisImpl::setOrientation(double orientation){
+bool H5SeisImpl::setOrientation(double orientation, const std::string& angleUnits){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::orientation},
-        orientation);
+        orientation, angleUnits, getAngleUnits());
 }
 
 bool H5SeisImpl::setOrigin(
@@ -1214,11 +1237,17 @@ std::string H5SeisImpl::getTemporalUnits(){
         std::string{h5geo::detail::temporal_units});
 }
 
+std::string H5SeisImpl::getAngleUnits(){
+  return h5geo::readStringAttribute(
+        objG,
+        std::string{h5geo::detail::angle_units});
+}
 
-double H5SeisImpl::getOrientation(){
+double H5SeisImpl::getOrientation(const std::string& angleUnits){
   return h5geo::readDoubleAttribute(
         objG,
-        std::string{h5geo::detail::orientation});
+        std::string{h5geo::detail::orientation},
+        getAngleUnits(), angleUnits);
 }
 
 Eigen::VectorXd H5SeisImpl::getOrigin(const std::string& spatialUnits){

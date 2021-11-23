@@ -244,8 +244,9 @@ public:
   virtual bool setSRD(double val, const std::string& spatialUnits = "") = 0;
   virtual bool setSpatialUnits(const std::string& str) = 0;
   virtual bool setTemporalUnits(const std::string& str) = 0;
+  virtual bool setAngleUnits(const std::string& str) = 0;
   virtual bool setDataUnits(const std::string& str) = 0;
-  virtual bool setOrientation(double orientation) = 0;
+  virtual bool setOrientation(double orientation, const std::string& angleUnits = "") = 0;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::VectorXd> origin, const std::string& spatialUnits = "") = 0;
   virtual bool setSpacing(
@@ -257,8 +258,9 @@ public:
   virtual double getSRD(const std::string& spatialUnits = "") = 0;
   virtual std::string getSpatialUnits() = 0;
   virtual std::string getTemporalUnits() = 0;
+  virtual std::string getAngleUnits() = 0;
   virtual std::string getDataUnits() = 0;
-  virtual double getOrientation() = 0;
+  virtual double getOrientation(const std::string& angleUnits = "") = 0;
   virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") = 0;
   virtual Eigen::VectorXd getSpacing(const std::string& spatialUnits = "") = 0;
   virtual Eigen::MatrixXd getBoundary(const std::string& spatialUnits = "") = 0;

@@ -57,6 +57,7 @@ public:
     p.nY = 20;
     p.domain = h5geo::Domain::TVD;
     p.spatialUnits = "millimeter";
+    p.angleUnits = "degree";
     p.dataUnits = "m/s";
   }
 

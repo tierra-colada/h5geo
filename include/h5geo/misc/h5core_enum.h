@@ -51,10 +51,11 @@ enum class SeisAttributes : unsigned{
   SRD = 4,
   spatial_units = 5,
   temporal_units = 6,
-  data_units = 7,
-  orientation = 8,
-  spacing = 9,
-  origin = 10
+  angle_units = 7,
+  data_units = 8,
+  orientation = 9,
+  spacing = 10,
+  origin = 11
 };
 
 inline constexpr auto& seis_attrs =
@@ -101,9 +102,10 @@ inline constexpr auto unique_values = magic_enum::enum_name(h5geo::detail::SeisG
 enum class MapAttributes : unsigned{
   Domain = 1,
   spatial_units = 2,
-  data_units = 3,
-  origin = 4,
-  spacing = 5
+  angle_units = 3,
+  data_units = 4,
+  origin = 5,
+  spacing = 6
 };
 
 inline constexpr auto& map_attrs =

@@ -21,8 +21,9 @@ public:
 
   virtual bool setDomain(const h5geo::Domain& domain) override;
   virtual bool setSpatialUnits(const std::string& str) override;
+  virtual bool setAngleUnits(const std::string& str) override;
   virtual bool setDataUnits(const std::string& str) override;
-  virtual bool setOrientation(double orientation) override;
+  virtual bool setOrientation(double orientation, const std::string& angleUnits = "") override;
   virtual bool setOrigin(
       std::vector<double>& v, const std::string& spatialUnits = "") override;
   virtual bool setOrigin(
@@ -39,8 +40,9 @@ public:
 
   virtual h5geo::Domain getDomain() override;
   virtual std::string getSpatialUnits() override;
+  virtual std::string getAngleUnits() override;
   virtual std::string getDataUnits() override;
-  virtual double getOrientation() override;
+  virtual double getOrientation(const std::string& angleUnits = "") override;
   virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") override;
   virtual Eigen::VectorXd getSpacing(const std::string& spatialUnits = "") override;
 

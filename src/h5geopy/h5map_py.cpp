@@ -17,8 +17,11 @@ void H5Map_py(
 
       .def("setDomain", &H5MapImpl::setDomain)
       .def("setSpatialUnits", &H5MapImpl::setSpatialUnits)
+      .def("setAngleUnits", &H5MapImpl::setAngleUnits)
       .def("setDataUnits", &H5MapImpl::setDataUnits)
-      .def("setOrientation", &H5MapImpl::setOrientation)
+      .def("setOrientation", &H5MapImpl::setOrientation,
+           py::arg("value"),
+           py::arg_v("angleUnits", "", "str()"))
       .def("setOrigin", py::overload_cast<
            std::vector<double>&,
            const std::string&>(
@@ -57,8 +60,10 @@ void H5Map_py(
 
       .def("getDomain", &H5MapImpl::getDomain)
       .def("getSpatialUnits", &H5MapImpl::getSpatialUnits)
+      .def("getAngleUnits", &H5MapImpl::getAngleUnits)
       .def("getDataUnits", &H5MapImpl::getDataUnits)
-      .def("getOrientation", &H5MapImpl::getOrientation)
+      .def("getOrientation", &H5MapImpl::getOrientation,
+           py::arg_v("angleUnits", "", "str()"))
       .def("getOrigin", &H5MapImpl::getOrigin,
            py::arg_v("spatialUnits", "", "str()"))
       .def("getSpacing", &H5MapImpl::getSpacing,

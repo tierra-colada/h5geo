@@ -44,7 +44,7 @@ struct MapParam{
   double orientation = 0;
   double X0, Y0, dX, dY;
   h5geo::Domain domain;
-  std::string spatialUnits, dataUnits;
+  std::string spatialUnits, angleUnits, dataUnits;
 };
 
 struct WellParam{
@@ -67,7 +67,7 @@ struct SeisParam{
   h5geo::Domain domain;
   h5geo::SeisDataType dataType;
   h5geo::SurveyType surveyType;
-  std::string spatialUnits, temporalUnits, dataUnits;
+  std::string spatialUnits, temporalUnits, angleUnits, dataUnits;
   size_t nTrc;
   size_t nSamp;
   double srd = 0, orientation = 0;

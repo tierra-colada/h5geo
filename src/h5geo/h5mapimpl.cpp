@@ -48,6 +48,13 @@ bool H5MapImpl::setSpatialUnits(const std::string& str){
         str);
 }
 
+bool H5MapImpl::setAngleUnits(const std::string& str){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::angle_units},
+        str);
+}
+
 bool H5MapImpl::setDataUnits(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
@@ -55,11 +62,11 @@ bool H5MapImpl::setDataUnits(const std::string& str){
         str);
 }
 
-bool H5MapImpl::setOrientation(double orientation){
+bool H5MapImpl::setOrientation(double orientation, const std::string& angleUnits){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::orientation},
-        orientation);
+        orientation, angleUnits, getAngleUnits());
 }
 
 bool H5MapImpl::setOrigin(
@@ -157,16 +164,23 @@ std::string H5MapImpl::getSpatialUnits(){
         std::string{h5geo::detail::spatial_units});
 }
 
+std::string H5MapImpl::getAngleUnits(){
+  return h5geo::readStringAttribute(
+        objG,
+        std::string{h5geo::detail::angle_units});
+}
+
 std::string H5MapImpl::getDataUnits(){
   return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::data_units});
 }
 
-double H5MapImpl::getOrientation(){
+double H5MapImpl::getOrientation(const std::string& angleUnits){
   return h5geo::readDoubleAttribute(
         objG,
-        std::string{h5geo::detail::orientation});
+        std::string{h5geo::detail::orientation},
+        getAngleUnits(), angleUnits);
 }
 
 Eigen::VectorXd H5MapImpl::getOrigin(const std::string& spatialUnits){

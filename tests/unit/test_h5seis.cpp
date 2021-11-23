@@ -38,6 +38,7 @@ public:
     p.domain = h5geo::Domain::OWT;
     p.spatialUnits = "millimeter";
     p.temporalUnits = "millisecond";
+    p.angleUnits = "degree";
     p.dataUnits = "My_data_units";
     p.dataType = h5geo::SeisDataType::PRESTACK;
     p.surveyType = h5geo::SurveyType::TWO_D;

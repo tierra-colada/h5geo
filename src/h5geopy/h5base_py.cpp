@@ -17,6 +17,7 @@ void MapParam_py(py::class_<MapParam> &py_obj){
         double,
         Domain,
         std::string,
+        std::string,
         std::string>(),
         py::arg("nX"),
         py::arg("nY"),
@@ -27,6 +28,7 @@ void MapParam_py(py::class_<MapParam> &py_obj){
         py::arg_v("orientation", 0, "0"),
         py::arg("domain"),
         py::arg("spatialUnits"),
+        py::arg("angleUnits"),
         py::arg("dataUnits"))
       .def_readwrite("nX", &MapParam::nX)
       .def_readwrite("nY", &MapParam::nY)
@@ -37,6 +39,7 @@ void MapParam_py(py::class_<MapParam> &py_obj){
       .def_readwrite("orientation", &MapParam::orientation)
       .def_readwrite("domain", &MapParam::domain)
       .def_readwrite("spatialUnits", &MapParam::spatialUnits)
+      .def_readwrite("spatialUnits", &MapParam::angleUnits)
       .def_readwrite("dataUnits", &MapParam::dataUnits);
 }
 
@@ -113,6 +116,7 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
         std::string,
         std::string,
         std::string,
+        std::string,
         size_t,
         size_t,
         double,
@@ -128,6 +132,7 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
         py::arg("surveyType"),
         py::arg("spatialUnits"),
         py::arg("temporalUnits"),
+        py::arg("angleUnits"),
         py::arg("dataUnits"),
         py::arg("nTrc"),
         py::arg("nSamp"),
@@ -142,6 +147,7 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
       .def_readwrite("domain", &SeisParam::domain)
       .def_readwrite("spatialUnits", &SeisParam::spatialUnits)
       .def_readwrite("temporalUnits", &SeisParam::temporalUnits)
+      .def_readwrite("temporalUnits", &SeisParam::angleUnits)
       .def_readwrite("dataUnits", &SeisParam::dataUnits)
       .def_readwrite("dataType", &SeisParam::dataType)
       .def_readwrite("surveyType", &SeisParam::surveyType)

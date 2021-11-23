@@ -320,6 +320,10 @@ H5BaseImpl::createNewMap(h5gt::Group &group, void* p)
           h5gt::DataSpace::From(param.spatialUnits)).
         write(param.spatialUnits);
     group.createAttribute<std::string>(
+          std::string{h5geo::detail::angle_units},
+          h5gt::DataSpace::From(param.angleUnits)).
+        write(param.angleUnits);
+    group.createAttribute<std::string>(
           std::string{h5geo::detail::data_units},
           h5gt::DataSpace::From(param.dataUnits)).
         write(param.dataUnits);
@@ -516,6 +520,10 @@ H5BaseImpl::createNewSeis(h5gt::Group &group, void* p)
           std::string{h5geo::detail::data_units},
           h5gt::DataSpace::From(param.dataUnits)).
         write(param.dataUnits);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::angle_units},
+          h5gt::DataSpace::From(param.angleUnits)).
+        write(param.angleUnits);
     group.createAttribute<double>(
           std::string{h5geo::detail::orientation},
           h5gt::DataSpace(1)).

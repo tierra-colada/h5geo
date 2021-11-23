@@ -302,8 +302,11 @@ void H5Seis_py(
            py::arg_v("units", "", "str()"))
       .def("setSpatialUnits", &H5SeisImpl::setSpatialUnits)
       .def("setTemporalUnits", &H5SeisImpl::setTemporalUnits)
+      .def("setAngleUnits", &H5SeisImpl::setAngleUnits)
       .def("setDataUnits", &H5SeisImpl::setDataUnits)
-      .def("setOrientation", &H5SeisImpl::setOrientation)
+      .def("setOrientation", &H5SeisImpl::setOrientation,
+           py::arg("value"),
+           py::arg_v("units", "", "str()"))
       .def("setOrigin", &H5SeisImpl::setOrigin,
            py::arg("value"),
            py::arg_v("units", "", "str()"))
@@ -318,8 +321,10 @@ void H5Seis_py(
            py::arg_v("units", "", "str()"))
       .def("getSpatialUnits", &H5SeisImpl::getSpatialUnits)
       .def("getTemporalUnits", &H5SeisImpl::getTemporalUnits)
+      .def("getAngleUnits", &H5SeisImpl::getAngleUnits)
       .def("getDataUnits", &H5SeisImpl::getDataUnits)
-      .def("getOrientation", &H5SeisImpl::getOrientation)
+      .def("getOrientation", &H5SeisImpl::getOrientation,
+           py::arg_v("units", "", "str()"))
       .def("getOrigin", &H5SeisImpl::getOrigin,
            py::arg_v("units", "", "str()"))
       .def("getSpacing", &H5SeisImpl::getSpacing,
