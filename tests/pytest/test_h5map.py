@@ -25,9 +25,11 @@ class test_h5map(unittest.TestCase):
         trig = True
 
         self.p.X0 = 0
-        self.p.Y0 = 10
-        self.p.dX = 2
-        self.p.dY = 4
+        self.p.Y0 = 0
+        self.p.X1 = 100
+        self.p.Y1 = 0
+        self.p.X2 = 100
+        self.p.Y2 = 0
         self.p.nX = 10
         self.p.nY = 20
         self.p.domain = h5geo.Domain.TVD

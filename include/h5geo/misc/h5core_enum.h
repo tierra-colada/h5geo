@@ -102,14 +102,16 @@ inline constexpr auto unique_values = magic_enum::enum_name(h5geo::detail::SeisG
 enum class MapAttributes : unsigned{
   Domain = 1,
   spatial_units = 2,
-  angle_units = 3,
-  data_units = 4,
-  origin = 5,
-  spacing = 6
+  data_units = 3,
+  origin = 4,
+  point1 = 5,
+  point2 = 6
 };
 
 inline constexpr auto& map_attrs =
     magic_enum::enum_names<h5geo::detail::MapAttributes>();
+inline constexpr auto point1 = magic_enum::enum_name(h5geo::detail::MapAttributes::point1);
+inline constexpr auto point2 = magic_enum::enum_name(h5geo::detail::MapAttributes::point2);
 
 enum class MapDatasets : unsigned{
   map_data = 1

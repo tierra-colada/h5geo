@@ -21,16 +21,18 @@ public:
 
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
   virtual bool setSpatialUnits(const std::string& str) = 0;
-  virtual bool setAngleUnits(const std::string& str) = 0;
   virtual bool setDataUnits(const std::string& str) = 0;
-  virtual bool setOrientation(double orientation, const std::string& angleUnits = "") = 0;
   virtual bool setOrigin(
       std::vector<double>& v, const std::string& spatialUnits = "") = 0;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") = 0;
-  virtual bool setSpacing(
+  virtual bool setPoint1(
       std::vector<double>& v, const std::string& spatialUnits = "") = 0;
-  virtual bool setSpacing(
+  virtual bool setPoint1(
+      Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") = 0;
+  virtual bool setPoint2(
+      std::vector<double>& v, const std::string& spatialUnits = "") = 0;
+  virtual bool setPoint2(
       Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") = 0;
 
   virtual bool addAttribute(H5Map* map, std::string name = "") = 0;
@@ -40,11 +42,10 @@ public:
 
   virtual h5geo::Domain getDomain() = 0;
   virtual std::string getSpatialUnits() = 0;
-  virtual std::string getAngleUnits() = 0;
   virtual std::string getDataUnits() = 0;
-  virtual double getOrientation(const std::string& angleUnits = "") = 0;
   virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") = 0;
-  virtual Eigen::VectorXd getSpacing(const std::string& spatialUnits = "") = 0;
+  virtual Eigen::VectorXd getPoint1(const std::string& spatialUnits = "") = 0;
+  virtual Eigen::VectorXd getPoint2(const std::string& spatialUnits = "") = 0;
 
   virtual H5MapContainer* getMapContainer() const = 0;
 

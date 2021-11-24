@@ -40,11 +40,11 @@ class H5LogCurve;
 
 
 struct MapParam{
+  double X0, Y0, X1, Y1, X2, Y2;
   size_t nX, nY;
-  double orientation = 0;
-  double X0, Y0, dX, dY;
   h5geo::Domain domain;
-  std::string spatialUnits, angleUnits, dataUnits;
+  std::string spatialUnits, dataUnits;
+  hsize_t xChunkSize = 100, yChunkSize = 100;
 };
 
 struct WellParam{

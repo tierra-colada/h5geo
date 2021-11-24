@@ -306,8 +306,17 @@ std::optional<h5gt::Group>
 H5BaseImpl::createNewMap(h5gt::Group &group, void* p)
 {
   MapParam param = *(static_cast<MapParam*>(p));
+
+  std::vector<size_t> count = {param.nY, param.nX};
+  std::vector<size_t> max_count = {h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {param.yChunkSize, param.xChunkSize};
+  h5gt::DataSetCreateProps props;
+  props.setChunk(cdims);
+  h5gt::DataSpace dataspace(count, max_count);
+
   std::vector<double> origin({param.X0, param.Y0});
-  std::vector<double> spacing({param.dX, param.dY});
+  std::vector<double> point1({param.X1, param.Y1});
+  std::vector<double> point2({param.X2, param.X2});
 
   try {
 
@@ -320,10 +329,6 @@ H5BaseImpl::createNewMap(h5gt::Group &group, void* p)
           h5gt::DataSpace::From(param.spatialUnits)).
         write(param.spatialUnits);
     group.createAttribute<std::string>(
-          std::string{h5geo::detail::angle_units},
-          h5gt::DataSpace::From(param.angleUnits)).
-        write(param.angleUnits);
-    group.createAttribute<std::string>(
           std::string{h5geo::detail::data_units},
           h5gt::DataSpace::From(param.dataUnits)).
         write(param.dataUnits);
@@ -332,17 +337,17 @@ H5BaseImpl::createNewMap(h5gt::Group &group, void* p)
           h5gt::DataSpace({2})).
         write(origin);
     group.createAttribute<double>(
-          std::string{h5geo::detail::spacing},
+          std::string{h5geo::detail::point1},
           h5gt::DataSpace({2})).
-        write(spacing);
+        write(point1);
     group.createAttribute<double>(
-          std::string{h5geo::detail::orientation},
-          h5gt::DataSpace(1)).
-        write(param.orientation);
+          std::string{h5geo::detail::point2},
+          h5gt::DataSpace({2})).
+        write(point2);
 
     group.createDataSet<double>(
           std::string{h5geo::detail::map_data},
-          h5gt::DataSpace({param.nX, param.nY}));
+          dataspace, h5gt::LinkCreateProps(), props);
 
     return group;
 
@@ -397,8 +402,8 @@ H5BaseImpl::createNewLogCurve(h5gt::Group &group, void* p)
 {
   LogCurveParam param = *(static_cast<LogCurveParam*>(p));
   std::vector<size_t> count = {2, 1};
-  std::vector<hsize_t> cdims = {2, param.chunkSize};
   std::vector<size_t> max_count = {2, h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {2, param.chunkSize};
   h5gt::DataSetCreateProps props;
   props.setChunk(cdims);
   h5gt::DataSpace dataspace(count, max_count);
@@ -435,8 +440,8 @@ H5BaseImpl::createNewDevCurve(h5gt::Group &group, void* p)
 {
   DevCurveParam param = *(static_cast<DevCurveParam*>(p));
   std::vector<size_t> count = {5, 1};
-  std::vector<hsize_t> cdims = {5, param.chunkSize};
   std::vector<size_t> max_count = {5, h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {5, param.chunkSize};
   h5gt::DataSetCreateProps props;
   props.setChunk(cdims);
   h5gt::DataSpace dataspace(count, max_count);
@@ -572,8 +577,8 @@ H5BaseImpl::createBinHeader(
   size_t nBinHeaderNames = fullHeaderNameList.size();
 
   std::vector<size_t> count = {size_t(nBinHeaderNames)};
-  std::vector<hsize_t> cdims = {stdChunk};
   std::vector<size_t> max_count = {h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {stdChunk};
 
   try {
 
@@ -603,9 +608,9 @@ H5BaseImpl::createTrace(
     const hsize_t& trcChunk)
 {
   std::vector<size_t> count = {nTrc, nSamp};
-  std::vector<hsize_t> cdims = {trcChunk, nSamp};
   std::vector<size_t> max_count = {
     h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {trcChunk, nSamp};
 
   try {
 
@@ -633,9 +638,9 @@ H5BaseImpl::createTraceHeader(
   size_t nTraceHeaderNames = fullHeaderNameList.size();
 
   std::vector<size_t> count = {size_t(nTraceHeaderNames), nTrc};
-  std::vector<hsize_t> cdims = {size_t(nTraceHeaderNames), trcChunk};
   std::vector<size_t> max_count = {
     h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {size_t(nTraceHeaderNames), trcChunk};
 
   try {
 
@@ -663,8 +668,8 @@ H5BaseImpl::createBoundary(
     const hsize_t& stdChunk)
 {
   std::vector<size_t> count = {2, 1};
-  std::vector<hsize_t> cdims = {2, stdChunk};
   std::vector<size_t> max_count = {2, h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {2, stdChunk};
 
   try {
 

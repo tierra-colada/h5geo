@@ -15,7 +15,7 @@ bool H5MapImpl::writeData(
   if (!opt.has_value())
     return false;
 
-  return h5geo::overwriteDataset(
+  return h5geo::overwriteResizableDataset(
         objG,
         opt->getPath(),
         M,
@@ -48,13 +48,6 @@ bool H5MapImpl::setSpatialUnits(const std::string& str){
         str);
 }
 
-bool H5MapImpl::setAngleUnits(const std::string& str){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::angle_units},
-        str);
-}
-
 bool H5MapImpl::setDataUnits(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
@@ -62,13 +55,6 @@ bool H5MapImpl::setDataUnits(const std::string& str){
         str);
 }
 
-bool H5MapImpl::setOrientation(double orientation, const std::string& angleUnits){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::orientation},
-        orientation, angleUnits, getAngleUnits());
-}
-
 bool H5MapImpl::setOrigin(
     std::vector<double>& v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
@@ -85,19 +71,35 @@ bool H5MapImpl::setOrigin(
         v, spatialUnits, getSpatialUnits());
 }
 
-bool H5MapImpl::setSpacing(
+bool H5MapImpl::setPoint1(
     std::vector<double>& v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
         objG,
-        std::string{h5geo::detail::spacing},
+        std::string{h5geo::detail::point1},
         v, spatialUnits, getSpatialUnits());
 }
 
-bool H5MapImpl::setSpacing(
+bool H5MapImpl::setPoint1(
     Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
         objG,
-        std::string{h5geo::detail::spacing},
+        std::string{h5geo::detail::point1},
+        v, spatialUnits, getSpatialUnits());
+}
+
+bool H5MapImpl::setPoint2(
+    std::vector<double>& v, const std::string& spatialUnits){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::point2},
+        v, spatialUnits, getSpatialUnits());
+}
+
+bool H5MapImpl::setPoint2(
+    Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::point2},
         v, spatialUnits, getSpatialUnits());
 }
 
@@ -164,23 +166,10 @@ std::string H5MapImpl::getSpatialUnits(){
         std::string{h5geo::detail::spatial_units});
 }
 
-std::string H5MapImpl::getAngleUnits(){
-  return h5geo::readStringAttribute(
-        objG,
-        std::string{h5geo::detail::angle_units});
-}
-
 std::string H5MapImpl::getDataUnits(){
   return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::data_units});
-}
-
-double H5MapImpl::getOrientation(const std::string& angleUnits){
-  return h5geo::readDoubleAttribute(
-        objG,
-        std::string{h5geo::detail::orientation},
-        getAngleUnits(), angleUnits);
 }
 
 Eigen::VectorXd H5MapImpl::getOrigin(const std::string& spatialUnits){
@@ -190,10 +179,17 @@ Eigen::VectorXd H5MapImpl::getOrigin(const std::string& spatialUnits){
         getSpatialUnits(), spatialUnits);
 }
 
-Eigen::VectorXd H5MapImpl::getSpacing(const std::string& spatialUnits){
+Eigen::VectorXd H5MapImpl::getPoint1(const std::string& spatialUnits){
   return h5geo::readDoubleEigenVecAttribute(
         objG,
-        std::string{h5geo::detail::spacing},
+        std::string{h5geo::detail::point1},
+        getSpatialUnits(), spatialUnits);
+}
+
+Eigen::VectorXd H5MapImpl::getPoint2(const std::string& spatialUnits){
+  return h5geo::readDoubleEigenVecAttribute(
+        objG,
+        std::string{h5geo::detail::point2},
         getSpatialUnits(), spatialUnits);
 }
 

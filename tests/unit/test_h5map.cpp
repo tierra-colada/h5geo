@@ -50,15 +50,18 @@ public:
     trig = true;
 
     p.X0 = 0;
-    p.Y0 = 10;
-    p.dX = 2;
-    p.dY = 4;
+    p.Y0 = 0;
+    p.X1 = 100;
+    p.Y1 = 0;
+    p.X2 = 100;
+    p.Y2 = 0;
     p.nX = 10;
     p.nY = 20;
     p.domain = h5geo::Domain::TVD;
     p.spatialUnits = "millimeter";
-    p.angleUnits = "degree";
     p.dataUnits = "m/s";
+    p.xChunkSize = 5;
+    p.yChunkSize = 5;
   }
 
   virtual void TearDown() override{

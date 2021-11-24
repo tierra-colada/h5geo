@@ -8,39 +8,45 @@ void MapParam_py(py::class_<MapParam> &py_obj){
         py::init<>())
       .def(
         py::init<
+        double,
+        double,
+        double,
+        double,
+        double,
+        double,
         size_t,
         size_t,
-        double,
-        double,
-        double,
-        double,
-        double,
         Domain,
         std::string,
         std::string,
-        std::string>(),
-        py::arg("nX"),
-        py::arg("nY"),
+        hsize_t,
+        hsize_t>(),
         py::arg("X0"),
         py::arg("Y0"),
-        py::arg("dX"),
-        py::arg("dY"),
-        py::arg_v("orientation", 0, "0"),
+        py::arg("X1"),
+        py::arg("Y1"),
+        py::arg("X2"),
+        py::arg("Y2"),
+        py::arg("nX"),
+        py::arg("nY"),
         py::arg("domain"),
         py::arg("spatialUnits"),
-        py::arg("angleUnits"),
-        py::arg("dataUnits"))
-      .def_readwrite("nX", &MapParam::nX)
-      .def_readwrite("nY", &MapParam::nY)
+        py::arg("dataUnits"),
+        py::arg("xChunkSize"),
+        py::arg("yChunkSize"))
       .def_readwrite("X0", &MapParam::X0)
       .def_readwrite("Y0", &MapParam::Y0)
-      .def_readwrite("dX", &MapParam::dX)
-      .def_readwrite("dY", &MapParam::dY)
-      .def_readwrite("orientation", &MapParam::orientation)
+      .def_readwrite("X1", &MapParam::X1)
+      .def_readwrite("Y1", &MapParam::Y1)
+      .def_readwrite("X2", &MapParam::X2)
+      .def_readwrite("Y2", &MapParam::Y2)
+      .def_readwrite("nX", &MapParam::nX)
+      .def_readwrite("nY", &MapParam::nY)
       .def_readwrite("domain", &MapParam::domain)
       .def_readwrite("spatialUnits", &MapParam::spatialUnits)
-      .def_readwrite("spatialUnits", &MapParam::angleUnits)
-      .def_readwrite("dataUnits", &MapParam::dataUnits);
+      .def_readwrite("dataUnits", &MapParam::dataUnits)
+      .def_readwrite("xChunkSize", &MapParam::xChunkSize)
+      .def_readwrite("yChunkSize", &MapParam::yChunkSize);
 }
 
 void WellParam_py(py::class_<WellParam> &py_obj){
