@@ -20,8 +20,6 @@ public:
   virtual Eigen::MatrixXd getData(const std::string& dataUnits = "") = 0;
 
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
-  virtual bool setSpatialUnits(const std::string& str) = 0;
-  virtual bool setDataUnits(const std::string& str) = 0;
   virtual bool setOrigin(
       std::vector<double>& v, const std::string& spatialUnits = "") = 0;
   virtual bool setOrigin(
@@ -41,8 +39,6 @@ public:
   virtual H5Map* getAttribute(const std::string& name) = 0;
 
   virtual h5geo::Domain getDomain() = 0;
-  virtual std::string getSpatialUnits() = 0;
-  virtual std::string getDataUnits() = 0;
   virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") = 0;
   virtual Eigen::VectorXd getPoint1(const std::string& spatialUnits = "") = 0;
   virtual Eigen::VectorXd getPoint2(const std::string& spatialUnits = "") = 0;

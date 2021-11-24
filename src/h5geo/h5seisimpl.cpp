@@ -1146,34 +1146,6 @@ bool H5SeisImpl::setSRD(double val, const std::string& spatialUnits){
         val, spatialUnits, getSpatialUnits());
 }
 
-bool H5SeisImpl::setSpatialUnits(const std::string& str){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::spatial_units},
-        str);
-}
-
-bool H5SeisImpl::setTemporalUnits(const std::string& str){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::temporal_units},
-        str);
-}
-
-bool H5SeisImpl::setAngularUnits(const std::string& str){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::angular_units},
-        str);
-}
-
-bool H5SeisImpl::setDataUnits(const std::string& str){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::data_units},
-        str);
-}
-
 bool H5SeisImpl::setOrientation(double orientation, const std::string& angularUnits){
   return h5geo::overwriteAttribute(
         objG,
@@ -1225,24 +1197,6 @@ double H5SeisImpl::getSRD(const std::string& spatialUnits){
         getSpatialUnits(), spatialUnits);
 }
 
-std::string H5SeisImpl::getSpatialUnits(){
-  return h5geo::readStringAttribute(
-        objG,
-        std::string{h5geo::detail::spatial_units});
-}
-
-std::string H5SeisImpl::getTemporalUnits(){
-  return h5geo::readStringAttribute(
-        objG,
-        std::string{h5geo::detail::temporal_units});
-}
-
-std::string H5SeisImpl::getAngularUnits(){
-  return h5geo::readStringAttribute(
-        objG,
-        std::string{h5geo::detail::angular_units});
-}
-
 double H5SeisImpl::getOrientation(const std::string& angularUnits){
   return h5geo::readDoubleAttribute(
         objG,
@@ -1273,12 +1227,6 @@ Eigen::MatrixXd H5SeisImpl::getBoundary(const std::string& spatialUnits){
         objG,
         opt->getPath(),
         getSpatialUnits(), spatialUnits);
-}
-
-std::string H5SeisImpl::getDataUnits(){
-  return h5geo::readStringAttribute(
-        objG,
-        std::string{h5geo::detail::data_units});
 }
 
 bool H5SeisImpl::hasPKeySort(const std::string& pKeyName)

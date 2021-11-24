@@ -35,14 +35,6 @@ public:
       const std::string& name,
       const std::string& units = "") = 0;
 
-  virtual bool setSpatialUnits(const std::string& str) = 0;
-  virtual bool setTemporalUnits(const std::string& str) = 0;
-  virtual bool setAngularUnits(const std::string& str) = 0;
-
-  virtual std::string getSpatialUnits() = 0;
-  virtual std::string getTemporalUnits() = 0;
-  virtual std::string getAngularUnits() = 0;
-
   virtual std::string getRelativeCurveName() = 0;
 
   virtual H5WellContainer* getWellContainer() = 0;

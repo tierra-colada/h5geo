@@ -9,6 +9,8 @@ void H5BaseObject_py(
     H5BaseImpl,
     H5BaseObject> &py_obj){
   py_obj
+      .def("setSpatialUnits", &H5BaseObjectImpl::setSpatialUnits)
+      .def("getSpatialUnits", &H5BaseObjectImpl::getSpatialUnits)
       .def("getH5File", &H5BaseObjectImpl::getH5File)
       .def("getObjG", &H5BaseObjectImpl::getObjG)
       .def("getGroupOpt", &H5BaseObjectImpl::getGroupOpt)

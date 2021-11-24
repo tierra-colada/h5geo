@@ -7,11 +7,12 @@
 
 namespace h5geopy {
 
-void MapParam_py(py::class_<MapParam> &py_obj);
-void WellParam_py(py::class_<WellParam> &py_obj);
-void DevCurveParam_py(py::class_<DevCurveParam> &py_obj);
-void LogCurveParam_py(py::class_<LogCurveParam> &py_obj);
-void SeisParam_py(py::class_<SeisParam> &py_obj);
+void BaseObjectParam_py(py::class_<BaseObjectParam> &py_obj);
+void MapParam_py(py::class_<MapParam, BaseObjectParam> &py_obj);
+void WellParam_py(py::class_<WellParam, BaseObjectParam> &py_obj);
+void DevCurveParam_py(py::class_<DevCurveParam, BaseObjectParam> &py_obj);
+void LogCurveParam_py(py::class_<LogCurveParam, BaseObjectParam> &py_obj);
+void SeisParam_py(py::class_<SeisParam, BaseObjectParam> &py_obj);
 
 void H5Base_py(py::class_<
                H5BaseImpl,

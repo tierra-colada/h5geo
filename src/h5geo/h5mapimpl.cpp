@@ -46,20 +46,6 @@ bool H5MapImpl::setDomain(const h5geo::Domain& val){
         v);
 }
 
-bool H5MapImpl::setSpatialUnits(const std::string& str){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::spatial_units},
-        str);
-}
-
-bool H5MapImpl::setDataUnits(const std::string& str){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::data_units},
-        str);
-}
-
 bool H5MapImpl::setOrigin(
     std::vector<double>& v, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
@@ -163,18 +149,6 @@ h5geo::Domain H5MapImpl::getDomain(){
         h5geo::readEnumAttribute(
           objG,
           std::string{h5geo::detail::Domain}));
-}
-
-std::string H5MapImpl::getSpatialUnits(){
-  return h5geo::readStringAttribute(
-        objG,
-        std::string{h5geo::detail::spatial_units});
-}
-
-std::string H5MapImpl::getDataUnits(){
-  return h5geo::readStringAttribute(
-        objG,
-        std::string{h5geo::detail::data_units});
 }
 
 Eigen::VectorXd H5MapImpl::getOrigin(const std::string& spatialUnits){

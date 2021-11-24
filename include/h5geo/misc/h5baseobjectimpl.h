@@ -14,6 +14,16 @@ protected:
   virtual ~H5BaseObjectImpl() = default;
 
 public:
+  virtual bool setSpatialUnits(const std::string& str) override;
+  virtual bool setTemporalUnits(const std::string& str) override;
+  virtual bool setAngularUnits(const std::string& str) override;
+  virtual bool setDataUnits(const std::string& str) override;
+
+  virtual std::string getSpatialUnits() override;
+  virtual std::string getTemporalUnits() override;
+  virtual std::string getAngularUnits() override;
+  virtual std::string getDataUnits() override;
+
   virtual h5gt::File getH5File() const override;
   virtual h5gt::Group getObjG() const override;
 

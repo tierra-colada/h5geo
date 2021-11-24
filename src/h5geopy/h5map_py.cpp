@@ -16,8 +16,6 @@ void H5Map_py(
            py::arg_v("dataUnits", "", "str()"))
 
       .def("setDomain", &H5MapImpl::setDomain)
-      .def("setSpatialUnits", &H5MapImpl::setSpatialUnits)
-      .def("setDataUnits", &H5MapImpl::setDataUnits)
       .def("setOrigin", py::overload_cast<
            std::vector<double>&,
            const std::string&>(
@@ -67,8 +65,6 @@ void H5Map_py(
            py::arg("name"))
 
       .def("getDomain", &H5MapImpl::getDomain)
-      .def("getSpatialUnits", &H5MapImpl::getSpatialUnits)
-      .def("getDataUnits", &H5MapImpl::getDataUnits)
       .def("getOrigin", &H5MapImpl::getOrigin,
            py::arg_v("spatialUnits", "", "str()"))
       .def("getPoint1", &H5MapImpl::getPoint1,

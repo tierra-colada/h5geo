@@ -29,12 +29,6 @@ public:
       const std::string& name,
       const std::string& units = "") override;
 
-  virtual bool setSpatialUnits(const std::string& str) override;
-  virtual bool setDataUnits(const std::string& str) override;
-
-  virtual std::string getSpatialUnits() override;
-  virtual std::string getDataUnits() override;
-
   virtual std::string getRelativeCurveName() override;
 
   virtual H5WellContainer* getWellContainer() override;

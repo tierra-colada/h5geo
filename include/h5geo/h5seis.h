@@ -242,10 +242,6 @@ public:
   virtual bool setDataType(const h5geo::SeisDataType& seisType) = 0;
   virtual bool setSurveyType(const h5geo::SurveyType& surveyType) = 0;
   virtual bool setSRD(double val, const std::string& spatialUnits = "") = 0;
-  virtual bool setSpatialUnits(const std::string& str) = 0;
-  virtual bool setTemporalUnits(const std::string& str) = 0;
-  virtual bool setAngularUnits(const std::string& str) = 0;
-  virtual bool setDataUnits(const std::string& str) = 0;
   virtual bool setOrientation(double orientation, const std::string& angularUnits = "") = 0;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::VectorXd> origin, const std::string& spatialUnits = "") = 0;
@@ -256,10 +252,6 @@ public:
   virtual h5geo::SeisDataType getDataType() = 0;
   virtual h5geo::SurveyType getSurveyType() = 0;
   virtual double getSRD(const std::string& spatialUnits = "") = 0;
-  virtual std::string getSpatialUnits() = 0;
-  virtual std::string getTemporalUnits() = 0;
-  virtual std::string getAngularUnits() = 0;
-  virtual std::string getDataUnits() = 0;
   virtual double getOrientation(const std::string& angularUnits = "") = 0;
   virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") = 0;
   virtual Eigen::VectorXd getSpacing(const std::string& spatialUnits = "") = 0;

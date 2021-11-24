@@ -47,14 +47,6 @@ void H5DevCurve_py(
            py::arg("name"),
            py::arg_v("units", "", "str()"))
 
-      .def("setSpatialUnits", &H5DevCurveImpl::setSpatialUnits)
-      .def("setTemporalUnits", &H5DevCurveImpl::setTemporalUnits)
-      .def("setAngularUnits", &H5DevCurveImpl::setAngularUnits)
-
-      .def("getSpatialUnits", &H5DevCurveImpl::getSpatialUnits)
-      .def("getTemporalUnits", &H5DevCurveImpl::getTemporalUnits)
-      .def("getAngularUnits", &H5DevCurveImpl::getAngularUnits)
-
       .def("getRelativeCurveName", &H5DevCurveImpl::getRelativeCurveName)
 
       .def("getWellContainer", &H5DevCurveImpl::getWellContainer)

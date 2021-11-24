@@ -132,45 +132,6 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
   return curve;
 }
 
-bool H5DevCurveImpl::setSpatialUnits(const std::string& str){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::spatial_units},
-        str);
-}
-
-bool H5DevCurveImpl::setTemporalUnits(const std::string& str){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::temporal_units},
-        str);
-}
-
-bool H5DevCurveImpl::setAngularUnits(const std::string& str){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::angular_units},
-        str);
-}
-
-std::string H5DevCurveImpl::getSpatialUnits(){
-  return h5geo::readStringAttribute(
-        objG,
-        std::string{h5geo::detail::spatial_units});
-}
-
-std::string H5DevCurveImpl::getTemporalUnits(){
-  return h5geo::readStringAttribute(
-        objG,
-        std::string{h5geo::detail::temporal_units});
-}
-
-std::string H5DevCurveImpl::getAngularUnits(){
-  return h5geo::readStringAttribute(
-        objG,
-        std::string{h5geo::detail::angular_units});
-}
-
 std::string H5DevCurveImpl::getRelativeCurveName(){
   auto optWellG = getParentG(h5geo::ObjectType::WELL);
   if (!optWellG.has_value())

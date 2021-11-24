@@ -196,13 +196,6 @@ H5DevCurve* H5WellImpl::createDevCurve(
   return new H5DevCurveImpl(opt.value());
 }
 
-bool H5WellImpl::setSpatialUnits(const std::string& str){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::spatial_units},
-        str);
-}
-
 bool H5WellImpl::setHeadCoord(
     Eigen::Ref<Eigen::Vector2d> v,
     const std::string& spatialUnits)
@@ -227,12 +220,6 @@ bool H5WellImpl::setUWI(const std::string& str){
         objG,
         std::string{h5geo::detail::UWI},
         str);
-}
-
-std::string H5WellImpl::getSpatialUnits(){
-  return h5geo::readStringAttribute(
-        objG,
-        std::string{h5geo::detail::spatial_units});
 }
 
 Eigen::VectorXd H5WellImpl::getHeadCoord(const std::string& spatialUnits){

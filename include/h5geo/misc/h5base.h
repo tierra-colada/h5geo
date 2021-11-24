@@ -38,36 +38,39 @@ class H5Well;
 class H5DevCurve;
 class H5LogCurve;
 
+///
+/// \brief Base class for object params
+/// 'spatialReference' in the form 'authName:code'
+struct BaseObjectParam{
+  // 'spatialReference' in the form 'authName:code'
+  std::string spatialReference, spatialUnits, temporalUnits, angularUnits, dataUnits;
+};
 
-struct MapParam{
+struct MapParam : public BaseObjectParam{
   double X0, Y0, X1, Y1, X2, Y2;
   size_t nX, nY;
   h5geo::Domain domain;
-  std::string spatialUnits, dataUnits;
   hsize_t xChunkSize = 100, yChunkSize = 100;
 };
 
-struct WellParam{
+struct WellParam : public BaseObjectParam{
   double headX, headY, kb = 0;
-  std::string spatialUnits, uwi;
+  std::string uwi;
 };
 
-struct DevCurveParam{
-  std::string spatialUnits, temporalUnits, angularUnits;
+struct DevCurveParam : public BaseObjectParam{
   bool setActive = false;
   hsize_t chunkSize = 1000;
 };
 
-struct LogCurveParam{
-  std::string dataUnits, spatialUnits;
+struct LogCurveParam : public BaseObjectParam{
   hsize_t chunkSize = 1000;
 };
 
-struct SeisParam{
+struct SeisParam : public BaseObjectParam{
   h5geo::Domain domain;
   h5geo::SeisDataType dataType;
   h5geo::SurveyType surveyType;
-  std::string spatialUnits, temporalUnits, angularUnits, dataUnits;
   size_t nTrc, nSamp;
   double srd = 0, orientation = 0;
   double X0, Y0, dX, dY;

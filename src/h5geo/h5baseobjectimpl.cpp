@@ -4,6 +4,58 @@
 H5BaseObjectImpl::H5BaseObjectImpl(const h5gt::Group &group) :
   objG(group){}
 
+bool H5BaseObjectImpl::setSpatialUnits(const std::string& str){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::spatial_units},
+        str);
+}
+
+bool H5BaseObjectImpl::setTemporalUnits(const std::string& str){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::temporal_units},
+        str);
+}
+
+bool H5BaseObjectImpl::setAngularUnits(const std::string& str){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::angular_units},
+        str);
+}
+
+bool H5BaseObjectImpl::setDataUnits(const std::string& str){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::data_units},
+        str);
+}
+
+std::string H5BaseObjectImpl::getSpatialUnits(){
+  return h5geo::readStringAttribute(
+        objG,
+        std::string{h5geo::detail::spatial_units});
+}
+
+std::string H5BaseObjectImpl::getTemporalUnits(){
+  return h5geo::readStringAttribute(
+        objG,
+        std::string{h5geo::detail::temporal_units});
+}
+
+std::string H5BaseObjectImpl::getAngularUnits(){
+  return h5geo::readStringAttribute(
+        objG,
+        std::string{h5geo::detail::angular_units});
+}
+
+std::string H5BaseObjectImpl::getDataUnits(){
+  return h5geo::readStringAttribute(
+        objG,
+        std::string{h5geo::detail::data_units});
+}
+
 h5gt::File H5BaseObjectImpl::getH5File() const {
   return h5gt::File::FromId(objG.getFileId(true), false);
 }

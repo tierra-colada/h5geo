@@ -21,6 +21,12 @@ namespace h5geopy {
 PYBIND11_MODULE(_h5geo, m) {
   py::module_::import("h5gtpy._h5gt");
 
+#ifdef H5GEO_USE_GDAL
+  py::module_::import("osgeo.gdal");
+  py::module_::import("osgeo.ogr");
+  py::module_::import("osgeo.sr");
+#endif
+
   m.doc() =
       "API to work with geo-data (seismic, wells, maps, other in process) based on HDF5 and originally written in C++: "
   "https://github.com/tierra-colada/h5geo";
@@ -122,11 +128,12 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyObjectDeleter = py::class_<ObjectDeleter>(m, "ObjectDeleter");
 
   // BASE
-  auto pyMapParam = py::class_<MapParam>(m, "MapParam");
-  auto pyWellParam = py::class_<WellParam>(m, "WellParam");
-  auto pyDevCurveParam = py::class_<DevCurveParam>(m, "DevCurveParam");
-  auto pyLogCurveParam = py::class_<LogCurveParam>(m, "LogCurveParam");
-  auto pySeisParam = py::class_<SeisParam>(m, "SeisParam");
+  auto pyBaseObjectParam = py::class_<BaseObjectParam>(m, "BaseObjectParam");
+  auto pyMapParam = py::class_<MapParam, BaseObjectParam>(m, "MapParam");
+  auto pyWellParam = py::class_<WellParam, BaseObjectParam>(m, "WellParam");
+  auto pyDevCurveParam = py::class_<DevCurveParam, BaseObjectParam>(m, "DevCurveParam");
+  auto pyLogCurveParam = py::class_<LogCurveParam, BaseObjectParam>(m, "LogCurveParam");
+  auto pySeisParam = py::class_<SeisParam, BaseObjectParam>(m, "SeisParam");
   auto pyBase = py::class_<
       H5BaseImpl,
       std::unique_ptr<H5BaseImpl, ObjectDeleter>,
@@ -238,6 +245,7 @@ PYBIND11_MODULE(_h5geo, m) {
   ObjectDeleter_py(pyObjectDeleter);
 
   // BASE
+  BaseObjectParam_py(pyBaseObjectParam);
   MapParam_py(pyMapParam);
   WellParam_py(pyWellParam);
   DevCurveParam_py(pyDevCurveParam);
