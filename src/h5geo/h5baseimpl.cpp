@@ -470,10 +470,10 @@ H5BaseImpl::createNewDevCurve(h5gt::Group &group, void* p)
           std::string{magic_enum::enum_name(h5geo::DevDataType::MD)},
           h5gt::DataSpace(1)).write(0);
     dataset.createAttribute<size_t>(
-          std::string{magic_enum::enum_name(h5geo::DevDataType::X)},
+          std::string{magic_enum::enum_name(h5geo::DevDataType::DX)},
           h5gt::DataSpace(1)).write(1);
     dataset.createAttribute<size_t>(
-          std::string{magic_enum::enum_name(h5geo::DevDataType::Y)},
+          std::string{magic_enum::enum_name(h5geo::DevDataType::DY)},
           h5gt::DataSpace(1)).write(2);
     dataset.createAttribute<size_t>(
           std::string{magic_enum::enum_name(h5geo::DevDataType::TVD)},

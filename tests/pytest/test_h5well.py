@@ -124,8 +124,8 @@ class test_h5well(unittest.TestCase):
         self.assertFalse(devCurve is None)
 
         self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.MD, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 0])))
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.X, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 1])))
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.Y, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 2])))
+        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.DX, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 5])))
+        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.DY, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 6])))
         self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.TVD, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 3])))
 
     def test_MdAzIncl2MdXYTvd(self):
@@ -370,8 +370,8 @@ class test_h5well(unittest.TestCase):
         devCurve = well.createDevCurve(self.DEV_NAME, self.devCurveParam, h5geo.CreationType.OPEN_OR_CREATE)
 
         self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.MD, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 0])))
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.X, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 1])))
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.Y, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 2])))
+        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.DX, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 5])))
+        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.DY, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 6])))
         self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.TVD, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 4])))
 
         self.assertFalse(devCurve.isActive())
@@ -384,9 +384,9 @@ class test_h5well(unittest.TestCase):
         self.assertTrue(
             np.allclose(devCurve.getCurve(h5geo.DevDataType.MD), activeCurve.getCurve(h5geo.DevDataType.MD)))
         self.assertTrue(
-            np.allclose(devCurve.getCurve(h5geo.DevDataType.X), activeCurve.getCurve(h5geo.DevDataType.X)))
+            np.allclose(devCurve.getCurve(h5geo.DevDataType.DX), activeCurve.getCurve(h5geo.DevDataType.DX)))
         self.assertTrue(
-            np.allclose(devCurve.getCurve(h5geo.DevDataType.Y), activeCurve.getCurve(h5geo.DevDataType.Y)))
+            np.allclose(devCurve.getCurve(h5geo.DevDataType.DY), activeCurve.getCurve(h5geo.DevDataType.DY)))
         self.assertTrue(
             np.allclose(devCurve.getCurve(h5geo.DevDataType.TVD), activeCurve.getCurve(h5geo.DevDataType.TVD)))
 

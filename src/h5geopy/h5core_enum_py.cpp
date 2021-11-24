@@ -87,8 +87,8 @@ void LogDataType_py(py::enum_<LogDataType> &py_obj){
 void DevDataType_py(py::enum_<DevDataType> &py_obj){
   py_obj
       .value("MD", DevDataType::MD)
-      .value("X", DevDataType::X)
-      .value("Y", DevDataType::Y)
+      .value("DX", DevDataType::DX)
+      .value("DY", DevDataType::DY)
       .value("TVD", DevDataType::TVD)
       .value("OWT", DevDataType::OWT);
 }

@@ -154,8 +154,8 @@ enum class LogDataType : unsigned{
 
 enum class DevDataType : unsigned{
   MD = 1,
-  X = 2,
-  Y = 3,
+  DX = 2,
+  DY = 3,
   TVD = 4,
   OWT = 5
 };

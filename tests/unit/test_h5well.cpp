@@ -204,19 +204,19 @@ TEST_F(H5WellFixture, writeReadDevCurve){
 
   ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::MD,
                                    MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0)));
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::X,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(1)));
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::Y,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(2)));
+  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::DX,
+                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5)));
+  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::DY,
+                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6)));
   ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::TVD,
                                    MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4)));
 
   ASSERT_TRUE(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0).isApprox(
                 devCurve->getCurve(h5geo::DevDataType::MD)));
-  ASSERT_TRUE(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(1).isApprox(
-                devCurve->getCurve(h5geo::DevDataType::X)));
-  ASSERT_TRUE(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(2).isApprox(
-                devCurve->getCurve(h5geo::DevDataType::Y)));
+  ASSERT_TRUE(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5).isApprox(
+                devCurve->getCurve(h5geo::DevDataType::DX)));
+  ASSERT_TRUE(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6).isApprox(
+                devCurve->getCurve(h5geo::DevDataType::DY)));
   ASSERT_TRUE(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).isApprox(
                 devCurve->getCurve(h5geo::DevDataType::TVD)));
 }
@@ -501,10 +501,10 @@ TEST_F(H5WellFixture, activeDevCurveTest){
 
   ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::MD,
                                    MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0)));
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::X,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(1)));
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::Y,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(2)));
+  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::DX,
+                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5)));
+  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::DY,
+                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6)));
   ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::TVD,
                                    MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4)));
 
@@ -517,10 +517,10 @@ TEST_F(H5WellFixture, activeDevCurveTest){
 
   ASSERT_TRUE(devCurve->getCurve(h5geo::DevDataType::MD).isApprox(
                 activeCurve->getCurve(h5geo::DevDataType::MD)));
-  ASSERT_TRUE(devCurve->getCurve(h5geo::DevDataType::X).isApprox(
-                activeCurve->getCurve(h5geo::DevDataType::X)));
-  ASSERT_TRUE(devCurve->getCurve(h5geo::DevDataType::Y).isApprox(
-                activeCurve->getCurve(h5geo::DevDataType::Y)));
+  ASSERT_TRUE(devCurve->getCurve(h5geo::DevDataType::DX).isApprox(
+                activeCurve->getCurve(h5geo::DevDataType::DX)));
+  ASSERT_TRUE(devCurve->getCurve(h5geo::DevDataType::DY).isApprox(
+                activeCurve->getCurve(h5geo::DevDataType::DY)));
   ASSERT_TRUE(devCurve->getCurve(h5geo::DevDataType::TVD).isApprox(
                 activeCurve->getCurve(h5geo::DevDataType::TVD)));
 }
