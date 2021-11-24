@@ -24,7 +24,7 @@ PYBIND11_MODULE(_h5geo, m) {
 #ifdef H5GEO_USE_GDAL
   py::module_::import("osgeo.gdal");
   py::module_::import("osgeo.ogr");
-  py::module_::import("osgeo.sr");
+  py::module_::import("osgeo.osr");
 #endif
 
   m.doc() =
