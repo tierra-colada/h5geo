@@ -7,7 +7,10 @@ void BaseObjectParam_py(py::class_<BaseObjectParam> &py_obj){
       .def(
         py::init<>())
       .def_readwrite("spatialReference", &MapParam::spatialReference)
-      .def_readwrite("spatialUnits", &MapParam::spatialUnits);
+      .def_readwrite("spatialUnits", &MapParam::spatialUnits)
+      .def_readwrite("temporalUnits", &SeisParam::temporalUnits)
+      .def_readwrite("angularUnits", &SeisParam::angularUnits)
+      .def_readwrite("dataUnits", &SeisParam::dataUnits);
 }
 
 void MapParam_py(py::class_<MapParam, BaseObjectParam> &py_obj){
@@ -23,7 +26,6 @@ void MapParam_py(py::class_<MapParam, BaseObjectParam> &py_obj){
       .def_readwrite("nX", &MapParam::nX)
       .def_readwrite("nY", &MapParam::nY)
       .def_readwrite("domain", &MapParam::domain)
-      .def_readwrite("dataUnits", &MapParam::dataUnits)
       .def_readwrite("xChunkSize", &MapParam::xChunkSize)
       .def_readwrite("yChunkSize", &MapParam::yChunkSize);
 }
@@ -42,9 +44,6 @@ void DevCurveParam_py(py::class_<DevCurveParam, BaseObjectParam> &py_obj){
   py_obj
       .def(
         py::init<>())
-      .def_readwrite("temporalUnits", &DevCurveParam::temporalUnits)
-      .def_readwrite("angularUnits", &DevCurveParam::angularUnits)
-      .def_readwrite("setActive", &DevCurveParam::setActive)
       .def_readwrite("chunkSize", &DevCurveParam::chunkSize);
 }
 
@@ -52,7 +51,6 @@ void LogCurveParam_py(py::class_<LogCurveParam, BaseObjectParam> &py_obj){
   py_obj
       .def(
         py::init<>())
-      .def_readwrite("dataUnits", &LogCurveParam::dataUnits)
       .def_readwrite("chunkSize", &LogCurveParam::chunkSize);
 }
 
@@ -60,9 +58,6 @@ void SeisParam_py(py::class_<SeisParam, BaseObjectParam> &py_obj){
   py_obj
       .def(
         py::init<>())
-      .def_readwrite("temporalUnits", &SeisParam::temporalUnits)
-      .def_readwrite("angularUnits", &SeisParam::angularUnits)
-      .def_readwrite("dataUnits", &SeisParam::dataUnits)
       .def_readwrite("domain", &SeisParam::domain)
       .def_readwrite("dataType", &SeisParam::dataType)
       .def_readwrite("surveyType", &SeisParam::surveyType)

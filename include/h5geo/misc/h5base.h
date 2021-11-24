@@ -60,7 +60,6 @@ struct WellParam : public BaseObjectParam{
 };
 
 struct DevCurveParam : public BaseObjectParam{
-  bool setActive = false;
   hsize_t chunkSize = 1000;
 };
 
