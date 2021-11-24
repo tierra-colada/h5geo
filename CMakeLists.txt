@@ -21,6 +21,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # OPTIONS
 option(H5GEO_SUPERBUILD "Superbuild h5geo" OFF)
 option(H5GEO_USE_THREADS "Use threads (enable std::execution)" ON)
+option(H5GEO_USE_GDAL "Use GDAL (uses cmake official FindGDAL module)" ON)
 option(H5GEO_BUILD_SHARED_LIBS "Build h5geo as shared lib" ON)
 option(H5GEO_BUILD_TESTS "Build tests" ON)
 option(H5GEO_BUILD_h5geopy "Build python wrapper (make sure to disable HDF5_USE_STATIC_LIBRARIES)" ON)
@@ -28,6 +29,8 @@ option(HDF5_USE_STATIC_LIBRARIES "Use static hdf5 lib" OFF)
 option(HDF5_PREFER_PARALLEL "Prefer parallel hdf5 if available" OFF)
 
 set(gtest_force_shared_crt ON CACHE BOOL "Prevent overriding the parent project's compiler/linker settings on Windows")
+set(GDAL_LIBS "" CACHE FILEPATH "Path to all GDAL dependcy (probably geos, proj etc.)")
+set(GDAL_LIBS_DIR "" CACHE PATH "Path to the folder where GDAL dependcy reside (probably geos, proj etc.)")
 
 # Add files to search path for targets needed
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
@@ -72,7 +75,7 @@ find_package(units REQUIRED CONFIG)
 # we don't want to install third-party include dirs
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${EIGEN3_INCLUDE_DIRS}>)
 target_link_libraries(h5geo PUBLIC ${HDF5_C_LIBRARIES})
-target_include_directories(h5geo PUBLIC ${HDF5_INCLUDE_DIRS})
+target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${HDF5_INCLUDE_DIRS}>)
 target_compile_definitions(h5geo PUBLIC ${HDF5_DEFINITIONS})
 target_link_libraries(h5geo PUBLIC $<BUILD_INTERFACE:magic_enum::magic_enum>)
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${h5gt_INCLUDE_DIRS}>)
@@ -87,6 +90,43 @@ if(H5GEO_USE_THREADS)
   target_include_directories(h5geo PUBLIC ${TBB_INCLUDE_DIRS})
   target_link_libraries(h5geo PUBLIC ${TBB_LIBRARIES})
   target_compile_definitions(h5geo PUBLIC H5GEO_USE_THREADS)
+endif()
+
+if(H5GEO_USE_GDAL)
+  find_package(GDAL REQUIRED)
+
+  if(EXISTS ${GDAL_LIBS})
+    target_link_libraries(GDAL::GDAL INTERFACE ${GDAL_LIBS})
+  endif()
+
+  if(IS_DIRECTORY ${GDAL_LIBS_DIR})
+    file(GLOB _GDAL_LIBS "${GDAL_LIBS_DIR}/lib*")
+    target_link_libraries(GDAL::GDAL INTERFACE ${_GDAL_LIBS})
+  endif()
+
+  target_link_libraries(h5geo PUBLIC GDAL::GDAL)
+  target_compile_definitions(h5geo PUBLIC H5GEO_USE_GDAL)
+
+  # check if 'GDAL_INCLUDE_DIRS/gdal' contains 'gdal.h' and 'gdal_priv.h'
+  file(GLOB _gdal_h "${GDAL_INCLUDE_DIRS}/gdal/gdal.h")
+  file(GLOB _gdal_priv_h "${GDAL_INCLUDE_DIRS}/gdal/gdal_priv.h")
+  get_filename_component(_gdal_folder_name ${GDAL_INCLUDE_DIRS} NAME)
+
+  # check if 'GDAL_PARENT_INCLUDE_DIRS' ends up by 'gdal' folder and contains 'gdal.h' and 'gdal_priv.h'
+  get_filename_component(GDAL_PARENT_INCLUDE_DIRS ${GDAL_INCLUDE_DIRS} DIRECTORY)
+  file(GLOB _parent_dir_gdal_h "${GDAL_PARENT_INCLUDE_DIRS}/gdal/gdal.h")
+  file(GLOB _parent_dir_gdal_priv_h "${GDAL_PARENT_INCLUDE_DIRS}/gdal/gdal_priv.h")
+
+  if(_gdal_h AND _gdal_priv_h)
+    target_include_directories(h5geo PUBLIC ${GDAL_INCLUDE_DIRS})
+  elseif(_parent_dir_gdal_h AND _parent_dir_gdal_priv_h)
+    set(GDAL_INCLUDE_DIRS ${GDAL_PARENT_INCLUDE_DIRS})
+    target_include_directories(h5geo PUBLIC ${GDAL_INCLUDE_DIRS})
+  else()
+    message(FATAL_ERROR "GDAL_INCLUDE_DIRS should end up by 'gdal' folder and"
+            "contain both 'gdal.h' and gdal_priv.h'")
+  endif()
+  message("GDAL_INCLUDE_DIRS: ${GDAL_INCLUDE_DIRS}")
 endif()
 
 if(H5GEO_BUILD_TESTS)

@@ -68,12 +68,10 @@ struct SeisParam{
   h5geo::SeisDataType dataType;
   h5geo::SurveyType surveyType;
   std::string spatialUnits, temporalUnits, angleUnits, dataUnits;
-  size_t nTrc;
-  size_t nSamp;
+  size_t nTrc, nSamp;
   double srd = 0, orientation = 0;
   double X0, Y0, dX, dY;
-  hsize_t trcChunk = 20000;
-  hsize_t stdChunk = 1000;
+  hsize_t trcChunk = 20000, stdChunk = 1000;
 };
 
 class H5Base

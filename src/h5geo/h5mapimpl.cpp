@@ -4,6 +4,11 @@
 
 #include <units/units.hpp>
 
+#ifdef H5GEO_USE_GDAL
+#include <gdal/gdal.h>
+#include <gdal/gdal_priv.h>
+#endif
+
 H5MapImpl::H5MapImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
