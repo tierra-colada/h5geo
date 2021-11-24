@@ -6,6 +6,7 @@
 #include "../../include/h5geo/misc/h5seisimpl.h"
 #include "../../include/h5geo/h5core.h"
 //#include "../../include/h5geo/misc/h5core_enum.h"
+#include "../../include/h5geo/misc/h5core_enum_string.h"
 
 #include <h5gt/H5File.hpp>
 #include <h5gt/H5Group.hpp>
@@ -814,11 +815,6 @@ bool h5geo::isWell(
 bool h5geo::isLogCurve(
     h5gt::Group &group)
 {
-  for (const auto& name : h5geo::detail::log_attrs){
-    if (!group.hasAttribute(std::string{name}))
-      return false;
-  }
-
   for (const auto& name : h5geo::detail::log_dsets){
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
       return false;
@@ -829,11 +825,6 @@ bool h5geo::isLogCurve(
 bool h5geo::isDevCurve(
     h5gt::Group &group)
 {
-  for (const auto& name : h5geo::detail::dev_attrs){
-    if (!group.hasAttribute(std::string{name}))
-      return false;
-  }
-
   for (const auto& name : h5geo::detail::dev_dsets){
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
       return false;

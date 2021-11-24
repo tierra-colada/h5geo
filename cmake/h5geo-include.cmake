@@ -6,6 +6,7 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_enum_operators.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_enum.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_misc.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_sr_settings.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5devcurveimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5deviation.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5easyhull.h

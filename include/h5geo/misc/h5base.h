@@ -6,6 +6,7 @@
 #endif
 
 #include "h5core_enum.h"
+#include "h5geo_export.h"
 
 #include <vector>
 #include <memory>

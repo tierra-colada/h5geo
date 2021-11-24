@@ -1,13 +1,18 @@
-#ifndef H5CORE_SETTINGS_H
-#define H5CORE_SETTINGS_H
+#ifndef H5CORE_SR_SETTINGS_H
+#define H5CORE_SR_SETTINGS_H
 
 #include <units/units.hpp>
 
 #include <gdal/gdal.h>
 #include <gdal/gdal_priv.h>
 
+
 namespace h5geo
 {
+
+
+namespace sr {
+
 
 inline OGRSpatialReference SR;
 
@@ -51,7 +56,10 @@ inline std::string getAngularUnits(){
 }
 
 
-}
+} // sr
 
 
-#endif // H5CORE_SETTINGS_H
+} // h5geo
+
+
+#endif // H5CORE_SR_SETTINGS_H

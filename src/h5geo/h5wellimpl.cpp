@@ -1,8 +1,9 @@
 #include "../../include/h5geo/misc/h5wellimpl.h"
 #include "../../include/h5geo/h5wellcontainer.h"
-#include "../../include/h5geo/h5core.h"
 #include "../../include/h5geo/misc/h5devcurveimpl.h"
 #include "../../include/h5geo/misc/h5logcurveimpl.h"
+#include "../../include/h5geo/h5core.h"
+#include "../../include/h5geo/misc/h5core_enum_string.h"
 
 #include <units/units.hpp>
 

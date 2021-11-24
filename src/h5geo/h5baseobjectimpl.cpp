@@ -1,8 +1,24 @@
 #include "../../include/h5geo/misc/h5baseobjectimpl.h"
 #include "../../include/h5geo/h5core.h"
+#include "../../include/h5geo/misc/h5core_enum_string.h"
 
 H5BaseObjectImpl::H5BaseObjectImpl(const h5gt::Group &group) :
   objG(group){}
+
+bool H5BaseObjectImpl::setSpatialReference(const std::string& str){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::spatial_reference},
+        str);
+}
+
+bool H5BaseObjectImpl::setSpatialReference(
+    const std::string& authName, const std::string& code){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::spatial_reference},
+        authName + ":" + code);
+}
 
 bool H5BaseObjectImpl::setSpatialUnits(const std::string& str){
   return h5geo::overwriteAttribute(
@@ -30,6 +46,12 @@ bool H5BaseObjectImpl::setDataUnits(const std::string& str){
         objG,
         std::string{h5geo::detail::data_units},
         str);
+}
+
+std::string H5BaseObjectImpl::getSpatialReference(){
+  return h5geo::readStringAttribute(
+        objG,
+        std::string{h5geo::detail::spatial_reference});
 }
 
 std::string H5BaseObjectImpl::getSpatialUnits(){

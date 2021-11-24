@@ -78,17 +78,17 @@ public:
 };
 
 TEST_F(H5MapFixture, createContainer){
-  h5geo::setSpatialReferenceFromUserInput("EPSG", "8139");
+  h5geo::sr::setSpatialReferenceFromUserInput("EPSG", "8139");
 
   OGRSpatialReference srFrom;
   srFrom.SetFromUserInput("EPSG:22521");
 
-  OGRSpatialReference srTo = h5geo::getSpatialReference();
+  OGRSpatialReference srTo = h5geo::sr::getSpatialReference();
   srTo.SetLinearUnitsAndUpdateParameters("km", 1000);
 
   OGRCoordinateTransformation *coordTrans =
         OGRCreateCoordinateTransformation(
-        &srFrom, &h5geo::SR);
+        &srFrom, &h5geo::sr::SR);
 
   double x, y;
   x = 0;
@@ -98,7 +98,7 @@ TEST_F(H5MapFixture, createContainer){
 
   std::cout << "x:\t" << x << std::endl;
   std::cout << "y:\t" << y << std::endl;
-  std::cout << "spatial units:\t" << h5geo::getSpatialUnits() << std::endl;
+  std::cout << "spatial units:\t" << h5geo::sr::getSpatialUnits() << std::endl;
 
   ASSERT_TRUE(fs::exists(FILE_NAME1));
 }

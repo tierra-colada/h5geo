@@ -14,11 +14,15 @@ protected:
   virtual ~H5BaseObjectImpl() = default;
 
 public:
+  virtual bool setSpatialReference(const std::string& str) override;
+  virtual bool setSpatialReference(
+      const std::string& authName, const std::string& code) override;
   virtual bool setSpatialUnits(const std::string& str) override;
   virtual bool setTemporalUnits(const std::string& str) override;
   virtual bool setAngularUnits(const std::string& str) override;
   virtual bool setDataUnits(const std::string& str) override;
 
+  virtual std::string getSpatialReference() override;
   virtual std::string getSpatialUnits() override;
   virtual std::string getTemporalUnits() override;
   virtual std::string getAngularUnits() override;

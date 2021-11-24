@@ -9,12 +9,27 @@ void H5BaseObject_py(
     H5BaseImpl,
     H5BaseObject> &py_obj){
   py_obj
+      .def("setSpatialReference", py::overload_cast<const std::string&>(
+             &H5BaseObjectImpl::setSpatialReference))
+      .def("setSpatialReference", py::overload_cast<const std::string&, const std::string&>(
+             &H5BaseObjectImpl::setSpatialReference))
       .def("setSpatialUnits", &H5BaseObjectImpl::setSpatialUnits)
+      .def("setTemporalUnits", &H5BaseObjectImpl::setTemporalUnits)
+      .def("setAngularUnits", &H5BaseObjectImpl::setAngularUnits)
+      .def("setDataUnits", &H5BaseObjectImpl::setDataUnits)
+
+      .def("getSpatialReference", &H5BaseObjectImpl::getSpatialReference)
       .def("getSpatialUnits", &H5BaseObjectImpl::getSpatialUnits)
+      .def("getTemporalUnits", &H5BaseObjectImpl::getTemporalUnits)
+      .def("getAngularUnits", &H5BaseObjectImpl::getAngularUnits)
+      .def("getDataUnits", &H5BaseObjectImpl::getDataUnits)
+
       .def("getH5File", &H5BaseObjectImpl::getH5File)
       .def("getObjG", &H5BaseObjectImpl::getObjG)
+
       .def("getGroupOpt", &H5BaseObjectImpl::getGroupOpt)
       .def("getDatasetOpt", &H5BaseObjectImpl::getDatasetOpt)
+
       .def("getName", &H5BaseObjectImpl::getName)
       .def("getFullName", &H5BaseObjectImpl::getFullName);
 //      .def(py::self == py::self)
