@@ -36,11 +36,11 @@ public:
 
   virtual bool setSpatialUnits(const std::string& str) override;
   virtual bool setTemporalUnits(const std::string& str) override;
-  virtual bool setAngleUnits(const std::string& str) override;
+  virtual bool setAngularUnits(const std::string& str) override;
 
   virtual std::string getSpatialUnits() override;
   virtual std::string getTemporalUnits() override;
-  virtual std::string getAngleUnits() override;
+  virtual std::string getAngularUnits() override;
 
   virtual std::string getRelativeCurveName() override;
 

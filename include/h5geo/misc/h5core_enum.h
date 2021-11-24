@@ -51,7 +51,7 @@ enum class SeisAttributes : unsigned{
   SRD = 4,
   spatial_units = 5,
   temporal_units = 6,
-  angle_units = 7,
+  angular_units = 7,
   data_units = 8,
   orientation = 9,
   spacing = 10,
@@ -149,12 +149,12 @@ inline constexpr auto ACTIVE_DEV = magic_enum::enum_name(h5geo::detail::WellGrou
 enum class DevAttributes : unsigned{
   spatial_units = 1,
   temporal_units = 2,
-  angle_units = 3
+  angular_units = 3
 };
 
 inline constexpr auto& dev_attrs =
     magic_enum::enum_names<h5geo::detail::DevAttributes>();
-inline constexpr auto angle_units = magic_enum::enum_name(h5geo::detail::DevAttributes::angle_units);
+inline constexpr auto angular_units = magic_enum::enum_name(h5geo::detail::DevAttributes::angular_units);
 
 enum class DevDatasets : unsigned{
   dev_data = 1

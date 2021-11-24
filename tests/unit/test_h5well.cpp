@@ -57,7 +57,7 @@ public:
 
     devCurveParam.spatialUnits = "meter";
     devCurveParam.temporalUnits = "millisecond";
-    devCurveParam.angleUnits = "radian";
+    devCurveParam.angularUnits = "radian";
 
     logCurveParam.spatialUnits = "cm";
     logCurveParam.dataUnits = "kg/m2";

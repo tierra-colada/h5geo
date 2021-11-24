@@ -53,7 +53,7 @@ struct WellParam{
 };
 
 struct DevCurveParam{
-  std::string spatialUnits, temporalUnits, angleUnits;
+  std::string spatialUnits, temporalUnits, angularUnits;
   bool setActive = false;
   hsize_t chunkSize = 1000;
 };
@@ -67,7 +67,7 @@ struct SeisParam{
   h5geo::Domain domain;
   h5geo::SeisDataType dataType;
   h5geo::SurveyType surveyType;
-  std::string spatialUnits, temporalUnits, angleUnits, dataUnits;
+  std::string spatialUnits, temporalUnits, angularUnits, dataUnits;
   size_t nTrc, nSamp;
   double srd = 0, orientation = 0;
   double X0, Y0, dX, dY;

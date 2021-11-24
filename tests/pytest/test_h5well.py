@@ -37,7 +37,7 @@ class test_h5well(unittest.TestCase):
         self.devCurveParam = h5geo.DevCurveParam()
         self.devCurveParam.spatialUnits = 'meter'
         self.devCurveParam.temporalUnits = 'msec'
-        self.devCurveParam.angleUnits = 'radian'
+        self.devCurveParam.angularUnits = 'radian'
 
         self.logCurveParam = h5geo.LogCurveParam()
         self.logCurveParam.spatialUnits = 'cm'

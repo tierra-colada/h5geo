@@ -236,9 +236,9 @@ public:
   virtual bool setSRD(double val, const std::string& spatialUnits = "") override;
   virtual bool setSpatialUnits(const std::string& str) override;
   virtual bool setTemporalUnits(const std::string& str) override;
-  virtual bool setAngleUnits(const std::string& str) override;
+  virtual bool setAngularUnits(const std::string& str) override;
   virtual bool setDataUnits(const std::string& str) override;
-  virtual bool setOrientation(double orientation, const std::string& angleUnits = "") override;
+  virtual bool setOrientation(double orientation, const std::string& angularUnits = "") override;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::VectorXd> origin, const std::string& spatialUnits = "") override;
   virtual bool setSpacing(
@@ -250,9 +250,9 @@ public:
   virtual double getSRD(const std::string& spatialUnits = "") override;
   virtual std::string getSpatialUnits() override;
   virtual std::string getTemporalUnits() override;
-  virtual std::string getAngleUnits() override;
+  virtual std::string getAngularUnits() override;
   virtual std::string getDataUnits() override;
-  virtual double getOrientation(const std::string& angleUnits = "") override;
+  virtual double getOrientation(const std::string& angularUnits = "") override;
   virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") override;
   virtual Eigen::VectorXd getSpacing(const std::string& spatialUnits = "") override;
   virtual Eigen::MatrixXd getBoundary(const std::string& spatialUnits = "") override;

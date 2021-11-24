@@ -49,11 +49,11 @@ void H5DevCurve_py(
 
       .def("setSpatialUnits", &H5DevCurveImpl::setSpatialUnits)
       .def("setTemporalUnits", &H5DevCurveImpl::setTemporalUnits)
-      .def("setAngleUnits", &H5DevCurveImpl::setAngleUnits)
+      .def("setAngularUnits", &H5DevCurveImpl::setAngularUnits)
 
       .def("getSpatialUnits", &H5DevCurveImpl::getSpatialUnits)
       .def("getTemporalUnits", &H5DevCurveImpl::getTemporalUnits)
-      .def("getAngleUnits", &H5DevCurveImpl::getAngleUnits)
+      .def("getAngularUnits", &H5DevCurveImpl::getAngularUnits)
 
       .def("getRelativeCurveName", &H5DevCurveImpl::getRelativeCurveName)
 

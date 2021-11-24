@@ -457,9 +457,9 @@ H5BaseImpl::createNewDevCurve(h5gt::Group &group, void* p)
           h5gt::DataSpace::From(param.temporalUnits)).
         write(param.temporalUnits);
     group.createAttribute<std::string>(
-          std::string{h5geo::detail::angle_units},
-          h5gt::DataSpace::From(param.angleUnits)).
-        write(param.angleUnits);
+          std::string{h5geo::detail::angular_units},
+          h5gt::DataSpace::From(param.angularUnits)).
+        write(param.angularUnits);
 
     h5gt::DataSet dataset =
         group.createDataSet<double>(
@@ -526,9 +526,9 @@ H5BaseImpl::createNewSeis(h5gt::Group &group, void* p)
           h5gt::DataSpace::From(param.dataUnits)).
         write(param.dataUnits);
     group.createAttribute<std::string>(
-          std::string{h5geo::detail::angle_units},
-          h5gt::DataSpace::From(param.angleUnits)).
-        write(param.angleUnits);
+          std::string{h5geo::detail::angular_units},
+          h5gt::DataSpace::From(param.angularUnits)).
+        write(param.angularUnits);
     group.createAttribute<double>(
           std::string{h5geo::detail::orientation},
           h5gt::DataSpace(1)).

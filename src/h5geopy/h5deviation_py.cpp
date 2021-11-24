@@ -13,10 +13,10 @@ D MdAzIncl2ALL(
     const typename D::Scalar& x0,
     const typename D::Scalar& y0,
     const typename D::Scalar& kb,
-    const std::string& angleUnits,
+    const std::string& angularUnits,
     const bool& XNorth)
 {
-  return h5geo::MdAzIncl2ALL(M, x0, y0, kb, angleUnits, XNorth);
+  return h5geo::MdAzIncl2ALL(M, x0, y0, kb, angularUnits, XNorth);
 }
 
 template<typename D>
@@ -58,11 +58,11 @@ D traj2ALL(
     const typename D::Scalar& x0,
     const typename D::Scalar& y0,
     const typename D::Scalar& kb,
-    const std::string& angleUnits,
+    const std::string& angularUnits,
     const h5geo::TrajectoryFormat& trajFormat,
     const bool& XNorth)
 {
-  return h5geo::traj2ALL(M, x0, y0, kb, angleUnits, trajFormat, XNorth);
+  return h5geo::traj2ALL(M, x0, y0, kb, angularUnits, trajFormat, XNorth);
 }
 
 template<typename D>
@@ -82,10 +82,10 @@ D MdAzIncl2MdXYTvd(
     const py::EigenDRef<const D> M,
     const typename D::Scalar& x0,
     const typename D::Scalar& y0,
-    const std::string& angleUnits,
+    const std::string& angularUnits,
     const bool& XNorth)
 {
-  return h5geo::MdAzIncl2MdXYTvd(M, x0, y0, angleUnits, XNorth);
+  return h5geo::MdAzIncl2MdXYTvd(M, x0, y0, angularUnits, XNorth);
 }
 
 template<typename D>
@@ -179,7 +179,7 @@ void defineDeviationFunctions(py::module_& m){
         py::arg("x0"),
         py::arg("y0"),
         py::arg("kb"),
-        py::arg("angleUnits"),
+        py::arg("angularUnits"),
         py::arg("XNorth"),
         "Convert matrix `M` (whose columns represent MD Az Incl respectively)"
 "to `MD_X_Y_Z_TVD_DX_DY_AZ_INCL` (Z the same as TVDSS). Set `XNorth` to `True` "
@@ -189,7 +189,7 @@ void defineDeviationFunctions(py::module_& m){
         py::arg("x0"),
         py::arg("y0"),
         py::arg("kb"),
-        py::arg("angleUnits"),
+        py::arg("angularUnits"),
         py::arg("XNorth"));
 
   m.def("TvdXY2ALL", &ext::TvdXY2ALL<Eigen::MatrixXf>,
@@ -245,7 +245,7 @@ void defineDeviationFunctions(py::module_& m){
         py::arg("x0"),
         py::arg("y0"),
         py::arg("kb"),
-        py::arg("angleUnits"),
+        py::arg("angularUnits"),
         py::arg("trajFormat"),
         py::arg("XNorth"),
         "Convert matrix `M` of any trajectory format "
@@ -256,7 +256,7 @@ void defineDeviationFunctions(py::module_& m){
         py::arg("x0"),
         py::arg("y0"),
         py::arg("kb"),
-        py::arg("angleUnits"),
+        py::arg("angularUnits"),
         py::arg("trajFormat"),
         py::arg("XNorth"));
 
@@ -281,7 +281,7 @@ void defineDeviationFunctions(py::module_& m){
         py::arg("M"),
         py::arg("x0"),
         py::arg("y0"),
-        py::arg("angleUnits"),
+        py::arg("angularUnits"),
         py::arg("XNorth"),
         "Convert matrix `M` (whose columns represent MD Az Incl respectively)"
 "to `MD_X_Y_TVD`. Set `XNorth` to `True` "
@@ -290,7 +290,7 @@ void defineDeviationFunctions(py::module_& m){
         py::arg("M"),
         py::arg("x0"),
         py::arg("y0"),
-        py::arg("angleUnits"),
+        py::arg("angularUnits"),
         py::arg("XNorth"));
 
   m.def("TvdXY2MdXYTvd", &ext::TvdXY2MdXYTvd<Eigen::MatrixXf>,

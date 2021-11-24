@@ -84,11 +84,11 @@ void DevCurveParam_py(py::class_<DevCurveParam> &py_obj){
         bool,
         hsize_t>(),
         py::arg("spatialUnits"), py::arg("temporalUnits"),
-        py::arg("angleUnits"), py::arg_v("setActive", false),
+        py::arg("angularUnits"), py::arg_v("setActive", false),
         py::arg_v("chunkSize", 1000))
       .def_readwrite("spatialUnits", &DevCurveParam::spatialUnits)
       .def_readwrite("temporalUnits", &DevCurveParam::temporalUnits)
-      .def_readwrite("angleUnits", &DevCurveParam::angleUnits)
+      .def_readwrite("angularUnits", &DevCurveParam::angularUnits)
       .def_readwrite("setActive", &DevCurveParam::setActive)
       .def_readwrite("chunkSize", &DevCurveParam::chunkSize);
 }
@@ -138,7 +138,7 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
         py::arg("surveyType"),
         py::arg("spatialUnits"),
         py::arg("temporalUnits"),
-        py::arg("angleUnits"),
+        py::arg("angularUnits"),
         py::arg("dataUnits"),
         py::arg("nTrc"),
         py::arg("nSamp"),
@@ -153,7 +153,7 @@ void SeisParam_py(py::class_<SeisParam> &py_obj){
       .def_readwrite("domain", &SeisParam::domain)
       .def_readwrite("spatialUnits", &SeisParam::spatialUnits)
       .def_readwrite("temporalUnits", &SeisParam::temporalUnits)
-      .def_readwrite("temporalUnits", &SeisParam::angleUnits)
+      .def_readwrite("temporalUnits", &SeisParam::angularUnits)
       .def_readwrite("dataUnits", &SeisParam::dataUnits)
       .def_readwrite("dataType", &SeisParam::dataType)
       .def_readwrite("surveyType", &SeisParam::surveyType)

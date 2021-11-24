@@ -146,10 +146,10 @@ bool H5DevCurveImpl::setTemporalUnits(const std::string& str){
         str);
 }
 
-bool H5DevCurveImpl::setAngleUnits(const std::string& str){
+bool H5DevCurveImpl::setAngularUnits(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
-        std::string{h5geo::detail::angle_units},
+        std::string{h5geo::detail::angular_units},
         str);
 }
 
@@ -165,10 +165,10 @@ std::string H5DevCurveImpl::getTemporalUnits(){
         std::string{h5geo::detail::temporal_units});
 }
 
-std::string H5DevCurveImpl::getAngleUnits(){
+std::string H5DevCurveImpl::getAngularUnits(){
   return h5geo::readStringAttribute(
         objG,
-        std::string{h5geo::detail::angle_units});
+        std::string{h5geo::detail::angular_units});
 }
 
 std::string H5DevCurveImpl::getRelativeCurveName(){
