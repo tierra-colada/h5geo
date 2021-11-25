@@ -22,16 +22,6 @@ getSortedData(
   return std::make_tuple(std::move(TRACE), std::move(HDR), std::move(idx));
 }
 
-std::tuple<Eigen::Vector2d, Eigen::Vector2d, double, bool>
-calcSpacingOriginOrientation3DStk(H5SeisImpl* self)
-{
-  Eigen::Vector2d bin, origin;
-  double orientation;
-  bool val = self->calcSpacingOriginOrientation3DStk(
-        bin, origin, orientation);
-  return std::make_tuple(std::move(bin), std::move(origin), orientation, val);
-}
-
 std::tuple<size_t, bool>
 checkTraceLimits(H5SeisImpl* self, const size_t& fromTrc, size_t& nTrc)
 {
@@ -258,23 +248,6 @@ void H5Seis_py(
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
 
-      .def("calcBoundaryStk2D", &H5SeisImpl::calcBoundaryStk2D,
-           "calculate boundary for 2D stk seismic")
-      .def("calcConvexHullBoundary", &H5SeisImpl::calcConvexHullBoundary,
-           "calculate convex boundary (usually used in 3D seismic or 2D prestack seismic)")
-      .def("calcSpacingOriginOrientation3DStk", &ext::calcSpacingOriginOrientation3DStk,
-           "calculate `bin` (along `INLINE` and `XLINE` respectively)`, "
-"`origin` (`XY` point coordinate where sorted: 1) INLINE->min, 2) CDP_X->min, 3) CDP_Y->min),"
-"`orientation` an azimuth along `INLINE` (in radians). All these parameters are needed when displaying in VTK scene."
-"Also returns `bool val` set to true if successful.")
-
-      .def("calcAndWriteBoundary", &H5SeisImpl::calcAndWriteBoundary,
-           "calculate boundary for any seismic survey type and write it. Retun true if successful")
-      .def("calcAndWriteTraceHeaderLimits", &H5SeisImpl::calcAndWriteTraceHeaderLimits,
-           py::arg_v("nTrcBuffer", 1e7, "1e7"),
-           "calculate and write min and max values for each header. "
-"This is needed by some operations. By default trace buffer is set `nTrcBuffer` to 10 millions of traces")
-
       .def("checkTraceLimits", &ext::checkTraceLimits,
            py::arg("fromTrc"),
            py::arg("nTrc"),
@@ -300,13 +273,13 @@ void H5Seis_py(
       .def("setSRD", &H5SeisImpl::setSRD,
            py::arg("value"),
            py::arg_v("units", "", "str()"))
-      .def("setOrientation", &H5SeisImpl::setOrientation,
-           py::arg("value"),
-           py::arg_v("units", "", "str()"))
       .def("setOrigin", &H5SeisImpl::setOrigin,
            py::arg("value"),
            py::arg_v("units", "", "str()"))
-      .def("setSpacing", &H5SeisImpl::setSpacing,
+      .def("setPoint1", &H5SeisImpl::setPoint1,
+           py::arg("value"),
+           py::arg_v("units", "", "str()"))
+      .def("setPoint2", &H5SeisImpl::setPoint2,
            py::arg("value"),
            py::arg_v("units", "", "str()"))
 
@@ -315,11 +288,11 @@ void H5Seis_py(
       .def("getSurveyType", &H5SeisImpl::getSurveyType)
       .def("getSRD", &H5SeisImpl::getSRD,
            py::arg_v("units", "", "str()"))
-      .def("getOrientation", &H5SeisImpl::getOrientation,
-           py::arg_v("units", "", "str()"))
       .def("getOrigin", &H5SeisImpl::getOrigin,
            py::arg_v("units", "", "str()"))
-      .def("getSpacing", &H5SeisImpl::getSpacing,
+      .def("getPoint1", &H5SeisImpl::getPoint1,
+           py::arg_v("units", "", "str()"))
+      .def("getPoint2", &H5SeisImpl::getPoint2,
            py::arg_v("units", "", "str()"))
       .def("getBoundary", &H5SeisImpl::getBoundary,
            py::arg_v("units", "", "str()"))
@@ -340,7 +313,9 @@ void H5Seis_py(
       .def("getTraceD", &H5SeisImpl::getTraceD)
       .def("getSortG", &H5SeisImpl::getSortG)
       .def("getUValG", &H5SeisImpl::getUValG)
-      .def("getIndexesG", &H5SeisImpl::getIndexesG);
+      .def("getIndexesG", &H5SeisImpl::getIndexesG)
+
+      .def("Finalize", &H5SeisImpl::Finalize);
 }
 
 

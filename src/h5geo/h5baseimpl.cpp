@@ -494,7 +494,8 @@ H5BaseImpl::createNewSeis(h5gt::Group &group, void* p)
 {
   SeisParam param = *(static_cast<SeisParam*>(p));
   std::vector<double> origin({param.X0, param.Y0});
-  std::vector<double> spacing({param.dX, param.dY});
+  std::vector<double> point1({param.X1, param.Y1});
+  std::vector<double> point2({param.X2, param.X2});
 
   try {
 
@@ -526,22 +527,18 @@ H5BaseImpl::createNewSeis(h5gt::Group &group, void* p)
           std::string{h5geo::detail::data_units},
           h5gt::DataSpace::From(param.dataUnits)).
         write(param.dataUnits);
-    group.createAttribute<std::string>(
-          std::string{h5geo::detail::angular_units},
-          h5gt::DataSpace::From(param.angularUnits)).
-        write(param.angularUnits);
-    group.createAttribute<double>(
-          std::string{h5geo::detail::orientation},
-          h5gt::DataSpace(1)).
-        write(param.orientation);
     group.createAttribute<double>(
           std::string{h5geo::detail::origin},
           h5gt::DataSpace({2})).
         write(origin);
     group.createAttribute<double>(
-          std::string{h5geo::detail::spacing},
+          std::string{h5geo::detail::point1},
           h5gt::DataSpace({2})).
-        write(spacing);
+        write(point1);
+    group.createAttribute<double>(
+          std::string{h5geo::detail::point2},
+          h5gt::DataSpace({2})).
+        write(point2);
 
     createTextHeader(group);
     createBinHeader(group, param.stdChunk);

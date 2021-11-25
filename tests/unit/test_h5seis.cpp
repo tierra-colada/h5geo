@@ -251,7 +251,7 @@ TEST_F(H5SeisFixture, writeAndGetTrace){
       << "Read single trace and compare it with original";
 }
 
-TEST_F(H5SeisFixture, writeAndGetTraceHeader){
+TEST_F(H5SeisFixture, writeAndGetTraceHeaderFinalize){
   H5Seis_ptr seis(seisContainer->createSeis(
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
@@ -275,6 +275,9 @@ TEST_F(H5SeisFixture, writeAndGetTraceHeader){
 
   ASSERT_TRUE(trcHdr_out.isApprox(trcHdr.col(40)))
       << "Read and compare single header (CDP for example)";
+
+  ASSERT_TRUE(seis->Finalize())
+      << "Make sure that Finalize() works";
 }
 
 TEST_F(H5SeisFixture, writeAndGetSortedData){
@@ -336,24 +339,27 @@ TEST_F(H5SeisFixture, writeAndGetSortedData){
       << "Read and compare single header (CDP for example)";
 }
 
-TEST_F(H5SeisFixture, writeAndGetOrientationSpacingOrigin){
-  H5Seis_ptr seis(seisContainer->createSeis(
-                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+// ORIGIN POINT1 AND POINT2 ARE DEFINED ONLY FOR 3D STACK DATA AND AFTER 'Finalize()` is called
+//TEST_F(H5SeisFixture, writeAndGetOriginPoint1Point2){
+//  H5Seis_ptr seis(seisContainer->createSeis(
+//                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
 
-  double orientation = 1;
-  Eigen::VectorXd origin(2), spacing(2);
-  origin << 11, 12;
-  spacing << 21, 22;
+//  double orientation = 1;
+//  Eigen::VectorXd origin(2), point1(2), point2(2);
+//  origin << 1, 1;
+//  point1 << 10, 1;
+//  point1 << 1, 10;
 
-  seis->setOrientation(orientation);
-  seis->setOrigin(origin);
-  seis->setSpacing(spacing);
+//  seis->setOrigin(origin);
+//  seis->setPoint1(point1);
+//  seis->setPoint2(point2);
 
-  double orientationOut = seis->getOrientation();
-  Eigen::VectorXd originOut = seis->getOrigin();
-  Eigen::VectorXd spacingOut = seis->getSpacing();
+//  Eigen::VectorXd originOut = seis->getOrigin();
+//  Eigen::VectorXd point1Out = seis->getPoint1();
+//  Eigen::VectorXd point2Out = seis->getPoint2();
 
-  ASSERT_TRUE(orientation == orientationOut);
-  ASSERT_TRUE(origin.isApprox(originOut));
-  ASSERT_TRUE(spacing.isApprox(spacingOut));
-}
+//  ASSERT_TRUE(origin.isApprox(originOut));
+//  ASSERT_TRUE(point1.isApprox(originOut));
+//  ASSERT_TRUE(point2.isApprox(point2Out));
+
+//}

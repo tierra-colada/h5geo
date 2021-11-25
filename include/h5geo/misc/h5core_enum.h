@@ -25,10 +25,7 @@ enum class SeisAttributes : unsigned{
   Domain = 1,
   SeisDataType = 2,
   SurveyType = 3,
-  SRD = 4,
-  orientation = 5,
-  spacing = 6,
-  origin = 7
+  SRD = 4
 };
 
 enum class SeisDatasets : unsigned{

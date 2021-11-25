@@ -832,248 +832,6 @@ double H5SeisImpl::getTraceHeaderMax(
   return hdr(ind);
 }
 
-Eigen::MatrixX2d H5SeisImpl::calcBoundaryStk2D(){
-  Eigen::MatrixX3d hdr(getNTrc(), 3), hdrSorted(getNTrc(), 3);
-  hdr.col(0) = getTraceHeader("CDP", 0, getNTrc());
-  hdr.col(1) = getTraceHeader("CDP_X", 0, getNTrc());
-  hdr.col(2) = getTraceHeader("CDP_Y", 0, getNTrc());
-
-  h5geo::sort_rows(hdr, hdrSorted);
-
-  return hdrSorted.rightCols(2);
-}
-
-Eigen::MatrixX2d H5SeisImpl::calcConvexHullBoundary(){
-  Eigen::MatrixX2d hdr(getNTrc(), 2);
-  hdr.col(0) = getTraceHeader("CDP_X", 0, getNTrc());
-  hdr.col(1) = getTraceHeader("CDP_Y", 0, getNTrc());
-
-  return h5geo::quickHull2D(hdr);
-}
-
-bool H5SeisImpl::calcSpacingOriginOrientation3DStk(
-    Eigen::Ref<Eigen::Vector2d> spacing,
-    Eigen::Ref<Eigen::Vector2d> origin,
-    double& orientation)
-{
-  double minIL = getTraceHeaderMin("INLINE");
-  double maxIL = getTraceHeaderMax("INLINE");
-  double minXL = getTraceHeaderMin("XLINE");
-  double maxXL = getTraceHeaderMax("XLINE");
-  double minX = getTraceHeaderMin("CDP_X");
-  double maxX = getTraceHeaderMax("CDP_X");
-  double minY = getTraceHeaderMin("CDP_Y");
-  double maxY = getTraceHeaderMax("CDP_Y");
-
-  if (isnan(minIL) || isnan(maxIL) ||
-      isnan(minXL) || isnan(maxXL) ||
-      isnan(minX) || isnan(maxX) ||
-      isnan(minY) || isnan(maxY))
-    return false;
-
-  std::vector<std::string> keyList({"INLINE", "CDP_X", "CDP_Y"});
-  /* get first INLINE */
-  std::vector<double> minList({minIL, minX, minY});
-  std::vector<double> maxList({minIL, maxX, maxY});
-
-  Eigen::MatrixXf TRACE;
-  Eigen::MatrixXd HDR;
-
-  getSortedData(
-        TRACE, HDR,
-        keyList, minList, maxList,
-        0, 0);
-
-  if (HDR.rows() <= 1)
-    return false;
-
-  origin(0) = HDR(0, 1);
-  origin(1) = HDR(0, 2);
-
-  double dx_iL = ( HDR(Eigen::last, 1)-HDR(0, 1) ) / ( HDR.rows()-1 );
-  double dy_iL = ( HDR(Eigen::last, 2)-HDR(0, 2) ) / ( HDR.rows()-1 );
-
-  keyList[0] = "XLINE";
-  /* get first XLINE */
-  minList[0] = minXL;
-  maxList[0] = minXL;
-
-  getSortedData(
-        TRACE, HDR,
-        keyList, minList, maxList,
-        0, 0);
-
-  if (HDR.rows() <= 1)
-    return false;
-
-  double dx_xL = ( HDR(Eigen::last-1, 1)-HDR(0, 1) ) / ( HDR.rows()-1 );
-  double dy_xL = ( HDR(Eigen::last-1, 2)-HDR(0, 2) ) / ( HDR.rows()-1 );
-
-  double bin_iL = std::sqrt(std::pow(dx_iL,2)+std::pow(dy_iL,2));
-  double bin_xL = std::sqrt(std::pow(dx_xL,2)+std::pow(dy_xL,2));
-
-  spacing(0) = bin_iL;
-  spacing(1) = bin_xL;
-
-  double cos_alpha_iL = dx_iL/bin_iL;
-  orientation = std::acos(cos_alpha_iL);
-
-  std::string angularUnits = getAngularUnits();
-  if (!angularUnits.empty()){
-    double coef = units::convert(
-        units::unit_from_string("radian"),
-        units::unit_from_string(angularUnits));
-    orientation *= coef;
-  }
-
-  return true;
-}
-
-bool H5SeisImpl::calcSpacingOriginOrientation3DStk(
-    std::vector<double>& spacing,
-    std::vector<double>& origin,
-    double& orientation)
-{
-  double minIL = getTraceHeaderMin("INLINE");
-  double maxIL = getTraceHeaderMax("INLINE");
-  double minXL = getTraceHeaderMin("XLINE");
-  double maxXL = getTraceHeaderMax("XLINE");
-  double minX = getTraceHeaderMin("CDP_X");
-  double maxX = getTraceHeaderMax("CDP_X");
-  double minY = getTraceHeaderMin("CDP_Y");
-  double maxY = getTraceHeaderMax("CDP_Y");
-
-  if (isnan(minIL) || isnan(maxIL) ||
-      isnan(minXL) || isnan(maxXL) ||
-      isnan(minX) || isnan(maxX) ||
-      isnan(minY) || isnan(maxY))
-    return false;
-
-  std::vector<std::string> keyList({"INLINE", "CDP_X", "CDP_Y"});
-  /* get first INLINE */
-  std::vector<double> minList({minIL, minX, minY});
-  std::vector<double> maxList({minIL, maxX, maxY});
-
-  Eigen::MatrixXf TRACE;
-  Eigen::MatrixXd HDR;
-
-  getSortedData(
-        TRACE, HDR,
-        keyList, minList, maxList,
-        0, 0);
-
-  if (HDR.rows() <= 1)
-    return false;
-
-  origin.resize(2);
-  origin[0] = HDR(0, 1);
-  origin[1] = HDR(0, 2);
-
-  double dx_iL = ( HDR(Eigen::last, 1)-HDR(0, 1) ) / ( HDR.rows()-1 );
-  double dy_iL = ( HDR(Eigen::last, 2)-HDR(0, 2) ) / ( HDR.rows()-1 );
-
-  keyList[0] = "XLINE";
-  /* get first XLINE */
-  minList[0] = minXL;
-  maxList[0] = minXL;
-
-  getSortedData(
-        TRACE, HDR,
-        keyList, minList, maxList,
-        0, 0);
-
-  if (HDR.rows() <= 1)
-    return false;
-
-  double dx_xL = ( HDR(Eigen::last, 1)-HDR(0, 1) ) / ( HDR.rows()-1 );
-  double dy_xL = ( HDR(Eigen::last, 2)-HDR(0, 2) ) / ( HDR.rows()-1 );
-
-  double bin_iL = std::sqrt(std::pow(dx_iL,2)+std::pow(dy_iL,2));
-  double bin_xL = std::sqrt(std::pow(dx_xL,2)+std::pow(dy_xL,2));
-
-  spacing.resize(2);
-  spacing[0] = bin_iL;
-  spacing[1] = bin_xL;
-
-  double cos_alpha_iL = dx_iL/bin_iL;
-  orientation = std::acos(cos_alpha_iL);
-
-  std::string angularUnits = getAngularUnits();
-  if (!angularUnits.empty()){
-    double coef = units::convert(
-        units::unit_from_string("radian"),
-        units::unit_from_string(angularUnits));
-    orientation *= coef;
-  }
-
-  return true;
-}
-
-bool H5SeisImpl::calcAndWriteBoundary(){
-  auto opt = getBoundaryD();
-  if (!opt.has_value())
-    return false;
-
-  Eigen::MatrixX2d boundary;
-
-  if (getDataType() == h5geo::SeisDataType::STACK &&
-      getSurveyType() == h5geo::SurveyType::TWO_D){
-    boundary = calcBoundaryStk2D();
-    if (boundary.size() == 0)
-      return false;
-  } else {
-    boundary = calcConvexHullBoundary();
-    if (boundary.size() == 0)
-      return false;
-
-    if (getDataType() == h5geo::SeisDataType::STACK &&
-        getSurveyType() == h5geo::SurveyType::THREE_D){
-      double orientation = 0;
-      Eigen::Vector2d spacing, origin;
-      if (!calcSpacingOriginOrientation3DStk(spacing, origin, orientation))
-        return false;
-      setSpacing(spacing);
-      setOrigin(origin);
-      setOrientation(orientation);
-    }
-  }
-  std::vector<size_t> dims{2, (size_t)boundary.rows()};
-  opt->resize({2, (size_t)boundary.rows()});
-  opt->write_raw(boundary.data());
-
-  return true;
-}
-
-bool H5SeisImpl::calcAndWriteTraceHeaderLimits(
-    const size_t& nTrcBuffer)
-{
-  size_t nHdr = getNTrcHdr();
-  Eigen::VectorXd hdr, minHdr(nHdr), maxHdr(nHdr);
-  for (size_t i = 0; i < nHdr; i++){
-    size_t fromTrc = 0;
-    double min = std::numeric_limits<double>::infinity(),
-        max = -std::numeric_limits<double>::infinity();
-    do {
-      hdr = getTraceHeader(
-            fromTrc, nTrcBuffer, i, 1);
-      fromTrc += nTrcBuffer;
-
-      min = std::min(min, hdr.minCoeff());
-      max = std::max(max, hdr.maxCoeff());
-    } while (hdr.size() > 0);
-
-    minHdr(i) = min;
-    maxHdr(i) = max;
-  }
-  if (!h5geo::overwriteAttribute(traceHeaderD, "min", minHdr))
-    return false;
-
-  if (!h5geo::overwriteAttribute(traceHeaderD, "max", maxHdr))
-    return false;
-
-  return true;
-}
-
 bool H5SeisImpl::checkTraceLimits(
     const size_t& fromTrc, size_t& nTrc)
 {
@@ -1147,13 +905,6 @@ bool H5SeisImpl::setSRD(double val, const std::string& spatialUnits){
         val, spatialUnits, getSpatialUnits());
 }
 
-bool H5SeisImpl::setOrientation(double orientation, const std::string& angularUnits){
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::orientation},
-        orientation, angularUnits, getAngularUnits());
-}
-
 bool H5SeisImpl::setOrigin(
     Eigen::Ref<Eigen::VectorXd> origin, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
@@ -1162,12 +913,20 @@ bool H5SeisImpl::setOrigin(
         origin, spatialUnits, getSpatialUnits());
 }
 
-bool H5SeisImpl::setSpacing(
-    Eigen::Ref<Eigen::VectorXd> spacing, const std::string& spatialUnits){
+bool H5SeisImpl::setPoint1(
+    Eigen::Ref<Eigen::VectorXd> p1, const std::string& spatialUnits){
   return h5geo::overwriteAttribute(
         objG,
-        std::string{h5geo::detail::spacing},
-        spacing, spatialUnits, getSpatialUnits());
+        std::string{h5geo::detail::point1},
+        p1, spatialUnits, getSpatialUnits());
+}
+
+bool H5SeisImpl::setPoint2(
+    Eigen::Ref<Eigen::VectorXd> p2, const std::string& spatialUnits){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::point2},
+        p2, spatialUnits, getSpatialUnits());
 }
 
 h5geo::Domain H5SeisImpl::getDomain(){
@@ -1198,13 +957,6 @@ double H5SeisImpl::getSRD(const std::string& spatialUnits){
         getSpatialUnits(), spatialUnits);
 }
 
-double H5SeisImpl::getOrientation(const std::string& angularUnits){
-  return h5geo::readDoubleAttribute(
-        objG,
-        std::string{h5geo::detail::orientation},
-        getAngularUnits(), angularUnits);
-}
-
 Eigen::VectorXd H5SeisImpl::getOrigin(const std::string& spatialUnits){
   return h5geo::readDoubleEigenVecAttribute(
         objG,
@@ -1212,10 +964,17 @@ Eigen::VectorXd H5SeisImpl::getOrigin(const std::string& spatialUnits){
         getSpatialUnits(), spatialUnits);
 }
 
-Eigen::VectorXd H5SeisImpl::getSpacing(const std::string& spatialUnits){
+Eigen::VectorXd H5SeisImpl::getPoint1(const std::string& spatialUnits){
   return h5geo::readDoubleEigenVecAttribute(
         objG,
-        std::string{h5geo::detail::spacing},
+        std::string{h5geo::detail::point1},
+        getSpatialUnits(), spatialUnits);
+}
+
+Eigen::VectorXd H5SeisImpl::getPoint2(const std::string& spatialUnits){
+  return h5geo::readDoubleEigenVecAttribute(
+        objG,
+        std::string{h5geo::detail::point2},
         getSpatialUnits(), spatialUnits);
 }
 
@@ -1402,4 +1161,217 @@ H5Seis* h5geo::openSeis(h5gt::Group group){
     return new H5SeisImpl(group);
 
   return nullptr;
+}
+
+
+bool H5SeisImpl::Finalize(const size_t& bufferSize)
+{
+  if (bufferSize < 1)
+    return false;
+
+  // sorting should be prepared first
+  std::vector<std::string> pKeyList;
+  if (getDataType() == h5geo::SeisDataType::STACK &&
+      getSurveyType() == h5geo::SurveyType::THREE_D){
+    pKeyList.push_back("CDP_X");
+    pKeyList.push_back("CDP_Y");
+    pKeyList.push_back("INLINE");
+    pKeyList.push_back("XLINE");
+  } else if (getDataType() == h5geo::SeisDataType::STACK &&
+             getSurveyType() == h5geo::SurveyType::TWO_D){
+    pKeyList.push_back("CDP");
+    pKeyList.push_back("CDP_X");
+    pKeyList.push_back("CDP_Y");
+  }
+
+  for (const std::string& pKey : pKeyList){
+    if (!hasPKeySort(pKey))
+      if (!addPKeySort(pKey))
+        return false;
+  }
+
+  if (!calcAndWriteBoundary())
+    return false;
+
+  if (!calcAndWriteTraceHeaderLimits(bufferSize))
+    return false;
+
+  // origin, point1 and poin2 depends on sorting and min max trace headers
+  if (getDataType() == h5geo::SeisDataType::STACK &&
+      getSurveyType() == h5geo::SurveyType::THREE_D){
+    Eigen::Vector2d origin, point1, point2;
+    if (!calcOriginPoint1Point2Stk3D(origin, point1, point2))
+      return false;
+
+    if (!h5geo::overwriteAttribute(
+            objG,
+            std::string{h5geo::detail::origin},
+            origin))
+      return false;
+
+    if (!h5geo::overwriteAttribute(
+            objG,
+            std::string{h5geo::detail::point1},
+            point1))
+      return false;
+
+    if (!h5geo::overwriteAttribute(
+            objG,
+            std::string{h5geo::detail::point2},
+            point2))
+      return false;
+  }
+
+  return true;
+}
+
+/*-------------------------------------------------------*/
+/*---------------------- PROTECTED ----------------------*/
+/*-------------------------------------------------------*/
+
+Eigen::MatrixX2d H5SeisImpl::calcBoundaryStk2D(){
+  if (getDataType() != h5geo::SeisDataType::STACK ||
+      getSurveyType() != h5geo::SurveyType::TWO_D)
+    return Eigen::MatrixX2d();
+
+  Eigen::MatrixX3d hdr(getNTrc(), 3), hdrSorted(getNTrc(), 3);
+  hdr.col(0) = getTraceHeader("CDP", 0, getNTrc());
+  hdr.col(1) = getTraceHeader("CDP_X", 0, getNTrc());
+  hdr.col(2) = getTraceHeader("CDP_Y", 0, getNTrc());
+
+  h5geo::sort_rows(hdr, hdrSorted);
+
+  return hdrSorted.rightCols(2);
+}
+
+Eigen::MatrixX2d H5SeisImpl::calcConvexHullBoundary(){
+  Eigen::MatrixX2d hdr(getNTrc(), 2);
+  hdr.col(0) = getTraceHeader("CDP_X", 0, getNTrc());
+  hdr.col(1) = getTraceHeader("CDP_Y", 0, getNTrc());
+
+  return h5geo::quickHull2D(hdr);
+}
+
+
+bool H5SeisImpl::calcAndWriteBoundary(){
+  auto opt = getBoundaryD();
+  if (!opt.has_value())
+    return false;
+
+  Eigen::MatrixX2d boundary;
+
+  if (getDataType() == h5geo::SeisDataType::STACK &&
+      getSurveyType() == h5geo::SurveyType::TWO_D){
+    boundary = calcBoundaryStk2D();
+    if (boundary.size() == 0)
+      return false;
+  } else {
+    boundary = calcConvexHullBoundary();
+    if (boundary.size() == 0)
+      return false;
+  }
+  return h5geo::overwriteResizableDataset(
+          objG,
+          opt->getPath(),
+          boundary);
+}
+
+bool H5SeisImpl::calcAndWriteTraceHeaderLimits(
+    const size_t& nTrcBuffer)
+{
+  size_t nHdr = getNTrcHdr();
+  if (nHdr < 1 || nTrcBuffer < 1)
+    return false;
+
+  Eigen::VectorXd hdr, minHdr(nHdr), maxHdr(nHdr);
+  for (size_t i = 0; i < nHdr; i++){
+    size_t fromTrc = 0;
+    double min = std::numeric_limits<double>::infinity(),
+        max = -std::numeric_limits<double>::infinity();
+    do {
+      hdr = getTraceHeader(
+            fromTrc, nTrcBuffer, i, 1);
+      if (hdr.rows() < 1)
+        break;
+
+      fromTrc += nTrcBuffer;
+
+      min = std::min(min, hdr.minCoeff());
+      max = std::max(max, hdr.maxCoeff());
+    } while (hdr.size() > 0);
+
+    minHdr(i) = min;
+    maxHdr(i) = max;
+  }
+  if (!h5geo::overwriteAttribute(traceHeaderD, "min", minHdr))
+    return false;
+
+  if (!h5geo::overwriteAttribute(traceHeaderD, "max", maxHdr))
+    return false;
+
+  return true;
+}
+
+bool H5SeisImpl::calcOriginPoint1Point2Stk3D(
+    Eigen::Ref<Eigen::Vector2d> origin,
+    Eigen::Ref<Eigen::Vector2d> p1,
+    Eigen::Ref<Eigen::Vector2d> p2)
+{
+  if (getDataType() != h5geo::SeisDataType::STACK ||
+      getSurveyType() != h5geo::SurveyType::THREE_D)
+    return false;
+
+  double minIL = getTraceHeaderMin("INLINE");
+  double maxIL = getTraceHeaderMax("INLINE");
+  double minXL = getTraceHeaderMin("XLINE");
+  double maxXL = getTraceHeaderMax("XLINE");
+  double minX = getTraceHeaderMin("CDP_X");
+  double maxX = getTraceHeaderMax("CDP_X");
+  double minY = getTraceHeaderMin("CDP_Y");
+  double maxY = getTraceHeaderMax("CDP_Y");
+
+  if (isnan(minIL) || isnan(maxIL) ||
+      isnan(minXL) || isnan(maxXL) ||
+      isnan(minX) || isnan(maxX) ||
+      isnan(minY) || isnan(maxY))
+    return false;
+
+  std::vector<std::string> keyList({"INLINE", "CDP_X", "CDP_Y"});
+  /* get first INLINE */
+  std::vector<double> minList({minIL, minX, minY});
+  std::vector<double> maxList({minIL, maxX, maxY});
+
+  Eigen::MatrixXf TRACE;
+  Eigen::MatrixXd HDR;
+
+  getSortedData(
+        TRACE, HDR,
+        keyList, minList, maxList,
+        0, 0);
+
+  if (HDR.rows() <= 1)
+    return false;
+
+  origin(0) = HDR(0, 1);
+  origin(1) = HDR(0, 2);
+  p1(0) = HDR(Eigen::last, 1);
+  p1(1) = HDR(Eigen::last, 2);
+
+  keyList[0] = "XLINE";
+  /* get first XLINE */
+  minList[0] = minXL;
+  maxList[0] = minXL;
+
+  getSortedData(
+        TRACE, HDR,
+        keyList, minList, maxList,
+        0, 0);
+
+  if (HDR.rows() <= 1)
+    return false;
+
+  p2(0) = HDR(Eigen::last, 1);
+  p2(1) = HDR(Eigen::last, 2);
+
+  return true;
 }

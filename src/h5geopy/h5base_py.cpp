@@ -63,12 +63,13 @@ void SeisParam_py(py::class_<SeisParam, BaseObjectParam> &py_obj){
       .def_readwrite("surveyType", &SeisParam::surveyType)
       .def_readwrite("nTrc", &SeisParam::nTrc)
       .def_readwrite("nSamp", &SeisParam::nSamp)
+      .def_readwrite("srd", &SeisParam::srd)
       .def_readwrite("X0", &SeisParam::X0)
       .def_readwrite("Y0", &SeisParam::Y0)
-      .def_readwrite("dX", &SeisParam::dX)
-      .def_readwrite("dY", &SeisParam::dY)
-      .def_readwrite("srd", &SeisParam::srd)
-      .def_readwrite("orientation", &SeisParam::orientation)
+      .def_readwrite("X1", &SeisParam::X1)
+      .def_readwrite("Y1", &SeisParam::Y1)
+      .def_readwrite("X2", &SeisParam::X2)
+      .def_readwrite("Y2", &SeisParam::Y2)
       .def_readwrite("trcChunk", &SeisParam::trcChunk)
       .def_readwrite("stdChunk", &SeisParam::stdChunk);
 }

@@ -16,7 +16,8 @@ protected:
   virtual ~H5Seis() = default;
 
 public:
-//  WRITERS
+
+  // WRITERS
   virtual bool writeTextHeader(const char (&txtHdr)[40][80]) = 0;
   /*!
    * \brief writeTextHeader Max 40x80 chars are to be written
@@ -56,7 +57,7 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
 
-//  GETTERS
+  // GETTERS
   virtual std::vector<std::string> getTextHeader() = 0;
   virtual Eigen::VectorXd getBinHeader() = 0;
   virtual double getBinHeader(
@@ -196,28 +197,8 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
 
-  virtual Eigen::MatrixX2d calcBoundaryStk2D() = 0;
-  virtual Eigen::MatrixX2d calcConvexHullBoundary() = 0;
-  virtual bool calcSpacingOriginOrientation3DStk(
-      Eigen::Ref<Eigen::Vector2d> spacing,
-      Eigen::Ref<Eigen::Vector2d> origin,
-      double& orientation) = 0;
-  virtual bool calcSpacingOriginOrientation3DStk(
-      std::vector<double>& spacing,
-      std::vector<double>& origin,
-      double& orientation) = 0;
-
-  virtual bool calcAndWriteBoundary() = 0;
   /*!
-   * \brief calcAndWriteTraceHeaderLimits
-   * \param nTrcBuffer by default it is set to 10 millions of traces
-   * \return
-   */
-  virtual bool calcAndWriteTraceHeaderLimits(
-      const size_t& nTrcBuffer = 1e7) = 0;
-
-  /*!
-   * \brief checkTraceLimits check *fromTrc* and *nTrc* and diminish
+   * \brief checkTraceLimits check *fromTrc*, *nTrc* and diminish
    *  *nTrc* to fit in data limits (if *fromTrc* is inside limit)
    * \param fromTrc first trace (to read for example)
    * \param nTrc number of trace (to read for example)
@@ -242,19 +223,20 @@ public:
   virtual bool setDataType(const h5geo::SeisDataType& seisType) = 0;
   virtual bool setSurveyType(const h5geo::SurveyType& surveyType) = 0;
   virtual bool setSRD(double val, const std::string& spatialUnits = "") = 0;
-  virtual bool setOrientation(double orientation, const std::string& angularUnits = "") = 0;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::VectorXd> origin, const std::string& spatialUnits = "") = 0;
-  virtual bool setSpacing(
-      Eigen::Ref<Eigen::VectorXd> spacing, const std::string& spatialUnits = "") = 0;
+  virtual bool setPoint1(
+      Eigen::Ref<Eigen::VectorXd> p1, const std::string& spatialUnits = "") = 0;
+  virtual bool setPoint2(
+      Eigen::Ref<Eigen::VectorXd> p2, const std::string& spatialUnits = "") = 0;
 
   virtual h5geo::Domain getDomain() = 0;
   virtual h5geo::SeisDataType getDataType() = 0;
   virtual h5geo::SurveyType getSurveyType() = 0;
   virtual double getSRD(const std::string& spatialUnits = "") = 0;
-  virtual double getOrientation(const std::string& angularUnits = "") = 0;
   virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") = 0;
-  virtual Eigen::VectorXd getSpacing(const std::string& spatialUnits = "") = 0;
+  virtual Eigen::VectorXd getPoint1(const std::string& spatialUnits = "") = 0;
+  virtual Eigen::VectorXd getPoint2(const std::string& spatialUnits = "") = 0;
   virtual Eigen::MatrixXd getBoundary(const std::string& spatialUnits = "") = 0;
 
   virtual bool hasPKeySort(const std::string& pKeyName) = 0;
@@ -271,6 +253,17 @@ public:
   virtual std::optional<h5gt::Group> getSortG() = 0;
   virtual std::optional<h5gt::Group> getUValG() = 0;
   virtual std::optional<h5gt::Group> getIndexesG() = 0;
+
+  ///
+  /// After text header, bin header, trace headers and trace data is written
+  /// then this method should be called (call it only once). It computes
+  /// trace header limits, boundary, origin, 'point1' and 'point2'
+  /// (for 3D stack data), prepares necessary sorting for 3D stack
+  /// data (CDP_X, CDP_Y, INLINE, XLINE).
+  /// Thus it will take some time to process (especially for big data).
+  /// 'bufferSize' is used to store values at a time. If RAM allows set it
+  /// to the number of traces (nTrc)
+  virtual bool Finalize(const size_t& bufferSize = 1e7) = 0;
 };
 
 namespace h5geo {

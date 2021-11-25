@@ -37,9 +37,6 @@ inline constexpr auto Domain = magic_enum::enum_name(h5geo::detail::SeisAttribut
 inline constexpr auto SeisDataType = magic_enum::enum_name(h5geo::detail::SeisAttributes::SeisDataType);
 inline constexpr auto SurveyType = magic_enum::enum_name(h5geo::detail::SeisAttributes::SurveyType);
 inline constexpr auto SRD = magic_enum::enum_name(h5geo::detail::SeisAttributes::SRD);
-inline constexpr auto orientation = magic_enum::enum_name(h5geo::detail::SeisAttributes::orientation);
-inline constexpr auto spacing = magic_enum::enum_name(h5geo::detail::SeisAttributes::spacing);
-inline constexpr auto origin = magic_enum::enum_name(h5geo::detail::SeisAttributes::origin);
 inline constexpr auto& seis_dsets =
     magic_enum::enum_names<h5geo::detail::SeisDatasets>();
 inline constexpr auto text_header = magic_enum::enum_name(h5geo::detail::SeisDatasets::text_header);
@@ -54,6 +51,7 @@ inline constexpr auto indexes = magic_enum::enum_name(h5geo::detail::SeisGroups:
 inline constexpr auto unique_values = magic_enum::enum_name(h5geo::detail::SeisGroups::unique_values);
 inline constexpr auto& map_attrs =
     magic_enum::enum_names<h5geo::detail::MapAttributes>();
+inline constexpr auto origin = magic_enum::enum_name(h5geo::detail::MapAttributes::origin);
 inline constexpr auto point1 = magic_enum::enum_name(h5geo::detail::MapAttributes::point1);
 inline constexpr auto point2 = magic_enum::enum_name(h5geo::detail::MapAttributes::point2);
 inline constexpr auto& map_dsets =

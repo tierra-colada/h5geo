@@ -17,7 +17,8 @@ protected:
   virtual ~H5SeisImpl() = default;
 
 public:
-//  WRITERS
+
+  // WRITERS
   virtual bool writeTextHeader(const char (&txtHdr)[40][80]) override;
   /*!
    * \brief writeTextHeader Max 40x80 chars are to be written
@@ -57,7 +58,7 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
 
-//  GETTERS
+  // GETTERS
   virtual std::vector<std::string> getTextHeader() override;
   virtual Eigen::VectorXd getBinHeader() override;
   virtual double getBinHeader(
@@ -193,20 +194,7 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
 
-  virtual Eigen::MatrixX2d calcBoundaryStk2D() override;
-  virtual Eigen::MatrixX2d calcConvexHullBoundary() override;
-  virtual bool calcSpacingOriginOrientation3DStk(
-      Eigen::Ref<Eigen::Vector2d> spacing,
-      Eigen::Ref<Eigen::Vector2d> origin,
-      double& orientation) override;
-  virtual bool calcSpacingOriginOrientation3DStk(
-      std::vector<double>& spacing,
-      std::vector<double>& origin,
-      double& orientation) override;
 
-  virtual bool calcAndWriteBoundary() override;
-  virtual bool calcAndWriteTraceHeaderLimits(
-      const size_t& nTrcBuffer = 1e7) override;
 
   /*!
    * \brief checkTraceLimits check *fromTrc* and *nTrc* and diminish
@@ -234,19 +222,20 @@ public:
   virtual bool setDataType(const h5geo::SeisDataType& val) override;
   virtual bool setSurveyType(const h5geo::SurveyType& val) override;
   virtual bool setSRD(double val, const std::string& spatialUnits = "") override;
-  virtual bool setOrientation(double orientation, const std::string& angularUnits = "") override;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::VectorXd> origin, const std::string& spatialUnits = "") override;
-  virtual bool setSpacing(
-      Eigen::Ref<Eigen::VectorXd> spacing, const std::string& spatialUnits = "") override;
+  virtual bool setPoint1(
+      Eigen::Ref<Eigen::VectorXd> p1, const std::string& spatialUnits = "") override;
+  virtual bool setPoint2(
+      Eigen::Ref<Eigen::VectorXd> p2, const std::string& spatialUnits = "") override;
 
   virtual h5geo::Domain getDomain() override;
   virtual h5geo::SeisDataType getDataType() override;
   virtual h5geo::SurveyType getSurveyType() override;
   virtual double getSRD(const std::string& spatialUnits = "") override;
-  virtual double getOrientation(const std::string& angularUnits = "") override;
   virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") override;
-  virtual Eigen::VectorXd getSpacing(const std::string& spatialUnits = "") override;
+  virtual Eigen::VectorXd getPoint1(const std::string& spatialUnits = "") override;
+  virtual Eigen::VectorXd getPoint2(const std::string& spatialUnits = "") override;
   virtual Eigen::MatrixXd getBoundary(const std::string& spatialUnits = "") override;
 
   virtual bool hasPKeySort(const std::string& pKeyName) override;
@@ -263,6 +252,22 @@ public:
   virtual std::optional<h5gt::Group> getSortG() override;
   virtual std::optional<h5gt::Group> getUValG() override;
   virtual std::optional<h5gt::Group> getIndexesG() override;
+
+  // COMPLETER
+  virtual bool Finalize(const size_t& bufferSize = 1e7) override;
+
+protected:
+  virtual Eigen::MatrixX2d calcBoundaryStk2D();
+  virtual Eigen::MatrixX2d calcConvexHullBoundary();
+  virtual bool calcAndWriteBoundary();
+  /// nTrcBuffer by default it is set to 10 millions of traces
+  virtual bool calcAndWriteTraceHeaderLimits(
+      const size_t& nTrcBuffer = 1e7);
+  virtual bool calcOriginPoint1Point2Stk3D(
+      Eigen::Ref<Eigen::Vector2d> origin,
+      Eigen::Ref<Eigen::Vector2d> p1,
+      Eigen::Ref<Eigen::Vector2d> p2);
+
 
 protected:
   h5gt::DataSet traceD, traceHeaderD;
