@@ -7,6 +7,11 @@
 
 #include <units/units.hpp>
 
+#ifdef H5GEO_USE_GDAL
+#include <gdal/gdal.h>
+#include <gdal/gdal_priv.h>
+#endif
+
 H5WellImpl::H5WellImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
@@ -199,8 +204,24 @@ H5DevCurve* H5WellImpl::createDevCurve(
 
 bool H5WellImpl::setHeadCoord(
     Eigen::Ref<Eigen::Vector2d> v,
-    const std::string& spatialUnits)
+    const std::string& spatialUnits,
+    bool doCoordTransform)
 {
+#ifdef H5GEO_USE_GDAL
+  if (doCoordTransform){
+    OGRCoordinateTransformation* coordTrans =
+        createCoordinateTransformationToWriteData(spatialUnits);
+    if (!coordTrans)
+      return false;
+
+    coordTrans->Transform(1, &v(0), &v(1));
+    return h5geo::overwriteAttribute(
+          objG,
+          std::string{h5geo::detail::head_coord},
+          v);
+  }
+#endif
+
   return h5geo::overwriteAttribute(
       objG,
       std::string{h5geo::detail::head_coord},
@@ -209,28 +230,54 @@ bool H5WellImpl::setHeadCoord(
 
 bool H5WellImpl::setKB(
     double& val,
-    const std::string& spatialUnits){
+    const std::string& spatialUnits)
+{
   return h5geo::overwriteAttribute(
       objG,
       std::string{h5geo::detail::head_coord},
       val, spatialUnits, getSpatialUnits());
 }
 
-bool H5WellImpl::setUWI(const std::string& str){
+bool H5WellImpl::setUWI(const std::string& str)
+{
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::UWI},
         str);
 }
 
-Eigen::VectorXd H5WellImpl::getHeadCoord(const std::string& spatialUnits){
+Eigen::VectorXd H5WellImpl::getHeadCoord(
+    const std::string& spatialUnits,
+    bool doCoordTransform)
+{
+#ifdef H5GEO_USE_GDAL
+  if (doCoordTransform){
+    OGRCoordinateTransformation* coordTrans =
+        createCoordinateTransformationToReadData(spatialUnits);
+    if (!coordTrans)
+      return Eigen::VectorXd();
+
+    Eigen::VectorXd v = h5geo::readDoubleEigenVecAttribute(
+          objG,
+          std::string{h5geo::detail::head_coord});
+
+    if (v.size() != 2)
+      return Eigen::VectorXd();
+
+    coordTrans->Transform(1, &v(0), &v(1));
+    return v;
+  }
+#endif
+
   return h5geo::readDoubleEigenVecAttribute(
       objG,
       std::string{h5geo::detail::head_coord},
       getSpatialUnits(), spatialUnits);
 }
 
-double H5WellImpl::getKB(const std::string& spatialUnits){
+double H5WellImpl::getKB(
+    const std::string& spatialUnits)
+{
   return h5geo::readDoubleAttribute(
       objG,
       std::string{h5geo::detail::KB},

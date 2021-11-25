@@ -14,6 +14,19 @@ protected:
   virtual ~H5BaseObjectImpl() = default;
 
 public:
+#ifdef H5GEO_USE_GDAL
+  ///
+  /// Assumes that 'spatial_reference' and 'spatial_units' attributes
+  /// exist and they are used to create transfromation
+  virtual OGRCoordinateTransformation* createCoordinateTransformationToReadData(
+      const std::string& unitsTo) override;
+  ///
+  /// Assumes that 'spatial_reference' and 'spatial_units' attributes
+  /// exist and they are used to create transfromation
+  virtual OGRCoordinateTransformation* createCoordinateTransformationToWriteData(
+      const std::string& unitsFrom) override;
+#endif
+
   virtual bool setSpatialReference(const std::string& str) override;
   virtual bool setSpatialReference(
       const std::string& authName, const std::string& code) override;

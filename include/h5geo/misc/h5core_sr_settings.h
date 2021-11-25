@@ -14,44 +14,44 @@ namespace h5geo
 namespace sr {
 
 
-inline OGRSpatialReference SR;
+inline OGRSpatialReference SpatialReference;
 
 inline void setSpatialReference(OGRSpatialReference sr){
-  SR = sr;
+  SpatialReference = sr;
 }
 
 inline void setSpatialReferenceFromUserInput(
     const std::string& authName, const std::string& code){
-  SR.SetFromUserInput((authName + ":" + code).c_str());
+  SpatialReference.SetFromUserInput((authName + ":" + code).c_str());
 }
 
 inline OGRSpatialReference& getSpatialReference(){
-  return SR;
+  return SpatialReference;
 }
 
 inline void setSpatialUnits(const std::string& units){
   double coef = units::convert(
       units::unit_from_string(units),
       units::unit_from_string("meter"));
-  SR.SetLinearUnitsAndUpdateParameters(units.c_str(), coef);
+  SpatialReference.SetLinearUnitsAndUpdateParameters(units.c_str(), coef);
 }
 
 inline void setAngularUnits(const std::string& units){
   double coef = units::convert(
       units::unit_from_string(units),
       units::unit_from_string("radian"));
-  SR.SetLinearUnitsAndUpdateParameters(units.c_str(), coef);
+  SpatialReference.SetLinearUnitsAndUpdateParameters(units.c_str(), coef);
 }
 
 inline std::string getSpatialUnits(){
   const char *units = nullptr;
-  SR.GetLinearUnits(&units);
+  SpatialReference.GetLinearUnits(&units);
   return std::string(units);
 }
 
 inline std::string getAngularUnits(){
   const char *units = nullptr;
-  SR.GetAngularUnits(&units);
+  SpatialReference.GetAngularUnits(&units);
   return std::string(units);
 }
 

@@ -2,8 +2,78 @@
 #include "../../include/h5geo/h5core.h"
 #include "../../include/h5geo/misc/h5core_enum_string.h"
 
+#ifdef H5GEO_USE_GDAL
+#include "../../include/h5geo/misc/h5core_sr_settings.h"
+#endif
+
 H5BaseObjectImpl::H5BaseObjectImpl(const h5gt::Group &group) :
   objG(group){}
+
+#ifdef H5GEO_USE_GDAL
+
+OGRCoordinateTransformation*
+H5BaseObjectImpl::createCoordinateTransformationToReadData(
+    const std::string& unitsTo)
+{
+  std::string unitsFrom = getSpatialUnits();
+  double coefFrom = units::convert(
+        units::unit_from_string(unitsFrom),
+        units::meter);
+
+  if (isnan(coefFrom))
+    return nullptr;
+
+  double coeffTo = units::convert(
+        units::unit_from_string(unitsTo),
+        units::meter);
+
+  if (isnan(coeffTo))
+    return nullptr;
+
+  std::string srAuthAndCodeFrom = getSpatialReference();
+  OGRSpatialReference srFrom;
+  if (srFrom.SetFromUserInput(srAuthAndCodeFrom.c_str()) != OGRERR_NONE)
+    return nullptr;
+
+  OGRSpatialReference srTo = h5geo::sr::getSpatialReference();
+
+  srFrom.SetLinearUnitsAndUpdateParameters(unitsFrom.c_str(), coefFrom);
+  srTo.SetLinearUnitsAndUpdateParameters(unitsTo.c_str(), coeffTo);
+  return OGRCreateCoordinateTransformation(&srFrom, &srTo);
+}
+
+OGRCoordinateTransformation*
+H5BaseObjectImpl::createCoordinateTransformationToWriteData(
+    const std::string &unitsFrom)
+{
+  double coefFrom = units::convert(
+        units::unit_from_string(unitsFrom),
+        units::meter);
+
+  if (isnan(coefFrom))
+    return nullptr;
+
+  std::string unitsTo = getSpatialUnits();
+  double coefTo = units::convert(
+        units::unit_from_string(unitsTo),
+        units::meter);
+
+  if (isnan(coefTo))
+    return nullptr;
+
+  OGRSpatialReference srFrom = h5geo::sr::getSpatialReference();
+
+  std::string srAuthAndCodeTo = getSpatialReference();
+  OGRSpatialReference srTo;
+  if (srTo.SetFromUserInput(srAuthAndCodeTo.c_str()) != OGRERR_NONE)
+    return nullptr;
+
+  srFrom.SetLinearUnitsAndUpdateParameters(unitsFrom.c_str(), coefFrom);
+  srTo.SetLinearUnitsAndUpdateParameters(unitsTo.c_str(), coefTo);
+  return OGRCreateCoordinateTransformation(&srFrom, &srTo);
+}
+
+#endif
 
 bool H5BaseObjectImpl::setSpatialReference(const std::string& str){
   return h5geo::overwriteAttribute(

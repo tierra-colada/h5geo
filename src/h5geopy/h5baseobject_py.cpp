@@ -1,5 +1,10 @@
 #include "../../include/h5geopy/h5baseobject_py.h"
 
+#ifdef H5GEO_USE_GDAL
+#include <gdal/gdal.h>
+#include <gdal/gdal_priv.h>
+#endif
+
 namespace h5geopy {
 
 void H5BaseObject_py(
@@ -9,6 +14,14 @@ void H5BaseObject_py(
     H5BaseImpl,
     H5BaseObject> &py_obj){
   py_obj
+
+    #ifdef H5GEO_USE_GDAL
+      .def("createCoordinateTransformationToReadData",
+             &H5BaseObjectImpl::createCoordinateTransformationToReadData)
+      .def("createCoordinateTransformationToWriteData",
+             &H5BaseObjectImpl::createCoordinateTransformationToWriteData)
+    #endif
+
       .def("setSpatialReference", py::overload_cast<const std::string&>(
              &H5BaseObjectImpl::setSpatialReference))
       .def("setSpatialReference", py::overload_cast<const std::string&, const std::string&>(

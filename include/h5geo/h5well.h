@@ -45,14 +45,18 @@ public:
 
   virtual bool setHeadCoord(
       Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& spatialUnits = "") = 0;
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) = 0;
   virtual bool setKB(
       double& val,
       const std::string& spatialUnits = "") = 0;
   virtual bool setUWI(const std::string& str) = 0;
 
-  virtual Eigen::VectorXd getHeadCoord(const std::string& spatialUnits = "") = 0;
-  virtual double getKB(const std::string& spatialUnits = "") = 0;
+  virtual Eigen::VectorXd getHeadCoord(
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) = 0;
+  virtual double getKB(
+      const std::string& spatialUnits = "") = 0;
   virtual std::string getUWI() = 0;
 
   virtual H5DevCurve* getActiveDevCurve() = 0;

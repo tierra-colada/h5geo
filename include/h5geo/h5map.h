@@ -21,17 +21,17 @@ public:
 
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
   virtual bool setOrigin(
-      std::vector<double>& v, const std::string& spatialUnits = "") = 0;
-  virtual bool setOrigin(
-      Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") = 0;
+      Eigen::Ref<Eigen::Vector2d> v,
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) = 0;
   virtual bool setPoint1(
-      std::vector<double>& v, const std::string& spatialUnits = "") = 0;
-  virtual bool setPoint1(
-      Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") = 0;
+      Eigen::Ref<Eigen::Vector2d> v,
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) = 0;
   virtual bool setPoint2(
-      std::vector<double>& v, const std::string& spatialUnits = "") = 0;
-  virtual bool setPoint2(
-      Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") = 0;
+      Eigen::Ref<Eigen::Vector2d> v,
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) = 0;
 
   virtual bool addAttribute(H5Map* map, std::string name = "") = 0;
   virtual bool addExternalAttribute(H5Map* map, std::string name = "") = 0;
@@ -39,9 +39,15 @@ public:
   virtual H5Map* getAttribute(const std::string& name) = 0;
 
   virtual h5geo::Domain getDomain() = 0;
-  virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") = 0;
-  virtual Eigen::VectorXd getPoint1(const std::string& spatialUnits = "") = 0;
-  virtual Eigen::VectorXd getPoint2(const std::string& spatialUnits = "") = 0;
+  virtual Eigen::VectorXd getOrigin(
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) = 0;
+  virtual Eigen::VectorXd getPoint1(
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) = 0;
+  virtual Eigen::VectorXd getPoint2(
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) = 0;
 
   virtual H5MapContainer* getMapContainer() const = 0;
 

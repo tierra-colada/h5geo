@@ -3,12 +3,23 @@
 
 #include "misc/h5base.h"
 
+#ifdef H5GEO_USE_GDAL
+class OGRCoordinateTransformation;
+#endif
+
 class H5BaseObject : public virtual H5Base
 {
 protected:
   virtual ~H5BaseObject() = default;
 
 public:
+#ifdef H5GEO_USE_GDAL
+  virtual OGRCoordinateTransformation* createCoordinateTransformationToReadData(
+      const std::string& unitsTo)  = 0;
+  virtual OGRCoordinateTransformation* createCoordinateTransformationToWriteData(
+      const std::string& unitsFrom)  = 0;
+#endif
+
   virtual bool setSpatialReference(const std::string& str) = 0;
   virtual bool setSpatialReference(
       const std::string& authName, const std::string& code) = 0;

@@ -16,42 +16,18 @@ void H5Map_py(
            py::arg_v("dataUnits", "", "str()"))
 
       .def("setDomain", &H5MapImpl::setDomain)
-      .def("setOrigin", py::overload_cast<
-           std::vector<double>&,
-           const std::string&>(
-             &H5MapImpl::setOrigin),
+      .def("setOrigin", &H5MapImpl::setOrigin,
            py::arg("xy"),
-           py::arg_v("spatialUnits", "", "str()"))
-      .def("setOrigin", py::overload_cast<
-           Eigen::Ref<Eigen::Vector2d>,
-           const std::string&>(
-             &H5MapImpl::setOrigin),
+           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
+      .def("setPoint1", &H5MapImpl::setPoint1,
            py::arg("xy"),
-           py::arg_v("spatialUnits", "", "str()"))
-      .def("setPoint1", py::overload_cast<
-           std::vector<double>&,
-           const std::string&>(
-             &H5MapImpl::setPoint1),
+           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
+      .def("setPoint2", &H5MapImpl::setPoint2,
            py::arg("xy"),
-           py::arg_v("spatialUnits", "", "str()"))
-      .def("setPoint1", py::overload_cast<
-           Eigen::Ref<Eigen::Vector2d>,
-           const std::string&>(
-             &H5MapImpl::setPoint1),
-           py::arg("xy"),
-           py::arg_v("spatialUnits", "", "str()"))
-      .def("setPoint2", py::overload_cast<
-           std::vector<double>&,
-           const std::string&>(
-             &H5MapImpl::setPoint2),
-           py::arg("xy"),
-           py::arg_v("spatialUnits", "", "str()"))
-      .def("setPoint2", py::overload_cast<
-           Eigen::Ref<Eigen::Vector2d>,
-           const std::string&>(
-             &H5MapImpl::setPoint2),
-           py::arg("xy"),
-           py::arg_v("spatialUnits", "", "str()"))
+           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
 
       .def("addAttribute", &H5MapImpl::addAttribute,
            py::arg("map"),
@@ -66,11 +42,14 @@ void H5Map_py(
 
       .def("getDomain", &H5MapImpl::getDomain)
       .def("getOrigin", &H5MapImpl::getOrigin,
-           py::arg_v("spatialUnits", "", "str()"))
+           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
       .def("getPoint1", &H5MapImpl::getPoint1,
-           py::arg_v("spatialUnits", "", "str()"))
+           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
       .def("getPoint2", &H5MapImpl::getPoint2,
-           py::arg_v("spatialUnits", "", "str()"))
+           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
 
       .def("getMapContainer", &H5MapImpl::getMapContainer)
 

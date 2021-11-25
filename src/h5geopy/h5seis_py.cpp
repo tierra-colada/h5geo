@@ -82,6 +82,7 @@ void H5Seis_py(
       .def("writeBoundary", &H5SeisImpl::writeBoundary,
            py::arg("boundary"),
            py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"),
            "write boundary of 2d (a line) or 3d (usually convex hull or concave hull) seismic survey. "
 "Input argument is `MatrixX2d` where first col - `X` coord, second - `Y` coord")
       .def("writeTrace", &H5SeisImpl::writeTrace,
@@ -275,13 +276,16 @@ void H5Seis_py(
            py::arg_v("units", "", "str()"))
       .def("setOrigin", &H5SeisImpl::setOrigin,
            py::arg("value"),
-           py::arg_v("units", "", "str()"))
+           py::arg_v("units", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
       .def("setPoint1", &H5SeisImpl::setPoint1,
            py::arg("value"),
-           py::arg_v("units", "", "str()"))
+           py::arg_v("units", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
       .def("setPoint2", &H5SeisImpl::setPoint2,
            py::arg("value"),
-           py::arg_v("units", "", "str()"))
+           py::arg_v("units", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
 
       .def("getDomain", &H5SeisImpl::getDomain)
       .def("getDataType", &H5SeisImpl::getDataType)
@@ -289,13 +293,17 @@ void H5Seis_py(
       .def("getSRD", &H5SeisImpl::getSRD,
            py::arg_v("units", "", "str()"))
       .def("getOrigin", &H5SeisImpl::getOrigin,
-           py::arg_v("units", "", "str()"))
+           py::arg_v("units", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
       .def("getPoint1", &H5SeisImpl::getPoint1,
-           py::arg_v("units", "", "str()"))
+           py::arg_v("units", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
       .def("getPoint2", &H5SeisImpl::getPoint2,
-           py::arg_v("units", "", "str()"))
+           py::arg_v("units", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
       .def("getBoundary", &H5SeisImpl::getBoundary,
-           py::arg_v("units", "", "str()"))
+           py::arg_v("units", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
 
       .def("hasPKeySort", &H5SeisImpl::hasPKeySort,
            py::arg("pKeyName"))

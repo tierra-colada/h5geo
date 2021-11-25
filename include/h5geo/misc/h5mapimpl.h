@@ -21,17 +21,17 @@ public:
 
   virtual bool setDomain(const h5geo::Domain& domain) override;
   virtual bool setOrigin(
-      std::vector<double>& v, const std::string& spatialUnits = "") override;
-  virtual bool setOrigin(
-      Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") override;
+      Eigen::Ref<Eigen::Vector2d> v,
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) override;
   virtual bool setPoint1(
-      std::vector<double>& v, const std::string& spatialUnits = "") override;
-  virtual bool setPoint1(
-      Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") override;
+      Eigen::Ref<Eigen::Vector2d> v,
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) override;
   virtual bool setPoint2(
-      std::vector<double>& v, const std::string& spatialUnits = "") override;
-  virtual bool setPoint2(
-      Eigen::Ref<Eigen::Vector2d> v, const std::string& spatialUnits = "") override;
+      Eigen::Ref<Eigen::Vector2d> v,
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) override;
 
   virtual bool addAttribute(H5Map* map, std::string name = "") override;
   virtual bool addExternalAttribute(H5Map* map, std::string name = "") override;
@@ -39,9 +39,15 @@ public:
   virtual H5Map* getAttribute(const std::string& name) override;
 
   virtual h5geo::Domain getDomain() override;
-  virtual Eigen::VectorXd getOrigin(const std::string& spatialUnits = "") override;
-  virtual Eigen::VectorXd getPoint1(const std::string& spatialUnits = "") override;
-  virtual Eigen::VectorXd getPoint2(const std::string& spatialUnits = "") override;
+  virtual Eigen::VectorXd getOrigin(
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) override;
+  virtual Eigen::VectorXd getPoint1(
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) override;
+  virtual Eigen::VectorXd getPoint2(
+      const std::string& spatialUnits = "",
+      bool doCoordTransform = false) override;
   virtual H5MapContainer* getMapContainer() const override;
 
   virtual std::optional<h5gt::DataSet> getMapD() const override;
