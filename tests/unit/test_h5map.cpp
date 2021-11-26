@@ -62,6 +62,7 @@ public:
     p.dataUnits = "m/s";
     p.xChunkSize = 5;
     p.yChunkSize = 5;
+    p.spatialReference = "EPSG:8139";
   }
 
   virtual void TearDown() override{
@@ -78,36 +79,6 @@ public:
 };
 
 TEST_F(H5MapFixture, createContainer){
-  h5geo::sr::setSpatialReferenceFromUserInput("EPSG", "8139");
-
-  OGRSpatialReference srFrom;
-  srFrom.SetFromUserInput("EPSG:22521");
-//  OGRErr err = srFrom.SetFromUserInput("ddddddd11");
-
-  OGRSpatialReference srTo = h5geo::sr::getSpatialReference();
-  srTo.SetLinearUnitsAndUpdateParameters("km", 1000);
-
-  OGRCoordinateTransformation *coordTrans =
-        OGRCreateCoordinateTransformation(
-        &srFrom, &h5geo::sr::SpatialReference);
-
-  Eigen::Vector2d v;
-  v(0) = 0;
-  v(1) = 0;
-
-  double x, y;
-  x = 0;
-  y = 0;
-
-  coordTrans->Transform(1, &v(0), &v(1));
-  coordTrans->Transform(1, &x, &y);
-
-  std::cout << "x:\t" << x << std::endl;
-  std::cout << "y:\t" << y << std::endl;
-  std::cout << "v(0):\t" << v(0) << std::endl;
-  std::cout << "v(1):\t" << v(1) << std::endl;
-  std::cout << "spatial units:\t" << h5geo::sr::getSpatialUnits() << std::endl;
-
   ASSERT_TRUE(fs::exists(FILE_NAME1));
 }
 

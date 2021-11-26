@@ -2,6 +2,7 @@
 #include "../../include/h5geopy/h5basecontainer_py.h"
 #include "../../include/h5geopy/h5baseobject_py.h"
 #include "../../include/h5geopy/h5core_enum_py.h"
+#include "../../include/h5geopy/h5core_sr_settings_py.h"
 #include "../../include/h5geopy/h5devcurve_py.h"
 #include "../../include/h5geopy/h5deviation_py.h"
 #include "../../include/h5geopy/h5easyhull_py.h"
@@ -15,6 +16,54 @@
 #include "../../include/h5geopy/h5well_py.h"
 #include "../../include/h5geopy/h5wellcontainer_py.h"
 
+struct inty { long long_value; };
+
+void print(inty s) {
+    std::cout << s.long_value << std::endl;
+}
+
+namespace pybind11 { namespace detail {
+    template <> struct type_caster<inty> {
+    public:
+        /**
+         * This macro establishes the name 'inty' in
+         * function signatures and declares a local variable
+         * 'value' of type inty
+         */
+        PYBIND11_TYPE_CASTER(inty, _("inty"));
+
+        /**
+         * Conversion part 1 (Python->C++): convert a PyObject into a inty
+         * instance or return false upon failure. The second argument
+         * indicates whether implicit conversions should be applied.
+         */
+        bool load(handle src, bool) {
+            /* Extract PyObject from handle */
+            PyObject *source = src.ptr();
+            /* Try converting into a Python integer value */
+            PyObject *tmp = PyNumber_Long(source);
+            if (!tmp)
+                return false;
+            /* Now try to convert into a C++ int */
+            value.long_value = PyLong_AsLong(tmp);
+            Py_DECREF(tmp);
+            /* Ensure return code was OK (to avoid out-of-range errors etc) */
+            return !(value.long_value == -1 && !PyErr_Occurred());
+        }
+
+        /**
+         * Conversion part 2 (C++ -> Python): convert an inty instance into
+         * a Python object. The second and third arguments are used to
+         * indicate the return value policy and parent object (for
+         * ``return_value_policy::reference_internal``) and are generally
+         * ignored by implicit casters.
+         */
+        static handle cast(inty src, return_value_policy /* policy */, handle /* parent */) {
+            return PyLong_FromLong(src.long_value);
+        }
+    };
+}} // namespace pybind11::detail
+
 
 namespace h5geopy {
 
@@ -22,15 +71,19 @@ PYBIND11_MODULE(_h5geo, m) {
   py::module_::import("h5gtpy._h5gt");
 
 #ifdef H5GEO_USE_GDAL
-  py::module_::import("osgeo.gdal");
-  py::module_::import("osgeo.ogr");
-  py::module_::import("osgeo.osr");
+  py::module_ m_gdal = py::module_::import("osgeo._gdal");
+  py::module_ m_ogr = py::module_::import("osgeo._ogr");
+  py::module_ m_osr = py::module_::import("osgeo._osr");
+
+  // create submodule for Spatial Reference Settings
+  py::module m_sr = m.def_submodule("sr");
 #endif
 
   m.doc() =
       "API to work with geo-data (seismic, wells, maps, other in process) based on HDF5 and originally written in C++: "
   "https://github.com/tierra-colada/h5geo";
 
+  m.def("print", &print);
 
   // Simple exception class
 
@@ -288,6 +341,10 @@ PYBIND11_MODULE(_h5geo, m) {
   defineDeviationFunctions(m);
   defineEasyHullFunctions(m);
   defineSortFunctions(m);
+
+#ifdef H5GEO_USE_GDAL
+  defineSRSettingsFunctions(m_sr);
+#endif
 }
 
 

@@ -326,6 +326,10 @@ H5BaseImpl::createNewMap(h5gt::Group &group, void* p)
           h5gt::DataSpace(1)).
         write(static_cast<unsigned>(param.domain));
     group.createAttribute<std::string>(
+          std::string{h5geo::detail::spatial_reference},
+          h5gt::DataSpace::From(param.spatialReference)).
+        write(param.spatialReference);
+    group.createAttribute<std::string>(
           std::string{h5geo::detail::spatial_units},
           h5gt::DataSpace::From(param.spatialUnits)).
         write(param.spatialUnits);
@@ -367,6 +371,10 @@ H5BaseImpl::createNewWell(h5gt::Group &group, void* p)
 
   try {
 
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::spatial_reference},
+          h5gt::DataSpace::From(param.spatialReference)).
+        write(param.spatialReference);
     group.createAttribute<double>(
           std::string{h5geo::detail::head_coord},
           h5gt::DataSpace({2})).
@@ -412,6 +420,10 @@ H5BaseImpl::createNewLogCurve(h5gt::Group &group, void* p)
   try {
 
     group.createAttribute<std::string>(
+          std::string{h5geo::detail::spatial_reference},
+          h5gt::DataSpace::From(param.spatialReference)).
+        write(param.spatialReference);
+    group.createAttribute<std::string>(
           std::string{h5geo::detail::spatial_units},
           h5gt::DataSpace::From(param.spatialUnits)).
         write(param.spatialUnits);
@@ -449,6 +461,10 @@ H5BaseImpl::createNewDevCurve(h5gt::Group &group, void* p)
 
   try {
 
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::spatial_reference},
+          h5gt::DataSpace::From(param.spatialReference)).
+        write(param.spatialReference);
     group.createAttribute<std::string>(
           std::string{h5geo::detail::spatial_units},
           h5gt::DataSpace::From(param.spatialUnits)).
@@ -515,6 +531,10 @@ H5BaseImpl::createNewSeis(h5gt::Group &group, void* p)
           std::string{h5geo::detail::SRD},
           h5gt::DataSpace(1)).
         write(param.srd);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::spatial_reference},
+          h5gt::DataSpace::From(param.spatialReference)).
+        write(param.spatialReference);
     group.createAttribute<std::string>(
           std::string{h5geo::detail::spatial_units},
           h5gt::DataSpace::From(param.spatialUnits)).

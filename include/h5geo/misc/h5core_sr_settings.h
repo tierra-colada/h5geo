@@ -6,6 +6,7 @@
 #include <gdal/gdal.h>
 #include <gdal/gdal_priv.h>
 
+#include <iostream>
 
 namespace h5geo
 {
@@ -40,7 +41,7 @@ inline void setAngularUnits(const std::string& units){
   double coef = units::convert(
       units::unit_from_string(units),
       units::unit_from_string("radian"));
-  SpatialReference.SetLinearUnitsAndUpdateParameters(units.c_str(), coef);
+  SpatialReference.SetAngularUnits(units.c_str(), coef);
 }
 
 inline std::string getSpatialUnits(){
@@ -50,9 +51,19 @@ inline std::string getSpatialUnits(){
 }
 
 inline std::string getAngularUnits(){
-  const char *units = nullptr;
+  const char *units;
   SpatialReference.GetAngularUnits(&units);
   return std::string(units);
+}
+
+inline std::string getAuthorityName(){
+  char *name = nullptr;
+  return std::string(SpatialReference.GetAuthorityName(name));
+}
+
+inline std::string getAuthorityCode(){
+  char *code = nullptr;
+  return std::string(SpatialReference.GetAuthorityCode(code));
 }
 
 

@@ -18,6 +18,7 @@
 //#include <pybind11/stl_bind.h>
 #include <pybind11/complex.h>
 #include <pybind11/operators.h>
+#include <pybind11/cast.h>
 
 // DON'T WRITE 'using namespace h5gt' AS h5gt AND h5geo ARE INCOPATIBLE
 
