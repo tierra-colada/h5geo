@@ -31,36 +31,6 @@ file(GLOB_RECURSE h5geopy_h
      ${CMAKE_SOURCE_DIR}/include/h5geopy/*.h
      )
 
-#set(h5geopy_src
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5base_py.cpp
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5basecontainer_py.cpp
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5baseobject_py.cpp
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5core_enum_py.cpp
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5core_sr_settings_py.cpp
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5deviation_py.cpp
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5easyhull_py.cpp
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5geo_py.cpp
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5geofunctions_py.cpp
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5mapcontainer_py.cpp
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5map_py.cpp
-#  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5sort_py.cpp
-#  )
-
-#set(h5geopy_h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5base_py.h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5basecontainer_py.h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5baseobject_py.h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5core_enum_py.h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5core_sr_settings_py.h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5deviation_py.h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5easyhull_py.h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5geo_py.h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5geofunctions_py.h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5mapcontainer_py.h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5map_py.h
-#  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5sort_py.h
-#  )
-
 pybind11_add_module(_h5geo
   ${h5geopy_src}
   ${h5geopy_h}

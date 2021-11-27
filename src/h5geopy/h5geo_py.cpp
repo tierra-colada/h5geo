@@ -35,8 +35,6 @@ PYBIND11_MODULE(_h5geo, m) {
       "API to work with geo-data (seismic, wells, maps, other in process) based on HDF5 and originally written in C++: "
   "https://github.com/tierra-colada/h5geo";
 
-  m.def("print", &print);
-
   /*-------------------------------------------------------------*/
   /*-------------------------DECLARATION-------------------------*/
   /*-------------------------------------------------------------*/
