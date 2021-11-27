@@ -9,10 +9,12 @@ namespace h5geopy {
 
 void H5LogCurve_py(
     py::class_<
+    H5LogCurve,
     H5LogCurveImpl,
-    std::unique_ptr<H5LogCurveImpl, ObjectDeleter>,
-    H5BaseObjectImpl,
-    H5LogCurve> &py_obj);
+    H5BaseObject,
+    H5Base,
+    std::unique_ptr<H5LogCurve, ObjectDeleter>>
+    &py_obj);
 
 } // h5geopy
 

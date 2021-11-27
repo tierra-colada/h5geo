@@ -12,6 +12,11 @@
 
 #include <Eigen/Dense>
 
+#ifdef H5GEO_USE_GDAL
+#include <gdal/gdal.h>
+#include <gdal/gdal_priv.h>
+#endif
+
 #include <pybind11/pybind11.h>
 #include <pybind11/eigen.h>
 #include <pybind11/stl.h>

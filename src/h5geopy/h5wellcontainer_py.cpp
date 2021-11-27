@@ -4,28 +4,30 @@ namespace h5geopy {
 
 void H5WellContainer_py(
     py::class_<
+    H5WellContainer,
     H5WellContainerImpl,
-    std::unique_ptr<H5WellContainerImpl, ObjectDeleter>,
-    H5BaseContainerImpl,
-    H5WellContainer> &py_obj){
+    H5BaseContainer,
+    H5Base,
+    std::unique_ptr<H5WellContainer, ObjectDeleter>>
+    &py_obj){
   py_obj
       .def("getWell", py::overload_cast<
            const std::string&>(
-             &H5WellContainerImpl::getWell))
+             &H5WellContainer::getWell))
       .def("getWell", py::overload_cast<
            h5gt::Group>(
-             &H5WellContainerImpl::getWell))
+             &H5WellContainer::getWell))
       .def("createWell", py::overload_cast<
            std::string&,
            WellParam&,
            CreationType>(
-             &H5WellContainerImpl::createWell))
+             &H5WellContainer::createWell))
       .def("createWell", py::overload_cast<
            h5gt::Group,
            WellParam&,
            CreationType>(
-             &H5WellContainerImpl::createWell))
-      .def("getWellList", &H5WellContainerImpl::getWellList);
+             &H5WellContainer::createWell))
+      .def("getWellList", &H5WellContainer::getWellList);
 }
 
 

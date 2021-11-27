@@ -10,10 +10,12 @@ namespace h5geopy {
 
 void H5Map_py(
     py::class_<
+    H5Map,
     H5MapImpl,
-    std::unique_ptr<H5MapImpl, ObjectDeleter>,
-    H5BaseObjectImpl,
-    H5Map> &py_obj);
+    H5BaseObject,
+    H5Base,
+    std::unique_ptr<H5Map, ObjectDeleter>>
+    &py_obj);
 
 } // h5geopy
 

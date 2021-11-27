@@ -7,46 +7,48 @@ namespace h5geopy {
 
 void H5Well_py(
     py::class_<
+    H5Well,
     H5WellImpl,
-    std::unique_ptr<H5WellImpl, ObjectDeleter>,
-    H5BaseObjectImpl,
-    H5Well> &py_obj){
+    H5BaseObject,
+    H5Base,
+    std::unique_ptr<H5Well, ObjectDeleter>>
+    &py_obj){
   py_obj
-      .def("getLogCurve", py::overload_cast<const std::string&, const std::string&>(&H5WellImpl::getLogCurve))
-      .def("getLogCurve", py::overload_cast<h5gt::Group>(&H5WellImpl::getLogCurve))
-      .def("getDevCurve", py::overload_cast<const std::string&>(&H5WellImpl::getDevCurve))
-      .def("getDevCurve", py::overload_cast<h5gt::Group>(&H5WellImpl::getDevCurve))
-      .def("createLogCurve", py::overload_cast<std::string&, std::string&, LogCurveParam&, CreationType>(&H5WellImpl::createLogCurve))
-      .def("createLogCurve", py::overload_cast<h5gt::Group, LogCurveParam&, CreationType>(&H5WellImpl::createLogCurve))
-      .def("createDevCurve", py::overload_cast<std::string&, DevCurveParam&, CreationType>(&H5WellImpl::createDevCurve))
-      .def("createDevCurve", py::overload_cast<h5gt::Group, DevCurveParam&, CreationType>(&H5WellImpl::createDevCurve))
+      .def("getLogCurve", py::overload_cast<const std::string&, const std::string&>(&H5Well::getLogCurve))
+      .def("getLogCurve", py::overload_cast<h5gt::Group>(&H5Well::getLogCurve))
+      .def("getDevCurve", py::overload_cast<const std::string&>(&H5Well::getDevCurve))
+      .def("getDevCurve", py::overload_cast<h5gt::Group>(&H5Well::getDevCurve))
+      .def("createLogCurve", py::overload_cast<std::string&, std::string&, LogCurveParam&, CreationType>(&H5Well::createLogCurve))
+      .def("createLogCurve", py::overload_cast<h5gt::Group, LogCurveParam&, CreationType>(&H5Well::createLogCurve))
+      .def("createDevCurve", py::overload_cast<std::string&, DevCurveParam&, CreationType>(&H5Well::createDevCurve))
+      .def("createDevCurve", py::overload_cast<h5gt::Group, DevCurveParam&, CreationType>(&H5Well::createDevCurve))
 
-      .def("setHeadCoord", &H5WellImpl::setHeadCoord,
+      .def("setHeadCoord", &H5Well::setHeadCoord,
            py::arg("xy"), py::arg_v("spatialUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
-      .def("setKB", &H5WellImpl::setKB,
+      .def("setKB", &H5Well::setKB,
            py::arg("val"), py::arg_v("spatialUnits", "", "str()"))
-      .def("setUWI", &H5WellImpl::setUWI)
+      .def("setUWI", &H5Well::setUWI)
 
-      .def("getHeadCoord", &H5WellImpl::getHeadCoord,
+      .def("getHeadCoord", &H5Well::getHeadCoord,
            py::arg_v("spatialUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
-      .def("getKB", &H5WellImpl::getKB)
-      .def("getUWI", &H5WellImpl::getUWI)
+      .def("getKB", &H5Well::getKB)
+      .def("getUWI", &H5Well::getUWI)
 
-      .def("getActiveDevCurve", &H5WellImpl::getActiveDevCurve)
-      .def("getDevCurveList", &H5WellImpl::getDevCurveList)
-      .def("getLogCurveList", &H5WellImpl::getLogCurveList)
-      .def("getDevCurveNameList", &H5WellImpl::getDevCurveNameList)
-      .def("getLogCurveNameList", &H5WellImpl::getLogCurveNameList)
-      .def("getLogTypeNameList", &H5WellImpl::getLogTypeNameList)
+      .def("getActiveDevCurve", &H5Well::getActiveDevCurve)
+      .def("getDevCurveList", &H5Well::getDevCurveList)
+      .def("getLogCurveList", &H5Well::getLogCurveList)
+      .def("getDevCurveNameList", &H5Well::getDevCurveNameList)
+      .def("getLogCurveNameList", &H5Well::getLogCurveNameList)
+      .def("getLogTypeNameList", &H5Well::getLogTypeNameList)
 
-      .def("getWellContainer", &H5WellImpl::getWellContainer)
+      .def("getWellContainer", &H5Well::getWellContainer)
 
-      .def("getDevG", &H5WellImpl::getDevG)
-      .def("getActiveDevG", &H5WellImpl::getActiveDevG)
-      .def("getLogG", &H5WellImpl::getLogG)
-      .def("getLogTypeG", &H5WellImpl::getLogTypeG);
+      .def("getDevG", &H5Well::getDevG)
+      .def("getActiveDevG", &H5Well::getActiveDevG)
+      .def("getLogG", &H5Well::getLogG)
+      .def("getLogTypeG", &H5Well::getLogTypeG);
 }
 
 
