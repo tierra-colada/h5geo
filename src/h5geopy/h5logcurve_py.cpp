@@ -7,16 +7,17 @@ namespace h5geopy {
 
 void H5LogCurve_py(
     py::class_<
+    H5LogCurve,
     H5LogCurveImpl,
-    std::unique_ptr<H5LogCurveImpl, ObjectDeleter>,
-    H5BaseObjectImpl,
-    H5LogCurve> &py_obj){
+    H5BaseObject,
+    std::unique_ptr<H5LogCurve, ObjectDeleter>>
+    &py_obj){
   py_obj
       .def("writeCurve", py::overload_cast<
            const LogDataType&,
            Eigen::Ref<Eigen::VectorXd>,
            const std::string&>(
-             &H5LogCurveImpl::writeCurve),
+             &H5LogCurve::writeCurve),
            py::arg("name"),
            py::arg("data"),
            py::arg_v("units", "", "str()"))
@@ -24,7 +25,7 @@ void H5LogCurve_py(
            const std::string&,
            Eigen::Ref<Eigen::VectorXd>,
            const std::string&>(
-             &H5LogCurveImpl::writeCurve),
+             &H5LogCurve::writeCurve),
            py::arg("name"),
            py::arg("data"),
            py::arg_v("units", "", "str()"))
@@ -32,22 +33,22 @@ void H5LogCurve_py(
       .def("getCurve", py::overload_cast<
            const LogDataType&,
            const std::string&>(
-             &H5LogCurveImpl::getCurve),
+             &H5LogCurve::getCurve),
            py::arg("name"),
            py::arg_v("units", "", "str()"))
       .def("getCurve", py::overload_cast<
            const std::string&,
            const std::string&>(
-             &H5LogCurveImpl::getCurve),
+             &H5LogCurve::getCurve),
            py::arg("name"),
            py::arg_v("units", "", "str()"))
 
-      .def("getRelativeCurveName", &H5LogCurveImpl::getRelativeCurveName)
+      .def("getRelativeCurveName", &H5LogCurve::getRelativeCurveName)
 
-      .def("getWellContainer", &H5LogCurveImpl::getWellContainer)
-      .def("getWell", &H5LogCurveImpl::getWell)
+      .def("getWellContainer", &H5LogCurve::getWellContainer)
+      .def("getWell", &H5LogCurve::getWell)
 
-      .def("getLogCurveD", &H5LogCurveImpl::getLogCurveD);
+      .def("getLogCurveD", &H5LogCurve::getLogCurveD);
 }
 
 

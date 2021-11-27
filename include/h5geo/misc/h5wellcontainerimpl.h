@@ -4,9 +4,7 @@
 #include "../h5wellcontainer.h"
 #include "h5basecontainerimpl.h"
 
-class H5WellContainerImpl :
-    public virtual H5WellContainer,
-    public virtual H5BaseContainerImpl
+class H5WellContainerImpl : public H5BaseContainerImpl<H5WellContainer>
 {
 protected:
   explicit H5WellContainerImpl(const h5gt::File &h5File);

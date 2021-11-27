@@ -5,9 +5,8 @@
 #include "h5baseimpl.h"
 #include "h5gt/H5Group.hpp"
 
-class H5BaseObjectImpl :
-    public virtual H5BaseObject,
-    public virtual H5BaseImpl
+template <typename TBase = H5BaseObject>
+class H5BaseObjectImpl : public H5BaseImpl<TBase>
 {
 protected:
   explicit H5BaseObjectImpl(const h5gt::Group &group);

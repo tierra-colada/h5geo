@@ -3,8 +3,9 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5basecontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5baseimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5baseobjectimpl.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_enum_operators.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_enum.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_enum_operators.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_enum_string.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_misc.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5core_sr_settings.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5devcurveimpl.h

@@ -8,9 +8,7 @@
 
 class H5SeisContainer;
 
-class H5SeisImpl :
-    public virtual H5Seis,
-    public virtual H5BaseObjectImpl
+class H5SeisImpl : public H5BaseObjectImpl<H5Seis>
 {
 protected:
   explicit H5SeisImpl(const h5gt::Group &group);

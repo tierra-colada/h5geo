@@ -3,7 +3,8 @@
 
 #include "h5base.h"
 
-class H5BaseImpl : public virtual H5Base
+template <typename TBase = H5Base>
+class H5BaseImpl : public TBase
 {
 protected:
   virtual ~H5BaseImpl() = default;
@@ -136,7 +137,6 @@ protected:
       h5gt::File h5File);
   friend H5WellContainer* h5geo::openWellContainer(
       h5gt::File h5File);
-
 };
 
 #endif // H5BASEIMPL_H

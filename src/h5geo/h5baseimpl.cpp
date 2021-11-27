@@ -1,9 +1,14 @@
 #include "../../include/h5geo/misc/h5baseimpl.h"
+#include "../../include/h5geo/misc/h5basecontainerimpl.h"
+#include "../../include/h5geo/misc/h5mapcontainerimpl.h"
+#include "../../include/h5geo/misc/h5seiscontainerimpl.h"
+#include "../../include/h5geo/misc/h5wellcontainerimpl.h"
+#include "../../include/h5geo/misc/h5baseobjectimpl.h"
 #include "../../include/h5geo/misc/h5mapimpl.h"
+#include "../../include/h5geo/misc/h5seisimpl.h"
+#include "../../include/h5geo/misc/h5wellimpl.h"
 #include "../../include/h5geo/misc/h5devcurveimpl.h"
 #include "../../include/h5geo/misc/h5logcurveimpl.h"
-#include "../../include/h5geo/misc/h5wellimpl.h"
-#include "../../include/h5geo/misc/h5seisimpl.h"
 #include "../../include/h5geo/h5core.h"
 //#include "../../include/h5geo/misc/h5core_enum.h"
 #include "../../include/h5geo/misc/h5core_enum_string.h"
@@ -15,13 +20,15 @@
 #include <filesystem>
 namespace fs = std::filesystem;
 
-void H5BaseImpl::Delete()
+template <typename TBase>
+void H5BaseImpl<TBase>::Delete()
 {
   delete this;
 }
 
+template <typename TBase>
 std::vector<h5gt::Group>
-H5BaseImpl::getChildList(
+H5BaseImpl<TBase>::getChildList(
     h5gt::Group& group,
     const h5geo::ObjectType& objType)
 {
@@ -49,8 +56,9 @@ H5BaseImpl::getChildList(
   return childList;
 }
 
+template <typename TBase>
 std::optional<h5gt::File>
-H5BaseImpl::createContainer(
+H5BaseImpl<TBase>::createContainer(
     std::string& fileName,
     const h5geo::ContainerType& containerType,
     h5geo::CreationType createFlag)
@@ -121,10 +129,12 @@ H5BaseImpl::createContainer(
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::File>
-H5BaseImpl::createContainer(h5gt::File h5File,
-                            const h5geo::ContainerType& containerType,
-                            h5geo::CreationType createFlag)
+H5BaseImpl<TBase>::createContainer(
+    h5gt::File h5File,
+    const h5geo::ContainerType& containerType,
+    h5geo::CreationType createFlag)
 {
   switch (createFlag) {
   case h5geo::CreationType::OPEN: {
@@ -154,24 +164,28 @@ H5BaseImpl::createContainer(h5gt::File h5File,
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseImpl::createObject(std::string& objName,
-                         h5gt::File parentFile,
-                         const h5geo::ObjectType& objType,
-                         void* p,
-                         h5geo::CreationType createFlag)
+H5BaseImpl<TBase>::createObject(
+    std::string& objName,
+    h5gt::File parentFile,
+    const h5geo::ObjectType& objType,
+    void* p,
+    h5geo::CreationType createFlag)
 {
   h5gt::Group parentGroup = parentFile.getGroup("/");
   return createObject(
         objName, parentGroup, objType, p, createFlag);
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseImpl::createObject(std::string& objName,
-                         h5gt::Group parentGroup,
-                         const h5geo::ObjectType& objType,
-                         void* p,
-                         h5geo::CreationType createFlag)
+H5BaseImpl<TBase>::createObject(
+    std::string& objName,
+    h5gt::Group parentGroup,
+    const h5geo::ObjectType& objType,
+    void* p,
+    h5geo::CreationType createFlag)
 {
   if (objName.empty() &&
       createFlag != h5geo::CreationType::CREATE_UNDER_NEW_NAME){
@@ -205,8 +219,9 @@ H5BaseImpl::createObject(std::string& objName,
         objG, objType, p, createFlag);
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseImpl::createObject(
+H5BaseImpl<TBase>::createObject(
     h5gt::Group objG,
     const h5geo::ObjectType& objType,
     void* p,
@@ -245,8 +260,9 @@ H5BaseImpl::createObject(
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::File>
-H5BaseImpl::createNewContainer(
+H5BaseImpl<TBase>::createNewContainer(
     h5gt::File &file,
     const h5geo::ContainerType& containerType)
 {
@@ -274,6 +290,7 @@ H5BaseImpl::createNewContainer(
   return file;
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
 /*!
  * \brief H5BaseImpl::createNewObject This method should work only
@@ -282,7 +299,7 @@ std::optional<h5gt::Group>
  * \param objType
  * \param p
  */
-H5BaseImpl::createNewObject(
+H5BaseImpl<TBase>::createNewObject(
     h5gt::Group &group,
     const h5geo::ObjectType& objType,
     void* p)
@@ -303,8 +320,9 @@ H5BaseImpl::createNewObject(
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseImpl::createNewMap(h5gt::Group &group, void* p)
+H5BaseImpl<TBase>::createNewMap(h5gt::Group &group, void* p)
 {
   MapParam param = *(static_cast<MapParam*>(p));
 
@@ -363,8 +381,9 @@ H5BaseImpl::createNewMap(h5gt::Group &group, void* p)
 
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseImpl::createNewWell(h5gt::Group &group, void* p)
+H5BaseImpl<TBase>::createNewWell(h5gt::Group &group, void* p)
 {
   WellParam param = *(static_cast<WellParam *>(p));
   std::vector<double> head_coord({param.headY, param.headX});
@@ -406,8 +425,9 @@ H5BaseImpl::createNewWell(h5gt::Group &group, void* p)
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseImpl::createNewLogCurve(h5gt::Group &group, void* p)
+H5BaseImpl<TBase>::createNewLogCurve(h5gt::Group &group, void* p)
 {
   LogCurveParam param = *(static_cast<LogCurveParam*>(p));
   std::vector<size_t> count = {2, 1};
@@ -448,8 +468,9 @@ H5BaseImpl::createNewLogCurve(h5gt::Group &group, void* p)
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseImpl::createNewDevCurve(h5gt::Group &group, void* p)
+H5BaseImpl<TBase>::createNewDevCurve(h5gt::Group &group, void* p)
 {
   DevCurveParam param = *(static_cast<DevCurveParam*>(p));
   std::vector<size_t> count = {5, 1};
@@ -505,8 +526,9 @@ H5BaseImpl::createNewDevCurve(h5gt::Group &group, void* p)
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseImpl::createNewSeis(h5gt::Group &group, void* p)
+H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
 {
   SeisParam param = *(static_cast<SeisParam*>(p));
   std::vector<double> origin({param.X0, param.Y0});
@@ -574,8 +596,9 @@ H5BaseImpl::createNewSeis(h5gt::Group &group, void* p)
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::DataSet>
-H5BaseImpl::createTextHeader(
+H5BaseImpl<TBase>::createTextHeader(
     h5gt::Group &seisGroup)
 {
   char txtHdr[40][80];
@@ -585,8 +608,9 @@ H5BaseImpl::createTextHeader(
   return dataset;
 }
 
+template <typename TBase>
 std::optional<h5gt::DataSet>
-H5BaseImpl::createBinHeader(
+H5BaseImpl<TBase>::createBinHeader(
     h5gt::Group &seisGroup,
     const hsize_t& stdChunk)
 {
@@ -618,8 +642,9 @@ H5BaseImpl::createBinHeader(
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::DataSet>
-H5BaseImpl::createTrace(
+H5BaseImpl<TBase>::createTrace(
     h5gt::Group &seisGroup,
     const size_t& nTrc,
     const size_t& nSamp,
@@ -645,8 +670,9 @@ H5BaseImpl::createTrace(
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::DataSet>
-H5BaseImpl::createTraceHeader(
+H5BaseImpl<TBase>::createTraceHeader(
     h5gt::Group &seisGroup,
     const size_t& nTrc,
     const hsize_t& trcChunk)
@@ -680,8 +706,9 @@ H5BaseImpl::createTraceHeader(
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::DataSet>
-H5BaseImpl::createBoundary(
+H5BaseImpl<TBase>::createBoundary(
     h5gt::Group &seisGroup,
     const hsize_t& stdChunk)
 {
@@ -704,8 +731,9 @@ H5BaseImpl::createBoundary(
   }
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseImpl::createSort(
+H5BaseImpl<TBase>::createSort(
     h5gt::Group &seisGroup)
 {
   try {
@@ -723,12 +751,14 @@ H5BaseImpl::createSort(
   }
 }
 
-bool H5BaseImpl::isSuccessor(h5gt::Group &parentG, h5gt::Group &childG)
+template <typename TBase>
+bool H5BaseImpl<TBase>::isSuccessor(h5gt::Group &parentG, h5gt::Group &childG)
 {
   return isSuccessor(parentG.getPath(), childG.getPath());
 }
 
-bool H5BaseImpl::isSuccessor(
+template <typename TBase>
+bool H5BaseImpl<TBase>::isSuccessor(
     const std::string& parentAbsPath, const std::string& childAbsPath)
 {
   if (parentAbsPath.empty() || childAbsPath.empty())
@@ -904,3 +934,16 @@ H5BaseObject* h5geo::openObject(h5gt::Group group)
   obj = openBaseObject(group);
   return obj;
 }
+
+// explicit instantiation (requires that corresponding headers are included)
+template class H5BaseImpl<H5Base>;
+template class H5BaseImpl<H5BaseContainer>;
+template class H5BaseImpl<H5MapContainer>;
+template class H5BaseImpl<H5SeisContainer>;
+template class H5BaseImpl<H5WellContainer>;
+template class H5BaseImpl<H5BaseObject>;
+template class H5BaseImpl<H5Map>;
+template class H5BaseImpl<H5Seis>;
+template class H5BaseImpl<H5Well>;
+template class H5BaseImpl<H5DevCurve>;
+template class H5BaseImpl<H5LogCurve>;

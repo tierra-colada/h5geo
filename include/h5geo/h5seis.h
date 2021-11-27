@@ -10,7 +10,7 @@
 
 class H5SeisContainer;
 
-class H5Seis : public virtual H5BaseObject
+class H5Seis : public H5BaseObject
 {
 protected:
   virtual ~H5Seis() = default;

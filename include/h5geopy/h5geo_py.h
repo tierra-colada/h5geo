@@ -20,6 +20,11 @@
 #include <pybind11/operators.h>
 #include <pybind11/cast.h>
 
+#ifdef H5GEO_USE_GDAL
+#include <gdal/gdal.h>
+#include <gdal/gdal_priv.h>
+#endif
+
 // DON'T WRITE 'using namespace h5gt' AS h5gt AND h5geo ARE INCOPATIBLE
 
 namespace py = pybind11;
@@ -42,6 +47,23 @@ using namespace h5geo;
 /* py::const_ -> is neccessary when binding overoaded functions */
 
 /* All declarations are here. And all functions are invoked in `h5gt.cpp` */
+
+#include <h5geo/misc/h5base.h>
+
+class H5BasePy : public H5Base {
+public:
+    /* Inherit the constructors */
+    using H5Base::H5Base;
+
+    /* Trampoline (need one for each virtual function) */
+    void Delete() override {
+        PYBIND11_OVERRIDE_PURE(
+            void, /* Return type */
+            H5Base,      /* Parent class */
+            Delete          /* Name of function in C++ (must match Python name) */
+        );
+    }
+};
 
 
 #endif // H5GEOPY_H

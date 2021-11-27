@@ -4,9 +4,7 @@
 #include "../h5well.h"
 #include "h5baseobjectimpl.h"
 
-class H5WellImpl :
-    public virtual H5Well,
-    public virtual H5BaseObjectImpl
+class H5WellImpl : public H5BaseObjectImpl<H5Well>
 {
 protected:
   explicit H5WellImpl(const h5gt::Group &group);

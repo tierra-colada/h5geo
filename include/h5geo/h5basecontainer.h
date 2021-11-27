@@ -3,7 +3,7 @@
 
 #include "misc/h5base.h"
 
-class H5BaseContainer : public virtual H5Base
+class H5BaseContainer : public H5Base
 {
 protected:
   virtual ~H5BaseContainer() = default;

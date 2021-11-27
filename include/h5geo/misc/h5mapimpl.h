@@ -4,9 +4,7 @@
 #include "../h5map.h"
 #include "h5baseobjectimpl.h"
 
-class H5MapImpl :
-    public virtual H5Map,
-    public virtual H5BaseObjectImpl
+class H5MapImpl : public H5BaseObjectImpl<H5Map>
 {
 protected:
   explicit H5MapImpl(const h5gt::Group &group);

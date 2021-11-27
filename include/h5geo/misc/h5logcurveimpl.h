@@ -4,9 +4,7 @@
 #include "../h5logcurve.h"
 #include "h5baseobjectimpl.h"
 
-class H5LogCurveImpl :
-    public virtual H5LogCurve,
-    public virtual H5BaseObjectImpl
+class H5LogCurveImpl : public H5BaseObjectImpl<H5LogCurve>
 {
 protected:
   explicit H5LogCurveImpl(const h5gt::Group &group);

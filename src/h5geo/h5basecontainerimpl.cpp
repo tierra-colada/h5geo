@@ -1,31 +1,35 @@
 #include "../../include/h5geo/misc/h5basecontainerimpl.h"
+#include "../../include/h5geo/misc/h5seiscontainerimpl.h"
 #include "../../include/h5geo/misc/h5mapcontainerimpl.h"
 #include "../../include/h5geo/misc/h5wellcontainerimpl.h"
-#include "../../include/h5geo/misc/h5seiscontainerimpl.h"
 #include "../../include/h5geo/h5core.h"
 
 #include <filesystem>
 namespace fs = std::filesystem;
 
-H5BaseContainerImpl::H5BaseContainerImpl(const h5gt::File &h5File) :
+template <typename TBase>
+H5BaseContainerImpl<TBase>::H5BaseContainerImpl(const h5gt::File &h5File) :
   h5File(h5File){}
 
-h5gt::File H5BaseContainerImpl::getH5File() const{
+template <typename TBase>
+h5gt::File H5BaseContainerImpl<TBase>::getH5File() const{
   return h5File;
 }
 
-bool H5BaseContainerImpl::operator == (H5BaseContainer& other) const {
+template <typename TBase>
+bool H5BaseContainerImpl<TBase>::operator == (H5BaseContainer& other) const {
   return h5File == other.getH5File();
 }
 
-bool H5BaseContainerImpl::operator != (H5BaseContainer& other) const {
+template <typename TBase>
+bool H5BaseContainerImpl<TBase>::operator != (H5BaseContainer& other) const {
   return !(*this == other);
 }
 
 H5BaseContainer*
 h5geo::openBaseContainer(h5gt::File h5File)
 {
-  return new H5BaseContainerImpl(h5File);
+  return new H5BaseContainerImpl<H5BaseContainer>(h5File);
 }
 
 H5BaseContainer*
@@ -74,3 +78,9 @@ h5geo::openContainerByName(const std::string& fileName)
 
   return h5geo::openBaseContainerByName(fileName);
 }
+
+// explicit instantiation (requires that corresponding headers are included)
+template class H5BaseContainerImpl<H5BaseContainer>;
+template class H5BaseContainerImpl<H5MapContainer>;
+template class H5BaseContainerImpl<H5SeisContainer>;
+template class H5BaseContainerImpl<H5WellContainer>;

@@ -4,29 +4,29 @@ namespace h5geopy {
 
 void H5MapContainer_py(
     py::class_<
+    H5MapContainer,
     H5MapContainerImpl,
-    std::unique_ptr<H5MapContainerImpl, ObjectDeleter>,
-    H5BaseContainerImpl,
-    H5MapContainer> &py_obj){
+    H5BaseContainer,
+    std::unique_ptr<H5MapContainer, ObjectDeleter>>
+    &py_obj){
   py_obj
       .def("getMap", py::overload_cast<
            const std::string&>(
-             &H5MapContainerImpl::getMap))
+             &H5MapContainer::getMap))
       .def("getMap", py::overload_cast<
            h5gt::Group>(
-             &H5MapContainerImpl::getMap))
+             &H5MapContainer::getMap))
       .def("createMap", py::overload_cast<
            std::string&,
            MapParam&,
            CreationType>(
-             &H5MapContainerImpl::createMap))
+             &H5MapContainer::createMap))
       .def("createMap", py::overload_cast<
            h5gt::Group,
            MapParam&,
            CreationType>(
-             &H5MapContainerImpl::createMap))
-      .def("getMapList", &H5MapContainerImpl::getMapList);
+             &H5MapContainer::createMap))
+      .def("getMapList", &H5MapContainer::getMapList);
 }
-
 
 } // h5geopy

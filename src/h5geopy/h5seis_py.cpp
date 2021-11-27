@@ -6,7 +6,7 @@ namespace ext {
 
 std::tuple<Eigen::MatrixXf, Eigen::MatrixXd, Eigen::VectorX<size_t>>
 getSortedData(
-    H5SeisImpl* self,
+    H5Seis* self,
     const std::vector<std::string>& keyList,
     const std::vector<double>& minList,
     const std::vector<double>& maxList,
@@ -23,7 +23,7 @@ getSortedData(
 }
 
 std::tuple<size_t, bool>
-checkTraceLimits(H5SeisImpl* self, const size_t& fromTrc, size_t& nTrc)
+checkTraceLimits(H5Seis* self, const size_t& fromTrc, size_t& nTrc)
 {
   bool val = self->checkTraceLimits(
         fromTrc, nTrc);
@@ -31,7 +31,7 @@ checkTraceLimits(H5SeisImpl* self, const size_t& fromTrc, size_t& nTrc)
 }
 
 std::tuple<size_t, bool>
-checkTraceHeaderLimits(H5SeisImpl* self, const size_t& fromHdr, size_t& nHdr)
+checkTraceHeaderLimits(H5Seis* self, const size_t& fromHdr, size_t& nHdr)
 {
   bool val = self->checkTraceHeaderLimits(
         fromHdr, nHdr);
@@ -39,7 +39,7 @@ checkTraceHeaderLimits(H5SeisImpl* self, const size_t& fromHdr, size_t& nHdr)
 }
 
 std::tuple<size_t, bool>
-checkSampleLimits(H5SeisImpl* self, const size_t& fromSampInd, size_t& nSamp)
+checkSampleLimits(H5Seis* self, const size_t& fromSampInd, size_t& nSamp)
 {
   bool val = self->checkSampleLimits(
         fromSampInd, nSamp);
@@ -51,41 +51,42 @@ checkSampleLimits(H5SeisImpl* self, const size_t& fromSampInd, size_t& nSamp)
 
 void H5Seis_py(
     py::class_<
+    H5Seis,
     H5SeisImpl,
-    std::unique_ptr<H5SeisImpl, ObjectDeleter>,
-    H5BaseObjectImpl,
-    H5Seis> &py_obj){
+    H5BaseObject,
+    std::unique_ptr<H5Seis, ObjectDeleter>>
+    &py_obj){
   py_obj
       //  WRITERS
       .def("writeTextHeader", py::overload_cast<
            const std::vector<std::string>&>(
-             &H5SeisImpl::writeTextHeader),
+             &H5Seis::writeTextHeader),
            py::arg("txtHdr"))
       .def("writeBinHeader", py::overload_cast<
            const std::vector<double>&>(
-             &H5SeisImpl::writeBinHeader),
+             &H5Seis::writeBinHeader),
            py::arg("binHdr"))
       .def("writeBinHeader", py::overload_cast<
            const Eigen::Ref<const Eigen::VectorXd>&>(
-             &H5SeisImpl::writeBinHeader),
+             &H5Seis::writeBinHeader),
            py::arg("binHdr"))
       .def("writeBinHeader", py::overload_cast<
            const std::string&,
            const double&,
            const std::string&,
            const std::string&>(
-             &H5SeisImpl::writeBinHeader),
+             &H5Seis::writeBinHeader),
            py::arg("hdrName"),
            py::arg("value"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
-      .def("writeBoundary", &H5SeisImpl::writeBoundary,
+      .def("writeBoundary", &H5Seis::writeBoundary,
            py::arg("boundary"),
            py::arg_v("spatialUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"),
            "write boundary of 2d (a line) or 3d (usually convex hull or concave hull) seismic survey. "
 "Input argument is `MatrixX2d` where first col - `X` coord, second - `Y` coord")
-      .def("writeTrace", &H5SeisImpl::writeTrace,
+      .def("writeTrace", &H5Seis::writeTrace,
            py::arg("TRACE"),
            py::arg_v("fromTrc", 0, "0"),
            py::arg_v("fromSampInd", 0, "0"))
@@ -93,7 +94,7 @@ void H5Seis_py(
            const Eigen::Ref<const Eigen::MatrixXd>&,
            const size_t&,
            const size_t&>(
-             &H5SeisImpl::writeTraceHeader),
+             &H5Seis::writeTraceHeader),
            py::arg("HDR"),
            py::arg_v("fromTrc", 0, "0"),
            py::arg_v("fromHdrInd", 0, "0"))
@@ -103,7 +104,7 @@ void H5Seis_py(
            const size_t&,
            const std::string&,
            const std::string&>(
-             &H5SeisImpl::writeTraceHeader),
+             &H5Seis::writeTraceHeader),
            py::arg("hdrName"),
            py::arg("hdr"),
            py::arg_v("fromTrc", 0, "0"),
@@ -111,18 +112,18 @@ void H5Seis_py(
            py::arg_v("unitsTo", "", "str()"))
 
       //  GETTERS
-      .def("getTextHeader", &H5SeisImpl::getTextHeader)
+      .def("getTextHeader", &H5Seis::getTextHeader)
       .def("getBinHeader", py::overload_cast<>(
-             &H5SeisImpl::getBinHeader))
+             &H5Seis::getBinHeader))
       .def("getBinHeader", py::overload_cast<
            const std::string&,
            const std::string&,
            const std::string&>(
-             &H5SeisImpl::getBinHeader),
+             &H5Seis::getBinHeader),
            py::arg("hdrName"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
-      .def("getTrace", &H5SeisImpl::getTrace,
+      .def("getTrace", &H5Seis::getTrace,
            py::arg("fromTrc"),
            py::arg_v("nTrc", 1, "1"),
            py::arg_v("fromSampInd", 0, "0"),
@@ -135,7 +136,7 @@ void H5Seis_py(
            const size_t&,
            size_t,const std::vector<std::string>&,
            const std::vector<std::string>&>(
-             &H5SeisImpl::getTraceHeader),
+             &H5Seis::getTraceHeader),
            py::arg("fromTrc"),
            py::arg_v("nTrc", 1, "1"),
            py::arg_v("fromHdr", 0, "0"),
@@ -149,7 +150,7 @@ void H5Seis_py(
            const size_t&,
            const std::string&,
            const std::string&>(
-             &H5SeisImpl::getTraceHeader),
+             &H5Seis::getTraceHeader),
            py::arg("hdrName"),
            py::arg_v("fromTrc", 0, "0"),
            py::arg_v("nTrc", std::numeric_limits<size_t>::max(), "sys.maxint"),
@@ -160,7 +161,7 @@ void H5Seis_py(
            const std::vector<size_t>&,
            const std::vector<std::string>&,
            const std::vector<std::string>&>(
-             &H5SeisImpl::getTraceHeader),
+             &H5Seis::getTraceHeader),
            py::arg("trcInd"),
            py::arg("trcHdrInd"),
            py::arg_v("unitsFrom", std::vector<std::string>(), "list()"),
@@ -170,7 +171,7 @@ void H5Seis_py(
            const std::vector<size_t>&,
            const std::vector<std::string>&,
            const std::vector<std::string>&>(
-             &H5SeisImpl::getTraceHeader),
+             &H5Seis::getTraceHeader),
            py::arg("hdrNames"),
            py::arg("trcHdrInd"),
            py::arg_v("unitsFrom", std::vector<std::string>(), "list()"),
@@ -186,57 +187,57 @@ void H5Seis_py(
            "Get sorted data based on precalculated primary sort keys (e.g. before using it you should prepare primary sort keys with `addPKeySort(...)` method)."
 "Return `TRACE` (traces matrix), `HDR` (hdr matrix) and `idx` (vector of trace indexes read)")
 
-      .def("getBinHeaderIndex", &H5SeisImpl::getBinHeaderIndex,
+      .def("getBinHeaderIndex", &H5Seis::getBinHeaderIndex,
            py::arg("hdrName"))
-      .def("getTraceHeaderIndex", &H5SeisImpl::getTraceHeaderIndex,
+      .def("getTraceHeaderIndex", &H5Seis::getTraceHeaderIndex,
            py::arg("hdrName"))
 
-      .def("getSamples", &H5SeisImpl::getSamples,
+      .def("getSamples", &H5Seis::getSamples,
            py::arg("trcInd"),
            py::arg_v("units", "", "str()"),
            "in units according to `Domain` (`METER` or `SECOND` or else...)")
-      .def("getFirstSample", &H5SeisImpl::getFirstSample,
+      .def("getFirstSample", &H5Seis::getFirstSample,
            py::arg("trcInd"),
            py::arg_v("units", "", "str()"),
            "in units according to `Domain` (`METER` or `SECOND` or else...)")
-      .def("getLastSample", &H5SeisImpl::getLastSample,
+      .def("getLastSample", &H5Seis::getLastSample,
            py::arg("trcInd"),
            py::arg_v("units", "", "str()"),
            "in units according to `Domain` (`METER` or `SECOND` or else...)")
-      .def("getSampRate", &H5SeisImpl::getSampRate,
+      .def("getSampRate", &H5Seis::getSampRate,
            py::arg_v("units", "", "str()"),
            "in units according to `Domain` (`METER` or `SECOND` or else...)")
-      .def("getNSamp", &H5SeisImpl::getNSamp,
+      .def("getNSamp", &H5Seis::getNSamp,
            "get number of samples (i.e. trace length)")
-      .def("getNTrc", &H5SeisImpl::getNTrc,
+      .def("getNTrc", &H5Seis::getNTrc,
            "get number of traces")
-      .def("getNTrcHdr", &H5SeisImpl::getNTrcHdr,
+      .def("getNTrcHdr", &H5Seis::getNTrcHdr,
            "get number of trace headers (usually 78)")
-      .def("getNBinHdr", &H5SeisImpl::getNBinHdr,
+      .def("getNBinHdr", &H5Seis::getNBinHdr,
            "get number of bin headers")
-      .def("getNTextHdrRows", &H5SeisImpl::getNTextHdrRows,
+      .def("getNTextHdrRows", &H5Seis::getNTextHdrRows,
            "get number lines of text header")
-      .def("getPKeyIndexes", &H5SeisImpl::getPKeyIndexes,
+      .def("getPKeyIndexes", &H5Seis::getPKeyIndexes,
            py::arg("pName"),
            py::arg("pMin"),
            py::arg("pMax"))
-      .def("getPKeyValues", &H5SeisImpl::getPKeyValues,
+      .def("getPKeyValues", &H5Seis::getPKeyValues,
            py::arg("pkey"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
-      .def("getPKeySize", &H5SeisImpl::getPKeySize,
+      .def("getPKeySize", &H5Seis::getPKeySize,
            py::arg("pName"))
-      .def("getPKeyNames", &H5SeisImpl::getPKeyNames,
+      .def("getPKeyNames", &H5Seis::getPKeyNames,
            "get primary key names (usually they are used in sorting)")
       .def("getTraceHeaderMin", py::overload_cast<>(
-             &H5SeisImpl::getTraceHeaderMin))
+             &H5Seis::getTraceHeaderMin))
       .def("getTraceHeaderMax", py::overload_cast<>(
-             &H5SeisImpl::getTraceHeaderMax))
+             &H5Seis::getTraceHeaderMax))
       .def("getTraceHeaderMin", py::overload_cast<
            const std::string&,
            const std::string&,
            const std::string&>(
-             &H5SeisImpl::getTraceHeaderMin),
+             &H5Seis::getTraceHeaderMin),
            py::arg("hdrName"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
@@ -244,7 +245,7 @@ void H5Seis_py(
            const std::string&,
            const std::string&,
            const std::string&>(
-             &H5SeisImpl::getTraceHeaderMax),
+             &H5Seis::getTraceHeaderMax),
            py::arg("hdrName"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
@@ -268,62 +269,62 @@ void H5Seis_py(
 "`fromSampInd` first index (the value should be less then number of samples)"
 "`nSamp` number of samples (to read for example). Return corrected `nSamp`")
 
-      .def("setDomain", &H5SeisImpl::setDomain)
-      .def("setDataType", &H5SeisImpl::setDataType)
-      .def("setSurveyType", &H5SeisImpl::setSurveyType)
-      .def("setSRD", &H5SeisImpl::setSRD,
+      .def("setDomain", &H5Seis::setDomain)
+      .def("setDataType", &H5Seis::setDataType)
+      .def("setSurveyType", &H5Seis::setSurveyType)
+      .def("setSRD", &H5Seis::setSRD,
            py::arg("value"),
            py::arg_v("units", "", "str()"))
-      .def("setOrigin", &H5SeisImpl::setOrigin,
+      .def("setOrigin", &H5Seis::setOrigin,
            py::arg("value"),
            py::arg_v("units", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
-      .def("setPoint1", &H5SeisImpl::setPoint1,
+      .def("setPoint1", &H5Seis::setPoint1,
            py::arg("value"),
            py::arg_v("units", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
-      .def("setPoint2", &H5SeisImpl::setPoint2,
+      .def("setPoint2", &H5Seis::setPoint2,
            py::arg("value"),
            py::arg_v("units", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
 
-      .def("getDomain", &H5SeisImpl::getDomain)
-      .def("getDataType", &H5SeisImpl::getDataType)
-      .def("getSurveyType", &H5SeisImpl::getSurveyType)
-      .def("getSRD", &H5SeisImpl::getSRD,
+      .def("getDomain", &H5Seis::getDomain)
+      .def("getDataType", &H5Seis::getDataType)
+      .def("getSurveyType", &H5Seis::getSurveyType)
+      .def("getSRD", &H5Seis::getSRD,
            py::arg_v("units", "", "str()"))
-      .def("getOrigin", &H5SeisImpl::getOrigin,
+      .def("getOrigin", &H5Seis::getOrigin,
            py::arg_v("units", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
-      .def("getPoint1", &H5SeisImpl::getPoint1,
+      .def("getPoint1", &H5Seis::getPoint1,
            py::arg_v("units", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
-      .def("getPoint2", &H5SeisImpl::getPoint2,
+      .def("getPoint2", &H5Seis::getPoint2,
            py::arg_v("units", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
-      .def("getBoundary", &H5SeisImpl::getBoundary,
+      .def("getBoundary", &H5Seis::getBoundary,
            py::arg_v("units", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
 
-      .def("hasPKeySort", &H5SeisImpl::hasPKeySort,
+      .def("hasPKeySort", &H5Seis::hasPKeySort,
            py::arg("pKeyName"))
-      .def("removePKeySort", &H5SeisImpl::removePKeySort,
+      .def("removePKeySort", &H5Seis::removePKeySort,
            py::arg("pKeyName"))
-      .def("addPKeySort", &H5SeisImpl::addPKeySort,
+      .def("addPKeySort", &H5Seis::addPKeySort,
            py::arg("pKeyName"))
 
-      .def("getSeisContainer", &H5SeisImpl::getSeisContainer)
+      .def("getSeisContainer", &H5Seis::getSeisContainer)
 
-      .def("getBoundaryD", &H5SeisImpl::getBoundaryD)
-      .def("getTextHeaderD", &H5SeisImpl::getTextHeaderD)
-      .def("getBinHeaderD", &H5SeisImpl::getBinHeaderD)
-      .def("getTraceHeaderD", &H5SeisImpl::getTraceHeaderD)
-      .def("getTraceD", &H5SeisImpl::getTraceD)
-      .def("getSortG", &H5SeisImpl::getSortG)
-      .def("getUValG", &H5SeisImpl::getUValG)
-      .def("getIndexesG", &H5SeisImpl::getIndexesG)
+      .def("getBoundaryD", &H5Seis::getBoundaryD)
+      .def("getTextHeaderD", &H5Seis::getTextHeaderD)
+      .def("getBinHeaderD", &H5Seis::getBinHeaderD)
+      .def("getTraceHeaderD", &H5Seis::getTraceHeaderD)
+      .def("getTraceD", &H5Seis::getTraceD)
+      .def("getSortG", &H5Seis::getSortG)
+      .def("getUValG", &H5Seis::getUValG)
+      .def("getIndexesG", &H5Seis::getIndexesG)
 
-      .def("Finalize", &H5SeisImpl::Finalize);
+      .def("Finalize", &H5Seis::Finalize);
 }
 
 

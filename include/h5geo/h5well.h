@@ -9,7 +9,7 @@ class H5WellContainer;
 class H5DevCurve;
 class H5LogCurve;
 
-class H5Well : public virtual H5BaseObject
+class H5Well : public H5BaseObject
 {
 protected:
   virtual ~H5Well() = default;

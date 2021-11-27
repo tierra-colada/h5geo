@@ -6,9 +6,8 @@
 
 #include <h5gt/H5File.hpp>
 
-class H5BaseContainerImpl :
-    public virtual H5BaseContainer,
-    public virtual H5BaseImpl
+template <typename TBase = H5BaseContainer>
+class H5BaseContainerImpl : public H5BaseImpl<TBase>
 {
 protected:
   explicit H5BaseContainerImpl(const h5gt::File &h5File);

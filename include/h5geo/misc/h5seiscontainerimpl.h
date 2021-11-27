@@ -4,11 +4,7 @@
 #include "../h5seiscontainer.h"
 #include "h5basecontainerimpl.h"
 
-#include <memory>
-
-class H5SeisContainerImpl :
-    public virtual H5SeisContainer,
-    public virtual H5BaseContainerImpl
+class H5SeisContainerImpl : public H5BaseContainerImpl<H5SeisContainer>
 {
 protected:
   explicit H5SeisContainerImpl(const h5gt::File &h5File);

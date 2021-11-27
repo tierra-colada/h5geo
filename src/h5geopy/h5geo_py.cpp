@@ -85,78 +85,9 @@ PYBIND11_MODULE(_h5geo, m) {
 
   m.def("print", &print);
 
-  // Simple exception class
-
   /*-------------------------------------------------------------*/
   /*-------------------------DECLARATION-------------------------*/
   /*-------------------------------------------------------------*/
-
-  /* `nullptr` problem: I use interface classes (base classes are abstract).
-   * Factory functions (and methods) may create `nullptr` instead of `H5Base *`
-   * pointer for example. If this happens then python doesn't know how to treat
-   * `H5Base *` casted from `nullptr` as I bind `H5BaseImpl` classes everywhere.
-   * So to bind this `nullptr` to some python class I need declare it as I do below
-   * (their names start with `_` as they are not intended to be explicetly used).
-   * Secondly I decided to include these abstract classes to bind class hierarchy
-   * (you can see that every `py_class_<SomeClassImpl, ..., SomeClass>` has a corresponding
-   * abstract class as parent. I do this to keep polymorphism (though this may be excessive) */
-
-  /*----------EMPTY DECLARATION OF ABSTRACT CLASSES (NEEDED TO OVERCOME `nullptr` PROBLEM---------*/
-
-  // _BASE
-  py::class_<
-      H5Base,
-      std::unique_ptr<H5Base,
-      ObjectDeleter>>(m, "_H5Base");
-  py::class_<
-      H5BaseContainer,
-      std::unique_ptr<H5BaseContainer, ObjectDeleter>,
-      H5Base>(m, "_H5BaseContainer");
-  py::class_<
-      H5BaseObject,
-      std::unique_ptr<H5BaseObject, ObjectDeleter>,
-      H5Base>(m, "_H5BaseObject");
-
-  // _MAP
-  py::class_<
-      H5MapContainer,
-      std::unique_ptr<H5MapContainer, ObjectDeleter>,
-      H5BaseContainer>(m, "_H5MapContainer");
-  py::class_<
-      H5Map,
-      std::unique_ptr<H5Map, ObjectDeleter>,
-      H5BaseObject>(m, "_H5Map");
-
-  // _SEIS
-  py::class_<
-      H5SeisContainer,
-      std::unique_ptr<H5SeisContainer, ObjectDeleter>,
-      H5BaseContainer>(m, "_H5SeisContainer");
-  py::class_<
-      H5Seis,
-      std::unique_ptr<H5Seis, ObjectDeleter>,
-      H5BaseObject>(m, "_H5Seis");
-
-  // _WELL
-  py::class_<
-      H5WellContainer,
-      std::unique_ptr<H5WellContainer, ObjectDeleter>,
-      H5BaseContainer>(m, "_H5WellContainer");
-  py::class_<
-      H5Well,
-      std::unique_ptr<H5Well, ObjectDeleter>,
-      H5BaseObject>(m, "_H5Well");
-  py::class_<
-      H5DevCurve,
-      std::unique_ptr<H5DevCurve, ObjectDeleter>,
-      H5BaseObject>(m, "_H5DevCurve");
-  py::class_<
-      H5LogCurve,
-      std::unique_ptr<H5LogCurve, ObjectDeleter>,
-      H5BaseObject>(m, "_H5LogCurve");
-
-  /*----------END OF `nullptr` PROBLEM---------*/
-
 
   // ENUM
   auto pyContainerType = py::enum_<ContainerType>(m, "ContainerType", py::arithmetic());
@@ -188,87 +119,96 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyLogCurveParam = py::class_<LogCurveParam, BaseObjectParam>(m, "LogCurveParam");
   auto pySeisParam = py::class_<SeisParam, BaseObjectParam>(m, "SeisParam");
   auto pyBase = py::class_<
-      H5BaseImpl,
-      std::unique_ptr<H5BaseImpl, ObjectDeleter>,
-      H5Base>(m, "H5Base");
+      H5Base,
+      H5BaseImpl<H5Base>,
+      std::unique_ptr<H5Base, ObjectDeleter>>
+      (m, "H5Base");
 
   // BASECONTAINER
   auto pyBaseContainer = py::class_<
-      H5BaseContainerImpl,
-      std::unique_ptr<H5BaseContainerImpl, ObjectDeleter>,
-      H5BaseImpl,
-      H5BaseContainer>(m, "H5BaseContainer");
+      H5BaseContainer,
+      H5BaseContainerImpl<H5BaseContainer>,
+      std::unique_ptr<H5BaseContainer, ObjectDeleter>>
+      (m, "H5BaseContainer");
 
   // BASEOBJECT
   auto pyBaseObject = py::class_<
-      H5BaseObjectImpl,
-      std::unique_ptr<H5BaseObjectImpl, ObjectDeleter>,
-      H5BaseImpl,
-      H5BaseObject>(m, "H5BaseObject");
+      H5BaseObject,
+      H5BaseObjectImpl<H5BaseObject>,
+      std::unique_ptr<H5BaseObject, ObjectDeleter>>
+      (m, "H5BaseObject");
 
   // MAPCONTAINER
   auto pyMapContainer =
       py::class_<
+      H5MapContainer,
       H5MapContainerImpl,
-      std::unique_ptr<H5MapContainerImpl, ObjectDeleter>,
-      H5BaseContainerImpl,
-      H5MapContainer>(m, "H5MapContainer");
+      H5BaseContainer,
+      std::unique_ptr<H5MapContainer, ObjectDeleter>>
+      (m, "H5MapContainer");
 
   // MAP
   auto pyMap =
       py::class_<
+      H5Map,
       H5MapImpl,
-      std::unique_ptr<H5MapImpl, ObjectDeleter>,
-      H5BaseObjectImpl,
-      H5Map>(m, "H5Map");
+      H5BaseObject,
+      std::unique_ptr<H5Map, ObjectDeleter>>
+      (m, "H5Map");
 
   // SEISCONTAINER
   auto pySeisContainer =
       py::class_<
+      H5SeisContainer,
       H5SeisContainerImpl,
-      std::unique_ptr<H5SeisContainerImpl, ObjectDeleter>,
-      H5BaseContainerImpl,
-      H5SeisContainer>(m, "H5SeisContainer");
+      H5BaseContainer,
+      std::unique_ptr<H5SeisContainer, ObjectDeleter>>
+      (m, "H5SeisContainer");
 
   // SEIS
   auto pySeis =
       py::class_<
+      H5Seis,
       H5SeisImpl,
-      std::unique_ptr<H5SeisImpl, ObjectDeleter>,
-      H5BaseObjectImpl,
-      H5Seis>(m, "H5Seis");
+      H5BaseObject,
+      std::unique_ptr<H5Seis, ObjectDeleter>>
+      (m, "H5Seis");
 
   // WELLCONTAINER
   auto pyWellContainer =
       py::class_<
+      H5WellContainer,
       H5WellContainerImpl,
-      std::unique_ptr<H5WellContainerImpl, ObjectDeleter>,
-      H5BaseContainerImpl,
-      H5WellContainer>(m, "H5WellContainer");
+      H5BaseContainer,
+      std::unique_ptr<H5WellContainer, ObjectDeleter>>
+      (m, "H5WellContainer");
 
   // WELL
   auto pyWell =
       py::class_<
+      H5Well,
       H5WellImpl,
-      std::unique_ptr<H5WellImpl, ObjectDeleter>,
-      H5BaseObjectImpl,
-      H5Well>(m, "H5Well");
+      H5BaseObject,
+      std::unique_ptr<H5Well, ObjectDeleter>>
+      (m, "H5Well");
 
   // DEVCURVE
   auto pyDevCurve =
       py::class_<
+      H5DevCurve,
       H5DevCurveImpl,
-      std::unique_ptr<H5DevCurveImpl, ObjectDeleter>,
-      H5BaseObjectImpl,
-      H5DevCurve>(m, "H5DevCurve");
+      H5BaseObject,
+      std::unique_ptr<H5DevCurve, ObjectDeleter>>
+      (m, "H5DevCurve");
 
-  // DEVCURVE
+  // LOGCURVE
   auto pyLogCurve =
       py::class_<
+      H5LogCurve,
       H5LogCurveImpl,
-      std::unique_ptr<H5LogCurveImpl, ObjectDeleter>,
-      H5BaseObjectImpl,
-      H5LogCurve>(m, "H5LogCurve");
+      H5BaseObject,
+      std::unique_ptr<H5LogCurve, ObjectDeleter>>
+      (m, "H5LogCurve");
 
 
   /*------------------------------------------------------------*/
@@ -304,13 +244,13 @@ PYBIND11_MODULE(_h5geo, m) {
   DevCurveParam_py(pyDevCurveParam);
   LogCurveParam_py(pyLogCurveParam);
   SeisParam_py(pySeisParam);
-  H5Base_py(pyBase);
+  H5Base_py pyBase_inst(pyBase);
 
   // BASECONTAINER
-  H5BaseContainer_py(pyBaseContainer);
+  H5BaseContainer_py pyBaseContainer_inst(pyBaseContainer);
 
   // BASEOBJECT
-  H5BaseObject_py(pyBaseObject);
+  H5BaseObject_py pyBaseObject_inst(pyBaseObject);
 
   // MAPCONTAINER
   H5MapContainer_py(pyMapContainer);
@@ -347,5 +287,6 @@ PYBIND11_MODULE(_h5geo, m) {
 #endif
 }
 
-
 } // h5geopy
+
+

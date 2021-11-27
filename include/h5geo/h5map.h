@@ -7,7 +7,7 @@
 
 class H5MapContainer;
 
-class H5Map : public virtual H5BaseObject
+class H5Map : public H5BaseObject
 {
 protected:
   virtual ~H5Map() = default;

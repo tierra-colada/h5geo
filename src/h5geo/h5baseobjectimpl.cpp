@@ -1,4 +1,9 @@
 #include "../../include/h5geo/misc/h5baseobjectimpl.h"
+#include "../../include/h5geo/misc/h5mapimpl.h"
+#include "../../include/h5geo/misc/h5seisimpl.h"
+#include "../../include/h5geo/misc/h5wellimpl.h"
+#include "../../include/h5geo/misc/h5devcurveimpl.h"
+#include "../../include/h5geo/misc/h5logcurveimpl.h"
 #include "../../include/h5geo/h5core.h"
 #include "../../include/h5geo/misc/h5core_enum_string.h"
 
@@ -6,13 +11,15 @@
 #include "../../include/h5geo/misc/h5core_sr_settings.h"
 #endif
 
-H5BaseObjectImpl::H5BaseObjectImpl(const h5gt::Group &group) :
+template <typename TBase>
+H5BaseObjectImpl<TBase>::H5BaseObjectImpl(const h5gt::Group &group) :
   objG(group){}
 
 #ifdef H5GEO_USE_GDAL
 
+template <typename TBase>
 OGRCoordinateTransformation*
-H5BaseObjectImpl::createCoordinateTransformationToReadData(
+H5BaseObjectImpl<TBase>::createCoordinateTransformationToReadData(
     const std::string& unitsTo)
 {
   std::string unitsFrom = getSpatialUnits();
@@ -42,8 +49,9 @@ H5BaseObjectImpl::createCoordinateTransformationToReadData(
   return OGRCreateCoordinateTransformation(&srFrom, &srTo);
 }
 
+template <typename TBase>
 OGRCoordinateTransformation*
-H5BaseObjectImpl::createCoordinateTransformationToWriteData(
+H5BaseObjectImpl<TBase>::createCoordinateTransformationToWriteData(
     const std::string &unitsFrom)
 {
   double coefFrom = units::convert(
@@ -75,14 +83,16 @@ H5BaseObjectImpl::createCoordinateTransformationToWriteData(
 
 #endif
 
-bool H5BaseObjectImpl::setSpatialReference(const std::string& str){
+template <typename TBase>
+bool H5BaseObjectImpl<TBase>::setSpatialReference(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::spatial_reference},
         str);
 }
 
-bool H5BaseObjectImpl::setSpatialReference(
+template <typename TBase>
+bool H5BaseObjectImpl<TBase>::setSpatialReference(
     const std::string& authName, const std::string& code){
   return h5geo::overwriteAttribute(
         objG,
@@ -90,74 +100,86 @@ bool H5BaseObjectImpl::setSpatialReference(
         authName + ":" + code);
 }
 
-bool H5BaseObjectImpl::setSpatialUnits(const std::string& str){
+template <typename TBase>
+bool H5BaseObjectImpl<TBase>::setSpatialUnits(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::spatial_units},
         str);
 }
 
-bool H5BaseObjectImpl::setTemporalUnits(const std::string& str){
+template <typename TBase>
+bool H5BaseObjectImpl<TBase>::setTemporalUnits(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::temporal_units},
         str);
 }
 
-bool H5BaseObjectImpl::setAngularUnits(const std::string& str){
+template <typename TBase>
+bool H5BaseObjectImpl<TBase>::setAngularUnits(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::angular_units},
         str);
 }
 
-bool H5BaseObjectImpl::setDataUnits(const std::string& str){
+template <typename TBase>
+bool H5BaseObjectImpl<TBase>::setDataUnits(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::data_units},
         str);
 }
 
-std::string H5BaseObjectImpl::getSpatialReference(){
+template <typename TBase>
+std::string H5BaseObjectImpl<TBase>::getSpatialReference(){
   return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::spatial_reference});
 }
 
-std::string H5BaseObjectImpl::getSpatialUnits(){
+template <typename TBase>
+std::string H5BaseObjectImpl<TBase>::getSpatialUnits(){
   return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::spatial_units});
 }
 
-std::string H5BaseObjectImpl::getTemporalUnits(){
+template <typename TBase>
+std::string H5BaseObjectImpl<TBase>::getTemporalUnits(){
   return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::temporal_units});
 }
 
-std::string H5BaseObjectImpl::getAngularUnits(){
+template <typename TBase>
+std::string H5BaseObjectImpl<TBase>::getAngularUnits(){
   return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::angular_units});
 }
 
-std::string H5BaseObjectImpl::getDataUnits(){
+template <typename TBase>
+std::string H5BaseObjectImpl<TBase>::getDataUnits(){
   return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::data_units});
 }
 
-h5gt::File H5BaseObjectImpl::getH5File() const {
+template <typename TBase>
+h5gt::File H5BaseObjectImpl<TBase>::getH5File() const {
   return h5gt::File::FromId(objG.getFileId(true), false);
 }
 
-h5gt::Group H5BaseObjectImpl::getObjG() const {
+template <typename TBase>
+h5gt::Group H5BaseObjectImpl<TBase>::getObjG() const {
   return objG;
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseObjectImpl::getGroupOpt(
+H5BaseObjectImpl<TBase>::getGroupOpt(
     h5gt::Group& parent,
     const std::string& name) const 
 {
@@ -167,8 +189,9 @@ H5BaseObjectImpl::getGroupOpt(
   return parent.getGroup(name);
 }
 
+template <typename TBase>
 std::optional<h5gt::DataSet>
-H5BaseObjectImpl::getDatasetOpt(
+H5BaseObjectImpl<TBase>::getDatasetOpt(
     const h5gt::Group& parent,
     const std::string& name) const 
 {
@@ -178,26 +201,31 @@ H5BaseObjectImpl::getDatasetOpt(
   return parent.getDataSet(name);
 }
 
-std::string H5BaseObjectImpl::getName() const {
+template <typename TBase>
+std::string H5BaseObjectImpl<TBase>::getName() const {
   std::string objName;
   h5geo::splitPathToParentAndObj(objG.getPath(), objName);
   return objName;
 }
 
-std::string H5BaseObjectImpl::getFullName() const {
+template <typename TBase>
+std::string H5BaseObjectImpl<TBase>::getFullName() const {
   return objG.getPath();
 }
 
-bool H5BaseObjectImpl::operator == (H5BaseObject& other) const {
+template <typename TBase>
+bool H5BaseObjectImpl<TBase>::operator == (H5BaseObject& other) const {
   return objG == other.getObjG();
 }
 
-bool H5BaseObjectImpl::operator != (H5BaseObject& other) const {
+template <typename TBase>
+bool H5BaseObjectImpl<TBase>::operator != (H5BaseObject& other) const {
   return !(*this == other);
 }
 
+template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseObjectImpl::getParentG(
+H5BaseObjectImpl<TBase>::getParentG(
     const h5geo::ObjectType& objType)
 {
   std::string path, objName;
@@ -221,5 +249,13 @@ H5BaseObjectImpl::getParentG(
 H5BaseObject*
 h5geo::openBaseObject(h5gt::Group group)
 {
-  return new H5BaseObjectImpl(group);
+  return new H5BaseObjectImpl<H5BaseObject>(group);
 }
+
+// explicit instantiation (requires that corresponding headers are included)
+template class H5BaseObjectImpl<H5BaseObject>;
+template class H5BaseObjectImpl<H5Map>;
+template class H5BaseObjectImpl<H5Seis>;
+template class H5BaseObjectImpl<H5Well>;
+template class H5BaseObjectImpl<H5DevCurve>;
+template class H5BaseObjectImpl<H5LogCurve>;

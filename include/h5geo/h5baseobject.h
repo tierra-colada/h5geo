@@ -7,7 +7,7 @@
 class OGRCoordinateTransformation;
 #endif
 
-class H5BaseObject : public virtual H5Base
+class H5BaseObject : public H5Base
 {
 protected:
   virtual ~H5BaseObject() = default;

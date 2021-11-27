@@ -10,10 +10,11 @@ namespace h5geopy {
 
 void H5SeisContainer_py(
     py::class_<
+    H5SeisContainer,
     H5SeisContainerImpl,
-    std::unique_ptr<H5SeisContainerImpl, ObjectDeleter>,
-    H5BaseContainerImpl,
-    H5SeisContainer> &py_obj);
+    H5BaseContainer,
+    std::unique_ptr<H5SeisContainer, ObjectDeleter>>
+    &py_obj);
 
 } // h5geopy
 

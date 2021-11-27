@@ -7,16 +7,17 @@ namespace h5geopy {
 
 void H5DevCurve_py(
     py::class_<
+    H5DevCurve,
     H5DevCurveImpl,
-    std::unique_ptr<H5DevCurveImpl, ObjectDeleter>,
-    H5BaseObjectImpl,
-    H5DevCurve> &py_obj){
+    H5BaseObject,
+    std::unique_ptr<H5DevCurve, ObjectDeleter>>
+    &py_obj){
   py_obj
       .def("writeCurve", py::overload_cast<
            const DevDataType&,
            Eigen::Ref<Eigen::VectorXd>,
            const std::string&>(
-             &H5DevCurveImpl::writeCurve),
+             &H5DevCurve::writeCurve),
            py::arg("name"),
            py::arg("data"),
            py::arg_v("units", "", "str()"))
@@ -24,35 +25,35 @@ void H5DevCurve_py(
            const std::string&,
            Eigen::Ref<Eigen::VectorXd>,
            const std::string&>(
-             &H5DevCurveImpl::writeCurve),
+             &H5DevCurve::writeCurve),
            py::arg("name"),
            py::arg("data"),
            py::arg_v("units", "", "str()"))
 
-      .def("setActive", &H5DevCurveImpl::setActive)
-      .def("isActive", &H5DevCurveImpl::isActive)
+      .def("setActive", &H5DevCurve::setActive)
+      .def("isActive", &H5DevCurve::isActive)
 
-      .def("getNCurves", &H5DevCurveImpl::getNCurves)
-      .def("getNSamp", &H5DevCurveImpl::getNSamp)
+      .def("getNCurves", &H5DevCurve::getNCurves)
+      .def("getNSamp", &H5DevCurve::getNSamp)
       .def("getCurve", py::overload_cast<
            const DevDataType&,
            const std::string&>(
-             &H5DevCurveImpl::getCurve),
+             &H5DevCurve::getCurve),
            py::arg("name"),
            py::arg_v("units", "", "str()"))
       .def("getCurve", py::overload_cast<
            const std::string&,
            const std::string&>(
-             &H5DevCurveImpl::getCurve),
+             &H5DevCurve::getCurve),
            py::arg("name"),
            py::arg_v("units", "", "str()"))
 
-      .def("getRelativeCurveName", &H5DevCurveImpl::getRelativeCurveName)
+      .def("getRelativeCurveName", &H5DevCurve::getRelativeCurveName)
 
-      .def("getWellContainer", &H5DevCurveImpl::getWellContainer)
-      .def("getWell", &H5DevCurveImpl::getWell)
+      .def("getWellContainer", &H5DevCurve::getWellContainer)
+      .def("getWell", &H5DevCurve::getWell)
 
-      .def("getDevCurveD", &H5DevCurveImpl::getDevCurveD);
+      .def("getDevCurveD", &H5DevCurve::getDevCurveD);
 }
 
 

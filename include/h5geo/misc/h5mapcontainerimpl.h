@@ -4,9 +4,7 @@
 #include "../h5mapcontainer.h"
 #include "h5basecontainerimpl.h"
 
-class H5MapContainerImpl :
-    public virtual H5MapContainer,
-    public virtual H5BaseContainerImpl
+class H5MapContainerImpl : public H5BaseContainerImpl<H5MapContainer>
 {
 protected:
   explicit H5MapContainerImpl(const h5gt::File &h5File);

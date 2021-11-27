@@ -8,7 +8,7 @@
 
 class H5Seis;
 
-class H5SeisContainer : public virtual H5BaseContainer
+class H5SeisContainer : public H5BaseContainer
 {
 protected:
   virtual ~H5SeisContainer() = default;

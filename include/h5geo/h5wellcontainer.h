@@ -8,7 +8,7 @@
 
 class H5Well;
 
-class H5WellContainer : public virtual H5BaseContainer
+class H5WellContainer : public H5BaseContainer
 {
 protected:
   virtual ~H5WellContainer() = default;

@@ -14,10 +14,21 @@ void DevCurveParam_py(py::class_<DevCurveParam, BaseObjectParam> &py_obj);
 void LogCurveParam_py(py::class_<LogCurveParam, BaseObjectParam> &py_obj);
 void SeisParam_py(py::class_<SeisParam, BaseObjectParam> &py_obj);
 
-void H5Base_py(py::class_<
-               H5BaseImpl,
-               std::unique_ptr<H5BaseImpl, ObjectDeleter>,
-               H5Base> &py_obj);
+template <class TBase>
+struct H5Base_py
+{
+  H5Base_py(
+      py::class_<
+      H5Base,
+      H5BaseImpl<TBase>,
+      std::unique_ptr<H5Base, ObjectDeleter>>
+      &py_obj)
+  {
+    py_obj
+        .def("Delete", &H5Base::Delete)
+        .def("getChildList", &H5Base::getChildList);
+  }
+};
 
 void ObjectDeleter_py(py::class_<ObjectDeleter> &py_obj);
 

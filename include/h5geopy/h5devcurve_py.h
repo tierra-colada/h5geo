@@ -9,10 +9,11 @@ namespace h5geopy {
 
 void H5DevCurve_py(
     py::class_<
+    H5DevCurve,
     H5DevCurveImpl,
-    std::unique_ptr<H5DevCurveImpl, ObjectDeleter>,
-    H5BaseObjectImpl,
-    H5DevCurve> &py_obj);
+    H5BaseObject,
+    std::unique_ptr<H5DevCurve, ObjectDeleter>>
+    &py_obj);
 
 } // h5geopy
 
