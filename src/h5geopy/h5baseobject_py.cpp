@@ -1,10 +1,5 @@
 #include "../../include/h5geopy/h5baseobject_py.h"
 
-#ifdef H5GEO_USE_GDAL
-#include <gdal/gdal.h>
-#include <gdal/gdal_priv.h>
-#endif
-
 namespace h5geopy {
 
 //template <typename TBase>
