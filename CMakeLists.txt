@@ -107,26 +107,14 @@ if(H5GEO_USE_GDAL)
   target_link_libraries(h5geo PUBLIC GDAL::GDAL)
   target_compile_definitions(h5geo PUBLIC H5GEO_USE_GDAL)
 
-  # check if 'GDAL_INCLUDE_DIRS/gdal' contains 'gdal.h' and 'gdal_priv.h'
-  file(GLOB _gdal_h "${GDAL_INCLUDE_DIRS}/gdal/gdal.h")
-  file(GLOB _gdal_priv_h "${GDAL_INCLUDE_DIRS}/gdal/gdal_priv.h")
-  get_filename_component(_gdal_folder_name ${GDAL_INCLUDE_DIRS} NAME)
+  # 'GDAL_INCLUDE_DIRS' rpovided by FindGDAL.cmake returns path
+  # to 'gdal.h' but we need the path to 'gdal/gdal.h'
+  find_path(GDAL_INCLUDE_DIR gdal/gdal.h gdal/gdal_priv.h
+    HINTS ${GDAL_INCLUDE_DIRS}/..
+    PATH_SUFFIXES include)
 
-  # check if 'GDAL_PARENT_INCLUDE_DIRS' ends up by 'gdal' folder and contains 'gdal.h' and 'gdal_priv.h'
-  get_filename_component(GDAL_PARENT_INCLUDE_DIRS ${GDAL_INCLUDE_DIRS} DIRECTORY)
-  file(GLOB _parent_dir_gdal_h "${GDAL_PARENT_INCLUDE_DIRS}/gdal/gdal.h")
-  file(GLOB _parent_dir_gdal_priv_h "${GDAL_PARENT_INCLUDE_DIRS}/gdal/gdal_priv.h")
-
-  if(_gdal_h AND _gdal_priv_h)
-    target_include_directories(h5geo PUBLIC ${GDAL_INCLUDE_DIRS})
-  elseif(_parent_dir_gdal_h AND _parent_dir_gdal_priv_h)
-    set(GDAL_INCLUDE_DIRS ${GDAL_PARENT_INCLUDE_DIRS})
-    target_include_directories(h5geo PUBLIC ${GDAL_INCLUDE_DIRS})
-  else()
-    message(FATAL_ERROR "GDAL_INCLUDE_DIRS should end up by 'gdal' folder and"
-            "contain both 'gdal.h' and gdal_priv.h'")
-  endif()
-  message("GDAL_INCLUDE_DIRS: ${GDAL_INCLUDE_DIRS}")
+  target_include_directories(h5geo PUBLIC ${GDAL_INCLUDE_DIR})
+  message("GDAL_INCLUDE_DIR: ${GDAL_INCLUDE_DIR}")
 endif()
 
 if(H5GEO_BUILD_TESTS)
