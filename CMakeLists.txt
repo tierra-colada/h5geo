@@ -111,12 +111,13 @@ if(H5GEO_USE_GDAL)
 
   # 'GDAL_INCLUDE_DIRS' rpovided by FindGDAL.cmake returns path
   # to 'gdal.h' but we need the path to 'gdal/gdal.h'
-  find_path(GDAL_INCLUDE_DIR gdal/gdal.h gdal/gdal_priv.h
-    HINTS ${GDAL_INCLUDE_DIRS}/..
+  find_path(GDAL_TOP_LEVEL_INCLUDE_DIR gdal/gdal.h gdal/gdal_priv.h
+    HINTS ${GDAL_INCLUDE_DIR}/..
     PATH_SUFFIXES include)
 
-  target_include_directories(h5geo PUBLIC ${GDAL_INCLUDE_DIR})
+  target_include_directories(h5geo PUBLIC ${GDAL_TOP_LEVEL_INCLUDE_DIR})
   message("GDAL_INCLUDE_DIR: ${GDAL_INCLUDE_DIR}")
+  message("GDAL_TOP_LEVEL_INCLUDE_DIR: ${GDAL_TOP_LEVEL_INCLUDE_DIR}")
 endif()
 
 if(H5GEO_BUILD_TESTS)
