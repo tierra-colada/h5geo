@@ -324,7 +324,8 @@ void H5Seis_py(
       .def("getUValG", &H5Seis::getUValG)
       .def("getIndexesG", &H5Seis::getIndexesG)
 
-      .def("Finalize", &H5Seis::Finalize);
+      .def("Finalize", &H5Seis::Finalize,
+           py::arg_v("bufferSize", 1e7, "10e7"));
 }
 
 

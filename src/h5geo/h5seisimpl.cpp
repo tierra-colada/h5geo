@@ -1359,7 +1359,7 @@ bool H5SeisImpl::Finalize(const size_t& bufferSize)
   if (!calcAndWriteTraceHeaderLimits(bufferSize))
     return false;
 
-  // origin, point1 and poin2 depends on sorting and min max trace headers
+  // origin, point1 and point2 depends on sorting and min max trace headers
   if (getDataType() == h5geo::SeisDataType::STACK &&
       getSurveyType() == h5geo::SurveyType::THREE_D){
     Eigen::Vector2d origin, point1, point2;
@@ -1521,9 +1521,15 @@ bool H5SeisImpl::calcOriginPoint1Point2Stk3D(
   p1(1) = HDR(Eigen::last, 2);
 
   keyList[0] = "XLINE";
+  keyList[1] = "CDP_Y";
+  keyList[2] = "CDP_X";
   /* get first XLINE */
   minList[0] = minXL;
   maxList[0] = minXL;
+  minList[1] = minY;
+  maxList[1] = maxY;
+  minList[2] = minX;
+  maxList[2] = maxX;
 
   getSortedData(
         TRACE, HDR,
@@ -1533,8 +1539,8 @@ bool H5SeisImpl::calcOriginPoint1Point2Stk3D(
   if (HDR.rows() <= 1)
     return false;
 
-  p2(0) = HDR(Eigen::last, 1);
-  p2(1) = HDR(Eigen::last, 2);
+  p2(0) = HDR(Eigen::last, 2);
+  p2(1) = HDR(Eigen::last, 1);
 
   return true;
 }
