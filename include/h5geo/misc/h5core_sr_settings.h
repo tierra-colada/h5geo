@@ -16,6 +16,7 @@ namespace sr {
 
 
 inline OGRSpatialReference SpatialReference;
+inline std::string TemporalUnits;
 
 inline void setSpatialReference(OGRSpatialReference sr){
   SpatialReference = sr;
