@@ -30,13 +30,13 @@ struct H5BaseObject_py
                &H5BaseObject::setSpatialReference))
         .def("setSpatialReference", py::overload_cast<const std::string&, const std::string&>(
                &H5BaseObject::setSpatialReference))
-        .def("setSpatialUnits", &H5BaseObject::setSpatialUnits)
+        .def("setLengthUnits", &H5BaseObject::setLengthUnits)
         .def("setTemporalUnits", &H5BaseObject::setTemporalUnits)
         .def("setAngularUnits", &H5BaseObject::setAngularUnits)
         .def("setDataUnits", &H5BaseObject::setDataUnits)
 
         .def("getSpatialReference", &H5BaseObject::getSpatialReference)
-        .def("getSpatialUnits", &H5BaseObject::getSpatialUnits)
+        .def("getLengthUnits", &H5BaseObject::getLengthUnits)
         .def("getTemporalUnits", &H5BaseObject::getTemporalUnits)
         .def("getAngularUnits", &H5BaseObject::getAngularUnits)
         .def("getDataUnits", &H5BaseObject::getDataUnits)

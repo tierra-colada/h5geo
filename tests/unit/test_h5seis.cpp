@@ -36,7 +36,7 @@ public:
     }
 
     p.domain = h5geo::Domain::OWT;
-    p.spatialUnits = "millimeter";
+    p.lengthUnits = "millimeter";
     p.temporalUnits = "millisecond";
     p.angularUnits = "degree";
     p.dataUnits = "My_data_units";

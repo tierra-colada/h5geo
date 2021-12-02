@@ -41,18 +41,18 @@ public:
 
   virtual bool setHeadCoord(
       Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual bool setKB(
       double& val,
-      const std::string& spatialUnits = "") override;
+      const std::string& lengthUnits = "") override;
   virtual bool setUWI(const std::string& str) override;
 
   virtual Eigen::VectorXd getHeadCoord(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual double getKB(
-      const std::string& spatialUnits = "") override;
+      const std::string& lengthUnits = "") override;
   virtual std::string getUWI() override;
 
   virtual H5DevCurve* getActiveDevCurve() override;

@@ -23,13 +23,13 @@ public:
   virtual bool setSpatialReference(const std::string& str) = 0;
   virtual bool setSpatialReference(
       const std::string& authName, const std::string& code) = 0;
-  virtual bool setSpatialUnits(const std::string& str) = 0;
+  virtual bool setLengthUnits(const std::string& str) = 0;
   virtual bool setTemporalUnits(const std::string& str) = 0;
   virtual bool setAngularUnits(const std::string& str) = 0;
   virtual bool setDataUnits(const std::string& str) = 0;
 
   virtual std::string getSpatialReference() = 0;
-  virtual std::string getSpatialUnits() = 0;
+  virtual std::string getLengthUnits() = 0;
   virtual std::string getTemporalUnits() = 0;
   virtual std::string getAngularUnits() = 0;
   virtual std::string getDataUnits() = 0;

@@ -16,9 +16,9 @@ void defineSRSettingsFunctions(py::module_& m_sr){
 //    py::object osr = py::module::import("osgeo").attr("osr");
 //    return py::cast(sref);
 //  });
-  m_sr.def("setSpatialUnits", &sr::setSpatialUnits);
+  m_sr.def("setLengthUnits", &sr::setLengthUnits);
   m_sr.def("setAngularUnits", &sr::setAngularUnits);
-  m_sr.def("getSpatialUnits", &sr::getSpatialUnits);
+  m_sr.def("getLengthUnits", &sr::getLengthUnits);
   m_sr.def("getAngularUnits", &sr::getAngularUnits);
   m_sr.def("getAuthorityName", &sr::getAuthorityName);
   m_sr.def("getAuthorityCode", &sr::getAuthorityCode);

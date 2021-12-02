@@ -31,7 +31,7 @@ inline OGRSpatialReference& getSpatialReference(){
   return SpatialReference;
 }
 
-inline void setSpatialUnits(const std::string& units){
+inline void setLengthUnits(const std::string& units){
   double coef = units::convert(
       units::unit_from_string(units),
       units::unit_from_string("meter"));
@@ -45,7 +45,7 @@ inline void setAngularUnits(const std::string& units){
   SpatialReference.SetAngularUnits(units.c_str(), coef);
 }
 
-inline std::string getSpatialUnits(){
+inline std::string getLengthUnits(){
   const char *units = nullptr;
   SpatialReference.GetLinearUnits(&units);
   return std::string(units);

@@ -34,7 +34,7 @@ class test_h5map(unittest.TestCase):
         self.p.nX = 10
         self.p.nY = 20
         self.p.domain = h5geo.Domain.TVD
-        self.p.spatialUnits = 'cm'
+        self.p.lengthUnits = 'cm'
         self.p.dataUnits = "m/s"
 
     def tearDown(self):

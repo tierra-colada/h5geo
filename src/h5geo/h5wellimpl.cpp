@@ -204,13 +204,13 @@ H5DevCurve* H5WellImpl::createDevCurve(
 
 bool H5WellImpl::setHeadCoord(
     Eigen::Ref<Eigen::Vector2d> v,
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(spatialUnits);
+        createCoordinateTransformationToWriteData(lengthUnits);
     if (!coordTrans)
       return false;
 
@@ -225,17 +225,17 @@ bool H5WellImpl::setHeadCoord(
   return h5geo::overwriteAttribute(
       objG,
       std::string{h5geo::detail::head_coord},
-      v, spatialUnits, getSpatialUnits());
+      v, lengthUnits, getLengthUnits());
 }
 
 bool H5WellImpl::setKB(
     double& val,
-    const std::string& spatialUnits)
+    const std::string& lengthUnits)
 {
   return h5geo::overwriteAttribute(
       objG,
       std::string{h5geo::detail::head_coord},
-      val, spatialUnits, getSpatialUnits());
+      val, lengthUnits, getLengthUnits());
 }
 
 bool H5WellImpl::setUWI(const std::string& str)
@@ -247,13 +247,13 @@ bool H5WellImpl::setUWI(const std::string& str)
 }
 
 Eigen::VectorXd H5WellImpl::getHeadCoord(
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(spatialUnits);
+        createCoordinateTransformationToReadData(lengthUnits);
     if (!coordTrans)
       return Eigen::VectorXd();
 
@@ -272,16 +272,16 @@ Eigen::VectorXd H5WellImpl::getHeadCoord(
   return h5geo::readDoubleEigenVecAttribute(
       objG,
       std::string{h5geo::detail::head_coord},
-      getSpatialUnits(), spatialUnits);
+      getLengthUnits(), lengthUnits);
 }
 
 double H5WellImpl::getKB(
-    const std::string& spatialUnits)
+    const std::string& lengthUnits)
 {
   return h5geo::readDoubleAttribute(
       objG,
       std::string{h5geo::detail::KB},
-      getSpatialUnits(), spatialUnits);
+      getLengthUnits(), lengthUnits);
 }
 
 std::string H5WellImpl::getUWI(){

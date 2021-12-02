@@ -117,7 +117,7 @@ bool H5SeisImpl::writeBinHeader(
 
 bool H5SeisImpl::writeBoundary(
     Eigen::Ref<Eigen::MatrixX2d> M,
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
   auto opt = getBoundaryD();
@@ -127,7 +127,7 @@ bool H5SeisImpl::writeBoundary(
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(spatialUnits);
+        createCoordinateTransformationToWriteData(lengthUnits);
     if (!coordTrans)
       return false;
 
@@ -143,7 +143,7 @@ bool H5SeisImpl::writeBoundary(
         objG,
         opt->getPath(),
         M,
-        spatialUnits, getDataUnits());
+        lengthUnits, getDataUnits());
 }
 
 bool H5SeisImpl::writeTrace(
@@ -595,7 +595,7 @@ Eigen::VectorXd H5SeisImpl::getSamples(
             units::unit_from_string(units));
     else
       coef = units::convert(
-            units::unit_from_string(getSpatialUnits()),
+            units::unit_from_string(getLengthUnits()),
             units::unit_from_string(units));
     if (!isnan(coef))
       return samp*coef;
@@ -625,7 +625,7 @@ double H5SeisImpl::getFirstSample(
             units::unit_from_string(units));
     else
       coef = units::convert(
-            units::unit_from_string(getSpatialUnits()),
+            units::unit_from_string(getLengthUnits()),
             units::unit_from_string(units));
     return firstSamp(0)*coef;
   }
@@ -650,7 +650,7 @@ double H5SeisImpl::getSampRate(const std::string& units){
             units::unit_from_string(units));
     else
       coef = units::convert(
-            units::unit_from_string(getSpatialUnits()),
+            units::unit_from_string(getLengthUnits()),
             units::unit_from_string(units));
     return sampRate*coef;
   }
@@ -919,22 +919,22 @@ bool H5SeisImpl::setSurveyType(const h5geo::SurveyType& val){
         v);
 }
 
-bool H5SeisImpl::setSRD(double val, const std::string& spatialUnits){
+bool H5SeisImpl::setSRD(double val, const std::string& lengthUnits){
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::SRD},
-        val, spatialUnits, getSpatialUnits());
+        val, lengthUnits, getLengthUnits());
 }
 
 bool H5SeisImpl::setOrigin(
     Eigen::Ref<Eigen::Vector2d> v,
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(spatialUnits);
+        createCoordinateTransformationToWriteData(lengthUnits);
     if (!coordTrans)
       return false;
 
@@ -949,18 +949,18 @@ bool H5SeisImpl::setOrigin(
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::origin},
-        v, spatialUnits, getSpatialUnits());
+        v, lengthUnits, getLengthUnits());
 }
 
 bool H5SeisImpl::setPoint1(
     Eigen::Ref<Eigen::Vector2d> v,
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(spatialUnits);
+        createCoordinateTransformationToWriteData(lengthUnits);
     if (!coordTrans)
       return false;
 
@@ -975,18 +975,18 @@ bool H5SeisImpl::setPoint1(
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::point1},
-        v, spatialUnits, getSpatialUnits());
+        v, lengthUnits, getLengthUnits());
 }
 
 bool H5SeisImpl::setPoint2(
     Eigen::Ref<Eigen::Vector2d> v,
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(spatialUnits);
+        createCoordinateTransformationToWriteData(lengthUnits);
     if (!coordTrans)
       return false;
 
@@ -1001,7 +1001,7 @@ bool H5SeisImpl::setPoint2(
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::point2},
-        v, spatialUnits, getSpatialUnits());
+        v, lengthUnits, getLengthUnits());
 }
 
 h5geo::Domain H5SeisImpl::getDomain(){
@@ -1025,21 +1025,21 @@ h5geo::SurveyType H5SeisImpl::getSurveyType(){
           std::string{h5geo::detail::SurveyType}));
 }
 
-double H5SeisImpl::getSRD(const std::string& spatialUnits){
+double H5SeisImpl::getSRD(const std::string& lengthUnits){
   return h5geo::readDoubleAttribute(
         objG,
         std::string{h5geo::detail::SRD},
-        getSpatialUnits(), spatialUnits);
+        getLengthUnits(), lengthUnits);
 }
 
 Eigen::VectorXd H5SeisImpl::getOrigin(
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(spatialUnits);
+        createCoordinateTransformationToReadData(lengthUnits);
     if (!coordTrans)
       return Eigen::VectorXd();
 
@@ -1058,17 +1058,17 @@ Eigen::VectorXd H5SeisImpl::getOrigin(
   return h5geo::readDoubleEigenVecAttribute(
         objG,
         std::string{h5geo::detail::origin},
-        getSpatialUnits(), spatialUnits);
+        getLengthUnits(), lengthUnits);
 }
 
 Eigen::VectorXd H5SeisImpl::getPoint1(
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(spatialUnits);
+        createCoordinateTransformationToReadData(lengthUnits);
     if (!coordTrans)
       return Eigen::VectorXd();
 
@@ -1087,17 +1087,17 @@ Eigen::VectorXd H5SeisImpl::getPoint1(
   return h5geo::readDoubleEigenVecAttribute(
         objG,
         std::string{h5geo::detail::point1},
-        getSpatialUnits(), spatialUnits);
+        getLengthUnits(), lengthUnits);
 }
 
 Eigen::VectorXd H5SeisImpl::getPoint2(
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(spatialUnits);
+        createCoordinateTransformationToReadData(lengthUnits);
     if (!coordTrans)
       return Eigen::VectorXd();
 
@@ -1116,11 +1116,11 @@ Eigen::VectorXd H5SeisImpl::getPoint2(
   return h5geo::readDoubleEigenVecAttribute(
         objG,
         std::string{h5geo::detail::point2},
-        getSpatialUnits(), spatialUnits);
+        getLengthUnits(), lengthUnits);
 }
 
 Eigen::MatrixXd H5SeisImpl::getBoundary(
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
   auto opt = getBoundaryD();
@@ -1130,7 +1130,7 @@ Eigen::MatrixXd H5SeisImpl::getBoundary(
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(spatialUnits);
+        createCoordinateTransformationToReadData(lengthUnits);
     if (!coordTrans)
       return Eigen::MatrixXd();
 
@@ -1149,7 +1149,7 @@ Eigen::MatrixXd H5SeisImpl::getBoundary(
   return h5geo::readDoubleEigenMtxDataset(
         objG,
         opt->getPath(),
-        getSpatialUnits(), spatialUnits);
+        getLengthUnits(), lengthUnits);
 }
 
 bool H5SeisImpl::hasPKeySort(const std::string& pKeyName)

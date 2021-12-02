@@ -82,7 +82,7 @@ void H5Seis_py(
            py::arg_v("unitsTo", "", "str()"))
       .def("writeBoundary", &H5Seis::writeBoundary,
            py::arg("boundary"),
-           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"),
            "write boundary of 2d (a line) or 3d (usually convex hull or concave hull) seismic survey. "
 "Input argument is `MatrixX2d` where first col - `X` coord, second - `Y` coord")

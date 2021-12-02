@@ -22,7 +22,7 @@ OGRCoordinateTransformation*
 H5BaseObjectImpl<TBase>::createCoordinateTransformationToReadData(
     const std::string& unitsTo)
 {
-  std::string unitsFrom = getSpatialUnits();
+  std::string unitsFrom = getLengthUnits();
   double coefFrom = units::convert(
         units::unit_from_string(unitsFrom),
         units::meter);
@@ -61,7 +61,7 @@ H5BaseObjectImpl<TBase>::createCoordinateTransformationToWriteData(
   if (isnan(coefFrom))
     return nullptr;
 
-  std::string unitsTo = getSpatialUnits();
+  std::string unitsTo = getLengthUnits();
   double coefTo = units::convert(
         units::unit_from_string(unitsTo),
         units::meter);
@@ -101,10 +101,10 @@ bool H5BaseObjectImpl<TBase>::setSpatialReference(
 }
 
 template <typename TBase>
-bool H5BaseObjectImpl<TBase>::setSpatialUnits(const std::string& str){
+bool H5BaseObjectImpl<TBase>::setLengthUnits(const std::string& str){
   return h5geo::overwriteAttribute(
         objG,
-        std::string{h5geo::detail::spatial_units},
+        std::string{h5geo::detail::length_units},
         str);
 }
 
@@ -140,10 +140,10 @@ std::string H5BaseObjectImpl<TBase>::getSpatialReference(){
 }
 
 template <typename TBase>
-std::string H5BaseObjectImpl<TBase>::getSpatialUnits(){
+std::string H5BaseObjectImpl<TBase>::getLengthUnits(){
   return h5geo::readStringAttribute(
         objG,
-        std::string{h5geo::detail::spatial_units});
+        std::string{h5geo::detail::length_units});
 }
 
 template <typename TBase>

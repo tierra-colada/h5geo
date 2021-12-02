@@ -36,7 +36,7 @@ bool H5DevCurveImpl::writeCurve(
     else
       coef = units::convert(
             units::unit_from_string(units),
-            units::unit_from_string(getSpatialUnits()));
+            units::unit_from_string(getLengthUnits()));
 
     v *= coef;
 
@@ -121,7 +121,7 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
             units::unit_from_string(units));
     else
       coef = units::convert(
-            units::unit_from_string(getSpatialUnits()),
+            units::unit_from_string(getLengthUnits()),
             units::unit_from_string(units));
 
     if (!isnan(coef))

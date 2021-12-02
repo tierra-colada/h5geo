@@ -15,12 +15,12 @@ protected:
 public:
 #ifdef H5GEO_USE_GDAL
   ///
-  /// Assumes that 'spatial_reference' and 'spatial_units' attributes
+  /// Assumes that 'spatial_reference' and 'length_units' attributes
   /// exist and they are used to create transfromation
   virtual OGRCoordinateTransformation* createCoordinateTransformationToReadData(
       const std::string& unitsTo) override;
   ///
-  /// Assumes that 'spatial_reference' and 'spatial_units' attributes
+  /// Assumes that 'spatial_reference' and 'length_units' attributes
   /// exist and they are used to create transfromation
   virtual OGRCoordinateTransformation* createCoordinateTransformationToWriteData(
       const std::string& unitsFrom) override;
@@ -29,13 +29,13 @@ public:
   virtual bool setSpatialReference(const std::string& str) override;
   virtual bool setSpatialReference(
       const std::string& authName, const std::string& code) override;
-  virtual bool setSpatialUnits(const std::string& str) override;
+  virtual bool setLengthUnits(const std::string& str) override;
   virtual bool setTemporalUnits(const std::string& str) override;
   virtual bool setAngularUnits(const std::string& str) override;
   virtual bool setDataUnits(const std::string& str) override;
 
   virtual std::string getSpatialReference() override;
-  virtual std::string getSpatialUnits() override;
+  virtual std::string getLengthUnits() override;
   virtual std::string getTemporalUnits() override;
   virtual std::string getAngularUnits() override;
   virtual std::string getDataUnits() override;

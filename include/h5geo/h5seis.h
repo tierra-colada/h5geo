@@ -41,7 +41,7 @@ public:
       const std::string& unitsTo = "") = 0;
   virtual bool writeBoundary(
       Eigen::Ref<Eigen::MatrixX2d> M,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
   virtual bool writeTrace(
       const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
@@ -223,35 +223,35 @@ public:
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
   virtual bool setDataType(const h5geo::SeisDataType& seisType) = 0;
   virtual bool setSurveyType(const h5geo::SurveyType& surveyType) = 0;
-  virtual bool setSRD(double val, const std::string& spatialUnits = "") = 0;
+  virtual bool setSRD(double val, const std::string& lengthUnits = "") = 0;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
   virtual bool setPoint1(
       Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
   virtual bool setPoint2(
       Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
 
   virtual h5geo::Domain getDomain() = 0;
   virtual h5geo::SeisDataType getDataType() = 0;
   virtual h5geo::SurveyType getSurveyType() = 0;
-  virtual double getSRD(const std::string& spatialUnits = "") = 0;
+  virtual double getSRD(const std::string& lengthUnits = "") = 0;
   virtual Eigen::VectorXd getOrigin(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
   virtual Eigen::VectorXd getPoint1(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
   virtual Eigen::VectorXd getPoint2(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
   virtual Eigen::MatrixXd getBoundary(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
 
   virtual bool hasPKeySort(const std::string& pKeyName) = 0;

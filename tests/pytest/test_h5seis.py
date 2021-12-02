@@ -25,7 +25,7 @@ class test_h5seis(unittest.TestCase):
         trig = True
 
         self.p.domain = h5geo.Domain.OWT
-        self.p.spatialUnits = 'mm'
+        self.p.lengthUnits = 'mm'
         self.p.temporalUnits = 'msec'
         self.p.dataUnits = 'kg'
         self.p.dataType = h5geo.SeisDataType.PRESTACK

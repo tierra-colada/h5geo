@@ -53,13 +53,13 @@ public:
     wellParam.headY = 7425880;
     wellParam.kb = 50.88;
     wellParam.uwi = "my_uwi";
-    wellParam.spatialUnits = "meter";
+    wellParam.lengthUnits = "meter";
 
-    devCurveParam.spatialUnits = "meter";
+    devCurveParam.lengthUnits = "meter";
     devCurveParam.temporalUnits = "millisecond";
     devCurveParam.angularUnits = "radian";
 
-    logCurveParam.spatialUnits = "cm";
+    logCurveParam.lengthUnits = "cm";
     logCurveParam.dataUnits = "kg/m2";
 
     trig = true;

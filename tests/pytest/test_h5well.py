@@ -32,15 +32,15 @@ class test_h5well(unittest.TestCase):
         self.wellParam.headY = 7425880
         self.wellParam.kb = 50.88
         self.wellParam.uwi = 'my_uwi'
-        self.wellParam.spatialUnits = 'meter'
+        self.wellParam.lengthUnits = 'meter'
 
         self.devCurveParam = h5geo.DevCurveParam()
-        self.devCurveParam.spatialUnits = 'meter'
+        self.devCurveParam.lengthUnits = 'meter'
         self.devCurveParam.temporalUnits = 'msec'
         self.devCurveParam.angularUnits = 'radian'
 
         self.logCurveParam = h5geo.LogCurveParam()
-        self.logCurveParam.spatialUnits = 'cm'
+        self.logCurveParam.lengthUnits = 'cm'
         self.logCurveParam.dataUnits = 'kg/m2'
 
         path_to_current_file = os.path.realpath(__file__)

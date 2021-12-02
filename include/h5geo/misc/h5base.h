@@ -44,7 +44,7 @@ class H5LogCurve;
 /// 'spatialReference' in the form 'authName:code'
 struct BaseObjectParam{
   // 'spatialReference' in the form 'authName:code'
-  std::string spatialReference, spatialUnits, temporalUnits, angularUnits, dataUnits;
+  std::string spatialReference, lengthUnits, temporalUnits, angularUnits, dataUnits;
 };
 
 struct MapParam : public BaseObjectParam{

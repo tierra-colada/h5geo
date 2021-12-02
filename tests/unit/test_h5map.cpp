@@ -58,7 +58,7 @@ public:
     p.nX = 10;
     p.nY = 20;
     p.domain = h5geo::Domain::TVD;
-    p.spatialUnits = "millimeter";
+    p.lengthUnits = "millimeter";
     p.dataUnits = "m/s";
     p.xChunkSize = 5;
     p.yChunkSize = 5;

@@ -31,7 +31,7 @@ bool H5LogCurveImpl::writeCurve(
     if (name == h5geo::MD)
       coef = units::convert(
             units::unit_from_string(units),
-            units::unit_from_string(getSpatialUnits()));
+            units::unit_from_string(getLengthUnits()));
     else
       coef = units::convert(
             units::unit_from_string(units),
@@ -75,7 +75,7 @@ Eigen::VectorXd H5LogCurveImpl::getCurve(
     double coef;
     if (name == h5geo::MD)
       coef = units::convert(
-            units::unit_from_string(getSpatialUnits()),
+            units::unit_from_string(getLengthUnits()),
             units::unit_from_string(units));
     else
       coef = units::convert(

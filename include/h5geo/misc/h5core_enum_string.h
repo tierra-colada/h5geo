@@ -23,7 +23,7 @@ namespace h5geo {
 namespace detail {
 
 inline constexpr auto spatial_reference = "spatial_reference";
-inline constexpr auto spatial_units = "spatial_units";
+inline constexpr auto length_units = "length_units";
 inline constexpr auto temporal_units = "temporal_units";
 inline constexpr auto data_units = "data_units";
 inline constexpr auto angular_units = "angular_units";

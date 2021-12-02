@@ -19,15 +19,15 @@ void H5Map_py(
       .def("setDomain", &H5Map::setDomain)
       .def("setOrigin", &H5Map::setOrigin,
            py::arg("xy"),
-           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
       .def("setPoint1", &H5Map::setPoint1,
            py::arg("xy"),
-           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
       .def("setPoint2", &H5Map::setPoint2,
            py::arg("xy"),
-           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
 
       .def("addAttribute", &H5Map::addAttribute,
@@ -43,13 +43,13 @@ void H5Map_py(
 
       .def("getDomain", &H5Map::getDomain)
       .def("getOrigin", &H5Map::getOrigin,
-           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
       .def("getPoint1", &H5Map::getPoint1,
-           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
       .def("getPoint2", &H5Map::getPoint2,
-           py::arg_v("spatialUnits", "", "str()"),
+           py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
 
       .def("getMapContainer", &H5Map::getMapContainer)

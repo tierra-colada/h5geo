@@ -7,7 +7,7 @@ void BaseObjectParam_py(py::class_<BaseObjectParam> &py_obj){
       .def(
         py::init<>())
       .def_readwrite("spatialReference", &MapParam::spatialReference)
-      .def_readwrite("spatialUnits", &MapParam::spatialUnits)
+      .def_readwrite("lengthUnits", &MapParam::lengthUnits)
       .def_readwrite("temporalUnits", &SeisParam::temporalUnits)
       .def_readwrite("angularUnits", &SeisParam::angularUnits)
       .def_readwrite("dataUnits", &SeisParam::dataUnits);

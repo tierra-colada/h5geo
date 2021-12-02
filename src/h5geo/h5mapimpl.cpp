@@ -49,13 +49,13 @@ bool H5MapImpl::setDomain(const h5geo::Domain& val){
 
 bool H5MapImpl::setOrigin(
     Eigen::Ref<Eigen::Vector2d> v,
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(spatialUnits);
+        createCoordinateTransformationToWriteData(lengthUnits);
     if (!coordTrans)
       return false;
 
@@ -70,18 +70,18 @@ bool H5MapImpl::setOrigin(
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::origin},
-        v, spatialUnits, getSpatialUnits());
+        v, lengthUnits, getLengthUnits());
 }
 
 bool H5MapImpl::setPoint1(
     Eigen::Ref<Eigen::Vector2d> v,
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(spatialUnits);
+        createCoordinateTransformationToWriteData(lengthUnits);
     if (!coordTrans)
       return false;
 
@@ -96,17 +96,17 @@ bool H5MapImpl::setPoint1(
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::point1},
-        v, spatialUnits, getSpatialUnits());
+        v, lengthUnits, getLengthUnits());
 }
 
 bool H5MapImpl::setPoint2(
     Eigen::Ref<Eigen::Vector2d> v,
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform){
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(spatialUnits);
+        createCoordinateTransformationToWriteData(lengthUnits);
     if (!coordTrans)
       return false;
 
@@ -121,7 +121,7 @@ bool H5MapImpl::setPoint2(
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::point2},
-        v, spatialUnits, getSpatialUnits());
+        v, lengthUnits, getLengthUnits());
 }
 
 bool H5MapImpl::addAttribute(H5Map* map, std::string name){
@@ -182,13 +182,13 @@ h5geo::Domain H5MapImpl::getDomain(){
 }
 
 Eigen::VectorXd H5MapImpl::getOrigin(
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(spatialUnits);
+        createCoordinateTransformationToReadData(lengthUnits);
     if (!coordTrans)
       return Eigen::VectorXd();
 
@@ -207,17 +207,17 @@ Eigen::VectorXd H5MapImpl::getOrigin(
   return h5geo::readDoubleEigenVecAttribute(
         objG,
         std::string{h5geo::detail::origin},
-        getSpatialUnits(), spatialUnits);
+        getLengthUnits(), lengthUnits);
 }
 
 Eigen::VectorXd H5MapImpl::getPoint1(
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(spatialUnits);
+        createCoordinateTransformationToReadData(lengthUnits);
     if (!coordTrans)
       return Eigen::VectorXd();
 
@@ -236,17 +236,17 @@ Eigen::VectorXd H5MapImpl::getPoint1(
   return h5geo::readDoubleEigenVecAttribute(
         objG,
         std::string{h5geo::detail::point1},
-        getSpatialUnits(), spatialUnits);
+        getLengthUnits(), lengthUnits);
 }
 
 Eigen::VectorXd H5MapImpl::getPoint2(
-    const std::string& spatialUnits,
+    const std::string& lengthUnits,
     bool doCoordTransform)
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(spatialUnits);
+        createCoordinateTransformationToReadData(lengthUnits);
     if (!coordTrans)
       return Eigen::VectorXd();
 
@@ -265,7 +265,7 @@ Eigen::VectorXd H5MapImpl::getPoint2(
   return h5geo::readDoubleEigenVecAttribute(
         objG,
         std::string{h5geo::detail::point2},
-        getSpatialUnits(), spatialUnits);
+        getLengthUnits(), lengthUnits);
 }
 
 

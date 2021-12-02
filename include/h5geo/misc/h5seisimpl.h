@@ -40,7 +40,7 @@ public:
       const std::string& unitsTo = "") override;
   virtual bool writeBoundary(
       Eigen::Ref<Eigen::MatrixX2d> M,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual bool writeTrace(
       const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
@@ -218,35 +218,35 @@ public:
   virtual bool setDomain(const h5geo::Domain& val) override;
   virtual bool setDataType(const h5geo::SeisDataType& val) override;
   virtual bool setSurveyType(const h5geo::SurveyType& val) override;
-  virtual bool setSRD(double val, const std::string& spatialUnits = "") override;
+  virtual bool setSRD(double val, const std::string& lengthUnits = "") override;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual bool setPoint1(
       Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual bool setPoint2(
       Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
 
   virtual h5geo::Domain getDomain() override;
   virtual h5geo::SeisDataType getDataType() override;
   virtual h5geo::SurveyType getSurveyType() override;
-  virtual double getSRD(const std::string& spatialUnits = "") override;
+  virtual double getSRD(const std::string& lengthUnits = "") override;
   virtual Eigen::VectorXd getOrigin(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual Eigen::VectorXd getPoint1(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual Eigen::VectorXd getPoint2(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual Eigen::MatrixXd getBoundary(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
 
   virtual bool hasPKeySort(const std::string& pKeyName) override;

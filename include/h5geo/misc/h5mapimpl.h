@@ -20,15 +20,15 @@ public:
   virtual bool setDomain(const h5geo::Domain& domain) override;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual bool setPoint1(
       Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual bool setPoint2(
       Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
 
   virtual bool addAttribute(H5Map* map, std::string name = "") override;
@@ -38,13 +38,13 @@ public:
 
   virtual h5geo::Domain getDomain() override;
   virtual Eigen::VectorXd getOrigin(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual Eigen::VectorXd getPoint1(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual Eigen::VectorXd getPoint2(
-      const std::string& spatialUnits = "",
+      const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual H5MapContainer* getMapContainer() const override;
 
