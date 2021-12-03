@@ -335,7 +335,7 @@ H5BaseImpl<TBase>::createNewMap(h5gt::Group &group, void* p)
 
   std::vector<double> origin({param.X0, param.Y0});
   std::vector<double> point1({param.X1, param.Y1});
-  std::vector<double> point2({param.X2, param.X2});
+  std::vector<double> point2({param.X2, param.Y2});
 
   try {
 
@@ -533,7 +533,7 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
   SeisParam param = *(static_cast<SeisParam*>(p));
   std::vector<double> origin({param.X0, param.Y0});
   std::vector<double> point1({param.X1, param.Y1});
-  std::vector<double> point2({param.X2, param.X2});
+  std::vector<double> point2({param.X2, param.Y2});
 
   try {
 
