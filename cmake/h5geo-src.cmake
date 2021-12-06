@@ -2,6 +2,7 @@ set(src_files_h5geo
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5baseimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5basecontainerimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5baseobjectimpl.cpp
+  ${CMAKE_SOURCE_DIR}/src/h5geo/h5core_sr_settings.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5devcurveimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5logcurveimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5seisimpl.cpp

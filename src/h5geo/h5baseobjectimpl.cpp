@@ -8,6 +8,8 @@
 #include "../../include/h5geo/misc/h5core_enum_string.h"
 
 #ifdef H5GEO_USE_GDAL
+#include <gdal/gdal.h>
+#include <gdal/gdal_priv.h>
 #include "../../include/h5geo/misc/h5core_sr_settings.h"
 #endif
 

@@ -9,7 +9,12 @@ void defineSRSettingsFunctions(py::module_& m_sr){
 //  m_sr.attr("SpatialReference")= &sr::SpatialReference;
 
   m_sr.def("setSpatialReference", &sr::setSpatialReference);
-  m_sr.def("setSpatialReferenceFromUserInput", &sr::setSpatialReferenceFromUserInput);
+  m_sr.def("setSpatialReferenceFromUserInput", py::overload_cast<
+           const std::string&>(
+             &sr::setSpatialReferenceFromUserInput));
+  m_sr.def("setSpatialReferenceFromUserInput", py::overload_cast<
+           const std::string&, const std::string&>(
+             &sr::setSpatialReferenceFromUserInput));
   m_sr.def("getSpatialReference", &sr::getSpatialReference);
 //  m_sr.def("getSpatialReference",[]() {
 //    OGRSpatialReference sref = sr::getSpatialReference();
@@ -18,10 +23,10 @@ void defineSRSettingsFunctions(py::module_& m_sr){
 //  });
   m_sr.def("setLengthUnits", &sr::setLengthUnits);
   m_sr.def("setAngularUnits", &sr::setAngularUnits);
+  m_sr.def("setTemporalUnits", &sr::setTemporalUnits);
   m_sr.def("getLengthUnits", &sr::getLengthUnits);
   m_sr.def("getAngularUnits", &sr::getAngularUnits);
-  m_sr.def("getAuthorityName", &sr::getAuthorityName);
-  m_sr.def("getAuthorityCode", &sr::getAuthorityCode);
+  m_sr.def("getTemporalUnits", &sr::getTemporalUnits);
 }
 
 

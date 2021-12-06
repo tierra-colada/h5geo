@@ -1,12 +1,11 @@
 #ifndef H5CORE_SR_SETTINGS_H
 #define H5CORE_SR_SETTINGS_H
 
-#include <units/units.hpp>
+#include "h5geo_export.h"
 
-#include <gdal/gdal.h>
-#include <gdal/gdal_priv.h>
+#include <string>
 
-#include <iostream>
+class OGRSpatialReference;
 
 namespace h5geo
 {
@@ -15,57 +14,27 @@ namespace h5geo
 namespace sr {
 
 
-inline OGRSpatialReference SpatialReference;
-inline std::string TemporalUnits;
+H5GEO_EXPORT void setSpatialReference(OGRSpatialReference sr);
 
-inline void setSpatialReference(OGRSpatialReference sr){
-  SpatialReference = sr;
-}
+H5GEO_EXPORT void setSpatialReferenceFromUserInput(
+    const std::string& name);
 
-inline void setSpatialReferenceFromUserInput(
-    const std::string& authName, const std::string& code){
-  SpatialReference.SetFromUserInput((authName + ":" + code).c_str());
-}
+H5GEO_EXPORT void setSpatialReferenceFromUserInput(
+    const std::string& authName, const std::string& code);
 
-inline OGRSpatialReference& getSpatialReference(){
-  return SpatialReference;
-}
+H5GEO_EXPORT OGRSpatialReference getSpatialReference();
 
-inline void setLengthUnits(const std::string& units){
-  double coef = units::convert(
-      units::unit_from_string(units),
-      units::unit_from_string("meter"));
-  SpatialReference.SetLinearUnitsAndUpdateParameters(units.c_str(), coef);
-}
+H5GEO_EXPORT void setLengthUnits(const std::string& units);
 
-inline void setAngularUnits(const std::string& units){
-  double coef = units::convert(
-      units::unit_from_string(units),
-      units::unit_from_string("radian"));
-  SpatialReference.SetAngularUnits(units.c_str(), coef);
-}
+H5GEO_EXPORT void setAngularUnits(const std::string& units);
 
-inline std::string getLengthUnits(){
-  const char *units = nullptr;
-  SpatialReference.GetLinearUnits(&units);
-  return std::string(units);
-}
+H5GEO_EXPORT void setTemporalUnits(const std::string& units);
 
-inline std::string getAngularUnits(){
-  const char *units;
-  SpatialReference.GetAngularUnits(&units);
-  return std::string(units);
-}
+H5GEO_EXPORT std::string getLengthUnits();
 
-inline std::string getAuthorityName(){
-  char *name = nullptr;
-  return std::string(SpatialReference.GetAuthorityName(name));
-}
+H5GEO_EXPORT std::string getAngularUnits();
 
-inline std::string getAuthorityCode(){
-  char *code = nullptr;
-  return std::string(SpatialReference.GetAuthorityCode(code));
-}
+H5GEO_EXPORT std::string getTemporalUnits();
 
 
 } // sr
