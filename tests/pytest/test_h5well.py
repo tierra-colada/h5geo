@@ -37,7 +37,7 @@ class test_h5well(unittest.TestCase):
         self.devCurveParam = h5geo.DevCurveParam()
         self.devCurveParam.lengthUnits = 'meter'
         self.devCurveParam.temporalUnits = 'msec'
-        self.devCurveParam.angularUnits = 'radian'
+        self.devCurveParam.angularUnits = 'degree'
 
         self.logCurveParam = h5geo.LogCurveParam()
         self.logCurveParam.lengthUnits = 'cm'
@@ -178,7 +178,7 @@ class test_h5well(unittest.TestCase):
                                  self.wellParam.headX, self.wellParam.headY,
                                  False)
 
-        MM = h5geo.MdAzIncl2MdXYTvd(M, self.wellParam.headX, self.wellParam.headY, 'radian', False)
+        MM = h5geo.MdAzIncl2MdXYTvd(M, self.wellParam.headX, self.wellParam.headY, 'degree', False)
 
         # self.wellContainer.getH5File().createDataSet(
         #     'MdAzIncl2MdXYTvd', [M.shape[1], M.shape[0]],
@@ -199,7 +199,7 @@ class test_h5well(unittest.TestCase):
                                  self.wellParam.headX, self.wellParam.headY,
                                  True)
 
-        MM = h5geo.MdAzIncl2MdXYTvd(M, self.wellParam.headX, self.wellParam.headY, 'radian', True)
+        MM = h5geo.MdAzIncl2MdXYTvd(M, self.wellParam.headX, self.wellParam.headY, 'degree', True)
 
         # self.wellContainer.getH5File().createDataSet(
         #     'MdAzIncl2MdXYTvd', [M.shape[1], M.shape[0]],
@@ -369,10 +369,9 @@ class test_h5well(unittest.TestCase):
 
         devCurve = well.createDevCurve(self.DEV_NAME, self.devCurveParam, h5geo.CreationType.OPEN_OR_CREATE)
 
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.MD, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 0])))
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.DX, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 5])))
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.DY, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 6])))
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.TVD, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 4])))
+        self.assertTrue(devCurve.writeMD(np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 0])))
+        self.assertTrue(devCurve.writeAZIM(np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 7])))
+        self.assertTrue(devCurve.writeINCL(np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 8])))
 
         self.assertFalse(devCurve.isActive())
         self.assertTrue(devCurve.setActive())

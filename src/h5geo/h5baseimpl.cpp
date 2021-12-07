@@ -472,9 +472,9 @@ std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewDevCurve(h5gt::Group &group, void* p)
 {
   DevCurveParam param = *(static_cast<DevCurveParam*>(p));
-  std::vector<size_t> count = {5, 1};
+  std::vector<size_t> count = {4, 1};
   std::vector<size_t> max_count = {5, h5gt::DataSpace::UNLIMITED};
-  std::vector<hsize_t> cdims = {5, param.chunkSize};
+  std::vector<hsize_t> cdims = {4, param.chunkSize};
   h5gt::DataSetCreateProps props;
   props.setChunk(cdims);
   h5gt::DataSpace dataspace(count, max_count);
@@ -503,20 +503,17 @@ H5BaseImpl<TBase>::createNewDevCurve(h5gt::Group &group, void* p)
           std::string{h5geo::detail::dev_data},
           dataspace, h5gt::LinkCreateProps(), props);
     dataset.createAttribute<size_t>(
-          std::string{magic_enum::enum_name(h5geo::DevDataType::MD)},
+          std::string{h5geo::MD},
           h5gt::DataSpace(1)).write(0);
     dataset.createAttribute<size_t>(
-          std::string{magic_enum::enum_name(h5geo::DevDataType::DX)},
+          std::string{h5geo::AZIM},
           h5gt::DataSpace(1)).write(1);
     dataset.createAttribute<size_t>(
-          std::string{magic_enum::enum_name(h5geo::DevDataType::DY)},
+          std::string{h5geo::INCL},
           h5gt::DataSpace(1)).write(2);
     dataset.createAttribute<size_t>(
-          std::string{magic_enum::enum_name(h5geo::DevDataType::TVD)},
+          std::string{h5geo::OWT},
           h5gt::DataSpace(1)).write(3);
-    dataset.createAttribute<size_t>(
-          std::string{magic_enum::enum_name(h5geo::DevDataType::OWT)},
-          h5gt::DataSpace(1)).write(4);
 
     return group;
 

@@ -14,12 +14,16 @@ protected:
   virtual ~H5DevCurve() = default;
 
 public:
-  virtual bool writeCurve(
-      const h5geo::DevDataType& name,
+  virtual bool writeMD(
       Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") = 0;
-  virtual bool writeCurve(
-      const std::string& name,
+  virtual bool writeAZIM(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "") = 0;
+  virtual bool writeINCL(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "") = 0;
+  virtual bool writeOWT(
       Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") = 0;
 
@@ -30,10 +34,12 @@ public:
   virtual size_t getNSamp() = 0;
   virtual Eigen::VectorXd getCurve(
       const h5geo::DevDataType& name,
-      const std::string& units = "") = 0;
+      const std::string& units = "",
+      bool doCoordTransform = false) = 0;
   virtual Eigen::VectorXd getCurve(
       const std::string& name,
-      const std::string& units = "") = 0;
+      const std::string& units = "",
+      bool doCoordTransform = false) = 0;
 
   virtual std::string getRelativeCurveName() = 0;
 

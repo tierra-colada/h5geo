@@ -126,7 +126,15 @@ inline constexpr auto RMS_VEL = magic_enum::enum_name(h5geo::WellDataType::RMS_V
 inline constexpr auto FWAL = magic_enum::enum_name(h5geo::WellDataType::FWAL);
 inline constexpr auto CHECKSHOTS = magic_enum::enum_name(h5geo::WellDataType::CHECKSHOTS);
 inline constexpr auto WELL_TIE = magic_enum::enum_name(h5geo::WellDataType::WELL_TIE);
-
+inline constexpr auto& dev_dtypes =
+    magic_enum::enum_names<h5geo::DevDataType>();
+inline constexpr auto X = magic_enum::enum_name(h5geo::DevDataType::X);
+inline constexpr auto Y = magic_enum::enum_name(h5geo::DevDataType::Y);
+inline constexpr auto Z = magic_enum::enum_name(h5geo::DevDataType::Z);
+inline constexpr auto DX = magic_enum::enum_name(h5geo::DevDataType::DX);
+inline constexpr auto DY = magic_enum::enum_name(h5geo::DevDataType::DY);
+inline constexpr auto AZIM = magic_enum::enum_name(h5geo::DevDataType::AZIM);
+inline constexpr auto INCL = magic_enum::enum_name(h5geo::DevDataType::INCL);
 
 
 }

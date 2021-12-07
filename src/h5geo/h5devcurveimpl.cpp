@@ -9,6 +9,34 @@
 H5DevCurveImpl::H5DevCurveImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
+bool H5DevCurveImpl::writeMD(
+    Eigen::Ref<Eigen::VectorXd> v,
+    const std::string& units)
+{
+  return writeCurve(std::string{h5geo::MD}, v, units);
+}
+
+bool H5DevCurveImpl::writeAZIM(
+    Eigen::Ref<Eigen::VectorXd> v,
+    const std::string& units)
+{
+  return writeCurve(std::string{h5geo::AZIM}, v, units);
+}
+
+bool H5DevCurveImpl::writeINCL(
+    Eigen::Ref<Eigen::VectorXd> v,
+    const std::string& units)
+{
+  return writeCurve(std::string{h5geo::INCL}, v, units);
+}
+
+bool H5DevCurveImpl::writeOWT(
+    Eigen::Ref<Eigen::VectorXd> v,
+    const std::string& units)
+{
+  return writeCurve(std::string{h5geo::OWT}, v, units);
+}
+
 bool H5DevCurveImpl::writeCurve(
     const h5geo::DevDataType& name,
     Eigen::Ref<Eigen::VectorXd> v,
@@ -33,10 +61,14 @@ bool H5DevCurveImpl::writeCurve(
       coef = units::convert(
             units::unit_from_string(units),
             units::unit_from_string(getTemporalUnits()));
+    else if (name == h5geo::AZIM || name == h5geo::INCL)
+      coef = units::convert(
+            units::unit_from_string(getAngularUnits()),
+            units::unit_from_string(units));
     else
       coef = units::convert(
-            units::unit_from_string(units),
-            units::unit_from_string(getLengthUnits()));
+            units::unit_from_string(getLengthUnits()),
+            units::unit_from_string(units));
 
     v *= coef;
 
@@ -97,40 +129,102 @@ size_t H5DevCurveImpl::getNSamp(){
 
 Eigen::VectorXd H5DevCurveImpl::getCurve(
     const h5geo::DevDataType& name,
-    const std::string& units)
+    const std::string& units,
+    bool doCoordTransform)
 {
-  return getCurve(std::string{magic_enum::enum_name(name)}, units);
+  return getCurve(
+        std::string{magic_enum::enum_name(name)},
+        units, doCoordTransform);
 }
 
 Eigen::VectorXd H5DevCurveImpl::getCurve(
     const std::string& name,
-    const std::string& units)
+    const std::string& units,
+    bool doCoordTransform)
 {
   auto opt = getDevCurveD();
   if (!opt.has_value())
     return Eigen::VectorXd();
 
-  Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
-        opt.value(), name);
+  double coef = 1;
+  if (name == h5geo::MD ||
+      name == h5geo::AZIM ||
+      name == h5geo::INCL){
+    if (!units.empty()){
+      if (name == h5geo::MD){
+        coef = units::convert(
+              units::unit_from_string(getLengthUnits()),
+              units::unit_from_string(units));
+      } else {
+        coef = units::convert(
+              units::unit_from_string(getAngularUnits()),
+              units::unit_from_string(units));
+      }
 
-  if (!units.empty()){
-    double coef;
-    if (name == h5geo::OWT)
-      coef = units::convert(
-            units::unit_from_string(getTemporalUnits()),
-            units::unit_from_string(units));
-    else
-      coef = units::convert(
-            units::unit_from_string(getLengthUnits()),
-            units::unit_from_string(units));
+      if (isnan(coef))
+        return Eigen::VectorXd();
+    }
 
-    if (!isnan(coef))
-      return curve*coef;
+    Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
+          opt.value(), name);
 
-    return Eigen::VectorXd();
+    return curve*coef;
   }
 
-  return curve;
+  // if the requested data needs to be calculated then we continue
+  // and if we go there then units may only have type LENGTH
+  H5Well_ptr well(getWell());
+  if (!well)
+    Eigen::VectorXd();
+
+  Eigen::VectorXd headXY = well->getHeadCoord(units, doCoordTransform);
+  if (headXY.size() != 2)
+    Eigen::VectorXd();
+
+  auto optD = getDevCurveD();
+  if (!optD.has_value())
+    return Eigen::VectorXd();
+
+  std::vector<size_t> dims = optD->getDimensions();
+  if (dims.size() != 2)
+    return Eigen::VectorXd();
+
+  Eigen::MatrixXd MdAzIncl(dims[1], 3);
+  MdAzIncl.col(0) = getCurve(std::string{h5geo::MD}, units);
+  MdAzIncl.col(1) = getCurve(std::string{h5geo::AZIM});
+  MdAzIncl.col(2) = getCurve(std::string{h5geo::INCL});
+  if (MdAzIncl.rows() < 1)
+    return Eigen::VectorXd();
+
+  double kb = well->getKB(units);
+  Eigen::MatrixXd MdXYTvdssTvdDxDy = h5geo::MdAzIncl2ALL(
+        MdAzIncl,
+        headXY(0),
+        headXY(1),
+        kb,
+        getAngularUnits(),
+        false);
+
+  if (MdXYTvdssTvdDxDy.rows() < 1)
+    return Eigen::VectorXd();
+
+  if (name == h5geo::X){
+    return MdXYTvdssTvdDxDy.col(1);
+  } else if (name == h5geo::Y){
+    return MdXYTvdssTvdDxDy.col(2);
+  } else if (name == h5geo::TVDSS){
+    return MdXYTvdssTvdDxDy.col(3);
+  } else if (name == h5geo::TVD){
+    return MdXYTvdssTvdDxDy.col(4);
+  } else if (name == h5geo::DX){
+    return MdXYTvdssTvdDxDy.col(5);
+  } else if (name == h5geo::DY){
+    return MdXYTvdssTvdDxDy.col(6);
+  } else if (name == h5geo::Z){
+    return MdXYTvdssTvdDxDy.col(3) * (-1);
+  }
+
+  return Eigen::VectorXd();
 }
 
 std::string H5DevCurveImpl::getRelativeCurveName(){

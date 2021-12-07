@@ -11,12 +11,16 @@ protected:
   virtual ~H5DevCurveImpl() = default;
 
 public:
-  virtual bool writeCurve(
-      const h5geo::DevDataType& name,
+  virtual bool writeMD(
       Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") override;
-  virtual bool writeCurve(
-      const std::string& name,
+  virtual bool writeAZIM(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "") override;
+  virtual bool writeINCL(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "") override;
+  virtual bool writeOWT(
       Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") override;
 
@@ -27,10 +31,12 @@ public:
   virtual size_t getNSamp() override;
   virtual Eigen::VectorXd getCurve(
       const h5geo::DevDataType& name,
-      const std::string& units = "") override;
+      const std::string& units = "",
+      bool doCoordTransform = false) override;
   virtual Eigen::VectorXd getCurve(
       const std::string& name,
-      const std::string& units = "") override;
+      const std::string& units = "",
+      bool doCoordTransform = false) override;
 
   virtual std::string getRelativeCurveName() override;
 
@@ -42,6 +48,16 @@ public:
   //----------- FRIEND CLASSES -----------
   friend class H5WellImpl;
   friend H5DevCurve* h5geo::openDevCurve(h5gt::Group group);
+
+protected:
+  bool writeCurve(
+      const h5geo::DevDataType& name,
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "");
+  bool writeCurve(
+      const std::string& name,
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "");
 };
 
 #endif // H5DEVCURVEIMPL_H

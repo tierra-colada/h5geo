@@ -51,7 +51,7 @@ struct MapParam : public BaseObjectParam{
   double X0, Y0, X1, Y1, X2, Y2;
   size_t nX, nY;
   h5geo::Domain domain;
-  hsize_t xChunkSize = 100, yChunkSize = 100;
+  hsize_t xChunkSize = 10, yChunkSize = 10;
 };
 
 struct WellParam : public BaseObjectParam{
@@ -60,11 +60,11 @@ struct WellParam : public BaseObjectParam{
 };
 
 struct DevCurveParam : public BaseObjectParam{
-  hsize_t chunkSize = 1000;
+  hsize_t chunkSize = 10;
 };
 
 struct LogCurveParam : public BaseObjectParam{
-  hsize_t chunkSize = 1000;
+  hsize_t chunkSize = 10;
 };
 
 struct SeisParam : public BaseObjectParam{

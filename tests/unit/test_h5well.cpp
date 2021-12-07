@@ -57,7 +57,7 @@ public:
 
     devCurveParam.lengthUnits = "meter";
     devCurveParam.temporalUnits = "millisecond";
-    devCurveParam.angularUnits = "radian";
+    devCurveParam.angularUnits = "degree";
 
     logCurveParam.lengthUnits = "cm";
     logCurveParam.dataUnits = "kg/m2";
@@ -202,23 +202,20 @@ TEST_F(H5WellFixture, writeReadDevCurve){
 
   //  Eigen::MatrixXd MD_X_Y_Z_TVD_DX_DY_AZ_INCL = readDeviation();
 
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::MD,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0)));
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::DX,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5)));
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::DY,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6)));
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::TVD,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4)));
+  ASSERT_TRUE(devCurve->writeMD(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0)));
+  ASSERT_TRUE(devCurve->writeAZIM(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(7)));
+  ASSERT_TRUE(devCurve->writeINCL(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(8)));
 
-  ASSERT_TRUE(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0).isApprox(
-                devCurve->getCurve(h5geo::DevDataType::MD)));
-  ASSERT_TRUE(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5).isApprox(
-                devCurve->getCurve(h5geo::DevDataType::DX)));
-  ASSERT_TRUE(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6).isApprox(
-                devCurve->getCurve(h5geo::DevDataType::DY)));
-  ASSERT_TRUE(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).isApprox(
-                devCurve->getCurve(h5geo::DevDataType::TVD)));
+  double dx_norm = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5)-
+      devCurve->getCurve(h5geo::DevDataType::DX)).norm();
+  double dy_norm = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6)-
+      devCurve->getCurve(h5geo::DevDataType::DY)).norm();
+  double tvd_norm = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4)-
+      devCurve->getCurve(h5geo::DevDataType::TVD)).norm();
+
+  ASSERT_TRUE(dx_norm < MD_X_Y_Z_TVD_DX_DY_AZ_INCL(Eigen::last, 4)*0.005); // less than 0,5 % of max TVD
+  ASSERT_TRUE(dy_norm < MD_X_Y_Z_TVD_DX_DY_AZ_INCL(Eigen::last, 4)*0.005); // less than 0,5 % of max TVD
+  ASSERT_TRUE(tvd_norm < MD_X_Y_Z_TVD_DX_DY_AZ_INCL(Eigen::last, 4)*0.005); // less than 0,5 % of max TVD
 }
 
 TEST_F(H5WellFixture, MdAzIncl2MdXYTvd){
@@ -499,14 +496,9 @@ TEST_F(H5WellFixture, activeDevCurveTest){
         well->createDevCurve(
           DEV_NAME, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
 
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::MD,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0)));
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::DX,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5)));
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::DY,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6)));
-  ASSERT_TRUE(devCurve->writeCurve(h5geo::DevDataType::TVD,
-                                   MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4)));
+  ASSERT_TRUE(devCurve->writeMD(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0)));
+  ASSERT_TRUE(devCurve->writeAZIM(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(7)));
+  ASSERT_TRUE(devCurve->writeINCL(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(8)));
 
   ASSERT_FALSE(devCurve->isActive());
   ASSERT_TRUE(devCurve->setActive());

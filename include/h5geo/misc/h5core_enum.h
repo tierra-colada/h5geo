@@ -151,10 +151,16 @@ enum class LogDataType : unsigned{
 
 enum class DevDataType : unsigned{
   MD = 1,
-  DX = 2,
-  DY = 3,
-  TVD = 4,
-  OWT = 5
+  X = 2,
+  Y = 3,
+  Z = 4,
+  TVD = 5,
+  TVDSS = 6,
+  DX = 7,
+  DY = 8,
+  AZIM = 9,
+  INCL = 10,
+  OWT = 11
 };
 
 enum class WellType : unsigned{

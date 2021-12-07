@@ -13,21 +13,17 @@ void H5DevCurve_py(
     std::unique_ptr<H5DevCurve, ObjectDeleter>>
     &py_obj){
   py_obj
-      .def("writeCurve", py::overload_cast<
-           const DevDataType&,
-           Eigen::Ref<Eigen::VectorXd>,
-           const std::string&>(
-             &H5DevCurve::writeCurve),
-           py::arg("name"),
-           py::arg("data"),
+      .def("writeMD", &H5DevCurve::writeMD,
+           py::arg("v"),
            py::arg_v("units", "", "str()"))
-      .def("writeCurve", py::overload_cast<
-           const std::string&,
-           Eigen::Ref<Eigen::VectorXd>,
-           const std::string&>(
-             &H5DevCurve::writeCurve),
-           py::arg("name"),
-           py::arg("data"),
+      .def("writeAZIM", &H5DevCurve::writeAZIM,
+           py::arg("v"),
+           py::arg_v("units", "", "str()"))
+      .def("writeINCL", &H5DevCurve::writeINCL,
+           py::arg("v"),
+           py::arg_v("units", "", "str()"))
+      .def("writeOWT", &H5DevCurve::writeOWT,
+           py::arg("v"),
            py::arg_v("units", "", "str()"))
 
       .def("setActive", &H5DevCurve::setActive)
@@ -37,16 +33,20 @@ void H5DevCurve_py(
       .def("getNSamp", &H5DevCurve::getNSamp)
       .def("getCurve", py::overload_cast<
            const DevDataType&,
-           const std::string&>(
+           const std::string&,
+           bool>(
              &H5DevCurve::getCurve),
            py::arg("name"),
-           py::arg_v("units", "", "str()"))
+           py::arg_v("units", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
       .def("getCurve", py::overload_cast<
            const std::string&,
-           const std::string&>(
+           const std::string&,
+           bool>(
              &H5DevCurve::getCurve),
            py::arg("name"),
-           py::arg_v("units", "", "str()"))
+           py::arg_v("units", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
 
       .def("getRelativeCurveName", &H5DevCurve::getRelativeCurveName)
 
