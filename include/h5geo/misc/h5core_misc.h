@@ -856,7 +856,6 @@ inline bool _overwriteAttribute(
     }  catch (h5gt::Exception e) {
       return false;
     }
-    return false;
   }
 
   if (!unitsFrom.empty() && !unitsTo.empty()){

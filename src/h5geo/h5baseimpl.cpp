@@ -103,10 +103,15 @@ H5BaseImpl<TBase>::createContainer(
     }
 
     if (fileExist){
+      // `createFlag` defines whether h5file is isGeoContainer or not
+      // thus the if flag is inapropriate hen it will be filtered
+      // in the following call to the `createContainer()` function below
       if (createFlag == h5geo::CreationType::OPEN |
           createFlag == h5geo::CreationType::CREATE |
           createFlag == h5geo::CreationType::OPEN_OR_CREATE){
-        if (H5Fis_hdf5(fileName.c_str()) > 0){
+        h5gt::FileAccessProps fapl;
+        if (H5Fis_hdf5(fileName.c_str()) > 0 &&
+            H5Fis_accessible(fileName.c_str(), fapl.getId()) > 0 ){
           h5gt::File h5File(
                 fileName,
                 h5gt::File::ReadWrite |
@@ -151,10 +156,7 @@ H5BaseImpl<TBase>::createContainer(
     if (h5geo::isGeoContainerByType(h5File, containerType))
       return h5File;
 
-    if (h5geo::isGeoContainer(h5File))
-      return std::nullopt;
-
-    return createNewContainer(h5File, containerType);
+    return createContainer(h5File, containerType, h5geo::CreationType::CREATE);
   } case h5geo::CreationType::CREATE_OR_OVERWRITE: {
     return createNewContainer(h5File, containerType);
   } case h5geo::CreationType::CREATE_UNDER_NEW_NAME: {
@@ -242,10 +244,7 @@ H5BaseImpl<TBase>::createObject(
     if (h5geo::isGeoObjectByType(objG, objType))
       return objG;
 
-    if (h5geo::isGeoObject(objG))
-      return std::nullopt;
-
-    return createNewObject(objG, objType, p);
+    return createObject(objG, objType, p, h5geo::CreationType::CREATE);
   } case h5geo::CreationType::CREATE_OR_OVERWRITE: {
     if (!h5geo::unlinkContent(objG))
       return std::nullopt;

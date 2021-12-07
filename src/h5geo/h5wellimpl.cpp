@@ -234,7 +234,7 @@ bool H5WellImpl::setKB(
 {
   return h5geo::overwriteAttribute(
       objG,
-      std::string{h5geo::detail::head_coord},
+      std::string{h5geo::detail::KB},
       val, lengthUnits, getLengthUnits());
 }
 
