@@ -357,7 +357,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2ALL(
   M_OUT.col(0) = M_MdXYTvd.col(0); // MD
   M_OUT.col(1) = M_MdXYTvd.col(1); // X
   M_OUT.col(2) = M_MdXYTvd.col(2); // Y
-  M_OUT.col(3) = M_MdXYTvd.col(3).array() + kb; // TVDSS
+  M_OUT.col(3) = M_MdXYTvd.col(3).array() - kb; // TVDSS
   M_OUT.col(4) = M_MdXYTvd.col(3); // TVD
   M_OUT.col(5) = M_MdXYTvd.col(1).array() - x0; // DX
   M_OUT.col(6) = M_MdXYTvd.col(2).array() - y0; // DY
@@ -392,7 +392,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2ALL(
   M_OUT.col(0) = M_MdAzIncl.col(0); // MD
   M_OUT.col(1) = M.col(1); // X
   M_OUT.col(2) = M.col(2); // Y
-  M_OUT.col(3) = M.col(0).array() + kb; // TVDSS
+  M_OUT.col(3) = M.col(0).array() - kb; // TVDSS
   M_OUT.col(4) = M.col(0); // TVD
   M_OUT.col(5) = M.col(1).array() - x0; // DX
   M_OUT.col(6) = M.col(2).array() - y0; // DY
@@ -417,7 +417,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2ALL(
   M_OUT.col(0) = M_MdAzIncl.col(0); // MD
   M_OUT.col(1) = M.col(1).array() + x0; // X
   M_OUT.col(2) = M.col(2).array() + y0; // Y
-  M_OUT.col(3) = M.col(0).array() + kb; // TVDSS
+  M_OUT.col(3) = M.col(0).array() - kb; // TVDSS
   M_OUT.col(4) = M.col(0); // TVD
   M_OUT.col(5) = M.col(1); // DX
   M_OUT.col(6) = M.col(2); // DY
@@ -443,7 +443,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2ALL(
   M_OUT.col(1) = M.col(1); // X
   M_OUT.col(2) = M.col(2); // Y
   M_OUT.col(3) = M.col(0); // TVDSS
-  M_OUT.col(4) = M.col(0).array() - kb; // TVD
+  M_OUT.col(4) = M.col(0).array() + kb; // TVD
   M_OUT.col(5) = M.col(1).array() - x0; // DX
   M_OUT.col(6) = M.col(2).array() - y0; // DY
   M_OUT.col(7) = M_MdAzIncl.col(1); // AZ
@@ -468,7 +468,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2ALL(
   M_OUT.col(1) = M.col(1).array() + x0; // X
   M_OUT.col(2) = M.col(2).array() + y0; // Y
   M_OUT.col(3) = M.col(0); // TVDSS
-  M_OUT.col(4) = M.col(0).array() - kb; // TVD
+  M_OUT.col(4) = M.col(0).array() + kb; // TVD
   M_OUT.col(5) = M.col(1); // DX
   M_OUT.col(6) = M.col(2); // DY
   M_OUT.col(7) = M_MdAzIncl.col(1); // AZ
@@ -623,7 +623,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2MdXYTvd(
   M_MdXYTvd.col(0) = M_MdAzIncl.col(0);
   M_MdXYTvd.col(1) = M.col(1);
   M_MdXYTvd.col(2) = M.col(2);
-  M_MdXYTvd.col(3) = M.col(0).array() - kb;
+  M_MdXYTvd.col(3) = M.col(0).array() + kb;
 
   return M_MdXYTvd;
 }
@@ -645,7 +645,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2MdXYTvd(
   M_MdXYTvd.col(0) = M_MdAzIncl.col(0);
   M_MdXYTvd.col(1) = M.col(1).array() + x0;
   M_MdXYTvd.col(2) = M.col(2).array() + y0;
-  M_MdXYTvd.col(3) = M.col(0).array() - kb;
+  M_MdXYTvd.col(3) = M.col(0).array() + kb;
 
   return M_MdXYTvd;
 }
@@ -733,7 +733,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2MdAzIncl(
     return Eigen::MatrixX<typename D::Scalar>();
 
   Eigen::MatrixX<typename D::Scalar> MM = M;
-  MM.col(0) = MM.col(0).array() - kb;
+  MM.col(0) = MM.col(0).array() + kb;
   MM.col(1) = MM.col(1).array() - x0;
   MM.col(2) = MM.col(2).array() - y0;
 
@@ -749,7 +749,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2MdAzIncl(
     return Eigen::MatrixX<typename D::Scalar>();
 
   Eigen::MatrixX<typename D::Scalar> MM = M;
-  MM.col(0) = MM.col(0).array() - kb;
+  MM.col(0) = MM.col(0).array() + kb;
 
   return TvdDxDy2MdAzIncl(MM, XNorth);
 }
