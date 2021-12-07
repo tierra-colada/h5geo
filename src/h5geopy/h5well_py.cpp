@@ -32,7 +32,8 @@ void H5Well_py(
       .def("getHeadCoord", &H5Well::getHeadCoord,
            py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
-      .def("getKB", &H5Well::getKB)
+      .def("getKB", &H5Well::getKB,
+           py::arg_v("lengthUnits", "", "str()"))
       .def("getUWI", &H5Well::getUWI)
 
       .def("getActiveDevCurve", &H5Well::getActiveDevCurve)
