@@ -527,9 +527,6 @@ std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
 {
   SeisParam param = *(static_cast<SeisParam*>(p));
-  std::vector<double> origin({param.X0, param.Y0});
-  std::vector<double> point1({param.X1, param.Y1});
-  std::vector<double> point2({param.X2, param.Y2});
 
   try {
 
@@ -565,18 +562,6 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
           std::string{h5geo::detail::data_units},
           h5gt::DataSpace::From(param.dataUnits)).
         write(param.dataUnits);
-    group.createAttribute<double>(
-          std::string{h5geo::detail::origin},
-          h5gt::DataSpace({2})).
-        write(origin);
-    group.createAttribute<double>(
-          std::string{h5geo::detail::point1},
-          h5gt::DataSpace({2})).
-        write(point1);
-    group.createAttribute<double>(
-          std::string{h5geo::detail::point2},
-          h5gt::DataSpace({2})).
-        write(point2);
 
     createTextHeader(group);
     createBinHeader(group, param.stdChunk);

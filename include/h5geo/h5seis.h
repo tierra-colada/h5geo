@@ -224,32 +224,11 @@ public:
   virtual bool setDataType(const h5geo::SeisDataType& seisType) = 0;
   virtual bool setSurveyType(const h5geo::SurveyType& surveyType) = 0;
   virtual bool setSRD(double val, const std::string& lengthUnits = "") = 0;
-  virtual bool setOrigin(
-      Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) = 0;
-  virtual bool setPoint1(
-      Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) = 0;
-  virtual bool setPoint2(
-      Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) = 0;
 
   virtual h5geo::Domain getDomain() = 0;
   virtual h5geo::SeisDataType getDataType() = 0;
   virtual h5geo::SurveyType getSurveyType() = 0;
   virtual double getSRD(const std::string& lengthUnits = "") = 0;
-  virtual Eigen::VectorXd getOrigin(
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) = 0;
-  virtual Eigen::VectorXd getPoint1(
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) = 0;
-  virtual Eigen::VectorXd getPoint2(
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) = 0;
   virtual Eigen::MatrixXd getBoundary(
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
@@ -272,8 +251,7 @@ public:
   ///
   /// After text header, bin header, trace headers and trace data is written
   /// then this method should be called (call it only once). It computes
-  /// trace header limits, boundary, origin, 'point1' and 'point2'
-  /// (for 3D stack data), prepares necessary sorting for 3D stack
+  /// trace header limits, boundary, prepares necessary sorting for 3D stack
   /// data (CDP_X, CDP_Y, INLINE, XLINE).
   /// Thus it will take some time to process (especially for big data).
   /// 'bufferSize' is used to store values at a time. If RAM allows set it

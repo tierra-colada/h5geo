@@ -275,33 +275,12 @@ void H5Seis_py(
       .def("setSRD", &H5Seis::setSRD,
            py::arg("value"),
            py::arg_v("units", "", "str()"))
-      .def("setOrigin", &H5Seis::setOrigin,
-           py::arg("value"),
-           py::arg_v("units", "", "str()"),
-           py::arg_v("doCoordTransform", false, "False"))
-      .def("setPoint1", &H5Seis::setPoint1,
-           py::arg("value"),
-           py::arg_v("units", "", "str()"),
-           py::arg_v("doCoordTransform", false, "False"))
-      .def("setPoint2", &H5Seis::setPoint2,
-           py::arg("value"),
-           py::arg_v("units", "", "str()"),
-           py::arg_v("doCoordTransform", false, "False"))
 
       .def("getDomain", &H5Seis::getDomain)
       .def("getDataType", &H5Seis::getDataType)
       .def("getSurveyType", &H5Seis::getSurveyType)
       .def("getSRD", &H5Seis::getSRD,
            py::arg_v("units", "", "str()"))
-      .def("getOrigin", &H5Seis::getOrigin,
-           py::arg_v("units", "", "str()"),
-           py::arg_v("doCoordTransform", false, "False"))
-      .def("getPoint1", &H5Seis::getPoint1,
-           py::arg_v("units", "", "str()"),
-           py::arg_v("doCoordTransform", false, "False"))
-      .def("getPoint2", &H5Seis::getPoint2,
-           py::arg_v("units", "", "str()"),
-           py::arg_v("doCoordTransform", false, "False"))
       .def("getBoundary", &H5Seis::getBoundary,
            py::arg_v("units", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))

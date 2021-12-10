@@ -365,7 +365,7 @@ TEST_F(H5WellFixture, TvdDxDy2MdXYTvd_XNorth){
 
 TEST_F(H5WellFixture, TvdssXY2MdXYTvd){
   Eigen::MatrixXd TvdssXY(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows(), 3);
-  TvdssXY.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + wellParam.kb;
+  TvdssXY.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() - wellParam.kb;
   TvdssXY.col(1) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(1);
   TvdssXY.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(2);
 
@@ -383,7 +383,7 @@ TEST_F(H5WellFixture, TvdssXY2MdXYTvd){
 
 TEST_F(H5WellFixture, TvdssXY2MdXYTvd_XNorth){
   Eigen::MatrixXd TvdssXY(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows(), 3);
-  TvdssXY.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + wellParam.kb;
+  TvdssXY.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() - wellParam.kb;
   TvdssXY.col(1) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(1);
   TvdssXY.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(2);
 
@@ -401,7 +401,7 @@ TEST_F(H5WellFixture, TvdssXY2MdXYTvd_XNorth){
 
 TEST_F(H5WellFixture, TvdssDxDy2MdXYTvd){
   Eigen::MatrixXd TvdssDxDy(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows(), 3);
-  TvdssDxDy.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + wellParam.kb;
+  TvdssDxDy.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() - wellParam.kb;
   TvdssDxDy.col(1) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5);
   TvdssDxDy.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6);
 
@@ -419,7 +419,7 @@ TEST_F(H5WellFixture, TvdssDxDy2MdXYTvd){
 
 TEST_F(H5WellFixture, TvdssDxDy2MdXYTvd_XNorth){
   Eigen::MatrixXd TvdssDxDy(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.rows(), 3);
-  TvdssDxDy.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() + wellParam.kb;
+  TvdssDxDy.col(0) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(4).array() - wellParam.kb;
   TvdssDxDy.col(1) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5);
   TvdssDxDy.col(2) = MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6);
 

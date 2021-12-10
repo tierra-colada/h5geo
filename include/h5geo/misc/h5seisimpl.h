@@ -219,32 +219,11 @@ public:
   virtual bool setDataType(const h5geo::SeisDataType& val) override;
   virtual bool setSurveyType(const h5geo::SurveyType& val) override;
   virtual bool setSRD(double val, const std::string& lengthUnits = "") override;
-  virtual bool setOrigin(
-      Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) override;
-  virtual bool setPoint1(
-      Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) override;
-  virtual bool setPoint2(
-      Eigen::Ref<Eigen::Vector2d> v,
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) override;
 
   virtual h5geo::Domain getDomain() override;
   virtual h5geo::SeisDataType getDataType() override;
   virtual h5geo::SurveyType getSurveyType() override;
   virtual double getSRD(const std::string& lengthUnits = "") override;
-  virtual Eigen::VectorXd getOrigin(
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) override;
-  virtual Eigen::VectorXd getPoint1(
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) override;
-  virtual Eigen::VectorXd getPoint2(
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) override;
   virtual Eigen::MatrixXd getBoundary(
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
@@ -274,10 +253,6 @@ protected:
   /// nTrcBuffer by default it is set to 10 millions of traces
   virtual bool calcAndWriteTraceHeaderLimits(
       const size_t& nTrcBuffer = 1e7);
-  virtual bool calcOriginPoint1Point2Stk3D(
-      Eigen::Ref<Eigen::Vector2d> origin,
-      Eigen::Ref<Eigen::Vector2d> p1,
-      Eigen::Ref<Eigen::Vector2d> p2);
 
 
 protected:
