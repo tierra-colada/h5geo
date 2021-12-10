@@ -115,7 +115,7 @@ H5BaseImpl<TBase>::createContainer(
           h5gt::File h5File(
                 fileName,
                 h5gt::File::ReadWrite |
-                h5gt::File::OpenOrCreate);
+                h5gt::File::OpenOrCreate, fapl);
           return createContainer(h5File, containerType, createFlag);
         }
         return std::nullopt;
