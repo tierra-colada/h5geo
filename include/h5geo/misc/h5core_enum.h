@@ -21,6 +21,14 @@ enum class ContainerAttributes : unsigned{
   ContainerType = 1
 };
 
+enum class PointsAttributes : unsigned{
+  Domain = 1
+};
+
+enum class PointsDatasets : unsigned{
+  points_data = 1
+};
+
 enum class SeisAttributes : unsigned{
   Domain = 1,
   SeisDataType = 2,
@@ -88,7 +96,8 @@ enum class ObjectType: unsigned{
   WELL = 2,
   LOGCURVE = 3,
   DEVCURVE = 4,
-  SEISMIC = 5
+  SEISMIC = 5,
+  POINTS = 6
 };
 //ENABLE_BITMASK_OPERATORS(ObjectType);
 

@@ -9,6 +9,7 @@
 #include "../../include/h5geo/misc/h5wellimpl.h"
 #include "../../include/h5geo/misc/h5devcurveimpl.h"
 #include "../../include/h5geo/misc/h5logcurveimpl.h"
+#include "../../include/h5geo/misc/h5pointsimpl.h"
 #include "../../include/h5geo/h5core.h"
 //#include "../../include/h5geo/misc/h5core_enum.h"
 #include "../../include/h5geo/misc/h5core_enum_string.h"
@@ -314,9 +315,56 @@ H5BaseImpl<TBase>::createNewObject(
     return createNewDevCurve(group, p);
   case h5geo::ObjectType::SEISMIC :
     return createNewSeis(group, p);
+  case h5geo::ObjectType::POINTS :
+    return createNewPoints(group, p);
   default:
     return std::nullopt;
   }
+}
+
+template <typename TBase>
+std::optional<h5gt::Group>
+H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p)
+{
+  PointsParam param = *(static_cast<PointsParam*>(p));
+
+  std::vector<size_t> count = {param.nPoints};
+  std::vector<size_t> max_count = {h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {param.chunkSize};
+  h5gt::DataSetCreateProps props;
+  props.setChunk(cdims);
+  h5gt::DataSpace dataspace(count, max_count);
+
+  try {
+
+    group.createAttribute<unsigned>(
+          std::string{h5geo::detail::Domain},
+          h5gt::DataSpace(1)).
+        write(static_cast<unsigned>(param.domain));
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::spatial_reference},
+          h5gt::DataSpace::From(param.spatialReference)).
+        write(param.spatialReference);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::length_units},
+          h5gt::DataSpace::From(param.lengthUnits)).
+        write(param.lengthUnits);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::temporal_units},
+          h5gt::DataSpace::From(param.temporalUnits)).
+        write(param.temporalUnits);
+
+    group.createDataSet(
+          std::string{h5geo::detail::points_data},
+          dataspace, h5geo::compound_Point(), h5gt::LinkCreateProps(), props);
+
+    return group;
+
+  } catch (h5gt::Exception& err) {
+    return std::nullopt;
+  }
+
+
 }
 
 template <typename TBase>
@@ -805,9 +853,32 @@ bool h5geo::isGeoObjectByType(h5gt::Group& group,
     return h5geo::isDevCurve(group);
   case h5geo::ObjectType::SEISMIC :
     return h5geo::isSeis(group);
+  case h5geo::ObjectType::POINTS :
+    return h5geo::isPoints(group);
   default:
     return false;
   }
+}
+
+bool h5geo::isPoints(
+    h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::points_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::points_dsets){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
+      return false;
+
+    h5gt::DataSet dset = group.getDataSet(std::string{name});
+    auto dtype = dset.getDataType();
+    if (!dtype.isTypeEqual(h5geo::compound_Point())){
+      return false;
+    }
+  }
+  return true;
 }
 
 bool h5geo::isMap(
@@ -912,6 +983,9 @@ H5BaseObject* h5geo::openObject(h5gt::Group group)
   obj = openLogCurve(group);
   if (obj)
     return obj;
+  obj = openPoints(group);
+  if (obj)
+    return obj;
   obj = openBaseObject(group);
   return obj;
 }
@@ -928,3 +1002,4 @@ template class H5BaseImpl<H5Seis>;
 template class H5BaseImpl<H5Well>;
 template class H5BaseImpl<H5DevCurve>;
 template class H5BaseImpl<H5LogCurve>;
+template class H5BaseImpl<H5Points>;

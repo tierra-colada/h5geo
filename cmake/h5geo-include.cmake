@@ -19,6 +19,7 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5mapimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5wellcontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5wellimpl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5pointsimpl.h
 
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5basecontainer.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5baseobject.h
@@ -31,4 +32,5 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5map.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5well.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5wellcontainer.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5points.h
   )

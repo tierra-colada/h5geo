@@ -6,6 +6,7 @@
 #endif
 
 #include "misc/h5core_enum.h"
+#include "misc/h5core_types.h"
 
 #include <type_traits>
 #include <string>
@@ -195,8 +196,8 @@ bool _overwriteResizableDataset(
 
 template<typename Object, typename D,
          typename std::enable_if<
-           (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value &&
            std::is_arithmetic<typename D::Scalar>::value>::type* = nullptr>
 bool overwriteResizableDataset(
     Object& node,
@@ -207,8 +208,8 @@ bool overwriteResizableDataset(
 
 template<typename Object, typename T,
          typename std::enable_if<
-           (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value &&
            std::is_arithmetic<T>::value>::type* = nullptr>
 bool overwriteResizableDataset(
     Object& node,
@@ -219,8 +220,8 @@ bool overwriteResizableDataset(
 
 template<typename Object, typename T,
          typename std::enable_if<
-           (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value &&
            std::is_arithmetic<T>::value>::type* = nullptr>
 bool overwriteResizableDataset(
     Object& node,
@@ -244,8 +245,8 @@ bool _overwriteDataset(
 
 template<typename Object, typename D,
          typename std::enable_if<
-           (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value &&
            std::is_arithmetic<typename D::Scalar>::value>::type* = nullptr>
 bool overwriteDataset(
     Object& node,
@@ -256,8 +257,8 @@ bool overwriteDataset(
 
 template<typename Object, typename T,
          typename std::enable_if<
-           (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value &&
            std::is_arithmetic<T>::value>::type* = nullptr>
 bool overwriteDataset(
     Object& node,
@@ -268,8 +269,8 @@ bool overwriteDataset(
 
 template<typename Object, typename T,
          typename std::enable_if<
-           (std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value) &&
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value &&
            std::is_arithmetic<T>::value>::type* = nullptr>
 bool overwriteDataset(
     Object& node,
@@ -278,7 +279,10 @@ bool overwriteDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
-template <typename Object, typename T>
+template <typename Object, typename T,
+          typename std::enable_if<
+            std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value>::type* = nullptr>
 bool _readDataset(
     Object& node,
     const std::string& datasetPath,
@@ -322,7 +326,11 @@ Eigen::MatrixXd readDoubleEigenMtxDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
-template <typename Object, typename T>
+template <typename Object, typename T,
+          typename std::enable_if<
+            std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 bool _readAttribute(
     Object& holder,
     const std::string& attrName,
@@ -377,7 +385,11 @@ bool readAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
-template <typename Object, typename T>
+template <typename Object, typename T,
+          typename std::enable_if<
+            std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value||
+            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 bool _overwriteAttribute(
     Object& holder,
     const std::string& attrName,

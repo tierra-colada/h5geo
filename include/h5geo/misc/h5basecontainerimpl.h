@@ -14,6 +14,19 @@ protected:
   virtual ~H5BaseContainerImpl() = default;
 
 public:
+  virtual H5Points* getPoints(
+      const std::string& name) override;
+  virtual H5Points* getPoints(
+      h5gt::Group group) override;
+  virtual H5Points* createPoints(
+      std::string& name,
+      PointsParam& p,
+      h5geo::CreationType createFlag) override;
+  virtual H5Points* createPoints(
+      h5gt::Group group,
+      PointsParam& p,
+      h5geo::CreationType createFlag) override;
+
   virtual h5gt::File getH5File() const override;
 
   virtual bool operator == (H5BaseContainer& other) const override;

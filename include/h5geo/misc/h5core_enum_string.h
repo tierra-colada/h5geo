@@ -31,6 +31,11 @@ inline constexpr auto angular_units = "angular_units";
 inline constexpr auto& cnt_attrs =
     magic_enum::enum_names<h5geo::detail::ContainerAttributes>();
 inline constexpr auto ContainerType = magic_enum::enum_name(h5geo::detail::ContainerAttributes::ContainerType);
+inline constexpr auto& points_attrs =
+    magic_enum::enum_names<h5geo::detail::PointsAttributes>();
+inline constexpr auto& points_dsets =
+    magic_enum::enum_names<h5geo::detail::PointsDatasets>();
+inline constexpr auto points_data = magic_enum::enum_name(h5geo::detail::PointsDatasets::points_data);
 inline constexpr auto& seis_attrs =
     magic_enum::enum_names<h5geo::detail::SeisAttributes>();
 inline constexpr auto Domain = magic_enum::enum_name(h5geo::detail::SeisAttributes::Domain);

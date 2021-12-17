@@ -278,8 +278,7 @@ H5MapContainer* H5MapImpl::getMapContainer() const{
 std::optional<h5gt::DataSet>
 H5MapImpl::getMapD() const
 {
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::MapDatasets::map_data)};
+  std::string name = std::string{h5geo::detail::map_data};
 
   return getDatasetOpt(objG, name);
 }

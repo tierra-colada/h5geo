@@ -6,6 +6,7 @@
 #endif
 
 #include "h5core_enum.h"
+#include "h5core_types.h"
 #include "h5geo_export.h"
 
 #include <vector>
@@ -38,6 +39,7 @@ class H5Map;
 class H5Well;
 class H5DevCurve;
 class H5LogCurve;
+class H5Points;
 
 ///
 /// \brief Base class for object params
@@ -45,6 +47,12 @@ class H5LogCurve;
 struct BaseObjectParam{
   // 'spatialReference' in the form 'authName:code'
   std::string spatialReference, lengthUnits, temporalUnits, angularUnits, dataUnits;
+};
+
+struct PointsParam : public BaseObjectParam{
+  h5geo::Domain domain;
+  size_t nPoints;
+  hsize_t chunkSize = 10;
 };
 
 struct MapParam : public BaseObjectParam{
@@ -154,6 +162,7 @@ H5GEO_EXPORT bool isGeoObjectByType(
     h5gt::Group& group,
     const h5geo::ObjectType& objType);
 
+H5GEO_EXPORT bool isPoints(h5gt::Group &group);
 H5GEO_EXPORT bool isMap(h5gt::Group &group);
 H5GEO_EXPORT bool isWell(h5gt::Group &group);
 H5GEO_EXPORT bool isLogCurve(h5gt::Group &group);

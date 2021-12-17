@@ -4,6 +4,7 @@
 #include "../../include/h5geo/misc/h5wellimpl.h"
 #include "../../include/h5geo/misc/h5devcurveimpl.h"
 #include "../../include/h5geo/misc/h5logcurveimpl.h"
+#include "../../include/h5geo/misc/h5pointsimpl.h"
 #include "../../include/h5geo/h5core.h"
 #include "../../include/h5geo/misc/h5core_enum_string.h"
 
@@ -261,3 +262,4 @@ template class H5BaseObjectImpl<H5Seis>;
 template class H5BaseObjectImpl<H5Well>;
 template class H5BaseObjectImpl<H5DevCurve>;
 template class H5BaseObjectImpl<H5LogCurve>;
+template class H5BaseObjectImpl<H5Points>;

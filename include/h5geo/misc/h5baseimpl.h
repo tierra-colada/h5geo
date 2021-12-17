@@ -77,6 +77,8 @@ private:
       const h5geo::ObjectType& objType,
       void* p);
   std::optional<h5gt::Group>
+  createNewPoints(h5gt::Group &group, void* p);
+  std::optional<h5gt::Group>
   createNewMap(h5gt::Group &group, void* p);
   std::optional<h5gt::Group>
   createNewWell(h5gt::Group &group, void* p);

@@ -260,8 +260,7 @@ H5Well* H5DevCurveImpl::getWell()
 std::optional<h5gt::DataSet>
 H5DevCurveImpl::getDevCurveD()
 {
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::DevDatasets::dev_data)};
+  std::string name = std::string{h5geo::detail::dev_data};
 
   return getDatasetOpt(objG, name);
 }

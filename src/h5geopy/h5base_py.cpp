@@ -13,6 +13,15 @@ void BaseObjectParam_py(py::class_<BaseObjectParam> &py_obj){
       .def_readwrite("dataUnits", &SeisParam::dataUnits);
 }
 
+void PointsParam_py(py::class_<PointsParam, BaseObjectParam> &py_obj){
+  py_obj
+      .def(
+        py::init<>())
+      .def_readwrite("domain", &PointsParam::domain)
+      .def_readwrite("nPoints", &PointsParam::nPoints)
+      .def_readwrite("chunkSize", &PointsParam::chunkSize);
+}
+
 void MapParam_py(py::class_<MapParam, BaseObjectParam> &py_obj){
   py_obj
       .def(

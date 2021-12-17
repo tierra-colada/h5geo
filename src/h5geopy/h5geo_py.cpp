@@ -3,11 +3,13 @@
 #include "../../include/h5geopy/h5baseobject_py.h"
 #include "../../include/h5geopy/h5core_enum_py.h"
 #include "../../include/h5geopy/h5core_sr_settings_py.h"
+#include "../../include/h5geopy/h5core_types_py.h"
 #include "../../include/h5geopy/h5devcurve_py.h"
 #include "../../include/h5geopy/h5deviation_py.h"
 #include "../../include/h5geopy/h5easyhull_py.h"
 #include "../../include/h5geopy/h5geofunctions_py.h"
 #include "../../include/h5geopy/h5logcurve_py.h"
+#include "../../include/h5geopy/h5points_py.h"
 #include "../../include/h5geopy/h5seis_py.h"
 #include "../../include/h5geopy/h5seiscontainer_py.h"
 #include "../../include/h5geopy/h5sort_py.h"
@@ -15,6 +17,8 @@
 #include "../../include/h5geopy/h5mapcontainer_py.h"
 #include "../../include/h5geopy/h5well_py.h"
 #include "../../include/h5geopy/h5wellcontainer_py.h"
+
+PYBIND11_MAKE_OPAQUE(PointArray);
 
 
 namespace h5geopy {
@@ -63,6 +67,7 @@ PYBIND11_MODULE(_h5geo, m) {
 
   // BASE
   auto pyBaseObjectParam = py::class_<BaseObjectParam>(m, "BaseObjectParam");
+  auto pyPointsParam = py::class_<PointsParam, BaseObjectParam>(m, "PointsParam");
   auto pyMapParam = py::class_<MapParam, BaseObjectParam>(m, "MapParam");
   auto pyWellParam = py::class_<WellParam, BaseObjectParam>(m, "WellParam");
   auto pyDevCurveParam = py::class_<DevCurveParam, BaseObjectParam>(m, "DevCurveParam");
@@ -87,6 +92,20 @@ PYBIND11_MODULE(_h5geo, m) {
       H5BaseObjectImpl<H5BaseObject>,
       std::unique_ptr<H5BaseObject, ObjectDeleter>>
       (m, "H5BaseObject");
+
+  // H5GEO::POINT
+  auto pyPoint =
+      py::class_<Point>
+      (m, "Point");
+
+  // POINTS
+  auto pyPoints =
+      py::class_<
+      H5Points,
+      H5PointsImpl,
+      H5BaseObject,
+      std::unique_ptr<H5Points, ObjectDeleter>>
+      (m, "H5Points");
 
   // MAPCONTAINER
   auto pyMapContainer =
@@ -189,6 +208,7 @@ PYBIND11_MODULE(_h5geo, m) {
 
   // BASE
   BaseObjectParam_py(pyBaseObjectParam);
+  PointsParam_py(pyPointsParam);
   MapParam_py(pyMapParam);
   WellParam_py(pyWellParam);
   DevCurveParam_py(pyDevCurveParam);
@@ -201,6 +221,13 @@ PYBIND11_MODULE(_h5geo, m) {
 
   // BASEOBJECT
   H5BaseObject_py pyBaseObject_inst(pyBaseObject);
+
+  // H5GEO::POINT
+  Point_py(pyPoint);
+  py::bind_vector<PointArray>(m, "PointArray");
+
+  // POINTS
+  H5Points_py(pyPoints);
 
   // MAPCONTAINER
   H5MapContainer_py(pyMapContainer);

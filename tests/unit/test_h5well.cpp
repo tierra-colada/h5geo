@@ -5,6 +5,7 @@
 #include <h5geo/h5core.h>
 #include <h5geo/h5devcurve.h>
 #include <h5geo/h5logcurve.h>
+#include <h5geo/h5points.h>
 
 #include <h5gt/H5File.hpp>
 #include <h5gt/H5Group.hpp>
@@ -62,6 +63,12 @@ public:
     logCurveParam.lengthUnits = "cm";
     logCurveParam.dataUnits = "kg/m2";
 
+    pointsParam.chunkSize = 1;
+    pointsParam.domain = h5geo::Domain::TVDSS;
+    pointsParam.nPoints = 3;
+    pointsParam.lengthUnits = "meter";
+    pointsParam.temporalUnits = "ms";
+
     trig = true;
   }
 
@@ -109,6 +116,9 @@ public:
 
   Eigen::MatrixXd MD_X_Y_Z_TVD_DX_DY_AZ_INCL;
   Eigen::MatrixXd LOG_MD_GR;
+
+  PointsParam pointsParam;
+  std::string POINTS_NAME;
 };
 
 TEST_F(H5WellFixture, createContainer){
@@ -554,4 +564,36 @@ TEST_F(H5WellFixture, getCurveFromDifferentWell){
   ASSERT_TRUE(well_1->getLogCurve(logCurveType1, logCurveName1) != nullptr);
   ASSERT_TRUE(well_2->getDevCurve(devCurveName2) != nullptr);
   ASSERT_TRUE(well_2->getLogCurve(logCurveType2, logCurveName2) != nullptr);
+}
+
+TEST_F(H5WellFixture, createPointsFromWellTop){
+  H5Well_ptr well(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(well != nullptr);
+
+  auto kb = well->getKB();
+  auto headXY = well->getHeadCoord();
+  std::string pointsName = "well head";
+  H5Points_ptr points(
+        wellContainer->createPoints(
+          pointsName, pointsParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+
+  h5geo::PointArray parr_in;
+  parr_in.push_back({headXY(0), headXY(1), kb, "one"});
+  parr_in.push_back({headXY(0), headXY(1), kb, "two"});
+
+  points->writeData(parr_in);
+
+  h5geo::PointArray parr_out = points->getData("km");
+
+  ASSERT_TRUE(parr_in[0].getName() == parr_out[0].getName());
+  ASSERT_EQ(parr_in[0].x(), parr_out[0].x()*1000);
+  ASSERT_EQ(parr_in[0].y(), parr_out[0].y()*1000);
+  ASSERT_EQ(parr_in[0].z(), parr_out[0].z()*1000);
+
+  ASSERT_TRUE(parr_in[1].getName() == parr_out[1].getName());
+  ASSERT_EQ(parr_in[1].x(), parr_out[1].x()*1000);
+  ASSERT_EQ(parr_in[1].y(), parr_out[1].y()*1000);
+  ASSERT_EQ(parr_in[1].z(), parr_out[1].z()*1000);
 }

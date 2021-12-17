@@ -382,8 +382,7 @@ H5WellContainer* H5WellImpl::getWellContainer(){
 std::optional<h5gt::Group>
 H5WellImpl::getDevG()
 {
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::WellGroups::DEV)};
+  std::string name = std::string{h5geo::detail::DEV};
 
   if (!objG.hasObject(name, h5gt::ObjectType::Group))
     return std::nullopt;
@@ -394,8 +393,7 @@ H5WellImpl::getDevG()
 std::optional<h5gt::Group>
 H5WellImpl::getActiveDevG()
 {
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::WellGroups::ACTIVE_DEV)};
+  std::string name = std::string{h5geo::detail::ACTIVE_DEV};
 
   return getGroupOpt(objG, name);
 }
@@ -403,8 +401,7 @@ H5WellImpl::getActiveDevG()
 std::optional<h5gt::Group>
 H5WellImpl::getLogG()
 {
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::WellGroups::LOG)};
+  std::string name = std::string{h5geo::detail::LOG};
 
   return getGroupOpt(objG, name);
 }
@@ -428,7 +425,7 @@ bool H5WellImpl::setActiveDevCurve(H5DevCurve& curve){
     objG.unlink(opt->getPath());
 
   objG.createLink(curve.getObjG(),
-                  std::string{magic_enum::enum_name(h5geo::detail::WellGroups::ACTIVE_DEV)},
+                  std::string{h5geo::detail::ACTIVE_DEV},
                   h5gt::LinkType::Soft);
 
   return true;

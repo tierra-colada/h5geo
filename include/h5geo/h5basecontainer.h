@@ -9,6 +9,19 @@ protected:
   virtual ~H5BaseContainer() = default;
 
 public:
+  virtual H5Points* getPoints(
+      const std::string& name) = 0;
+  virtual H5Points* getPoints(
+      h5gt::Group group) = 0;
+  virtual H5Points* createPoints(
+      std::string& name,
+      PointsParam& p,
+      h5geo::CreationType createFlag) = 0;
+  virtual H5Points* createPoints(
+      h5gt::Group group,
+      PointsParam& p,
+      h5geo::CreationType createFlag) = 0;
+
   virtual h5gt::File getH5File() const = 0;
 
   virtual bool operator == (H5BaseContainer& other) const = 0;

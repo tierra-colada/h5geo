@@ -1077,8 +1077,7 @@ H5SeisContainer* H5SeisImpl::getSeisContainer(){
 std::optional<h5gt::DataSet>
 H5SeisImpl::getBoundaryD()
 {
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::SeisDatasets::boundary)};
+  std::string name = std::string{h5geo::detail::boundary};
 
   return getDatasetOpt(objG, name);
 }
@@ -1086,8 +1085,7 @@ H5SeisImpl::getBoundaryD()
 std::optional<h5gt::DataSet>
 H5SeisImpl::getTextHeaderD()
 {
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::SeisDatasets::text_header)};
+  std::string name = std::string{h5geo::detail::text_header};
 
   return getDatasetOpt(objG, name);
 }
@@ -1095,8 +1093,7 @@ H5SeisImpl::getTextHeaderD()
 std::optional<h5gt::DataSet>
 H5SeisImpl::getBinHeaderD()
 {
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::SeisDatasets::bin_header)};
+  std::string name = std::string{h5geo::detail::bin_header};
 
   return getDatasetOpt(objG, name);
 }
@@ -1116,8 +1113,7 @@ H5SeisImpl::getTraceD()
 std::optional<h5gt::Group>
 H5SeisImpl::getSortG()
 {
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::SeisGroups::sort)};
+  std::string name = std::string{h5geo::detail::sort};
 
   return getGroupOpt(objG, name);
 }
@@ -1129,8 +1125,7 @@ H5SeisImpl::getUValG()
   if (!opt.has_value())
     return std::nullopt;
 
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::SeisGroups::unique_values)};
+  std::string name = std::string{h5geo::detail::unique_values};
 
   if (!opt->hasObject(name, h5gt::ObjectType::Group))
     return std::nullopt;
@@ -1145,8 +1140,7 @@ H5SeisImpl::getIndexesG()
   if (!opt.has_value())
     return std::nullopt;
 
-  std::string name = std::string{magic_enum::enum_name(
-        h5geo::detail::SeisGroups::indexes)};
+  std::string name = std::string{h5geo::detail::indexes};
 
   if (!opt->hasObject(name, h5gt::ObjectType::Group))
     return std::nullopt;

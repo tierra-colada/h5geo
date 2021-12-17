@@ -11,4 +11,5 @@ set(src_files_h5geo
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5mapimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5wellimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5wellcontainerimpl.cpp
+  ${CMAKE_SOURCE_DIR}/src/h5geo/h5pointsimpl.cpp
   )
