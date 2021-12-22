@@ -567,8 +567,12 @@ TEST_F(H5WellFixture, getCurveFromDifferentWell){
 }
 
 TEST_F(H5WellFixture, createPointsFromWellTop){
+  std::string fileName = "welltops.h5";
+  H5WellCnt_ptr wellCnt(
+        h5geo::createWellContainerByName(
+          fileName, h5geo::CreationType::CREATE_OR_OVERWRITE));
   H5Well_ptr well(
-        wellContainer->createWell(
+        wellCnt->createWell(
           WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(well != nullptr);
 
@@ -576,24 +580,23 @@ TEST_F(H5WellFixture, createPointsFromWellTop){
   auto headXY = well->getHeadCoord();
   std::string pointsName = "well head";
   H5Points_ptr points(
-        wellContainer->createPoints(
+        wellCnt->createPoints(
           pointsName, pointsParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
 
-  h5geo::PointArray parr_in;
-  parr_in.push_back({headXY(0), headXY(1), kb, "one"});
-  parr_in.push_back({headXY(0), headXY(1), kb, "two"});
+  h5geo::PointArray pArrIn, pArrOut;
+  pArrIn.push_back({headXY(0), headXY(1), kb, "one"});
+  pArrIn.push_back({headXY(0), headXY(1), kb, "two"});
 
-  points->writeData(parr_in);
+  points->writeData(pArrIn);
+  pArrOut = points->getData("km");
 
-  h5geo::PointArray parr_out = points->getData("km");
+  ASSERT_TRUE(pArrIn[0].getName() == pArrOut[0].getName());
+  ASSERT_EQ(pArrIn[0].x(), pArrOut[0].x()*1000);
+  ASSERT_EQ(pArrIn[0].y(), pArrOut[0].y()*1000);
+  ASSERT_EQ(pArrIn[0].z(), pArrOut[0].z()*1000);
 
-  ASSERT_TRUE(parr_in[0].getName() == parr_out[0].getName());
-  ASSERT_EQ(parr_in[0].x(), parr_out[0].x()*1000);
-  ASSERT_EQ(parr_in[0].y(), parr_out[0].y()*1000);
-  ASSERT_EQ(parr_in[0].z(), parr_out[0].z()*1000);
-
-  ASSERT_TRUE(parr_in[1].getName() == parr_out[1].getName());
-  ASSERT_EQ(parr_in[1].x(), parr_out[1].x()*1000);
-  ASSERT_EQ(parr_in[1].y(), parr_out[1].y()*1000);
-  ASSERT_EQ(parr_in[1].z(), parr_out[1].z()*1000);
+  ASSERT_TRUE(pArrIn[1].getName() == pArrOut[1].getName());
+  ASSERT_EQ(pArrIn[1].x(), pArrOut[1].x()*1000);
+  ASSERT_EQ(pArrIn[1].y(), pArrOut[1].y()*1000);
+  ASSERT_EQ(pArrIn[1].z(), pArrOut[1].z()*1000);
 }

@@ -21,21 +21,18 @@ typedef struct Point{
   }
 
   void setX(const double& x) { p[0] = x; }
-  void setY(const double& y) { p[0] = y; }
-  void setZ(const double& z) { p[0] = z; }
+  void setY(const double& y) { p[1] = y; }
+  void setZ(const double& z) { p[2] = z; }
 
   double& x() { return p[0]; }
   double& y() { return p[1]; }
   double& z() { return p[2]; }
 
-  void setName(const std::string& name) {
-    strncpy(this->name, name.c_str(), sizeof(this->name));
-    this->name[sizeof(this->name) - 1] = 0;
-  }
-  std::string getName() { return std::string(name); }
+  void setName(const std::string& name) { this->name = name; }
+  std::string getName() { return this->name; }
 
   double p[3];
-  char name[H5GEO_CHAR_ARR_SIZE];
+  std::string name;
 } Point;
 
 typedef std::vector<h5geo::Point> PointArray;
@@ -43,11 +40,11 @@ typedef std::vector<h5geo::Point> PointArray;
 inline h5gt::CompoundType compound_Point() {
   h5gt::CompoundType t(
         {
-          {"x", h5gt::AtomicType<double>{}},
-          {"y", h5gt::AtomicType<double>{}},
-          {"z", h5gt::AtomicType<double>{}},
-          {"name", h5gt::AtomicType<h5gt::FixedLenStringArray<H5GEO_CHAR_ARR_SIZE>>{}}
-        });
+          {"x", h5gt::AtomicType<double>{}, offsetof(Point, p[0])},
+          {"y", h5gt::AtomicType<double>{}, offsetof(Point, p[1])},
+          {"z", h5gt::AtomicType<double>{}, offsetof(Point, p[2])},
+          {"name", h5gt::AtomicType<std::string>{}, offsetof(Point, name)}
+        }, sizeof (Point));
 
   return t;
 }

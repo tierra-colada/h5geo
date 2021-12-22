@@ -10,8 +10,7 @@ void Point_py(
       .def(py::init<
            const double&,
            const double&,
-           const double&,
-           const std::string&>())
+           const double&>())
 
       .def("setX", &Point::setX)
       .def("setY", &Point::setY)
