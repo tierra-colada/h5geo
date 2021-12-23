@@ -47,6 +47,7 @@ public:
       double& val,
       const std::string& lengthUnits = "") override;
   virtual bool setUWI(const std::string& str) override;
+  virtual bool setActiveDevCurve(H5DevCurve* curve) override;
 
   virtual Eigen::VectorXd getHeadCoord(
       const std::string& lengthUnits = "",
@@ -70,7 +71,6 @@ public:
   virtual std::optional<h5gt::Group> getLogTypeG(const std::string& logType) override;
 
 private:
-  bool setActiveDevCurve(H5DevCurve& curve);
 
   //----------- FRIEND CLASSES -----------
   friend class H5WellContainerImpl;

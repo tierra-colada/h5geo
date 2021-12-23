@@ -246,6 +246,18 @@ bool H5WellImpl::setUWI(const std::string& str)
         str);
 }
 
+bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve){
+  auto opt = getActiveDevG();
+  if (opt.has_value())
+    objG.unlink(opt->getPath());
+
+  objG.createLink(curve->getObjG(),
+                  std::string{h5geo::detail::ACTIVE_DEV},
+                  h5gt::LinkType::Soft);
+
+  return true;
+}
+
 Eigen::VectorXd H5WellImpl::getHeadCoord(
     const std::string& lengthUnits,
     bool doCoordTransform)
@@ -417,18 +429,6 @@ H5WellImpl::getLogTypeG(const std::string& logType)
     return std::nullopt;
 
   return logG->getGroup(logType);
-}
-
-bool H5WellImpl::setActiveDevCurve(H5DevCurve& curve){
-  auto opt = getActiveDevG();
-  if (opt.has_value())
-    objG.unlink(opt->getPath());
-
-  objG.createLink(curve.getObjG(),
-                  std::string{h5geo::detail::ACTIVE_DEV},
-                  h5gt::LinkType::Soft);
-
-  return true;
 }
 
 H5Well* h5geo::openWell(h5gt::Group group){

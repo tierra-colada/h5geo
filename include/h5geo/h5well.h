@@ -51,6 +51,7 @@ public:
       double& val,
       const std::string& lengthUnits = "") = 0;
   virtual bool setUWI(const std::string& str) = 0;
+  virtual bool setActiveDevCurve(H5DevCurve* curve) = 0;
 
   virtual Eigen::VectorXd getHeadCoord(
       const std::string& lengthUnits = "",

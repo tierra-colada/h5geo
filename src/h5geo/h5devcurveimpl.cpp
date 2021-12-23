@@ -93,7 +93,7 @@ bool H5DevCurveImpl::setActive(){
 
   H5WellImpl well(optWellG.value());
 
-  return well.setActiveDevCurve(*this);
+  return well.setActiveDevCurve(this);
 }
 
 bool H5DevCurveImpl::isActive(){
