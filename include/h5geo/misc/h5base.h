@@ -157,17 +157,17 @@ H5GEO_EXPORT H5BaseObject* openObject(
     h5gt::Group group);
 
 H5GEO_EXPORT bool isGeoObject(
-    h5gt::Group& group);
+    const h5gt::Group& group);
 H5GEO_EXPORT bool isGeoObjectByType(
-    h5gt::Group& group,
+    const h5gt::Group& group,
     const h5geo::ObjectType& objType);
 
-H5GEO_EXPORT bool isPoints(h5gt::Group &group);
-H5GEO_EXPORT bool isMap(h5gt::Group &group);
-H5GEO_EXPORT bool isWell(h5gt::Group &group);
-H5GEO_EXPORT bool isLogCurve(h5gt::Group &group);
-H5GEO_EXPORT bool isDevCurve(h5gt::Group &group);
-H5GEO_EXPORT bool isSeis(h5gt::Group &group);
+H5GEO_EXPORT bool isPoints(const h5gt::Group &group);
+H5GEO_EXPORT bool isMap(const h5gt::Group &group);
+H5GEO_EXPORT bool isWell(const h5gt::Group &group);
+H5GEO_EXPORT bool isLogCurve(const h5gt::Group &group);
+H5GEO_EXPORT bool isDevCurve(const h5gt::Group &group);
+H5GEO_EXPORT bool isSeis(const h5gt::Group &group);
 
 }
 

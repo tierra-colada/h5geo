@@ -830,7 +830,7 @@ bool h5geo::isGeoContainerByType(h5gt::File file,
   }
 }
 
-bool h5geo::isGeoObject(h5gt::Group& group){
+bool h5geo::isGeoObject(const h5gt::Group& group){
   constexpr auto& objTypes = magic_enum::enum_values<h5geo::ObjectType>();
   for (const auto &objType : objTypes)
     if (h5geo::isGeoObjectByType(group, objType))
@@ -839,7 +839,7 @@ bool h5geo::isGeoObject(h5gt::Group& group){
   return false;
 }
 
-bool h5geo::isGeoObjectByType(h5gt::Group& group,
+bool h5geo::isGeoObjectByType(const h5gt::Group& group,
                               const h5geo::ObjectType& objType)
 {
   switch (objType) {
@@ -861,7 +861,7 @@ bool h5geo::isGeoObjectByType(h5gt::Group& group,
 }
 
 bool h5geo::isPoints(
-    h5gt::Group &group)
+    const h5gt::Group &group)
 {
   for (const auto& name : h5geo::detail::points_attrs){
     if (!group.hasAttribute(std::string{name}))
@@ -882,7 +882,7 @@ bool h5geo::isPoints(
 }
 
 bool h5geo::isMap(
-    h5gt::Group &group)
+    const h5gt::Group &group)
 {
   for (const auto& name : h5geo::detail::map_attrs){
     if (!group.hasAttribute(std::string{name}))
@@ -897,7 +897,7 @@ bool h5geo::isMap(
 }
 
 bool h5geo::isWell(
-    h5gt::Group &group)
+    const h5gt::Group &group)
 {
   for (const auto& name : h5geo::detail::well_attrs){
     if (!group.hasAttribute(std::string{name}))
@@ -912,7 +912,7 @@ bool h5geo::isWell(
 }
 
 bool h5geo::isLogCurve(
-    h5gt::Group &group)
+    const h5gt::Group &group)
 {
   for (const auto& name : h5geo::detail::log_dsets){
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
@@ -922,7 +922,7 @@ bool h5geo::isLogCurve(
 }
 
 bool h5geo::isDevCurve(
-    h5gt::Group &group)
+    const h5gt::Group &group)
 {
   for (const auto& name : h5geo::detail::dev_dsets){
     if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
@@ -932,7 +932,7 @@ bool h5geo::isDevCurve(
 }
 
 bool h5geo::isSeis(
-    h5gt::Group &group)
+    const h5gt::Group &group)
 {
   for (const auto& name : h5geo::detail::seis_attrs){
     if (!group.hasAttribute(std::string{name}))
