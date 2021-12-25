@@ -102,12 +102,10 @@ enum class ObjectType: unsigned{
 //ENABLE_BITMASK_OPERATORS(ObjectType);
 
 enum class Domain : unsigned{
-  MD = 1,
-  TVD = 2,
-  TVDSS = 4,
-  TVDSD = 8,
-  TWT = 16,
-  OWT = 32
+  TVD = 1,
+  TVDSS = 2,
+  TWT = 4,
+  OWT = 8
 };
 
 enum class SeisDataType : unsigned{
@@ -169,7 +167,8 @@ enum class DevDataType : unsigned{
   DY = 8,
   AZIM = 9,
   INCL = 10,
-  OWT = 11
+  OWT = 11,
+  TWT = 12
 };
 
 enum class WellType : unsigned{

@@ -94,10 +94,8 @@ inline constexpr auto LOGCURVE = magic_enum::enum_name(h5geo::ObjectType::LOGCUR
 inline constexpr auto DEVCURVE = magic_enum::enum_name(h5geo::ObjectType::DEVCURVE);
 inline constexpr auto& domains =
     magic_enum::enum_names<h5geo::Domain>();
-inline constexpr auto MD = magic_enum::enum_name(h5geo::Domain::MD);
 inline constexpr auto TVD = magic_enum::enum_name(h5geo::Domain::TVD);
 inline constexpr auto TVDSS = magic_enum::enum_name(h5geo::Domain::TVDSS);
-inline constexpr auto TVDSD = magic_enum::enum_name(h5geo::Domain::TVDSD);
 inline constexpr auto TWT = magic_enum::enum_name(h5geo::Domain::TWT);
 inline constexpr auto OWT = magic_enum::enum_name(h5geo::Domain::OWT);
 inline constexpr auto& seis_dtypes =
@@ -133,6 +131,7 @@ inline constexpr auto CHECKSHOTS = magic_enum::enum_name(h5geo::WellDataType::CH
 inline constexpr auto WELL_TIE = magic_enum::enum_name(h5geo::WellDataType::WELL_TIE);
 inline constexpr auto& dev_dtypes =
     magic_enum::enum_names<h5geo::DevDataType>();
+inline constexpr auto MD = magic_enum::enum_name(h5geo::DevDataType::MD);
 inline constexpr auto X = magic_enum::enum_name(h5geo::DevDataType::X);
 inline constexpr auto Y = magic_enum::enum_name(h5geo::DevDataType::Y);
 inline constexpr auto Z = magic_enum::enum_name(h5geo::DevDataType::Z);

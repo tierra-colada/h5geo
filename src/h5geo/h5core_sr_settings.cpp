@@ -1,6 +1,7 @@
 #include "../../include/h5geo/misc/h5core_sr_settings.h"
 
 #include <units/units.hpp>
+#include <magic_enum.hpp>
 
 #include <gdal/gdal.h>
 #include <gdal/gdal_priv.h>
@@ -17,6 +18,7 @@ namespace {
 
 OGRSpatialReference SpatialReference {};
 std::string TemporalUnits {};
+std::string Domain;
 
 } // namespace
 
@@ -72,6 +74,25 @@ std::string getTemporalUnits(){
   return TemporalUnits;
 }
 
+void setDomain(const std::string& domain){
+  Domain = domain;
+}
+
+void setDomain(const h5geo::Domain& domain){
+  Domain = std::string{magic_enum::enum_name(domain)};
+}
+
+std::string getDomain(){
+  return Domain;
+}
+
+h5geo::Domain getDomainEnum(){
+  auto domainEnum = magic_enum::enum_cast<h5geo::Domain>(Domain);
+  if (!domainEnum.has_value())
+    return static_cast<h5geo::Domain>(0);
+
+  return domainEnum.value();
+}
 
 } // sr
 

@@ -20,10 +20,8 @@ void ObjectType_py(py::enum_<ObjectType> &py_obj){
 
 void Domain_py(py::enum_<Domain> &py_obj){
   py_obj
-      .value("MD", Domain::MD)
       .value("TVD", Domain::TVD)
       .value("TVDSS", Domain::TVDSS)
-      .value("TVDSD", Domain::TVDSD)
       .value("TWT", Domain::TWT)
       .value("OWT", Domain::OWT);
 }
@@ -87,10 +85,17 @@ void LogDataType_py(py::enum_<LogDataType> &py_obj){
 void DevDataType_py(py::enum_<DevDataType> &py_obj){
   py_obj
       .value("MD", DevDataType::MD)
+      .value("X", DevDataType::X)
+      .value("Y", DevDataType::Y)
+      .value("Z", DevDataType::Z)
+      .value("TVD", DevDataType::TVD)
+      .value("TVDSS", DevDataType::TVDSS)
       .value("DX", DevDataType::DX)
       .value("DY", DevDataType::DY)
-      .value("TVD", DevDataType::TVD)
-      .value("OWT", DevDataType::OWT);
+      .value("AZIM", DevDataType::AZIM)
+      .value("INCL", DevDataType::INCL)
+      .value("OWT", DevDataType::OWT)
+      .value("TWT", DevDataType::TWT);
 }
 
 void WellType_py(py::enum_<WellType> &py_obj){

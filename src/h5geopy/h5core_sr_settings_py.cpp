@@ -27,6 +27,10 @@ void defineSRSettingsFunctions(py::module_& m_sr){
   m_sr.def("getLengthUnits", &sr::getLengthUnits);
   m_sr.def("getAngularUnits", &sr::getAngularUnits);
   m_sr.def("getTemporalUnits", &sr::getTemporalUnits);
+  m_sr.def("setDomain", py::overload_cast<const std::string&>(&sr::setDomain));
+  m_sr.def("setDomain", py::overload_cast<const h5geo::Domain&>(&sr::setDomain));
+  m_sr.def("getDomain", &sr::getDomain);
+  m_sr.def("getDomainEnum", &sr::getDomainEnum);
 }
 
 

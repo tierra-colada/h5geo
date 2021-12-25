@@ -57,18 +57,19 @@ bool H5DevCurveImpl::writeCurve(
 
   if (!units.empty()){
     double coef;
-    if (name == h5geo::OWT)
+    if (name == h5geo::OWT){
       coef = units::convert(
             units::unit_from_string(units),
             units::unit_from_string(getTemporalUnits()));
-    else if (name == h5geo::AZIM || name == h5geo::INCL)
+    } else if (name == h5geo::AZIM || name == h5geo::INCL){
       coef = units::convert(
             units::unit_from_string(getAngularUnits()),
             units::unit_from_string(units));
-    else
+    } else {
       coef = units::convert(
             units::unit_from_string(getLengthUnits()),
             units::unit_from_string(units));
+    }
 
     v *= coef;
 
@@ -149,11 +150,16 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
   double coef = 1;
   if (name == h5geo::MD ||
       name == h5geo::AZIM ||
-      name == h5geo::INCL){
+      name == h5geo::INCL ||
+      name == h5geo::OWT){
     if (!units.empty()){
       if (name == h5geo::MD){
         coef = units::convert(
               units::unit_from_string(getLengthUnits()),
+              units::unit_from_string(units));
+      } else if (name == h5geo::OWT){
+        coef = units::convert(
+              units::unit_from_string(getTemporalUnits()),
               units::unit_from_string(units));
       } else {
         coef = units::convert(
@@ -169,6 +175,22 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
           opt.value(), name);
 
     return curve*coef;
+  }
+
+  if (name == h5geo::TWT){
+    if (!units.empty()){
+      coef = units::convert(
+            units::unit_from_string(getTemporalUnits()),
+            units::unit_from_string(units));
+
+      if (isnan(coef))
+        return Eigen::VectorXd();
+    }
+
+    Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
+          opt.value(), std::string{h5geo::OWT});
+
+    return curve*coef/2;
   }
 
   // if the requested data needs to be calculated then we continue
