@@ -69,8 +69,7 @@ enum class WellAttributes : unsigned{
 
 enum class WellGroups : unsigned{
   LOG = 1,
-  DEV = 2,
-  ACTIVE_DEV = 3
+  DEV = 2
 };
 
 enum class DevDatasets : unsigned{

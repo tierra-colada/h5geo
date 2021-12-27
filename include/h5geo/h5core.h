@@ -7,6 +7,7 @@
 
 #include "misc/h5core_enum.h"
 #include "misc/h5core_types.h"
+#include "misc/h5interpolation.h"
 
 #include <type_traits>
 #include <string>

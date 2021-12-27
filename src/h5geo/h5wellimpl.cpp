@@ -252,6 +252,7 @@ bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve){
     objG.unlink(opt->getPath());
 
   objG.createLink(curve->getObjG(),
+                  std::string{h5geo::detail::DEV} + "/" +
                   std::string{h5geo::detail::ACTIVE_DEV},
                   h5gt::LinkType::Soft);
 
@@ -405,7 +406,8 @@ H5WellImpl::getDevG()
 std::optional<h5gt::Group>
 H5WellImpl::getActiveDevG()
 {
-  std::string name = std::string{h5geo::detail::ACTIVE_DEV};
+  std::string name = std::string{h5geo::detail::DEV} + "/" +
+      std::string{h5geo::detail::ACTIVE_DEV};
 
   return getGroupOpt(objG, name);
 }

@@ -11,6 +11,7 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5devcurveimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5deviation.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5easyhull.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5interpolation.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5logcurveimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5seiscontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5seisimpl.h

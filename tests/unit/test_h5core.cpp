@@ -83,3 +83,37 @@ TEST_F(H5CoreFixture, getBinHeaderBytes){
     std::cout << val << std::endl;
   }
 }
+
+TEST_F(H5CoreFixture, interp1MonotonicIncreasing){
+  ptrdiff_t n = 5;
+  Eigen::VectorXd x = Eigen::VectorXd::LinSpaced(n, 4, 0);
+  Eigen::VectorXd y(n);
+  y << 1, 2, 1, 5, 3;
+  Eigen::VectorXd xnew = Eigen::VectorXd::LinSpaced(2*n+1, 4, -1);
+
+  Eigen::VectorXd ynew = h5geo::interp1Monotonic(x,y,xnew, NAN);
+
+  Eigen::VectorXd ynew_expected(2*n-1);
+  ynew_expected << 1, 1.5, 2, 1.5, 1, 3, 5, 4, 3;
+
+  ASSERT_TRUE(ynew(Eigen::seq(0, Eigen::last-2)).isApprox(ynew_expected));
+  ASSERT_TRUE(isnan(ynew(Eigen::last-1)));
+  ASSERT_TRUE(isnan(ynew(Eigen::last)));
+}
+
+TEST_F(H5CoreFixture, interp1MonotonicDecreasing){
+  ptrdiff_t n = 5;
+  Eigen::VectorXd x = Eigen::VectorXd::LinSpaced(n, 0, 4);
+  Eigen::VectorXd y(n);
+  y << 1, 2, 1, 5, 3;
+  Eigen::VectorXd xnew = Eigen::VectorXd::LinSpaced(2*n+1, 0, 5);
+
+  Eigen::VectorXd ynew = h5geo::interp1Monotonic(x,y,xnew, NAN);
+
+  Eigen::VectorXd ynew_expected(2*n-1);
+  ynew_expected << 1, 1.5, 2, 1.5, 1, 3, 5, 4, 3;
+
+  ASSERT_TRUE(ynew(Eigen::seq(0, Eigen::last-2)).isApprox(ynew_expected));
+  ASSERT_TRUE(isnan(ynew(Eigen::last-1)));
+  ASSERT_TRUE(isnan(ynew(Eigen::last)));
+}
