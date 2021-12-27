@@ -84,7 +84,7 @@ TEST_F(H5CoreFixture, getBinHeaderBytes){
   }
 }
 
-TEST_F(H5CoreFixture, interp1MonotonicIncreasing){
+TEST_F(H5CoreFixture, interp1MonotonicDecreasing){
   ptrdiff_t n = 5;
   Eigen::VectorXd x = Eigen::VectorXd::LinSpaced(n, 4, 0);
   Eigen::VectorXd y(n);
@@ -101,7 +101,7 @@ TEST_F(H5CoreFixture, interp1MonotonicIncreasing){
   ASSERT_TRUE(isnan(ynew(Eigen::last)));
 }
 
-TEST_F(H5CoreFixture, interp1MonotonicDecreasing){
+TEST_F(H5CoreFixture, interp1MonotonicIncreasing){
   ptrdiff_t n = 5;
   Eigen::VectorXd x = Eigen::VectorXd::LinSpaced(n, 0, 4);
   Eigen::VectorXd y(n);

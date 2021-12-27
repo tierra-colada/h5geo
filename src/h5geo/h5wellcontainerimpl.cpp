@@ -1,5 +1,6 @@
 #include "../../include/h5geo/misc/h5wellcontainerimpl.h"
 #include "../../include/h5geo/h5well.h"
+#include "../../include/h5geo/h5core.h"
 #include "../../include/h5geo/misc/h5wellimpl.h"
 #include "../../include/h5geo/misc/h5core_enum_string.h"
 
@@ -53,11 +54,29 @@ H5Well* H5WellContainerImpl::createWell(
   return new H5WellImpl(opt.value());
 }
 
+H5Well* H5WellContainerImpl::getWellByUWI(
+    const std::string& name)
+{
+  h5gt::Group group = h5File.getGroup("/");
+  std::vector<h5gt::Group> childGroupList =
+      getChildList(group, h5geo::ObjectType::WELL);
+  for (h5gt::Group& group : childGroupList){
+    std::string uwi = h5geo::readStringAttribute(
+          group,
+          std::string{h5geo::detail::UWI});
+
+    if (uwi == name &&
+        h5geo::isWell(group))
+      return getWell(group);
+  }
+  return nullptr;
+}
+
 std::vector<H5Well*>
 H5WellContainerImpl::getWellList(){
   h5gt::Group group = h5File.getGroup("/");
   std::vector<h5gt::Group> childGroupList =
-      getChildList(group, h5geo::ObjectType::WELL);;
+      getChildList(group, h5geo::ObjectType::WELL);
 
   std::vector<H5Well*> childList;
   childList.reserve(childGroupList.size());

@@ -27,6 +27,10 @@ public:
       WellParam& p,
       h5geo::CreationType createFlag) = 0;
 
+  virtual H5Well* getWellByUWI(
+      const std::string& name) = 0;
+
+  /// must be manually deleted using Delete()
   virtual std::vector<H5Well*> getWellList() = 0;
 };
 

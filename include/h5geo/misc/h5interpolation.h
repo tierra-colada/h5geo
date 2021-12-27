@@ -36,23 +36,46 @@ Eigen::VectorX<typename D::Scalar> interp1Monotonic(
   int nx = x.size();
   Eigen::VectorX<S> ynew;
   ynew.resize(xnew.size());
+  S dx = x(1)-x(0);
+  bool isXIncreasing;
+  if (dx > 0)
+    isXIncreasing = true;
+  else if (dx < 0)
+    isXIncreasing = false;
+  else
+    return Eigen::VectorX<S>();
 
   for (ptrdiff_t i = 0; i < xnew.size(); i++){
     int ind = 0;
-    if (xnew(i) >= x(nx - 2))
-      ind = nx - 2;
-    else
-      while (xnew(i) > x(ind+1))
-        ind++;
+    if (isXIncreasing){
+      if (xnew(i) >= x(nx - 2))
+        ind = nx - 2;
+      else
+        while (xnew(i) > x(ind+1))
+          ind++;
+    } else {
+      if (xnew(i) <= x(nx - 2))
+        ind = nx - 2;
+      else
+        while (xnew(i) < x(ind+1))
+          ind++;
+    }
 
     S xL = x(ind);
     S yL = y(ind);
     S xR = x(ind+1);
     S yR = y(ind+1);
-    if (xnew(i) < xL)
-      yR = extrapVal; // yR = yL;
-    if (xnew(i) > xR)
-      yL = extrapVal; // yL = yR;
+    if (isXIncreasing){
+      if (xnew(i) < xL)
+        yR = extrapVal; // yR = yL;
+      if (xnew(i) > xR)
+        yL = extrapVal; // yL = yR;
+    } else {
+      if (xnew(i) > xL)
+        yR = extrapVal;
+      if (xnew(i) < xR)
+        yL = extrapVal;
+    }
 
     S dydx = (yR - yL) / (xR - xL);
 

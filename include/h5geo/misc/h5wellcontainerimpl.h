@@ -24,6 +24,9 @@ public:
       WellParam& p,
       h5geo::CreationType createFlag) override;
 
+  virtual H5Well* getWellByUWI(
+      const std::string& name) override;
+
   virtual std::vector<H5Well*> getWellList() override;
 
   //----------- FRIEND CLASSES -----------

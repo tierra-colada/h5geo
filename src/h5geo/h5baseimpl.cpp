@@ -34,7 +34,7 @@ H5BaseImpl<TBase>::getChildList(
     const h5geo::ObjectType& objType)
 {
   std::vector<h5gt::Group> childList;
-  std::vector<std::string> nameList = group.listAttributeNames();
+  std::vector<std::string> nameList = group.listObjectNames();
   for (const auto& name : nameList){
     if (group.getObjectType(name) != h5gt::ObjectType::Group)
       continue;

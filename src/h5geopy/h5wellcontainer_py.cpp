@@ -21,6 +21,7 @@ void H5WellContainer_py(
            WellParam&,
            CreationType>(
              &H5WellContainer::createWell))
+      .def("getWellByUWI", &H5WellContainer::getWellByUWI)
       .def("createWell", py::overload_cast<
            h5gt::Group,
            WellParam&,
