@@ -16,38 +16,44 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> MdAzIncl2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
-    const std::string& angularUnits,
+    const std::string& angularUnitsFrom,
+    const std::string& angularUnitsTo,
     const bool& XNorth);
 
 template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> TvdXY2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
+    const std::string& angularUnits,
     const bool& XNorth);
 
 template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> TvdDxDy2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
+    const std::string& angularUnits,
     const bool& XNorth);
 
 template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> TvdssXY2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
+    const std::string& angularUnits,
     const bool& XNorth);
 
 template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> TvdssDxDy2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
+    const std::string& angularUnits,
     const bool& XNorth);
 
 template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> traj2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
-    const std::string& angularUnits,
+    const std::string& angularUnitsFrom,
+    const std::string& angularUnitsTo,
     const h5geo::TrajectoryFormat& trajFormat,
     const bool& XNorth);
 
@@ -86,21 +92,21 @@ Eigen::MatrixX<typename D::Scalar> TvdssDxDy2MdXYTvd(
 template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> TvdXY2MdAzIncl(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const bool& XNorth);
+    const T& x0, const T& y0, const std::string& angularUnits, const bool& XNorth);
 
 template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdDxDy2MdAzIncl(
-    const Eigen::DenseBase<D> &M, const bool& XNorth);
+    const Eigen::DenseBase<D> &M, const std::string& angularUnits, const bool& XNorth);
 
 template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> TvdssXY2MdAzIncl(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb, const bool& XNorth);
+    const T& x0, const T& y0, const T& kb, const std::string& angularUnits, const bool& XNorth);
 
 template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> TvdssDxDy2MdAzIncl(
     const Eigen::DenseBase<D> &M,
-    const T& kb, const bool& XNorth);
+    const T& kb, const std::string& angularUnits, const bool& XNorth);
 
 template<typename T>
 /*!
@@ -344,14 +350,15 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
-    const std::string& angularUnits,
+    const std::string& angularUnitsFrom,
+    const std::string& angularUnitsTo,
     const bool& XNorth)
 {
   if (M.cols() != 3)
     return Eigen::MatrixX<typename D::Scalar>();
 
   Eigen::MatrixX<typename D::Scalar> M_MdXYTvd =
-      MdAzIncl2MdXYTvd(M, x0, y0, angularUnits, XNorth);
+      MdAzIncl2MdXYTvd(M, x0, y0, angularUnitsFrom, XNorth);
 
   Eigen::MatrixX<typename D::Scalar> M_OUT(M.rows(), 9);
   M_OUT.col(0) = M_MdXYTvd.col(0); // MD
@@ -359,18 +366,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2ALL(
   M_OUT.col(2) = M_MdXYTvd.col(2); // Y
   M_OUT.col(3) = M_MdXYTvd.col(3).array() - kb; // TVDSS
   M_OUT.col(4) = M_MdXYTvd.col(3); // TVD
-  if (XNorth){
-    M_OUT.col(5) = M_MdXYTvd.col(1).array() - y0; // DX
-    M_OUT.col(6) = M_MdXYTvd.col(2).array() - x0; // DY
-  } else {
-    M_OUT.col(5) = M_MdXYTvd.col(1).array() - x0; // DX
-    M_OUT.col(6) = M_MdXYTvd.col(2).array() - y0; // DY
-  }
+  M_OUT.col(5) = M_MdXYTvd.col(1).array() - x0; // DX
+  M_OUT.col(6) = M_MdXYTvd.col(2).array() - y0; // DY
 
-  if (!angularUnits.empty()){
+  if (!angularUnitsTo.empty()){
     double coef = units::convert(
-          units::unit_from_string(angularUnits),
-          units::unit_from_string("radian"));
+          units::unit_from_string(angularUnitsFrom),
+          units::unit_from_string(angularUnitsTo));
     M_OUT.col(7) = M.col(1)*coef; // AZ
     M_OUT.col(8) = M.col(2)*coef; // INCL
   } else {
@@ -385,13 +387,14 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
+    const std::string& angularUnits,
     const bool& XNorth)
 {
   if (M.cols() != 3)
     return Eigen::MatrixX<typename D::Scalar>();
 
   Eigen::MatrixX<typename D::Scalar> M_MdAzIncl =
-      TvdXY2MdAzIncl(M, x0, y0, XNorth);
+      TvdXY2MdAzIncl(M, x0, y0, angularUnits, XNorth);
 
   Eigen::MatrixX<typename D::Scalar> M_OUT(M.rows(), 9);
   M_OUT.col(0) = M_MdAzIncl.col(0); // MD
@@ -399,13 +402,8 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2ALL(
   M_OUT.col(2) = M.col(2); // Y
   M_OUT.col(3) = M.col(0).array() - kb; // TVDSS
   M_OUT.col(4) = M.col(0); // TVD
-  if (XNorth){
-    M_OUT.col(5) = M.col(1).array() - y0; // DX
-    M_OUT.col(6) = M.col(2).array() - x0; // DY
-  } else {
-    M_OUT.col(5) = M.col(1).array() - x0; // DX
-    M_OUT.col(6) = M.col(2).array() - y0; // DY
-  }
+  M_OUT.col(5) = M.col(1).array() - x0; // DX
+  M_OUT.col(6) = M.col(2).array() - y0; // DY
   M_OUT.col(7) = M_MdAzIncl.col(1); // AZ
   M_OUT.col(8) = M_MdAzIncl.col(2); // INCL
   return M_OUT;
@@ -415,23 +413,19 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
+    const std::string& angularUnits,
     const bool& XNorth)
 {
   if (M.cols() != 3)
     return Eigen::MatrixX<typename D::Scalar>();
 
   Eigen::MatrixX<typename D::Scalar> M_MdAzIncl =
-      TvdDxDy2MdAzIncl(M, XNorth);
+      TvdDxDy2MdAzIncl(M, angularUnits, XNorth);
 
   Eigen::MatrixX<typename D::Scalar> M_OUT(M.rows(), 9);
   M_OUT.col(0) = M_MdAzIncl.col(0); // MD
-  if (XNorth){
-    M_OUT.col(1) = M.col(1).array() + y0; // X
-    M_OUT.col(2) = M.col(2).array() + x0; // Y
-  } else {
-    M_OUT.col(1) = M.col(1).array() + x0; // X
-    M_OUT.col(2) = M.col(2).array() + y0; // Y
-  }
+  M_OUT.col(1) = M.col(1).array() + x0; // X
+  M_OUT.col(2) = M.col(2).array() + y0; // Y
   M_OUT.col(3) = M.col(0).array() - kb; // TVDSS
   M_OUT.col(4) = M.col(0); // TVD
   M_OUT.col(5) = M.col(1); // DX
@@ -445,13 +439,14 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
+    const std::string& angularUnits,
     const bool& XNorth)
 {
   if (M.cols() != 3)
     return Eigen::MatrixX<typename D::Scalar>();
 
   Eigen::MatrixX<typename D::Scalar> M_MdAzIncl =
-      TvdssXY2MdAzIncl(M, x0, y0, kb, XNorth);
+      TvdssXY2MdAzIncl(M, x0, y0, kb, angularUnits, XNorth);
 
   Eigen::MatrixX<typename D::Scalar> M_OUT(M.rows(), 9);
   M_OUT.col(0) = M_MdAzIncl.col(0); // MD
@@ -459,13 +454,8 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2ALL(
   M_OUT.col(2) = M.col(2); // Y
   M_OUT.col(3) = M.col(0); // TVDSS
   M_OUT.col(4) = M.col(0).array() + kb; // TVD
-  if (XNorth){
-    M_OUT.col(5) = M.col(1).array() - y0; // DX
-    M_OUT.col(6) = M.col(2).array() - x0; // DY
-  } else {
-    M_OUT.col(5) = M.col(1).array() - x0; // DX
-    M_OUT.col(6) = M.col(2).array() - y0; // DY
-  }
+  M_OUT.col(5) = M.col(1).array() - x0; // DX
+  M_OUT.col(6) = M.col(2).array() - y0; // DY
   M_OUT.col(7) = M_MdAzIncl.col(1); // AZ
   M_OUT.col(8) = M_MdAzIncl.col(2); // INCL
   return M_OUT;
@@ -475,23 +465,19 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
+    const std::string& angularUnits,
     const bool& XNorth)
 {
   if (M.cols() != 3)
     return Eigen::MatrixX<typename D::Scalar>();
 
   Eigen::MatrixX<typename D::Scalar> M_MdAzIncl =
-      TvdssDxDy2MdAzIncl(M, kb, XNorth);
+      TvdssDxDy2MdAzIncl(M, kb, angularUnits, XNorth);
 
   Eigen::MatrixX<typename D::Scalar> M_OUT(M.rows(), 9);
   M_OUT.col(0) = M_MdAzIncl.col(0); // MD
-  if (XNorth){
-    M_OUT.col(1) = M.col(1).array() + y0; // X
-    M_OUT.col(2) = M.col(2).array() + x0; // Y
-  } else {
-    M_OUT.col(1) = M.col(1).array() + x0; // X
-    M_OUT.col(2) = M.col(2).array() + y0; // Y
-  }
+  M_OUT.col(1) = M.col(1).array() + x0; // X
+  M_OUT.col(2) = M.col(2).array() + y0; // Y
   M_OUT.col(3) = M.col(0); // TVDSS
   M_OUT.col(4) = M.col(0).array() + kb; // TVD
   M_OUT.col(5) = M.col(1); // DX
@@ -505,21 +491,22 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::traj2ALL(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
-    const std::string& angularUnits,
+    const std::string& angularUnitsFrom,
+    const std::string& angularUnitsTo,
     const h5geo::TrajectoryFormat& trajFormat,
     const bool& XNorth)
 {
   switch (trajFormat) {
   case h5geo::TrajectoryFormat::MD_AZIM_INCL:
-    return h5geo::MdAzIncl2ALL(M, x0, y0, kb, angularUnits, XNorth);
+    return h5geo::MdAzIncl2ALL(M, x0, y0, kb, angularUnitsFrom, angularUnitsTo, XNorth);
   case h5geo::TrajectoryFormat::TVDSS_DX_DY:
-    return h5geo::TvdssDxDy2ALL(M, x0, y0, kb, XNorth);
+    return h5geo::TvdssDxDy2ALL(M, x0, y0, kb, angularUnitsTo, XNorth);
   case h5geo::TrajectoryFormat::TVDSS_X_Y:
-    return h5geo::TvdssXY2ALL(M, x0, y0, kb, XNorth);
+    return h5geo::TvdssXY2ALL(M, x0, y0, kb, angularUnitsTo, XNorth);
   case h5geo::TrajectoryFormat::TVD_DX_DY:
-    return h5geo::TvdDxDy2ALL(M, x0, y0, kb, XNorth);
+    return h5geo::TvdDxDy2ALL(M, x0, y0, kb, angularUnitsTo, XNorth);
   case h5geo::TrajectoryFormat::TVD_X_Y:
-    return h5geo::TvdXY2ALL(M, x0, y0, kb, XNorth);
+    return h5geo::TvdXY2ALL(M, x0, y0, kb, angularUnitsTo, XNorth);
   default:
     return Eigen::MatrixX<typename D::Scalar>();
   }
@@ -597,7 +584,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2MdXYTvd(
     return Eigen::MatrixX<typename D::Scalar>();
 
   Eigen::MatrixX<typename D::Scalar> M_MdAzIncl =
-      TvdXY2MdAzIncl(M, x0, y0, XNorth);
+      TvdXY2MdAzIncl(M, x0, y0, "", XNorth);
 
   Eigen::MatrixX<typename D::Scalar> M_MdXYTvd(M.rows(), 4);
 
@@ -619,18 +606,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2MdXYTvd(
     return Eigen::MatrixX<typename D::Scalar>();
 
   Eigen::MatrixX<typename D::Scalar> M_MdAzIncl =
-      TvdDxDy2MdAzIncl(M, XNorth);
+      TvdDxDy2MdAzIncl(M, "", XNorth);
 
   Eigen::MatrixX<typename D::Scalar> M_MdXYTvd(M.rows(), 4);
 
   M_MdXYTvd.col(0) = M_MdAzIncl.col(0);
-  if (XNorth){
-    M_MdXYTvd.col(1) = M.col(1).array() + y0; // X
-    M_MdXYTvd.col(2) = M.col(2).array() + x0; // Y
-  } else {
-    M_MdXYTvd.col(1) = M.col(1).array() + x0; // X
-    M_MdXYTvd.col(2) = M.col(2).array() + y0; // Y
-  }
+  M_MdXYTvd.col(1) = M.col(1).array() + x0;
+  M_MdXYTvd.col(2) = M.col(2).array() + y0;
   M_MdXYTvd.col(3) = M.col(0);
 
   return M_MdXYTvd;
@@ -646,7 +628,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2MdXYTvd(
     return Eigen::MatrixX<typename D::Scalar>();
 
   Eigen::MatrixX<typename D::Scalar> M_MdAzIncl =
-      TvdssXY2MdAzIncl(M, x0, y0, kb, XNorth);
+      TvdssXY2MdAzIncl(M, x0, y0, kb, "", XNorth);
 
   Eigen::MatrixX<typename D::Scalar> M_MdXYTvd(M.rows(), 4);
 
@@ -668,18 +650,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2MdXYTvd(
     return Eigen::MatrixX<typename D::Scalar>();
 
   Eigen::MatrixX<typename D::Scalar> M_MdAzIncl =
-      TvdssDxDy2MdAzIncl(M, kb, XNorth);
+      TvdssDxDy2MdAzIncl(M, kb, "", XNorth);
 
   Eigen::MatrixX<typename D::Scalar> M_MdXYTvd(M.rows(), 4);
 
   M_MdXYTvd.col(0) = M_MdAzIncl.col(0);
-  if (XNorth){
-    M_MdXYTvd.col(1) = M.col(1).array() + y0; // X
-    M_MdXYTvd.col(2) = M.col(2).array() + x0; // Y
-  } else {
-    M_MdXYTvd.col(1) = M.col(1).array() + x0; // X
-    M_MdXYTvd.col(2) = M.col(2).array() + y0; // Y
-  }
+  M_MdXYTvd.col(1) = M.col(1).array() + x0;
+  M_MdXYTvd.col(2) = M.col(2).array() + y0;
   M_MdXYTvd.col(3) = M.col(0).array() + kb;
 
   return M_MdXYTvd;
@@ -689,6 +666,7 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2MdAzIncl(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0,
+    const std::string& angularUnits,
     const bool& XNorth)
 {
   if (M.cols() != 3)
@@ -698,12 +676,12 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2MdAzIncl(
   MM.col(1) = MM.col(1).array() - x0;
   MM.col(2) = MM.col(2).array() - y0;
 
-  return TvdDxDy2MdAzIncl(MM, XNorth);
+  return TvdDxDy2MdAzIncl(MM, angularUnits, XNorth);
 }
 
 template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2MdAzIncl(
-    const Eigen::DenseBase<D> &M, const bool& XNorth)
+    const Eigen::DenseBase<D> &M, const std::string& angularUnits, const bool& XNorth)
 {
   if (M.cols() != 3)
     return Eigen::MatrixX<typename D::Scalar>();
@@ -755,6 +733,15 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2MdAzIncl(
     M_OUT(i, 1) = A2;
     M_OUT(i, 2) = I2;
   }
+
+  if (!angularUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string("radian"),
+          units::unit_from_string(angularUnits));
+    M_OUT.col(1) = M_OUT.col(1).array() * coef;
+    M_OUT.col(2) = M_OUT.col(2).array() * coef;
+  }
+
   return M_OUT;
 }
 
@@ -762,6 +749,7 @@ template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2MdAzIncl(
     const Eigen::DenseBase<D> &M,
     const T& x0, const T& y0, const T& kb,
+    const std::string& angularUnits,
     const bool& XNorth)
 {
   if (M.cols() != 3)
@@ -772,13 +760,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2MdAzIncl(
   MM.col(1) = MM.col(1).array() - x0;
   MM.col(2) = MM.col(2).array() - y0;
 
-  return TvdDxDy2MdAzIncl(MM, XNorth);
+  return TvdDxDy2MdAzIncl(MM, angularUnits, XNorth);
 }
 
 template<typename D, typename T>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2MdAzIncl(
     const Eigen::DenseBase<D> &M,
-    const T& kb, const bool& XNorth)
+    const T& kb, const std::string& angularUnits, const bool& XNorth)
 {
   if (M.cols() != 3)
     return Eigen::MatrixX<typename D::Scalar>();
@@ -786,7 +774,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2MdAzIncl(
   Eigen::MatrixX<typename D::Scalar> MM = M;
   MM.col(0) = MM.col(0).array() + kb;
 
-  return TvdDxDy2MdAzIncl(MM, XNorth);
+  return TvdDxDy2MdAzIncl(MM, angularUnits, XNorth);
 }
 
 template<typename T>

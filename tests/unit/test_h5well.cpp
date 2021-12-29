@@ -292,7 +292,7 @@ TEST_F(H5WellFixture, TvdXY2MdAzIncl){
 
   Eigen::MatrixXd M = h5geo::TvdXY2MdAzIncl(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {4, 1, 2}), wellParam.headX, wellParam.headY, false);
+          Eigen::all, {4, 1, 2}), wellParam.headX, wellParam.headY, "radian", false);
 
   Eigen::MatrixXd MM = h5geo::MdAzIncl2MdXYTvd(
         M, wellParam.headX, wellParam.headY, "radian", false);
@@ -315,7 +315,7 @@ TEST_F(H5WellFixture, TvdXY2MdAzIncl_XNorth){
 
   Eigen::MatrixXd M = h5geo::TvdXY2MdAzIncl(
         MD_X_Y_Z_TVD_DX_DY_AZ_INCL(
-          Eigen::all, {4, 2, 1}), wellParam.headY, wellParam.headX, true);
+          Eigen::all, {4, 2, 1}), wellParam.headY, wellParam.headX, "radian", true);
 
   Eigen::MatrixXd MM = h5geo::MdAzIncl2MdXYTvd(
         M, wellParam.headY, wellParam.headX, "radian", true);

@@ -176,7 +176,7 @@ class test_h5well(unittest.TestCase):
 
         M = h5geo.TvdXY2MdAzIncl(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, [4, 1, 2]],
                                  self.wellParam.headX, self.wellParam.headY,
-                                 False)
+                                 'degree', False)
 
         MM = h5geo.MdAzIncl2MdXYTvd(M, self.wellParam.headX, self.wellParam.headY, 'degree', False)
 
@@ -197,7 +197,7 @@ class test_h5well(unittest.TestCase):
 
         M = h5geo.TvdXY2MdAzIncl(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, [4, 2, 1]],
                                  self.wellParam.headX, self.wellParam.headY,
-                                 True)
+                                 'degree', True)
 
         MM = h5geo.MdAzIncl2MdXYTvd(M, self.wellParam.headX, self.wellParam.headY, 'degree', True)
 

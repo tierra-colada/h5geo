@@ -190,7 +190,7 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
     Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
           opt.value(), std::string{h5geo::OWT});
 
-    return curve*coef/2;
+    return curve*coef*2;
   }
 
   // if the requested data needs to be calculated then we continue
@@ -225,6 +225,7 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
         headXY(1),
         kb,
         getAngularUnits(),
+        "degree",
         false);
 
   if (MdXYTvdssTvdDxDy.rows() < 1)
