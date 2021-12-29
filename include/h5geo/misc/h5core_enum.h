@@ -181,11 +181,11 @@ enum class WellType : unsigned{
 //ENABLE_BITMASK_OPERATORS(WellType);
 
 enum class TrajectoryFormat : unsigned{
-  MD_AZIM_INCL = 0,
-  TVD_X_Y = 1,
-  TVD_DX_DY = 2,
-  TVDSS_X_Y = 3,
-  TVDSS_DX_DY = 4
+  MD_AZIM_INCL = 1,
+  TVD_X_Y = 2,
+  TVD_DX_DY = 3,
+  TVDSS_X_Y = 4,
+  TVDSS_DX_DY = 5
 };
 
 /*!

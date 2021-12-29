@@ -359,8 +359,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2ALL(
   M_OUT.col(2) = M_MdXYTvd.col(2); // Y
   M_OUT.col(3) = M_MdXYTvd.col(3).array() - kb; // TVDSS
   M_OUT.col(4) = M_MdXYTvd.col(3); // TVD
-  M_OUT.col(5) = M_MdXYTvd.col(1).array() - x0; // DX
-  M_OUT.col(6) = M_MdXYTvd.col(2).array() - y0; // DY
+  if (XNorth){
+    M_OUT.col(5) = M_MdXYTvd.col(1).array() - y0; // DX
+    M_OUT.col(6) = M_MdXYTvd.col(2).array() - x0; // DY
+  } else {
+    M_OUT.col(5) = M_MdXYTvd.col(1).array() - x0; // DX
+    M_OUT.col(6) = M_MdXYTvd.col(2).array() - y0; // DY
+  }
 
   if (!angularUnits.empty()){
     double coef = units::convert(
@@ -394,8 +399,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2ALL(
   M_OUT.col(2) = M.col(2); // Y
   M_OUT.col(3) = M.col(0).array() - kb; // TVDSS
   M_OUT.col(4) = M.col(0); // TVD
-  M_OUT.col(5) = M.col(1).array() - x0; // DX
-  M_OUT.col(6) = M.col(2).array() - y0; // DY
+  if (XNorth){
+    M_OUT.col(5) = M.col(1).array() - y0; // DX
+    M_OUT.col(6) = M.col(2).array() - x0; // DY
+  } else {
+    M_OUT.col(5) = M.col(1).array() - x0; // DX
+    M_OUT.col(6) = M.col(2).array() - y0; // DY
+  }
   M_OUT.col(7) = M_MdAzIncl.col(1); // AZ
   M_OUT.col(8) = M_MdAzIncl.col(2); // INCL
   return M_OUT;
@@ -415,8 +425,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2ALL(
 
   Eigen::MatrixX<typename D::Scalar> M_OUT(M.rows(), 9);
   M_OUT.col(0) = M_MdAzIncl.col(0); // MD
-  M_OUT.col(1) = M.col(1).array() + x0; // X
-  M_OUT.col(2) = M.col(2).array() + y0; // Y
+  if (XNorth){
+    M_OUT.col(1) = M.col(1).array() + y0; // X
+    M_OUT.col(2) = M.col(2).array() + x0; // Y
+  } else {
+    M_OUT.col(1) = M.col(1).array() + x0; // X
+    M_OUT.col(2) = M.col(2).array() + y0; // Y
+  }
   M_OUT.col(3) = M.col(0).array() - kb; // TVDSS
   M_OUT.col(4) = M.col(0); // TVD
   M_OUT.col(5) = M.col(1); // DX
@@ -444,8 +459,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2ALL(
   M_OUT.col(2) = M.col(2); // Y
   M_OUT.col(3) = M.col(0); // TVDSS
   M_OUT.col(4) = M.col(0).array() + kb; // TVD
-  M_OUT.col(5) = M.col(1).array() - x0; // DX
-  M_OUT.col(6) = M.col(2).array() - y0; // DY
+  if (XNorth){
+    M_OUT.col(5) = M.col(1).array() - y0; // DX
+    M_OUT.col(6) = M.col(2).array() - x0; // DY
+  } else {
+    M_OUT.col(5) = M.col(1).array() - x0; // DX
+    M_OUT.col(6) = M.col(2).array() - y0; // DY
+  }
   M_OUT.col(7) = M_MdAzIncl.col(1); // AZ
   M_OUT.col(8) = M_MdAzIncl.col(2); // INCL
   return M_OUT;
@@ -465,8 +485,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2ALL(
 
   Eigen::MatrixX<typename D::Scalar> M_OUT(M.rows(), 9);
   M_OUT.col(0) = M_MdAzIncl.col(0); // MD
-  M_OUT.col(1) = M.col(1).array() + x0; // X
-  M_OUT.col(2) = M.col(2).array() + y0; // Y
+  if (XNorth){
+    M_OUT.col(1) = M.col(1).array() + y0; // X
+    M_OUT.col(2) = M.col(2).array() + x0; // Y
+  } else {
+    M_OUT.col(1) = M.col(1).array() + x0; // X
+    M_OUT.col(2) = M.col(2).array() + y0; // Y
+  }
   M_OUT.col(3) = M.col(0); // TVDSS
   M_OUT.col(4) = M.col(0).array() + kb; // TVD
   M_OUT.col(5) = M.col(1); // DX
@@ -599,8 +624,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2MdXYTvd(
   Eigen::MatrixX<typename D::Scalar> M_MdXYTvd(M.rows(), 4);
 
   M_MdXYTvd.col(0) = M_MdAzIncl.col(0);
-  M_MdXYTvd.col(1) = M.col(1).array() + x0;
-  M_MdXYTvd.col(2) = M.col(2).array() + y0;
+  if (XNorth){
+    M_MdXYTvd.col(1) = M.col(1).array() + y0; // X
+    M_MdXYTvd.col(2) = M.col(2).array() + x0; // Y
+  } else {
+    M_MdXYTvd.col(1) = M.col(1).array() + x0; // X
+    M_MdXYTvd.col(2) = M.col(2).array() + y0; // Y
+  }
   M_MdXYTvd.col(3) = M.col(0);
 
   return M_MdXYTvd;
@@ -643,8 +673,13 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2MdXYTvd(
   Eigen::MatrixX<typename D::Scalar> M_MdXYTvd(M.rows(), 4);
 
   M_MdXYTvd.col(0) = M_MdAzIncl.col(0);
-  M_MdXYTvd.col(1) = M.col(1).array() + x0;
-  M_MdXYTvd.col(2) = M.col(2).array() + y0;
+  if (XNorth){
+    M_MdXYTvd.col(1) = M.col(1).array() + y0; // X
+    M_MdXYTvd.col(2) = M.col(2).array() + x0; // Y
+  } else {
+    M_MdXYTvd.col(1) = M.col(1).array() + x0; // X
+    M_MdXYTvd.col(2) = M.col(2).array() + y0; // Y
+  }
   M_MdXYTvd.col(3) = M.col(0).array() + kb;
 
   return M_MdXYTvd;
