@@ -63,8 +63,10 @@ public:
   virtual std::string getUWI() = 0;
 
   virtual H5DevCurve* getActiveDevCurve() = 0;
+  /// Omit active dev curve
   virtual std::vector<h5gt::Group> getDevCurveGroupList() = 0;
   virtual std::vector<h5gt::Group> getLogCurveGroupList() = 0;
+  /// Omit active dev curve
   virtual std::vector<std::string> getDevCurveNameList() = 0;
   /// return all logCurve names in the form 'TYPE/NAME'
   virtual std::vector<std::string> getLogCurveNameList() = 0;

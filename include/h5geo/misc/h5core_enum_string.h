@@ -71,7 +71,7 @@ inline constexpr auto& well_groups =
     magic_enum::enum_names<h5geo::detail::WellGroups>();
 inline constexpr auto LOG = magic_enum::enum_name(h5geo::detail::WellGroups::LOG);
 inline constexpr auto DEV = magic_enum::enum_name(h5geo::detail::WellGroups::DEV);
-inline constexpr auto ACTIVE_DEV = "ACTIVE_DEV";
+inline constexpr auto ACTIVE = "ACTIVE";
 inline constexpr auto& dev_dsets =
     magic_enum::enum_names<h5geo::detail::DevDatasets>();
 inline constexpr auto dev_data = magic_enum::enum_name(h5geo::detail::DevDatasets::dev_data);

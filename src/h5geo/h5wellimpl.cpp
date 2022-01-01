@@ -264,7 +264,7 @@ bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve){
 
   objG.createLink(curve->getObjG(),
                   std::string{h5geo::detail::DEV} + "/" +
-                  std::string{h5geo::detail::ACTIVE_DEV},
+                  std::string{h5geo::detail::ACTIVE},
                   h5gt::LinkType::Soft);
 
   return true;
@@ -332,6 +332,10 @@ H5WellImpl::getDevCurveGroupList(){
   std::vector<h5gt::Group> childList;
   childList.reserve(childGroupList.size());
   for (size_t i = 0; i < childGroupList.size(); i++){
+    // exclude active dev curve
+    if (childGroupList[i].getLinkInfo().getLinkType() == h5gt::LinkType::Soft)
+      continue;
+
     if (h5geo::isDevCurve(childGroupList[i]))
       childList.push_back(childGroupList[i]);
   }
@@ -433,7 +437,7 @@ std::optional<h5gt::Group>
 H5WellImpl::getActiveDevG()
 {
   std::string name = std::string{h5geo::detail::DEV} + "/" +
-      std::string{h5geo::detail::ACTIVE_DEV};
+      std::string{h5geo::detail::ACTIVE};
 
   return getGroupOpt(objG, name);
 }
