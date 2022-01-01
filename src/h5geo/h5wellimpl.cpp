@@ -27,7 +27,7 @@ H5LogCurve* H5WellImpl::getLogCurve(
   /* if `logName` was full path then we need to be confident
    * that this curve belong to this well */
   if (!logType.empty() && logType[0] == '/')
-    if (!isSuccessor(logG->getPath(), logType))
+    if (!isSuccessor(logG->getTargetPath(), logType))
       return nullptr;
 
   if (!logName.empty() && logName[0] == '/' &&
@@ -71,7 +71,7 @@ H5DevCurve* H5WellImpl::getDevCurve(
   /* if `logName` was full path then we need to be confident
    * that this curve belong to this well */
   if (!devName.empty() && devName[0] == '/')
-    if (!isSuccessor(devG->getPath(), devName))
+    if (!isSuccessor(devG->getTargetPath(), devName))
       return nullptr;
 
   if (!devG->hasObject(devName, h5gt::ObjectType::Group))
@@ -108,7 +108,7 @@ H5LogCurve* H5WellImpl::createLogCurve(
   /* If `logType` is full path then we need to be confident that
    * this `logType` (and `logName`) refers to this well */
   if (!logType.empty() && logType[0] == '/')
-    if (!isSuccessor(logG->getPath(), logType))
+    if (!isSuccessor(logG->getTargetPath(), logType))
       return nullptr;
 
   if (!logName.empty() && logName[0] == '/' &&
@@ -167,7 +167,7 @@ H5DevCurve* H5WellImpl::createDevCurve(
   /* If `devName` is full path then we need to be confident that
    * this `devName` refers to this well */
   if (!devName.empty() && devName[0] == '/')
-    if (!isSuccessor(devG->getPath(), devName))
+    if (!isSuccessor(devG->getTargetPath(), devName))
       return nullptr;
 
   std::optional<h5gt::Group> opt = createObject(
@@ -249,7 +249,7 @@ bool H5WellImpl::setUWI(const std::string& str)
 bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve){
   auto opt = getActiveDevG();
   if (opt.has_value())
-    objG.unlink(opt->getPath());
+    objG.unlink(opt->getTargetPath());
 
   objG.createLink(curve->getObjG(),
                   std::string{h5geo::detail::DEV} + "/" +
@@ -313,33 +313,31 @@ H5DevCurve* H5WellImpl::getActiveDevCurve(){
   return getDevCurve(opt->getTargetPath());
 }
 
-std::vector<H5DevCurve*>
-H5WellImpl::getDevCurveList(){
+std::vector<h5gt::Group>
+H5WellImpl::getDevCurveGroupList(){
   std::vector<h5gt::Group> childGroupList =
-      getChildList(objG, h5geo::ObjectType::DEVCURVE);;
+      getChildList(objG, h5geo::ObjectType::DEVCURVE);
 
-  std::vector<H5DevCurve*> childList;
+  std::vector<h5gt::Group> childList;
   childList.reserve(childGroupList.size());
   for (size_t i = 0; i < childGroupList.size(); i++){
-    H5DevCurve* curve = getDevCurve(childGroupList[i]);
-    if (curve != nullptr)
-      childList.push_back(curve);
+    if (h5geo::isDevCurve(childGroupList[i]))
+      childList.push_back(childGroupList[i]);
   }
   childList.shrink_to_fit();
   return childList;
 }
 
-std::vector<H5LogCurve*>
-H5WellImpl::getLogCurveList(){
+std::vector<h5gt::Group>
+H5WellImpl::getLogCurveGroupList(){
   std::vector<h5gt::Group> childGroupList =
-      getChildList(objG, h5geo::ObjectType::LOGCURVE);;
+      getChildList(objG, h5geo::ObjectType::LOGCURVE);
 
-  std::vector<H5LogCurve*> childList;
+  std::vector<h5gt::Group> childList;
   childList.reserve(childGroupList.size());
   for (size_t i = 0; i < childGroupList.size(); i++){
-    H5LogCurve* curve = getLogCurve(childGroupList[i]);
-    if (curve != nullptr)
-      childList.push_back(curve);
+    if (h5geo::isLogCurve(childGroupList[i]))
+      childList.push_back(childGroupList[i]);
   }
   childList.shrink_to_fit();
   return childList;
@@ -347,24 +345,34 @@ H5WellImpl::getLogCurveList(){
 
 std::vector<std::string>
 H5WellImpl::getDevCurveNameList(){
-  std::vector<H5DevCurve*> curveList = getDevCurveList();
+  std::vector<h5gt::Group> curveList = getDevCurveGroupList();
   std::vector<std::string> curveNameList(curveList.size());
 
+  auto devG = getDevG();
+  if (!devG.has_value())
+    return std::vector<std::string>();
+
   for (size_t i = 0; i < curveList.size(); i++){
-    curveNameList[i] = curveList[i]->getRelativeCurveName();
-    curveList[i]->Delete();
+    h5geo::getRelativePath(
+            devG->getTargetPath(), curveList[i].getTargetPath(),
+            h5geo::CaseSensitivity::CASE_INSENSITIVE);
   }
   return curveNameList;
 }
 
 std::vector<std::string>
 H5WellImpl::getLogCurveNameList(){
-  std::vector<H5LogCurve*> curveList = getLogCurveList();
+  std::vector<h5gt::Group> curveList = getLogCurveGroupList();
   std::vector<std::string> curveNameList(curveList.size());
 
+  auto logG = getLogG();
+  if (!logG.has_value())
+    return std::vector<std::string>();
+
   for (size_t i = 0; i < curveList.size(); i++){
-    curveNameList[i] = curveList[i]->getRelativeCurveName();
-    curveList[i]->Delete();
+    h5geo::getRelativePath(
+            logG->getTargetPath(), curveList[i].getTargetPath(),
+            h5geo::CaseSensitivity::CASE_INSENSITIVE);
   }
   return curveNameList;
 }

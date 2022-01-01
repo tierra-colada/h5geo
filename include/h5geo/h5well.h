@@ -61,8 +61,8 @@ public:
   virtual std::string getUWI() = 0;
 
   virtual H5DevCurve* getActiveDevCurve() = 0;
-  virtual std::vector<H5DevCurve*> getDevCurveList() = 0;
-  virtual std::vector<H5LogCurve*> getLogCurveList() = 0;
+  virtual std::vector<h5gt::Group> getDevCurveGroupList() = 0;
+  virtual std::vector<h5gt::Group> getLogCurveGroupList() = 0;
   virtual std::vector<std::string> getDevCurveNameList() = 0;
   virtual std::vector<std::string> getLogCurveNameList() = 0;
   virtual std::vector<std::string> getLogTypeNameList() = 0;

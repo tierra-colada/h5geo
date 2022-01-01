@@ -147,6 +147,23 @@ TEST_F(H5WellFixture, createWellWithDifferentCreateFlags){
   ASSERT_TRUE(well != nullptr);
 }
 
+TEST_F(H5WellFixture, equalityOperator){
+  H5Well_ptr well1(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::OPEN_OR_CREATE));
+  H5Well_ptr well2(wellContainer->getWell(WELL_NAME));
+  H5Well_ptr well3(
+        wellContainer->createWell(
+          WELL_NAME2, wellParam, h5geo::CreationType::OPEN_OR_CREATE));
+  H5Well_ptr well4(wellContainer->getWell(WELL_NAME2));
+
+  ASSERT_TRUE(*well1 == *well1);
+  ASSERT_TRUE(*well1 == *well2);
+  ASSERT_TRUE(*well1 != *well3);
+  ASSERT_TRUE(*well1 != *well4);
+  ASSERT_TRUE(*well3 == *well4);
+}
+
 TEST_F(H5WellFixture, getWellByUWI){
   H5Well_ptr well(
         wellContainer->createWell(

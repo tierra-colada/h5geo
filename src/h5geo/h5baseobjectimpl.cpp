@@ -207,17 +207,20 @@ H5BaseObjectImpl<TBase>::getDatasetOpt(
 template <typename TBase>
 std::string H5BaseObjectImpl<TBase>::getName() const {
   std::string objName;
-  h5geo::splitPathToParentAndObj(objG.getPath(), objName);
+  h5geo::splitPathToParentAndObj(objG.getTargetPath(), objName);
   return objName;
 }
 
 template <typename TBase>
 std::string H5BaseObjectImpl<TBase>::getFullName() const {
-  return objG.getPath();
+  return objG.getTargetPath();
 }
 
 template <typename TBase>
 bool H5BaseObjectImpl<TBase>::operator == (H5BaseObject& other) const {
+  // to compare h5gt objects their files must be open
+  h5gt::File file1 = this->getH5File();
+  h5gt::File file2 = other.getH5File();
   return objG == other.getObjG();
 }
 
@@ -236,7 +239,7 @@ H5BaseObjectImpl<TBase>::getParentG(
 
   do {
     path = h5geo::splitPathToParentAndObj(
-          parentGroup.getPath(), objName);
+          parentGroup.getTargetPath(), objName);
     if (!parentGroup.hasObject(path, h5gt::ObjectType::Group))
       return std::nullopt;
 

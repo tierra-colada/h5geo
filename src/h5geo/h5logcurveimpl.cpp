@@ -96,14 +96,12 @@ std::string H5LogCurveImpl::getRelativeCurveName(){
   if (!optWellG.has_value())
     return std::string();
 
-  H5WellImpl well(optWellG.value());
-
-  auto optLogG = well.getLogG();
-  if (!optLogG.has_value())
+  if (!optWellG->hasObject("LOG", h5gt::ObjectType::Group))
     return std::string();
 
+  h5gt::Group logG = optWellG->getGroup("LOG");
   return h5geo::getRelativePath(
-        optLogG->getPath(), objG.getPath(),
+        logG.getTargetPath(), objG.getTargetPath(),
         h5geo::CaseSensitivity::CASE_INSENSITIVE);
 }
 

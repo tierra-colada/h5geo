@@ -57,8 +57,8 @@ public:
   virtual std::string getUWI() override;
 
   virtual H5DevCurve* getActiveDevCurve() override;
-  virtual std::vector<H5DevCurve*> getDevCurveList() override;
-  virtual std::vector<H5LogCurve*> getLogCurveList() override;
+  virtual std::vector<h5gt::Group> getDevCurveGroupList() override;
+  virtual std::vector<h5gt::Group> getLogCurveGroupList() override;
   virtual std::vector<std::string> getDevCurveNameList() override;
   virtual std::vector<std::string> getLogCurveNameList() override;
   virtual std::vector<std::string> getLogTypeNameList() override;
