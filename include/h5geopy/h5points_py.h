@@ -13,6 +13,7 @@ void H5Points_py(
     H5Points,
     H5PointsImpl,
     H5BaseObject,
+    H5Base,
     std::unique_ptr<H5Points, ObjectDeleter>>
     &py_obj);
 

@@ -12,6 +12,7 @@ void H5DevCurve_py(
     H5DevCurve,
     H5DevCurveImpl,
     H5BaseObject,
+    H5Base,
     std::unique_ptr<H5DevCurve, ObjectDeleter>>
     &py_obj);
 

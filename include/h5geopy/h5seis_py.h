@@ -13,6 +13,7 @@ void H5Seis_py(
     H5Seis,
     H5SeisImpl,
     H5BaseObject,
+    H5Base,
     std::unique_ptr<H5Seis, ObjectDeleter>>
     &py_obj);
 

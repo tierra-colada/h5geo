@@ -13,6 +13,7 @@ void H5Well_py(
     H5Well,
     H5WellImpl,
     H5BaseObject,
+    H5Base,
     std::unique_ptr<H5Well, ObjectDeleter>>
     &py_obj);
 

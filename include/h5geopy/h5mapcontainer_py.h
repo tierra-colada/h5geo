@@ -13,6 +13,7 @@ void H5MapContainer_py(
     H5MapContainer,
     H5MapContainerImpl,
     H5BaseContainer,
+    H5Base,
     std::unique_ptr<H5MapContainer, ObjectDeleter>>
     &py_obj);
 

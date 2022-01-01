@@ -7,6 +7,7 @@ void H5WellContainer_py(
     H5WellContainer,
     H5WellContainerImpl,
     H5BaseContainer,
+    H5Base,
     std::unique_ptr<H5WellContainer, ObjectDeleter>>
     &py_obj){
   py_obj

@@ -14,6 +14,7 @@ struct H5BaseObject_py
       py::class_<
       H5BaseObject,
       H5BaseObjectImpl<TBase>,
+      H5Base,
       std::unique_ptr<H5BaseObject, ObjectDeleter>>
       &py_obj)
   {

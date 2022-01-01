@@ -84,6 +84,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyBaseContainer = py::class_<
       H5BaseContainer,
       H5BaseContainerImpl<H5BaseContainer>,
+      H5Base,
       std::unique_ptr<H5BaseContainer, ObjectDeleter>>
       (m, "H5BaseContainer");
 
@@ -91,6 +92,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyBaseObject = py::class_<
       H5BaseObject,
       H5BaseObjectImpl<H5BaseObject>,
+      H5Base,
       std::unique_ptr<H5BaseObject, ObjectDeleter>>
       (m, "H5BaseObject");
 
@@ -105,6 +107,7 @@ PYBIND11_MODULE(_h5geo, m) {
       H5Points,
       H5PointsImpl,
       H5BaseObject,
+      H5Base,
       std::unique_ptr<H5Points, ObjectDeleter>>
       (m, "H5Points");
 
@@ -114,6 +117,7 @@ PYBIND11_MODULE(_h5geo, m) {
       H5MapContainer,
       H5MapContainerImpl,
       H5BaseContainer,
+      H5Base,
       std::unique_ptr<H5MapContainer, ObjectDeleter>>
       (m, "H5MapContainer");
 
@@ -123,6 +127,7 @@ PYBIND11_MODULE(_h5geo, m) {
       H5Map,
       H5MapImpl,
       H5BaseObject,
+      H5Base,
       std::unique_ptr<H5Map, ObjectDeleter>>
       (m, "H5Map");
 
@@ -132,6 +137,7 @@ PYBIND11_MODULE(_h5geo, m) {
       H5SeisContainer,
       H5SeisContainerImpl,
       H5BaseContainer,
+      H5Base,
       std::unique_ptr<H5SeisContainer, ObjectDeleter>>
       (m, "H5SeisContainer");
 
@@ -141,6 +147,7 @@ PYBIND11_MODULE(_h5geo, m) {
       H5Seis,
       H5SeisImpl,
       H5BaseObject,
+      H5Base,
       std::unique_ptr<H5Seis, ObjectDeleter>>
       (m, "H5Seis");
 
@@ -150,6 +157,7 @@ PYBIND11_MODULE(_h5geo, m) {
       H5WellContainer,
       H5WellContainerImpl,
       H5BaseContainer,
+      H5Base,
       std::unique_ptr<H5WellContainer, ObjectDeleter>>
       (m, "H5WellContainer");
 
@@ -159,6 +167,7 @@ PYBIND11_MODULE(_h5geo, m) {
       H5Well,
       H5WellImpl,
       H5BaseObject,
+      H5Base,
       std::unique_ptr<H5Well, ObjectDeleter>>
       (m, "H5Well");
 
@@ -168,6 +177,7 @@ PYBIND11_MODULE(_h5geo, m) {
       H5DevCurve,
       H5DevCurveImpl,
       H5BaseObject,
+      H5Base,
       std::unique_ptr<H5DevCurve, ObjectDeleter>>
       (m, "H5DevCurve");
 
@@ -177,6 +187,7 @@ PYBIND11_MODULE(_h5geo, m) {
       H5LogCurve,
       H5LogCurveImpl,
       H5BaseObject,
+      H5Base,
       std::unique_ptr<H5LogCurve, ObjectDeleter>>
       (m, "H5LogCurve");
 

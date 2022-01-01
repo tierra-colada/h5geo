@@ -12,6 +12,7 @@ void H5LogCurve_py(
     H5LogCurve,
     H5LogCurveImpl,
     H5BaseObject,
+    H5Base,
     std::unique_ptr<H5LogCurve, ObjectDeleter>>
     &py_obj);
 

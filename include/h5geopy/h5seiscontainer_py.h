@@ -13,6 +13,7 @@ void H5SeisContainer_py(
     H5SeisContainer,
     H5SeisContainerImpl,
     H5BaseContainer,
+    H5Base,
     std::unique_ptr<H5SeisContainer, ObjectDeleter>>
     &py_obj);
 
