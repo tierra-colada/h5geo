@@ -630,3 +630,43 @@ TEST_F(H5WellFixture, createPointsFromWellTop){
   ASSERT_EQ(pArrIn[1].y(), pArrOut[1].y()*1000);
   ASSERT_EQ(pArrIn[1].z(), pArrOut[1].z()*1000);
 }
+
+TEST_F(H5WellFixture, getDevCurveGroupList){
+  std::string devName1 = "dev1";
+  std::string devName2 = "dev2";
+  std::string logName1 = "log1";
+  std::string logName2 = "log2";
+
+  H5Well_ptr well(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(well != nullptr);
+
+  H5DevCurve_ptr devCurve1(
+        well->createDevCurve(
+          devName1, devCurveParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+
+  H5DevCurve_ptr devCurve2(
+        well->createDevCurve(
+          devName2, devCurveParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+
+  H5LogCurve_ptr logCurve1(
+        well->createLogCurve(
+          LOG_TYPE, logName1,
+          logCurveParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+
+  H5LogCurve_ptr logCurve2(
+        well->createLogCurve(
+          LOG_TYPE, logName2,
+          logCurveParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+
+  std::vector<std::string> devNameList = well->getDevCurveNameList();
+  std::vector<std::string> logNameList = well->getLogCurveNameList();
+  std::vector<std::string> logTypeList = well->getLogTypeNameList();
+
+  ASSERT_TRUE(devNameList[0] == devName1);
+  ASSERT_TRUE(devNameList[1] == devName2);
+  ASSERT_TRUE(logNameList[0] == LOG_TYPE + "/" + logName1);
+  ASSERT_TRUE(logNameList[1] == LOG_TYPE + "/" + logName2);
+  ASSERT_TRUE(logTypeList[0] == LOG_TYPE);
+}

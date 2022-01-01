@@ -24,8 +24,8 @@ H5LogCurve* H5WellImpl::getLogCurve(
   if (!logG.has_value())
     return nullptr;
 
-  /* if `logName` was full path then we need to be confident
-   * that this curve belong to this well */
+  // if `logName` is full path then we need to be confident
+  // that this curve belong to this well
   if (!logType.empty() && logType[0] == '/')
     if (!isSuccessor(logG->getTargetPath(), logType))
       return nullptr;
@@ -35,17 +35,25 @@ H5LogCurve* H5WellImpl::getLogCurve(
     if (!isSuccessor(logType, logName))
       return nullptr;
 
-  if (!logG->hasObject(logType, h5gt::ObjectType::Group))
-    return nullptr;
+  // logType may be empty that means log is written without type
+  if (logType.empty()){
+    if (!logG->hasObject(logName, h5gt::ObjectType::Group))
+      return nullptr;
 
-  h5gt::Group logTypeG = logG->getGroup(logType);
+    h5gt::Group curveG = logG->getGroup(logName);
+    return getLogCurve(curveG);
+  } else {
+    if (!logG->hasObject(logType, h5gt::ObjectType::Group))
+      return nullptr;
 
-  if (!logTypeG.hasObject(logName, h5gt::ObjectType::Group))
-    return nullptr;
+    h5gt::Group logTypeG = logG->getGroup(logType);
 
-  h5gt::Group curveG = logTypeG.getGroup(logName);
+    if (!logTypeG.hasObject(logName, h5gt::ObjectType::Group))
+      return nullptr;
 
-  return getLogCurve(curveG);
+    h5gt::Group curveG = logTypeG.getGroup(logName);
+    return getLogCurve(curveG);
+  }
 }
 
 H5LogCurve* H5WellImpl::getLogCurve(
@@ -116,16 +124,19 @@ H5LogCurve* H5WellImpl::createLogCurve(
     if (!isSuccessor(logType, logName))
       return nullptr;
 
-  if (logType.empty())
-    logType = "UNKNOWN";
+  std::optional<h5gt::Group> opt;
+  if (logType.empty()){
+    opt = createObject(
+          logName, logG.value(), h5geo::ObjectType::LOGCURVE, &p, createFlag);
+  } else {
+    if (!logG->hasObject(logType, h5gt::ObjectType::Group))
+      logG->createGroup(logType);
 
-  if (!logG->hasObject(logType, h5gt::ObjectType::Group))
-    logG->createGroup(logType);
+    h5gt::Group logTypeG = logG->getGroup(logType);
 
-  h5gt::Group logTypeG = logG->getGroup(logType);
-
-  auto opt = createObject(
-        logName, logTypeG, h5geo::ObjectType::LOGCURVE, &p, createFlag);
+    opt = createObject(
+          logName, logTypeG, h5geo::ObjectType::LOGCURVE, &p, createFlag);
+  }
 
   if (!opt.has_value())
     return nullptr;
@@ -353,7 +364,7 @@ H5WellImpl::getDevCurveNameList(){
     return std::vector<std::string>();
 
   for (size_t i = 0; i < curveList.size(); i++){
-    h5geo::getRelativePath(
+    curveNameList[i] = h5geo::getRelativePath(
             devG->getTargetPath(), curveList[i].getTargetPath(),
             h5geo::CaseSensitivity::CASE_INSENSITIVE);
   }
@@ -370,7 +381,7 @@ H5WellImpl::getLogCurveNameList(){
     return std::vector<std::string>();
 
   for (size_t i = 0; i < curveList.size(); i++){
-    h5geo::getRelativePath(
+    curveNameList[i] = h5geo::getRelativePath(
             logG->getTargetPath(), curveList[i].getTargetPath(),
             h5geo::CaseSensitivity::CASE_INSENSITIVE);
   }
@@ -387,8 +398,15 @@ H5WellImpl::getLogTypeNameList(){
   std::vector<std::string> childNameList = logG->listObjectNames();
   logTypeNameList.reserve(childNameList.size());
   for (const auto& name : childNameList){
-    if (logG->getObjectType(name) == h5gt::ObjectType::Group)
-      logTypeNameList.push_back(name);
+    if (logG->getObjectType(name) != h5gt::ObjectType::Group)
+      continue;
+
+    h5gt::Group logTypeG = logG->getGroup(name);
+    // log curve may be created without type, so log curve is not a type
+    if (h5geo::isLogCurve(logTypeG))
+      continue;
+
+    logTypeNameList.push_back(name);
   }
   logTypeNameList.shrink_to_fit();
   return logTypeNameList;

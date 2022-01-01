@@ -15,6 +15,7 @@ protected:
   virtual ~H5Well() = default;
 
 public:
+  /// logType maybe empty
   virtual H5LogCurve* getLogCurve(
       const std::string &logType,
       const std::string &logName) = 0;
@@ -25,6 +26,7 @@ public:
   virtual H5DevCurve* getDevCurve(
       h5gt::Group group) = 0;
 
+  /// logType maybe empty
   virtual H5LogCurve* createLogCurve(
       std::string& logType,
       std::string& logName,
@@ -64,7 +66,9 @@ public:
   virtual std::vector<h5gt::Group> getDevCurveGroupList() = 0;
   virtual std::vector<h5gt::Group> getLogCurveGroupList() = 0;
   virtual std::vector<std::string> getDevCurveNameList() = 0;
+  /// return all logCurve names in the form 'TYPE/NAME'
   virtual std::vector<std::string> getLogCurveNameList() = 0;
+  /// return all objG child group names that are not logCurves
   virtual std::vector<std::string> getLogTypeNameList() = 0;
 
   virtual H5WellContainer* getWellContainer() = 0;
