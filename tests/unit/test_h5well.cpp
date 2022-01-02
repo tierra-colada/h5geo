@@ -663,6 +663,7 @@ TEST_F(H5WellFixture, getDevCurveGroupList){
   std::vector<std::string> devNameList = well->getDevCurveNameList();
   std::vector<std::string> logNameList = well->getLogCurveNameList();
   std::vector<std::string> logTypeList = well->getLogTypeNameList();
+  std::vector<h5gt::Group> logGroupList = well->getLogCurveGroupList();
 
   ASSERT_TRUE(devNameList[0] == devName1);
   ASSERT_TRUE(devNameList[1] == devName2);
