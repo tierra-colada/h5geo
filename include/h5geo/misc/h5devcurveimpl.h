@@ -47,6 +47,7 @@ public:
 
   //----------- FRIEND CLASSES -----------
   friend class H5WellImpl;
+  friend class H5BaseObjectImpl<H5DevCurve>;
   friend H5DevCurve* h5geo::openDevCurve(h5gt::Group group);
 
 protected:

@@ -12,6 +12,30 @@ template <typename TBase>
 H5BaseContainerImpl<TBase>::H5BaseContainerImpl(const h5gt::File &h5File) :
   h5File(h5File){}
 
+template <>
+H5Base* H5BaseContainerImpl<H5BaseContainer>::clone()
+{
+  return new H5BaseContainerImpl<H5BaseContainer>(h5File);
+}
+
+template <>
+H5Base* H5BaseContainerImpl<H5MapContainer>::clone()
+{
+  return new H5MapContainerImpl(h5File);
+}
+
+template <>
+H5Base* H5BaseContainerImpl<H5SeisContainer>::clone()
+{
+  return new H5SeisContainerImpl(h5File);
+}
+
+template <>
+H5Base* H5BaseContainerImpl<H5WellContainer>::clone()
+{
+  return new H5WellContainerImpl(h5File);
+}
+
 template <typename TBase>
 H5Points* H5BaseContainerImpl<TBase>::getPoints(
     const std::string& name)

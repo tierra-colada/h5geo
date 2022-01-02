@@ -152,6 +152,17 @@ TEST_F(H5MapFixture, createMapWithDifferentCreateFlags){
   ASSERT_TRUE(map != nullptr && seisName_tmp.compare(MAP_NAME1)) << "CREATE_UNDER_NEW_NAME";
 }
 
+TEST_F(H5MapFixture, clone){
+  H5Map_ptr map(
+        mapContainer1->createMap(
+          MAP_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(map != nullptr);
+
+  H5Map_ptr map2(dynamic_cast<H5Map*>(map->clone()));
+
+  ASSERT_TRUE(*map.get() == *map2.get());
+}
+
 TEST_F(H5MapFixture, openObject){
   H5Map_ptr map(
         mapContainer1->createMap(

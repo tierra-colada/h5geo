@@ -22,6 +22,12 @@
 namespace fs = std::filesystem;
 
 template <typename TBase>
+H5Base* H5BaseImpl<TBase>::clone()
+{
+  return nullptr;
+}
+
+template <typename TBase>
 void H5BaseImpl<TBase>::Delete()
 {
   delete this;

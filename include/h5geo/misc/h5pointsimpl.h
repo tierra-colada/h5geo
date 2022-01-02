@@ -49,6 +49,7 @@ protected:
       OGRCoordinateTransformation* coordTrans = nullptr);
 
   //----------- FRIEND CLASSES -----------
+  friend class H5BaseObjectImpl<H5Points>;
   friend class H5BaseContainerImpl<H5BaseContainer>;
   friend class H5BaseContainerImpl<H5MapContainer>;
   friend class H5BaseContainerImpl<H5SeisContainer>;

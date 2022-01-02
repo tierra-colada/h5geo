@@ -14,6 +14,7 @@ protected:
   virtual ~H5BaseContainerImpl() = default;
 
 public:
+  virtual H5Base* clone() override;
   virtual H5Points* getPoints(
       const std::string& name) override;
   virtual H5Points* getPoints(

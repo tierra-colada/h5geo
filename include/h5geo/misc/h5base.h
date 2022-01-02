@@ -90,6 +90,9 @@ protected:
   virtual ~H5Base() = default;
 
 public:
+  /// Must be manually deleted and must be reimplemented
+  /// in H5BaseObjectImpl<T> and H5BaseContainerImpl<T>
+  virtual H5Base* clone() = 0;
   virtual void Delete() = 0;
   virtual std::vector<h5gt::Group>
   getChildList(h5gt::Group& group,

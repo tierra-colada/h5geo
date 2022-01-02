@@ -30,6 +30,7 @@ public:
   virtual std::vector<H5Well*> getWellList() override;
 
   //----------- FRIEND CLASSES -----------
+  friend class H5BaseContainerImpl<H5WellContainer>;
   friend H5WellContainer* h5geo::createWellContainer(
       h5gt::File h5File, h5geo::CreationType createFlag);
   friend H5WellContainer* h5geo::createWellContainerByName(

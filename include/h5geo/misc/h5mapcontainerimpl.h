@@ -27,6 +27,7 @@ public:
   virtual std::vector<H5Map*> getMapList() override;
 
   //----------- FRIEND CLASSES -----------
+  friend class H5BaseContainerImpl<H5MapContainer>;
   friend H5MapContainer* h5geo::createMapContainer(
       h5gt::File h5File, h5geo::CreationType createFlag);
   friend H5MapContainer* h5geo::createMapContainerByName(

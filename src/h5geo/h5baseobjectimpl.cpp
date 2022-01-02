@@ -18,6 +18,48 @@ template <typename TBase>
 H5BaseObjectImpl<TBase>::H5BaseObjectImpl(const h5gt::Group &group) :
   objG(group){}
 
+template <>
+H5Base* H5BaseObjectImpl<H5BaseObject>::clone()
+{
+  return new H5BaseObjectImpl<H5BaseObject>(objG);
+}
+
+template <>
+H5Base* H5BaseObjectImpl<H5Map>::clone()
+{
+  return new H5MapImpl(objG);
+}
+
+template <>
+H5Base* H5BaseObjectImpl<H5Seis>::clone()
+{
+  return new H5SeisImpl(objG);
+}
+
+template <>
+H5Base* H5BaseObjectImpl<H5Well>::clone()
+{
+  return new H5WellImpl(objG);
+}
+
+template <>
+H5Base* H5BaseObjectImpl<H5DevCurve>::clone()
+{
+  return new H5DevCurveImpl(objG);
+}
+
+template <>
+H5Base* H5BaseObjectImpl<H5LogCurve>::clone()
+{
+  return new H5LogCurveImpl(objG);
+}
+
+template <>
+H5Base* H5BaseObjectImpl<H5Points>::clone()
+{
+  return new H5PointsImpl(objG);
+}
+
 #ifdef H5GEO_USE_GDAL
 
 template <typename TBase>

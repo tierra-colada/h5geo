@@ -13,6 +13,7 @@ protected:
   virtual ~H5BaseObjectImpl() = default;
 
 public:
+  virtual H5Base* clone() override;
 #ifdef H5GEO_USE_GDAL
   ///
   /// Assumes that 'spatial_reference' and 'length_units' attributes

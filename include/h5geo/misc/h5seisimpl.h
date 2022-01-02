@@ -15,7 +15,6 @@ protected:
   virtual ~H5SeisImpl() = default;
 
 public:
-
   // WRITERS
   virtual bool writeTextHeader(const char (&txtHdr)[40][80]) override;
   /*!
@@ -261,6 +260,7 @@ protected:
 
   //----------- FRIEND CLASSES -----------
   friend class H5SeisContainerImpl;
+  friend class H5BaseObjectImpl<H5Seis>;
   friend H5Seis* h5geo::openSeis(h5gt::Group group);
 };
 

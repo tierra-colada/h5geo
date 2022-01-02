@@ -27,6 +27,7 @@ public:
   virtual std::vector<H5Seis*> getSeisList() override;
 
   //----------- FRIEND CLASSES -----------
+  friend class H5BaseContainerImpl<H5SeisContainer>;
   friend H5SeisContainer* h5geo::createSeisContainer(
       h5gt::File h5File, h5geo::CreationType createFlag);
   friend H5SeisContainer* h5geo::createSeisContainerByName(

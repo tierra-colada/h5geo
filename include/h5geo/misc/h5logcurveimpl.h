@@ -36,6 +36,7 @@ public:
 
   //----------- FRIEND CLASSES -----------
   friend class H5WellImpl;
+  friend class H5BaseObjectImpl<H5LogCurve>;
   friend H5LogCurve* h5geo::openLogCurve(h5gt::Group group);
 };
 

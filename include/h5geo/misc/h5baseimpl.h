@@ -10,6 +10,7 @@ protected:
   virtual ~H5BaseImpl() = default;
 
 public:
+  virtual H5Base* clone() override;
   virtual void Delete() override;
   virtual std::vector<h5gt::Group>
   getChildList(h5gt::Group& group,

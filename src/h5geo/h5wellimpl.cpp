@@ -15,7 +15,6 @@
 H5WellImpl::H5WellImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
-
 H5LogCurve* H5WellImpl::getLogCurve(
     const std::string &logType,
     const std::string &logName)
