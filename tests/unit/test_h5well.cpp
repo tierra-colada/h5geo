@@ -246,6 +246,11 @@ TEST_F(H5WellFixture, writeReadDevCurve){
   ASSERT_TRUE(devCurve->writeAZIM(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(7)));
   ASSERT_TRUE(devCurve->writeINCL(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(8)));
 
+  devCurve->updateTvdDxDy();
+
+  auto dx = devCurve->getCurve(h5geo::DevDataType::DX);
+  auto dy = devCurve->getCurve(h5geo::DevDataType::DY);
+  auto tvd = devCurve->getCurve(h5geo::DevDataType::TVD);
   double dx_norm = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(5)-
       devCurve->getCurve(h5geo::DevDataType::DX)).norm();
   double dy_norm = (MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(6)-
@@ -539,6 +544,8 @@ TEST_F(H5WellFixture, activeDevCurveTest){
   ASSERT_TRUE(devCurve->writeMD(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(0)));
   ASSERT_TRUE(devCurve->writeAZIM(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(7)));
   ASSERT_TRUE(devCurve->writeINCL(MD_X_Y_Z_TVD_DX_DY_AZ_INCL.col(8)));
+
+  devCurve->updateTvdDxDy();
 
   ASSERT_FALSE(devCurve->isActive());
   ASSERT_TRUE(devCurve->setActive());

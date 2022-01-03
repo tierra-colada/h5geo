@@ -531,7 +531,7 @@ Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2MdXYTvd(
 
   Eigen::MatrixX<typename D::Scalar> M_OUT(M.rows(), 4);
   M_OUT.col(0) = M.col(0);
-  T I1, I2, A1, A2, dMD, B, RF, dx, dy, dz;
+  typename D::Scalar I1, I2, A1, A2, dMD, B, RF, dx, dy, dz;
 
   for (size_t i = 0; i < M.rows(); i++){
     if (i == 0){

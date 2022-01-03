@@ -23,12 +23,24 @@ void H5DevCurve_py(
       .def("writeINCL", &H5DevCurve::writeINCL,
            py::arg("v"),
            py::arg_v("units", "", "str()"))
+      .def("writeTVD", &H5DevCurve::writeTVD,
+           py::arg("v"),
+           py::arg_v("units", "", "str()"))
+      .def("writeDX", &H5DevCurve::writeDX,
+           py::arg("v"),
+           py::arg_v("units", "", "str()"))
+      .def("writeDY", &H5DevCurve::writeDY,
+           py::arg("v"),
+           py::arg_v("units", "", "str()"))
       .def("writeOWT", &H5DevCurve::writeOWT,
            py::arg("v"),
            py::arg_v("units", "", "str()"))
 
       .def("setActive", &H5DevCurve::setActive)
       .def("isActive", &H5DevCurve::isActive)
+
+      .def("updateMdAzimIncl", &H5DevCurve::updateMdAzimIncl)
+      .def("updateTvdDxDy", &H5DevCurve::updateTvdDxDy)
 
       .def("getNCurves", &H5DevCurve::getNCurves)
       .def("getNSamp", &H5DevCurve::getNSamp)

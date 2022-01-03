@@ -127,6 +127,7 @@ class test_h5well(unittest.TestCase):
         self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.DX, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 5])))
         self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.DY, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 6])))
         self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.TVD, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 3])))
+        devCurve.updateMdAzimIncl()
 
     def test_MdAzIncl2MdXYTvd(self):
         # self.wellContainer.getH5File().createDataSet(

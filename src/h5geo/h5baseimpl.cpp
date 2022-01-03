@@ -526,9 +526,9 @@ std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewDevCurve(h5gt::Group &group, void* p)
 {
   DevCurveParam param = *(static_cast<DevCurveParam*>(p));
-  std::vector<size_t> count = {4, 1};
-  std::vector<size_t> max_count = {5, h5gt::DataSpace::UNLIMITED};
-  std::vector<hsize_t> cdims = {4, param.chunkSize};
+  std::vector<size_t> count = {7, 1};
+  std::vector<size_t> max_count = {7, h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {7, param.chunkSize};
   h5gt::DataSetCreateProps props;
   props.setChunk(cdims);
   h5gt::DataSpace dataspace(count, max_count);
@@ -566,8 +566,17 @@ H5BaseImpl<TBase>::createNewDevCurve(h5gt::Group &group, void* p)
           std::string{h5geo::INCL},
           h5gt::DataSpace(1)).write(2);
     dataset.createAttribute<size_t>(
-          std::string{h5geo::OWT},
+          std::string{h5geo::TVD},
           h5gt::DataSpace(1)).write(3);
+    dataset.createAttribute<size_t>(
+          std::string{h5geo::DX},
+          h5gt::DataSpace(1)).write(4);
+    dataset.createAttribute<size_t>(
+          std::string{h5geo::DY},
+          h5gt::DataSpace(1)).write(5);
+    dataset.createAttribute<size_t>(
+          std::string{h5geo::OWT},
+          h5gt::DataSpace(1)).write(6);
 
     return group;
 

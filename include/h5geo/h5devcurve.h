@@ -23,12 +23,26 @@ public:
   virtual bool writeINCL(
       Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") = 0;
+  virtual bool writeTVD(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "") = 0;
+  virtual bool writeDX(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "") = 0;
+  virtual bool writeDY(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "") = 0;
   virtual bool writeOWT(
       Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") = 0;
 
   virtual bool setActive() = 0;
   virtual bool isActive() = 0;
+
+  /// Tvd, Dx, Dy must be filled
+  virtual void updateMdAzimIncl() = 0;
+  /// Md, Azim, Incl must be filled
+  virtual void updateTvdDxDy() = 0;
 
   virtual size_t getNCurves() = 0;
   virtual size_t getNSamp() = 0;

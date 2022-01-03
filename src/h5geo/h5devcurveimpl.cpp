@@ -30,6 +30,27 @@ bool H5DevCurveImpl::writeINCL(
   return writeCurve(std::string{h5geo::INCL}, v, units);
 }
 
+bool H5DevCurveImpl::writeTVD(
+    Eigen::Ref<Eigen::VectorXd> v,
+    const std::string& units)
+{
+  return writeCurve(std::string{h5geo::TVD}, v, units);
+}
+
+bool H5DevCurveImpl::writeDX(
+    Eigen::Ref<Eigen::VectorXd> v,
+    const std::string& units)
+{
+  return writeCurve(std::string{h5geo::DX}, v, units);
+}
+
+bool H5DevCurveImpl::writeDY(
+    Eigen::Ref<Eigen::VectorXd> v,
+    const std::string& units)
+{
+  return writeCurve(std::string{h5geo::DY}, v, units);
+}
+
 bool H5DevCurveImpl::writeOWT(
     Eigen::Ref<Eigen::VectorXd> v,
     const std::string& units)
@@ -120,6 +141,35 @@ size_t H5DevCurveImpl::getNCurves(){
   return opt->getDimensions()[0];
 }
 
+void H5DevCurveImpl::updateMdAzimIncl(){
+  Eigen::MatrixXd M;
+  M.resize(getNSamp(), 3);
+  M.col(0) = this->getCurve(std::string{h5geo::TVD});
+  M.col(1) = this->getCurve(std::string{h5geo::DX});
+  M.col(2) = this->getCurve(std::string{h5geo::DY});
+
+  Eigen::MatrixXd MM = h5geo::TvdDxDy2MdAzIncl(M, getAngularUnits(), false);
+
+  writeMD(MM.col(0));
+  writeAZIM(MM.col(1));
+  writeINCL(MM.col(2));
+}
+
+void H5DevCurveImpl::updateTvdDxDy(){
+  Eigen::MatrixXd M;
+  M.resize(getNSamp(), 3);
+  M.col(0) = this->getCurve(std::string{h5geo::MD});
+  M.col(1) = this->getCurve(std::string{h5geo::AZIM});
+  M.col(2) = this->getCurve(std::string{h5geo::INCL});
+
+  // passing x0 = 0.0, y0 = 0.0 makes DX, DY output instead of XY (must be float or it won't work)
+  Eigen::MatrixXd MM = h5geo::MdAzIncl2MdXYTvd(M, 0.f, 0.f, getAngularUnits(), false);
+
+  writeTVD(MM.col(3));
+  writeDX(MM.col(1));
+  writeDY(MM.col(2));
+}
+
 size_t H5DevCurveImpl::getNSamp(){
   auto opt = getDevCurveD();
   if (!opt.has_value())
@@ -148,45 +198,39 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
     return Eigen::VectorXd();
 
   double coef = 1;
+  if (!units.empty()){
+    if (name == h5geo::AZIM ||
+        name == h5geo::INCL){
+      coef = units::convert(
+            units::unit_from_string(getAngularUnits()),
+            units::unit_from_string(units));
+    } else if (name == h5geo::OWT ||
+               name == h5geo::TWT){
+      coef = units::convert(
+            units::unit_from_string(getTemporalUnits()),
+            units::unit_from_string(units));
+    } else {
+      coef = units::convert(
+            units::unit_from_string(getLengthUnits()),
+            units::unit_from_string(units));
+    }
+
+    if (isnan(coef))
+      return Eigen::VectorXd();
+  }
+
   if (name == h5geo::MD ||
       name == h5geo::AZIM ||
       name == h5geo::INCL ||
+      name == h5geo::TVD ||
+      name == h5geo::DX ||
+      name == h5geo::DY ||
       name == h5geo::OWT){
-    if (!units.empty()){
-      if (name == h5geo::MD){
-        coef = units::convert(
-              units::unit_from_string(getLengthUnits()),
-              units::unit_from_string(units));
-      } else if (name == h5geo::OWT){
-        coef = units::convert(
-              units::unit_from_string(getTemporalUnits()),
-              units::unit_from_string(units));
-      } else {
-        coef = units::convert(
-              units::unit_from_string(getAngularUnits()),
-              units::unit_from_string(units));
-      }
-
-      if (isnan(coef))
-        return Eigen::VectorXd();
-    }
-
     Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
           opt.value(), name);
 
     return curve*coef;
-  }
-
-  if (name == h5geo::TWT){
-    if (!units.empty()){
-      coef = units::convert(
-            units::unit_from_string(getTemporalUnits()),
-            units::unit_from_string(units));
-
-      if (isnan(coef))
-        return Eigen::VectorXd();
-    }
-
+  } else if (name == h5geo::TWT){
     Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
           opt.value(), std::string{h5geo::OWT});
 
@@ -203,48 +247,24 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
   if (headXY.size() != 2)
     Eigen::VectorXd();
 
-  auto optD = getDevCurveD();
-  if (!optD.has_value())
-    return Eigen::VectorXd();
-
-  std::vector<size_t> dims = optD->getDimensions();
-  if (dims.size() != 2)
-    return Eigen::VectorXd();
-
-  Eigen::MatrixXd MdAzIncl(dims[1], 3);
-  MdAzIncl.col(0) = getCurve(std::string{h5geo::MD}, units);
-  MdAzIncl.col(1) = getCurve(std::string{h5geo::AZIM});
-  MdAzIncl.col(2) = getCurve(std::string{h5geo::INCL});
-  if (MdAzIncl.rows() < 1)
-    return Eigen::VectorXd();
-
   double kb = well->getKB(units);
-  Eigen::MatrixXd MdXYTvdssTvdDxDy = h5geo::MdAzIncl2ALL(
-        MdAzIncl,
-        headXY(0),
-        headXY(1),
-        kb,
-        getAngularUnits(),
-        "degree",
-        false);
-
-  if (MdXYTvdssTvdDxDy.rows() < 1)
-    return Eigen::VectorXd();
 
   if (name == h5geo::X){
-    return MdXYTvdssTvdDxDy.col(1);
+    Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
+          opt.value(), std::string{h5geo::DX});
+    return curve.array() + headXY(0);
   } else if (name == h5geo::Y){
-    return MdXYTvdssTvdDxDy.col(2);
+    Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
+          opt.value(), std::string{h5geo::DY});
+    return curve.array() + headXY(1);
   } else if (name == h5geo::TVDSS){
-    return MdXYTvdssTvdDxDy.col(3);
-  } else if (name == h5geo::TVD){
-    return MdXYTvdssTvdDxDy.col(4);
-  } else if (name == h5geo::DX){
-    return MdXYTvdssTvdDxDy.col(5);
-  } else if (name == h5geo::DY){
-    return MdXYTvdssTvdDxDy.col(6);
+    Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
+          opt.value(), std::string{h5geo::TVD});
+    return curve.array() - kb;
   } else if (name == h5geo::Z){
-    return MdXYTvdssTvdDxDy.col(3) * (-1);
+    Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
+          opt.value(), std::string{h5geo::TVD});
+    return (curve.array() - kb)*(-1);
   }
 
   return Eigen::VectorXd();

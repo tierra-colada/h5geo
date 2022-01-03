@@ -20,12 +20,24 @@ public:
   virtual bool writeINCL(
       Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") override;
+  virtual bool writeTVD(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "") override;
+  virtual bool writeDX(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "") override;
+  virtual bool writeDY(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& units = "") override;
   virtual bool writeOWT(
       Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") override;
 
   virtual bool setActive() override;
   virtual bool isActive() override;
+
+  virtual void updateMdAzimIncl() override;
+  virtual void updateTvdDxDy() override;
 
   virtual size_t getNCurves() override;
   virtual size_t getNSamp() override;
