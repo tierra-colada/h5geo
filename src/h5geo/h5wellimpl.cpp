@@ -259,7 +259,7 @@ bool H5WellImpl::setUWI(const std::string& str)
 bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve){
   auto opt = getActiveDevG();
   if (opt.has_value())
-    objG.unlink(opt->getTargetPath());
+    objG.unlink(opt->getPath()); // must be getPath (not getTargetPath)
 
   objG.createLink(curve->getObjG(),
                   std::string{h5geo::detail::DEV} + "/" +
