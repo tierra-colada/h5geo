@@ -12,103 +12,103 @@
 namespace h5geo
 {
 /* */
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> MdAzIncl2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnitsFrom,
     const std::string& angularUnitsTo,
     const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdXY2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnits,
     const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdDxDy2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnits,
     const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdssXY2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnits,
     const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdssDxDy2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnits,
     const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> traj2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnitsFrom,
     const std::string& angularUnitsTo,
     const h5geo::TrajectoryFormat& trajFormat,
     const bool& XNorth);
 
 /* */
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> MdAzIncl2MdXYTvd(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0,
+    const double& x0, const double& y0,
     const std::string& angularUnits,
     const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdXY2MdXYTvd(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0,
+    const double& x0, const double& y0,
     const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdDxDy2MdXYTvd(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0,
+    const double& x0, const double& y0,
     const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdssXY2MdXYTvd(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdssDxDy2MdXYTvd(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdXY2MdAzIncl(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const std::string& angularUnits, const bool& XNorth);
+    const double& x0, const double& y0, const std::string& angularUnits, const bool& XNorth);
 
 template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdDxDy2MdAzIncl(
     const Eigen::DenseBase<D> &M, const std::string& angularUnits, const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdssXY2MdAzIncl(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb, const std::string& angularUnits, const bool& XNorth);
+    const double& x0, const double& y0, const double& kb, const std::string& angularUnits, const bool& XNorth);
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> TvdssDxDy2MdAzIncl(
     const Eigen::DenseBase<D> &M,
-    const T& kb, const std::string& angularUnits, const bool& XNorth);
+    const double& kb, const std::string& angularUnits, const bool& XNorth);
 
-template<typename T>
+
 /*!
  * \brief angleAndRadius Calculate angle and radius from arc and chord
  * \param arcLen
@@ -117,18 +117,18 @@ template<typename T>
  * \param max_iter
  * \return
  */
-inline Eigen::VectorX<T> angleAndRadius(
-    const T& arcLen,
-    const T& chordLen,
-    const T& eps,
+inline Eigen::VectorX<double> angleAndRadius(
+    const double& arcLen,
+    const double& chordLen,
+    const double& eps,
     const size_t& max_iter);
 
-template<typename T>
-inline T _betaAngle(
-    T I1,
-    T I2,
-    T A1,
-    T A2,
+
+inline double _betaAngle(
+    double I1,
+    double I2,
+    double A1,
+    double A2,
     const std::string& angularUnits)
 {
   if (!angularUnits.empty()){
@@ -144,8 +144,8 @@ inline T _betaAngle(
   return acos(cos(I2-I1) - (sin(I1)*sin(I2)*(1 - cos(A2-A1))));
 }
 
-template<typename T>
-inline T _ratioFactor(T B, const std::string& angularUnits)
+
+inline double _ratioFactor(double B, const std::string& angularUnits)
 {
   if (!angularUnits.empty()){
     double coef = units::convert(
@@ -160,14 +160,14 @@ inline T _ratioFactor(T B, const std::string& angularUnits)
     return 2 / B * tan(B / 2);
 }
 
-template<typename T>
-inline T _deltaEast(
-    const T& dMD,
-    T I1,
-    T I2,
-    T A1,
-    T A2,
-    const T& RF,
+
+inline double _deltaEast(
+    const double& dMD,
+    double I1,
+    double I2,
+    double A1,
+    double A2,
+    const double& RF,
     const std::string& angularUnits)
 {
   if (!angularUnits.empty()){
@@ -183,14 +183,14 @@ inline T _deltaEast(
   return dMD/2 * (sin(I1)*sin(A1) + sin(I2)*sin(A2))*RF;
 }
 
-template<typename T>
-inline T _deltaNorth(
-    const T& dMD,
-    T I1,
-    T I2,
-    T A1,
-    T A2,
-    const T& RF,
+
+inline double _deltaNorth(
+    const double& dMD,
+    double I1,
+    double I2,
+    double A1,
+    double A2,
+    const double& RF,
     const std::string& angularUnits)
 {
   if (!angularUnits.empty()){
@@ -206,12 +206,12 @@ inline T _deltaNorth(
   return dMD/2 * (sin(I1)*cos(A1) + sin(I2)*cos(A2))*RF;
 }
 
-template<typename T>
-inline T _deltaZ(
-    const T& dMD,
-    T I1,
-    T I2,
-    const T& RF,
+
+inline double _deltaZ(
+    const double& dMD,
+    double I1,
+    double I2,
+    const double& RF,
     const std::string& angularUnits)
 {
   if (!angularUnits.empty()){
@@ -225,14 +225,14 @@ inline T _deltaZ(
   return dMD/2 * (cos(I1) + cos(I2))*RF;
 }
 
-template<typename T>
-inline T _dMDFromDeltaEast(
-    const T& dE,
-    T I1,
-    T I2,
-    T A1,
-    T A2,
-    const T& RF,
+
+inline double _dMDFromDeltaEast(
+    const double& dE,
+    double I1,
+    double I2,
+    double A1,
+    double A2,
+    const double& RF,
     const std::string& angularUnits)
 {
   if (!angularUnits.empty()){
@@ -248,14 +248,14 @@ inline T _dMDFromDeltaEast(
   return 2*dE / ((sin(I1)*sin(A1) + sin(I2)*sin(A2))*RF);
 }
 
-template<typename T>
-inline T _dMDFromDeltaNorth(
-    const T& dN,
-    T I1,
-    T I2,
-    T A1,
-    T A2,
-    const T& RF,
+
+inline double _dMDFromDeltaNorth(
+    const double& dN,
+    double I1,
+    double I2,
+    double A1,
+    double A2,
+    const double& RF,
     const std::string& angularUnits)
 {
   if (!angularUnits.empty()){
@@ -271,12 +271,12 @@ inline T _dMDFromDeltaNorth(
   return 2*dN / ((sin(I1)*cos(A1) + sin(I2)*cos(A2))*RF);
 }
 
-template<typename T>
-inline T _dMDFromDeltaZ(
-    const T& dZ,
-    T I1,
-    T I2,
-    const T& RF,
+
+inline double _dMDFromDeltaZ(
+    const double& dZ,
+    double I1,
+    double I2,
+    const double& RF,
     const std::string& angularUnits)
 {
   if (!angularUnits.empty()){
@@ -290,11 +290,11 @@ inline T _dMDFromDeltaZ(
   return 2*dZ / ((cos(I1) + cos(I2))*RF);
 }
 
-template<typename T>
-inline T _fa(
-    const T& arc,
-    const T& chord,
-    T a,
+
+inline double _fa(
+    const double& arc,
+    const double& chord,
+    double a,
     const std::string& angularUnits)
 {
   if (!angularUnits.empty()){
@@ -307,11 +307,11 @@ inline T _fa(
   return chord*a-2*arc*sin(a/2);
 }
 
-template<typename T>
-inline T _dfa(
-    const T& arc,
-    const T& chord,
-    T a,
+
+inline double _dfa(
+    const double& arc,
+    const double& chord,
+    double a,
     const std::string& angularUnits)
 {
   if (!angularUnits.empty()){
@@ -324,10 +324,10 @@ inline T _dfa(
   return chord-arc*cos(a/2);
 }
 
-template<typename T>
-inline T _ddfa(
-    const T& arc,
-    T a,
+
+inline double _ddfa(
+    const double& arc,
+    double a,
     const std::string& angularUnits)
 {
   if (!angularUnits.empty()){
@@ -346,10 +346,10 @@ inline T _ddfa(
 
 
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnitsFrom,
     const std::string& angularUnitsTo,
     const bool& XNorth)
@@ -383,10 +383,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2ALL(
   return M_OUT;
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnits,
     const bool& XNorth)
 {
@@ -409,10 +409,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2ALL(
   return M_OUT;
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnits,
     const bool& XNorth)
 {
@@ -435,10 +435,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2ALL(
   return M_OUT;
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnits,
     const bool& XNorth)
 {
@@ -461,10 +461,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2ALL(
   return M_OUT;
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnits,
     const bool& XNorth)
 {
@@ -487,10 +487,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2ALL(
   return M_OUT;
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::traj2ALL(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnitsFrom,
     const std::string& angularUnitsTo,
     const h5geo::TrajectoryFormat& trajFormat,
@@ -512,10 +512,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::traj2ALL(
   }
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2MdXYTvd(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0,
+    const double& x0, const double& y0,
     const std::string& angularUnits,
     const bool& XNorth)
 {
@@ -574,10 +574,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::MdAzIncl2MdXYTvd(
   return M_OUT;
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2MdXYTvd(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0,
+    const double& x0, const double& y0,
     const bool& XNorth)
 {
   if (M.cols() != 3)
@@ -596,10 +596,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2MdXYTvd(
   return M_MdXYTvd;
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2MdXYTvd(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0,
+    const double& x0, const double& y0,
     const bool& XNorth)
 {
   if (M.cols() != 3)
@@ -618,10 +618,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2MdXYTvd(
   return M_MdXYTvd;
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2MdXYTvd(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const bool& XNorth)
 {
   if (M.cols() != 3)
@@ -640,10 +640,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2MdXYTvd(
   return M_MdXYTvd;
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2MdXYTvd(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const bool& XNorth)
 {
   if (M.cols() != 3)
@@ -662,10 +662,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2MdXYTvd(
   return M_MdXYTvd;
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdXY2MdAzIncl(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0,
+    const double& x0, const double& y0,
     const std::string& angularUnits,
     const bool& XNorth)
 {
@@ -745,10 +745,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdDxDy2MdAzIncl(
   return M_OUT;
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2MdAzIncl(
     const Eigen::DenseBase<D> &M,
-    const T& x0, const T& y0, const T& kb,
+    const double& x0, const double& y0, const double& kb,
     const std::string& angularUnits,
     const bool& XNorth)
 {
@@ -763,10 +763,10 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssXY2MdAzIncl(
   return TvdDxDy2MdAzIncl(MM, angularUnits, XNorth);
 }
 
-template<typename D, typename T>
+template<typename D>
 Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2MdAzIncl(
     const Eigen::DenseBase<D> &M,
-    const T& kb, const std::string& angularUnits, const bool& XNorth)
+    const double& kb, const std::string& angularUnits, const bool& XNorth)
 {
   if (M.cols() != 3)
     return Eigen::MatrixX<typename D::Scalar>();
@@ -777,21 +777,21 @@ Eigen::MatrixX<typename D::Scalar> h5geo::TvdssDxDy2MdAzIncl(
   return TvdDxDy2MdAzIncl(MM, angularUnits, XNorth);
 }
 
-template<typename T>
-Eigen::VectorX<T> h5geo::angleAndRadius(
-    const T& arcLen,
-    const T& chordLen,
-    const T& eps,
+
+Eigen::VectorX<double> h5geo::angleAndRadius(
+    const double& arcLen,
+    const double& chordLen,
+    const double& eps,
     const size_t& max_iter)
 {
   if (arcLen <= chordLen ||
       arcLen == 0 ||
       chordLen == 0)
-    return Eigen::VectorX<T>();
+    return Eigen::VectorX<double>();
 
-  T a_min = 0;
-  T a_max = 2*M_PI;
-  T a0, a1, f, df, ddf;
+  double a_min = 0;
+  double a_max = 2*M_PI;
+  double a0, a1, f, df, ddf;
   for (a0 = a_min; a0 < a_max; a0 = a0+0.1){
     f = _fa(arcLen, chordLen, a0, "");
     ddf = _ddfa(arcLen, a0, "");
@@ -801,7 +801,7 @@ Eigen::VectorX<T> h5geo::angleAndRadius(
 
   df = _dfa(arcLen, chordLen, a0, "");
   if (df == 0)
-    return Eigen::VectorX<T>();
+    return Eigen::VectorX<double>();
 
   a1 = a0 - f/df;
   size_t i = 1, ii = 0;
@@ -809,7 +809,7 @@ Eigen::VectorX<T> h5geo::angleAndRadius(
     f = _fa(arcLen, chordLen, a0, "");
     df = _dfa(arcLen, chordLen, a0, "");
     if (df == 0)
-      return Eigen::VectorX<T>();
+      return Eigen::VectorX<double>();
 
     a0 = a1;
     a1 = a0 - f/df;
@@ -818,15 +818,15 @@ Eigen::VectorX<T> h5geo::angleAndRadius(
         a1 = (a0+a1)/2;
         ii++;
         if (ii == max_iter)
-          return Eigen::VectorX<T>();
+          return Eigen::VectorX<double>();
       }
       ii = 0;
     }
     i++;
   }
-  T radius = arcLen/a1;
+  double radius = arcLen/a1;
 
-  Eigen::Vector2<T> v;
+  Eigen::Vector2<double> v;
   v(0) = a1;
   v(1) = radius;
   return v;
