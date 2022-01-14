@@ -77,39 +77,9 @@ public:
   MapParam p;
   std::string FILE_NAME1, FILE_NAME2, MAP_NAME1,  MAP_NAME2;
 };
-#include <gdal/gdal.h>
-#include <gdal/gdal_priv.h>
+
 TEST_F(H5MapFixture, createContainer){
   ASSERT_TRUE(fs::exists(FILE_NAME1));
-
-  h5geo::sr::setSpatialReferenceFromUserInput("EPSG", "32056");
-  std::cout << "NAME: " << h5geo::sr::getSpatialReference().GetName() << std::endl;
-  h5geo::sr::setLengthUnits("m");
-  std::cout << "NAME: " << h5geo::sr::getSpatialReference().GetName() << std::endl;
-
-  int a = 0;
-
-  OGRSpatialReference oSourceSRS, oTargetSRS;
-  OGRCoordinateTransformation *poCT;
-  double x0 = 788937.2;
-  double y0 = 976745.59;
-  double x1 = x0;
-  double y1 = y0;
-
-  oSourceSRS = h5geo::sr::getSpatialReference();
-  oTargetSRS.SetFromUserInput("EPSG:32056");
-
-  poCT = OGRCreateCoordinateTransformation( &oSourceSRS,
-                                            &oTargetSRS );
-
-  if( poCT == NULL || !poCT->Transform( 1, &x1, &y1 ) )
-      printf( "Transformation failed.\n" );
-  else
-  {
-      printf( "(%f,%f) -> (%f,%f)\n",
-              x0, y0,
-              x1, y1 );
-  }
 
   H5MapCnt_ptr mapCnt(h5geo::openMapContainerByName("/home/kerim/Documents/Colada_prj/default/DATA/horizons/Seismic horizon 1.h5"));
   H5Map_ptr map(mapCnt->getMap("Seismic horizon 1"));
