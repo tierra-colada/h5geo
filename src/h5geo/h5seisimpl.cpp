@@ -187,7 +187,9 @@ bool H5SeisImpl::writeTraceHeader(
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
-  size_t ind = getTraceHeaderIndex(hdrName);
+  ptrdiff_t ind = getTraceHeaderIndex(hdrName);
+  if (ind < 0)
+    return false;
 
   if (!unitsFrom.empty() && !unitsTo.empty()){
     double coef = units::convert(
@@ -366,7 +368,10 @@ Eigen::VectorXd H5SeisImpl::getTraceHeader(
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
-  size_t ind = getTraceHeaderIndex(hdrName);
+  ptrdiff_t ind = getTraceHeaderIndex(hdrName);
+  if (ind < 0)
+    return Eigen::VectorXd();
+
   Eigen::VectorXd hdr = getTraceHeader(
         fromTrc, nTrc, ind, 1,
         std::vector<std::string>({unitsFrom}),
@@ -440,7 +445,10 @@ Eigen::MatrixXd H5SeisImpl::getTraceHeader(
 
   std::vector<size_t> hdrInd(hdrNames.size());
   for (size_t i = 0; i < hdrNames.size(); i++){
-    hdrInd[i] = getTraceHeaderIndex(hdrNames[i]);
+    ptrdiff_t ind = getTraceHeaderIndex(hdrNames[i]);
+    if (ind < 0)
+      return Eigen::MatrixXd();
+    hdrInd[i] = ind;
   }
   return getTraceHeader(
         trcInd,
@@ -460,7 +468,10 @@ Eigen::MatrixXd H5SeisImpl::getTraceHeader(
 
   Eigen::VectorX<size_t> hdrInd(hdrNames.size());
   for (size_t i = 0; i < hdrNames.size(); i++){
-    hdrInd(i) = getTraceHeaderIndex(hdrNames[i]);
+    ptrdiff_t ind = getTraceHeaderIndex(hdrNames[i]);
+    if (ind < 0)
+      return Eigen::MatrixXd();
+    hdrInd(i) = ind;
   }
   return getTraceHeader(
         trcInd,
@@ -841,7 +852,6 @@ double H5SeisImpl::getTraceHeaderMin(
     const std::string& unitsTo)
 {
   int ind = getTraceHeaderIndex(hdrName);
-
   if (ind < 0)
     return NAN;
 
@@ -866,7 +876,6 @@ double H5SeisImpl::getTraceHeaderMax(
     const std::string& unitsTo)
 {
   int ind = getTraceHeaderIndex(hdrName);
-
   if (ind < 0)
     return NAN;
 
