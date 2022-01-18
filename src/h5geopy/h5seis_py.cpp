@@ -111,6 +111,8 @@ void H5Seis_py(
            py::arg_v("fromTrc", 0, "0"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
+      .def("setNTrc", &H5Seis::setNTrc)
+      .def("setNSamp", &H5Seis::setNSamp)
 
       //  GETTERS
       .def("getTextHeader", &H5Seis::getTextHeader)

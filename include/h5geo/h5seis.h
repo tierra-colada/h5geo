@@ -58,6 +58,11 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
 
+  /// resize trace and trace header datasets
+  virtual bool setNTrc(size_t nTrc) = 0;
+  /// resize trace datasets
+  virtual bool setNSamp(size_t nSamp) = 0;
+
   // GETTERS
   virtual std::vector<std::string> getTextHeader() = 0;
   virtual Eigen::VectorXd getBinHeader() = 0;

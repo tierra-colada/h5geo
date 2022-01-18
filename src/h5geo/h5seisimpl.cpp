@@ -199,6 +199,38 @@ bool H5SeisImpl::writeTraceHeader(
   return writeTraceHeader(hdr, fromTrc, ind);
 }
 
+bool H5SeisImpl::setNTrc(size_t nTrc)
+{
+  std::vector<size_t> trcHdrDims = traceHeaderD.getDimensions();
+  if (trcHdrDims.size() != 2)
+    return false;
+  std::vector<size_t> trcDims = traceD.getDimensions();
+  if (trcDims.size() != 2)
+    return false;
+
+  try {
+    traceHeaderD.resize({trcHdrDims[0], nTrc});
+    traceD.resize({nTrc, trcDims[1]});
+    return true;
+  } catch (h5gt::Exception e) {
+    return false;
+  }
+}
+
+bool H5SeisImpl::setNSamp(size_t nSamp)
+{
+  std::vector<size_t> trcDims = traceD.getDimensions();
+  if (trcDims.size() != 2)
+    return false;
+
+  try {
+    traceD.resize({trcDims[0], nSamp});
+    return true;
+  } catch (h5gt::Exception e) {
+    return false;
+  }
+}
+
 std::vector<std::string>
 H5SeisImpl::getTextHeader()
 {

@@ -334,6 +334,11 @@ H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p)
 {
   PointsParam param = *(static_cast<PointsParam*>(p));
 
+  // try-catch can't handle this situation
+  if (param.nPoints < 1 ||
+      param.chunkSize < 1)
+    return std::nullopt;
+
   std::vector<size_t> count = {param.nPoints};
   std::vector<size_t> max_count = {h5gt::DataSpace::UNLIMITED};
   std::vector<hsize_t> cdims = {param.chunkSize};
@@ -378,6 +383,13 @@ std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewMap(h5gt::Group &group, void* p)
 {
   MapParam param = *(static_cast<MapParam*>(p));
+
+  // try-catch can't handle this situation
+  if (param.xChunkSize < 1 ||
+      param.yChunkSize < 1 ||
+      param.nX < 1 ||
+      param.nY < 1)
+    return std::nullopt;
 
   std::vector<size_t> count = {param.nY, param.nX};
   std::vector<size_t> max_count = {h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED};
@@ -483,6 +495,11 @@ std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewLogCurve(h5gt::Group &group, void* p)
 {
   LogCurveParam param = *(static_cast<LogCurveParam*>(p));
+
+  // try-catch can't handle this situation
+  if (param.chunkSize < 1)
+    return std::nullopt;
+
   std::vector<size_t> count = {2, 1};
   std::vector<size_t> max_count = {2, h5gt::DataSpace::UNLIMITED};
   std::vector<hsize_t> cdims = {2, param.chunkSize};
@@ -526,6 +543,11 @@ std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewDevCurve(h5gt::Group &group, void* p)
 {
   DevCurveParam param = *(static_cast<DevCurveParam*>(p));
+
+  // try-catch can't handle this situation
+  if (param.chunkSize < 1)
+    return std::nullopt;
+
   std::vector<size_t> count = {7, 1};
   std::vector<size_t> max_count = {7, h5gt::DataSpace::UNLIMITED};
   std::vector<hsize_t> cdims = {7, param.chunkSize};
@@ -590,6 +612,13 @@ std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
 {
   SeisParam param = *(static_cast<SeisParam*>(p));
+
+  // try-catch can't handle this situation
+  if (param.nTrc < 1 ||
+      param.nSamp < 1 ||
+      param.trcChunk < 1 ||
+      param.stdChunk < 1)
+    return std::nullopt;
 
   try {
 

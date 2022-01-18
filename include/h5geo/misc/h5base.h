@@ -81,7 +81,7 @@ struct SeisParam : public BaseObjectParam{
   h5geo::SurveyType surveyType;
   size_t nTrc, nSamp;
   double srd = 0;
-  hsize_t trcChunk = 20000, stdChunk = 1000;
+  hsize_t trcChunk = 20000, stdChunk = 100;
 };
 
 class H5Base

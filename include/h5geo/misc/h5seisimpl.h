@@ -56,6 +56,9 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
 
+  virtual bool setNTrc(size_t nTrc) override;
+  virtual bool setNSamp(size_t nSamp) override;
+
   // GETTERS
   virtual std::vector<std::string> getTextHeader() override;
   virtual Eigen::VectorXd getBinHeader() override;
