@@ -306,8 +306,11 @@ void H5Seis_py(
       .def("getUValG", &H5Seis::getUValG)
       .def("getIndexesG", &H5Seis::getIndexesG)
 
-      .def("Finalize", &H5Seis::Finalize,
-           py::arg_v("bufferSize", 1e7, "10e7"));
+      .def("updateTraceHeaderLimits", &H5Seis::updateTraceHeaderLimits,
+           py::arg_v("nTrcBuffer", 1e7, "10e7"))
+      .def("updateBoundary", &H5Seis::updateBoundary)
+      .def("updatePkeySort", &H5Seis::updatePkeySort,
+           py::arg("pKeyName"));
 }
 
 

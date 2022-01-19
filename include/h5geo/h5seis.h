@@ -133,25 +133,24 @@ public:
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
       const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
       const std::vector<std::string>& unitsTo = std::vector<std::string>()) = 0;
-  /*!
-   * \brief readSortedData Get sorted data based on precalculated
-   * primary sort keys (e.g. before using it you should prepare
-   * primary sort keys with `addPKeySort(...)` method)
-   * \param TRACE this is not Eigen::Ref<> because Eigen::Ref<>
-   * doesn't allow to resize matrices
-   * \param HDR this is not Eigen::Ref<> because Eigen::Ref<>
-   * doesn't allow to resize matrices
-   * \param keyList
-   * \param minList
-   * \param maxList
-   * \param fromSampInd first sample index to read
-   * (from 0 to getNSamp())
-   * \param nSamp Number of samples to read (if 0 then
-   * 'TRACE' will be empty). By default all samples
-   * \param readTraceByTrace whether to read h5 in row or col order
-   * \param dataUnits you will get data transformed to these units
-   * \return vector of trace indexes read
-   */
+
+  /// \brief readSortedData Get sorted data based on precalculated
+  /// primary sort keys (e.g. before using it you should prepare
+  /// primary sort keys with `addPKeySort(...)` method)
+  /// \param TRACE this is not Eigen::Ref<> because Eigen::Ref<>
+  /// doesn't allow to resize matrices
+  /// \param HDR this is not Eigen::Ref<> because Eigen::Ref<>
+  /// doesn't allow to resize matrices
+  /// \param keyList
+  /// \param minList
+  /// \param maxList
+  /// \param fromSampInd first sample index to read
+  /// (from 0 to getNSamp())
+  /// \param nSamp Number of samples to read (if 0 then
+  /// 'TRACE' will be empty). By default all samples
+  /// \param readTraceByTrace whether to read h5 in row or col order
+  /// \param dataUnits you will get data transformed to these units
+  /// \return vector of trace indexes read
   virtual Eigen::VectorX<size_t> getSortedData(
       Eigen::MatrixXf& TRACE,
       Eigen::MatrixXd& HDR,
@@ -203,23 +202,20 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
 
-  /*!
-   * \brief checkTraceLimits check *fromTrc*, *nTrc* and diminish
-   *  *nTrc* to fit in data limits (if *fromTrc* is inside limit)
-   * \param fromTrc first trace (to read for example)
-   * \param nTrc number of trace (to read for example)
-   * \return
-   */
+  /// \brief checkTraceLimits check *fromTrc*, *nTrc* and diminish
+  ///  *nTrc* to fit in data limits (if *fromTrc* is inside limit)
+  /// \param fromTrc first trace (to read for example)
+  /// \param nTrc number of trace (to read for example)
+  /// \return
   virtual bool checkTraceLimits(
       const size_t& fromTrc, size_t& nTrc) = 0;
-  /*!
-   * \brief checkTraceHeaderLimits check 'fromHdr' and 'nHdr' and diminish
-   * 'nHdr' to fit in data limits (if 'fromTrc' is inside limit)
-   * \param fromHdr first header (usually there are 78 headers so
-   * the value should be less then this value)
-   * \param nHdr number of headers (to read for example)
-   * \return
-   */
+
+  /// \brief checkTraceHeaderLimits check 'fromHdr' and 'nHdr' and diminish
+  /// 'nHdr' to fit in data limits (if 'fromTrc' is inside limit)
+  /// \param fromHdr first header (usually there are 78 headers so
+  /// the value should be less then this value)
+  /// \param nHdr number of headers (to read for example)
+  /// \return
   virtual bool checkTraceHeaderLimits(
       const size_t& fromHdr, size_t& nHdr) = 0;
   virtual bool checkSampleLimits(
@@ -253,15 +249,11 @@ public:
   virtual std::optional<h5gt::Group> getUValG() = 0;
   virtual std::optional<h5gt::Group> getIndexesG() = 0;
 
-  ///
-  /// After text header, bin header, trace headers and trace data is written
-  /// then this method should be called (call it only once). It computes
-  /// trace header limits, boundary, prepares necessary sorting for 3D stack
-  /// data (CDP_X, CDP_Y, INLINE, XLINE).
-  /// Thus it will take some time to process (especially for big data).
-  /// 'bufferSize' is used to store values at a time. If RAM allows set it
-  /// to the number of traces (nTrc)
-  virtual bool Finalize(const size_t& bufferSize = 1e7) = 0;
+  /// Calculate and write min/max trace headers
+  virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) = 0;
+  /// Calculate and write XY boundary based on CDP_X and CDP_Y
+  virtual bool updateBoundary() = 0;
+  virtual bool updatePkeySort(const std::string& pKeyName) = 0;
 };
 
 namespace h5geo {

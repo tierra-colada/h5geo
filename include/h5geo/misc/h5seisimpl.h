@@ -245,17 +245,13 @@ public:
   virtual std::optional<h5gt::Group> getUValG() override;
   virtual std::optional<h5gt::Group> getIndexesG() override;
 
-  // COMPLETER
-  virtual bool Finalize(const size_t& bufferSize = 1e7) override;
+  virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) override;
+  virtual bool updateBoundary() override;
+  virtual bool updatePkeySort(const std::string& pKeyName) override;
 
 protected:
   virtual Eigen::MatrixX2d calcBoundaryStk2D();
   virtual Eigen::MatrixX2d calcConvexHullBoundary();
-  virtual bool calcAndWriteBoundary();
-  /// nTrcBuffer by default it is set to 10 millions of traces
-  virtual bool calcAndWriteTraceHeaderLimits(
-      const size_t& nTrcBuffer = 1e7);
-
 
 protected:
   h5gt::DataSet traceD, traceHeaderD;

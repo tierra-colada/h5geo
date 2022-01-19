@@ -275,9 +275,6 @@ TEST_F(H5SeisFixture, writeAndGetTraceHeaderFinalize){
 
   ASSERT_TRUE(trcHdr_out.isApprox(trcHdr.col(40)))
       << "Read and compare single header (CDP for example)";
-
-  ASSERT_TRUE(seis->Finalize())
-      << "Make sure that Finalize() works";
 }
 
 TEST_F(H5SeisFixture, writeAndGetSortedData){
