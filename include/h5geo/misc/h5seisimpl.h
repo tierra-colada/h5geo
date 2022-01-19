@@ -221,6 +221,7 @@ public:
   virtual bool setDataType(const h5geo::SeisDataType& val) override;
   virtual bool setSurveyType(const h5geo::SurveyType& val) override;
   virtual bool setSRD(double val, const std::string& lengthUnits = "") override;
+  virtual bool setSampRate(double val, const std::string& units = "") override;
 
   virtual h5geo::Domain getDomain() override;
   virtual h5geo::SeisDataType getDataType() override;

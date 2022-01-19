@@ -225,6 +225,7 @@ public:
   virtual bool setDataType(const h5geo::SeisDataType& seisType) = 0;
   virtual bool setSurveyType(const h5geo::SurveyType& surveyType) = 0;
   virtual bool setSRD(double val, const std::string& lengthUnits = "") = 0;
+  virtual bool setSampRate(double val, const std::string& units = "") = 0;
 
   virtual h5geo::Domain getDomain() = 0;
   virtual h5geo::SeisDataType getDataType() = 0;

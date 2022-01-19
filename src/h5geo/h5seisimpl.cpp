@@ -967,6 +967,16 @@ bool H5SeisImpl::setSRD(double val, const std::string& lengthUnits){
         val, lengthUnits, getLengthUnits());
 }
 
+bool H5SeisImpl::setSampRate(double val, const std::string& units){
+  h5geo::Domain domain = this->getDomain();
+  if (domain == h5geo::Domain::OWT ||
+      domain == h5geo::Domain::TWT){
+    return this->writeBinHeader("SAMP_RATE", val, units, getTemporalUnits());
+  } else {
+    return this->writeBinHeader("SAMP_RATE", val, units, getLengthUnits());
+  }
+}
+
 h5geo::Domain H5SeisImpl::getDomain(){
   return static_cast<h5geo::Domain>(
         h5geo::readEnumAttribute(
