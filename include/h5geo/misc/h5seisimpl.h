@@ -248,7 +248,7 @@ public:
 
   virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) override;
   virtual bool updateBoundary() override;
-  virtual bool updatePkeySort(const std::string& pKeyName) override;
+  virtual bool updatePKeySort(const std::string& pKeyName) override;
 
 protected:
   virtual Eigen::MatrixX2d calcBoundaryStk2D();

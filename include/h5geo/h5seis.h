@@ -254,7 +254,7 @@ public:
   virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) = 0;
   /// Calculate and write XY boundary based on CDP_X and CDP_Y
   virtual bool updateBoundary() = 0;
-  virtual bool updatePkeySort(const std::string& pKeyName) = 0;
+  virtual bool updatePKeySort(const std::string& pKeyName) = 0;
 };
 
 namespace h5geo {

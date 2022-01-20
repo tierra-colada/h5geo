@@ -1268,11 +1268,9 @@ bool H5SeisImpl::updateBoundary()
           boundary);
 }
 
-bool H5SeisImpl::updatePkeySort(const std::string& pKeyName)
+bool H5SeisImpl::updatePKeySort(const std::string& pKeyName)
 {
-  if (!removePKeySort(pKeyName))
-    return false;
-
+  removePKeySort(pKeyName);
   return addPKeySort(pKeyName);
 }
 
