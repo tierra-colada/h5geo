@@ -405,13 +405,14 @@ inline size_t getBinHeaderCount(){
 
 inline ptrdiff_t getIndexFromAttribute(
     h5gt::DataSet& dataset,
-    const std::string& attributeName)
+    const std::string& attrName)
 {
-  if (!dataset.hasAttribute(attributeName))
+  // hdf5 throws exception when empty name is passed
+  if (attrName.empty() || !dataset.hasAttribute(attrName))
     return -1;
 
   ptrdiff_t idx;
-  dataset.getAttribute(attributeName).read(idx);
+  dataset.getAttribute(attrName).read(idx);
   return idx;
 }
 
@@ -423,7 +424,7 @@ template<typename Object,
 inline bool deleteAllAttributes(Object& object){
   try {
     std::vector<std::string> attrNameList =
-        object.listAttributeNames();
+        object.listattrNames();
     for (const auto& name : attrNameList)
       object.deleteAttribute(name);
   } catch (h5gt::Exception e) {
@@ -474,7 +475,11 @@ inline bool _overwriteResizableDataset(
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
-  if(!node.hasObject(datasetPath, h5gt::ObjectType::Dataset))
+  if(datasetPath.empty() ||
+     !node.hasObject(datasetPath, h5gt::ObjectType::Dataset))
+    return false;
+
+  if (nH5Rows == 0 || nH5Cols == 0)
     return false;
 
   h5gt::DataSet dset = node.getDataSet(datasetPath);
@@ -565,6 +570,12 @@ inline bool _overwriteDataset(
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
+  if (datasetPath.empty())
+    return false;
+
+  if (nH5Rows == 0 || nH5Cols == 0)
+    return false;
+
   if(node.hasObject(datasetPath, h5gt::ObjectType::Dataset)){
     h5gt::DataSet dset = node.getDataSet(datasetPath);
     auto dtype = dset.getDataType();
@@ -652,7 +663,11 @@ inline bool _readDataset(
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
-  if (!node.hasObject(datasetPath, h5gt::ObjectType::Dataset))
+  if (datasetPath.empty() ||
+      !node.hasObject(datasetPath, h5gt::ObjectType::Dataset))
+    return false;
+
+  if (nElem == 0)
     return false;
 
   h5gt::DataSet dset = node.getDataSet(datasetPath);
@@ -688,7 +703,8 @@ inline bool readDataset(
     const std::string& unitsTo)
 {
   // we don't want to resize vector if no data to read
-  if (!node.hasObject(datasetPath, h5gt::ObjectType::Dataset))
+  if (datasetPath.empty() ||
+      !node.hasObject(datasetPath, h5gt::ObjectType::Dataset))
     return false;
 
   h5gt::DataSet dset = node.getDataSet(datasetPath);
@@ -747,7 +763,10 @@ inline bool _readAttribute(
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
-  if (!holder.hasAttribute(attrName))
+  if (attrName.empty() || !holder.hasAttribute(attrName))
+    return false;
+
+  if (nElem == 0)
     return false;
 
   h5gt::Attribute attr = holder.getAttribute(attrName);
@@ -783,7 +802,7 @@ inline bool readAttribute(
     const std::string& unitsTo)
 {
   // we don't want to resize vector if no data to read
-  if (!holder.hasAttribute(attrName))
+  if (attrName.empty() || !holder.hasAttribute(attrName))
     return false;
 
   h5gt::Attribute attr = holder.getAttribute(attrName);
@@ -810,7 +829,7 @@ inline bool readAttribute(
     const std::string& unitsTo)
 {
   // we don't want to resize vector if no data to read
-  if (!holder.hasAttribute(attrName))
+  if (attrName.empty() || !holder.hasAttribute(attrName))
     return false;
 
   h5gt::Attribute attr = holder.getAttribute(attrName);
@@ -853,6 +872,12 @@ inline bool _overwriteAttribute(
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
+  if (attrName.empty())
+    return false;
+
+  if (nElem == 0)
+    return false;
+
   if (!holder.hasAttribute(attrName))
     holder.template createAttribute<T>(
           attrName, h5gt::DataSpace({nElem}));
@@ -892,6 +917,9 @@ inline bool overwriteAttribute(
     const std::string& attrName,
     const std::string& str)
 {
+  if (attrName.empty())
+    return false;
+
   if (!holder.hasAttribute(attrName))
     holder.template createAttribute<std::string>(
           attrName, h5gt::DataSpace::From(str));
@@ -981,7 +1009,7 @@ template<typename Object,
            std::is_same<Object, h5gt::DataSet>::value>::type*>
 inline std::string readStringAttribute(Object& object, const std::string& attrName){
   std::string str;
-  if (!object.hasAttribute(attrName))
+  if (attrName.empty() || !object.hasAttribute(attrName))
     return str;
 
   h5gt::Attribute attr = object.getAttribute(attrName);

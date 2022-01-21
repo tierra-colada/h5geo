@@ -144,12 +144,12 @@ size_t getBinHeaderCount();
  * \brief getIndexFromAttribute Get row/col from Datasets with attributes
  * where attribute reflects the row/col index (like tables)
  * \param dataset
- * \param attributeName
+ * \param attrName
  * \return
  */
 ptrdiff_t getIndexFromAttribute(
     h5gt::DataSet& dataset,
-    const std::string& attributeName);
+    const std::string& attrName);
 
 template<typename Object,
          typename std::enable_if<
