@@ -424,7 +424,7 @@ template<typename Object,
 inline bool deleteAllAttributes(Object& object){
   try {
     std::vector<std::string> attrNameList =
-        object.listattrNames();
+        object.listAttributeNames();
     for (const auto& name : attrNameList)
       object.deleteAttribute(name);
   } catch (h5gt::Exception e) {
