@@ -402,7 +402,6 @@ Eigen::MatrixX2<T> quickHull2D(
   Eigen::MatrixX2<T> right(v.rows(), 2);
   ptrdiff_t il = 0;
   ptrdiff_t ir = 0;
-  std::cout << "MATRIX:\n" << std::endl;
   for (ptrdiff_t i = 0; i < v.rows(); i++){
     if (_ccw(a, b, v.row(i)) > 0){
       left.row(il) = v.row(i);
