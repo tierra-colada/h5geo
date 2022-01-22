@@ -65,7 +65,7 @@ public:
 
   // GETTERS
   virtual std::vector<std::string> getTextHeader() = 0;
-  virtual Eigen::VectorXd getBinHeader() = 0;
+  virtual std::map<std::string, double> getBinHeader() = 0;
   virtual double getBinHeader(
       const std::string& hdrName,
       const std::string& unitsFrom = "",
@@ -191,8 +191,8 @@ public:
       const std::string& unitsTo = "") = 0;
   virtual size_t getPKeySize(const std::string& pkey) = 0;
   virtual std::vector<std::string> getPKeyNames() = 0;
-  virtual Eigen::VectorXd getTraceHeaderMin() = 0;
-  virtual Eigen::VectorXd getTraceHeaderMax() = 0;
+  virtual std::map<std::string, double> getTraceHeaderMin() = 0;
+  virtual std::map<std::string, double> getTraceHeaderMax() = 0;
   virtual double getTraceHeaderMin(
       const std::string& hdrName,
       const std::string& unitsFrom = "",

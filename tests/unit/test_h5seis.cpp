@@ -207,9 +207,8 @@ TEST_F(H5SeisFixture, writeAndGetBinHeader){
 
   ASSERT_TRUE(seis->writeBinHeader(binHdr));
 
-  Eigen::VectorXd binHdr_out = seis->getBinHeader();
-
-  ASSERT_TRUE(binHdr_out.isApprox(binHdr))
+  std::map<std::string, double> binHdr_out = seis->getBinHeader();
+  ASSERT_TRUE(binHdr_out.count("SAMP_RATE") > 0)
       << "write/read bin header from Eigen vector";
 
   ASSERT_TRUE(seis->writeBinHeader("SAMP_RATE", 2000));

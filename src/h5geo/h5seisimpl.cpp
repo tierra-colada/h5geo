@@ -255,15 +255,27 @@ H5SeisImpl::getTextHeader()
   return v;
 }
 
-Eigen::VectorXd H5SeisImpl::getBinHeader()
+std::map<std::string, double> H5SeisImpl::getBinHeader()
 {
   auto opt = getBinHeaderD();
   if (!opt.has_value())
-    return Eigen::VectorXd();
+    return std::map<std::string, double>();
 
-  Eigen::VectorXd binHdr(getNBinHdr());
-  opt->read(binHdr.data());
-  return binHdr;
+  std::vector<double> binHdr;
+  opt->read(binHdr);
+
+  std::vector<std::string> fullHdrNames, shortHdrNames;
+  h5geo::getBinHeaderNames(fullHdrNames, shortHdrNames);
+  std::map<std::string, double> m;
+  for (const auto& name : shortHdrNames){
+    int ind = getBinHeaderIndex(name);
+    if (ind < 0 || ind >= binHdr.size())
+      continue;
+
+    m[name] = binHdr[ind];
+  }
+
+  return m;
 }
 
 double H5SeisImpl::getBinHeader(
@@ -271,13 +283,15 @@ double H5SeisImpl::getBinHeader(
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
+  if (hdrName.empty())
+    return NAN;
+
   auto opt = getBinHeaderD();
   if (!opt.has_value())
     return NAN;
 
   ptrdiff_t ind = getBinHeaderIndex(hdrName);
-
-  if (ind < 0)
+  if (ind < 0 || ind >= opt->getElementCount())
     return NAN;
 
   double hdr;
@@ -828,22 +842,48 @@ std::vector<std::string> H5SeisImpl::getPKeyNames(){
   return opt->listObjectNames();
 }
 
-Eigen::VectorXd H5SeisImpl::getTraceHeaderMin(){
+std::map<std::string, double> H5SeisImpl::getTraceHeaderMin(){
   if (!traceHeaderD.hasAttribute("min"))
-    return Eigen::VectorXd();
+    return std::map<std::string, double>();
 
-  Eigen::VectorXd hdr(getNTrcHdr());
-  traceHeaderD.getAttribute("min").read(hdr.data());
-  return hdr;
+  auto attr = traceHeaderD.getAttribute("min");
+  std::vector<double> hdr;
+  attr.read(hdr);
+
+  std::vector<std::string> fullHdrNames, shortHdrNames;
+  h5geo::getTraceHeaderNames(fullHdrNames, shortHdrNames);
+  std::map<std::string, double> m;
+  for (const auto& name : shortHdrNames){
+    int ind = getTraceHeaderIndex(name);
+    if (ind < 0 || ind >= hdr.size())
+      continue;
+
+    m[name] = hdr[ind];
+  }
+
+  return m;
 }
 
-Eigen::VectorXd H5SeisImpl::getTraceHeaderMax(){
+std::map<std::string, double> H5SeisImpl::getTraceHeaderMax(){
   if (!traceHeaderD.hasAttribute("max"))
-    return Eigen::VectorXd();
+    return std::map<std::string, double>();
 
-  Eigen::VectorXd hdr(getNTrcHdr());
-  traceHeaderD.getAttribute("max").read(hdr.data());
-  return hdr;
+  auto attr = traceHeaderD.getAttribute("max");
+  std::vector<double> hdr;
+  attr.read(hdr);
+
+  std::vector<std::string> fullHdrNames, shortHdrNames;
+  h5geo::getTraceHeaderNames(fullHdrNames, shortHdrNames);
+  std::map<std::string, double> m;
+  for (const auto& name : shortHdrNames){
+    int ind = getTraceHeaderIndex(name);
+    if (ind < 0 || ind >= hdr.size())
+      continue;
+
+    m[name] = hdr[ind];
+  }
+
+  return m;
 }
 
 double H5SeisImpl::getTraceHeaderMin(
@@ -851,12 +891,19 @@ double H5SeisImpl::getTraceHeaderMin(
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
+  if (hdrName.empty())
+    return NAN;
+
+  if (!traceHeaderD.hasAttribute("min"))
+    return NAN;
+
+  auto attr = traceHeaderD.getAttribute("min");
   int ind = getTraceHeaderIndex(hdrName);
   if (ind < 0)
     return NAN;
 
-  Eigen::VectorXd hdr = getTraceHeaderMin();
-
+  std::vector<double> hdr;
+  attr.read(hdr);
   if (ind >= hdr.size())
     return NAN;
 
@@ -864,10 +911,10 @@ double H5SeisImpl::getTraceHeaderMin(
     double coef = units::convert(
           units::unit_from_string(unitsFrom),
           units::unit_from_string(unitsTo));
-    return hdr(ind)*coef;
+    return hdr[ind]*coef;
   }
 
-  return hdr(ind);
+  return hdr[ind];
 }
 
 double H5SeisImpl::getTraceHeaderMax(
@@ -875,12 +922,20 @@ double H5SeisImpl::getTraceHeaderMax(
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
+  if (hdrName.empty())
+    return NAN;
+
+  if (!traceHeaderD.hasAttribute("max"))
+    return NAN;
+
+  auto attr = traceHeaderD.getAttribute("max");
+
   int ind = getTraceHeaderIndex(hdrName);
   if (ind < 0)
     return NAN;
 
-  Eigen::VectorXd hdr = getTraceHeaderMax();
-
+  std::vector<double> hdr;
+  attr.read(hdr);
   if (ind >= hdr.size())
     return NAN;
 
@@ -888,10 +943,10 @@ double H5SeisImpl::getTraceHeaderMax(
     double coef = units::convert(
           units::unit_from_string(unitsFrom),
           units::unit_from_string(unitsTo));
-    return hdr(ind)*coef;
+    return hdr[ind]*coef;
   }
 
-  return hdr(ind);
+  return hdr[ind];
 }
 
 bool H5SeisImpl::checkTraceLimits(

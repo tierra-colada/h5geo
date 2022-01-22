@@ -61,7 +61,7 @@ public:
 
   // GETTERS
   virtual std::vector<std::string> getTextHeader() override;
-  virtual Eigen::VectorXd getBinHeader() override;
+  virtual std::map<std::string, double> getBinHeader() override;
   virtual double getBinHeader(
       const std::string& hdrName,
       const std::string& unitsFrom = "",
@@ -184,8 +184,8 @@ public:
       const std::string& unitsTo = "") override;
   virtual size_t getPKeySize(const std::string& pkey) override;
   virtual std::vector<std::string> getPKeyNames() override;
-  virtual Eigen::VectorXd getTraceHeaderMin() override;
-  virtual Eigen::VectorXd getTraceHeaderMax() override;
+  virtual std::map<std::string, double> getTraceHeaderMin() override;
+  virtual std::map<std::string, double> getTraceHeaderMax() override;
   virtual double getTraceHeaderMin(
       const std::string& hdrName,
       const std::string& unitsFrom = "",
