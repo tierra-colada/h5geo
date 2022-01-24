@@ -26,6 +26,7 @@ bool H5LogCurveImpl::writeCurve(
   if (!opt.has_value())
     return false;
 
+  bool val;
   if (!units.empty()){
     double coef;
     if (name == h5geo::MD)
@@ -39,18 +40,24 @@ bool H5LogCurveImpl::writeCurve(
 
     v *= coef;
 
-    return h5geo::writeData2IndexedDataset(
+    val = h5geo::writeData2IndexedDataset(
           opt.value(),
           name,
           v,
           true);
+
+    objG.flush();
+    return val;
   }
 
-  return h5geo::writeData2IndexedDataset(
+  val = h5geo::writeData2IndexedDataset(
         opt.value(),
         name,
         v,
         true);
+
+  objG.flush();
+  return val;
 }
 
 Eigen::VectorXd H5LogCurveImpl::getCurve(

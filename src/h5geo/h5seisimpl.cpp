@@ -21,6 +21,7 @@ bool H5SeisImpl::writeTextHeader(const char (&txtHdr)[40][80]){
     return false;
 
   opt->write(txtHdr);
+  objG.flush();
   return true;
 }
 
@@ -47,6 +48,7 @@ bool H5SeisImpl::writeTextHeader(
   }
 
   opt->write(array);
+  objG.flush();
   return true;
 }
 
@@ -57,6 +59,7 @@ bool H5SeisImpl::writeBinHeader(const double (&binHdr)[30])
     return false;
 
   opt->write(binHdr);
+  objG.flush();
   return true;
 }
 
@@ -71,6 +74,7 @@ bool H5SeisImpl::writeBinHeader(
     return false;
 
   opt->write(binHdrVec);
+  objG.flush();
   return true;
 }
 
@@ -85,6 +89,7 @@ bool H5SeisImpl::writeBinHeader(
     return false;
 
   opt->write_raw(binHdrVec.data());
+  objG.flush();
   return true;
 }
 
@@ -124,6 +129,7 @@ bool H5SeisImpl::writeBoundary(
   if (!opt.has_value())
     return false;
 
+  bool val;
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCoordinateTransformation* coordTrans =
@@ -132,18 +138,24 @@ bool H5SeisImpl::writeBoundary(
       return false;
 
     coordTrans->Transform(M.rows(), M.col(0).data(), M.col(1).data());
-    return h5geo::overwriteResizableDataset(
+    val = h5geo::overwriteResizableDataset(
           objG,
           opt->getPath(),
           M);
+
+    objG.flush();
+    return val;
   }
 #endif
 
-  return h5geo::overwriteResizableDataset(
+  val = h5geo::overwriteResizableDataset(
         objG,
         opt->getPath(),
         M,
         lengthUnits, getDataUnits());
+
+  objG.flush();
+  return val;
 }
 
 bool H5SeisImpl::writeTrace(
@@ -1171,6 +1183,8 @@ bool H5SeisImpl::addPKeySort(const std::string& pKeyName){
     uidxG.createDataSet<ptrdiff_t>(
           std::to_string(i), uidxS).write_raw(uidx.data());
   }
+
+  objG.flush();
   return true;
 }
 
@@ -1296,6 +1310,8 @@ bool H5SeisImpl::updateTraceHeaderLimits(size_t nTrcBuffer)
   if (!h5geo::overwriteAttribute(traceHeaderD, "max", maxHdr))
     return false;
 
+
+  objG.flush();
   return true;
 }
 
@@ -1317,10 +1333,14 @@ bool H5SeisImpl::updateBoundary()
     if (boundary.size() == 0)
       return false;
   }
-  return h5geo::overwriteResizableDataset(
-          objG,
-          opt->getPath(),
-          boundary);
+
+  bool val = h5geo::overwriteResizableDataset(
+        objG,
+        opt->getPath(),
+        boundary);
+
+  objG.flush();
+  return val;
 }
 
 bool H5SeisImpl::updatePKeySort(const std::string& pKeyName)

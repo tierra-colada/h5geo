@@ -76,6 +76,7 @@ bool H5DevCurveImpl::writeCurve(
   if (!opt.has_value())
     return false;
 
+  bool val;
   if (!units.empty()){
     double coef;
     if (name == h5geo::OWT){
@@ -94,18 +95,24 @@ bool H5DevCurveImpl::writeCurve(
 
     v *= coef;
 
-    return h5geo::writeData2IndexedDataset(
+    val = h5geo::writeData2IndexedDataset(
           opt.value(),
           name,
           v,
           true);
+
+    objG.flush();
+    return val;
   }
 
-  return h5geo::writeData2IndexedDataset(
+  val = h5geo::writeData2IndexedDataset(
         opt.value(),
         name,
         v,
         true);
+
+  objG.flush();
+  return val;
 }
 
 bool H5DevCurveImpl::setActive(){

@@ -123,6 +123,7 @@ bool H5PointsImpl::overwritePointsDataset(
   try {
     opt->resize({data.size()});
     opt->write_raw(data.data(), h5geo::compound_Point());
+    objG.flush();
     return true;
   } catch (h5gt::Exception e) {
     return false;

@@ -21,11 +21,14 @@ bool H5MapImpl::writeData(
   if (!opt.has_value())
     return false;
 
-  return h5geo::overwriteResizableDataset(
+  bool val = h5geo::overwriteResizableDataset(
         objG,
         opt->getPath(),
         M,
         dataUnits, getDataUnits());
+
+  objG.flush();
+  return val;
 }
 
 Eigen::MatrixXd H5MapImpl::getData(const std::string& dataUnits){

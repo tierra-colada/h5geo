@@ -335,6 +335,34 @@ TEST_F(H5SeisFixture, writeAndGetSortedData){
       << "Read and compare single header (CDP for example)";
 }
 
+TEST_F(H5SeisFixture, updateBoundary){
+  H5Seis_ptr seis(seisContainer->createSeis(
+                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
+
+  Eigen::MatrixXf traces = Eigen::MatrixXf::Random(
+        seis->getNSamp(), seis->getNTrc());
+
+  ASSERT_TRUE(seis->writeTrace(traces, 0))
+      << "Write all traces at once";
+
+  double HI = 5; // set HI and LO according to your problem.
+  double LO = 0;
+  double range= HI-LO;
+  Eigen::MatrixXd m = Eigen::MatrixXd::Random(seis->getNTrc(), seis->getNTrcHdr()); // 3x3 Matrix filled with random numbers between (-1,1)
+  m = (m + Eigen::MatrixXd::Constant(seis->getNTrc(), seis->getNTrcHdr(),1.))*range/2.; // add 1 to the matrix to have values between 0 and 2; multiply with range/2
+  m = (m + Eigen::MatrixXd::Constant(seis->getNTrc(), seis->getNTrcHdr(),LO)); //set LO as the lower bound (offset)
+
+  Eigen::MatrixXd trcHdr = m.array().round();
+
+  ASSERT_TRUE(seis->writeTraceHeader(trcHdr, 0))
+      << "Write all trace headers at once";
+
+  seis->updateBoundary();
+  auto boundary = seis->getBoundary();
+  ASSERT_TRUE(!boundary.isZero(0));
+}
+
 // ORIGIN POINT1 AND POINT2 ARE DEFINED ONLY FOR 3D STACK DATA AND AFTER 'Finalize()` is called
 //TEST_F(H5SeisFixture, writeAndGetOriginPoint1Point2){
 //  H5Seis_ptr seis(seisContainer->createSeis(
