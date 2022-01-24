@@ -37,18 +37,18 @@ H5Base* H5BaseContainerImpl<H5WellContainer>::clone()
 }
 
 template <typename TBase>
-H5Points* H5BaseContainerImpl<TBase>::getPoints(
+H5Points* H5BaseContainerImpl<TBase>::openPoints(
     const std::string& name)
 {
   if (!h5File.hasObject(name, h5gt::ObjectType::Group))
     return nullptr;
 
   h5gt::Group group = h5File.getGroup(name);
-  return getPoints(group);
+  return openPoints(group);
 }
 
 template <typename TBase>
-H5Points* H5BaseContainerImpl<TBase>::getPoints(
+H5Points* H5BaseContainerImpl<TBase>::openPoints(
     h5gt::Group group)
 {
   return h5geo::openPoints(group);

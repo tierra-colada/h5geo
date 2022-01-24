@@ -8,16 +8,16 @@ namespace fs = std::filesystem;
 H5MapContainerImpl::H5MapContainerImpl(const h5gt::File &h5File) :
   H5BaseContainerImpl(h5File){}
 
-H5Map* H5MapContainerImpl::getMap(const std::string &name)
+H5Map* H5MapContainerImpl::openMap(const std::string &name)
 {
   if (!h5File.hasObject(name, h5gt::ObjectType::Group))
     return nullptr;
 
   h5gt::Group group = h5File.getGroup(name);
-  return getMap(group);
+  return openMap(group);
 }
 
-H5Map* H5MapContainerImpl::getMap(
+H5Map* H5MapContainerImpl::openMap(
     h5gt::Group group)
 {
   return h5geo::openMap(group);
@@ -52,7 +52,7 @@ H5Map* H5MapContainerImpl::createMap(
 }
 
 std::vector<H5Map*>
-H5MapContainerImpl::getMapList() {
+H5MapContainerImpl::openMapList() {
   h5gt::Group group = h5File.getGroup("/");
   std::vector<h5gt::Group> childGroupList =
       getChildList(group, h5geo::ObjectType::MAP);
@@ -60,7 +60,7 @@ H5MapContainerImpl::getMapList() {
   std::vector<H5Map*> childList;
   childList.reserve(childGroupList.size());
   for (size_t i = 0; i < childGroupList.size(); i++){
-    H5Map* map = getMap(childGroupList[i]);
+    H5Map* map = openMap(childGroupList[i]);
     if (map != nullptr)
       childList.push_back(map);
   }

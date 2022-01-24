@@ -15,9 +15,9 @@ protected:
 
 public:
   virtual H5Base* clone() override;
-  virtual H5Points* getPoints(
+  virtual H5Points* openPoints(
       const std::string& name) override;
-  virtual H5Points* getPoints(
+  virtual H5Points* openPoints(
       h5gt::Group group) override;
   virtual H5Points* createPoints(
       std::string& name,

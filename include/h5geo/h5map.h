@@ -49,7 +49,7 @@ public:
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
 
-  virtual H5MapContainer* getMapContainer() const = 0;
+  virtual H5MapContainer* openMapContainer() const = 0;
 
   virtual std::optional<h5gt::DataSet> getMapD() const = 0;
 };

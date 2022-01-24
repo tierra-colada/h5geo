@@ -46,8 +46,8 @@ void H5LogCurve_py(
 
       .def("getRelativeCurveName", &H5LogCurve::getRelativeCurveName)
 
-      .def("getWellContainer", &H5LogCurve::getWellContainer)
-      .def("getWell", &H5LogCurve::getWell)
+      .def("openWellContainer", &H5LogCurve::openWellContainer)
+      .def("openWell", &H5LogCurve::openWell)
 
       .def("getLogCurveD", &H5LogCurve::getLogCurveD);
 }

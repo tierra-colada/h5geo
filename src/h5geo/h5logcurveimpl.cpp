@@ -105,13 +105,13 @@ std::string H5LogCurveImpl::getRelativeCurveName(){
         h5geo::CaseSensitivity::CASE_INSENSITIVE);
 }
 
-H5WellContainer* H5LogCurveImpl::getWellContainer(){
+H5WellContainer* H5LogCurveImpl::openWellContainer(){
   h5gt::File file = getH5File();
   return h5geo::createWellContainer(
         file, h5geo::CreationType::OPEN_OR_CREATE);
 }
 
-H5Well* H5LogCurveImpl::getWell()
+H5Well* H5LogCurveImpl::openWell()
 {
   auto optWellG = getParentG(h5geo::ObjectType::WELL);
   if (!optWellG.has_value())

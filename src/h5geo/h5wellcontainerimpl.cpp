@@ -10,17 +10,17 @@ namespace fs = std::filesystem;
 H5WellContainerImpl::H5WellContainerImpl(const h5gt::File &h5File):
   H5BaseContainerImpl(h5File){}
 
-H5Well* H5WellContainerImpl::getWell(
+H5Well* H5WellContainerImpl::openWell(
     const std::string& name)
 {
   if (!h5File.hasObject(name, h5gt::ObjectType::Group))
     return nullptr;
 
   h5gt::Group group = h5File.getGroup(name);
-  return getWell(group);
+  return openWell(group);
 }
 
-H5Well* H5WellContainerImpl::getWell(
+H5Well* H5WellContainerImpl::openWell(
     h5gt::Group group)
 {
   return h5geo::openWell(group);
@@ -54,7 +54,7 @@ H5Well* H5WellContainerImpl::createWell(
   return new H5WellImpl(opt.value());
 }
 
-H5Well* H5WellContainerImpl::getWellByUWI(
+H5Well* H5WellContainerImpl::openWellByUWI(
     const std::string& name)
 {
   h5gt::Group group = h5File.getGroup("/");
@@ -67,13 +67,13 @@ H5Well* H5WellContainerImpl::getWellByUWI(
 
     if (uwi == name &&
         h5geo::isWell(group))
-      return getWell(group);
+      return openWell(group);
   }
   return nullptr;
 }
 
 std::vector<H5Well*>
-H5WellContainerImpl::getWellList(){
+H5WellContainerImpl::openWellList(){
   h5gt::Group group = h5File.getGroup("/");
   std::vector<h5gt::Group> childGroupList =
       getChildList(group, h5geo::ObjectType::WELL);
@@ -81,7 +81,7 @@ H5WellContainerImpl::getWellList(){
   std::vector<H5Well*> childList;
   childList.reserve(childGroupList.size());
   for (size_t i = 0; i < childGroupList.size(); i++){
-    H5Well* well = getWell(childGroupList[i]);
+    H5Well* well = openWell(childGroupList[i]);
     if (well != nullptr)
       childList.push_back(well);
   }

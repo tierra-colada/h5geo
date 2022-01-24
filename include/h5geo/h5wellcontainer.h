@@ -14,9 +14,9 @@ protected:
   virtual ~H5WellContainer() = default;
 
 public:
-  virtual H5Well* getWell(
+  virtual H5Well* openWell(
       const std::string& name) = 0;
-  virtual H5Well* getWell(
+  virtual H5Well* openWell(
       h5gt::Group group) = 0;
   virtual H5Well* createWell(
       std::string& name,
@@ -27,11 +27,11 @@ public:
       WellParam& p,
       h5geo::CreationType createFlag) = 0;
 
-  virtual H5Well* getWellByUWI(
+  virtual H5Well* openWellByUWI(
       const std::string& name) = 0;
 
   /// must be manually deleted using Delete()
-  virtual std::vector<H5Well*> getWellList() = 0;
+  virtual std::vector<H5Well*> openWellList() = 0;
 };
 
 namespace h5geo {

@@ -11,9 +11,9 @@ protected:
   virtual ~H5WellContainerImpl() = default;
 
 public:
-  virtual H5Well* getWell(
+  virtual H5Well* openWell(
       const std::string& name) override;
-  virtual H5Well* getWell(
+  virtual H5Well* openWell(
       h5gt::Group group) override;
   virtual H5Well* createWell(
       std::string& name,
@@ -24,10 +24,10 @@ public:
       WellParam& p,
       h5geo::CreationType createFlag) override;
 
-  virtual H5Well* getWellByUWI(
+  virtual H5Well* openWellByUWI(
       const std::string& name) override;
 
-  virtual std::vector<H5Well*> getWellList() override;
+  virtual std::vector<H5Well*> openWellList() override;
 
   //----------- FRIEND CLASSES -----------
   friend class H5BaseContainerImpl<H5WellContainer>;

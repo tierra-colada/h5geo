@@ -359,10 +359,10 @@ class test_h5well(unittest.TestCase):
         devCurve = well.createDevCurve(self.DEV_NAME, self.devCurveParam, h5geo.CreationType.OPEN_OR_CREATE)
 
         self.assertFalse(devCurve is None)
-        self.assertTrue(devCurve.getWell())
-        self.assertTrue(logCurve.getWell())
-        self.assertTrue(devCurve.getWellContainer())
-        self.assertTrue(logCurve.getWellContainer())
+        self.assertTrue(devCurve.openWell())
+        self.assertTrue(logCurve.openWell())
+        self.assertTrue(devCurve.openWellContainer())
+        self.assertTrue(logCurve.openWellContainer())
 
     def test_activeDevCurveTest(self):
         well = self.wellContainer.createWell(self.WELL_NAME, self.wellParam, h5geo.CreationType.CREATE_OR_OVERWRITE)
@@ -413,15 +413,15 @@ class test_h5well(unittest.TestCase):
         self.assertTrue(well_2.createDevCurve(devCurveName2, self.devCurveParam, h5geo.CreationType.OPEN_OR_CREATE))
         self.assertTrue(well_2.createLogCurve(logCurveType2, logCurveName2, self.logCurveParam, h5geo.CreationType.OPEN_OR_CREATE))
 
-        self.assertTrue(well_1.getDevCurve(devCurveName2) is None)
-        self.assertTrue(well_1.getLogCurve(logCurveType2, logCurveName2) is None)
-        self.assertTrue(well_2.getDevCurve(devCurveName1) is None)
-        self.assertTrue(well_2.getLogCurve(logCurveType1, logCurveName1) is None)
+        self.assertTrue(well_1.openDevCurve(devCurveName2) is None)
+        self.assertTrue(well_1.openLogCurve(logCurveType2, logCurveName2) is None)
+        self.assertTrue(well_2.openDevCurve(devCurveName1) is None)
+        self.assertTrue(well_2.openLogCurve(logCurveType1, logCurveName1) is None)
 
-        self.assertFalse(well_1.getDevCurve(devCurveName1) is None)
-        self.assertFalse(well_1.getLogCurve(logCurveType1, logCurveName1) is None)
-        self.assertFalse(well_2.getDevCurve(devCurveName2) is None)
-        self.assertFalse(well_2.getLogCurve(logCurveType2, logCurveName2) is None)
+        self.assertFalse(well_1.openDevCurve(devCurveName1) is None)
+        self.assertFalse(well_1.openLogCurve(logCurveType1, logCurveName1) is None)
+        self.assertFalse(well_2.openDevCurve(devCurveName2) is None)
+        self.assertFalse(well_2.openLogCurve(logCurveType2, logCurveName2) is None)
 
 
 if __name__ == '__main__':

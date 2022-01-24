@@ -239,7 +239,7 @@ public:
   virtual bool removePKeySort(const std::string& pKeyName) = 0;
   virtual bool addPKeySort(const std::string& pKeyName) = 0;
 
-  virtual H5SeisContainer* getSeisContainer() = 0;
+  virtual H5SeisContainer* openSeisContainer() = 0;
 
   virtual std::optional<h5gt::DataSet> getBoundaryD() = 0;
   virtual std::optional<h5gt::DataSet> getTextHeaderD() = 0;

@@ -15,7 +15,7 @@
 H5WellImpl::H5WellImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
-H5LogCurve* H5WellImpl::getLogCurve(
+H5LogCurve* H5WellImpl::openLogCurve(
     const std::string &logType,
     const std::string &logName)
 {
@@ -40,7 +40,7 @@ H5LogCurve* H5WellImpl::getLogCurve(
       return nullptr;
 
     h5gt::Group curveG = logG->getGroup(logName);
-    return getLogCurve(curveG);
+    return openLogCurve(curveG);
   } else {
     if (!logG->hasObject(logType, h5gt::ObjectType::Group))
       return nullptr;
@@ -51,11 +51,11 @@ H5LogCurve* H5WellImpl::getLogCurve(
       return nullptr;
 
     h5gt::Group curveG = logTypeG.getGroup(logName);
-    return getLogCurve(curveG);
+    return openLogCurve(curveG);
   }
 }
 
-H5LogCurve* H5WellImpl::getLogCurve(
+H5LogCurve* H5WellImpl::openLogCurve(
     h5gt::Group group)
 {
   auto logG = getLogG();
@@ -68,7 +68,7 @@ H5LogCurve* H5WellImpl::getLogCurve(
   return h5geo::openLogCurve(group);
 }
 
-H5DevCurve* H5WellImpl::getDevCurve(
+H5DevCurve* H5WellImpl::openDevCurve(
     const std::string &devName)
 {
   auto devG = getDevG();
@@ -86,10 +86,10 @@ H5DevCurve* H5WellImpl::getDevCurve(
 
   h5gt::Group curveG = devG->getGroup(devName);
 
-  return getDevCurve(curveG);
+  return openDevCurve(curveG);
 }
 
-H5DevCurve* H5WellImpl::getDevCurve(
+H5DevCurve* H5WellImpl::openDevCurve(
     h5gt::Group group)
 {
   auto devG = getDevG();
@@ -320,7 +320,7 @@ H5DevCurve* H5WellImpl::getActiveDevCurve(){
 
   std::string path = opt->getTargetPath();
   opt->hasObject(path, h5gt::ObjectType::Group);
-  return getDevCurve(opt->getTargetPath());
+  return openDevCurve(opt->getTargetPath());
 }
 
 std::vector<h5gt::Group>
@@ -415,7 +415,7 @@ H5WellImpl::getLogTypeNameList(){
   return logTypeNameList;
 }
 
-H5WellContainer* H5WellImpl::getWellContainer(){
+H5WellContainer* H5WellImpl::openWellContainer(){
   h5gt::File file = getH5File();
   return h5geo::createWellContainer(
         file, h5geo::CreationType::OPEN_OR_CREATE);

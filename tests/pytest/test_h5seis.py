@@ -61,13 +61,13 @@ class test_h5seis(unittest.TestCase):
 
     def test_createAndGetSeis(self):
         seis = self.seisContainer.createSeis(self.SEIS_NAME1, self.p, h5geo.CreationType.CREATE_OR_OVERWRITE)
-        self.seisContainer.getSeis(self.SEIS_NAME1)
+        self.seisContainer.openSeis(self.SEIS_NAME1)
         self.assertFalse(seis is None)
 
     def test_createAndGetSeisFromGroup(self):
         group = self.seisContainer.getH5File().createGroup(self.SEIS_NAME2)
         self.seisContainer.createSeis(group, self.p, h5geo.CreationType.CREATE_OR_OVERWRITE)
-        seis = self.seisContainer.getSeis(self.SEIS_NAME2)
+        seis = self.seisContainer.openSeis(self.SEIS_NAME2)
         self.assertFalse(seis is None)
 
     def test_writeAndGetTextHeader(self):

@@ -11,14 +11,14 @@ protected:
   virtual ~H5WellImpl() = default;
 
 public:
-  virtual H5LogCurve* getLogCurve(
+  virtual H5LogCurve* openLogCurve(
       const std::string &logType,
       const std::string &logName) override;
-  virtual H5LogCurve* getLogCurve(
+  virtual H5LogCurve* openLogCurve(
       h5gt::Group group) override;
-  virtual H5DevCurve* getDevCurve(
+  virtual H5DevCurve* openDevCurve(
       const std::string &devName) override;
-  virtual H5DevCurve* getDevCurve(
+  virtual H5DevCurve* openDevCurve(
       h5gt::Group group) override;
 
   virtual H5LogCurve* createLogCurve(
@@ -63,7 +63,7 @@ public:
   virtual std::vector<std::string> getLogCurveNameList() override;
   virtual std::vector<std::string> getLogTypeNameList() override;
 
-  virtual H5WellContainer* getWellContainer() override;
+  virtual H5WellContainer* openWellContainer() override;
 
   virtual std::optional<h5gt::Group> getDevG() override;
   virtual std::optional<h5gt::Group> getActiveDevG() override;

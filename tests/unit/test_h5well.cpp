@@ -151,11 +151,11 @@ TEST_F(H5WellFixture, equalityOperator){
   H5Well_ptr well1(
         wellContainer->createWell(
           WELL_NAME, wellParam, h5geo::CreationType::OPEN_OR_CREATE));
-  H5Well_ptr well2(wellContainer->getWell(WELL_NAME));
+  H5Well_ptr well2(wellContainer->openWell(WELL_NAME));
   H5Well_ptr well3(
         wellContainer->createWell(
           WELL_NAME2, wellParam, h5geo::CreationType::OPEN_OR_CREATE));
-  H5Well_ptr well4(wellContainer->getWell(WELL_NAME2));
+  H5Well_ptr well4(wellContainer->openWell(WELL_NAME2));
 
   ASSERT_TRUE(*well1 == *well1);
   ASSERT_TRUE(*well1 == *well2);
@@ -164,16 +164,16 @@ TEST_F(H5WellFixture, equalityOperator){
   ASSERT_TRUE(*well3 == *well4);
 }
 
-TEST_F(H5WellFixture, getWellByUWI){
+TEST_F(H5WellFixture, openWellByUWI){
   H5Well_ptr well(
         wellContainer->createWell(
           WELL_NAME, wellParam, h5geo::CreationType::OPEN_OR_CREATE));
   ASSERT_TRUE(well != nullptr);
 
-  H5Well_ptr wellByUwi1(wellContainer->getWellByUWI("noname"));
+  H5Well_ptr wellByUwi1(wellContainer->openWellByUWI("noname"));
   ASSERT_TRUE(wellByUwi1 == nullptr);
 
-  H5Well_ptr wellByUwi2(wellContainer->getWellByUWI(wellParam.uwi));
+  H5Well_ptr wellByUwi2(wellContainer->openWellByUWI(wellParam.uwi));
   ASSERT_TRUE(wellByUwi2 != nullptr);
 }
 
@@ -520,14 +520,14 @@ TEST_F(H5WellFixture, getWellFromCurve){
 
   ASSERT_TRUE(devCurve != nullptr);
 
-  ASSERT_TRUE(devCurve->getWell())
+  ASSERT_TRUE(devCurve->openWell())
       << "Try to find well containing this curve";
-  ASSERT_TRUE(logCurve->getWell())
+  ASSERT_TRUE(logCurve->openWell())
       << "Try to find well containing this curve";
 
-  ASSERT_TRUE(devCurve->getWellContainer())
+  ASSERT_TRUE(devCurve->openWellContainer())
       << "Get wellcontainer containing this curve";
-  ASSERT_TRUE(logCurve->getWellContainer())
+  ASSERT_TRUE(logCurve->openWellContainer())
       << "Get wellcontainer containing this curve";
 }
 
@@ -592,15 +592,15 @@ TEST_F(H5WellFixture, getCurveFromDifferentWell){
   ASSERT_TRUE(well_2->createDevCurve(devCurveName2, devCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
   ASSERT_TRUE(well_2->createLogCurve(logCurveType2, logCurveName2, logCurveParam, h5geo::CreationType::OPEN_OR_CREATE));
 
-  ASSERT_FALSE(well_1->getDevCurve(devCurveName2) != nullptr);
-  ASSERT_FALSE(well_1->getLogCurve(logCurveType2, logCurveName2) != nullptr);
-  ASSERT_FALSE(well_2->getDevCurve(devCurveName1) != nullptr);
-  ASSERT_FALSE(well_2->getLogCurve(logCurveType1, logCurveName1) != nullptr);
+  ASSERT_FALSE(well_1->openDevCurve(devCurveName2) != nullptr);
+  ASSERT_FALSE(well_1->openLogCurve(logCurveType2, logCurveName2) != nullptr);
+  ASSERT_FALSE(well_2->openDevCurve(devCurveName1) != nullptr);
+  ASSERT_FALSE(well_2->openLogCurve(logCurveType1, logCurveName1) != nullptr);
 
-  ASSERT_TRUE(well_1->getDevCurve(devCurveName1) != nullptr);
-  ASSERT_TRUE(well_1->getLogCurve(logCurveType1, logCurveName1) != nullptr);
-  ASSERT_TRUE(well_2->getDevCurve(devCurveName2) != nullptr);
-  ASSERT_TRUE(well_2->getLogCurve(logCurveType2, logCurveName2) != nullptr);
+  ASSERT_TRUE(well_1->openDevCurve(devCurveName1) != nullptr);
+  ASSERT_TRUE(well_1->openLogCurve(logCurveType1, logCurveName1) != nullptr);
+  ASSERT_TRUE(well_2->openDevCurve(devCurveName2) != nullptr);
+  ASSERT_TRUE(well_2->openLogCurve(logCurveType2, logCurveName2) != nullptr);
 }
 
 TEST_F(H5WellFixture, createPointsFromWellTop){

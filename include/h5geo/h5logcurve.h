@@ -32,8 +32,8 @@ public:
 
   virtual std::string getRelativeCurveName() = 0;
 
-  virtual H5WellContainer* getWellContainer() = 0;
-  virtual H5Well* getWell() = 0;
+  virtual H5WellContainer* openWellContainer() = 0;
+  virtual H5Well* openWell() = 0;
 
   virtual std::optional<h5gt::DataSet> getLogCurveD() = 0;
 };

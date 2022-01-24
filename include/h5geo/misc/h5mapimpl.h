@@ -46,7 +46,7 @@ public:
   virtual Eigen::VectorXd getPoint2(
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
-  virtual H5MapContainer* getMapContainer() const override;
+  virtual H5MapContainer* openMapContainer() const override;
 
   virtual std::optional<h5gt::DataSet> getMapD() const override;
 

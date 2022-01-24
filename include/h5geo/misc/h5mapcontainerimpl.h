@@ -11,9 +11,9 @@ protected:
   virtual ~H5MapContainerImpl() = default;
 
 public:
-  virtual H5Map* getMap(
+  virtual H5Map* openMap(
       const std::string& name) override;
-  virtual H5Map* getMap(
+  virtual H5Map* openMap(
       h5gt::Group group) override;
   virtual H5Map* createMap(
       std::string& name,
@@ -24,7 +24,7 @@ public:
       MapParam &p,
       h5geo::CreationType createFlag) override;
 
-  virtual std::vector<H5Map*> getMapList() override;
+  virtual std::vector<H5Map*> openMapList() override;
 
   //----------- FRIEND CLASSES -----------
   friend class H5BaseContainerImpl<H5MapContainer>;

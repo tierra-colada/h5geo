@@ -63,8 +63,8 @@ void H5DevCurve_py(
 
       .def("getRelativeCurveName", &H5DevCurve::getRelativeCurveName)
 
-      .def("getWellContainer", &H5DevCurve::getWellContainer)
-      .def("getWell", &H5DevCurve::getWell)
+      .def("openWellContainer", &H5DevCurve::openWellContainer)
+      .def("openWell", &H5DevCurve::openWell)
 
       .def("getDevCurveD", &H5DevCurve::getDevCurveD);
 }

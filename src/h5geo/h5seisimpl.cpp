@@ -1174,7 +1174,7 @@ bool H5SeisImpl::addPKeySort(const std::string& pKeyName){
   return true;
 }
 
-H5SeisContainer* H5SeisImpl::getSeisContainer(){
+H5SeisContainer* H5SeisImpl::openSeisContainer(){
   h5gt::File file = getH5File();
   return h5geo::createSeisContainer(
         file, h5geo::CreationType::OPEN_OR_CREATE);

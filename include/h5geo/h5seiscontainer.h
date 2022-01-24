@@ -14,9 +14,9 @@ protected:
   virtual ~H5SeisContainer() = default;
 
 public:
-  virtual H5Seis* getSeis(
+  virtual H5Seis* openSeis(
       const std::string& name) = 0;
-  virtual H5Seis* getSeis(
+  virtual H5Seis* openSeis(
       h5gt::Group group) = 0;
   virtual H5Seis* createSeis(
       std::string& name,
@@ -27,7 +27,7 @@ public:
       SeisParam& p,
       h5geo::CreationType createFlag) = 0;
 
-  virtual std::vector<H5Seis*> getSeisList() = 0;
+  virtual std::vector<H5Seis*> openSeisList() = 0;
 };
 
 namespace h5geo {

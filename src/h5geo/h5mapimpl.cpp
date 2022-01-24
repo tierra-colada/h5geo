@@ -269,7 +269,7 @@ Eigen::VectorXd H5MapImpl::getPoint2(
 }
 
 
-H5MapContainer* H5MapImpl::getMapContainer() const{
+H5MapContainer* H5MapImpl::openMapContainer() const{
   h5gt::File file = getH5File();
   return h5geo::createMapContainer(
         file, h5geo::CreationType::OPEN_OR_CREATE);

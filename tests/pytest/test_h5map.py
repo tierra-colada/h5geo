@@ -64,13 +64,13 @@ class test_h5map(unittest.TestCase):
 
     def test_createAndGetMap(self):
         map = self.mapContainer.createMap(self.MAP_NAME1, self.p, h5geo.CreationType.CREATE_OR_OVERWRITE)
-        self.mapContainer.getMap(self.MAP_NAME1)
+        self.mapContainer.openMap(self.MAP_NAME1)
         self.assertFalse(map is None)
 
     def test_createAndGetMapFromGroup(self):
         group = self.mapContainer.getH5File().createGroup(self.MAP_NAME2)
         self.mapContainer.createMap(group, self.p, h5geo.CreationType.CREATE_OR_OVERWRITE)
-        map = self.mapContainer.getMap(self.MAP_NAME2)
+        map = self.mapContainer.openMap(self.MAP_NAME2)
         self.assertFalse(map is None)
 
     def test_writeAndGetDataFromMap(self):

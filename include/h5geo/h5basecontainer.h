@@ -9,9 +9,9 @@ protected:
   virtual ~H5BaseContainer() = default;
 
 public:
-  virtual H5Points* getPoints(
+  virtual H5Points* openPoints(
       const std::string& name) = 0;
-  virtual H5Points* getPoints(
+  virtual H5Points* openPoints(
       h5gt::Group group) = 0;
   virtual H5Points* createPoints(
       std::string& name,

@@ -14,10 +14,10 @@ void H5Well_py(
     std::unique_ptr<H5Well, ObjectDeleter>>
     &py_obj){
   py_obj
-      .def("getLogCurve", py::overload_cast<const std::string&, const std::string&>(&H5Well::getLogCurve))
-      .def("getLogCurve", py::overload_cast<h5gt::Group>(&H5Well::getLogCurve))
-      .def("getDevCurve", py::overload_cast<const std::string&>(&H5Well::getDevCurve))
-      .def("getDevCurve", py::overload_cast<h5gt::Group>(&H5Well::getDevCurve))
+      .def("openLogCurve", py::overload_cast<const std::string&, const std::string&>(&H5Well::openLogCurve))
+      .def("openLogCurve", py::overload_cast<h5gt::Group>(&H5Well::openLogCurve))
+      .def("openDevCurve", py::overload_cast<const std::string&>(&H5Well::openDevCurve))
+      .def("openDevCurve", py::overload_cast<h5gt::Group>(&H5Well::openDevCurve))
       .def("createLogCurve", py::overload_cast<std::string&, std::string&, LogCurveParam&, CreationType>(&H5Well::createLogCurve))
       .def("createLogCurve", py::overload_cast<h5gt::Group, LogCurveParam&, CreationType>(&H5Well::createLogCurve))
       .def("createDevCurve", py::overload_cast<std::string&, DevCurveParam&, CreationType>(&H5Well::createDevCurve))
@@ -44,7 +44,7 @@ void H5Well_py(
       .def("getLogCurveNameList", &H5Well::getLogCurveNameList)
       .def("getLogTypeNameList", &H5Well::getLogTypeNameList)
 
-      .def("getWellContainer", &H5Well::getWellContainer)
+      .def("openWellContainer", &H5Well::openWellContainer)
 
       .def("getDevG", &H5Well::getDevG)
       .def("getActiveDevG", &H5Well::getActiveDevG)

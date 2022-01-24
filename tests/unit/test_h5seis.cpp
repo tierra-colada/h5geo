@@ -150,7 +150,7 @@ TEST_F(H5SeisFixture, createSeisWithDifferentCreateFlags){
 
 TEST_F(H5SeisFixture, createAndGetSeis){
   seisContainer->createSeis(SEIS_NAME1, p, h5geo::CreationType::OPEN_OR_CREATE);
-  H5Seis_ptr seis(seisContainer->getSeis(SEIS_NAME1));
+  H5Seis_ptr seis(seisContainer->openSeis(SEIS_NAME1));
   ASSERT_TRUE(seis != nullptr);
 }
 
@@ -158,7 +158,7 @@ TEST_F(H5SeisFixture, createAndGetSeisFromGroup){
   h5gt::Group group =
       seisContainer->getH5File().createGroup(SEIS_NAME2);
   seisContainer->createSeis(group, p, h5geo::CreationType::OPEN_OR_CREATE);
-  H5Seis_ptr seis(seisContainer->getSeis(SEIS_NAME2));
+  H5Seis_ptr seis(seisContainer->openSeis(SEIS_NAME2));
   ASSERT_TRUE(seis != nullptr);
 }
 

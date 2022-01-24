@@ -298,7 +298,7 @@ void H5Seis_py(
       .def("addPKeySort", &H5Seis::addPKeySort,
            py::arg("pKeyName"))
 
-      .def("getSeisContainer", &H5Seis::getSeisContainer)
+      .def("openSeisContainer", &H5Seis::openSeisContainer)
 
       .def("getBoundaryD", &H5Seis::getBoundaryD)
       .def("getTextHeaderD", &H5Seis::getTextHeaderD)

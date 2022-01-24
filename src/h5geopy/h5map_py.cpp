@@ -53,7 +53,7 @@ void H5Map_py(
            py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
 
-      .def("getMapContainer", &H5Map::getMapContainer)
+      .def("openMapContainer", &H5Map::openMapContainer)
 
       .def("getMapD", &H5Map::getMapD);
 }

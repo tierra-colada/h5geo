@@ -11,9 +11,9 @@ protected:
   virtual ~H5SeisContainerImpl() = default;
 
 public:
-  virtual H5Seis* getSeis(
+  virtual H5Seis* openSeis(
       const std::string& name) override;
-  virtual H5Seis* getSeis(
+  virtual H5Seis* openSeis(
       h5gt::Group group) override;
   virtual H5Seis* createSeis(
       std::string& name,
@@ -24,7 +24,7 @@ public:
       SeisParam& p,
       h5geo::CreationType createFlag) override;
 
-  virtual std::vector<H5Seis*> getSeisList() override;
+  virtual std::vector<H5Seis*> openSeisList() override;
 
   //----------- FRIEND CLASSES -----------
   friend class H5BaseContainerImpl<H5SeisContainer>;

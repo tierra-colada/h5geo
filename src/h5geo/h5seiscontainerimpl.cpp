@@ -8,16 +8,16 @@ namespace fs = std::filesystem;
 H5SeisContainerImpl::H5SeisContainerImpl(const h5gt::File &h5File) :
   H5BaseContainerImpl(h5File){}
 
-H5Seis* H5SeisContainerImpl::getSeis(const std::string &name)
+H5Seis* H5SeisContainerImpl::openSeis(const std::string &name)
 {
   if (!h5File.hasObject(name, h5gt::ObjectType::Group))
     return nullptr;
 
   h5gt::Group group = h5File.getGroup(name);
-  return getSeis(group);
+  return openSeis(group);
 }
 
-H5Seis* H5SeisContainerImpl::getSeis(
+H5Seis* H5SeisContainerImpl::openSeis(
     h5gt::Group group)
 {
   return h5geo::openSeis(group);
@@ -52,7 +52,7 @@ H5Seis* H5SeisContainerImpl::createSeis(
 }
 
 std::vector<H5Seis*>
-H5SeisContainerImpl::getSeisList(){
+H5SeisContainerImpl::openSeisList(){
   h5gt::Group group = h5File.getGroup("/");
   std::vector<h5gt::Group> childGroupList =
       getChildList(group, h5geo::ObjectType::SEISMIC);
@@ -60,7 +60,7 @@ H5SeisContainerImpl::getSeisList(){
   std::vector<H5Seis*> childList;
   childList.reserve(childGroupList.size());
   for (size_t i = 0; i < childGroupList.size(); i++){
-    H5Seis* seis = getSeis(childGroupList[i]);
+    H5Seis* seis = openSeis(childGroupList[i]);
     if (seis != nullptr)
       childList.push_back(seis);
   }

@@ -239,7 +239,7 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
 
   // if the requested data needs to be calculated then we continue
   // and if we go there then units may only have type LENGTH
-  H5Well_ptr well(getWell());
+  H5Well_ptr well(openWell());
   if (!well)
     Eigen::VectorXd();
 
@@ -284,13 +284,13 @@ std::string H5DevCurveImpl::getRelativeCurveName(){
         h5geo::CaseSensitivity::CASE_INSENSITIVE);
 }
 
-H5WellContainer* H5DevCurveImpl::getWellContainer(){
+H5WellContainer* H5DevCurveImpl::openWellContainer(){
   h5gt::File file = getH5File();
   return h5geo::createWellContainer(
         file, h5geo::CreationType::OPEN_OR_CREATE);
 }
 
-H5Well* H5DevCurveImpl::getWell()
+H5Well* H5DevCurveImpl::openWell()
 {
   auto optWellG = getParentG(h5geo::ObjectType::WELL);
   if (!optWellG.has_value())

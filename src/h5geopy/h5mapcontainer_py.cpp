@@ -11,12 +11,12 @@ void H5MapContainer_py(
     std::unique_ptr<H5MapContainer, ObjectDeleter>>
     &py_obj){
   py_obj
-      .def("getMap", py::overload_cast<
+      .def("openMap", py::overload_cast<
            const std::string&>(
-             &H5MapContainer::getMap))
-      .def("getMap", py::overload_cast<
+             &H5MapContainer::openMap))
+      .def("openMap", py::overload_cast<
            h5gt::Group>(
-             &H5MapContainer::getMap))
+             &H5MapContainer::openMap))
       .def("createMap", py::overload_cast<
            std::string&,
            MapParam&,
@@ -27,7 +27,7 @@ void H5MapContainer_py(
            MapParam&,
            CreationType>(
              &H5MapContainer::createMap))
-      .def("getMapList", &H5MapContainer::getMapList);
+      .def("openMapList", &H5MapContainer::openMapList);
 }
 
 } // h5geopy

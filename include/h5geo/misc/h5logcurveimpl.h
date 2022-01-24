@@ -29,8 +29,8 @@ public:
 
   virtual std::string getRelativeCurveName() override;
 
-  virtual H5WellContainer* getWellContainer() override;
-  virtual H5Well* getWell() override;
+  virtual H5WellContainer* openWellContainer() override;
+  virtual H5Well* openWell() override;
 
   virtual std::optional<h5gt::DataSet> getLogCurveD() override;
 

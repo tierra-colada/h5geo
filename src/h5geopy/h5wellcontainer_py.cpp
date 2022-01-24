@@ -11,24 +11,24 @@ void H5WellContainer_py(
     std::unique_ptr<H5WellContainer, ObjectDeleter>>
     &py_obj){
   py_obj
-      .def("getWell", py::overload_cast<
+      .def("openWell", py::overload_cast<
            const std::string&>(
-             &H5WellContainer::getWell))
-      .def("getWell", py::overload_cast<
+             &H5WellContainer::openWell))
+      .def("openWell", py::overload_cast<
            h5gt::Group>(
-             &H5WellContainer::getWell))
+             &H5WellContainer::openWell))
       .def("createWell", py::overload_cast<
            std::string&,
            WellParam&,
            CreationType>(
              &H5WellContainer::createWell))
-      .def("getWellByUWI", &H5WellContainer::getWellByUWI)
+      .def("openWellByUWI", &H5WellContainer::openWellByUWI)
       .def("createWell", py::overload_cast<
            h5gt::Group,
            WellParam&,
            CreationType>(
              &H5WellContainer::createWell))
-      .def("getWellList", &H5WellContainer::getWellList);
+      .def("openWellList", &H5WellContainer::openWellList);
 }
 
 

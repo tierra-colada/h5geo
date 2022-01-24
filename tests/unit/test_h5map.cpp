@@ -82,7 +82,7 @@ TEST_F(H5MapFixture, createContainer){
   ASSERT_TRUE(fs::exists(FILE_NAME1));
 
   H5MapCnt_ptr mapCnt(h5geo::openMapContainerByName("/home/kerim/Documents/Colada_prj/default/DATA/horizons/Seismic horizon 1.h5"));
-  H5Map_ptr map(mapCnt->getMap("Seismic horizon 1"));
+  H5Map_ptr map(mapCnt->openMap("Seismic horizon 1"));
   Eigen::VectorXd origin = map->getOrigin("m", true);
   std::cout << origin << std::endl;
 
@@ -149,7 +149,7 @@ TEST_F(H5MapFixture, openObject){
 
 TEST_F(H5MapFixture, createAndGetMap){
   mapContainer1->createMap(MAP_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE);
-  H5Map_ptr map(mapContainer1->getMap(MAP_NAME1));
+  H5Map_ptr map(mapContainer1->openMap(MAP_NAME1));
   ASSERT_TRUE(map != nullptr);
 }
 
@@ -158,7 +158,7 @@ TEST_F(H5MapFixture, createAndGetMapFromGroup){
       mapContainer1->getH5File().createGroup(MAP_NAME2);
   mapContainer1->createMap(group, p, h5geo::CreationType::CREATE_OR_OVERWRITE);
   H5Map_ptr map(
-        mapContainer1->getMap(MAP_NAME2));
+        mapContainer1->openMap(MAP_NAME2));
   ASSERT_TRUE(map != nullptr);
 }
 

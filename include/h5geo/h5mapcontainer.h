@@ -14,9 +14,9 @@ protected:
   virtual ~H5MapContainer() = default;
 
 public:
-  virtual H5Map* getMap(
+  virtual H5Map* openMap(
       const std::string& name) = 0;
-  virtual H5Map* getMap(
+  virtual H5Map* openMap(
       h5gt::Group group) = 0;
   virtual H5Map* createMap(
       std::string& name,
@@ -27,7 +27,7 @@ public:
       MapParam &p,
       h5geo::CreationType createFlag) = 0;
 
-  virtual std::vector<H5Map*> getMapList() = 0;
+  virtual std::vector<H5Map*> openMapList() = 0;
 };
 
 namespace h5geo {
