@@ -51,23 +51,6 @@ H5Map* H5MapContainerImpl::createMap(
   return new H5MapImpl(opt.value());
 }
 
-std::vector<H5Map*>
-H5MapContainerImpl::openMapList() {
-  h5gt::Group group = h5File.getGroup("/");
-  std::vector<h5gt::Group> childGroupList =
-      getChildList(group, h5geo::ObjectType::MAP);
-
-  std::vector<H5Map*> childList;
-  childList.reserve(childGroupList.size());
-  for (size_t i = 0; i < childGroupList.size(); i++){
-    H5Map* map = openMap(childGroupList[i]);
-    if (map != nullptr)
-      childList.push_back(map);
-  }
-  childList.shrink_to_fit();
-  return childList;
-}
-
 H5MapContainer*
 h5geo::createMapContainer(
     h5gt::File h5File, h5geo::CreationType createFlag)

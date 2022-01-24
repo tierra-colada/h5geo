@@ -26,8 +26,7 @@ void H5MapContainer_py(
            h5gt::Group,
            MapParam&,
            CreationType>(
-             &H5MapContainer::createMap))
-      .def("openMapList", &H5MapContainer::openMapList);
+             &H5MapContainer::createMap));
 }
 
 } // h5geopy

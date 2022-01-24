@@ -90,12 +90,26 @@ h5gt::File H5BaseContainerImpl<TBase>::getH5File() const{
 }
 
 template <typename TBase>
-bool H5BaseContainerImpl<TBase>::operator == (H5BaseContainer& other) const {
+std::vector<h5gt::Group>
+H5BaseContainerImpl<TBase>::getObjGroupList(const h5geo::ObjectType& objType){
+  h5gt::Group group = h5File.getGroup("/");
+  return H5BaseImpl<TBase>::getChildGroupList(group, objType);
+}
+
+template <typename TBase>
+std::vector<std::string>
+H5BaseContainerImpl<TBase>::getObjNameList(const h5geo::ObjectType& objType){
+  h5gt::Group group = h5File.getGroup("/");
+  return H5BaseImpl<TBase>::getChildNameList(group, objType);
+}
+
+template <typename TBase>
+bool H5BaseContainerImpl<TBase>::operator == (const H5BaseContainer& other) const {
   return h5File == other.getH5File();
 }
 
 template <typename TBase>
-bool H5BaseContainerImpl<TBase>::operator != (H5BaseContainer& other) const {
+bool H5BaseContainerImpl<TBase>::operator != (const H5BaseContainer& other) const {
   return !(*this == other);
 }
 

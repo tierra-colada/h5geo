@@ -27,8 +27,7 @@ void H5WellContainer_py(
            h5gt::Group,
            WellParam&,
            CreationType>(
-             &H5WellContainer::createWell))
-      .def("openWellList", &H5WellContainer::openWellList);
+             &H5WellContainer::createWell));
 }
 
 

@@ -24,8 +24,6 @@ public:
       SeisParam& p,
       h5geo::CreationType createFlag) override;
 
-  virtual std::vector<H5Seis*> openSeisList() override;
-
   //----------- FRIEND CLASSES -----------
   friend class H5BaseContainerImpl<H5SeisContainer>;
   friend H5SeisContainer* h5geo::createSeisContainer(

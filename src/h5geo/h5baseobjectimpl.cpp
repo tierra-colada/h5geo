@@ -259,7 +259,19 @@ std::string H5BaseObjectImpl<TBase>::getFullName() const {
 }
 
 template <typename TBase>
-bool H5BaseObjectImpl<TBase>::operator == (H5BaseObject& other) const {
+std::vector<h5gt::Group>
+H5BaseObjectImpl<TBase>::getObjGroupList(const h5geo::ObjectType& objType){
+  return H5BaseImpl<TBase>::getChildGroupList(objG, objType);
+}
+
+template <typename TBase>
+std::vector<std::string>
+H5BaseObjectImpl<TBase>::getObjNameList(const h5geo::ObjectType& objType){
+  return H5BaseImpl<TBase>::getChildNameList(objG, objType);
+}
+
+template <typename TBase>
+bool H5BaseObjectImpl<TBase>::operator == (const H5BaseObject& other) const {
   // to compare h5gt objects their files must be open
   h5gt::File file1 = this->getH5File();
   h5gt::File file2 = other.getH5File();
@@ -267,7 +279,7 @@ bool H5BaseObjectImpl<TBase>::operator == (H5BaseObject& other) const {
 }
 
 template <typename TBase>
-bool H5BaseObjectImpl<TBase>::operator != (H5BaseObject& other) const {
+bool H5BaseObjectImpl<TBase>::operator != (const H5BaseObject& other) const {
   return !(*this == other);
 }
 

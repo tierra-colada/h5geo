@@ -25,8 +25,7 @@ void H5SeisContainer_py(
            h5gt::Group,
            SeisParam&,
            CreationType>(
-             &H5SeisContainer::createSeis))
-      .def("openSeisList", &H5SeisContainer::openSeisList);
+             &H5SeisContainer::createSeis));
 }
 
 

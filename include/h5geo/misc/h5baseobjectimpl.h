@@ -44,31 +44,32 @@ public:
   virtual h5gt::File getH5File() const override;
   virtual h5gt::Group getObjG() const override;
 
+  virtual std::string getName() const override;
+  virtual std::string getFullName() const override;
+
+  virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType) override;
+  virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType) override;
+
+  virtual bool operator == (const H5BaseObject& other) const override;
+  virtual bool operator != (const H5BaseObject& other) const override;
+
+protected:
+  /// \brief getParent Search for parent of type `ObjectType`
+  ///  for the `objG`
+  /// \param objType
+  /// \return
+  std::optional<h5gt::Group>
+  getParentG(const h5geo::ObjectType& objType);
+
   virtual std::optional<h5gt::Group>
   getGroupOpt(
       h5gt::Group& parent,
-      const std::string& groupName) const override;
+      const std::string& groupName) const;
 
   virtual std::optional<h5gt::DataSet>
   getDatasetOpt(
       const h5gt::Group& parent,
-      const std::string& datasetName) const override;
-
-  virtual std::string getName() const override;
-  virtual std::string getFullName() const override;
-
-  virtual bool operator == (H5BaseObject& other) const override;
-  virtual bool operator != (H5BaseObject& other) const override;
-
-protected:
-  /*!
-   * \brief getParent Search for parent of type `ObjectType`
-   *  for the `objG`
-   * \param objType
-   * \return
-   */
-  std::optional<h5gt::Group>
-  getParentG(const h5geo::ObjectType& objType);
+      const std::string& datasetName) const;
 
   //----------- FRIEND CLASSES -----------
   friend H5BaseObject* h5geo::openBaseObject(h5gt::Group group);

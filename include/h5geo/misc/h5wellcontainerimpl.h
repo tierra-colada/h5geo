@@ -27,8 +27,6 @@ public:
   virtual H5Well* openWellByUWI(
       const std::string& name) override;
 
-  virtual std::vector<H5Well*> openWellList() override;
-
   //----------- FRIEND CLASSES -----------
   friend class H5BaseContainerImpl<H5WellContainer>;
   friend H5WellContainer* h5geo::createWellContainer(

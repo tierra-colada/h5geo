@@ -12,11 +12,15 @@ protected:
 public:
   virtual H5Base* clone() override;
   virtual void Delete() override;
-  virtual std::vector<h5gt::Group>
-  getChildList(h5gt::Group& group,
-               const h5geo::ObjectType& objType) override;
 
 protected:
+  virtual std::vector<h5gt::Group>
+  getChildGroupList(h5gt::Group& group,
+               const h5geo::ObjectType& objType);
+  virtual std::vector<std::string>
+  getChildNameList(h5gt::Group& group,
+               const h5geo::ObjectType& objType);
+
   static std::optional<h5gt::File> createContainer(
       std::string& fileName,
       const h5geo::ContainerType& containerType,
@@ -27,15 +31,13 @@ protected:
       h5geo::CreationType createFlag);
 
   std::optional<h5gt::Group>
-  /*!
-   * \brief createObject Creates new object. If `CREATE_UNDER_NEW_NAME`
-   * then `objName` will be chaged to be unique in its parent file.
-   * \param objName
-   * \param parentGroup
-   * \param objType
-   * \param p
-   * \param createFlag
-   */
+  /// \brief createObject Creates new object. If `CREATE_UNDER_NEW_NAME`
+  /// then `objName` will be chaged to be unique in its parent file.
+  /// \param objName
+  /// \param parentGroup
+  /// \param objType
+  /// \param p
+  /// \param createFlag
   createObject(
       std::string& objName,
       h5gt::File parentFile,
@@ -44,15 +46,13 @@ protected:
       h5geo::CreationType createFlag);
 
   std::optional<h5gt::Group>
-  /*!
-   * \brief createObject Creates new object. If `CREATE_UNDER_NEW_NAME`
-   * then `objName` will be chaged to be unique in its parent group.
-   * \param objName
-   * \param parentGroup
-   * \param objType
-   * \param p
-   * \param createFlag
-   */
+  /// \brief createObject Creates new object. If `CREATE_UNDER_NEW_NAME`
+  /// then `objName` will be chaged to be unique in its parent group.
+  /// \param objName
+  /// \param parentGroup
+  /// \param objType
+  /// \param p
+  /// \param createFlag
   createObject(
       std::string& objName,
       h5gt::Group parentGroup,

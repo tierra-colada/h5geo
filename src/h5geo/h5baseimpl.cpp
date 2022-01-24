@@ -35,7 +35,7 @@ void H5BaseImpl<TBase>::Delete()
 
 template <typename TBase>
 std::vector<h5gt::Group>
-H5BaseImpl<TBase>::getChildList(
+H5BaseImpl<TBase>::getChildGroupList(
     h5gt::Group& group,
     const h5geo::ObjectType& objType)
 {
@@ -49,7 +49,37 @@ H5BaseImpl<TBase>::getChildList(
     if (h5geo::isGeoObjectByType(childG, objType)){
       childList.push_back(childG);
     } else {
-      std::vector<h5gt::Group> subChildList = getChildList(childG, objType);
+      std::vector<h5gt::Group> subChildList = getChildGroupList(childG, objType);
+      childList.reserve(childList.size() + subChildList.size());
+      childList.insert(
+            childList.end(),
+            std::make_move_iterator(subChildList.begin()),
+            std::make_move_iterator(subChildList.end()));
+      /* if don't erase then `subChildList`stays in undefined
+       * but safe-to-destruct state. */
+      subChildList.erase(subChildList.begin(), subChildList.end());
+    }
+  }
+  return childList;
+}
+
+template <typename TBase>
+std::vector<std::string>
+H5BaseImpl<TBase>::getChildNameList(
+    h5gt::Group& group,
+    const h5geo::ObjectType& objType)
+{
+  std::vector<std::string> childList;
+  std::vector<std::string> nameList = group.listObjectNames();
+  for (const auto& name : nameList){
+    if (group.getObjectType(name) != h5gt::ObjectType::Group)
+      continue;
+
+    h5gt::Group childG = group.getGroup(name);
+    if (h5geo::isGeoObjectByType(childG, objType)){
+      childList.push_back(childG.getPath());
+    } else {
+      std::vector<std::string> subChildList = getChildNameList(childG, objType);
       childList.reserve(childList.size() + subChildList.size());
       childList.insert(
             childList.end(),

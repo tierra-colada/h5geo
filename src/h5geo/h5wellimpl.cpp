@@ -326,7 +326,7 @@ H5DevCurve* H5WellImpl::getActiveDevCurve(){
 std::vector<h5gt::Group>
 H5WellImpl::getDevCurveGroupList(){
   std::vector<h5gt::Group> childGroupList =
-      getChildList(objG, h5geo::ObjectType::DEVCURVE);
+      getChildGroupList(objG, h5geo::ObjectType::DEVCURVE);
 
   std::vector<h5gt::Group> childList;
   childList.reserve(childGroupList.size());
@@ -345,7 +345,7 @@ H5WellImpl::getDevCurveGroupList(){
 std::vector<h5gt::Group>
 H5WellImpl::getLogCurveGroupList(){
   std::vector<h5gt::Group> childGroupList =
-      getChildList(objG, h5geo::ObjectType::LOGCURVE);
+      getChildGroupList(objG, h5geo::ObjectType::LOGCURVE);
 
   std::vector<h5gt::Group> childList;
   childList.reserve(childGroupList.size());

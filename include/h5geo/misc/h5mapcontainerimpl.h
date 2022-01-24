@@ -24,8 +24,6 @@ public:
       MapParam &p,
       h5geo::CreationType createFlag) override;
 
-  virtual std::vector<H5Map*> openMapList() override;
-
   //----------- FRIEND CLASSES -----------
   friend class H5BaseContainerImpl<H5MapContainer>;
   friend H5MapContainer* h5geo::createMapContainer(

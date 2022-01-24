@@ -29,9 +29,6 @@ public:
 
   virtual H5Well* openWellByUWI(
       const std::string& name) = 0;
-
-  /// must be manually deleted using Delete()
-  virtual std::vector<H5Well*> openWellList() = 0;
 };
 
 namespace h5geo {

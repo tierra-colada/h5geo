@@ -30,8 +30,11 @@ public:
 
   virtual h5gt::File getH5File() const override;
 
-  virtual bool operator == (H5BaseContainer& other) const override;
-  virtual bool operator != (H5BaseContainer& other) const override;
+  virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType) override;
+  virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType) override;
+
+  virtual bool operator == (const H5BaseContainer& other) const override;
+  virtual bool operator != (const H5BaseContainer& other) const override;
 
   //----------- FRIEND CLASSES -----------
   friend H5BaseContainer* h5geo::openBaseContainer(

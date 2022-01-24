@@ -27,8 +27,7 @@ struct H5Base_py
   {
     py_obj
         .def("clone", &H5Base::clone)
-        .def("Delete", &H5Base::Delete)
-        .def("getChildList", &H5Base::getChildList);
+        .def("Delete", &H5Base::Delete);
   }
 };
 

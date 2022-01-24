@@ -59,7 +59,7 @@ H5Well* H5WellContainerImpl::openWellByUWI(
 {
   h5gt::Group group = h5File.getGroup("/");
   std::vector<h5gt::Group> childGroupList =
-      getChildList(group, h5geo::ObjectType::WELL);
+      getChildGroupList(group, h5geo::ObjectType::WELL);
   for (h5gt::Group& group : childGroupList){
     std::string uwi = h5geo::readStringAttribute(
           group,
@@ -70,23 +70,6 @@ H5Well* H5WellContainerImpl::openWellByUWI(
       return openWell(group);
   }
   return nullptr;
-}
-
-std::vector<H5Well*>
-H5WellContainerImpl::openWellList(){
-  h5gt::Group group = h5File.getGroup("/");
-  std::vector<h5gt::Group> childGroupList =
-      getChildList(group, h5geo::ObjectType::WELL);
-
-  std::vector<H5Well*> childList;
-  childList.reserve(childGroupList.size());
-  for (size_t i = 0; i < childGroupList.size(); i++){
-    H5Well* well = openWell(childGroupList[i]);
-    if (well != nullptr)
-      childList.push_back(well);
-  }
-  childList.shrink_to_fit();
-  return childList;
 }
 
 H5WellContainer*

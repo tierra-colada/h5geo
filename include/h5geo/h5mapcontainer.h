@@ -26,8 +26,6 @@ public:
       h5gt::Group group,
       MapParam &p,
       h5geo::CreationType createFlag) = 0;
-
-  virtual std::vector<H5Map*> openMapList() = 0;
 };
 
 namespace h5geo {

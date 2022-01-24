@@ -37,21 +37,14 @@ public:
   virtual h5gt::File getH5File() const = 0;
   virtual h5gt::Group getObjG() const = 0;
 
-  virtual std::optional<h5gt::Group>
-  getGroupOpt(
-      h5gt::Group& parent,
-      const std::string& groupName) const = 0;
-
-  virtual std::optional<h5gt::DataSet>
-  getDatasetOpt(
-      const h5gt::Group& parent,
-      const std::string& datasetName) const = 0;
-
   virtual std::string getName() const = 0;
   virtual std::string getFullName() const = 0;
 
-  virtual bool operator == (H5BaseObject& other) const = 0;
-  virtual bool operator != (H5BaseObject& other) const = 0;
+  virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType) = 0;
+  virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType) = 0;
+
+  virtual bool operator == (const H5BaseObject& other) const = 0;
+  virtual bool operator != (const H5BaseObject& other) const = 0;
 };
 
 namespace h5geo {

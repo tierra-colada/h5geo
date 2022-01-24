@@ -24,8 +24,11 @@ public:
 
   virtual h5gt::File getH5File() const = 0;
 
-  virtual bool operator == (H5BaseContainer& other) const = 0;
-  virtual bool operator != (H5BaseContainer& other) const = 0;
+  virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType) = 0;
+  virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType) = 0;
+
+  virtual bool operator == (const H5BaseContainer& other) const = 0;
+  virtual bool operator != (const H5BaseContainer& other) const = 0;
 };
 
 using H5BaseCnt_ptr = std::unique_ptr<H5BaseContainer, h5geo::ObjectDeleter>;

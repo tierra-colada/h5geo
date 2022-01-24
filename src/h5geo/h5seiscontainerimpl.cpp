@@ -51,23 +51,6 @@ H5Seis* H5SeisContainerImpl::createSeis(
   return new H5SeisImpl(opt.value());
 }
 
-std::vector<H5Seis*>
-H5SeisContainerImpl::openSeisList(){
-  h5gt::Group group = h5File.getGroup("/");
-  std::vector<h5gt::Group> childGroupList =
-      getChildList(group, h5geo::ObjectType::SEISMIC);
-
-  std::vector<H5Seis*> childList;
-  childList.reserve(childGroupList.size());
-  for (size_t i = 0; i < childGroupList.size(); i++){
-    H5Seis* seis = openSeis(childGroupList[i]);
-    if (seis != nullptr)
-      childList.push_back(seis);
-  }
-  childList.shrink_to_fit();
-  return childList;
-}
-
 H5SeisContainer*
 h5geo::createSeisContainer(
     h5gt::File h5File, h5geo::CreationType createFlag)

@@ -45,13 +45,13 @@ struct H5BaseObject_py
         .def("getH5File", &H5BaseObject::getH5File)
         .def("getObjG", &H5BaseObject::getObjG)
 
-        .def("getGroupOpt", &H5BaseObject::getGroupOpt)
-        .def("getDatasetOpt", &H5BaseObject::getDatasetOpt)
-
         .def("getName", &H5BaseObject::getName)
-        .def("getFullName", &H5BaseObject::getFullName);
-  //      .def(py::self == py::self)
-  //      .def(py::self != py::self);
+        .def("getFullName", &H5BaseObject::getFullName)
+
+        .def("getObjGroupList", &H5BaseObject::getObjGroupList)
+        .def("getObjNameList", &H5BaseObject::getObjNameList);
+//        .def(py::self == py::self)
+//        .def(py::self != py::self);
   }
 };
 
