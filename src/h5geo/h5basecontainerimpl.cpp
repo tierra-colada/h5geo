@@ -104,6 +104,11 @@ H5BaseContainerImpl<TBase>::getObjNameList(const h5geo::ObjectType& objType){
 }
 
 template <typename TBase>
+bool H5BaseContainerImpl<TBase>::isEqual(H5BaseContainer* other) const{
+  return h5File == other->getH5File();
+}
+
+template <typename TBase>
 bool H5BaseContainerImpl<TBase>::operator == (const H5BaseContainer& other) const {
   return h5File == other.getH5File();
 }

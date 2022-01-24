@@ -33,7 +33,13 @@ struct H5BaseContainer_py
              h5geo::CreationType>(&H5BaseContainer::createPoints))
         .def("getH5File", &H5BaseContainer::getH5File)
         .def("getObjGroupList", &H5BaseContainer::getObjGroupList)
-        .def("getObjNameList", &H5BaseContainer::getObjNameList);
+        .def("getObjNameList", &H5BaseContainer::getObjNameList)
+
+        .def("isEqual", &H5BaseContainer::isEqual)
+
+        // operators == for abstract classes https://github.com/pybind/pybind11/issues/1487
+        .def("__eq__", [](const H5BaseContainer &self, const H5BaseContainer &other){ return self == other; })
+        .def("__ne__", [](const H5BaseContainer &self, const H5BaseContainer &other){ return self != other; });
   }
 };
 

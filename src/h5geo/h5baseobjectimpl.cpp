@@ -271,6 +271,14 @@ H5BaseObjectImpl<TBase>::getObjNameList(const h5geo::ObjectType& objType){
 }
 
 template <typename TBase>
+bool H5BaseObjectImpl<TBase>::isEqual(H5BaseObject* other) const{
+  // to compare h5gt objects their files must be open
+  h5gt::File file1 = this->getH5File();
+  h5gt::File file2 = other->getH5File();
+  return objG == other->getObjG();
+}
+
+template <typename TBase>
 bool H5BaseObjectImpl<TBase>::operator == (const H5BaseObject& other) const {
   // to compare h5gt objects their files must be open
   h5gt::File file1 = this->getH5File();

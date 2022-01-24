@@ -50,6 +50,8 @@ public:
   virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType) override;
   virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType) override;
 
+  virtual bool isEqual(H5BaseObject* other) const override;
+
   virtual bool operator == (const H5BaseObject& other) const override;
   virtual bool operator != (const H5BaseObject& other) const override;
 

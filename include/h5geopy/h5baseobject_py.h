@@ -49,9 +49,13 @@ struct H5BaseObject_py
         .def("getFullName", &H5BaseObject::getFullName)
 
         .def("getObjGroupList", &H5BaseObject::getObjGroupList)
-        .def("getObjNameList", &H5BaseObject::getObjNameList);
-//        .def(py::self == py::self)
-//        .def(py::self != py::self);
+        .def("getObjNameList", &H5BaseObject::getObjNameList)
+
+        .def("isEqual", &H5BaseObject::isEqual)
+
+        // operators == for abstract classes https://github.com/pybind/pybind11/issues/1487
+        .def("__eq__", [](const H5BaseObject &self, const H5BaseObject &other){ return self == other; })
+        .def("__ne__", [](const H5BaseObject &self, const H5BaseObject &other){ return self != other; });
   }
 };
 
