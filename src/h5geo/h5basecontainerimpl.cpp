@@ -127,14 +127,14 @@ h5geo::openBaseContainer(h5gt::File h5File)
 H5BaseContainer*
 h5geo::openBaseContainerByName(const std::string& fileName)
 {
-  if (fs::exists(fileName) && H5Fis_hdf5(fileName.c_str()) <= 0)
-    return nullptr;
+  if (fs::exists(fileName) && H5Fis_hdf5(fileName.c_str()) > 0){
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
 
-  h5gt::File h5File(
-        fileName,
-        h5gt::File::ReadWrite);
-
-  return openBaseContainer(h5File);
+    return h5geo::openBaseContainer(h5File);
+  }
+  return nullptr;
 }
 
 H5BaseContainer*

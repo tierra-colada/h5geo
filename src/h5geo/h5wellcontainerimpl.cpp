@@ -110,5 +110,6 @@ h5geo::openWellContainerByName(const std::string& fileName){
 
     return h5geo::openWellContainer(h5File);
   }
-  return nullptr;}
+  return nullptr;
+}
 
