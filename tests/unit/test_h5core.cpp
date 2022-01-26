@@ -16,6 +16,20 @@ public:
   virtual void TearDown() override{}
 };
 
+TEST_F(H5CoreFixture, sort){
+  Eigen::VectorXd v(3), v_sorted;
+  v << 3, 2, 1;
+
+  auto ind = h5geo::sort(v, v_sorted);
+  ASSERT_TRUE(ind(0) == 2);
+  ASSERT_TRUE(ind(1) == 1);
+  ASSERT_TRUE(ind(2) == 0);
+
+  ASSERT_TRUE(v(0) == v_sorted(2));
+  ASSERT_TRUE(v(1) == v_sorted(1));
+  ASSERT_TRUE(v(2) == v_sorted(0));
+}
+
 TEST_F(H5CoreFixture, getTraceHeaderNames){
   std::vector<std::string> fullHeaderNames, shortHeaderNames;
   h5geo::getTraceHeaderNames(fullHeaderNames, shortHeaderNames);

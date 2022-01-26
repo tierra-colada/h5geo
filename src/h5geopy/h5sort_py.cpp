@@ -111,11 +111,11 @@ void defineSortFunctions(py::module_& m){
   m.def("sort", &ext::sort<const Eigen::VectorXd>,
         py::arg("v"));
 
-  m.def("sort", &ext::sort_vsorted<Eigen::VectorXf>,
+  m.def("sortv", &ext::sort_vsorted<Eigen::VectorXf>,
         py::arg("v"),
         "return indices such that `v_sorted = v(ind)` and also return `v_sorted`. "
 "Input parameter `v` is a vector");
-  m.def("sort", &ext::sort_vsorted<Eigen::VectorXd>,
+  m.def("sortv", &ext::sort_vsorted<Eigen::VectorXd>,
         py::arg("v"));
 
   m.def("sort_rows", &ext::sort_rows<Eigen::MatrixXf>,
@@ -128,14 +128,14 @@ void defineSortFunctions(py::module_& m){
   m.def("sort_rows", &ext::sort_rows<Eigen::MatrixXd>,
         py::arg("M"));
 
-  m.def("sort_rows", &ext::sort_rows_msorted<Eigen::MatrixXf>,
+  m.def("sort_rowsv", &ext::sort_rows_msorted<Eigen::MatrixXf>,
         py::arg("M"),
         "sorts the rows of a matrix in ascending order "
 "based on the elements in the first column. When the first column "
 "contains repeated elements, sortrows sorts according to the values "
 "in the next column and repeats this behavior for succeeding equal values. "
 "also calculates M_sorted = M(ind, Eigen::all)");
-  m.def("sort_rows", &ext::sort_rows_msorted<Eigen::MatrixXd>,
+  m.def("sort_rowsv", &ext::sort_rows_msorted<Eigen::MatrixXd>,
         py::arg("M"));
 
   m.def("sort_unique", &ext::sort_unique<Eigen::VectorXf>,
@@ -149,7 +149,7 @@ void defineSortFunctions(py::module_& m){
   m.def("sort_unique", &ext::sort_unique<Eigen::VectorXd>,
         py::arg("v"));
 
-  m.def("sort_unique", &ext::sort_unique_vsorted<Eigen::VectorXf>,
+  m.def("sort_uniquev", &ext::sort_unique_vsorted<Eigen::VectorXf>,
         py::arg("v"),
         "find unique elements, sort them, identify unique values "
 "start and end indices and return indices `ind` such that v_sorted = v(ind), "
@@ -158,7 +158,7 @@ void defineSortFunctions(py::module_& m){
 "Each row can be considered as v_sorted.segment(uvals_from_size.row(n)) "
 "gives the same unique value uval. "
 "Also return `v_sorted`");
-  m.def("sort_unique", &ext::sort_unique_vsorted<Eigen::VectorXd>,
+  m.def("sort_uniquev", &ext::sort_unique_vsorted<Eigen::VectorXd>,
         py::arg("v"));
 
   m.def("sort_rows_unique", &ext::sort_rows_unique<Eigen::MatrixXf>,
@@ -169,12 +169,12 @@ void defineSortFunctions(py::module_& m){
   m.def("sort_rows_unique", &ext::sort_rows_unique<Eigen::MatrixXd>,
         py::arg("M"));
 
-  m.def("sort_rows_unique", &ext::sort_rows_unique_msorted<Eigen::MatrixXf>,
+  m.def("sort_rows_uniquev", &ext::sort_rows_unique_msorted<Eigen::MatrixXf>,
         py::arg("M"),
         "find unique rows, sort them, identify unique rows "
 "start and end row-indices and return row-indices such that M_sorted = M(ind, Eigen::all)."
 "Return indices `ind`, `urows` and `urows_from_size`. Also return `M_sorted`");
-  m.def("sort_rows_unique", &ext::sort_rows_unique_msorted<Eigen::MatrixXd>,
+  m.def("sort_rows_uniquev", &ext::sort_rows_unique_msorted<Eigen::MatrixXd>,
         py::arg("M"));
 }
 
