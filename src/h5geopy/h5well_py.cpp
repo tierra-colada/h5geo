@@ -37,7 +37,7 @@ void H5Well_py(
            py::arg_v("lengthUnits", "", "str()"))
       .def("getUWI", &H5Well::getUWI)
 
-      .def("getActiveDevCurve", &H5Well::getActiveDevCurve)
+      .def("openActiveDevCurve", &H5Well::openActiveDevCurve)
       .def("getDevCurveGroupList", &H5Well::getDevCurveGroupList)
       .def("getLogCurveGroupList", &H5Well::getLogCurveGroupList)
       .def("getDevCurveNameList", &H5Well::getDevCurveNameList)

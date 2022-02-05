@@ -62,7 +62,7 @@ public:
       const std::string& lengthUnits = "") = 0;
   virtual std::string getUWI() = 0;
 
-  virtual H5DevCurve* getActiveDevCurve() = 0;
+  virtual H5DevCurve* openActiveDevCurve() = 0;
   /// Omit active dev curve
   virtual std::vector<h5gt::Group> getDevCurveGroupList() = 0;
   virtual std::vector<h5gt::Group> getLogCurveGroupList() = 0;

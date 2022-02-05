@@ -378,7 +378,7 @@ class test_h5well(unittest.TestCase):
         self.assertTrue(devCurve.setActive())
         self.assertTrue(devCurve.isActive())
 
-        activeCurve = well.getActiveDevCurve()
+        activeCurve = well.openActiveDevCurve()
         self.assertFalse(activeCurve is None)
 
         self.assertTrue(

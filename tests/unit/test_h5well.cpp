@@ -551,7 +551,7 @@ TEST_F(H5WellFixture, activeDevCurveTest){
   ASSERT_TRUE(devCurve->setActive());
   ASSERT_TRUE(devCurve->isActive());
 
-  H5DevCurve_ptr activeCurve(well->getActiveDevCurve());
+  H5DevCurve_ptr activeCurve(well->openActiveDevCurve());
   ASSERT_TRUE(activeCurve != nullptr);
 
   ASSERT_TRUE(devCurve->getCurve(h5geo::DevDataType::MD).isApprox(

@@ -56,7 +56,7 @@ public:
       const std::string& lengthUnits = "") override;
   virtual std::string getUWI() override;
 
-  virtual H5DevCurve* getActiveDevCurve() override;
+  virtual H5DevCurve* openActiveDevCurve() override;
   virtual std::vector<h5gt::Group> getDevCurveGroupList() override;
   virtual std::vector<h5gt::Group> getLogCurveGroupList() override;
   virtual std::vector<std::string> getDevCurveNameList() override;

@@ -313,7 +313,7 @@ std::string H5WellImpl::getUWI(){
         std::string{h5geo::detail::UWI});
 }
 
-H5DevCurve* H5WellImpl::getActiveDevCurve(){
+H5DevCurve* H5WellImpl::openActiveDevCurve(){
   auto opt = getActiveDevG();
   if (!opt.has_value())
     return nullptr;
