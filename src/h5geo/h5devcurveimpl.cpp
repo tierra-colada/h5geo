@@ -259,19 +259,19 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
   if (name == h5geo::X){
     Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
           opt.value(), std::string{h5geo::DX});
-    return curve.array() + headXY(0);
+    return (curve*coef).array() + headXY(0);
   } else if (name == h5geo::Y){
     Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
           opt.value(), std::string{h5geo::DY});
-    return curve.array() + headXY(1);
+    return (curve*coef).array() + headXY(1);
   } else if (name == h5geo::TVDSS){
     Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
           opt.value(), std::string{h5geo::TVD});
-    return curve.array() - kb;
+    return (curve*coef).array() - kb;
   } else if (name == h5geo::Z){
     Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(
           opt.value(), std::string{h5geo::TVD});
-    return (curve.array() - kb)*(-1);
+    return ((curve*coef).array() - kb)*(-1);
   }
 
   return Eigen::VectorXd();

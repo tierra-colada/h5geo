@@ -678,3 +678,16 @@ TEST_F(H5WellFixture, getDevCurveGroupList){
   ASSERT_TRUE(logNameList[1] == LOG_TYPE + "/" + logName2);
   ASSERT_TRUE(logTypeList[0] == LOG_TYPE);
 }
+
+//TEST_F(H5WellFixture, customWell){
+//  std::string wellCntName = "/home/kerim/Documents/Colada_prj/default/DATA/wells.h5";
+//  std::string wellName = "85-LX-9";
+
+//  H5WellCnt_ptr wellCnt(h5geo::openWellContainerByName(wellCntName));
+//  H5Well_ptr well(wellCnt->openWell(wellName));
+//  H5DevCurve_ptr devCurve(well->openActiveDevCurve());
+//  Eigen::VectorXd x = devCurve->getCurve("X", "m");
+//  Eigen::VectorXd dx = devCurve->getCurve("DX", "m");
+//  Eigen::VectorXd headXY = well->getHeadCoord("m");
+//  double kb = well->getKB("m");
+//}
