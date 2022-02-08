@@ -3,6 +3,9 @@
 
 #include <Eigen/Dense>
 
+namespace h5geo
+{
+
 template <typename D>
 Eigen::VectorX<typename D::Scalar> polyfit(const Eigen::DenseBase<D> &x, const Eigen::DenseBase<D> &y,int order)
 {
@@ -37,5 +40,7 @@ Eigen::MatrixX<typename D::Scalar> polyval(const Eigen::DenseBase<D> &coeffs, co
   }
   return m;
 }
+
+} // namespace h5geo
 
 #endif // H5POLYFIT_H
