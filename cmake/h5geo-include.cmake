@@ -21,6 +21,7 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5wellcontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5wellimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5pointsimpl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/misc/h5polyfit.h
 
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5basecontainer.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5baseobject.h

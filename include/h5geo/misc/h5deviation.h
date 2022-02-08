@@ -109,14 +109,12 @@ Eigen::MatrixX<typename D::Scalar> TvdssDxDy2MdAzIncl(
     const double& kb, const std::string& angularUnits, const bool& XNorth);
 
 
-/*!
- * \brief angleAndRadius Calculate angle and radius from arc and chord
- * \param arcLen
- * \param chordLen
- * \param eps
- * \param max_iter
- * \return
- */
+///\brief angleAndRadius Calculate angle and radius from arc and chord
+///\param arcLen
+///\param chordLen
+///\param eps
+///\param max_iter
+///\return
 inline Eigen::VectorX<double> angleAndRadius(
     const double& arcLen,
     const double& chordLen,
