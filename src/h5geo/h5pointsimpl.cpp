@@ -87,7 +87,7 @@ H5PointsImpl::getPointsD() const
 }
 
 H5Points* h5geo::openPoints(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::MAP))
+  if (isGeoObjectByType(group, h5geo::ObjectType::POINTS))
       return new H5PointsImpl(group);
 
   return nullptr;

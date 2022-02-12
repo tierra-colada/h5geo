@@ -84,6 +84,7 @@ void defineGeoFunctions(py::module_& m){
   m.def("isLogCurve", &isLogCurve);
   m.def("isDevCurve", &isDevCurve);
   m.def("isSeis", &isSeis);
+  m.def("isPoints", &isPoints);
 
   m.def("getTraceHeaderNames", &ext::getTraceHeaderNames);
   m.def("getBinHeaderNames", &ext::getTraceHeaderNames);

@@ -15,7 +15,8 @@ void ObjectType_py(py::enum_<ObjectType> &py_obj){
       .value("WELL", ObjectType::WELL)
       .value("LOGCURVE", ObjectType::LOGCURVE)
       .value("DEVCURVE", ObjectType::DEVCURVE)
-      .value("SEISMIC", ObjectType::SEISMIC);
+      .value("SEISMIC", ObjectType::SEISMIC)
+      .value("POINTS", ObjectType::POINTS);
 }
 
 void Domain_py(py::enum_<Domain> &py_obj){

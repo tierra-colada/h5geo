@@ -627,6 +627,10 @@ TEST_F(H5WellFixture, createPointsFromWellTop){
   points->writeData(pArrIn);
   pArrOut = points->getData("km");
 
+  H5Points_ptr points_out(wellCnt->openPoints(pointsName));
+  ASSERT_TRUE(points_out);
+  ASSERT_TRUE(h5geo::isPoints(points->getObjG()));
+
   ASSERT_TRUE(pArrIn[0].getName() == pArrOut[0].getName());
   ASSERT_EQ(pArrIn[0].x(), pArrOut[0].x()*1000);
   ASSERT_EQ(pArrIn[0].y(), pArrOut[0].y()*1000);
