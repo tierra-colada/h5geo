@@ -23,9 +23,11 @@ void H5Points_py(
            py::arg_v("temporalUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
 
+      .def("setNPoints", &H5Points::setNPoints)
       .def("setDomain", &H5Points::setDomain)
 
       .def("getContainer", &H5Points::getContainer)
+      .def("getNPoints", &H5Points::getNPoints)
       .def("getDomain", &H5Points::getDomain)
       .def("getPointsD", &H5Points::getPointsD);
 }

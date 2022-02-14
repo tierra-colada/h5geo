@@ -58,6 +58,21 @@ h5geo::PointArray H5PointsImpl::getData(
   return data;
 }
 
+bool H5PointsImpl::setNPoints(size_t n)
+{
+  auto opt = getPointsD();
+  if (!opt.has_value())
+    return false;
+
+  try {
+    opt->resize({n});
+    objG.flush();
+    return true;
+  } catch (h5gt::Exception e) {
+    return false;
+  }
+}
+
 bool H5PointsImpl::setDomain(const h5geo::Domain& val){
   unsigned v = static_cast<unsigned>(val);
   return h5geo::overwriteAttribute(
@@ -69,6 +84,15 @@ bool H5PointsImpl::setDomain(const h5geo::Domain& val){
 H5BaseContainer* H5PointsImpl::getContainer() const{
   h5gt::File file = getH5File();
   return h5geo::openContainer(file);
+}
+
+size_t H5PointsImpl::getNPoints()
+{
+  auto opt = getPointsD();
+  if (!opt.has_value())
+    return 0;
+
+  return opt->getElementCount();
 }
 
 h5geo::Domain H5PointsImpl::getDomain(){
