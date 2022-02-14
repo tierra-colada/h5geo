@@ -119,6 +119,42 @@ bool H5BaseContainerImpl<TBase>::operator != (const H5BaseContainer& other) cons
 }
 
 H5BaseContainer*
+h5geo::createContainer(
+    h5gt::File h5File,
+    h5geo::ContainerType cntType,
+    h5geo::CreationType createFlag)
+{
+  switch (static_cast<h5geo::ContainerType>(cntType)) {
+  case h5geo::ContainerType::MAP :
+    return h5geo::createMapContainer(h5File, createFlag);
+  case h5geo::ContainerType::SEISMIC :
+    return h5geo::createSeisContainer(h5File, createFlag);
+  case h5geo::ContainerType::WELL :
+    return h5geo::createWellContainer(h5File, createFlag);
+  default :
+    return nullptr;
+  }
+}
+
+H5BaseContainer*
+h5geo::createContainerByName(
+    std::string& fileName,
+    h5geo::ContainerType cntType,
+    h5geo::CreationType createFlag)
+{
+  switch (static_cast<h5geo::ContainerType>(cntType)) {
+  case h5geo::ContainerType::MAP :
+    return h5geo::createMapContainerByName(fileName, createFlag);
+  case h5geo::ContainerType::SEISMIC :
+    return h5geo::createSeisContainerByName(fileName, createFlag);
+  case h5geo::ContainerType::WELL :
+    return h5geo::createWellContainerByName(fileName, createFlag);
+  default :
+    return nullptr;
+  }
+}
+
+H5BaseContainer*
 h5geo::openBaseContainer(h5gt::File h5File)
 {
   return new H5BaseContainerImpl<H5BaseContainer>(h5File);

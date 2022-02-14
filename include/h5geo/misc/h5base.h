@@ -109,6 +109,12 @@ struct ObjectDeleter
 extern "C" {
 
 //----------- CONTAINERS -----------
+H5GEO_EXPORT H5BaseContainer* createContainer(
+    h5gt::File h5File, h5geo::ContainerType cntType, h5geo::CreationType createFlag);
+
+H5GEO_EXPORT H5BaseContainer* createContainerByName(
+    std::string& fileName, h5geo::ContainerType cntType, h5geo::CreationType createFlag);
+
 /// Check if the file can be treated as
 /// H5SeisContainer/H5MapContaier/H5WellContainer etc
 /// and create appropriate object.
