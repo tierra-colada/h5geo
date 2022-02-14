@@ -81,7 +81,7 @@ bool H5PointsImpl::setDomain(const h5geo::Domain& val){
         v);
 }
 
-H5BaseContainer* H5PointsImpl::getContainer() const{
+H5BaseContainer* H5PointsImpl::openContainer() const{
   h5gt::File file = getH5File();
   return h5geo::openContainer(file);
 }

@@ -34,6 +34,7 @@ struct H5BaseContainer_py
         .def("getH5File", &H5BaseContainer::getH5File)
         .def("getObjGroupList", &H5BaseContainer::getObjGroupList)
         .def("getObjNameList", &H5BaseContainer::getObjNameList)
+        .def("getContainerType", &H5BaseContainer::getContainerType)
 
         .def("isEqual", &H5BaseContainer::isEqual)
 

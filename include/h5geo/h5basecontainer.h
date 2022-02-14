@@ -26,6 +26,7 @@ public:
 
   virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType) = 0;
   virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType) = 0;
+  virtual h5geo::ContainerType getContainerType() = 0;
 
   /// Does the same as operator '=='
   virtual bool isEqual(H5BaseContainer* other) const = 0;

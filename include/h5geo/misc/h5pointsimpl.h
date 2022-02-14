@@ -28,7 +28,7 @@ public:
   virtual bool setNPoints(size_t n) override;
   virtual bool setDomain(const h5geo::Domain& domain) override;
 
-  virtual H5BaseContainer* getContainer() const override;
+  virtual H5BaseContainer* openContainer() const override;
   virtual size_t getNPoints() override;
   virtual h5geo::Domain getDomain() override;
 

@@ -27,7 +27,7 @@ public:
   virtual bool setNPoints(size_t n) = 0;
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
 
-  virtual H5BaseContainer* getContainer() const = 0;
+  virtual H5BaseContainer* openContainer() const = 0;
   virtual size_t getNPoints() = 0;
   virtual h5geo::Domain getDomain() = 0;
 

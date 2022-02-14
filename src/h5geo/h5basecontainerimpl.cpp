@@ -4,6 +4,7 @@
 #include "../../include/h5geo/misc/h5wellcontainerimpl.h"
 #include "../../include/h5geo/misc/h5pointsimpl.h"
 #include "../../include/h5geo/h5core.h"
+#include "../../include/h5geo/misc/h5core_enum_string.h"
 
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -101,6 +102,14 @@ std::vector<std::string>
 H5BaseContainerImpl<TBase>::getObjNameList(const h5geo::ObjectType& objType){
   h5gt::Group group = h5File.getGroup("/");
   return H5BaseImpl<TBase>::getChildNameList(group, objType);
+}
+
+template <typename TBase>
+h5geo::ContainerType
+H5BaseContainerImpl<TBase>::getContainerType()
+{
+  return static_cast<h5geo::ContainerType>(
+        h5geo::readEnumAttribute(h5File, std::string(h5geo::detail::ContainerType)));
 }
 
 template <typename TBase>

@@ -26,7 +26,7 @@ void H5Points_py(
       .def("setNPoints", &H5Points::setNPoints)
       .def("setDomain", &H5Points::setDomain)
 
-      .def("getContainer", &H5Points::getContainer)
+      .def("openContainer", &H5Points::openContainer)
       .def("getNPoints", &H5Points::getNPoints)
       .def("getDomain", &H5Points::getDomain)
       .def("getPointsD", &H5Points::getPointsD);
