@@ -114,6 +114,9 @@ H5BaseContainerImpl<TBase>::getContainerType()
 
 template <typename TBase>
 bool H5BaseContainerImpl<TBase>::isEqual(H5BaseContainer* other) const{
+  if (!other)
+    return false;
+
   return h5File == other->getH5File();
 }
 
