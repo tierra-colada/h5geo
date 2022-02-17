@@ -23,6 +23,8 @@ public:
       Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") = 0;
 
+  virtual size_t getNCurves() = 0;
+  virtual size_t getNSamp() = 0;
   virtual Eigen::VectorXd getCurve(
       const h5geo::LogDataType& name,
       const std::string& units = "") = 0;

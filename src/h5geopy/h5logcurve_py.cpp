@@ -31,6 +31,8 @@ void H5LogCurve_py(
            py::arg("data"),
            py::arg_v("units", "", "str()"))
 
+      .def("getNCurves", &H5LogCurve::getNCurves)
+      .def("getNSamp", &H5LogCurve::getNSamp)
       .def("getCurve", py::overload_cast<
            const LogDataType&,
            const std::string&>(

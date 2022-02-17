@@ -140,14 +140,6 @@ bool H5DevCurveImpl::isActive(){
   return *this == activeDev;
 }
 
-size_t H5DevCurveImpl::getNCurves(){
-  auto opt = getDevCurveD();
-  if (!opt.has_value())
-    return 0;
-
-  return opt->getDimensions()[0];
-}
-
 void H5DevCurveImpl::updateMdAzimIncl(){
   Eigen::MatrixXd M;
   M.resize(getNSamp(), 3);
@@ -175,6 +167,14 @@ void H5DevCurveImpl::updateTvdDxDy(){
   writeTVD(MM.col(3));
   writeDX(MM.col(1));
   writeDY(MM.col(2));
+}
+
+size_t H5DevCurveImpl::getNCurves(){
+  auto opt = getDevCurveD();
+  if (!opt.has_value())
+    return 0;
+
+  return opt->getDimensions()[0];
 }
 
 size_t H5DevCurveImpl::getNSamp(){

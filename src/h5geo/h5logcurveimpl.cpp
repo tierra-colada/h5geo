@@ -60,6 +60,22 @@ bool H5LogCurveImpl::writeCurve(
   return val;
 }
 
+size_t H5LogCurveImpl::getNCurves(){
+  auto opt = getLogCurveD();
+  if (!opt.has_value())
+    return 0;
+
+  return opt->getDimensions()[0];
+}
+
+size_t H5LogCurveImpl::getNSamp(){
+  auto opt = getLogCurveD();
+  if (!opt.has_value())
+    return 0;
+
+  return opt->getDimensions()[1];
+}
+
 Eigen::VectorXd H5LogCurveImpl::getCurve(
     const h5geo::LogDataType& name,
     const std::string& units)

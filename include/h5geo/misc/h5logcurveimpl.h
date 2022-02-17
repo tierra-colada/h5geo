@@ -20,6 +20,8 @@ public:
       Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") override;
 
+  virtual size_t getNCurves() override;
+  virtual size_t getNSamp() override;
   virtual Eigen::VectorXd getCurve(
       const h5geo::LogDataType& name,
       const std::string& units = "") override;
