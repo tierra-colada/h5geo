@@ -101,7 +101,7 @@ void H5Seis_py(
            py::arg_v("fromHdrInd", 0, "0"))
       .def("writeTraceHeader", py::overload_cast<
            const std::string&,
-           const Eigen::Ref<const Eigen::MatrixXd>&,
+           Eigen::Ref<Eigen::MatrixXd>,
            const size_t&,
            const std::string&,
            const std::string&>(
@@ -111,6 +111,44 @@ void H5Seis_py(
            py::arg_v("fromTrc", 0, "0"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
+      .def("writeTraceHeader", py::overload_cast<
+           const std::string&,
+           Eigen::Ref<Eigen::MatrixXd>,
+           const Eigen::Ref<const Eigen::VectorX<size_t>>&,
+           const std::string&,
+           const std::string&>(
+             &H5Seis::writeTraceHeader),
+           py::arg("hdrName"),
+           py::arg("hdr"),
+           py::arg("trcInd"),
+           py::arg_v("unitsFrom", "", "str()"),
+           py::arg_v("unitsTo", "", "str()"))
+
+      .def("writeXYTraceHeaders", py::overload_cast<
+           const std::vector<std::string>&,
+           Eigen::Ref<Eigen::MatrixXd>&,
+           const size_t&,
+           const std::string&,
+           bool>(
+             &H5Seis::writeXYTraceHeaders),
+           py::arg("xhHdrNames"),
+           py::arg("xy"),
+           py::arg_v("fromTrc", 0, "0"),
+           py::arg_v("lengthUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
+      .def("writeXYTraceHeaders", py::overload_cast<
+           const std::vector<std::string>&,
+           Eigen::Ref<Eigen::MatrixXd>&,
+           const Eigen::Ref<const Eigen::VectorX<size_t>>&,
+           const std::string&,
+           bool>(
+             &H5Seis::writeXYTraceHeaders),
+           py::arg("xhHdrNames"),
+           py::arg("xy"),
+           py::arg("trcInd"),
+           py::arg_v("lengthUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
+
       .def("setNTrc", &H5Seis::setNTrc)
       .def("setNSamp", &H5Seis::setNSamp)
 
@@ -179,6 +217,31 @@ void H5Seis_py(
            py::arg("trcHdrInd"),
            py::arg_v("unitsFrom", std::vector<std::string>(), "list()"),
            py::arg_v("unitsTo", std::vector<std::string>(), "list()"))
+
+      .def("getXYTraceHeaders", py::overload_cast<
+           const std::vector<std::string>&,
+           const size_t&,
+           size_t,
+           const std::string&,
+           bool>(
+             &H5Seis::getXYTraceHeaders),
+           py::arg("xyHdrNames"),
+           py::arg_v("fromTrc", 0, "0"),
+           py::arg_v("nTrc", std::numeric_limits<size_t>::max(), "sys.maxint"),
+           py::arg_v("lengthUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
+      .def("getXYTraceHeaders", py::overload_cast<
+           const std::vector<std::string>&,
+           const Eigen::Ref<const Eigen::VectorX<size_t>>&,
+           const std::string&,
+           bool>(
+             &H5Seis::getXYTraceHeaders),
+           py::arg("xyHdrNames"),
+           py::arg("trcInd"),
+           py::arg_v("lengthUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
+
+
       .def("getSortedData", &ext::getSortedData,
            py::arg("keyList"),
            py::arg("minList"),

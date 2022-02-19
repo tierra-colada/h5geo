@@ -194,23 +194,155 @@ bool H5SeisImpl::writeTraceHeader(
 
 bool H5SeisImpl::writeTraceHeader(
     const std::string& hdrName,
-    const Eigen::Ref<const Eigen::MatrixXd>& hdr,
+    Eigen::Ref<Eigen::MatrixXd> hdr,
     const size_t& fromTrc,
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
-  ptrdiff_t ind = getTraceHeaderIndex(hdrName);
-  if (ind < 0)
+  ptrdiff_t hdrInd = getTraceHeaderIndex(hdrName);
+  if (hdrInd < 0)
     return false;
 
   if (!unitsFrom.empty() && !unitsTo.empty()){
     double coef = units::convert(
           units::unit_from_string(unitsFrom),
           units::unit_from_string(unitsTo));
-    return writeTraceHeader(hdr*coef, fromTrc, ind);
+    hdr = hdr*coef;
   }
 
-  return writeTraceHeader(hdr, fromTrc, ind);
+  traceHeaderD.select({size_t(hdrInd), fromTrc},
+                      {(size_t)1,
+                       (size_t)hdr.size()}).write_raw(hdr.data());
+  return true;
+}
+
+bool H5SeisImpl::writeTraceHeader(
+    const std::string& hdrName,
+    Eigen::Ref<Eigen::MatrixXd> hdr,
+    const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
+{
+  ptrdiff_t hdrInd = getTraceHeaderIndex(hdrName);
+  if (hdrInd < 0 || hdrInd >= getNTrcHdr())
+    return false;
+
+  if (trcInd.maxCoeff() >= getNTrc())
+    return false;
+
+  h5gt::ElementSet elSet = h5geo::rowCols2ElementSet(hdrInd, trcInd);
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(unitsTo));
+    hdr = hdr*coef;
+  }
+
+  traceHeaderD.select(elSet).write_raw(hdr.data());
+  return true;
+}
+
+bool H5SeisImpl::writeXYTraceHeaders(
+    const std::vector<std::string>& xyHdrNames,
+    Eigen::Ref<Eigen::MatrixXd>& xy,
+    const size_t& fromTrc,
+    const std::string& lengthUnits,
+    bool doCoordTransform)
+{
+  if (xyHdrNames.size() != 2 ||
+      xy.cols() != 2)
+    return false;
+
+  if (fromTrc+xy.rows() > getNTrc())
+    return false;
+
+  ptrdiff_t hdrInd_0 = getTraceHeaderIndex(xyHdrNames[0]);
+  ptrdiff_t hdrInd_1 = getTraceHeaderIndex(xyHdrNames[1]);
+  if (hdrInd_0 < 0 || hdrInd_0 >= getNTrcHdr() ||
+      hdrInd_1 < 0 || hdrInd_1 >= getNTrcHdr())
+    return false;
+
+#ifdef H5GEO_USE_GDAL
+  if (doCoordTransform){
+    OGRCoordinateTransformation* coordTrans =
+        createCoordinateTransformationToWriteData(lengthUnits);
+    if (!coordTrans)
+      return false;
+
+    coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
+    traceHeaderD.select({size_t(hdrInd_0), fromTrc},
+                        {(size_t)1,
+                         (size_t)xy.size()}).write_raw(xy.col(0).data());
+    traceHeaderD.select({size_t(hdrInd_1), fromTrc},
+                        {(size_t)1,
+                         (size_t)xy.size()}).write_raw(xy.col(1).data());
+    return true;
+  }
+#endif
+
+  std::string unitsFrom = getLengthUnits();
+  if (!unitsFrom.empty() && !lengthUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(lengthUnits));
+    xy = xy*coef;
+  }
+
+  traceHeaderD.select({size_t(hdrInd_0), fromTrc},
+                      {(size_t)1,
+                       (size_t)xy.size()}).write_raw(xy.col(0).data());
+  traceHeaderD.select({size_t(hdrInd_1), fromTrc},
+                      {(size_t)1,
+                       (size_t)xy.size()}).write_raw(xy.col(1).data());
+  return true;
+}
+
+bool H5SeisImpl::writeXYTraceHeaders(
+    const std::vector<std::string>& xyHdrNames,
+    Eigen::Ref<Eigen::MatrixXd>& xy,
+    const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+    const std::string& lengthUnits,
+    bool doCoordTransform)
+{
+  if (xyHdrNames.size() != 2)
+    return false;
+
+  if (trcInd.maxCoeff() >= getNTrc())
+    return false;
+
+  ptrdiff_t hdrInd_0 = getTraceHeaderIndex(xyHdrNames[0]);
+  ptrdiff_t hdrInd_1 = getTraceHeaderIndex(xyHdrNames[1]);
+  if (hdrInd_0 < 0 || hdrInd_0 >= getNTrcHdr() ||
+      hdrInd_1 < 0 || hdrInd_1 >= getNTrcHdr())
+    return false;
+
+  h5gt::ElementSet elSet_0 = h5geo::rowCols2ElementSet(hdrInd_0, trcInd);
+  h5gt::ElementSet elSet_1 = h5geo::rowCols2ElementSet(hdrInd_1, trcInd);
+#ifdef H5GEO_USE_GDAL
+  if (doCoordTransform){
+    OGRCoordinateTransformation* coordTrans =
+        createCoordinateTransformationToWriteData(lengthUnits);
+    if (!coordTrans)
+      return false;
+
+    coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
+    traceHeaderD.select(elSet_0).write_raw(xy.col(0).data());
+    traceHeaderD.select(elSet_1).write_raw(xy.col(1).data());
+    return true;
+  }
+#endif
+
+  std::string unitsFrom = getLengthUnits();
+  if (!unitsFrom.empty() && !lengthUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(lengthUnits));
+    xy = xy*coef;
+  }
+
+  traceHeaderD.select(elSet_0).write_raw(xy.col(0).data());
+  traceHeaderD.select(elSet_1).write_raw(xy.col(1).data());
+  return true;
 }
 
 bool H5SeisImpl::setNTrc(size_t nTrc)
@@ -504,6 +636,89 @@ Eigen::MatrixXd H5SeisImpl::getTraceHeader(
         hdrInd,
         unitsFrom,
         unitsTo);
+}
+
+Eigen::MatrixXd H5SeisImpl::getXYTraceHeaders(
+    const std::vector<std::string>& xyHdrNames,
+    const size_t& fromTrc,
+    size_t nTrc,
+    const std::string& lengthUnits,
+    bool doCoordTransform)
+{
+  if (xyHdrNames.size() != 2)
+    return Eigen::MatrixXd();
+
+  ptrdiff_t hdrInd_0 = getTraceHeaderIndex(xyHdrNames[0]);
+  ptrdiff_t hdrInd_1 = getTraceHeaderIndex(xyHdrNames[1]);
+  if (hdrInd_0 < 0 || hdrInd_0 >= getNTrcHdr() ||
+      hdrInd_1 < 0 || hdrInd_1 >= getNTrcHdr())
+    return Eigen::MatrixXd();
+
+  // reduce nTrc if necessary to create matrix of appropriate size
+  if (!checkTraceLimits(fromTrc, nTrc))
+    return Eigen::VectorXd();
+
+  Eigen::MatrixXd xy(nTrc, 2);
+#ifdef H5GEO_USE_GDAL
+  if (doCoordTransform){
+    OGRCoordinateTransformation* coordTrans =
+        createCoordinateTransformationToReadData(lengthUnits);
+    if (!coordTrans)
+      return Eigen::MatrixXd();
+
+    xy.col(0) = this->getTraceHeader(
+          fromTrc, nTrc, hdrInd_0, 1);
+    xy.col(1) = this->getTraceHeader(
+          fromTrc, nTrc, hdrInd_1, 1);
+
+    if (xy.cols() != 2 || xy.rows() < 1)
+      return Eigen::MatrixXd();
+
+    coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
+    return xy;
+  }
+#endif
+
+  std::string unitsFrom = this->getLengthUnits();
+  xy.col(0) = this->getTraceHeader(
+        fromTrc, nTrc, hdrInd_0, 1, {unitsFrom}, {lengthUnits});
+  xy.col(1) = this->getTraceHeader(
+        fromTrc, nTrc, hdrInd_1, 1, {unitsFrom}, {lengthUnits});
+  return xy;
+}
+
+Eigen::MatrixXd H5SeisImpl::getXYTraceHeaders(
+    const std::vector<std::string>& xyHdrNames,
+    const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+    const std::string& lengthUnits,
+    bool doCoordTransform)
+{
+  if (xyHdrNames.size() != 2)
+    return Eigen::MatrixXd();
+
+#ifdef H5GEO_USE_GDAL
+  if (doCoordTransform){
+    OGRCoordinateTransformation* coordTrans =
+        createCoordinateTransformationToReadData(lengthUnits);
+    if (!coordTrans)
+      return Eigen::MatrixXd();
+
+    Eigen::MatrixXd xy = this->getTraceHeader(
+          xyHdrNames, trcInd);
+
+    if (xy.cols() != 2 || xy.rows() < 1)
+      return Eigen::MatrixXd();
+
+    coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
+    return xy;
+  }
+#endif
+
+  std::string unitsFrom = this->getLengthUnits();
+  return this->getTraceHeader(
+        xyHdrNames, trcInd,
+        {unitsFrom, unitsFrom},
+        {lengthUnits, lengthUnits});
 }
 
 Eigen::VectorX<size_t> H5SeisImpl::getSortedData(

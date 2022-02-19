@@ -19,18 +19,16 @@ public:
 
   // WRITERS
   virtual bool writeTextHeader(const char (&txtHdr)[40][80]) = 0;
-  /*!
-   * \brief writeTextHeader Max 40x80 chars are to be written
-   * \param txtHdr
-   * \return
-   */
+
+  /// \brief writeTextHeader Max 40x80 chars are to be written
+  /// \param txtHdr
+  /// \return
   virtual bool writeTextHeader(const std::vector<std::string>& txtHdr) = 0;
   virtual bool writeBinHeader(const double (&binHdr)[30]) = 0;
-  /*!
-   * \brief writeBinHeader Vector length should be equal to getNBinHdr
-   * \param binHdrVec
-   * \return
-   */
+
+  /// \brief writeBinHeader Vector length should be equal to getNBinHdr
+  /// \param binHdrVec
+  /// \return
   virtual bool writeBinHeader(const std::vector<double>& binHdrVec) = 0;
   virtual bool writeBinHeader(
       const Eigen::Ref<const Eigen::VectorXd>& binHdrVec) = 0;
@@ -53,10 +51,29 @@ public:
       const size_t& fromHdrInd = 0) = 0;
   virtual bool writeTraceHeader(
       const std::string& hdrName,
-      const Eigen::Ref<const Eigen::MatrixXd>& hdr,
+      Eigen::Ref<Eigen::MatrixXd> hdr,
       const size_t& fromTrc = 0,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
+  virtual bool writeTraceHeader(
+      const std::string& hdrName,
+      Eigen::Ref<Eigen::MatrixXd> hdr,
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
+
+  virtual bool writeXYTraceHeaders(
+      const std::vector<std::string>& xyHdrNames,
+      Eigen::Ref<Eigen::MatrixXd>& xy,
+      const size_t& fromTrc = 0,
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) = 0;
+  virtual bool writeXYTraceHeaders(
+      const std::vector<std::string>& xyHdrNames,
+      Eigen::Ref<Eigen::MatrixXd>& xy,
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) = 0;
 
   /// resize trace and trace header datasets
   virtual bool setNTrc(size_t nTrc) = 0;
@@ -70,36 +87,34 @@ public:
       const std::string& hdrName,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
-  /*!
-   * \brief getTrace Get block of traces. If `nTrc` or
-   * `nSamp` exceed max values then these values are
-   * changed to max allowed (that is why they are not `const`)
-   * \param fromTrc
-   * \param nTrc
-   * \param fromSampInd
-   * \param nSamp
-   * \param dataUnits
-   * \return
-   */
+
+  /// \brief getTrace Get block of traces. If `nTrc` or
+  /// `nSamp` exceed max values then these values are
+  /// changed to max allowed (that is why they are not `const`)
+  /// \param fromTrc
+  /// \param nTrc
+  /// \param fromSampInd
+  /// \param nSamp
+  /// \param dataUnits
+  /// \return
   virtual Eigen::MatrixXf getTrace(
       const size_t& fromTrc,
       size_t nTrc = 1,
       const size_t& fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
       const std::string& dataUnits = "") = 0;
-  /*!
-   * \brief getTraceHeader Get block of trace headers.
-   * If `nTrc` or `nHdr` exceed max values then these
-   * values are changed to max allowed (that is why
-   * they are not `const`)
-   * \param fromTrc
-   * \param nTrc
-   * \param fromHdr
-   * \param nHdr
-   * \param unitsFrom
-   * \param unitsTo
-   * \return
-   */
+
+  /// \brief getTraceHeader Get block of trace headers.
+  /// If `nTrc` or `nHdr` exceed max values then these
+  /// values are changed to max allowed (that is why
+  /// they are not `const`)
+  /// \param fromTrc
+  /// \param nTrc
+  /// \param fromHdr
+  /// \param nHdr
+  /// \param unitsFrom
+  /// \param unitsTo
+  /// \return
   virtual Eigen::MatrixXd getTraceHeader(
       const size_t& fromTrc,
       size_t nTrc = 1,
@@ -133,6 +148,21 @@ public:
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
       const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
       const std::vector<std::string>& unitsTo = std::vector<std::string>()) = 0;
+
+  /// Do the same as `getTraceHeader()` but also able to do a coord transform.
+  /// \return two column matrix if successful. Otherwise empty matrix is returned
+  virtual Eigen::MatrixXd getXYTraceHeaders(
+      const std::vector<std::string>& xyHdrNames,
+      const size_t& fromTrc = 0,
+      size_t nTrc = std::numeric_limits<size_t>::max(),
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) = 0;
+  virtual Eigen::MatrixXd getXYTraceHeaders(
+      const std::vector<std::string>& xyHdrNames,
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) = 0;
+
 
   /// \brief readSortedData Get sorted data based on precalculated
   /// primary sort keys (e.g. before using it you should prepare

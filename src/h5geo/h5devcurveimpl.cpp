@@ -250,11 +250,14 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
   if (!well)
     Eigen::VectorXd();
 
-  Eigen::VectorXd headXY = well->getHeadCoord(units, doCoordTransform);
-  if (headXY.size() != 2)
-    Eigen::VectorXd();
-
   double kb = well->getKB(units);
+
+  Eigen::VectorXd headXY;
+  if (name == h5geo::X || name == h5geo::Y){
+    headXY = well->getHeadCoord(units, doCoordTransform);
+    if (headXY.size() != 2)
+      Eigen::VectorXd();
+  }
 
   if (name == h5geo::X){
     Eigen::VectorXd curve = h5geo::getDataFromIndexedDataset<double>(

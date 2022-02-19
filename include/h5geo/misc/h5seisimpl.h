@@ -17,18 +17,9 @@ protected:
 public:
   // WRITERS
   virtual bool writeTextHeader(const char (&txtHdr)[40][80]) override;
-  /*!
-   * \brief writeTextHeader Max 40x80 chars are to be written
-   * \param txtHdr
-   * \return
-   */
   virtual bool writeTextHeader(const std::vector<std::string>& txtHdr) override;
+
   virtual bool writeBinHeader(const double (&binHdr)[30]) override;
-  /*!
-   * \brief writeBinHeader Vector length should be equal to getNBinHdr
-   * \param binHdrVec
-   * \return
-   */
   virtual bool writeBinHeader(const std::vector<double>& binHdrVec) override;
   virtual bool writeBinHeader(
       const Eigen::Ref<const Eigen::VectorXd>& binHdrVec) override;
@@ -37,10 +28,12 @@ public:
       const double& value,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
+
   virtual bool writeBoundary(
       Eigen::Ref<Eigen::MatrixX2d> M,
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
+
   virtual bool writeTrace(
       const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
       const size_t& fromTrc = 0,
@@ -51,10 +44,29 @@ public:
       const size_t& fromHdrInd = 0) override;
   virtual bool writeTraceHeader(
       const std::string& hdrName,
-      const Eigen::Ref<const Eigen::MatrixXd>& hdr,
+      Eigen::Ref<Eigen::MatrixXd> hdr,
       const size_t& fromTrc = 0,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
+  virtual bool writeTraceHeader(
+      const std::string& hdrName,
+      Eigen::Ref<Eigen::MatrixXd> hdr,
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") override;
+
+  virtual bool writeXYTraceHeaders(
+      const std::vector<std::string>& xyHdrNames,
+      Eigen::Ref<Eigen::MatrixXd>& xy,
+      const size_t& fromTrc = 0,
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) override;
+  virtual bool writeXYTraceHeaders(
+      const std::vector<std::string>& xyHdrNames,
+      Eigen::Ref<Eigen::MatrixXd>& xy,
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) override;
 
   virtual bool setNTrc(size_t nTrc) override;
   virtual bool setNSamp(size_t nSamp) override;
@@ -66,33 +78,14 @@ public:
       const std::string& hdrName,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
-  /*!
-   * \brief getTrace Get block of traces. If `nTrc` or
-   * `nSamp` exceed max values then these values are
-   * changed to max allowed (that is why they are not `const`)
-   * \param fromTrc
-   * \param nTrc
-   * \param fromSampInd
-   * \param nSamp
-   * \return
-   */
+
   virtual Eigen::MatrixXf getTrace(
       const size_t& fromTrc,
       size_t nTrc = 1,
       const size_t& fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
       const std::string& dataUnits = "") override;
-  /*!
-   * \brief getTraceHeader Get block of trace headers.
-   * If `nTrc` or `nHdr` exceed max values then these
-   * values are changed to max allowed (that is why
-   * they are not `const`)
-   * \param fromTrc
-   * \param nTrc
-   * \param fromHdr
-   * \param nHdr
-   * \return
-   */
+
   virtual Eigen::MatrixXd getTraceHeader(
       const size_t& fromTrc,
       size_t nTrc = 1,
@@ -126,25 +119,19 @@ public:
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
       const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
       const std::vector<std::string>& unitsTo = std::vector<std::string>()) override;
-  /*!
-   * \brief readSortedData Get sorted data based on precalculated
-   * primary sort keys (e.g. before using it you should prepare
-   * primary sort keys with `addPKeySort(...)` method)
-   * \param TRACE this is not Eigen::Ref<> because Eigen::Ref<>
-   * doesn't allow to resize matrices
-   * \param HDR this is not Eigen::Ref<> because Eigen::Ref<>
-   * doesn't allow to resize matrices
-   * \param keyList
-   * \param minList
-   * \param maxList
-   * \param fromSampInd first sample index to read
-   * (from 0 to getNSamp())
-   * \param nSamp Number of samples to read (if 0 then
-   * 'TRACE' will be empty). By default all samples
-   * \param readTraceByTrace whether to read h5 in row or col order
-   * \param dataUnits you will get data transformed to these units
-   * \return vector of trace indexes read
-   */
+
+  virtual Eigen::MatrixXd getXYTraceHeaders(
+      const std::vector<std::string>& xyHdrNames,
+      const size_t& fromTrc = 0,
+      size_t nTrc = std::numeric_limits<size_t>::max(),
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) override;
+  virtual Eigen::MatrixXd getXYTraceHeaders(
+      const std::vector<std::string>& xyHdrNames,
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) override;
+
   virtual Eigen::VectorX<size_t> getSortedData(
       Eigen::MatrixXf& TRACE,
       Eigen::MatrixXd& HDR,
@@ -195,23 +182,9 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
 
-  /*!
-   * \brief checkTraceLimits check *fromTrc* and *nTrc* and diminish
-   *  *nTrc* to fit in data limits (if *fromTrc* is inside limit)
-   * \param fromTrc first trace (to read for example)
-   * \param nTrc number of trace (to read for example)
-   * \return
-   */
   virtual bool checkTraceLimits(
       const size_t& fromTrc, size_t& nTrc) override;
-  /*!
-   * \brief checkTraceHeaderLimits check 'fromHdr' and 'nHdr' and diminish
-   * 'nHdr' to fit in data limits (if 'fromTrc' is inside limit)
-   * \param fromHdr first header (usually there are 78 headers so
-   * the value should be less then this value)
-   * \param nHdr number of headers (to read for example)
-   * \return
-   */
+
   virtual bool checkTraceHeaderLimits(
       const size_t& fromHdr, size_t& nHdr) override;
   virtual bool checkSampleLimits(
