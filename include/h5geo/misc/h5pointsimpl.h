@@ -40,14 +40,16 @@ protected:
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "",
       bool doCoordTransform = false);
+  /// Do the coordinate transformation and units convertion
+  /// \param toRead if true then OGRCT will be created to read data
   bool transformPoints(
       h5geo::PointArray& data,
+      bool toReadData,
       const std::string& lengthUnitsFrom = "",
       const std::string& lengthUnitsTo = "",
       const std::string& temporalUnitsFrom = "",
       const std::string& temporalUnitsTo = "",
-      bool doCoordTransform = false,
-      OGRCoordinateTransformation* coordTrans = nullptr);
+      bool doCoordTransform = false);
 
   //----------- FRIEND CLASSES -----------
   friend class H5BaseObjectImpl<H5Points>;

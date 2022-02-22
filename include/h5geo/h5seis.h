@@ -180,6 +180,8 @@ public:
   /// 'TRACE' will be empty). By default all samples
   /// \param readTraceByTrace whether to read h5 in row or col order
   /// \param dataUnits you will get data transformed to these units
+  /// \param lengthUnits works only in pair with 'doCoordTransform'
+  /// \param doCoordTransform only works if two header names are passed (X and Y)
   /// \return vector of trace indexes read
   virtual Eigen::VectorX<size_t> getSortedData(
       Eigen::MatrixXf& TRACE,
@@ -190,7 +192,9 @@ public:
       size_t fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
       bool readTraceByTrace = true,
-      const std::string& dataUnits = "") = 0;
+      const std::string& dataUnits = "",
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) = 0;
 
   virtual ptrdiff_t getBinHeaderIndex(const std::string& hdrName) = 0;
   virtual ptrdiff_t getTraceHeaderIndex(const std::string& hdrName) = 0;

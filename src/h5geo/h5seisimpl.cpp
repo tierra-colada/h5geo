@@ -132,8 +132,7 @@ bool H5SeisImpl::writeBoundary(
   bool val;
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
     if (!coordTrans)
       return false;
 
@@ -264,8 +263,7 @@ bool H5SeisImpl::writeXYTraceHeaders(
 
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
     if (!coordTrans)
       return false;
 
@@ -320,8 +318,7 @@ bool H5SeisImpl::writeXYTraceHeaders(
   h5gt::ElementSet elSet_1 = h5geo::rowCols2ElementSet(hdrInd_1, trcInd);
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
     if (!coordTrans)
       return false;
 
@@ -661,8 +658,7 @@ Eigen::MatrixXd H5SeisImpl::getXYTraceHeaders(
   Eigen::MatrixXd xy(nTrc, 2);
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
     if (!coordTrans)
       return Eigen::MatrixXd();
 
@@ -698,8 +694,7 @@ Eigen::MatrixXd H5SeisImpl::getXYTraceHeaders(
 
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
     if (!coordTrans)
       return Eigen::MatrixXd();
 
@@ -730,7 +725,9 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
     size_t fromSampInd,
     size_t nSamp,
     bool readTraceByTrace,
-    const std::string& dataUnits)
+    const std::string& dataUnits,
+    const std::string& lengthUnits,
+    bool doCoordTransform)
 {
   if (keyList.empty() || minList.empty() || maxList.empty())
     return Eigen::VectorX<size_t>();
@@ -763,39 +760,40 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
   h5gt::ElementSet hdrElSet = h5geo::rowsCols2ElementSet(
         headerIndex, traceIndexes);
 
-  Eigen::MatrixXd tmpHDR(
-        traceIndexes.size(), headerIndex.size());
+  HDR.conservativeResize(traceIndexes.size(), headerIndex.size());
 
-  traceHeaderD.select(hdrElSet).read(tmpHDR.data());
+  traceHeaderD.select(hdrElSet).read(HDR.data());
 
   // take in account SKeys and remove unecessary rows (traces),
   // correct 'traceIndexes'
-  Eigen::VectorX<bool> idx_bool = Eigen::VectorX<bool>::Ones(tmpHDR.rows());
+  Eigen::VectorX<bool> idx_bool = Eigen::VectorX<bool>::Ones(HDR.rows());
   for (size_t i = 1; i < keyList.size(); i++){
     idx_bool = idx_bool.array() && (
-          tmpHDR.col(i).array() >= minList[i] &&
-          tmpHDR.col(i).array() <= maxList[i]);
+          HDR.col(i).array() >= minList[i] &&
+          HDR.col(i).array() <= maxList[i]);
   }
 
   Eigen::VectorX<ptrdiff_t> idx = h5geo::find_index(idx_bool);
-
-  for (ptrdiff_t i = 0; i < idx.size(); i++){
-    tmpHDR.row(i) = tmpHDR.row(idx(i));
-    traceIndexes(i) = traceIndexes(idx(i));
-  }
-  tmpHDR.conservativeResize(idx.size(), Eigen::NoChange);
-  traceIndexes.conservativeResize(idx.size());
-
-  if (tmpHDR.size() == 0 || traceIndexes.size() == 0)
+  HDR = HDR(idx, Eigen::all).eval();
+  traceIndexes = traceIndexes(idx).eval();
+  if (HDR.size() < 1 || traceIndexes.size() < 1)
     return Eigen::VectorX<size_t>();
 
   Eigen::MatrixXd urows;
   Eigen::MatrixX2<ptrdiff_t> urows_from_size;
   Eigen::VectorX<ptrdiff_t> sortInd = h5geo::sort_rows_unique(
-        tmpHDR, urows, urows_from_size);
+        HDR, urows, urows_from_size);
 
-  HDR = tmpHDR(sortInd, Eigen::all);
-  traceIndexes = traceIndexes(sortInd);
+  HDR = HDR(sortInd, Eigen::all).eval();
+  traceIndexes = traceIndexes(sortInd).eval();
+
+#ifdef H5GEO_USE_GDAL
+  if (doCoordTransform && HDR.cols() == 2){
+    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
+    if (coordTrans)
+      coordTrans->Transform(HDR.rows(), HDR.col(0).data(), HDR.col(1).data());
+  }
+#endif
 
   if (fromSampInd >= getNSamp() || nSamp == 0)
     return traceIndexes;
@@ -1297,8 +1295,7 @@ Eigen::MatrixXd H5SeisImpl::getBoundary(
 
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
     if (!coordTrans)
       return Eigen::MatrixXd();
 

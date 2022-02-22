@@ -219,8 +219,7 @@ bool H5WellImpl::setHeadCoord(
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
     if (!coordTrans)
       return false;
 
@@ -275,8 +274,7 @@ Eigen::VectorXd H5WellImpl::getHeadCoord(
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
     if (!coordTrans)
       return Eigen::VectorXd();
 

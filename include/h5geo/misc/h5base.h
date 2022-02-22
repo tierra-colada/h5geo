@@ -96,8 +96,14 @@ public:
   virtual void Delete() = 0;
 };
 
+#ifdef H5GEO_USE_GDAL
+#include <gdal/gdal.h>
+#include <gdal/gdal_priv.h>
+#endif
+
 namespace h5geo
 {
+
 struct ObjectDeleter
 {
   void operator()(H5Base * ptr) const
@@ -105,6 +111,16 @@ struct ObjectDeleter
     ptr->Delete();
   }
 };
+
+#ifdef H5GEO_USE_GDAL
+struct OGRCoordinateTransformationDeleter
+{
+  void operator()(OGRCoordinateTransformation * ptr) const
+  {
+    OGRCoordinateTransformation::DestroyCT(ptr);
+  }
+};
+#endif
 
 extern "C" {
 
@@ -179,6 +195,11 @@ H5GEO_EXPORT bool isSeis(const h5gt::Group &group);
 
 } // h5geo
 
+
 using H5Base_ptr = std::unique_ptr<H5Base, h5geo::ObjectDeleter>;
+
+#ifdef H5GEO_USE_GDAL
+using OGRCT_ptr = std::unique_ptr<OGRCoordinateTransformation, h5geo::OGRCoordinateTransformationDeleter>;
+#endif
 
 #endif // H5BASE_H

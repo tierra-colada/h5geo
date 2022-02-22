@@ -141,7 +141,9 @@ public:
       size_t fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
       bool readTraceByTrace = true,
-      const std::string& dataUnits = "") override;
+      const std::string& dataUnits = "",
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) override;
 
   virtual ptrdiff_t getBinHeaderIndex(const std::string& hdrName) override;
   virtual ptrdiff_t getTraceHeaderIndex(const std::string& hdrName) override;

@@ -45,12 +45,12 @@ h5geo::PointArray H5PointsImpl::getData(
 
   bool val = transformPoints(
         data,
+        true,
         getLengthUnits(),
         lengthUnits,
         getTemporalUnits(),
         temporalUnits,
-        doCoordTransform,
-        createCoordinateTransformationToReadData(getLengthUnits()));
+        doCoordTransform);
 
   if (!val)
     return h5geo::PointArray();
@@ -134,12 +134,12 @@ bool H5PointsImpl::overwritePointsDataset(
 
   bool val = transformPoints(
         data,
+        false,
         lengthUnits,
         getLengthUnits(),
         temporalUnits,
         getTemporalUnits(),
-        doCoordTransform,
-        createCoordinateTransformationToWriteData(lengthUnits));
+        doCoordTransform);
 
   if (!val)
     return false;
@@ -156,16 +156,23 @@ bool H5PointsImpl::overwritePointsDataset(
 
 bool H5PointsImpl::transformPoints(
     h5geo::PointArray& data,
+    bool toReadData,
     const std::string& lengthUnitsFrom,
     const std::string& lengthUnitsTo,
     const std::string& temporalUnitsFrom,
     const std::string& temporalUnitsTo,
-    bool doCoordTransform,
-    OGRCoordinateTransformation* coordTrans)
+    bool doCoordTransform)
 {
   h5geo::Domain domain = getDomain();
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
+    OGRCT_ptr coordTrans;
+    if (toReadData)
+      coordTrans.reset(createCoordinateTransformationToReadData(
+                         lengthUnitsTo));
+    else
+      coordTrans.reset(createCoordinateTransformationToWriteData(
+                         lengthUnitsFrom));
     if (!coordTrans)
       return false;
 

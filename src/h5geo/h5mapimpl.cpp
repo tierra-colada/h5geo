@@ -57,8 +57,7 @@ bool H5MapImpl::setOrigin(
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
     if (!coordTrans)
       return false;
 
@@ -83,8 +82,7 @@ bool H5MapImpl::setPoint1(
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
     if (!coordTrans)
       return false;
 
@@ -108,8 +106,7 @@ bool H5MapImpl::setPoint2(
     bool doCoordTransform){
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToWriteData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
     if (!coordTrans)
       return false;
 
@@ -190,8 +187,7 @@ Eigen::VectorXd H5MapImpl::getOrigin(
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
     if (!coordTrans)
       return Eigen::VectorXd();
 
@@ -219,8 +215,7 @@ Eigen::VectorXd H5MapImpl::getPoint1(
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
     if (!coordTrans)
       return Eigen::VectorXd();
 
@@ -248,8 +243,7 @@ Eigen::VectorXd H5MapImpl::getPoint2(
 {
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCoordinateTransformation* coordTrans =
-        createCoordinateTransformationToReadData(lengthUnits);
+    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
     if (!coordTrans)
       return Eigen::VectorXd();
 
