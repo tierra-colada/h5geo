@@ -1402,7 +1402,7 @@ bool H5SeisImpl::generatePRESTKGeometry(
   }
 
   // update cdp numbers
-  Eigen::VectorXd cdp_yx = this->getXYTraceHeaders({"CDP_Y", "CDP_X"});
+  Eigen::MatrixXd cdp_yx = this->getXYTraceHeaders({"CDP_Y", "CDP_X"});
   Eigen::VectorX<ptrdiff_t> cdp_yx_ind = h5geo::sort_rows(cdp_yx);
   Eigen::VectorXd cdp = Eigen::VectorXd::LinSpaced(cdp_yx_ind.size(), 1, cdp_yx_ind.size())(cdp_yx_ind);
   this->writeTraceHeader("CDP", cdp);

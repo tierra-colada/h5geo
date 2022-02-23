@@ -377,9 +377,9 @@ TEST_F(H5SeisFixture, generateGeometry){
   double src_z = 0;
 
   ASSERT_TRUE(seis->generateSTKGeometry(
-        src_x0, src_dx, src_nx,
-        src_y0, src_dy, src_ny,
-        src_z));
+                src_x0, src_dx, src_nx,
+                src_y0, src_dy, src_ny,
+                src_z));
 
   Eigen::VectorXd cdp(6), cdpx(6), cdpy(6);
   cdp << 1, 2, 3, 4, 5, 6;
@@ -393,6 +393,15 @@ TEST_F(H5SeisFixture, generateGeometry){
   ASSERT_TRUE(cdp_out.isApprox(cdp));
   ASSERT_TRUE(cdpx_out.isApprox(cdpx));
   ASSERT_TRUE(cdpy_out.isApprox(cdpy));
+
+  ASSERT_TRUE(seis->generatePRESTKGeometry(
+                src_x0, src_dx, src_nx,
+                src_y0, src_dy, src_ny,
+                src_z,
+                src_x0, src_dx, src_nx,
+                src_y0, src_dy, src_ny,
+                src_z,
+                true));
 }
 
 // ORIGIN POINT1 AND POINT2 ARE DEFINED ONLY FOR 3D STACK DATA AND AFTER 'Finalize()` is called
