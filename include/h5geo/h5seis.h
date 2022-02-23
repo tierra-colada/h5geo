@@ -255,6 +255,23 @@ public:
   virtual bool checkSampleLimits(
       const size_t& fromSampInd, size_t& nSamp) = 0;
 
+  virtual bool generatePRESTKGeometry(
+      double src_x0, double src_dx, size_t src_nx,
+      double src_y0, double src_dy, size_t src_ny,
+      double src_z,
+      double rec_x0, double rec_dx, size_t rec_nx,
+      double rec_y0, double rec_dy, size_t rec_ny,
+      double rec_z,
+      bool moveRec,
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) = 0;
+  virtual bool generateSTKGeometry(
+      double x0, double dx, size_t nx,
+      double y0, double dy, size_t ny,
+      double z,
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) = 0;
+
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
   virtual bool setDataType(const h5geo::SeisDataType& seisType) = 0;
   virtual bool setSurveyType(const h5geo::SurveyType& surveyType) = 0;

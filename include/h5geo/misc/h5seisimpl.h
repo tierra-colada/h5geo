@@ -192,6 +192,27 @@ public:
   virtual bool checkSampleLimits(
       const size_t& fromSampInd, size_t& nSamp) override;
 
+  /// Generate geometry and set nTrc to match it and
+  /// set seis datatype to PRESTACK
+  virtual bool generatePRESTKGeometry(
+      double src_x0, double src_dx, size_t src_nx,
+      double src_y0, double src_dy, size_t src_ny,
+      double src_z,
+      double rec_x0, double rec_dx, size_t rec_nx,
+      double rec_y0, double rec_dy, size_t rec_ny,
+      double rec_z,
+      bool moveRec,
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) override;
+  /// Generate geometry and set nTrc to match it and
+  /// set seis datatype to STACK
+  virtual bool generateSTKGeometry(
+      double x0, double dx, size_t nx,
+      double y0, double dy, size_t ny,
+      double z,
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) override;
+
   virtual bool setDomain(const h5geo::Domain& val) override;
   virtual bool setDataType(const h5geo::SeisDataType& val) override;
   virtual bool setSurveyType(const h5geo::SurveyType& val) override;
@@ -228,6 +249,13 @@ public:
 protected:
   virtual Eigen::MatrixX2d calcBoundaryStk2D();
   virtual Eigen::MatrixX2d calcConvexHullBoundary();
+  virtual void calcGrid3D(
+      const Eigen::Ref<Eigen::VectorXd>& x,
+      const Eigen::Ref<Eigen::VectorXd>& y,
+      double z,
+      Eigen::Ref<Eigen::VectorXd> x_loc,
+      Eigen::Ref<Eigen::VectorXd> y_loc,
+      Eigen::Ref<Eigen::VectorXd> z_loc);
 
 protected:
   h5gt::DataSet traceD, traceHeaderD;

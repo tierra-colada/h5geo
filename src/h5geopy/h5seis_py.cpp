@@ -342,6 +342,22 @@ void H5Seis_py(
            "check 'fromSampInd' and 'nSamp' and diminish 'nSamp' to fit in data limits (if 'fromSampInd' is inside limit)"
 "`fromSampInd` first index (the value should be less then number of samples)"
 "`nSamp` number of samples (to read for example). Return corrected `nSamp`")
+      .def("generatePRESTKGeometry", &H5Seis::generatePRESTKGeometry,
+           py::arg("src_x0"), py::arg("src_dx"), py::arg("src_nx"),
+           py::arg("src_y0"), py::arg("src_dy"), py::arg("src_ny"),
+           py::arg("src_z"),
+           py::arg("rec_x0"), py::arg("rec_dx"), py::arg("rec_nx"),
+           py::arg("rec_y0"), py::arg("rec_dy"), py::arg("rec_ny"),
+           py::arg("rec_z"),
+           py::arg("moveRec"),
+           py::arg_v("lengthUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
+      .def("generateSTKGeometry", &H5Seis::generateSTKGeometry,
+           py::arg("x0"), py::arg("dx"), py::arg("nx"),
+           py::arg("y0"), py::arg("dy"), py::arg("ny"),
+           py::arg("z"),
+           py::arg_v("lengthUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"))
 
       .def("setDomain", &H5Seis::setDomain)
       .def("setDataType", &H5Seis::setDataType)

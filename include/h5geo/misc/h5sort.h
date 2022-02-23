@@ -12,9 +12,9 @@
 
 namespace h5geo
 {
-///\brief sort return indices such that v_sorted = v(ind).
-///\param v Vector (row/col)
-///\return ind
+/// \brief sort return indices such that v_sorted = v(ind).
+/// \param v Vector (row/col)
+/// \return ind
 template <typename D>
 Eigen::VectorX<ptrdiff_t> sort(const Eigen::DenseBase<D> &v){
 
@@ -40,10 +40,10 @@ Eigen::VectorX<ptrdiff_t> sort(const Eigen::DenseBase<D> &v){
   return idx;
 }
 
-///\brief sort also calculates v_sorted_ = v(ind).
-///\param v Vector (row/col)
-///\param v_sorted_ Vector (row/col). Fundamental types of `v_sorted_` and `v` should be the same
-///\return ind
+/// \brief sort also calculates v_sorted_ = v(ind).
+/// \param v Vector (row/col)
+/// \param v_sorted_ Vector (row/col). Fundamental types of `v_sorted_` and `v` should be the same
+/// \return ind
 template <typename DRaw, typename DSort>
 Eigen::VectorX<ptrdiff_t> sort(
     const Eigen::DenseBase<DRaw> &v,
@@ -57,13 +57,13 @@ Eigen::VectorX<ptrdiff_t> sort(
   return idx;
 }
 
-///\brief sort_rows  sorts the rows of a matrix in ascending order
+/// \brief sort_rows  sorts the rows of a matrix in ascending order
 /// based on the elements in the first column. When the first column
 /// contains repeated elements, sortrows sorts according to the values
 /// in the next column and repeats this behavior for succeeding equal values.
 /// M_sorted = M(ind, Eigen::all)
-///\param M
-///\return ind
+/// \param M
+/// \return ind
 template <typename D>
 Eigen::VectorX<ptrdiff_t> sort_rows(const Eigen::DenseBase<D> &M){
 
@@ -106,11 +106,11 @@ Eigen::VectorX<ptrdiff_t> sort_rows(const Eigen::DenseBase<D> &M){
   return idx;
 }
 
-///\brief sort_rows also calculates M_sorted = M(ind, Eigen::all).
-///\param M Matrix wich rows should be sorted
-///\param M_sorted_ Row-sorted matrix. Fundamental type of
+/// \brief sort_rows also calculates M_sorted = M(ind, Eigen::all).
+/// \param M Matrix wich rows should be sorted
+/// \param M_sorted_ Row-sorted matrix. Fundamental type of
 /// M_sorted_ should be same as M type
-///\return ind
+/// \return ind
 template <typename DRaw, typename DSort>
 Eigen::VectorX<ptrdiff_t> sort_rows(
     const Eigen::DenseBase<DRaw> &M,
@@ -123,15 +123,15 @@ Eigen::VectorX<ptrdiff_t> sort_rows(
   return idx;
 }
 
-///\brief sort_unique find unique elements, sort them, identify unique values
+/// \brief sort_unique find unique elements, sort them, identify unique values
 /// start and end indices and return indices such that v_sorted = v(ind).
-///\param v vector
-///\param uvals
-///\param uvals_from_size first col - start index, second col - number of elements.
+/// \param v vector
+/// \param uvals
+/// \param uvals_from_size first col - start index, second col - number of elements.
 /// Each row can be considered as v_sorted.segment(uvals_from_size.row(n))
 /// gives the same unique value uval.
 /// Also v_sorted.segment(uvals_from_size.row(n)) = v(ind.segment(uvals_from_size.row(n)))
-///\return ind
+/// \return ind
 template <typename DRaw, typename TUval>
 Eigen::VectorX<ptrdiff_t> sort_unique(
     const Eigen::DenseBase<DRaw> &v,
@@ -167,12 +167,12 @@ Eigen::VectorX<ptrdiff_t> sort_unique(
   return idx;
 }
 
-///\brief sort_unique also calculates v_sorted = v(ind).
-///\param v vector
-///\param uvals
-///\param uvals_from_size
-///\param v_sorted_
-///\return ind
+/// \brief sort_unique also calculates v_sorted = v(ind).
+/// \param v vector
+/// \param uvals
+/// \param uvals_from_size
+/// \param v_sorted_
+/// \return ind
 template <typename DRaw, typename TUval, typename DSort>
 Eigen::VectorX<ptrdiff_t> sort_unique(
     const Eigen::DenseBase<DRaw> &v,
@@ -187,17 +187,17 @@ Eigen::VectorX<ptrdiff_t> sort_unique(
   return idx;
 }
 
-///\brief sort_rows_unique find unique rows, sort them, identify unique rows
+/// \brief sort_rows_unique find unique rows, sort them, identify unique rows
 /// start and end row-indices and return row-indices such that M_sorted = M(ind, Eigen::all).
-///\param M
-///\param urows
-///\param urows_from_size first col - start index, second col - number of elements.
+/// \param M
+/// \param urows
+/// \param urows_from_size first col - start index, second col - number of elements.
 /// Each row can be considered as:
 /// M_sorted.middleRows(urows_from_size.row(n))
 /// gives the same unique value uval.
 /// Also:
 /// M_sorted.middleRows(urows_from_size.row(n)) = M(ind.segment(urows_from_size.row(n)))
-///\return ind
+/// \return ind
 template <typename DRaw, typename TUval>
 Eigen::VectorX<ptrdiff_t> sort_rows_unique(
     const Eigen::DenseBase<DRaw> &M,
@@ -234,12 +234,12 @@ Eigen::VectorX<ptrdiff_t> sort_rows_unique(
   return idx;
 }
 
-///\brief sort_rows_unique also calculates M_sorted = M(ind, Eigen::all).
-///\param M
-///\param urows
-///\param urows_from_size
-///\param M_sorted_
-///\return ind
+/// \brief sort_rows_unique also calculates M_sorted = M(ind, Eigen::all).
+/// \param M
+/// \param urows
+/// \param urows_from_size
+/// \param M_sorted_
+/// \return ind
 template <typename DRaw, typename TUval, typename DSort>
 Eigen::VectorX<ptrdiff_t> sort_rows_unique(
     const Eigen::DenseBase<DRaw> &M,
