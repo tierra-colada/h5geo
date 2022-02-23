@@ -1220,9 +1220,9 @@ void H5SeisImpl::calcGrid3D(
     const Eigen::Ref<Eigen::VectorXd>& x,
     const Eigen::Ref<Eigen::VectorXd>& y,
     double z,
-    Eigen::Ref<Eigen::VectorXd> x_loc,
-    Eigen::Ref<Eigen::VectorXd> y_loc,
-    Eigen::Ref<Eigen::VectorXd> z_loc)
+    Eigen::VectorXd& x_loc,
+    Eigen::VectorXd& y_loc,
+    Eigen::VectorXd& z_loc)
 {
   if (x.size() < 1 || y.size() < 1)
     return;
@@ -1240,6 +1240,7 @@ void H5SeisImpl::calcGrid3D(
       x_loc(idx) = x(j);
       y_loc(idx) = y(k);
       z_loc(idx) = z;
+      idx++;
     }
   }
 }
@@ -1300,7 +1301,7 @@ bool H5SeisImpl::generatePRESTKGeometry(
   size_t nRec = rec_nx*rec_ny;
   size_t nTrc = nShot*nRec;
   if (this->getNTrc() != nTrc)
-    if (this->setNTrc(nTrc))
+    if (!this->setNTrc(nTrc))
       return false;
 
   double src_xmin = src_x.minCoeff();
@@ -1454,7 +1455,7 @@ bool H5SeisImpl::generateSTKGeometry(
 
   size_t nTrc = xloc.size();
   if (this->getNTrc() != nTrc)
-    if (this->setNTrc(nTrc))
+    if (!this->setNTrc(nTrc))
       return false;
 
   Eigen::VectorXd lind = Eigen::VectorXd::LinSpaced(nTrc, 1, nTrc);

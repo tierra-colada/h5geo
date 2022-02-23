@@ -363,6 +363,38 @@ TEST_F(H5SeisFixture, updateBoundary){
   ASSERT_TRUE(!boundary.isZero(0));
 }
 
+TEST_F(H5SeisFixture, generateGeometry){
+  H5Seis_ptr seis(seisContainer->createSeis(
+                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
+
+  double src_x0 = 0;
+  double src_dx = 1;
+  size_t src_nx = 3;
+  double src_y0 = 0;
+  double src_dy = 2;
+  size_t src_ny = 2;
+  double src_z = 0;
+
+  ASSERT_TRUE(seis->generateSTKGeometry(
+        src_x0, src_dx, src_nx,
+        src_y0, src_dy, src_ny,
+        src_z));
+
+  Eigen::VectorXd cdp(6), cdpx(6), cdpy(6);
+  cdp << 1, 2, 3, 4, 5, 6;
+  cdpx << 0, 1, 2, 0, 1, 2;
+  cdpy << 0, 0, 0, 2, 2, 2;
+
+  Eigen::VectorXd cdp_out = seis->getTraceHeader("CDP");
+  Eigen::VectorXd cdpx_out = seis->getTraceHeader("CDP_X");
+  Eigen::VectorXd cdpy_out = seis->getTraceHeader("CDP_Y");
+
+  ASSERT_TRUE(cdp_out.isApprox(cdp));
+  ASSERT_TRUE(cdpx_out.isApprox(cdpx));
+  ASSERT_TRUE(cdpy_out.isApprox(cdpy));
+}
+
 // ORIGIN POINT1 AND POINT2 ARE DEFINED ONLY FOR 3D STACK DATA AND AFTER 'Finalize()` is called
 //TEST_F(H5SeisFixture, writeAndGetOriginPoint1Point2){
 //  H5Seis_ptr seis(seisContainer->createSeis(

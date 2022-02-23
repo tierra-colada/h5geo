@@ -253,9 +253,9 @@ protected:
       const Eigen::Ref<Eigen::VectorXd>& x,
       const Eigen::Ref<Eigen::VectorXd>& y,
       double z,
-      Eigen::Ref<Eigen::VectorXd> x_loc,
-      Eigen::Ref<Eigen::VectorXd> y_loc,
-      Eigen::Ref<Eigen::VectorXd> z_loc);
+      Eigen::VectorXd& x_loc,
+      Eigen::VectorXd& y_loc,
+      Eigen::VectorXd& z_loc);
 
 protected:
   h5gt::DataSet traceD, traceHeaderD;
