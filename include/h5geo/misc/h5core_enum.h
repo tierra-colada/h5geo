@@ -50,6 +50,18 @@ enum class SeisGroups : unsigned{
   unique_values = 3
 };
 
+enum class SeisSEGYGroups : unsigned{
+  segy = 1
+};
+
+enum class SeisSEGYDatasets : unsigned{
+  text_header = 1,
+  bin_header_2bytes = 2,
+  bin_header_4bytes = 3,
+  data_2bytes = 4,
+  data_4bytes = 5
+};
+
 enum class MapAttributes : unsigned{
   Domain = 1,
   origin = 2,
@@ -118,19 +130,19 @@ enum class SurveyType : unsigned{
 };
 
 enum class TxtEncoding : unsigned{
-  ASCII = 0,
-  EBCDIC = 1
+  ASCII = 1,
+  EBCDIC = 2
 };
 
 enum class SegyEndian : unsigned{
-  Little = 0,
-  Big = 1
+  Little = 1,
+  Big = 2
 };
 
 enum class SegyFormat : unsigned{
-  FourByte_IBM = 0,
-  FourByte_IEEE = 1,
-  FourByte_integer = 2
+  FourByte_IBM = 1,
+  FourByte_IEEE = 2,
+  FourByte_integer = 3
 };
 
 enum class WellDataType : unsigned{

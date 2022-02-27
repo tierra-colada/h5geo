@@ -54,6 +54,15 @@ inline constexpr auto& seis_groups =
 inline constexpr auto sort = magic_enum::enum_name(h5geo::detail::SeisGroups::sort);
 inline constexpr auto indexes = magic_enum::enum_name(h5geo::detail::SeisGroups::indexes);
 inline constexpr auto unique_values = magic_enum::enum_name(h5geo::detail::SeisGroups::unique_values);
+inline constexpr auto& seis_segy_groups =
+    magic_enum::enum_names<h5geo::detail::SeisSEGYGroups>();
+inline constexpr auto segy = magic_enum::enum_name(h5geo::detail::SeisSEGYGroups::segy);
+inline constexpr auto& seis_segy_dsets =
+    magic_enum::enum_names<h5geo::detail::SeisSEGYDatasets>();
+inline constexpr auto bin_header_2bytes = magic_enum::enum_name(h5geo::detail::SeisSEGYDatasets::bin_header_2bytes);
+inline constexpr auto bin_header_4bytes = magic_enum::enum_name(h5geo::detail::SeisSEGYDatasets::bin_header_4bytes);
+inline constexpr auto data_2bytes = magic_enum::enum_name(h5geo::detail::SeisSEGYDatasets::data_2bytes);
+inline constexpr auto data_4bytes = magic_enum::enum_name(h5geo::detail::SeisSEGYDatasets::data_4bytes);
 inline constexpr auto& map_attrs =
     magic_enum::enum_names<h5geo::detail::MapAttributes>();
 inline constexpr auto origin = magic_enum::enum_name(h5geo::detail::MapAttributes::origin);

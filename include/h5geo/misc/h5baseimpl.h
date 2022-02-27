@@ -89,7 +89,10 @@ private:
   createNewDevCurve(h5gt::Group &group, void* p);
   std::optional<h5gt::Group>
   createNewSeis(h5gt::Group &group, void* p);
+  std::optional<h5gt::Group>
+  createNewSeisSEGY(h5gt::Group &group, void* p);
 
+  // Seismic
   std::optional<h5gt::DataSet>
   createTextHeader(
       h5gt::Group &seisGroup);
@@ -115,6 +118,16 @@ private:
   std::optional<h5gt::Group>
   createSort(
       h5gt::Group &seisGroup);
+
+  // Seismic SEGY
+  std::optional<h5gt::Group>
+  createSEGY(
+      h5gt::Group &seisGroup,
+      const size_t& nTrc,
+      const size_t& nSamp,
+      const hsize_t& trcChunk,
+      const hsize_t& stdChunk,
+      const std::string& segy);
 
 // --------------MISCELLANEOUS------------
 protected:

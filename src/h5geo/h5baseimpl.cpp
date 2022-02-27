@@ -686,7 +686,7 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
         write(param.dataUnits);
 
     createTextHeader(group);
-    createBinHeader(group, param.stdChunk);
+    createBinHeader(group, 10); // stdChunk may be too big for bin header
     createTrace(group, param.nTrc, param.nSamp, param.trcChunk);
     createTraceHeader(group, param.nTrc, param.trcChunk);
     createBoundary(group, param.stdChunk);
@@ -694,6 +694,84 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
 
     return group;
 
+  } catch (h5gt::Exception& err) {
+    return std::nullopt;
+  }
+}
+
+template <typename TBase>
+std::optional<h5gt::Group>
+H5BaseImpl<TBase>::createNewSeisSEGY(h5gt::Group &group, void* p)
+{
+
+}
+
+template <typename TBase>
+std::optional<h5gt::Group>
+H5BaseImpl<TBase>::createSEGY(
+    h5gt::Group &seisGroup,
+    const size_t& nTrc,
+    const size_t& nSamp,
+    const hsize_t& trcChunk,
+    const hsize_t& stdChunk,
+    const std::string& segy)
+{
+  h5gt::DataSetCreateProps txtP, binHdrP2, binHdrP4, dataP2, dataP4;
+  std::vector<std::string> fullHeaderNameList, shortHeaderNameList;
+  h5geo::getBinHeaderNames(fullHeaderNameList, shortHeaderNameList);
+  size_t nBinHeaderNames = fullHeaderNameList.size();
+
+  std::vector<size_t> count;
+  std::vector<size_t> max_count;
+  std::vector<hsize_t> cdims;
+
+  try {
+    txtP.addExternalFile(segy, 0, 3200);
+    binHdrP2.addExternalFile(segy, 3200, 400);
+    binHdrP4.addExternalFile(segy, 3200, 400);
+    dataP2.addExternalFile(segy, 3600);
+    dataP4.addExternalFile(segy, 3600);
+
+    h5gt::Group segyG = seisGroup.createGroup(std::string{h5geo::detail::segy});
+
+    // text header
+    char txtHdr[40][80];
+    segyG.createDataSet<char[80]>(
+          std::string{h5geo::detail::text_header},
+          h5gt::DataSpace::FromCharArrayStrings(txtHdr),
+          h5gt::LinkCreateProps(), txtP);
+
+    // bin header
+    count = {size_t(nBinHeaderNames)};
+    max_count = {h5gt::DataSpace::UNLIMITED};
+    cdims = {stdChunk};
+    binHdrP2.setChunk(10);
+    binHdrP4.setChunk(10);
+    segyG.createDataSet<short>(
+          std::string{h5geo::detail::bin_header_2bytes},
+          h5gt::DataSpace(count, max_count),
+          h5gt::LinkCreateProps(), binHdrP2);
+    segyG.createDataSet<int>(
+          std::string{h5geo::detail::bin_header_4bytes},
+          h5gt::DataSpace(count, max_count),
+          h5gt::LinkCreateProps(), binHdrP4);
+
+    // trace
+    count = {nTrc, nSamp+60};
+    max_count = {
+        h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED};
+    cdims = {trcChunk, nSamp+60};
+    dataP2.setChunk(cdims);
+    dataP4.setChunk(cdims);
+    segyG.createDataSet<short>(
+          std::string{h5geo::detail::data_2bytes},
+          h5gt::DataSpace(count, max_count),
+          h5gt::LinkCreateProps(), binHdrP2);
+    segyG.createDataSet<int>(
+          std::string{h5geo::detail::data_4bytes},
+          h5gt::DataSpace(count, max_count),
+          h5gt::LinkCreateProps(), binHdrP4);
+    return segyG;
   } catch (h5gt::Exception& err) {
     return std::nullopt;
   }

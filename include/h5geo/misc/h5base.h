@@ -82,6 +82,8 @@ struct SeisParam : public BaseObjectParam{
   size_t nTrc, nSamp;
   double srd = 0;
   hsize_t trcChunk = 20000, stdChunk = 100;
+  bool mapSEGY = false;
+  std::string segyFile;
 };
 
 class H5Base

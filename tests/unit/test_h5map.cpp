@@ -197,3 +197,17 @@ TEST_F(H5MapFixture, addAndGetExternalAttribute){
   ASSERT_TRUE(map1->getAttribute("myAttr") != nullptr);
   ASSERT_TRUE(map1->removeAttribute("myAttr"));
 }
+
+//#include <hdf5.h>
+
+//TEST_F(H5MapFixture, virtualDset){
+//  std::string cntName = "virtual.h5";
+//  std::string dsetName = "vdset";
+//  std::string segyName = "/home/kerim/.julia/dev/JUDI/overthrust_model_2D.h5";
+//  H5MapCnt_ptr cnt(h5geo::createMapContainerByName(cntName, h5geo::CreationType::CREATE_OR_OVERWRITE));
+//  ASSERT_TRUE(cnt);
+
+//  h5gt::File file = cnt->getH5File();
+//  h5gt::DataSetCreateProps dsetP;
+//  DATASET;
+//}
