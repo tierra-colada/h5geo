@@ -130,7 +130,7 @@ private:
       const hsize_t& trcChunk,
       const hsize_t& stdChunk,
       const std::string& segy,
-      h5geo::SegyEndian endian);
+      h5geo::Endian endian);
 
 // --------------MISCELLANEOUS------------
 protected:

@@ -51,7 +51,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pySeisDataType = py::enum_<SeisDataType>(m, "SeisDataType", py::arithmetic());
   auto pySurveyType = py::enum_<SurveyType>(m, "SurveyType", py::arithmetic());
   auto pyTxtEncoding = py::enum_<TxtEncoding>(m, "TxtEncoding", py::arithmetic());
-  auto pySegyEndian = py::enum_<SegyEndian>(m, "SegyEndian", py::arithmetic());
+  auto pySegyEndian = py::enum_<Endian>(m, "Endian", py::arithmetic());
   auto pySegyFormat = py::enum_<SegyFormat>(m, "SegyFormat", py::arithmetic());
   auto pyWellDataType = py::enum_<WellDataType>(m, "WellDataType", py::arithmetic());
   auto pyWellName = py::enum_<WellName>(m, "WellName", py::arithmetic());

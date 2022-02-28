@@ -135,7 +135,7 @@ enum class TxtEncoding : unsigned{
   EBCDIC = 2
 };
 
-enum class SegyEndian : unsigned{
+enum class Endian : unsigned{
   Little = 1,
   Big = 2
 };

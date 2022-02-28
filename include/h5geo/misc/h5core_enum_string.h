@@ -121,9 +121,9 @@ inline constexpr auto& txt_encodings =
 inline constexpr auto ASCII = magic_enum::enum_name(h5geo::TxtEncoding::ASCII);
 inline constexpr auto EBCDIC = magic_enum::enum_name(h5geo::TxtEncoding::EBCDIC);
 inline constexpr auto& segy_endians =
-    magic_enum::enum_names<h5geo::SegyEndian>();
-inline constexpr auto Little = magic_enum::enum_name(h5geo::SegyEndian::Little);
-inline constexpr auto Big = magic_enum::enum_name(h5geo::SegyEndian::Big);
+    magic_enum::enum_names<h5geo::Endian>();
+inline constexpr auto Little = magic_enum::enum_name(h5geo::Endian::Little);
+inline constexpr auto Big = magic_enum::enum_name(h5geo::Endian::Big);
 inline constexpr auto& segy_formats =
     magic_enum::enum_names<h5geo::SegyFormat>();
 inline constexpr auto FourByte_IBM = magic_enum::enum_name(h5geo::SegyFormat::FourByte_IBM);

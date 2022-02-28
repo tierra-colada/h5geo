@@ -37,7 +37,7 @@ __all__ = [
     "Point",
     "PointArray",
     "PointsParam",
-    "SegyEndian",
+    "Endian",
     "SegyFormat",
     "SeisDataType",
     "SeisParam",
@@ -1028,7 +1028,7 @@ class PointsParam(BaseObjectParam):
     def nPoints(self, arg0: int) -> None:
         pass
     pass
-class SegyEndian():
+class Endian():
     """
     Members:
 
@@ -1058,9 +1058,9 @@ class SegyEndian():
         """
         :type: int
         """
-    Big: h5geopy._h5geo.SegyEndian # value = <SegyEndian.Big: 1>
-    Little: h5geopy._h5geo.SegyEndian # value = <SegyEndian.Little: 0>
-    __members__: dict # value = {'Little': <SegyEndian.Little: 0>, 'Big': <SegyEndian.Big: 1>}
+    Big: h5geopy._h5geo.Endian # value = <Endian.Big: 1>
+    Little: h5geopy._h5geo.Endian # value = <Endian.Little: 0>
+    __members__: dict # value = {'Little': <Endian.Little: 0>, 'Big': <Endian.Big: 1>}
     pass
 class SegyFormat():
     """

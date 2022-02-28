@@ -45,10 +45,10 @@ void TxtEncoding_py(py::enum_<TxtEncoding> &py_obj){
       .value("EBCDIC", TxtEncoding::EBCDIC);
 }
 
-void SegyEndian_py(py::enum_<SegyEndian> &py_obj){
+void SegyEndian_py(py::enum_<Endian> &py_obj){
   py_obj
-      .value("Little", SegyEndian::Little)
-      .value("Big", SegyEndian::Big);
+      .value("Little", Endian::Little)
+      .value("Big", Endian::Big);
 }
 
 void SegyFormat_py(py::enum_<SegyFormat> &py_obj){

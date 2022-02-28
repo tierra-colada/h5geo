@@ -648,7 +648,7 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
     return std::nullopt;
 
   if (param.mapSEGY){
-    h5geo::SegyEndian endian = h5geo::getSEGYEndian(param.segyFile);
+    h5geo::Endian endian = h5geo::getSEGYEndian(param.segyFile);
     param.nSamp = h5geo::getSEGYNSamp(param.segyFile, endian);
     param.nTrc = h5geo::getSEGYNTrc(param.segyFile, endian);
     if (param.nSamp < 1 || param.nTrc < 1)
@@ -724,16 +724,16 @@ H5BaseImpl<TBase>::createExternalSEGY(
     const hsize_t& trcChunk,
     const hsize_t& stdChunk,
     const std::string& segy,
-    h5geo::SegyEndian endian)
+    h5geo::Endian endian)
 {
   // if SEGY endian differs from NATIVE we should take into account that or
   // mapped values will have swapped bytes
   h5gt::Endian endianNum;
   switch (endian) {
-  case h5geo::SegyEndian::Little :
+  case h5geo::Endian::Little :
     endianNum = h5gt::Endian::Little;
     break;
-  case h5geo::SegyEndian::Big :
+  case h5geo::Endian::Big :
     endianNum = h5gt::Endian::Big;
     break;
   default:

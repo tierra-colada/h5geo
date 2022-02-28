@@ -93,13 +93,13 @@ inline void bswap(II begin, II end, OI dest) {
 }
 
 template <typename T>
-inline T to_native_endian(T val, h5geo::SegyEndian fromEndian) {
+inline T to_native_endian(T val, h5geo::Endian fromEndian) {
   if (O32_HOST_ORDER == O32_LITTLE_ENDIAN){
-    if (fromEndian == h5geo::SegyEndian::Big){
+    if (fromEndian == h5geo::Endian::Big){
       return bswap(val);
     }
   } else if (O32_HOST_ORDER == O32_BIG_ENDIAN){
-    if (fromEndian == h5geo::SegyEndian::Little){
+    if (fromEndian == h5geo::Endian::Little){
       return bswap(val);
     }
   }
@@ -107,13 +107,13 @@ inline T to_native_endian(T val, h5geo::SegyEndian fromEndian) {
 }
 
 template <typename Scalar, typename II, typename OI>
-inline void to_native_endian(II begin, II end, OI dest, h5geo::SegyEndian fromEndian) {
+inline void to_native_endian(II begin, II end, OI dest, h5geo::Endian fromEndian) {
   if (O32_HOST_ORDER == O32_LITTLE_ENDIAN){
-    if (fromEndian == h5geo::SegyEndian::Big){
+    if (fromEndian == h5geo::Endian::Big){
       bswap<Scalar>(begin, end, dest);
     }
   } else if (O32_HOST_ORDER == O32_BIG_ENDIAN){
-    if (fromEndian == h5geo::SegyEndian::Little){
+    if (fromEndian == h5geo::Endian::Little){
       bswap<Scalar>(begin, end, dest);
     }
   }
@@ -150,36 +150,36 @@ inline TxtEncoding getSEGYTxtEncoding(
   return encoding;
 }
 
-inline SegyEndian getSEGYEndian(
+inline Endian getSEGYEndian(
     const std::string& segy)
 {
   std::ifstream file(segy);
   if (!file.is_open())
-    return static_cast<h5geo::SegyEndian>(0);
+    return static_cast<h5geo::Endian>(0);
 
-  h5geo::SegyEndian endian = static_cast<h5geo::SegyEndian>(0);
+  h5geo::Endian endian = static_cast<h5geo::Endian>(0);
   short dataFormatCode, dataFormatCodeSE;
   file.seekg(3224);
   file.read(bit_cast<char *>(&dataFormatCode), 2);
   dataFormatCodeSE = bswap(dataFormatCode);
   if (O32_HOST_ORDER == O32_LITTLE_ENDIAN){
     if (dataFormatCode > 0 && dataFormatCode <= 8) {
-      endian = h5geo::SegyEndian::Little;
+      endian = h5geo::Endian::Little;
     } else if (dataFormatCodeSE > 0 && dataFormatCodeSE <= 8) {
-      endian = h5geo::SegyEndian::Big;
+      endian = h5geo::Endian::Big;
     }
   } else if (O32_HOST_ORDER == O32_BIG_ENDIAN){
     if (dataFormatCode > 0 && dataFormatCode <= 8) {
-      endian = h5geo::SegyEndian::Big;
+      endian = h5geo::Endian::Big;
     } else if (dataFormatCodeSE > 0 && dataFormatCodeSE <= 8) {
-      endian = h5geo::SegyEndian::Little;
+      endian = h5geo::Endian::Little;
     }
   }
   return endian;
 }
 
 inline SegyFormat getSEGYFormat(
-    const std::string& segy, h5geo::SegyEndian endian)
+    const std::string& segy, h5geo::Endian endian)
 {
   std::ifstream file(segy);
   if (!file.is_open())
@@ -221,7 +221,7 @@ inline void readSEGYTxtHdr(
 
 inline void readSEGYBinHdr(
     const std::string& segy,
-    double binHdr[30], h5geo::SegyEndian endian)
+    double binHdr[30], h5geo::Endian endian)
 {
   std::ifstream file(segy);
   if (!file.is_open())
@@ -253,7 +253,7 @@ inline void readSEGYBinHdr(
 }
 
 inline double getSEGYSampRate(
-    const std::string& segy, h5geo::SegyEndian endian)
+    const std::string& segy, h5geo::Endian endian)
 {
   double binHdr[30];
   readSEGYBinHdr(segy, binHdr, endian);
@@ -262,7 +262,7 @@ inline double getSEGYSampRate(
 }
 
 inline size_t getSEGYNSamp(
-    const std::string& segy, h5geo::SegyEndian endian)
+    const std::string& segy, h5geo::Endian endian)
 {
   double binHdr[30];
   readSEGYBinHdr(segy, binHdr, endian);
@@ -271,7 +271,7 @@ inline size_t getSEGYNSamp(
 }
 
 inline size_t getSEGYNTrc(
-    const std::string& segy, h5geo::SegyEndian endian)
+    const std::string& segy, h5geo::Endian endian)
 {
   size_t fsize = 0;
   try {

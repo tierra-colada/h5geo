@@ -13,7 +13,7 @@ void Domain_py(py::enum_<Domain> &py_obj);
 void SeisDataType_py(py::enum_<SeisDataType> &py_obj);
 void SurveyType_py(py::enum_<SurveyType> &py_obj);
 void TxtEncoding_py(py::enum_<TxtEncoding> &py_obj);
-void SegyEndian_py(py::enum_<SegyEndian> &py_obj);
+void SegyEndian_py(py::enum_<Endian> &py_obj);
 void SegyFormat_py(py::enum_<SegyFormat> &py_obj);
 void WellDataType_py(py::enum_<WellDataType> &py_obj);
 void WellName_py(py::enum_<WellName> &py_obj);
