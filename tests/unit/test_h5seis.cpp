@@ -404,7 +404,7 @@ TEST_F(H5SeisFixture, generateGeometry){
                 true));
 }
 
-TEST_F(H5SeisFixture, mapSEGY){
+TEST_F(H5SeisFixture, SEGY){
   p.mapSEGY = true;
   p.segyFiles = {
     TEST_DATA_DIR"/1.segy",
@@ -427,6 +427,26 @@ TEST_F(H5SeisFixture, mapSEGY){
   ASSERT_EQ(seis->getBinHeader("SAMP_RATE"), 2000);
   Eigen::VectorXd grpx = seis->getTraceHeader("GRPX");
   ASSERT_TRUE(grpx(1) == 50000);
+  Eigen::VectorXf trace = seis->getTrace(0);
+
+
+  p.mapSEGY = false;
+  H5Seis_ptr seis2(seisContainer->createSeis(
+                     SEIS_NAME2, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis2 != nullptr) << "CREATE_OR_OVERWRITE";
+
+  auto endian = h5geo::getSEGYEndian(TEST_DATA_DIR"/1.segy");
+  auto nSamp = h5geo::getSEGYNSamp(TEST_DATA_DIR"/1.segy", endian);
+  auto nTrc = h5geo::getSEGYNTrc(TEST_DATA_DIR"/1.segy", endian);
+  auto format = h5geo::getSEGYFormat(TEST_DATA_DIR"/1.segy", endian);
+  ASSERT_TRUE(h5geo::readSEGYTraces(
+                seis2.get(),
+                TEST_DATA_DIR"/1.segy",
+                nSamp, nTrc, format, endian, 10));
+  Eigen::VectorXf trace2 = seis2->getTrace(0);
+  ASSERT_TRUE(trace.isApprox(trace2));
+
+  int a = 0;
 }
 
 // ORIGIN POINT1 AND POINT2 ARE DEFINED ONLY FOR 3D STACK DATA AND AFTER 'Finalize()` is called

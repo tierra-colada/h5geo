@@ -8,7 +8,13 @@
 #include <fstream>
 #include <filesystem>
 
+#include <Eigen/Dense>
+
+#include <mio/mmap.hpp>
+
 #include "h5core_enum.h"
+#include "../h5seis.h"
+
 
 namespace h5geo {
 
@@ -285,6 +291,120 @@ inline size_t getSEGYNTrc(
     return 0;
 
   return (fsize - 3600) / (nSamp * 4 + 240);
+}
+
+inline bool readSEGYTraces(
+    H5Seis* seis,
+    const std::string& segy,
+    size_t nSamp,
+    size_t nTrc,
+    h5geo::SegyFormat format,
+    h5geo::Endian endian,
+    size_t trcBuffer = 10000)
+{
+  if (!seis || nSamp < 1 || nTrc < 1)
+    return false;
+
+  seis->setNTrc(nTrc);
+  seis->setNSamp(nSamp);
+
+  Eigen::MatrixXd HDR;
+  Eigen::MatrixXf TRACE;
+  Eigen::VectorXd minHDRVec(78), maxHDRVec(78);
+  minHDRVec.fill(std::numeric_limits<double>::infinity());
+  maxHDRVec.fill(-std::numeric_limits<double>::infinity());
+
+  size_t bytesPerTrc = 4 * nSamp + 240;
+  size_t fromTrc = 0;
+  size_t J = trcBuffer;
+  size_t N = nTrc / trcBuffer;
+
+  for (ptrdiff_t n = 0; n <= N; n++) {
+    if (n < N) {
+      J = trcBuffer;
+    } else {
+      J = nTrc - N * trcBuffer;
+    }
+
+    if (J == 0)
+      continue;
+
+    HDR.resize(J, 78);
+    TRACE.resize(nSamp, J);
+
+    size_t memoryOffset = 3600 + n * trcBuffer * bytesPerTrc; // trcBuffer !!! NOT J
+    size_t memorySize = J * bytesPerTrc;
+
+    std::error_code err;
+    mio::mmap_sink rw_mmap = mio::make_mmap_sink(
+          segy, memoryOffset, memorySize, err);
+    if (err)
+      return false;
+
+    short* m_short = h5geo::bit_cast<short *>(rw_mmap.data());
+    int* m_int = h5geo::bit_cast<int *>(rw_mmap.data());
+    float* m_float = h5geo::bit_cast<float *>(rw_mmap.data());
+
+    for (size_t j = 0; j < J; j++) {
+      for (size_t i = 0; i < 7; i++) {
+        HDR(j, i) = to_native_endian(m_int[j * bytesPerTrc / 4 + i], endian);
+      }
+      for (size_t i = 7; i < 11; i++) {
+        HDR(j, i) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 7) + 14], endian);
+      }
+      for (size_t i = 11; i < 19; i++) {
+        HDR(j, i) = to_native_endian(m_int[j * bytesPerTrc / 4 + (i - 11) + 9], endian);
+      }
+      for (size_t i = 19; i < 21; i++) {
+        HDR(j, i) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 19) + 34], endian);
+      }
+      for (size_t i = 21; i < 25; i++) {
+        HDR(j, i) = to_native_endian(m_int[j * bytesPerTrc / 4 + (i - 21) + 18], endian);
+      }
+      for (size_t i = 25; i < 71; i++) {
+        HDR(j, i) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 25) + 44], endian);
+      }
+      for (size_t i = 71; i < 76; i++) {
+        HDR(j, i) = to_native_endian(m_int[j * bytesPerTrc / 4 + (i - 71) + 45], endian);
+      }
+      for (size_t i = 76; i < 78; i++) {
+        HDR(j, i) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 76) + 100], endian);
+      }
+
+      if (format == h5geo::SegyFormat::FourByte_IBM) {
+        for (size_t i = 0; i < nSamp; i++) {
+          TRACE(i, j) = ibm2ieee(
+                to_native_endian(m_int[j * bytesPerTrc / 4 + i + 60], endian));
+        }
+      } else if (format == h5geo::SegyFormat::FourByte_integer) {
+        for (size_t i = 0; i < nSamp; i++) {
+          TRACE(i, j) =
+              to_native_endian(m_int[j * bytesPerTrc / 4 + i + 60], endian);
+        }
+      } else if (format == h5geo::SegyFormat::FourByte_IEEE) {
+        for (size_t i = 0; i < nSamp; i++) {
+          TRACE(i, j) =
+              to_native_endian(m_float[j * bytesPerTrc / 4 + i + 60], endian);
+        }
+      }
+    }
+
+    {
+      seis->writeTraceHeader(HDR, fromTrc);
+      seis->writeTrace(TRACE, fromTrc);
+      fromTrc = fromTrc + J;
+
+      for (ptrdiff_t i = 0; i < HDR.rows(); i++) {
+        for (ptrdiff_t j = 0; j < HDR.cols(); j++) {
+          minHDRVec(j) = std::min(minHDRVec(j), HDR(i, j));
+          maxHDRVec(j) = std::max(maxHDRVec(j), HDR(i, j));
+        }
+      }
+    }
+    rw_mmap.unmap();
+  }
+
+  return true;
 }
 
 
