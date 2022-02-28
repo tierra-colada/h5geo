@@ -7,10 +7,13 @@
 #include <bitset>
 #include <fstream>
 #include <filesystem>
+#include <filesystem>
+#include <omp.h>
 
 #include <Eigen/Dense>
 
 #include <mio/mmap.hpp>
+#include <magic_enum.hpp>
 
 #include "h5core_enum.h"
 #include "../h5seis.h"
@@ -293,6 +296,18 @@ inline size_t getSEGYNTrc(
   return (fsize - 3600) / (nSamp * 4 + 240);
 }
 
+/// \brief readSEGYTraces read and write SEGY traces and trace headers to
+/// H5Seis object using memory mapping technique (OpenMP enabled)
+/// \param seis
+/// \param segy path to SEGY file
+/// \param nSamp number of samples in SEGY
+/// \param nTrc number of traces in SEGY
+/// \param format SEGY format (ibm32, ieee32 or int4)
+/// \param endian Big or Little
+/// \param fromTrc means the starting trace index in H5Seis to be written (may be useful
+/// when reading multiple SEGY in the same H5Seis object)
+/// \param trcBuffer number of traces per thread to read before writing them at once
+/// \return
 inline bool readSEGYTraces(
     H5Seis* seis,
     const std::string& segy,
@@ -300,10 +315,26 @@ inline bool readSEGYTraces(
     size_t nTrc,
     h5geo::SegyFormat format,
     h5geo::Endian endian,
+    size_t fromTrc = 0,
     size_t trcBuffer = 10000)
 {
-  if (!seis || nSamp < 1 || nTrc < 1)
+  if (!seis || nSamp < 1 || nTrc < 1 || trcBuffer < 1)
     return false;
+
+  if (std::string{magic_enum::enum_name(format)}.empty())
+    return false;
+
+  if (std::string{magic_enum::enum_name(endian)}.empty())
+    return false;
+
+  // must do the filesize check as within OMP I cannot return 'false', only 'continue'
+  try {
+    auto segySize = std::filesystem::file_size(segy);
+    if (segySize < 3600)
+      return false;
+  } catch(std::filesystem::filesystem_error& e) {
+    return false;
+  }
 
   seis->setNTrc(nTrc);
   seis->setNSamp(nSamp);
@@ -315,10 +346,12 @@ inline bool readSEGYTraces(
   maxHDRVec.fill(-std::numeric_limits<double>::infinity());
 
   size_t bytesPerTrc = 4 * nSamp + 240;
-  size_t fromTrc = 0;
   size_t J = trcBuffer;
   size_t N = nTrc / trcBuffer;
 
+#ifdef H5GEO_USE_THREADS
+#pragma omp parallel for private(HDR, TRACE, J)
+#endif
   for (ptrdiff_t n = 0; n <= N; n++) {
     if (n < N) {
       J = trcBuffer;
@@ -339,7 +372,7 @@ inline bool readSEGYTraces(
     mio::mmap_sink rw_mmap = mio::make_mmap_sink(
           segy, memoryOffset, memorySize, err);
     if (err)
-      return false;
+      continue;
 
     short* m_short = h5geo::bit_cast<short *>(rw_mmap.data());
     int* m_int = h5geo::bit_cast<int *>(rw_mmap.data());
@@ -389,6 +422,9 @@ inline bool readSEGYTraces(
       }
     }
 
+#ifdef H5GEO_USE_THREADS
+#pragma omp critical
+#endif
     {
       seis->writeTraceHeader(HDR, fromTrc);
       seis->writeTrace(TRACE, fromTrc);

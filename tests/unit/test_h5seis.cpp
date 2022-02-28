@@ -442,11 +442,9 @@ TEST_F(H5SeisFixture, SEGY){
   ASSERT_TRUE(h5geo::readSEGYTraces(
                 seis2.get(),
                 TEST_DATA_DIR"/1.segy",
-                nSamp, nTrc, format, endian, 10));
+                nSamp, nTrc, format, endian, 0, 10000)); // for testing purpose I need to set value not less than 24 trc (10000) as OMP may save traces in different order
   Eigen::VectorXf trace2 = seis2->getTrace(0);
   ASSERT_TRUE(trace.isApprox(trace2));
-
-  int a = 0;
 }
 
 // ORIGIN POINT1 AND POINT2 ARE DEFINED ONLY FOR 3D STACK DATA AND AFTER 'Finalize()` is called

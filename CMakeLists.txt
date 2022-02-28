@@ -95,6 +95,8 @@ if(H5GEO_USE_THREADS)
   target_include_directories(h5geo PUBLIC ${TBB_INCLUDE_DIRS})
   target_link_libraries(h5geo PUBLIC ${TBB_LIBRARIES})
   target_compile_definitions(h5geo PUBLIC H5GEO_USE_THREADS)
+  find_package(OpenMP REQUIRED)
+  target_link_libraries(h5geo PUBLIC OpenMP::OpenMP_CXX)
 endif()
 
 if(H5GEO_USE_GDAL)
