@@ -61,8 +61,9 @@ inline constexpr auto& seis_segy_dsets =
     magic_enum::enum_names<h5geo::detail::SeisSEGYDatasets>();
 inline constexpr auto bin_header_2bytes = magic_enum::enum_name(h5geo::detail::SeisSEGYDatasets::bin_header_2bytes);
 inline constexpr auto bin_header_4bytes = magic_enum::enum_name(h5geo::detail::SeisSEGYDatasets::bin_header_4bytes);
-inline constexpr auto data_2bytes = magic_enum::enum_name(h5geo::detail::SeisSEGYDatasets::data_2bytes);
-inline constexpr auto data_4bytes = magic_enum::enum_name(h5geo::detail::SeisSEGYDatasets::data_4bytes);
+inline constexpr auto trace_header_2bytes = magic_enum::enum_name(h5geo::detail::SeisSEGYDatasets::trace_header_2bytes);
+inline constexpr auto trace_header_4bytes = magic_enum::enum_name(h5geo::detail::SeisSEGYDatasets::trace_header_4bytes);
+inline constexpr auto trace_float = magic_enum::enum_name(h5geo::detail::SeisSEGYDatasets::trace_float);
 inline constexpr auto& map_attrs =
     magic_enum::enum_names<h5geo::detail::MapAttributes>();
 inline constexpr auto origin = magic_enum::enum_name(h5geo::detail::MapAttributes::origin);

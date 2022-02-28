@@ -42,8 +42,8 @@ public:
                                       file, h5geo::CreationType::CREATE_OR_OVERWRITE));
     }
 
-    /* TEST_DATA_DIR is a macro defined in CMake and it points to a dir
-     * where test data reside */
+    // TEST_DATA_DIR is a macro defined in CMake and it points to a dir
+    // where test data reside
     MD_X_Y_Z_TVD_DX_DY_AZ_INCL =
         readWellFile(TEST_DATA_DIR"/well_dev", {305, 9}, 11);
 

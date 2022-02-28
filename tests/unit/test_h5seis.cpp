@@ -49,12 +49,12 @@ public:
     trig = true;
   }
 
-  virtual void TearDown() override{
-    // code here will be called just after the test completes
-    // ok to through exceptions from here if need be
-    auto h5File = seisContainer->getH5File();
-    h5geo::unlinkContent(h5File);
-  }
+//  virtual void TearDown() override{
+//    // code here will be called just after the test completes
+//    // ok to through exceptions from here if need be
+//    auto h5File = seisContainer->getH5File();
+//    h5geo::unlinkContent(h5File);
+//  }
 
 public:
   H5SeisCnt_ptr seisContainer;
@@ -193,7 +193,7 @@ TEST_F(H5SeisFixture, writeAndGetTextHeader){
 TEST_F(H5SeisFixture, writeAndGetBinHeader){
   H5Seis_ptr seis(seisContainer->createSeis(
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
+  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
 
   std::vector<double> binHdrStd;
   for (size_t i = 0; i < seis->getNBinHdr(); i++)
@@ -220,7 +220,7 @@ TEST_F(H5SeisFixture, writeAndGetBinHeader){
 TEST_F(H5SeisFixture, writeAndGetTrace){
   H5Seis_ptr seis(seisContainer->createSeis(
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
+  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
 
   Eigen::MatrixXf traces = Eigen::MatrixXf::Random(
         seis->getNSamp(), seis->getNTrc());
@@ -253,7 +253,7 @@ TEST_F(H5SeisFixture, writeAndGetTrace){
 TEST_F(H5SeisFixture, writeAndGetTraceHeaderFinalize){
   H5Seis_ptr seis(seisContainer->createSeis(
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
+  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
 
   Eigen::MatrixXd trcHdr = Eigen::MatrixXi::Random(
         seis->getNTrc(), seis->getNTrcHdr()).cast<double>();
@@ -279,7 +279,7 @@ TEST_F(H5SeisFixture, writeAndGetTraceHeaderFinalize){
 TEST_F(H5SeisFixture, writeAndGetSortedData){
   H5Seis_ptr seis(seisContainer->createSeis(
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
+  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
 
   Eigen::MatrixXf traces = Eigen::MatrixXf::Random(
         seis->getNSamp(), seis->getNTrc());
@@ -338,7 +338,7 @@ TEST_F(H5SeisFixture, writeAndGetSortedData){
 TEST_F(H5SeisFixture, updateBoundary){
   H5Seis_ptr seis(seisContainer->createSeis(
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
+  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
 
   Eigen::MatrixXf traces = Eigen::MatrixXf::Random(
         seis->getNSamp(), seis->getNTrc());
@@ -366,7 +366,7 @@ TEST_F(H5SeisFixture, updateBoundary){
 TEST_F(H5SeisFixture, generateGeometry){
   H5Seis_ptr seis(seisContainer->createSeis(
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-  ASSERT_TRUE(seis != nullptr) << "OPEN_OR_CREATE";
+  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
 
   double src_x0 = 0;
   double src_dx = 1;
@@ -402,6 +402,27 @@ TEST_F(H5SeisFixture, generateGeometry){
                 src_y0, src_dy, src_ny,
                 src_z,
                 true));
+}
+
+TEST_F(H5SeisFixture, mapSEGY){
+  p.mapSEGY = true;
+  p.segyFile = TEST_DATA_DIR"/one_shot.segy";
+
+  H5Seis_ptr seis(seisContainer->createSeis(
+                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
+
+  std::vector<std::string> txtHdr = seis->getTextHeader();
+
+  ASSERT_TRUE(txtHdr[0].find("Don't worry about") != std::string::npos);
+  ASSERT_TRUE(txtHdr[1].find("spelling") != std::string::npos);
+  ASSERT_TRUE(txtHdr[5].find("dont touch this data") != std::string::npos);
+  ASSERT_EQ(seis->getNSamp(), 500);
+  ASSERT_EQ(seis->getNTrc(), 24);
+  ASSERT_EQ(seis->getBinHeader("JOB"), 1);
+  ASSERT_EQ(seis->getBinHeader("SAMP_RATE"), 2000);
+  Eigen::VectorXd grpx = seis->getTraceHeader("GRPX");
+  ASSERT_TRUE(grpx(1) == 50000);
 }
 
 // ORIGIN POINT1 AND POINT2 ARE DEFINED ONLY FOR 3D STACK DATA AND AFTER 'Finalize()` is called

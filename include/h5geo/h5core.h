@@ -51,35 +51,35 @@ namespace h5geo
 std::vector<std::string> getRawBinHeaderNames();
 std::vector<std::string> getRawTraceHeaderNames();
 
-///\brief compareStrings Return `true` if strings are equal.
-///\param bigger
-///\param smaller
-///\param caseSensitivity
-///\return
+/// \brief compareStrings Return `true` if strings are equal.
+/// \param bigger
+/// \param smaller
+/// \param caseSensitivity
+/// \return
 bool compareStrings(
     const std::string& bigger,
     const std::string& smaller,
     const CaseSensitivity& caseSensitivity = CaseSensitivity::CASE_INSENSITIVE);
 
-///\brief eraseSubStr First Occurrence of given  substring from main string.
-///\param mainStr
-///\param toErase
+/// \brief eraseSubStr First Occurrence of given  substring from main string.
+/// \param mainStr
+/// \param toErase
 void eraseSubStr(
     std::string & mainStr, const std::string & toErase);
 
-///\brief eraseAllSubStr Erase all Occurrences of given substring from main string.
-///\param mainStr
-///\param toErase
+/// \brief eraseAllSubStr Erase all Occurrences of given substring from main string.
+/// \param mainStr
+/// \param toErase
 void eraseAllSubStr(
     std::string & mainStr, const std::string & toErase);
 
 char getDelimiter(
     const Delimiter& delimiter);
 
-///\brief generateName generates unique name by adding "_i"
-///\param nameList
-///\param baseName if empty then it will be replaced by "no_name"
-///\return
+/// \brief generateName generates unique name by adding "_i"
+/// \param nameList
+/// \param baseName if empty then it will be replaced by "no_name"
+/// \return
 std::string generateName(
     const std::vector<std::string> &nameList,
     std::string baseName = std::string());
@@ -97,32 +97,32 @@ void splitHeaderBytes(
     std::vector<int> &bytesStart,
     std::vector<int> &nBytes);
 
-///\brief splitPath Split path of type /path///to/where/things/happen//
+/// \brief splitPath Split path of type /path///to/where/things/happen//
 /// to output vector {"path", "to", "where", "things", "happen"}.
 /// Path that starts from `/` is treated as absolute
-///\param path
-///\return
+/// \param path
+/// \return
 std::vector<std::string> splitPath(
     std::string path);
 
-///\brief splitPath Split path of type /path///to/where/things/happen//
+/// \brief splitPath Split path of type /path///to/where/things/happen//
 /// to output vector {"path", "to", "where", "things", "happen"}
 /// and to filtered path `/path/to/where/things/happen`.
 /// Path that starts from `/` is treated as absolute
-///\param path
-///\param filteredPath
-///\return
+/// \param path
+/// \param filteredPath
+/// \return
 std::vector<std::string> splitPath(
     std::string path, std::string& filteredPath);
 
-///\brief splitPathToParentAndObj Return path to parent
+/// \brief splitPathToParentAndObj Return path to parent
 /// and object name. E.g. if `path = /a/s` then it returns
 /// `/a` as path and `s` as object name.
 /// If path is empty or `path = /` then both output path
 /// and object name are empty strings.
-///\param path
-///\param objName
-///\return
+/// \param path
+/// \param objName
+/// \return
 std::string splitPathToParentAndObj(
     const std::string& path,
     std::string& objName);
@@ -149,11 +149,11 @@ void getBinHeaderBytes(
 size_t getTraceHeaderCount();
 size_t getBinHeaderCount();
 
-///\brief getIndexFromAttribute Get row/col from Datasets with attributes
+/// \brief getIndexFromAttribute Get row/col from Datasets with attributes
 /// where attribute reflects the row/col index (like tables)
-///\param dataset
-///\param attrName
-///\return
+/// \param dataset
+/// \param attrName
+/// \return
 ptrdiff_t getIndexFromAttribute(
     h5gt::DataSet& dataset,
     const std::string& attrName);
@@ -165,20 +165,20 @@ template<typename Object,
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 bool deleteAllAttributes(Object& object);
 
-///\brief unlinkObject Unlink object from container
-///\param object parent object (File or Group) relatively
+/// \brief unlinkObject Unlink object from container
+/// \param object parent object (File or Group) relatively
 /// to `objPath`
-///\param objPath path to object from root
+/// \param objPath path to object from root
 ///(like: /path/to/object)
-///\return
+/// \return
 template<typename Parent,
          typename std::enable_if<
            std::is_same<Parent, h5gt::File>::value ||
            std::is_same<Parent, h5gt::Group>::value>::type* = nullptr>
 bool unlinkObject(Parent& parent, const std::string& objPath);
 
-///\brief unlinkContent Unlink everything in group
-///\return
+/// \brief unlinkContent Unlink everything in group
+/// \return
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -343,11 +343,11 @@ bool _readAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
-///\brief readAttribute Read attribute only if it exist and
+/// \brief readAttribute Read attribute only if it exist and
 /// its type is the same as passed buffer
-///\param holder h5gt::Object that contains given attribute
-///\param attrName
-///\param v
+/// \param holder h5gt::Object that contains given attribute
+/// \param attrName
+/// \param v
 template<typename Object, typename D,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
@@ -410,12 +410,12 @@ bool overwriteAttribute(
     const std::string& attrName,
     const std::string& str);
 
-///\brief overwriteAttribute Create attribute if not exist.
+/// \brief overwriteAttribute Create attribute if not exist.
 /// Delete attribute if type or size is different
 /// and create new one and write data to it
-///\param holder h5gt::Object that contains given attribute
-///\param attrName
-///\param v
+/// \param holder h5gt::Object that contains given attribute
+/// \param attrName
+/// \param v
 template<typename Object, typename D,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
@@ -455,11 +455,11 @@ bool overwriteAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
-///\brief readEnumAttribute Read enum from `Object's`
+/// \brief readEnumAttribute Read enum from `Object's`
 /// attribute as unsigned value. Return `0` if attribute
 /// not exists.
-///\param object
-///\param attrName
+/// \param object
+/// \param attrName
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -467,12 +467,12 @@ template<typename Object,
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 unsigned readEnumAttribute(Object& object, const std::string& attrName);
 
-///\brief readStringAttribute Read string from `Object's`
+/// \brief readStringAttribute Read string from `Object's`
 /// attribute. Return `std::string()` (empty string) if attribute
 /// not exists.
-///\param object
-///\param attrName
-///\return
+/// \param object
+/// \param attrName
+/// \return
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -540,14 +540,14 @@ Eigen::VectorXd readDoubleEigenVecAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
-///\brief writeData2IndexedDataset Try to write vector to dataset with
+/// \brief writeData2IndexedDataset Try to write vector to dataset with
 /// attribute where attribute is a single value reflecting
 /// row index of a corresponding dataset
-///\param dataset
-///\param v
-///\param attrName
-///\param resize resize if needed. Use it only for resizable dataset!
-///\return
+/// \param dataset
+/// \param v
+/// \param attrName
+/// \param resize resize if needed. Use it only for resizable dataset!
+/// \return
 template<typename D>
 bool writeData2IndexedDataset(
     h5gt::DataSet& dataset,
@@ -555,23 +555,23 @@ bool writeData2IndexedDataset(
     const Eigen::DenseBase<D>& v,
     bool resize);
 
-///\brief getDataFromIndexedDataset Try to read data to vector
+/// \brief getDataFromIndexedDataset Try to read data to vector
 /// from dataset with attribute where attribute is a single
 /// value reflecting row index of a corresponding dataset
-///\param dataset
-///\param attrName
-///\return
+/// \param dataset
+/// \param attrName
+/// \return
 template<typename T>
 Eigen::VectorX<T> getDataFromIndexedDataset(
     h5gt::DataSet& dataset,
     const std::string& attrName);
 
-///\brief find_index find all non-zero elements's indices.
+/// \brief find_index find all non-zero elements's indices.
 /// Possible usage:
 /// Eigen::VectorX<ptrdiff_t> ind = find_index(M.array() > 20)
 /// M.array() > 20 returns bool matrix and then we find non-zero indices
-///\param M
-///\return ind indices of nonzero elements
+/// \param M
+/// \return ind indices of nonzero elements
 template<typename T>
 Eigen::VectorX<ptrdiff_t> find_index(
     Eigen::DenseBase<T> const & M);
@@ -590,11 +590,11 @@ h5gt::ElementSet rowsCol2ElementSet(
     const Eigen::DenseBase<D>& rows,
     const T& col);
 
-///\brief rowsCols2ElementSet select rectilinear block of elements, i.e.
+/// \brief rowsCols2ElementSet select rectilinear block of elements, i.e.
 /// uses double loop to select every possible row-col intersection
-///\param rows vector
-///\param cols vector
-///\return
+/// \param rows vector
+/// \param cols vector
+/// \return
 template<typename D>
 h5gt::ElementSet rowsCols2ElementSet(
     const Eigen::DenseBase<D>& rows,
@@ -614,11 +614,11 @@ h5gt::ElementSet rowsCol2ElementSet(
     const std::vector<T>& rows,
     const T& col);
 
-///\brief rowsCols2ElementSet select rectilinear block of elements, i.e.
+/// \brief rowsCols2ElementSet select rectilinear block of elements, i.e.
 /// uses double loop to select every possible row-col intersection
-///\param rows
-///\param cols
-///\return
+/// \param rows
+/// \param cols
+/// \return
 template<typename T,
          typename std::enable_if<
            std::is_arithmetic<T>::value>::type* = nullptr>
@@ -630,6 +630,7 @@ h5gt::ElementSet rowsCols2ElementSet(
 
 
 #include "misc/h5core_misc.h"
+#include "misc/h5core_segy.h"
 
 #ifdef H5GEO_USE_GDAL
 #include "misc/h5core_sr_settings.h"

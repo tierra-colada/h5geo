@@ -89,28 +89,30 @@ private:
   createNewDevCurve(h5gt::Group &group, void* p);
   std::optional<h5gt::Group>
   createNewSeis(h5gt::Group &group, void* p);
-  std::optional<h5gt::Group>
-  createNewSeisSEGY(h5gt::Group &group, void* p);
 
   // Seismic
   std::optional<h5gt::DataSet>
   createTextHeader(
-      h5gt::Group &seisGroup);
+      h5gt::Group &seisGroup,
+      bool mapSEGY);
   std::optional<h5gt::DataSet>
   createBinHeader(
       h5gt::Group &seisGroup,
-      const hsize_t& stdChunk);
+      const hsize_t& stdChunk,
+      bool mapSEGY);
   std::optional<h5gt::DataSet>
   createTrace(
       h5gt::Group &seisGroup,
       const size_t& nTrc,
       const size_t& nSamp,
-      const hsize_t& trcChunk);
+      const hsize_t& trcChunk,
+      bool mapSEGY);
   std::optional<h5gt::DataSet>
   createTraceHeader(
       h5gt::Group &seisGroup,
       const size_t& nTrc,
-      const hsize_t& trcChunk);
+      const hsize_t& trcChunk,
+      bool mapSEGY);
   std::optional<h5gt::DataSet>
   createBoundary(
       h5gt::Group &seisGroup,
@@ -121,13 +123,14 @@ private:
 
   // Seismic SEGY
   std::optional<h5gt::Group>
-  createSEGY(
+  createExternalSEGY(
       h5gt::Group &seisGroup,
       const size_t& nTrc,
       const size_t& nSamp,
       const hsize_t& trcChunk,
       const hsize_t& stdChunk,
-      const std::string& segy);
+      const std::string& segy,
+      h5geo::SegyEndian endian);
 
 // --------------MISCELLANEOUS------------
 protected:

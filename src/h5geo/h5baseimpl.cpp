@@ -326,15 +326,13 @@ H5BaseImpl<TBase>::createNewContainer(
   return file;
 }
 
+/// \brief H5BaseImpl::createNewObject This method should work only
+///  with clean groups that don't have any attributes or content
+/// \param group is going to be object group (objG)
+/// \param objType
+/// \param p
 template <typename TBase>
 std::optional<h5gt::Group>
-/*!
- * \brief H5BaseImpl::createNewObject This method should work only
- * with clean groups that don't have any attributes or content
- * \param group is going to be object group (objG)
- * \param objType
- * \param p
- */
 H5BaseImpl<TBase>::createNewObject(
     h5gt::Group &group,
     const h5geo::ObjectType& objType,
@@ -642,13 +640,31 @@ std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
 {
   SeisParam param = *(static_cast<SeisParam*>(p));
-
   // try-catch can't handle this situation
   if (param.nTrc < 1 ||
       param.nSamp < 1 ||
       param.trcChunk < 1 ||
       param.stdChunk < 1)
     return std::nullopt;
+
+  if (param.mapSEGY){
+    h5geo::SegyEndian endian = h5geo::getSEGYEndian(param.segyFile);
+    param.nSamp = h5geo::getSEGYNSamp(param.segyFile, endian);
+    param.nTrc = h5geo::getSEGYNTrc(param.segyFile, endian);
+    if (param.nSamp < 1 || param.nTrc < 1)
+      return std::nullopt;
+
+    auto optG = createExternalSEGY(
+          group,
+          param.nTrc,
+          param.nSamp,
+          param.trcChunk,
+          param.stdChunk,
+          param.segyFile,
+          endian);
+    if (!optG.has_value())
+      return std::nullopt;
+  }
 
   try {
 
@@ -685,10 +701,10 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
           h5gt::DataSpace::From(param.dataUnits)).
         write(param.dataUnits);
 
-    createTextHeader(group);
-    createBinHeader(group, 10); // stdChunk may be too big for bin header
-    createTrace(group, param.nTrc, param.nSamp, param.trcChunk);
-    createTraceHeader(group, param.nTrc, param.trcChunk);
+    createTextHeader(group, param.mapSEGY);
+    createBinHeader(group, 10, param.mapSEGY); // stdChunk may be too big for bin header
+    createTrace(group, param.nTrc, param.nSamp, param.trcChunk, param.mapSEGY);
+    createTraceHeader(group, param.nTrc, param.trcChunk, param.mapSEGY);
     createBoundary(group, param.stdChunk);
     createSort(group);
 
@@ -701,21 +717,29 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
 
 template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseImpl<TBase>::createNewSeisSEGY(h5gt::Group &group, void* p)
-{
-
-}
-
-template <typename TBase>
-std::optional<h5gt::Group>
-H5BaseImpl<TBase>::createSEGY(
+H5BaseImpl<TBase>::createExternalSEGY(
     h5gt::Group &seisGroup,
     const size_t& nTrc,
     const size_t& nSamp,
     const hsize_t& trcChunk,
     const hsize_t& stdChunk,
-    const std::string& segy)
+    const std::string& segy,
+    h5geo::SegyEndian endian)
 {
+  // if SEGY endian differs from NATIVE we should take into account that or
+  // mapped values will have swapped bytes
+  h5gt::Endian endianNum;
+  switch (endian) {
+  case h5geo::SegyEndian::Little :
+    endianNum = h5gt::Endian::Little;
+    break;
+  case h5geo::SegyEndian::Big :
+    endianNum = h5gt::Endian::Big;
+    break;
+  default:
+    endianNum = h5gt::Endian::Native;
+  }
+
   h5gt::DataSetCreateProps txtP, binHdrP2, binHdrP4, dataP2, dataP4;
   std::vector<std::string> fullHeaderNameList, shortHeaderNameList;
   h5geo::getBinHeaderNames(fullHeaderNameList, shortHeaderNameList);
@@ -742,35 +766,44 @@ H5BaseImpl<TBase>::createSEGY(
           h5gt::LinkCreateProps(), txtP);
 
     // bin header
-    count = {size_t(nBinHeaderNames)};
-    max_count = {h5gt::DataSpace::UNLIMITED};
+    count = {20};
     cdims = {stdChunk};
-    binHdrP2.setChunk(10);
-    binHdrP4.setChunk(10);
-    segyG.createDataSet<short>(
+    h5gt::AtomicType<short> shortType(endianNum);
+    segyG.createDataSet(
           std::string{h5geo::detail::bin_header_2bytes},
-          h5gt::DataSpace(count, max_count),
+          h5gt::DataSpace(count),
+          shortType,
           h5gt::LinkCreateProps(), binHdrP2);
-    segyG.createDataSet<int>(
+    count = {10};
+    h5gt::AtomicType<int> intType(endianNum);
+    segyG.createDataSet(
           std::string{h5geo::detail::bin_header_4bytes},
-          h5gt::DataSpace(count, max_count),
+          h5gt::DataSpace(count),
+          intType,
           h5gt::LinkCreateProps(), binHdrP4);
+
+    // trace header
+    count = {nTrc, nSamp*2+120};
+    segyG.createDataSet(
+          std::string{h5geo::detail::trace_header_2bytes},
+          h5gt::DataSpace(count),
+          shortType,
+          h5gt::LinkCreateProps(), dataP2);
+    count = {nTrc, nSamp+60};
+    segyG.createDataSet(
+          std::string{h5geo::detail::trace_header_4bytes},
+          h5gt::DataSpace(count),
+          intType,
+          h5gt::LinkCreateProps(), dataP4);
 
     // trace
     count = {nTrc, nSamp+60};
-    max_count = {
-        h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED};
-    cdims = {trcChunk, nSamp+60};
-    dataP2.setChunk(cdims);
-    dataP4.setChunk(cdims);
-    segyG.createDataSet<short>(
-          std::string{h5geo::detail::data_2bytes},
-          h5gt::DataSpace(count, max_count),
-          h5gt::LinkCreateProps(), binHdrP2);
-    segyG.createDataSet<int>(
-          std::string{h5geo::detail::data_4bytes},
-          h5gt::DataSpace(count, max_count),
-          h5gt::LinkCreateProps(), binHdrP4);
+    h5gt::AtomicType<float> floatType(endianNum);
+    segyG.createDataSet(
+          std::string{h5geo::detail::trace_float},
+          h5gt::DataSpace(count),
+          floatType,
+          h5gt::LinkCreateProps(), dataP4);
     return segyG;
   } catch (h5gt::Exception& err) {
     return std::nullopt;
@@ -780,20 +813,39 @@ H5BaseImpl<TBase>::createSEGY(
 template <typename TBase>
 std::optional<h5gt::DataSet>
 H5BaseImpl<TBase>::createTextHeader(
-    h5gt::Group &seisGroup)
+    h5gt::Group &seisGroup,
+    bool mapSEGY)
 {
   char txtHdr[40][80];
-  h5gt::DataSet dataset = seisGroup.createDataSet<char[80]>(
+  h5gt::DataSetCreateProps props;
+
+  try {
+
+    if (mapSEGY){
+      auto space = h5gt::DataSpace::FromCharArrayStrings(txtHdr);
+      h5gt::Selection vSel(space);
+      auto segyG = seisGroup.getGroup(std::string{h5geo::detail::segy});
+      auto srcDset = segyG.getDataSet(std::string{h5geo::detail::text_header});
+      h5gt::Selection srcSel(srcDset.getSpace());
+      props.addVirtualDataSet(vSel.getSpace(), srcDset, srcSel.getSpace());
+    }
+
+    return seisGroup.createDataSet<char[80]>(
         std::string{h5geo::detail::text_header},
-        h5gt::DataSpace::FromCharArrayStrings(txtHdr));
-  return dataset;
+        h5gt::DataSpace::FromCharArrayStrings(txtHdr),
+            h5gt::LinkCreateProps(), props);
+
+  } catch (h5gt::Exception& err) {
+    return std::nullopt;
+  }
 }
 
 template <typename TBase>
 std::optional<h5gt::DataSet>
 H5BaseImpl<TBase>::createBinHeader(
     h5gt::Group &seisGroup,
-    const hsize_t& stdChunk)
+    const hsize_t& stdChunk,
+    bool mapSEGY)
 {
   std::vector<std::string> fullHeaderNameList, shortHeaderNameList;
   h5geo::getBinHeaderNames(fullHeaderNameList, shortHeaderNameList);
@@ -805,12 +857,29 @@ H5BaseImpl<TBase>::createBinHeader(
 
   try {
 
+    h5gt::DataSpace space(count, max_count);
     h5gt::DataSetCreateProps props;
     props.setChunk(cdims);
-    h5gt::DataSpace dataspace(count, max_count);
+    if (mapSEGY){
+      h5gt::Selection vSel(space);
+      auto segyG = seisGroup.getGroup(std::string{h5geo::detail::segy});
+      auto srcDset2b = segyG.getDataSet(std::string{h5geo::detail::bin_header_2bytes});
+      auto srcDset4b = segyG.getDataSet(std::string{h5geo::detail::bin_header_4bytes});
+
+      h5gt::Selection vSel4b(space);
+      vSel4b = vSel4b.select({0},{3});
+      auto srcSel4b = srcDset4b.select({0},{3});
+      props.addVirtualDataSet(vSel4b.getSpace(), srcDset4b, srcSel4b.getSpace());
+
+      h5gt::Selection vSel2b(space);
+      vSel2b = vSel2b.select({3},{count[0]-3});
+      auto srcSel2b = srcDset2b.select({6},{count[0]-3});
+      props.addVirtualDataSet(vSel2b.getSpace(), srcDset2b, srcSel2b.getSpace());
+    }
+
     h5gt::DataSet dataset = seisGroup.createDataSet<double>(
           std::string{h5geo::detail::bin_header},
-          dataspace, h5gt::LinkCreateProps(), props);
+          space, h5gt::LinkCreateProps(), props);
     for (size_t i = 0; i < nBinHeaderNames; i++){
       h5gt::Attribute attribute = dataset.createAttribute<size_t>(
             shortHeaderNameList[i], h5gt::DataSpace(1));
@@ -829,7 +898,8 @@ H5BaseImpl<TBase>::createTrace(
     h5gt::Group &seisGroup,
     const size_t& nTrc,
     const size_t& nSamp,
-    const hsize_t& trcChunk)
+    const hsize_t& trcChunk,
+    bool mapSEGY)
 {
   std::vector<size_t> count = {nTrc, nSamp};
   std::vector<size_t> max_count = {
@@ -840,10 +910,19 @@ H5BaseImpl<TBase>::createTrace(
 
     h5gt::DataSetCreateProps props;
     props.setChunk(cdims);
-    h5gt::DataSpace dataspace(count, max_count);
+    h5gt::DataSpace space(count, max_count);
+    if (mapSEGY){
+      h5gt::Selection vSel(space);
+      auto segyG = seisGroup.getGroup(std::string{h5geo::detail::segy});
+      auto srcDset4b = segyG.getDataSet(std::string{h5geo::detail::trace_float});
+
+      h5gt::Selection vSel4b(space);
+      auto srcSel4b = srcDset4b.select({0,60},{nTrc,nSamp});
+      props.addVirtualDataSet(vSel4b.getSpace(), srcDset4b, srcSel4b.getSpace());
+    }
     h5gt::DataSet dataset = seisGroup.createDataSet<float>(
           std::string{h5geo::detail::trace},
-          dataspace, h5gt::LinkCreateProps(), props);
+          space, h5gt::LinkCreateProps(), props);
     return dataset;
 
   } catch (h5gt::Exception& err) {
@@ -856,7 +935,8 @@ std::optional<h5gt::DataSet>
 H5BaseImpl<TBase>::createTraceHeader(
     h5gt::Group &seisGroup,
     const size_t& nTrc,
-    const hsize_t& trcChunk)
+    const hsize_t& trcChunk,
+    bool mapSEGY)
 {
   std::vector<std::string> fullHeaderNameList, shortHeaderNameList;
   h5geo::getTraceHeaderNames(fullHeaderNameList, shortHeaderNameList);
@@ -871,10 +951,42 @@ H5BaseImpl<TBase>::createTraceHeader(
 
     h5gt::DataSetCreateProps props;
     props.setChunk(cdims);
-    h5gt::DataSpace dataspace(count, max_count);
+    h5gt::DataSpace space(count, max_count);
+    if (mapSEGY){
+      h5gt::Selection vSel(space);
+      auto segyG = seisGroup.getGroup(std::string{h5geo::detail::segy});
+      auto srcDset2b = segyG.getDataSet(std::string{h5geo::detail::trace_header_2bytes});
+      auto srcDset4b = segyG.getDataSet(std::string{h5geo::detail::trace_header_4bytes});
+
+      std::vector<size_t> srcCols_from = {0,12,8,32,17,42,44,98};
+      std::vector<size_t> srcCols_to = {6,16,16,34,21,88,49,100};
+
+      size_t I = srcCols_from.size();
+      size_t srcOffset = 0;
+      bool is4b = true;
+      for (size_t i = 0; i < I; i++){
+        size_t nCols = srcCols_to[i] - srcCols_from[i];
+        h5gt::Selection vSel(space);
+        // should work only line by line or incorrect result will be gotten
+        for (size_t ii = 0; ii < nCols; ii++){
+          vSel = vSel.select({srcOffset,0},{1,nTrc}); // SEGY is mapped as {nTrc,nSamp} while Seis Header is in reverse order {nSamp,nTrc}
+          if (is4b){
+            auto srcSel4b = srcDset4b.select({0,srcCols_from[i]+ii},{nTrc,1});
+            props.addVirtualDataSet(vSel.getSpace(), srcDset4b, srcSel4b.getSpace());
+          } else {
+            auto srcSel2b = srcDset2b.select({0,srcCols_from[i]+ii},{nTrc,1});
+            props.addVirtualDataSet(vSel.getSpace(), srcDset2b, srcSel2b.getSpace());
+          }
+          srcOffset++;
+        }
+        // change 4 bytes to 2 bytes
+        is4b = !is4b;
+      }
+    }
+
     h5gt::DataSet dataset = seisGroup.createDataSet<double>(
           std::string{h5geo::detail::trace_header},
-          dataspace, h5gt::LinkCreateProps(), props);
+          space, h5gt::LinkCreateProps(), props);
     for (size_t i = 0; i < nTraceHeaderNames; i++){
       h5gt::Attribute attribute = dataset.createAttribute<size_t>(
             shortHeaderNameList[i], h5gt::DataSpace(1));

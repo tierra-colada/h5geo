@@ -58,8 +58,9 @@ enum class SeisSEGYDatasets : unsigned{
   text_header = 1,
   bin_header_2bytes = 2,
   bin_header_4bytes = 3,
-  data_2bytes = 4,
-  data_4bytes = 5
+  trace_header_2bytes = 4,
+  trace_header_4bytes = 5,
+  trace_float = 6
 };
 
 enum class MapAttributes : unsigned{
@@ -200,9 +201,6 @@ enum class TrajectoryFormat : unsigned{
   TVDSS_DX_DY = 5
 };
 
-/*!
- * \brief The CreationType enum
- */
 enum class CreationType : unsigned{
   OPEN = 1, /*!< Open if exist */
   CREATE = 2, /*!< Create if not exist */

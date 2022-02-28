@@ -257,27 +257,6 @@ protected:
       Eigen::VectorXd& y_loc,
       Eigen::VectorXd& z_loc);
 
-  virtual h5geo::TxtEncoding getSEGYTxtEncoding(
-      const std::string& segy);
-  virtual h5geo::SegyEndian getSEGYEndian(
-      const std::string& segy);
-  virtual h5geo::SegyFormat getSEGYFormat(
-      const std::string& segy, h5geo::SegyEndian endian);
-
-  virtual void readSEGYTxtHdr(
-      const std::string& segy,
-      char txtHdr[40][80], h5geo::TxtEncoding encoding);
-  virtual void readSEGYBinHdr(
-      const std::string& segy,
-      double binHdr[30], h5geo::SegyEndian endian);
-
-  virtual double getSEGYSampRate(
-      const std::string& segy, h5geo::SegyEndian endian);
-  virtual size_t getSEGYNSamp(
-      const std::string& segy, h5geo::SegyEndian endian);
-  virtual size_t getSEGYNTrc(
-      const std::string& segy, h5geo::SegyEndian endian);
-
 protected:
   h5gt::DataSet traceD, traceHeaderD;
 

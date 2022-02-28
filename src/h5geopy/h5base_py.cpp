@@ -74,7 +74,9 @@ void SeisParam_py(py::class_<SeisParam, BaseObjectParam> &py_obj){
       .def_readwrite("nSamp", &SeisParam::nSamp)
       .def_readwrite("srd", &SeisParam::srd)
       .def_readwrite("trcChunk", &SeisParam::trcChunk)
-      .def_readwrite("stdChunk", &SeisParam::stdChunk);
+      .def_readwrite("stdChunk", &SeisParam::stdChunk)
+      .def_readwrite("mapSEGY", &SeisParam::mapSEGY)
+      .def_readwrite("segyFile", &SeisParam::segyFile);
 }
 
 void ObjectDeleter_py(py::class_<ObjectDeleter> &py_obj){
