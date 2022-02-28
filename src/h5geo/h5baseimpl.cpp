@@ -648,9 +648,28 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
     return std::nullopt;
 
   if (param.mapSEGY){
-    h5geo::Endian endian = h5geo::getSEGYEndian(param.segyFile);
-    param.nSamp = h5geo::getSEGYNSamp(param.segyFile, endian);
-    param.nTrc = h5geo::getSEGYNTrc(param.segyFile, endian);
+    if (param.segyFiles.size() < 1)
+      return std::nullopt;
+
+    h5geo::Endian endian = h5geo::getSEGYEndian(param.segyFiles[0]);
+    param.nSamp = h5geo::getSEGYNSamp(param.segyFiles[0], endian);
+    param.nTrc = h5geo::getSEGYNTrc(param.segyFiles[0], endian);
+    h5geo::SegyFormat format = h5geo::getSEGYFormat(param.segyFiles[0], endian);
+    if (format != h5geo::SegyFormat::FourByte_IEEE)
+      return std::nullopt;
+
+    for (size_t i = 1; i < param.segyFiles.size(); i++){
+      auto e = h5geo::getSEGYEndian(param.segyFiles[i]);
+      auto n = h5geo::getSEGYNTrc(param.segyFiles[i], endian);
+      auto f = h5geo::getSEGYFormat(param.segyFiles[0], endian);
+      if (endian != h5geo::getSEGYEndian(param.segyFiles[i]) ||
+          param.nSamp != h5geo::getSEGYNSamp(param.segyFiles[i], endian) ||
+          h5geo::getSEGYFormat(param.segyFiles[i], endian) != h5geo::SegyFormat::FourByte_IEEE)
+        return std::nullopt;
+
+      param.nTrc += h5geo::getSEGYNTrc(param.segyFiles[i], endian);
+    }
+
     if (param.nSamp < 1 || param.nTrc < 1)
       return std::nullopt;
 
@@ -660,7 +679,7 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
           param.nSamp,
           param.trcChunk,
           param.stdChunk,
-          param.segyFile,
+          param.segyFiles,
           endian);
     if (!optG.has_value())
       return std::nullopt;
@@ -723,9 +742,12 @@ H5BaseImpl<TBase>::createExternalSEGY(
     const size_t& nSamp,
     const hsize_t& trcChunk,
     const hsize_t& stdChunk,
-    const std::string& segy,
+    const std::vector<std::string>& segyFiles,
     h5geo::Endian endian)
 {
+  if (segyFiles.size() < 1)
+    return std::nullopt;
+
   // if SEGY endian differs from NATIVE we should take into account that or
   // mapped values will have swapped bytes
   h5gt::Endian endianNum;
@@ -740,7 +762,7 @@ H5BaseImpl<TBase>::createExternalSEGY(
     endianNum = h5gt::Endian::Native;
   }
 
-  h5gt::DataSetCreateProps txtP, binHdrP2, binHdrP4, dataP2, dataP4;
+  h5gt::DataSetCreateProps txtP, binHdrP, dataP;
   std::vector<std::string> fullHeaderNameList, shortHeaderNameList;
   h5geo::getBinHeaderNames(fullHeaderNameList, shortHeaderNameList);
   size_t nBinHeaderNames = fullHeaderNameList.size();
@@ -750,11 +772,11 @@ H5BaseImpl<TBase>::createExternalSEGY(
   std::vector<hsize_t> cdims;
 
   try {
-    txtP.addExternalFile(segy, 0, 3200);
-    binHdrP2.addExternalFile(segy, 3200, 400);
-    binHdrP4.addExternalFile(segy, 3200, 400);
-    dataP2.addExternalFile(segy, 3600);
-    dataP4.addExternalFile(segy, 3600);
+    txtP.addExternalFile(segyFiles[0], 0, 3200);
+    binHdrP.addExternalFile(segyFiles[0], 3200, 400);
+    for (const auto& segy : segyFiles){
+      dataP.addExternalFile(segy, 3600);
+    }
 
     h5gt::Group segyG = seisGroup.createGroup(std::string{h5geo::detail::segy});
 
@@ -773,14 +795,14 @@ H5BaseImpl<TBase>::createExternalSEGY(
           std::string{h5geo::detail::bin_header_2bytes},
           h5gt::DataSpace(count),
           shortType,
-          h5gt::LinkCreateProps(), binHdrP2);
+          h5gt::LinkCreateProps(), binHdrP);
     count = {10};
     h5gt::AtomicType<int> intType(endianNum);
     segyG.createDataSet(
           std::string{h5geo::detail::bin_header_4bytes},
           h5gt::DataSpace(count),
           intType,
-          h5gt::LinkCreateProps(), binHdrP4);
+          h5gt::LinkCreateProps(), binHdrP);
 
     // trace header
     count = {nTrc, nSamp*2+120};
@@ -788,13 +810,13 @@ H5BaseImpl<TBase>::createExternalSEGY(
           std::string{h5geo::detail::trace_header_2bytes},
           h5gt::DataSpace(count),
           shortType,
-          h5gt::LinkCreateProps(), dataP2);
+          h5gt::LinkCreateProps(), dataP);
     count = {nTrc, nSamp+60};
     segyG.createDataSet(
           std::string{h5geo::detail::trace_header_4bytes},
           h5gt::DataSpace(count),
           intType,
-          h5gt::LinkCreateProps(), dataP4);
+          h5gt::LinkCreateProps(), dataP);
 
     // trace
     count = {nTrc, nSamp+60};
@@ -803,7 +825,7 @@ H5BaseImpl<TBase>::createExternalSEGY(
           std::string{h5geo::detail::trace_float},
           h5gt::DataSpace(count),
           floatType,
-          h5gt::LinkCreateProps(), dataP4);
+          h5gt::LinkCreateProps(), dataP);
     return segyG;
   } catch (h5gt::Exception& err) {
     return std::nullopt;

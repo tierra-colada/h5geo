@@ -129,24 +129,20 @@ private:
       const size_t& nSamp,
       const hsize_t& trcChunk,
       const hsize_t& stdChunk,
-      const std::string& segy,
+      const std::vector<std::string>& segyFiles,
       h5geo::Endian endian);
 
 // --------------MISCELLANEOUS------------
 protected:
-  /*!
-   * \brief isSuccessor checks whether `childG` is successor of `parentG`
-   * \param parentG
-   * \param childG
-   * \return
-   */
+  /// \brief isSuccessor checks whether `childG` is successor of `parentG`
+  /// \param parentG
+  /// \param childG
+  /// \return
   bool isSuccessor(h5gt::Group& parentG, h5gt::Group& childG);
-  /*!
-   * \brief isSuccessor works only with absolute path!
-   * \param parent
-   * \param child
-   * \return
-   */
+  /// \brief isSuccessor works only with absolute path!
+  /// \param parent
+  /// \param child
+  /// \return
   bool isSuccessor(const std::string& parent, const std::string& child);
 
   //----------- FRIEND CLASSES -----------

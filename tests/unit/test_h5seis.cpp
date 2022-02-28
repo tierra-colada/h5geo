@@ -406,7 +406,11 @@ TEST_F(H5SeisFixture, generateGeometry){
 
 TEST_F(H5SeisFixture, mapSEGY){
   p.mapSEGY = true;
-  p.segyFile = TEST_DATA_DIR"/one_shot.segy";
+  p.segyFiles = {
+    TEST_DATA_DIR"/1.segy",
+    TEST_DATA_DIR"/2.segy",
+    TEST_DATA_DIR"/3.segy",
+    TEST_DATA_DIR"/4.segy"};
 
   H5Seis_ptr seis(seisContainer->createSeis(
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
@@ -418,7 +422,7 @@ TEST_F(H5SeisFixture, mapSEGY){
   ASSERT_TRUE(txtHdr[1].find("spelling") != std::string::npos);
   ASSERT_TRUE(txtHdr[5].find("dont touch this data") != std::string::npos);
   ASSERT_EQ(seis->getNSamp(), 500);
-  ASSERT_EQ(seis->getNTrc(), 24);
+  ASSERT_EQ(seis->getNTrc(), 96);
   ASSERT_EQ(seis->getBinHeader("JOB"), 1);
   ASSERT_EQ(seis->getBinHeader("SAMP_RATE"), 2000);
   Eigen::VectorXd grpx = seis->getTraceHeader("GRPX");
