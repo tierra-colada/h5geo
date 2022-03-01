@@ -81,10 +81,12 @@ target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${EIGEN3_INCLUDE_DIRS}
 target_link_libraries(h5geo PUBLIC ${HDF5_C_LIBRARIES})
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${HDF5_INCLUDE_DIRS}>)
 target_compile_definitions(h5geo PUBLIC ${HDF5_DEFINITIONS})
-target_link_libraries(h5geo PUBLIC $<BUILD_INTERFACE:magic_enum::magic_enum>)
+# MAGIC_ENUM is PRIVATE as it is for internal purpose only
+target_link_libraries(h5geo PRIVATE $<BUILD_INTERFACE:magic_enum::magic_enum>)
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${h5gt_INCLUDE_DIRS}>)
 target_link_libraries(h5geo PUBLIC units::units)
-target_link_libraries(h5geo PUBLIC mio::mio)
+# MIO is PRIVATE as it is for internal purpose only
+target_link_libraries(h5geo PRIVATE mio::mio)
 
 if(H5GEO_BUILD_h5geopy)
   add_subdirectory(src/h5geopy)

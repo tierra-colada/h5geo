@@ -31,6 +31,9 @@ target_link_libraries(H5GeoTest
   PRIVATE h5geo
   )
 
+target_link_libraries(H5GeoTest PRIVATE $<BUILD_INTERFACE:magic_enum::magic_enum>)
+target_link_libraries(H5GeoTest PRIVATE mio::mio)
+
 add_test(
   NAME H5GeoTest
   COMMAND H5GeoTest
