@@ -630,7 +630,6 @@ h5gt::ElementSet rowsCols2ElementSet(
 
 
 #include "misc/h5core_misc.h"
-#include "misc/h5core_segy.h"
 
 #ifdef H5GEO_USE_GDAL
 #include "misc/h5core_sr_settings.h"

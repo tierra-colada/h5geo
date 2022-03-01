@@ -6,8 +6,14 @@
 #include <type_traits> // for enum class operators
 #include <string>
 
+#if !defined(MAGIC_ENUM_RANGE_MIN)
 #define MAGIC_ENUM_RANGE_MIN 0
+#endif
+
+#if !defined(MAGIC_ENUM_RANGE_MAX)
 #define MAGIC_ENUM_RANGE_MAX 256
+#endif
+
 #include <magic_enum.hpp>
 
 
