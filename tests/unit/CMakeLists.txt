@@ -31,8 +31,9 @@ target_link_libraries(H5GeoTest
   PRIVATE h5geo
   )
 
-target_link_libraries(H5GeoTest PRIVATE $<BUILD_INTERFACE:magic_enum::magic_enum>)
+target_link_libraries(H5GeoTest PRIVATE magic_enum::magic_enum)
 target_link_libraries(H5GeoTest PRIVATE mio::mio)
+target_link_libraries(H5GeoTest PRIVATE units::units)
 
 add_test(
   NAME H5GeoTest

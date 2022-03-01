@@ -15,38 +15,32 @@
 
 namespace h5geo{
 
+/// \brief _ccw The z-value of the cross product of segments
+/// (a, b) and (a, c). Positive means c is _ccw
+/// from (a, b), negative cw. Zero means its collinear.
+/// \param a
+/// \param b
+/// \param c
+/// \return
 template<typename T1, typename T2>
-/*!
- * \brief _ccw The z-value of the cross product of segments
- * (a, b) and (a, c). Positive means c is _ccw
- * from (a, b), negative cw. Zero means its collinear.
- * \param a
- * \param b
- * \param c
- * \return
- */
 T1 _ccw(const Eigen::Vector2<T1>& a,
        const Eigen::Vector2<T1>& b,
        const Eigen::MatrixBase<T2>& c) {
   return (b.x() - a.x()) * (c.y() - a.y()) - (b.y() - a.y()) * (c.x() - a.x());
 }
 
+/// \brief _isLeftOf Returns true if a is lexicographically before b.
+/// \param a
+/// \param b
+/// \return
 template<typename T>
-/*!
- * \brief _isLeftOf Returns true if a is lexicographically before b.
- * \param a
- * \param b
- * \return
- */
 bool _isLeftOf(const Eigen::Vector2<T>& a,
               const Eigen::Vector2<T>& b) {
   return (a.x() < b.x() || (a.x() == b.x() && a.y() < b.y()));
 }
 
+/// \brief The _ccwSorter struct Used to sort points in _ccw order about a pivot.
 template<typename T>
-/*!
- * \brief The _ccwSorter struct Used to sort points in _ccw order about a pivot.
- */
 struct _ccwSorter {
   const Eigen::Vector2<T>& pivot;
 
@@ -57,40 +51,34 @@ struct _ccwSorter {
   }
 };
 
+/// \brief _segmentLen The length of segment (a, b).
+/// \param a
+/// \param b
+/// \return
 template<typename T>
-/*!
- * \brief _segmentLen The length of segment (a, b).
- * \param a
- * \param b
- * \return
- */
 T _segmentLen(const Eigen::Vector2<T>& a,
       const Eigen::Vector2<T>& b) {
   return sqrt((b.x() - a.x()) * (b.x() - a.x()) + (b.y() - a.y()) * (b.y() - a.y()));
 }
 
+/// \brief _segmentDist The unsigned distance of p from segment (a, b).
+/// \param a
+/// \param b
+/// \param p
+/// \return
 template<typename T1, typename T2>
-/*!
- * \brief _segmentDist The unsigned distance of p from segment (a, b).
- * \param a
- * \param b
- * \param p
- * \return
- */
 T1 _segmentDist(const Eigen::Vector2<T1>& a,
         const Eigen::Vector2<T1>& b,
         const Eigen::MatrixBase<T2>& p) {
   return fabs((b.x() - a.x()) * (a.y() - p.y()) - (b.y() - a.y()) * (a.x() - p.x())) / _segmentLen(a, b);
 }
 
+/// \brief _getFarthestInd Returns the index of the farthest point from segment (a, b).
+/// \param a
+/// \param b
+/// \param v
+/// \return
 template<typename T>
-/*!
- * \brief _getFarthestInd Returns the index of the farthest point from segment (a, b).
- * \param a
- * \param b
- * \param v
- * \return
- */
 size_t _getFarthestInd(const Eigen::Vector2<T>& a,
                    const Eigen::Vector2<T>& b,
                    const std::vector<Eigen::Vector2<T> >& v) {
@@ -126,13 +114,11 @@ size_t _getFarthestInd(const Eigen::Vector2<T1>& a,
   return idxMax;
 }
 
+/// \brief giftWrapping The gift-wrapping algorithm for convex hull.
+/// https://en.wikipedia.org/wiki/Gift_wrapping_algorithm
+/// \param v
+/// \return
 template<typename T>
-/*!
- * \brief giftWrapping The gift-wrapping algorithm for convex hull.
- * https://en.wikipedia.org/wiki/Gift_wrapping_algorithm
- * \param v
- * \return
- */
 [[deprecated("Use 'quickHull2D' instead")]]
 std::vector<Eigen::Vector2<T> > giftWrapping(std::vector<Eigen::Vector2<T> > v) {
   // Move the leftmost point to the beginning of our vector.
@@ -151,13 +137,11 @@ std::vector<Eigen::Vector2<T> > giftWrapping(std::vector<Eigen::Vector2<T> > v) 
   return hull;
 }
 
+/// \brief GrahamScan The Graham scan algorithm for convex hull.
+/// https://en.wikipedia.org/wiki/Graham_scan
+/// \param v
+/// \return
 template<typename T>
-/*!
- * \brief GrahamScan The Graham scan algorithm for convex hull.
- * https://en.wikipedia.org/wiki/Graham_scan
- * \param v
- * \return
- */
 [[deprecated("Use 'quickHull2D' instead")]]
 std::vector<Eigen::Vector2<T> > GrahamScan(std::vector<Eigen::Vector2<T> > v) {
   // Put our leftmost point at index 0
@@ -186,12 +170,10 @@ std::vector<Eigen::Vector2<T> > GrahamScan(std::vector<Eigen::Vector2<T> > v) {
 }
 
 
+/// \brief monotoneChain The monotone chain algorithm for convex hull.
+/// \param v
+/// \return
 template<typename T>
-/*!
- * \brief monotoneChain The monotone chain algorithm for convex hull.
- * \param v
- * \return
- */
 [[deprecated("Use 'quickHull2D' instead")]]
 std::vector<Eigen::Vector2<T> > monotoneChain(std::vector<Eigen::Vector2<T> > v) {
   // Sort our points in lexicographic order.
@@ -226,14 +208,12 @@ std::vector<Eigen::Vector2<T> > monotoneChain(std::vector<Eigen::Vector2<T> > v)
 }
 
 
+/// \brief quickHull2D Recursive call of the quickHull2D algorithm.
+/// \param v
+/// \param a
+/// \param b
+/// \param hull
 template<typename T>
-/*!
- * \brief quickHull2D Recursive call of the quickHull2D algorithm.
- * \param v
- * \param a
- * \param b
- * \param hull
- */
 void quickHull2D(
     const std::vector<Eigen::Vector2<T> >& v,
     const Eigen::Vector2<T>& a,
@@ -268,12 +248,10 @@ void quickHull2D(
   quickHull2D(right, f, b, hull);
 }
 
+/// \brief quickHull2D Quick Hull 2D algorithm https://en.wikipedia.org/wiki/quickHull.
+/// \param v
+/// \return
 template<typename T>
-/*!
- * \brief quickHull2D Quick Hull 2D algorithm https://en.wikipedia.org/wiki/quickHull.
- * \param v
- * \return
- */
 std::vector<Eigen::Vector2<T> > quickHull2D(
     const std::vector<Eigen::Vector2<T> >& v)
 {
@@ -306,15 +284,13 @@ std::vector<Eigen::Vector2<T> > quickHull2D(
   return hull;
 }
 
+/// \brief quickHull2D Recursive call of the quickHull2D algorithm.
+/// \param v
+/// \param a
+/// \param b
+/// \param hull
+/// \param ih
 template<typename T>
-/*!
- * \brief quickHull2D Recursive call of the quickHull2D algorithm.
- * \param v
- * \param a
- * \param b
- * \param hull
- * \param ih
- */
 void quickHull2D(
     const Eigen::MatrixX2<T>& v,
     const Eigen::Vector2<T>& a,
@@ -357,12 +333,10 @@ void quickHull2D(
   quickHull2D(right, f, b, hull, ih);
 };
 
+/// \brief quickHull2D Quick Hull 2D algorithm https://en.wikipedia.org/wiki/quickHull.
+/// \param v
+/// \return
 template<typename T>
-/*!
- * \brief quickHull2D Quick Hull 2D algorithm https://en.wikipedia.org/wiki/quickHull.
- * \param v
- * \return
- */
 Eigen::MatrixX2<T> quickHull2D(
     const Eigen::MatrixX2<T>& v)
 {

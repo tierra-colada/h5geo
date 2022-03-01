@@ -15,8 +15,8 @@
 #include <mio/mmap.hpp>
 
 // enum string is needed to include magic_enum with predefined macro
-#include "h5core_enum_string.h"
-#include "../h5core.h"
+#include "h5enum_string.h"
+#include "../h5util.h"
 #include "../h5seis.h"
 
 

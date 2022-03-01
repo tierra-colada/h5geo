@@ -8,7 +8,7 @@
 #include <h5geo/h5well.h>
 #include <h5geo/h5devcurve.h>
 #include <h5geo/h5logcurve.h>
-#include <h5geo/h5core.h>
+#include <h5geo/h5util.h>
 
 namespace h5geopy {
 

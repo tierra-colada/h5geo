@@ -4,7 +4,6 @@
 #include <h5geo/h5map.h>
 #include <h5geo/h5seis.h>
 #include <h5geo/h5well.h>
-#include <h5geo/h5core.h>
 
 #include <h5gt/H5File.hpp>
 #include <h5gt/H5Group.hpp>

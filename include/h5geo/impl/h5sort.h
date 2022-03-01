@@ -204,7 +204,6 @@ Eigen::VectorX<ptrdiff_t> sort_rows_unique(
     Eigen::MatrixX<TUval> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size)
 {
-
   if (M.rows() < 1)
     return Eigen::VectorX<ptrdiff_t>();
 

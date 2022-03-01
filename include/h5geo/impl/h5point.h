@@ -1,5 +1,5 @@
-#ifndef H5CORE_TYPES_H
-#define H5CORE_TYPES_H
+#ifndef H5POINT_H
+#define H5POINT_H
 
 #include <h5gt/H5DataType.hpp>
 

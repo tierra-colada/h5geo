@@ -1,5 +1,5 @@
-#ifndef H5CORE_ENUM_OPERATORS_H
-#define H5CORE_ENUM_OPERATORS_H
+#ifndef H5ENUM_OPERATORS_H
+#define H5ENUM_OPERATORS_H
 
 #ifndef H5GT_USE_EIGEN
 #define H5GT_USE_EIGEN // should be defined before including h5gt
@@ -101,4 +101,4 @@ operator ^=(Enum &lhs, Enum rhs)
 }
 
 
-#endif // H5CORE_ENUM_OPERATORS_H
+#endif // H5ENUM_OPERATORS_H

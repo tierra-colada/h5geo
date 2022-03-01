@@ -1,6 +1,6 @@
-#include "../../include/h5geo/misc/h5mapcontainerimpl.h"
+#include "../../include/h5geo/impl/h5mapcontainerimpl.h"
 #include "../../include/h5geo/h5map.h"
-#include "../../include/h5geo/misc/h5mapimpl.h"
+#include "../../include/h5geo/impl/h5mapimpl.h"
 
 #include <filesystem>
 namespace fs = std::filesystem;

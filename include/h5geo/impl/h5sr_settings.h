@@ -1,8 +1,8 @@
-#ifndef H5CORE_SR_SETTINGS_H
-#define H5CORE_SR_SETTINGS_H
+#ifndef H5SR_SETTINGS_H
+#define H5SR_SETTINGS_H
 
 #include "h5geo_export.h"
-#include "h5core_enum.h"
+#include "h5enum.h"
 
 #include <string>
 
@@ -43,4 +43,4 @@ H5GEO_EXPORT h5geo::Domain getDomainEnum();
 } // h5geo
 
 
-#endif // H5CORE_SR_SETTINGS_H
+#endif // H5SR_SETTINGS_H

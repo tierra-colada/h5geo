@@ -1,6 +1,6 @@
 #include "../../include/h5geopy/h5points_py.h"
 
-#include <h5geo/misc/h5core_types.h>
+#include <h5geo/impl/h5point.h>
 
 namespace h5geopy {
 

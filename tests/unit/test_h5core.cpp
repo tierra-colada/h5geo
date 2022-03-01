@@ -1,11 +1,12 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <h5geo/h5core.h>
+#include <h5geo/misc/h5core.h>
 
 #include <h5gt/H5File.hpp>
 #include <h5gt/H5Group.hpp>
 #include <h5gt/H5DataSet.hpp>
 
+#include <cmath>
 #include <filesystem>
 namespace fs = std::filesystem;
 
@@ -111,8 +112,8 @@ TEST_F(H5CoreFixture, interp1MonotonicDecreasing){
   ynew_expected << 1, 1.5, 2, 1.5, 1, 3, 5, 4, 3;
 
   ASSERT_TRUE(ynew(Eigen::seq(0, Eigen::last-2)).isApprox(ynew_expected));
-  ASSERT_TRUE(isnan(ynew(Eigen::last-1)));
-  ASSERT_TRUE(isnan(ynew(Eigen::last)));
+  ASSERT_TRUE(std::isnan(ynew(Eigen::last-1)));
+  ASSERT_TRUE(std::isnan(ynew(Eigen::last)));
 }
 
 TEST_F(H5CoreFixture, interp1MonotonicIncreasing){
@@ -128,6 +129,6 @@ TEST_F(H5CoreFixture, interp1MonotonicIncreasing){
   ynew_expected << 1, 1.5, 2, 1.5, 1, 3, 5, 4, 3;
 
   ASSERT_TRUE(ynew(Eigen::seq(0, Eigen::last-2)).isApprox(ynew_expected));
-  ASSERT_TRUE(isnan(ynew(Eigen::last-1)));
-  ASSERT_TRUE(isnan(ynew(Eigen::last)));
+  ASSERT_TRUE(std::isnan(ynew(Eigen::last-1)));
+  ASSERT_TRUE(std::isnan(ynew(Eigen::last)));
 }

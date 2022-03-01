@@ -1,7 +1,7 @@
-#ifndef H5CORE_ENUM_H
-#define H5CORE_ENUM_H
+#ifndef H5NUM_H
+#define H5NUM_H
 
-#include "h5core_enum_operators.h"
+#include "h5enum_operators.h"
 
 namespace h5gt
 {

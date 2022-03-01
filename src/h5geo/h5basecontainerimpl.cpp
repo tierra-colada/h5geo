@@ -1,10 +1,10 @@
-#include "../../include/h5geo/misc/h5basecontainerimpl.h"
-#include "../../include/h5geo/misc/h5seiscontainerimpl.h"
-#include "../../include/h5geo/misc/h5mapcontainerimpl.h"
-#include "../../include/h5geo/misc/h5wellcontainerimpl.h"
-#include "../../include/h5geo/misc/h5pointsimpl.h"
-#include "../../include/h5geo/h5core.h"
-#include "../../include/h5geo/misc/h5core_enum_string.h"
+#include "../../include/h5geo/impl/h5basecontainerimpl.h"
+#include "../../include/h5geo/impl/h5seiscontainerimpl.h"
+#include "../../include/h5geo/impl/h5mapcontainerimpl.h"
+#include "../../include/h5geo/impl/h5wellcontainerimpl.h"
+#include "../../include/h5geo/impl/h5pointsimpl.h"
+#include "../../include/h5geo/misc/h5core.h"
+#include "../../include/h5geo/misc/h5enum_string.h"
 
 #include <filesystem>
 namespace fs = std::filesystem;

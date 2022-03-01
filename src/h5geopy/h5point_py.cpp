@@ -1,4 +1,4 @@
-#include "../../include/h5geopy/h5core_types_py.h"
+#include "../../include/h5geopy/h5point_py.h"
 
 namespace h5geopy {
 

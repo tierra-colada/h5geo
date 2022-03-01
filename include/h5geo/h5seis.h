@@ -5,7 +5,9 @@
 
 #include <Eigen/Dense>
 
+#ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES   // should be before <cmath>, include 'pi' val
+#endif
 #include <math.h>
 
 class H5SeisContainer;

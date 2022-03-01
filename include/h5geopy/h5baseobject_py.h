@@ -3,7 +3,7 @@
 
 #include "h5geo_py.h"
 
-#include <h5geo/misc/h5baseobjectimpl.h>
+#include <h5geo/impl/h5baseobjectimpl.h>
 
 namespace h5geopy {
 

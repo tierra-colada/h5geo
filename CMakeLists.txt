@@ -64,7 +64,7 @@ install(TARGETS h5geo DESTINATION lib EXPORT h5geo-targets)
 include(GenerateExportHeader)
 generate_export_header(
   h5geo
-  EXPORT_FILE_NAME ${CMAKE_CURRENT_SOURCE_DIR}/include/h5geo/misc/h5geo_export.h
+  EXPORT_FILE_NAME ${CMAKE_CURRENT_SOURCE_DIR}/include/h5geo/impl/h5geo_export.h
   )
 
 # LINK DEPENDENCIES
@@ -84,7 +84,7 @@ target_compile_definitions(h5geo PUBLIC ${HDF5_DEFINITIONS})
 # MAGIC_ENUM is PRIVATE as it is for internal purpose only
 target_link_libraries(h5geo PRIVATE $<BUILD_INTERFACE:magic_enum::magic_enum>)
 target_include_directories(h5geo PUBLIC $<BUILD_INTERFACE:${h5gt_INCLUDE_DIRS}>)
-target_link_libraries(h5geo PUBLIC units::units)
+target_link_libraries(h5geo PRIVATE units::units)
 # MIO is PRIVATE as it is for internal purpose only
 target_link_libraries(h5geo PRIVATE mio::mio)
 

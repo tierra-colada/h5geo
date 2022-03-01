@@ -5,8 +5,12 @@
 #define H5GT_USE_EIGEN // should be defined before including h5gt
 #endif
 
-#include "h5core_enum.h"
-#include "h5core_types.h"
+#ifdef H5GEO_USE_GDAL
+#include "h5sr_settings.h"
+#endif
+
+#include "h5enum.h"
+#include "h5point.h"
 #include "h5geo_export.h"
 
 #include <vector>

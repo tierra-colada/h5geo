@@ -1,7 +1,7 @@
-#include "../../include/h5geo/misc/h5seisimpl.h"
+#include "../../include/h5geo/impl/h5seisimpl.h"
 #include "../../include/h5geo/h5seiscontainer.h"
-#include "../../include/h5geo/h5core.h"
-#include "../../include/h5geo/misc/h5core_segy.h"
+#include "../../include/h5geo/misc/h5core.h"
+#include "../../include/h5geo/misc/h5segy.h"
 
 #include <fstream>
 #include <climits>

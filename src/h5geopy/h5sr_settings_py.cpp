@@ -1,6 +1,6 @@
-#include "../../include/h5geopy/h5core_sr_settings_py.h"
+#include "../../include/h5geopy/h5sr_settings_py.h"
 
-#include <h5geo/misc/h5core_sr_settings.h>
+#include <h5geo/impl/h5sr_settings.h>
 
 namespace h5geopy {
 

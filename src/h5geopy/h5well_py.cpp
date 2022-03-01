@@ -1,7 +1,7 @@
 #include "../../include/h5geopy/h5well_py.h"
 
-#include <h5geo/misc/h5devcurveimpl.h>
-#include <h5geo/misc/h5logcurveimpl.h>
+#include <h5geo/impl/h5devcurveimpl.h>
+#include <h5geo/impl/h5logcurveimpl.h>
 
 namespace h5geopy {
 

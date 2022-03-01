@@ -1,6 +1,6 @@
 #include "../../include/h5geopy/h5easyhull_py.h"
 
-#include <h5geo/misc/h5easyhull.h>
+#include <h5geo/impl/h5easyhull.h>
 
 namespace h5geopy {
 

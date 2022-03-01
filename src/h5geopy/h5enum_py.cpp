@@ -1,4 +1,4 @@
-#include "../../include/h5geopy/h5core_enum_py.h"
+#include "../../include/h5geopy/h5enum_py.h"
 
 namespace h5geopy {
 

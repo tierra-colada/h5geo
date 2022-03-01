@@ -1,17 +1,17 @@
-#include "../../include/h5geo/misc/h5baseobjectimpl.h"
-#include "../../include/h5geo/misc/h5mapimpl.h"
-#include "../../include/h5geo/misc/h5seisimpl.h"
-#include "../../include/h5geo/misc/h5wellimpl.h"
-#include "../../include/h5geo/misc/h5devcurveimpl.h"
-#include "../../include/h5geo/misc/h5logcurveimpl.h"
-#include "../../include/h5geo/misc/h5pointsimpl.h"
-#include "../../include/h5geo/h5core.h"
-#include "../../include/h5geo/misc/h5core_enum_string.h"
+#include "../../include/h5geo/impl/h5baseobjectimpl.h"
+#include "../../include/h5geo/impl/h5mapimpl.h"
+#include "../../include/h5geo/impl/h5seisimpl.h"
+#include "../../include/h5geo/impl/h5wellimpl.h"
+#include "../../include/h5geo/impl/h5devcurveimpl.h"
+#include "../../include/h5geo/impl/h5logcurveimpl.h"
+#include "../../include/h5geo/impl/h5pointsimpl.h"
+#include "../../include/h5geo/misc/h5core.h"
+#include "../../include/h5geo/misc/h5enum_string.h"
 
 #ifdef H5GEO_USE_GDAL
 #include <gdal/gdal.h>
 #include <gdal/gdal_priv.h>
-#include "../../include/h5geo/misc/h5core_sr_settings.h"
+#include "../../include/h5geo/impl/h5sr_settings.h"
 #endif
 
 template <typename TBase>
