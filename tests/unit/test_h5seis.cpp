@@ -21,6 +21,7 @@ public:
     FILE_NAME = "seis.h5";
     SEIS_NAME1 = "path1/to/seis";
     SEIS_NAME2 = "path2/to/seis";
+    SEIS_NAME3 = "path3/to/seis";
 
     if (trig){
       h5gt::File file(FILE_NAME, h5gt::File::OpenOrCreate);
@@ -59,7 +60,7 @@ public:
 public:
   H5SeisCnt_ptr seisContainer;
   SeisParam p;
-  std::string FILE_NAME, SEIS_NAME1, SEIS_NAME2;
+  std::string FILE_NAME, SEIS_NAME1, SEIS_NAME2, SEIS_NAME3;
 };
 
 TEST_F(H5SeisFixture, createContainer){
@@ -442,9 +443,19 @@ TEST_F(H5SeisFixture, SEGY){
   ASSERT_TRUE(h5geo::readSEGYTraces(
                 seis2.get(),
                 TEST_DATA_DIR"/1.segy",
-                nSamp, nTrc, format, endian, 0, 10000)); // for testing purpose I need to set value not less than 24 trc (10000) as OMP may save traces in different order
+                nSamp, nTrc, 0, 10000, format, endian)); // for testing purpose I need to set value not less than 24 trc (10000) as OMP may save traces in different order
   Eigen::VectorXf trace2 = seis2->getTrace(0);
   ASSERT_TRUE(trace.isApprox(trace2));
+
+
+  H5Seis_ptr seis3(seisContainer->createSeis(
+                     SEIS_NAME3, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis3 != nullptr) << "CREATE_OR_OVERWRITE";
+  ASSERT_TRUE(seis3->readSEGYTxtHeader(p.segyFiles[0]));
+  ASSERT_TRUE(seis3->readSEGYBinHeader(p.segyFiles[0]));
+  ASSERT_TRUE(seis3->readSEGYTraces(p.segyFiles));
+  Eigen::VectorXf trace3 = seis3->getTrace(0);
+  ASSERT_TRUE(trace.isApprox(trace3));
 }
 
 // ORIGIN POINT1 AND POINT2 ARE DEFINED ONLY FOR 3D STACK DATA AND AFTER 'Finalize()` is called

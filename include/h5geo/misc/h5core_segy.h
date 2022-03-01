@@ -128,11 +128,30 @@ inline void to_native_endian(II begin, II end, OI dest, h5geo::Endian fromEndian
   }
 }
 
+inline bool isSEGY(
+    const std::string& segy)
+{
+  try {
+    auto segySize = std::filesystem::file_size(segy);
+    if (segySize < 3600 + 240)
+      return false;
+  } catch(std::filesystem::filesystem_error& e) {
+    return false;
+  }
 
+  std::ifstream file(segy);
+  if (!file.is_open())
+    return false;
+
+  return true;
+}
 
 inline TxtEncoding getSEGYTxtEncoding(
     const std::string& segy)
 {
+  if (!isSEGY(segy))
+    return static_cast<h5geo::TxtEncoding>(0);
+
   std::ifstream file(segy);
   if (!file.is_open())
     return static_cast<h5geo::TxtEncoding>(0);
@@ -140,28 +159,34 @@ inline TxtEncoding getSEGYTxtEncoding(
   h5geo::TxtEncoding encoding = static_cast<h5geo::TxtEncoding>(0);
   char txtHdr[40][80];
   file.read(*txtHdr, 3200);
-  if (((txtHdr[0][0] == 'C') & (txtHdr[1][0] == 'C') & (txtHdr[2][0] == 'C')) |
-      ((txtHdr[0][0] == ' ') & (txtHdr[1][0] == ' ') & (txtHdr[2][0] == ' '))) {
-    encoding = h5geo::TxtEncoding::ASCII;
-  } else if (((ebc_to_ascii_table(txtHdr[0][0]) == 'C') &
-              (ebc_to_ascii_table(txtHdr[1][0]) == 'C') &
-              (ebc_to_ascii_table(txtHdr[2][0]) == 'C')) |
-             ((ebc_to_ascii_table(txtHdr[0][0]) == ' ') &
-              (ebc_to_ascii_table(txtHdr[1][0]) == ' ') &
-              (ebc_to_ascii_table(txtHdr[2][0]) == ' '))) {
-    for (int i = 0; i < 40; i++) {
-      for (int j = 0; j < 80; j++) {
-        txtHdr[i][j] = ebc_to_ascii_table(txtHdr[i][j]);
-      }
+
+  int n;
+  int neb = 0;
+  int nas = 0;
+  for (int i = 0; i < 40; i++) {
+    for (int j = 0; j < 80; j++) {
+      if (txtHdr[i][j] == ' ')
+        nas++;
+
+      if (txtHdr[i][j] == 0x40)
+        neb++;
     }
-    encoding = h5geo::TxtEncoding::EBCDIC;
   }
+
+  if (neb > nas)
+    encoding = h5geo::TxtEncoding::EBCDIC;
+  else
+    encoding = h5geo::TxtEncoding::ASCII;
+
   return encoding;
 }
 
 inline Endian getSEGYEndian(
     const std::string& segy)
 {
+  if (!isSEGY(segy))
+    return static_cast<h5geo::Endian>(0);
+
   std::ifstream file(segy);
   if (!file.is_open())
     return static_cast<h5geo::Endian>(0);
@@ -188,11 +213,17 @@ inline Endian getSEGYEndian(
 }
 
 inline SegyFormat getSEGYFormat(
-    const std::string& segy, h5geo::Endian endian)
+    const std::string& segy, h5geo::Endian endian = static_cast<Endian>(0))
 {
+  if (!isSEGY(segy))
+    return static_cast<h5geo::SegyFormat>(0);
+
   std::ifstream file(segy);
   if (!file.is_open())
     return static_cast<h5geo::SegyFormat>(0);
+
+  if (std::string{magic_enum::enum_name(endian)}.empty())
+    endian = getSEGYEndian(segy);
 
   short dataFormatCode;
   file.seekg(3224);
@@ -210,13 +241,19 @@ inline SegyFormat getSEGYFormat(
   return format;
 }
 
-inline void readSEGYTxtHdr(
+inline bool readSEGYTxtHeader(
     const std::string& segy,
-    char txtHdr[40][80], h5geo::TxtEncoding encoding)
+    char txtHdr[40][80], h5geo::TxtEncoding encoding = static_cast<TxtEncoding>(0))
 {
+  if (!isSEGY(segy))
+    return false;
+
   std::ifstream file(segy);
   if (!file.is_open())
-    return;
+    return false;
+
+  if (std::string{magic_enum::enum_name(encoding)}.empty())
+    encoding = getSEGYTxtEncoding(segy);
 
   file.read(*txtHdr, 3200);
   if (encoding == h5geo::TxtEncoding::EBCDIC) {
@@ -226,15 +263,23 @@ inline void readSEGYTxtHdr(
       }
     }
   }
+
+  return true;
 }
 
-inline void readSEGYBinHdr(
+inline bool readSEGYBinHeader(
     const std::string& segy,
-    double binHdr[30], h5geo::Endian endian)
+    double binHdr[30], h5geo::Endian endian = static_cast<Endian>(0))
 {
+  if (!isSEGY(segy))
+    return false;
+
   std::ifstream file(segy);
   if (!file.is_open())
-    return;
+    return false;
+
+  if (std::string{magic_enum::enum_name(endian)}.empty())
+    endian = getSEGYEndian(segy);
 
   int binHdr4[3];
   short binHdr2[27], binHdr2tmp[3];
@@ -256,38 +301,59 @@ inline void readSEGYBinHdr(
   for (int i = 0; i < 3; i++) {
     binHdr[i] = binHdr4[i];
   }
+
   for (int i = 3; i < 30; i++) {
     binHdr[i] = binHdr2[i - 3];
   }
+
+  return true;
 }
 
 inline double getSEGYSampRate(
-    const std::string& segy, h5geo::Endian endian)
+    const std::string& segy, h5geo::Endian endian = static_cast<Endian>(0))
 {
+  if (!isSEGY(segy))
+    return 0;
+
+  if (std::string{magic_enum::enum_name(endian)}.empty())
+    endian = getSEGYEndian(segy);
+
   double binHdr[30];
-  readSEGYBinHdr(segy, binHdr, endian);
+  readSEGYBinHeader(segy, binHdr, endian);
 
   return binHdr[5];
 }
 
 inline size_t getSEGYNSamp(
-    const std::string& segy, h5geo::Endian endian)
+    const std::string& segy, h5geo::Endian endian = static_cast<Endian>(0))
 {
+  if (!isSEGY(segy))
+    return 0;
+
+  if (std::string{magic_enum::enum_name(endian)}.empty())
+    endian = getSEGYEndian(segy);
+
   double binHdr[30];
-  readSEGYBinHdr(segy, binHdr, endian);
+  readSEGYBinHeader(segy, binHdr, endian);
 
   return binHdr[7];
 }
 
 inline size_t getSEGYNTrc(
-    const std::string& segy, h5geo::Endian endian)
+    const std::string& segy, h5geo::Endian endian = static_cast<Endian>(0))
 {
+  if (!isSEGY(segy))
+    return 0;
+
   size_t fsize = 0;
   try {
     fsize = std::filesystem::file_size(segy);
   } catch(std::filesystem::filesystem_error& e) {
     return 0;
   }
+
+  if (std::string{magic_enum::enum_name(endian)}.empty())
+    endian = getSEGYEndian(segy);
 
   size_t nSamp = getSEGYNSamp(segy, endian);
   if (nSamp < 1)
@@ -311,32 +377,40 @@ inline size_t getSEGYNTrc(
 inline bool readSEGYTraces(
     H5Seis* seis,
     const std::string& segy,
-    size_t nSamp,
-    size_t nTrc,
-    h5geo::SegyFormat format,
-    h5geo::Endian endian,
+    size_t nSamp = 0,
+    size_t nTrc = 0,
     size_t fromTrc = 0,
-    size_t trcBuffer = 10000)
+    size_t trcBuffer = 10000,
+    h5geo::SegyFormat format = static_cast<SegyFormat>(0),
+    h5geo::Endian endian = static_cast<Endian>(0))
 {
-  if (!seis || nSamp < 1 || nTrc < 1 || trcBuffer < 1)
+  if (!seis || trcBuffer < 1)
+    return false;
+
+  if (nTrc < 1)
+    nTrc = getSEGYNTrc(segy, endian);
+
+  if (nSamp < 1)
+    nSamp = getSEGYNSamp(segy, endian);
+
+  if (nSamp < 1 || nTrc < 1)
     return false;
 
   if (std::string{magic_enum::enum_name(format)}.empty())
-    return false;
+    format = getSEGYFormat(segy, endian);
 
   if (std::string{magic_enum::enum_name(endian)}.empty())
+    endian = getSEGYEndian(segy);
+
+  if (std::string{magic_enum::enum_name(format)}.empty() ||
+      std::string{magic_enum::enum_name(endian)}.empty())
     return false;
 
-  // must do the filesize check as within OMP I cannot return 'false', only 'continue'
-  try {
-    auto segySize = std::filesystem::file_size(segy);
-    if (segySize < 3600)
-      return false;
-  } catch(std::filesystem::filesystem_error& e) {
+  // must do the check as within OMP I cannot return 'false', only 'continue'
+  if (!isSEGY(segy))
     return false;
-  }
 
-  seis->setNTrc(nTrc);
+  seis->setNTrc(fromTrc+nTrc);
   seis->setNSamp(nSamp);
 
   Eigen::MatrixXd HDR;

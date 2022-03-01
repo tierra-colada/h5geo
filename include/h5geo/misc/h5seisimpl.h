@@ -16,6 +16,12 @@ protected:
 
 public:
   // WRITERS
+  virtual bool readSEGYTxtHeader(const std::string& segy) override;
+  virtual bool readSEGYBinHeader(const std::string& segy) override;
+  virtual bool readSEGYTraces(
+      const std::vector<std::string>& segyFiles,
+      size_t trcBuffer = 10000) override;
+
   virtual bool writeTextHeader(const char (&txtHdr)[40][80]) override;
   virtual bool writeTextHeader(const std::vector<std::string>& txtHdr) override;
 

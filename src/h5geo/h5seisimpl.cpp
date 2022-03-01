@@ -19,6 +19,72 @@ H5SeisImpl::H5SeisImpl(const h5gt::Group &group) :
   traceD(objG.getDataSet("trace")),
   traceHeaderD(objG.getDataSet("trace_header")){}
 
+bool H5SeisImpl::readSEGYTxtHeader(const std::string& segy)
+{
+  char txtHdr[40][80];
+  if (!h5geo::readSEGYTxtHeader(segy, txtHdr))
+    return false;
+
+  return this->writeTextHeader(txtHdr);
+}
+
+bool H5SeisImpl::readSEGYBinHeader(const std::string& segy)
+{
+  double binHdr[30];
+  if (!h5geo::readSEGYBinHeader(segy, binHdr))
+    return false;
+
+  return this->writeBinHeader(binHdr);
+}
+
+bool H5SeisImpl::readSEGYTraces(
+    const std::vector<std::string>& segyFiles,
+    size_t trcBuffer)
+{
+  if (segyFiles.size() < 1)
+    return false;
+
+  size_t nSamp = h5geo::getSEGYNSamp(segyFiles[0]);
+  if (nSamp < 1)
+    return false;
+
+  std::vector<size_t> nTrcVec;
+  for (size_t i = 0; i < segyFiles.size(); i++){
+    if (h5geo::getSEGYNSamp(segyFiles[i]) != nSamp)
+      return false;
+
+    size_t nTrc = h5geo::getSEGYNTrc(segyFiles[i]);
+    if (nTrc < 1)
+      return false;
+
+    nTrcVec.push_back(nTrc);
+  }
+
+  if (!readSEGYTxtHeader(segyFiles[0]))
+    return false;
+
+  if (!readSEGYBinHeader(segyFiles[0]))
+    return false;
+
+  size_t fromTrc = 0;
+  for (size_t i = 0; i < segyFiles.size(); i++){
+    bool val = h5geo::readSEGYTraces(
+          this,
+          segyFiles[i],
+          nSamp,
+          nTrcVec[i],
+          fromTrc,
+          trcBuffer);
+
+    if (!val)
+      return false;
+
+    fromTrc += nTrcVec[i];
+  }
+
+  return true;
+}
+
 bool H5SeisImpl::writeTextHeader(const char (&txtHdr)[40][80]){
   auto opt = getTextHeaderD();
   if (!opt.has_value())

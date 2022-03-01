@@ -652,8 +652,14 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
       return std::nullopt;
 
     h5geo::Endian endian = h5geo::getSEGYEndian(param.segyFiles[0]);
+    if (std::string{magic_enum::enum_name(endian)}.empty())
+      return std::nullopt;
+
     param.nSamp = h5geo::getSEGYNSamp(param.segyFiles[0], endian);
     param.nTrc = h5geo::getSEGYNTrc(param.segyFiles[0], endian);
+    if (param.nSamp < 1 || param.nTrc < 1)
+      return std::nullopt;
+
     h5geo::SegyFormat format = h5geo::getSEGYFormat(param.segyFiles[0], endian);
     if (format != h5geo::SegyFormat::FourByte_IEEE)
       return std::nullopt;
@@ -669,9 +675,6 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
 
       param.nTrc += h5geo::getSEGYNTrc(param.segyFiles[i], endian);
     }
-
-    if (param.nSamp < 1 || param.nTrc < 1)
-      return std::nullopt;
 
     auto optG = createExternalSEGY(
           group,

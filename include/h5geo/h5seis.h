@@ -18,6 +18,12 @@ protected:
 public:
 
   // WRITERS
+  virtual bool readSEGYTxtHeader(const std::string& segy) = 0;
+  virtual bool readSEGYBinHeader(const std::string& segy) = 0;
+  virtual bool readSEGYTraces(
+      const std::vector<std::string>& segyFiles,
+      size_t trcBuffer = 10000) = 0;
+
   virtual bool writeTextHeader(const char (&txtHdr)[40][80]) = 0;
 
   /// \brief writeTextHeader Max 40x80 chars are to be written
