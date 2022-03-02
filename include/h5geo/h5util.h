@@ -17,6 +17,18 @@
 #include <limits.h>
 #include <stdint.h>
 
+#ifndef H5GT_USE_EIGEN
+#define H5GT_USE_EIGEN // should be defined before including h5gt
+#endif
+
+#include <Eigen/Dense>
+
+#include <h5gt/H5File.hpp>
+#include <h5gt/H5Group.hpp>
+#include <h5gt/H5DataSet.hpp>
+#include <h5gt/H5DataSpace.hpp>
+#include <h5gt/H5Attribute.hpp>
+
 #if CHAR_BIT != 8
 #error "unsupported char size"
 #endif
@@ -147,6 +159,96 @@ H5GEO_EXPORT ptrdiff_t getIndexFromAttribute(
     h5gt::DataSet& dataset,
     const std::string& attrName);
 
+
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+bool deleteAllAttributes(Object& object);
+
+/// \brief unlinkObject Unlink object from container
+/// \param object parent object (File or Group) relatively
+/// to `objPath`
+/// \param objPath path to object from root
+///(like: /path/to/object)
+/// \return
+template<typename Parent,
+         typename std::enable_if<
+           std::is_same<Parent, h5gt::File>::value ||
+           std::is_same<Parent, h5gt::Group>::value>::type* = nullptr>
+bool unlinkObject(Parent& parent, const std::string& objPath);
+
+/// \brief unlinkContent Unlink everything in group
+/// \return
+template<typename Object,
+         typename std::enable_if<
+           std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value>::type* = nullptr>
+bool unlinkContent(Object& object);
+
+/// \brief find_index find all non-zero elements's indices.
+/// Possible usage:
+/// Eigen::VectorX<ptrdiff_t> ind = find_index(M.array() > 20)
+/// M.array() > 20 returns bool matrix and then we find non-zero indices
+/// \param M
+/// \return ind indices of nonzero elements
+template<typename T>
+Eigen::VectorX<ptrdiff_t> find_index(
+    Eigen::DenseBase<T> const & M);
+
+template<typename D, typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type* = nullptr>
+h5gt::ElementSet rowCols2ElementSet(
+    const T& row,
+    const Eigen::DenseBase<D>& cols);
+
+template<typename D, typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type* = nullptr>
+h5gt::ElementSet rowsCol2ElementSet(
+    const Eigen::DenseBase<D>& rows,
+    const T& col);
+
+/// \brief rowsCols2ElementSet select rectilinear block of elements, i.e.
+/// uses double loop to select every possible row-col intersection
+/// \param rows vector
+/// \param cols vector
+/// \return
+template<typename D>
+h5gt::ElementSet rowsCols2ElementSet(
+    const Eigen::DenseBase<D>& rows,
+    const Eigen::DenseBase<D>& cols);
+
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type* = nullptr>
+h5gt::ElementSet rowCols2ElementSet(
+    const T& row,
+    const std::vector<T>& cols);
+
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type* = nullptr>
+h5gt::ElementSet rowsCol2ElementSet(
+    const std::vector<T>& rows,
+    const T& col);
+
+/// \brief rowsCols2ElementSet select rectilinear block of elements, i.e.
+/// uses double loop to select every possible row-col intersection
+/// \param rows
+/// \param cols
+/// \return
+template<typename T,
+         typename std::enable_if<
+           std::is_arithmetic<T>::value>::type* = nullptr>
+h5gt::ElementSet rowsCols2ElementSet(
+    const std::vector<T>& rows,
+    const std::vector<T>& cols);
+
 }
+
+#include "impl/h5utilimpl.h"
 
 #endif // H5UTIL_H

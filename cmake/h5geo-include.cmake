@@ -12,6 +12,7 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5enum_operators.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5sr_settings.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5coreimpl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5utilimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5base.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5basecontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5baseimpl.h
