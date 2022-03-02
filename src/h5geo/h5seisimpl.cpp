@@ -19,10 +19,10 @@ H5SeisImpl::H5SeisImpl(const h5gt::Group &group) :
   traceD(objG.getDataSet("trace")),
   traceHeaderD(objG.getDataSet("trace_header")){}
 
-bool H5SeisImpl::readSEGYTxtHeader(const std::string& segy)
+bool H5SeisImpl::readSEGYTextHeader(const std::string& segy)
 {
   char txtHdr[40][80];
-  if (!h5geo::readSEGYTxtHeader(segy, txtHdr))
+  if (!h5geo::readSEGYTextHeader(segy, txtHdr))
     return false;
 
   return this->writeTextHeader(txtHdr);
@@ -60,7 +60,7 @@ bool H5SeisImpl::readSEGYTraces(
     nTrcVec.push_back(nTrc);
   }
 
-  if (!readSEGYTxtHeader(segyFiles[0]))
+  if (!readSEGYTextHeader(segyFiles[0]))
     return false;
 
   if (!readSEGYBinHeader(segyFiles[0]))

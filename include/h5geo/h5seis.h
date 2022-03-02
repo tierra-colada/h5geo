@@ -20,7 +20,7 @@ protected:
 public:
 
   // WRITERS
-  virtual bool readSEGYTxtHeader(const std::string& segy) = 0;
+  virtual bool readSEGYTextHeader(const std::string& segy) = 0;
   virtual bool readSEGYBinHeader(const std::string& segy) = 0;
   virtual bool readSEGYTraces(
       const std::vector<std::string>& segyFiles,

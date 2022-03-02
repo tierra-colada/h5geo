@@ -16,7 +16,7 @@ protected:
 
 public:
   // WRITERS
-  virtual bool readSEGYTxtHeader(const std::string& segy) override;
+  virtual bool readSEGYTextHeader(const std::string& segy) override;
   virtual bool readSEGYBinHeader(const std::string& segy) override;
   virtual bool readSEGYTraces(
       const std::vector<std::string>& segyFiles,

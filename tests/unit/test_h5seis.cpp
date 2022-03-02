@@ -451,7 +451,7 @@ TEST_F(H5SeisFixture, SEGY){
   H5Seis_ptr seis3(seisContainer->createSeis(
                      SEIS_NAME3, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(seis3 != nullptr) << "CREATE_OR_OVERWRITE";
-  ASSERT_TRUE(seis3->readSEGYTxtHeader(p.segyFiles[0]));
+  ASSERT_TRUE(seis3->readSEGYTextHeader(p.segyFiles[0]));
   ASSERT_TRUE(seis3->readSEGYBinHeader(p.segyFiles[0]));
   ASSERT_TRUE(seis3->readSEGYTraces(p.segyFiles));
   Eigen::VectorXf trace3 = seis3->getTrace(0);

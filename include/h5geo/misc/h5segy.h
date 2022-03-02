@@ -242,7 +242,7 @@ inline SegyFormat getSEGYFormat(
   return format;
 }
 
-inline bool readSEGYTxtHeader(
+inline bool readSEGYTextHeader(
     const std::string& segy,
     char txtHdr[40][80], h5geo::TxtEncoding encoding = static_cast<TxtEncoding>(0))
 {
