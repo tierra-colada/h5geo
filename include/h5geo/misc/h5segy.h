@@ -341,7 +341,7 @@ inline size_t getSEGYNSamp(
 }
 
 inline size_t getSEGYNTrc(
-    const std::string& segy, h5geo::Endian endian = static_cast<Endian>(0))
+    const std::string& segy, size_t nSamp = 0, h5geo::Endian endian = static_cast<Endian>(0))
 {
   if (!isSEGY(segy))
     return 0;
@@ -356,7 +356,9 @@ inline size_t getSEGYNTrc(
   if (std::string{magic_enum::enum_name(endian)}.empty())
     endian = getSEGYEndian(segy);
 
-  size_t nSamp = getSEGYNSamp(segy, endian);
+  if (nSamp < 1)
+    nSamp = getSEGYNSamp(segy, endian);
+
   if (nSamp < 1)
     return 0;
 
@@ -367,13 +369,15 @@ inline size_t getSEGYNTrc(
 /// H5Seis object using memory mapping technique (OpenMP enabled)
 /// \param seis
 /// \param segy path to SEGY file
-/// \param nSamp number of samples in SEGY
-/// \param nTrc number of traces in SEGY
-/// \param format SEGY format (ibm32, ieee32 or int4)
-/// \param endian Big or Little
-/// \param fromTrc means the starting trace index in H5Seis to be written (may be useful
+/// \param nSamp number of samples in SEGY (if 0 then try automatically detect)
+/// \param nTrc number of traces in SEGY (if 0 then try automatically detect)
+/// \param fromTrc the starting trace index in H5Seis to be written (may be useful
 /// when reading multiple SEGY in the same H5Seis object)
 /// \param trcBuffer number of traces per thread to read before writing them at once
+/// \param format SEGY format (ibm32, ieee32 or int4)
+/// \param endian Big or Little
+/// \param trcHdrNames use only those defined in 'getTraceHeaderShortNames',
+/// but you can change their order thus fix probably messed up trace header bytes
 /// \return
 inline bool readSEGYTraces(
     H5Seis* seis,
@@ -383,13 +387,14 @@ inline bool readSEGYTraces(
     size_t fromTrc = 0,
     size_t trcBuffer = 10000,
     h5geo::SegyFormat format = static_cast<SegyFormat>(0),
-    h5geo::Endian endian = static_cast<Endian>(0))
+    h5geo::Endian endian = static_cast<Endian>(0),
+    std::vector<std::string> trcHdrNames = getTraceHeaderShortNames())
 {
   if (!seis || trcBuffer < 1)
     return false;
 
   if (nTrc < 1)
-    nTrc = getSEGYNTrc(segy, endian);
+    nTrc = getSEGYNTrc(segy, nSamp, endian);
 
   if (nSamp < 1)
     nSamp = getSEGYNSamp(segy, endian);
@@ -410,6 +415,22 @@ inline bool readSEGYTraces(
   // must do the check as within OMP I cannot return 'false', only 'continue'
   if (!isSEGY(segy))
     return false;
+
+  std::vector<std::string> trcHdrNames_original = getTraceHeaderShortNames();
+  if (trcHdrNames.size() != trcHdrNames_original.size())
+    return false;
+
+  std::vector<size_t> mapHdr2origin(trcHdrNames.size());
+  for (size_t i = 0; i < trcHdrNames.size(); i++){
+    ptrdiff_t ind = find(trcHdrNames_original.begin(),
+                   trcHdrNames_original.end(),
+                   trcHdrNames[i]) - trcHdrNames_original.begin();
+    if (ind >= trcHdrNames.size()) {
+      return false;
+    }
+
+    mapHdr2origin[i] = ind;
+  }
 
   seis->setNTrc(fromTrc+nTrc);
   seis->setNSamp(nSamp);
@@ -455,28 +476,28 @@ inline bool readSEGYTraces(
 
     for (size_t j = 0; j < J; j++) {
       for (size_t i = 0; i < 7; i++) {
-        HDR(j, i) = to_native_endian(m_int[j * bytesPerTrc / 4 + i], endian);
+        HDR(j, mapHdr2origin[i]) = to_native_endian(m_int[j * bytesPerTrc / 4 + i], endian);
       }
       for (size_t i = 7; i < 11; i++) {
-        HDR(j, i) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 7) + 14], endian);
+        HDR(j, mapHdr2origin[i]) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 7) + 14], endian);
       }
       for (size_t i = 11; i < 19; i++) {
-        HDR(j, i) = to_native_endian(m_int[j * bytesPerTrc / 4 + (i - 11) + 9], endian);
+        HDR(j, mapHdr2origin[i]) = to_native_endian(m_int[j * bytesPerTrc / 4 + (i - 11) + 9], endian);
       }
       for (size_t i = 19; i < 21; i++) {
-        HDR(j, i) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 19) + 34], endian);
+        HDR(j, mapHdr2origin[i]) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 19) + 34], endian);
       }
       for (size_t i = 21; i < 25; i++) {
-        HDR(j, i) = to_native_endian(m_int[j * bytesPerTrc / 4 + (i - 21) + 18], endian);
+        HDR(j, mapHdr2origin[i]) = to_native_endian(m_int[j * bytesPerTrc / 4 + (i - 21) + 18], endian);
       }
       for (size_t i = 25; i < 71; i++) {
-        HDR(j, i) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 25) + 44], endian);
+        HDR(j, mapHdr2origin[i]) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 25) + 44], endian);
       }
       for (size_t i = 71; i < 76; i++) {
-        HDR(j, i) = to_native_endian(m_int[j * bytesPerTrc / 4 + (i - 71) + 45], endian);
+        HDR(j, mapHdr2origin[i]) = to_native_endian(m_int[j * bytesPerTrc / 4 + (i - 71) + 45], endian);
       }
       for (size_t i = 76; i < 78; i++) {
-        HDR(j, i) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 76) + 100], endian);
+        HDR(j, mapHdr2origin[i]) = to_native_endian(m_short[j * bytesPerTrc / 2 + (i - 76) + 100], endian);
       }
 
       if (format == h5geo::SegyFormat::FourByte_IBM) {

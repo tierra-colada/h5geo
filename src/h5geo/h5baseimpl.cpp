@@ -641,9 +641,7 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
 {
   SeisParam param = *(static_cast<SeisParam*>(p));
   // try-catch can't handle this situation
-  if (param.nTrc < 1 ||
-      param.nSamp < 1 ||
-      param.trcChunk < 1 ||
+  if (param.trcChunk < 1 ||
       param.stdChunk < 1)
     return std::nullopt;
 
@@ -656,7 +654,8 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
       return std::nullopt;
 
     param.nSamp = h5geo::getSEGYNSamp(param.segyFiles[0], endian);
-    param.nTrc = h5geo::getSEGYNTrc(param.segyFiles[0], endian);
+    param.nTrc = h5geo::getSEGYNTrc(param.segyFiles[0], param.nSamp, endian);
+
     if (param.nSamp < 1 || param.nTrc < 1)
       return std::nullopt;
 
@@ -666,14 +665,14 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
 
     for (size_t i = 1; i < param.segyFiles.size(); i++){
       auto e = h5geo::getSEGYEndian(param.segyFiles[i]);
-      auto n = h5geo::getSEGYNTrc(param.segyFiles[i], endian);
+      auto n = h5geo::getSEGYNTrc(param.segyFiles[i], 0, endian);
       auto f = h5geo::getSEGYFormat(param.segyFiles[0], endian);
       if (endian != h5geo::getSEGYEndian(param.segyFiles[i]) ||
           param.nSamp != h5geo::getSEGYNSamp(param.segyFiles[i], endian) ||
           h5geo::getSEGYFormat(param.segyFiles[i], endian) != h5geo::SegyFormat::FourByte_IEEE)
         return std::nullopt;
 
-      param.nTrc += h5geo::getSEGYNTrc(param.segyFiles[i], endian);
+      param.nTrc += h5geo::getSEGYNTrc(param.segyFiles[i], 0, endian);
     }
 
     auto optG = createExternalSEGY(
@@ -687,6 +686,11 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
     if (!optG.has_value())
       return std::nullopt;
   }
+
+  // try-catch can't handle this situation
+  if (param.nTrc < 1 ||
+      param.nSamp < 1)
+    return std::nullopt;
 
   try {
 
@@ -766,9 +770,9 @@ H5BaseImpl<TBase>::createExternalSEGY(
   }
 
   h5gt::DataSetCreateProps txtP, binHdrP, dataP;
-  std::vector<std::string> fullHeaderNameList, shortHeaderNameList;
-  h5geo::getBinHeaderNames(fullHeaderNameList, shortHeaderNameList);
-  size_t nBinHeaderNames = fullHeaderNameList.size();
+  std::vector<std::string> fullHeaderNames, shortHeaderNames;
+  h5geo::getBinHeaderNames(fullHeaderNames, shortHeaderNames);
+  size_t nBinHeaderNames = fullHeaderNames.size();
 
   std::vector<size_t> count;
   std::vector<size_t> max_count;
@@ -872,9 +876,9 @@ H5BaseImpl<TBase>::createBinHeader(
     const hsize_t& stdChunk,
     bool mapSEGY)
 {
-  std::vector<std::string> fullHeaderNameList, shortHeaderNameList;
-  h5geo::getBinHeaderNames(fullHeaderNameList, shortHeaderNameList);
-  size_t nBinHeaderNames = fullHeaderNameList.size();
+  std::vector<std::string> fullHeaderNames, shortHeaderNames;
+  h5geo::getBinHeaderNames(fullHeaderNames, shortHeaderNames);
+  size_t nBinHeaderNames = fullHeaderNames.size();
 
   std::vector<size_t> count = {size_t(nBinHeaderNames)};
   std::vector<size_t> max_count = {h5gt::DataSpace::UNLIMITED};
@@ -907,7 +911,7 @@ H5BaseImpl<TBase>::createBinHeader(
           space, h5gt::LinkCreateProps(), props);
     for (size_t i = 0; i < nBinHeaderNames; i++){
       h5gt::Attribute attribute = dataset.createAttribute<size_t>(
-            shortHeaderNameList[i], h5gt::DataSpace(1));
+            shortHeaderNames[i], h5gt::DataSpace(1));
       attribute.write(i);
     }
     return dataset;
@@ -963,9 +967,9 @@ H5BaseImpl<TBase>::createTraceHeader(
     const hsize_t& trcChunk,
     bool mapSEGY)
 {
-  std::vector<std::string> fullHeaderNameList, shortHeaderNameList;
-  h5geo::getTraceHeaderNames(fullHeaderNameList, shortHeaderNameList);
-  size_t nTraceHeaderNames = fullHeaderNameList.size();
+  std::vector<std::string> fullHeaderNames, shortHeaderNames;
+  h5geo::getTraceHeaderNames(fullHeaderNames, shortHeaderNames);
+  size_t nTraceHeaderNames = fullHeaderNames.size();
 
   std::vector<size_t> count = {size_t(nTraceHeaderNames), nTrc};
   std::vector<size_t> max_count = {
@@ -1014,7 +1018,7 @@ H5BaseImpl<TBase>::createTraceHeader(
           space, h5gt::LinkCreateProps(), props);
     for (size_t i = 0; i < nTraceHeaderNames; i++){
       h5gt::Attribute attribute = dataset.createAttribute<size_t>(
-            shortHeaderNameList[i], h5gt::DataSpace(1));
+            shortHeaderNames[i], h5gt::DataSpace(1));
       attribute.write(i);
     }
     return dataset;

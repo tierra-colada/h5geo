@@ -353,10 +353,38 @@ void getTraceHeaderNames(std::vector<std::string> &fullHeaderNames, std::vector<
   splitHeaderNames(traceHeaderNames, fullHeaderNames, shortHeaderNames);
 }
 
+std::vector<std::string> getTraceHeaderShortNames(){
+  std::vector<std::string> fullHeaderNames;
+  std::vector<std::string> shortHeaderNames;
+  getTraceHeaderNames(fullHeaderNames, shortHeaderNames);
+  return shortHeaderNames;
+}
+
+std::vector<std::string> getTraceHeaderFullNames(){
+  std::vector<std::string> fullHeaderNames;
+  std::vector<std::string> shortHeaderNames;
+  getTraceHeaderNames(fullHeaderNames, shortHeaderNames);
+  return fullHeaderNames;
+}
+
 void getBinHeaderNames(std::vector<std::string> &fullHeaderNames, std::vector<std::string> &shortHeaderNames){
   std::vector<std::string> binHeaderNames = getRawBinHeaderNames();
 
   splitHeaderNames(binHeaderNames, fullHeaderNames, shortHeaderNames);
+}
+
+std::vector<std::string> getBinHeaderShortNames(){
+  std::vector<std::string> fullHeaderNames;
+  std::vector<std::string> shortHeaderNames;
+  getBinHeaderNames(fullHeaderNames, shortHeaderNames);
+  return shortHeaderNames;
+}
+
+std::vector<std::string> getBinHeaderFullNames(){
+  std::vector<std::string> fullHeaderNames;
+  std::vector<std::string> shortHeaderNames;
+  getBinHeaderNames(fullHeaderNames, shortHeaderNames);
+  return fullHeaderNames;
 }
 
 void getTraceHeaderBytes(

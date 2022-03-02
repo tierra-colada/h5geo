@@ -136,9 +136,14 @@ H5GEO_EXPORT std::string getRelativePath(
 H5GEO_EXPORT void getTraceHeaderNames(
     std::vector<std::string> &fullHeaderNames,
     std::vector<std::string> &shortHeaderNames);
+H5GEO_EXPORT std::vector<std::string> getTraceHeaderShortNames();
+H5GEO_EXPORT std::vector<std::string> getTraceHeaderFullNames();
+
 H5GEO_EXPORT void getBinHeaderNames(
     std::vector<std::string> &fullHeaderNames,
     std::vector<std::string> &shortHeaderNames);
+H5GEO_EXPORT std::vector<std::string> getBinHeaderShortNames();
+H5GEO_EXPORT std::vector<std::string> getBinHeaderFullNames();
 
 H5GEO_EXPORT void getTraceHeaderBytes(
     std::vector<int> &bytesStart,

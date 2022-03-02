@@ -438,7 +438,7 @@ TEST_F(H5SeisFixture, SEGY){
 
   auto endian = h5geo::getSEGYEndian(TEST_DATA_DIR"/1.segy");
   auto nSamp = h5geo::getSEGYNSamp(TEST_DATA_DIR"/1.segy", endian);
-  auto nTrc = h5geo::getSEGYNTrc(TEST_DATA_DIR"/1.segy", endian);
+  auto nTrc = h5geo::getSEGYNTrc(TEST_DATA_DIR"/1.segy", 0, endian);
   auto format = h5geo::getSEGYFormat(TEST_DATA_DIR"/1.segy", endian);
   ASSERT_TRUE(h5geo::readSEGYTraces(
                 seis2.get(),
