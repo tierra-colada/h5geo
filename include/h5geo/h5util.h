@@ -1,6 +1,10 @@
 #ifndef H5UTIL_H
 #define H5UTIL_H
 
+#ifdef H5GEO_USE_GDAL
+#include "impl/h5sr_settings.h"
+#endif
+
 #include "impl/h5geo_export.h"
 #include "impl/h5enum.h"
 #include "impl/h5easyhull.h"
