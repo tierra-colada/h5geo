@@ -147,7 +147,7 @@ inline bool isSEGY(
   return true;
 }
 
-inline TextEncoding getSEGYTxtEncoding(
+inline TextEncoding getSEGYTextEncoding(
     const std::string& segy)
 {
   if (!isSEGY(segy))
@@ -254,7 +254,7 @@ inline bool readSEGYTextHeader(
     return false;
 
   if (std::string{magic_enum::enum_name(encoding)}.empty())
-    encoding = getSEGYTxtEncoding(segy);
+    encoding = getSEGYTextEncoding(segy);
 
   file.read(*txtHdr, 3200);
   if (encoding == h5geo::TextEncoding::EBCDIC) {
