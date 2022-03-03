@@ -406,6 +406,7 @@ TEST_F(H5SeisFixture, generateGeometry){
 }
 
 TEST_F(H5SeisFixture, SEGY){
+  // MAPPED
   p.mapSEGY = true;
   p.segyFiles = {
     TEST_DATA_DIR"/1.segy",
@@ -431,6 +432,7 @@ TEST_F(H5SeisFixture, SEGY){
   Eigen::VectorXf trace = seis->getTrace(0);
 
 
+  // NOT MAPPED (read with h5geo::functions)
   p.mapSEGY = false;
   H5Seis_ptr seis2(seisContainer->createSeis(
                      SEIS_NAME2, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
@@ -448,6 +450,7 @@ TEST_F(H5SeisFixture, SEGY){
   ASSERT_TRUE(trace.isApprox(trace2));
 
 
+  // NOT MAPPED (read with H5Seis::methods)
   H5Seis_ptr seis3(seisContainer->createSeis(
                      SEIS_NAME3, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(seis3 != nullptr) << "CREATE_OR_OVERWRITE";

@@ -446,7 +446,8 @@ inline bool readSEGYTraces(
   size_t N = nTrc / trcBuffer;
 
 #ifdef H5GEO_USE_THREADS
-#pragma omp parallel for private(HDR, TRACE, J)
+  int nThreads = omp_get_max_threads();
+#pragma omp parallel for num_threads(nThreads) private(HDR, TRACE, J)
 #endif
   for (ptrdiff_t n = 0; n <= N; n++) {
     if (n < N) {
