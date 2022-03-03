@@ -130,7 +130,7 @@ enum class SurveyType : unsigned{
   THREE_D = 2
 };
 
-enum class TxtEncoding : unsigned{
+enum class TextEncoding : unsigned{
   ASCII = 1,
   EBCDIC = 2
 };

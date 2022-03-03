@@ -39,10 +39,10 @@ void SurveyType_py(py::enum_<SurveyType> &py_obj){
       .value("THREE_D", SurveyType::THREE_D);
 }
 
-void TxtEncoding_py(py::enum_<TxtEncoding> &py_obj){
+void TxtEncoding_py(py::enum_<TextEncoding> &py_obj){
   py_obj
-      .value("ASCII", TxtEncoding::ASCII)
-      .value("EBCDIC", TxtEncoding::EBCDIC);
+      .value("ASCII", TextEncoding::ASCII)
+      .value("EBCDIC", TextEncoding::EBCDIC);
 }
 
 void SegyEndian_py(py::enum_<Endian> &py_obj){

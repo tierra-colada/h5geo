@@ -122,10 +122,10 @@ inline constexpr auto& survey_types =
     magic_enum::enum_names<h5geo::SurveyType>();
 inline constexpr auto TWO_D = magic_enum::enum_name(h5geo::SurveyType::TWO_D);
 inline constexpr auto THREE_D = magic_enum::enum_name(h5geo::SurveyType::THREE_D);
-inline constexpr auto& txt_encodings =
-    magic_enum::enum_names<h5geo::TxtEncoding>();
-inline constexpr auto ASCII = magic_enum::enum_name(h5geo::TxtEncoding::ASCII);
-inline constexpr auto EBCDIC = magic_enum::enum_name(h5geo::TxtEncoding::EBCDIC);
+inline constexpr auto& text_encodings =
+    magic_enum::enum_names<h5geo::TextEncoding>();
+inline constexpr auto ASCII = magic_enum::enum_name(h5geo::TextEncoding::ASCII);
+inline constexpr auto EBCDIC = magic_enum::enum_name(h5geo::TextEncoding::EBCDIC);
 inline constexpr auto& segy_endians =
     magic_enum::enum_names<h5geo::Endian>();
 inline constexpr auto Little = magic_enum::enum_name(h5geo::Endian::Little);

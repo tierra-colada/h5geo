@@ -147,17 +147,17 @@ inline bool isSEGY(
   return true;
 }
 
-inline TxtEncoding getSEGYTxtEncoding(
+inline TextEncoding getSEGYTxtEncoding(
     const std::string& segy)
 {
   if (!isSEGY(segy))
-    return static_cast<h5geo::TxtEncoding>(0);
+    return static_cast<h5geo::TextEncoding>(0);
 
   std::ifstream file(segy);
   if (!file.is_open())
-    return static_cast<h5geo::TxtEncoding>(0);
+    return static_cast<h5geo::TextEncoding>(0);
 
-  h5geo::TxtEncoding encoding = static_cast<h5geo::TxtEncoding>(0);
+  h5geo::TextEncoding encoding = static_cast<h5geo::TextEncoding>(0);
   char txtHdr[40][80];
   file.read(*txtHdr, 3200);
 
@@ -175,9 +175,9 @@ inline TxtEncoding getSEGYTxtEncoding(
   }
 
   if (neb > nas)
-    encoding = h5geo::TxtEncoding::EBCDIC;
+    encoding = h5geo::TextEncoding::EBCDIC;
   else
-    encoding = h5geo::TxtEncoding::ASCII;
+    encoding = h5geo::TextEncoding::ASCII;
 
   return encoding;
 }
@@ -244,7 +244,7 @@ inline SegyFormat getSEGYFormat(
 
 inline bool readSEGYTextHeader(
     const std::string& segy,
-    char txtHdr[40][80], h5geo::TxtEncoding encoding = static_cast<TxtEncoding>(0))
+    char txtHdr[40][80], h5geo::TextEncoding encoding = static_cast<TextEncoding>(0))
 {
   if (!isSEGY(segy))
     return false;
@@ -257,7 +257,7 @@ inline bool readSEGYTextHeader(
     encoding = getSEGYTxtEncoding(segy);
 
   file.read(*txtHdr, 3200);
-  if (encoding == h5geo::TxtEncoding::EBCDIC) {
+  if (encoding == h5geo::TextEncoding::EBCDIC) {
     for (int i = 0; i < 40; i++) {
       for (int j = 0; j < 80; j++) {
         txtHdr[i][j] = ebc_to_ascii_table(txtHdr[i][j]);

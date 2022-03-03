@@ -55,7 +55,7 @@ __all__ = [
     "TvdssXY2ALL",
     "TvdssXY2MdAzIncl",
     "TvdssXY2MdXYTvd",
-    "TxtEncoding",
+    "TextEncoding",
     "WellDataType",
     "WellName",
     "WellParam",
@@ -1277,7 +1277,7 @@ class TrajectoryFormat():
     TVD_X_Y: h5geopy._h5geo.TrajectoryFormat # value = <TrajectoryFormat.TVD_X_Y: 2>
     __members__: dict # value = {'MD_AZIM_INCL': <TrajectoryFormat.MD_AZIM_INCL: 1>, 'TVD_X_Y': <TrajectoryFormat.TVD_X_Y: 2>, 'TVD_DX_DY': <TrajectoryFormat.TVD_DX_DY: 3>, 'TVDSS_X_Y': <TrajectoryFormat.TVDSS_X_Y: 4>, 'TVDSS_DX_DY': <TrajectoryFormat.TVDSS_DX_DY: 5>}
     pass
-class TxtEncoding():
+class TextEncoding():
     """
     Members:
 
@@ -1307,9 +1307,9 @@ class TxtEncoding():
         """
         :type: int
         """
-    ASCII: h5geopy._h5geo.TxtEncoding # value = <TxtEncoding.ASCII: 0>
-    EBCDIC: h5geopy._h5geo.TxtEncoding # value = <TxtEncoding.EBCDIC: 1>
-    __members__: dict # value = {'ASCII': <TxtEncoding.ASCII: 0>, 'EBCDIC': <TxtEncoding.EBCDIC: 1>}
+    ASCII: h5geopy._h5geo.TextEncoding # value = <TextEncoding.ASCII: 0>
+    EBCDIC: h5geopy._h5geo.TextEncoding # value = <TextEncoding.EBCDIC: 1>
+    __members__: dict # value = {'ASCII': <TextEncoding.ASCII: 0>, 'EBCDIC': <TextEncoding.EBCDIC: 1>}
     pass
 class WellDataType():
     """
