@@ -824,9 +824,6 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
     headerIndex[i] = ind;
   }
 
-  if (traceIndexes.size() <= 0)
-    return Eigen::VectorX<size_t>();
-
   h5gt::ElementSet hdrElSet = h5geo::rowsCols2ElementSet(
         headerIndex, traceIndexes);
 
@@ -1042,8 +1039,8 @@ size_t H5SeisImpl::getNTextHdrRows(){
 }
 
 Eigen::VectorX<size_t> H5SeisImpl::getPKeyIndexes(
-    const std::string& pName,
-    const double& pMin, const double& pMax)
+    const std::string& pKey,
+    double pMin, double pMax)
 {
   auto optUValG = getUValG();
   if (!optUValG.has_value())
@@ -1053,13 +1050,13 @@ Eigen::VectorX<size_t> H5SeisImpl::getPKeyIndexes(
   if (!optIndexesG.has_value())
     return Eigen::VectorX<size_t>();
 
-  if (!optIndexesG->exist(pName) ||
-      optIndexesG->getObjectType(pName) != h5gt::ObjectType::Group)
+  if (!optIndexesG->exist(pKey) ||
+      optIndexesG->getObjectType(pKey) != h5gt::ObjectType::Group)
     return Eigen::VectorX<size_t>();
 
-  h5gt::Group pGroup = optIndexesG->getGroup(pName);
+  h5gt::Group pGroup = optIndexesG->getGroup(pKey);
   std::vector<double> uHeader(pGroup.getNumberObjects());
-  optUValG->getDataSet(pName).read(uHeader);
+  optUValG->getDataSet(pKey).read(uHeader);
   std::vector<std::string> pDatasetsNames;
   pDatasetsNames.reserve(pGroup.getNumberObjects());
   for (size_t i = 0; i < uHeader.size(); i++){
@@ -1086,22 +1083,22 @@ Eigen::VectorX<size_t> H5SeisImpl::getPKeyIndexes(
 }
 
 Eigen::VectorXd H5SeisImpl::getPKeyValues(
-    const std::string& pkey,
+    const std::string& pKey,
     const std::string& unitsFrom,
     const std::string& unitsTo){
   auto uvalG = getUValG();
   if (!uvalG.has_value())
     return Eigen::VectorXd();
 
-  if (!uvalG->hasObject(pkey, h5gt::ObjectType::Dataset))
+  if (!uvalG->hasObject(pKey, h5gt::ObjectType::Dataset))
     return Eigen::VectorXd();
 
   Eigen::VectorXd v(
-        uvalG->getDataSet(pkey).
+        uvalG->getDataSet(pKey).
         getMemSpace().
         getElementCount());
 
-  uvalG->getDataSet(pkey).read(v.data());
+  uvalG->getDataSet(pKey).read(v.data());
 
   if (!unitsFrom.empty() && !unitsTo.empty()){
     double coef = units::convert(
@@ -1116,17 +1113,50 @@ Eigen::VectorXd H5SeisImpl::getPKeyValues(
   return v;
 }
 
-size_t H5SeisImpl::getPKeySize(const std::string& pkey){
+size_t H5SeisImpl::getPKeySize(const std::string& pKey){
   auto uvalG = getUValG();
   if (!uvalG.has_value())
     return 0;
 
-  if (!uvalG->hasObject(pkey, h5gt::ObjectType::Dataset))
+  if (!uvalG->hasObject(pKey, h5gt::ObjectType::Dataset))
     return 0;
 
-  return uvalG->getDataSet(pkey).
+  return uvalG->getDataSet(pKey).
       getMemSpace().
       getElementCount();
+}
+
+size_t H5SeisImpl::getPKeyTraceSize(const std::string& pKey, double pMin, double pMax){
+  auto optUValG = getUValG();
+  if (!optUValG.has_value())
+    return 0;
+
+  auto optIndexesG = getIndexesG();
+  if (!optIndexesG.has_value())
+    return 0;
+
+  if (!optIndexesG->exist(pKey) ||
+      optIndexesG->getObjectType(pKey) != h5gt::ObjectType::Group)
+    return 0;
+
+  h5gt::Group pGroup = optIndexesG->getGroup(pKey);
+  std::vector<double> uHeader(pGroup.getNumberObjects());
+  optUValG->getDataSet(pKey).read(uHeader);
+  std::vector<std::string> pDatasetsNames;
+  pDatasetsNames.reserve(pGroup.getNumberObjects());
+  for (size_t i = 0; i < uHeader.size(); i++){
+    if (uHeader[i] >= pMin &&
+        uHeader[i] <= pMax){
+      pDatasetsNames.push_back(std::to_string(i));
+    }
+  }
+  pDatasetsNames.shrink_to_fit();
+
+  size_t pKeyCount = 0;
+  for (size_t i = 0; i < pDatasetsNames.size(); i++)
+    pKeyCount = pGroup.getDataSet(pDatasetsNames[i]).getElementCount() + pKeyCount;
+
+  return pKeyCount;
 }
 
 std::vector<std::string> H5SeisImpl::getPKeyNames(){

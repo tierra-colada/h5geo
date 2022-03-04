@@ -225,13 +225,16 @@ public:
   virtual size_t getNBinHdr() = 0;
   virtual size_t getNTextHdrRows() = 0;
   virtual Eigen::VectorX<size_t> getPKeyIndexes(
-      const std::string& pName,
-      const double& pMin, const double& pMax) = 0;
+      const std::string& pKey,
+     double pMin, double pMax) = 0;
   virtual Eigen::VectorXd getPKeyValues(
-      const std::string& pkey,
+      const std::string& pKey,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
-  virtual size_t getPKeySize(const std::string& pkey) = 0;
+  /// Return number unique values of given pKey
+  virtual size_t getPKeySize(const std::string& pKey) = 0;
+  /// Return number of traces to be selected of given pKey
+  virtual size_t getPKeyTraceSize(const std::string& pKey, double pMin, double pMax) = 0;
   virtual std::vector<std::string> getPKeyNames() = 0;
   virtual std::map<std::string, double> getTraceHeaderMin() = 0;
   virtual std::map<std::string, double> getTraceHeaderMax() = 0;

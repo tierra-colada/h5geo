@@ -292,7 +292,7 @@ void H5Seis_py(
       .def("getNTextHdrRows", &H5Seis::getNTextHdrRows,
            "get number lines of text header")
       .def("getPKeyIndexes", &H5Seis::getPKeyIndexes,
-           py::arg("pName"),
+           py::arg("pKey"),
            py::arg("pMin"),
            py::arg("pMax"))
       .def("getPKeyValues", &H5Seis::getPKeyValues,
@@ -300,7 +300,9 @@ void H5Seis_py(
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
       .def("getPKeySize", &H5Seis::getPKeySize,
-           py::arg("pName"))
+           py::arg("pKey"))
+      .def("getPKeyTraceSize", &H5Seis::getPKeyTraceSize,
+           py::arg("pKey"), py::arg("pMin"), py::arg("pMax"))
       .def("getPKeyNames", &H5Seis::getPKeyNames,
            "get primary key names (usually they are used in sorting)")
       .def("getTraceHeaderMin", py::overload_cast<>(

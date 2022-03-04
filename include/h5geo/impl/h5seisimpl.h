@@ -171,13 +171,13 @@ public:
   virtual size_t getNBinHdr() override;
   virtual size_t getNTextHdrRows() override;
   virtual Eigen::VectorX<size_t> getPKeyIndexes(
-      const std::string& pName,
-      const double& pMin, const double& pMax) override;
+      const std::string& pKey, double pMin, double pMax) override;
   virtual Eigen::VectorXd getPKeyValues(
-      const std::string& pkey,
+      const std::string& pKey,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
-  virtual size_t getPKeySize(const std::string& pkey) override;
+  virtual size_t getPKeySize(const std::string& pKey) override;
+  virtual size_t getPKeyTraceSize(const std::string& pKey, double pMin, double pMax) override;
   virtual std::vector<std::string> getPKeyNames() override;
   virtual std::map<std::string, double> getTraceHeaderMin() override;
   virtual std::map<std::string, double> getTraceHeaderMax() override;
