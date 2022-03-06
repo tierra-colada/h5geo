@@ -6,6 +6,8 @@
 
 #include <string>
 
+#include <Eigen/Dense>
+
 class OGRSpatialReference;
 
 namespace h5geo
@@ -35,6 +37,72 @@ H5GEO_EXPORT void setDomain(const h5geo::Domain& domain);
 
 H5GEO_EXPORT std::string getDomain();
 H5GEO_EXPORT h5geo::Domain getDomainEnum();
+
+H5GEO_EXPORT bool convertUnits(
+    Eigen::Ref<Eigen::MatrixXd> m,
+    const std::string& unitsFrom,
+    const std::string& unitsTo);
+H5GEO_EXPORT bool convertUnits(
+    Eigen::Ref<Eigen::MatrixXf> m,
+    const std::string& unitsFrom,
+    const std::string& unitsTo);
+
+// Transform coord FROM
+/// Transform from given CRS to the project CRS
+H5GEO_EXPORT bool transformCoordFrom(
+    Eigen::Ref<Eigen::MatrixXd> x,
+    Eigen::Ref<Eigen::MatrixXd> y,
+    const std::string& unitsFrom,
+    const std::string& srAuthAndCodeFrom);
+/// Transform from given CRS to the project CRS
+H5GEO_EXPORT bool transformCoordFrom(
+    Eigen::Ref<Eigen::MatrixXd> x,
+    Eigen::Ref<Eigen::MatrixXd> y,
+    const std::string& unitsFrom,
+    const std::string& authNameFrom,
+    const std::string& codeFrom);
+/// Transform from given CRS to the project CRS
+H5GEO_EXPORT bool transformCoordFrom(
+    Eigen::Ref<Eigen::MatrixXf> x,
+    Eigen::Ref<Eigen::MatrixXf> y,
+    const std::string& unitsFrom,
+    const std::string& srAuthAndCodeFrom);
+/// Transform from given CRS to the project CRS
+H5GEO_EXPORT bool transformCoordFrom(
+    Eigen::Ref<Eigen::MatrixXf> x,
+    Eigen::Ref<Eigen::MatrixXf> y,
+    const std::string& unitsFrom,
+    const std::string& authNameFrom,
+    const std::string& codeFrom);
+
+
+// Transform coord TO
+/// Transform from project CRS to the given CRS
+H5GEO_EXPORT bool transformCoordTo(
+    Eigen::Ref<Eigen::MatrixXd> x,
+    Eigen::Ref<Eigen::MatrixXd> y,
+    const std::string& unitsTo,
+    const std::string& srAuthAndCodeTo);
+/// Transform from project CRS to the given CRS
+H5GEO_EXPORT bool transformCoordTo(
+    Eigen::Ref<Eigen::MatrixXd> x,
+    Eigen::Ref<Eigen::MatrixXd> y,
+    const std::string& unitsTo,
+    const std::string& authNameTo,
+    const std::string& codeTo);
+/// Transform from project CRS to the given CRS
+H5GEO_EXPORT bool transformCoordTo(
+    Eigen::Ref<Eigen::MatrixXf> x,
+    Eigen::Ref<Eigen::MatrixXf> y,
+    const std::string& unitsTo,
+    const std::string& srAuthAndCodeTo);
+/// Transform from project CRS to the given CRS
+H5GEO_EXPORT bool transformCoordTo(
+    Eigen::Ref<Eigen::MatrixXf> x,
+    Eigen::Ref<Eigen::MatrixXf> y,
+    const std::string& unitsTo,
+    const std::string& authNameTo,
+    const std::string& codeTo);
 
 
 } // sr

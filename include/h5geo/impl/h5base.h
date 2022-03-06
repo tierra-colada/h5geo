@@ -201,7 +201,6 @@ H5GEO_EXPORT bool isSeis(const h5gt::Group &group);
 
 } // h5geo
 
-
 using H5Base_ptr = std::unique_ptr<H5Base, h5geo::ObjectDeleter>;
 
 #ifdef H5GEO_USE_GDAL

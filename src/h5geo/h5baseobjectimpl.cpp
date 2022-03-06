@@ -75,11 +75,11 @@ H5BaseObjectImpl<TBase>::createCoordinateTransformationToReadData(
   if (isnan(coefFrom))
     return nullptr;
 
-  double coeffTo = units::convert(
+  double coefTo = units::convert(
         units::unit_from_string(unitsTo),
         units::meter);
 
-  if (isnan(coeffTo))
+  if (isnan(coefTo))
     return nullptr;
 
   std::string srAuthAndCodeFrom = getSpatialReference();
@@ -89,8 +89,12 @@ H5BaseObjectImpl<TBase>::createCoordinateTransformationToReadData(
 
   OGRSpatialReference srTo = h5geo::sr::getSpatialReference();
 
-  srFrom.SetLinearUnitsAndUpdateParameters(unitsFrom.c_str(), coefFrom);
-  srTo.SetLinearUnitsAndUpdateParameters(unitsTo.c_str(), coeffTo);
+  if (srFrom.SetLinearUnitsAndUpdateParameters(unitsFrom.c_str(), coefFrom) != OGRERR_NONE)
+    return nullptr;
+
+  if (srTo.SetLinearUnitsAndUpdateParameters(unitsTo.c_str(), coefTo) != OGRERR_NONE)
+    return nullptr;
+
   return OGRCreateCoordinateTransformation(&srFrom, &srTo);
 }
 
@@ -121,8 +125,12 @@ H5BaseObjectImpl<TBase>::createCoordinateTransformationToWriteData(
   if (srTo.SetFromUserInput(srAuthAndCodeTo.c_str()) != OGRERR_NONE)
     return nullptr;
 
-  srFrom.SetLinearUnitsAndUpdateParameters(unitsFrom.c_str(), coefFrom);
-  srTo.SetLinearUnitsAndUpdateParameters(unitsTo.c_str(), coefTo);
+  if (srFrom.SetLinearUnitsAndUpdateParameters(unitsFrom.c_str(), coefFrom) != OGRERR_NONE)
+    return nullptr;
+
+  if (srTo.SetLinearUnitsAndUpdateParameters(unitsTo.c_str(), coefTo) != OGRERR_NONE)
+    return nullptr;
+
   return OGRCreateCoordinateTransformation(&srFrom, &srTo);
 }
 
