@@ -398,6 +398,14 @@ void H5Seis_py(
       .def("getUValG", &H5Seis::getUValG)
       .def("getIndexesG", &H5Seis::getIndexesG)
 
+      .def("getSEGYG", &H5Seis::getSEGYG)
+      .def("getSEGYTextHeaderD", &H5Seis::getSEGYTextHeaderD)
+      .def("getSEGYBinHeader2BytesD", &H5Seis::getSEGYBinHeader2BytesD)
+      .def("getSEGYBinHeader4BytesD", &H5Seis::getSEGYBinHeader4BytesD)
+      .def("getSEGYTraceHeader2BytesD", &H5Seis::getSEGYTraceHeader2BytesD)
+      .def("getSEGYTraceHeader4BytesD", &H5Seis::getSEGYTraceHeader4BytesD)
+      .def("getSEGYTraceFloatD", &H5Seis::getSEGYTraceFloatD)
+
       .def("updateTraceHeaderLimits", &H5Seis::updateTraceHeaderLimits,
            py::arg_v("nTrcBuffer", 1e7, "int(1e7)")) // `int` is important
       .def("updateBoundary", &H5Seis::updateBoundary)

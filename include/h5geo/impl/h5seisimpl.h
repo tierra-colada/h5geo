@@ -248,6 +248,14 @@ public:
   virtual std::optional<h5gt::Group> getUValG() override;
   virtual std::optional<h5gt::Group> getIndexesG() override;
 
+  virtual std::optional<h5gt::Group> getSEGYG() override;
+  virtual std::optional<h5gt::DataSet> getSEGYTextHeaderD() override;
+  virtual std::optional<h5gt::DataSet> getSEGYBinHeader2BytesD() override;
+  virtual std::optional<h5gt::DataSet> getSEGYBinHeader4BytesD() override;
+  virtual std::optional<h5gt::DataSet> getSEGYTraceHeader2BytesD() override;
+  virtual std::optional<h5gt::DataSet> getSEGYTraceHeader4BytesD() override;
+  virtual std::optional<h5gt::DataSet> getSEGYTraceFloatD() override;
+
   virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) override;
   virtual bool updateBoundary() override;
   virtual bool updatePKeySort(const std::string& pKeyName) override;

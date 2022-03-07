@@ -1772,7 +1772,6 @@ std::optional<h5gt::DataSet>
 H5SeisImpl::getBoundaryD()
 {
   std::string name = std::string{h5geo::detail::boundary};
-
   return getDatasetOpt(objG, name);
 }
 
@@ -1780,7 +1779,6 @@ std::optional<h5gt::DataSet>
 H5SeisImpl::getTextHeaderD()
 {
   std::string name = std::string{h5geo::detail::text_header};
-
   return getDatasetOpt(objG, name);
 }
 
@@ -1788,7 +1786,6 @@ std::optional<h5gt::DataSet>
 H5SeisImpl::getBinHeaderD()
 {
   std::string name = std::string{h5geo::detail::bin_header};
-
   return getDatasetOpt(objG, name);
 }
 
@@ -1808,7 +1805,6 @@ std::optional<h5gt::Group>
 H5SeisImpl::getSortG()
 {
   std::string name = std::string{h5geo::detail::sort};
-
   return getGroupOpt(objG, name);
 }
 
@@ -1820,7 +1816,6 @@ H5SeisImpl::getUValG()
     return std::nullopt;
 
   std::string name = std::string{h5geo::detail::unique_values};
-
   if (!opt->hasObject(name, h5gt::ObjectType::Group))
     return std::nullopt;
 
@@ -1835,11 +1830,97 @@ H5SeisImpl::getIndexesG()
     return std::nullopt;
 
   std::string name = std::string{h5geo::detail::indexes};
-
   if (!opt->hasObject(name, h5gt::ObjectType::Group))
     return std::nullopt;
 
   return opt->getGroup(name);
+}
+
+std::optional<h5gt::Group> H5SeisImpl::getSEGYG()
+{
+  std::string name = std::string{h5geo::detail::segy};
+  if (!objG.hasObject(name, h5gt::ObjectType::Group))
+    return std::nullopt;
+
+  return objG.getGroup(name);
+}
+
+std::optional<h5gt::DataSet> H5SeisImpl::getSEGYTextHeaderD()
+{
+  auto opt = getSEGYG();
+  if (!opt.has_value())
+    return std::nullopt;
+
+  std::string name = std::string{h5geo::detail::text_header};
+  if (!opt->hasObject(name, h5gt::ObjectType::Dataset))
+    return std::nullopt;
+
+  return opt->getDataSet(name);
+}
+
+std::optional<h5gt::DataSet> H5SeisImpl::getSEGYBinHeader2BytesD()
+{
+  auto opt = getSEGYG();
+  if (!opt.has_value())
+    return std::nullopt;
+
+  std::string name = std::string{h5geo::detail::bin_header_2bytes};
+  if (!opt->hasObject(name, h5gt::ObjectType::Dataset))
+    return std::nullopt;
+
+  return opt->getDataSet(name);
+}
+
+std::optional<h5gt::DataSet> H5SeisImpl::getSEGYBinHeader4BytesD()
+{
+  auto opt = getSEGYG();
+  if (!opt.has_value())
+    return std::nullopt;
+
+  std::string name = std::string{h5geo::detail::bin_header_4bytes};
+  if (!opt->hasObject(name, h5gt::ObjectType::Dataset))
+    return std::nullopt;
+
+  return opt->getDataSet(name);
+}
+
+std::optional<h5gt::DataSet> H5SeisImpl::getSEGYTraceHeader2BytesD()
+{
+  auto opt = getSEGYG();
+  if (!opt.has_value())
+    return std::nullopt;
+
+  std::string name = std::string{h5geo::detail::trace_header_2bytes};
+  if (!opt->hasObject(name, h5gt::ObjectType::Dataset))
+    return std::nullopt;
+
+  return opt->getDataSet(name);
+}
+
+std::optional<h5gt::DataSet> H5SeisImpl::getSEGYTraceHeader4BytesD()
+{
+  auto opt = getSEGYG();
+  if (!opt.has_value())
+    return std::nullopt;
+
+  std::string name = std::string{h5geo::detail::trace_header_4bytes};
+  if (!opt->hasObject(name, h5gt::ObjectType::Dataset))
+    return std::nullopt;
+
+  return opt->getDataSet(name);
+}
+
+std::optional<h5gt::DataSet> H5SeisImpl::getSEGYTraceFloatD()
+{
+  auto opt = getSEGYG();
+  if (!opt.has_value())
+    return std::nullopt;
+
+  std::string name = std::string{h5geo::detail::trace_float};
+  if (!opt->hasObject(name, h5gt::ObjectType::Dataset))
+    return std::nullopt;
+
+  return opt->getDataSet(name);
 }
 
 H5Seis* h5geo::openSeis(h5gt::Group group){

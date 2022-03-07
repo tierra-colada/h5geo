@@ -312,6 +312,14 @@ public:
   virtual std::optional<h5gt::Group> getUValG() = 0;
   virtual std::optional<h5gt::Group> getIndexesG() = 0;
 
+  virtual std::optional<h5gt::Group> getSEGYG() = 0;
+  virtual std::optional<h5gt::DataSet> getSEGYTextHeaderD() = 0;
+  virtual std::optional<h5gt::DataSet> getSEGYBinHeader2BytesD() = 0;
+  virtual std::optional<h5gt::DataSet> getSEGYBinHeader4BytesD() = 0;
+  virtual std::optional<h5gt::DataSet> getSEGYTraceHeader2BytesD() = 0;
+  virtual std::optional<h5gt::DataSet> getSEGYTraceHeader4BytesD() = 0;
+  virtual std::optional<h5gt::DataSet> getSEGYTraceFloatD() = 0;
+
   /// Calculate and write min/max trace headers
   virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) = 0;
   /// Calculate and write XY boundary based on CDP_X and CDP_Y
