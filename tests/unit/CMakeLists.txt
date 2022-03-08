@@ -34,6 +34,10 @@ target_link_libraries(H5GeoTest
 target_link_libraries(H5GeoTest PRIVATE magic_enum::magic_enum)
 target_link_libraries(H5GeoTest PRIVATE mio::mio)
 target_link_libraries(H5GeoTest PRIVATE units::units)
+if(H5GEO_USE_GDAL)
+  target_link_libraries(H5GeoTest PRIVATE GDAL::GDAL)
+  target_include_directories(H5GeoTest PRIVATE ${GDAL_TOP_LEVEL_INCLUDE_DIR})
+endif()
 
 add_test(
   NAME H5GeoTest
