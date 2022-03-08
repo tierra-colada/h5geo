@@ -5,6 +5,8 @@
 #include "h5baseimpl.h"
 #include "h5gt/H5Group.hpp"
 
+class OGRCoordinateTransformation;
+
 template <typename TBase = H5BaseObject>
 class H5BaseObjectImpl : public H5BaseImpl<TBase>
 {

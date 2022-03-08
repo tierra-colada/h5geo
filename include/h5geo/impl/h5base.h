@@ -103,8 +103,7 @@ public:
 };
 
 #ifdef H5GEO_USE_GDAL
-#include <gdal/gdal.h>
-#include <gdal/gdal_priv.h>
+class OGRCoordinateTransformation;
 #endif
 
 namespace h5geo
@@ -112,19 +111,13 @@ namespace h5geo
 
 struct ObjectDeleter
 {
-  void operator()(H5Base * ptr) const
-  {
-    ptr->Delete();
-  }
+  void operator()(H5Base * ptr) const;
 };
 
 #ifdef H5GEO_USE_GDAL
 struct OGRCoordinateTransformationDeleter
 {
-  void operator()(OGRCoordinateTransformation * ptr) const
-  {
-    OGRCoordinateTransformation::DestroyCT(ptr);
-  }
+  void operator()(OGRCoordinateTransformation * ptr) const;
 };
 #endif
 

@@ -6,6 +6,8 @@
 
 #include <units/units.hpp>
 
+#include <cmath>
+
 H5LogCurveImpl::H5LogCurveImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
@@ -105,7 +107,7 @@ Eigen::VectorXd H5LogCurveImpl::getCurve(
             units::unit_from_string(getDataUnits()),
             units::unit_from_string(units));
 
-    if (!isnan(coef))
+    if (!std::isnan(coef))
       return curve*coef;
 
     return Eigen::VectorXd();

@@ -18,8 +18,30 @@
 #include <h5gt/H5Group.hpp>
 #include <h5gt/H5DataSet.hpp>
 
+#ifdef H5GEO_USE_GDAL
+#include <gdal/gdal.h>
+#include <gdal/gdal_priv.h>
+#endif
+
+#ifdef H5GEO_USE_GDAL
+#include <gdal/gdal.h>
+#include <gdal/gdal_priv.h>
+#endif
+
 #include <filesystem>
 namespace fs = std::filesystem;
+
+void h5geo::ObjectDeleter::operator()(H5Base * ptr) const
+{
+  ptr->Delete();
+}
+
+#ifdef H5GEO_USE_GDAL
+void h5geo::OGRCoordinateTransformationDeleter::operator()(OGRCoordinateTransformation * ptr) const
+{
+  OGRCoordinateTransformation::DestroyCT(ptr);
+}
+#endif
 
 template <typename TBase>
 H5Base* H5BaseImpl<TBase>::clone()
