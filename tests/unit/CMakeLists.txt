@@ -34,6 +34,13 @@ target_link_libraries(H5GeoTest
 target_link_libraries(H5GeoTest PRIVATE magic_enum::magic_enum)
 target_link_libraries(H5GeoTest PRIVATE mio::mio)
 target_link_libraries(H5GeoTest PRIVATE units::units)
+
+if(H5GEO_USE_THREADS)
+  target_include_directories(H5GeoTest PRIVATE ${TBB_INCLUDE_DIRS})
+  target_link_libraries(H5GeoTest PRIVATE ${TBB_LIBRARIES_RELEASE})
+  target_link_libraries(H5GeoTest PRIVATE OpenMP::OpenMP_CXX)
+endif()
+
 if(H5GEO_USE_GDAL)
   target_link_libraries(H5GeoTest PRIVATE GDAL::GDAL)
   target_link_libraries(H5GeoTest PRIVATE ${_GDAL_LIBS})  # must be linked or undef ref to GEOS

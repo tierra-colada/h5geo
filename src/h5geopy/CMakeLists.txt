@@ -46,8 +46,16 @@ if(NOT HDF5_USE_STATIC_LIBRARIES)
   target_link_libraries(_h5geo PRIVATE magic_enum::magic_enum)
   target_link_libraries(_h5geo PRIVATE mio::mio)
   target_link_libraries(_h5geo PRIVATE units::units)
+
+  if(H5GEO_USE_THREADS)
+    target_include_directories(_h5geo PRIVATE ${TBB_INCLUDE_DIRS})
+    target_link_libraries(_h5geo PRIVATE ${TBB_LIBRARIES_RELEASE})
+    target_link_libraries(_h5geo PRIVATE OpenMP::OpenMP_CXX)
+  endif()
+
   if(H5GEO_USE_GDAL)
     target_link_libraries(_h5geo PRIVATE GDAL::GDAL)
+    target_link_libraries(_h5geo PRIVATE ${_GDAL_LIBS})  # must be linked or undef ref to GEOS
     target_include_directories(_h5geo PRIVATE ${GDAL_TOP_LEVEL_INCLUDE_DIR})
   endif()
 else()
