@@ -54,7 +54,7 @@ class build_ext(build_ext_orig):
     import multiprocessing
     build_args = [
         '--config', config,
-        '--', '-j'+str(multiprocessing.cpu_count())
+        '-j'+str(multiprocessing.cpu_count())
     ]
 
     # example of install args
