@@ -25,19 +25,10 @@ if(NOT pybind11_POPULATED)
   message(STATUS "PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
 endif()
 
-file(GLOB_RECURSE h5geopy_src
-     RELATIVE ${PROJECT_SOURCE_DIR}
-     ${CMAKE_SOURCE_DIR}/src/h5geopy/*.cpp
-     )
-file(GLOB_RECURSE h5geopy_h
-     RELATIVE ${PROJECT_SOURCE_DIR}
-     ${CMAKE_SOURCE_DIR}/include/h5geopy/*.h
-     )
+include("${CMAKE_SOURCE_DIR}/cmake/h5geopy-include.cmake")
+include("${CMAKE_SOURCE_DIR}/cmake/h5geopy-src.cmake")
 
-pybind11_add_module(_h5geo
-  ${h5geopy_src}
-  ${h5geopy_h}
-  )
+pybind11_add_module(_h5geo ${src_files_h5geopy} ${include_files_h5geopy})
 target_include_directories(_h5geo PRIVATE ${CMAKE_SOURCE_DIR}/include)
 target_link_directories(_h5geo PRIVATE pybind11)
 

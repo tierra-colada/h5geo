@@ -41,3 +41,7 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5wellcontainer.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5points.h
   )
+
+if(H5GEO_USE_GDAL)
+  list(APPEND include_files_h5geo ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5sr_settings.h)
+endif()
