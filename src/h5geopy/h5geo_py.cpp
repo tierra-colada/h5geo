@@ -19,8 +19,6 @@
 #include "../../include/h5geopy/h5well_py.h"
 #include "../../include/h5geopy/h5wellcontainer_py.h"
 
-PYBIND11_MAKE_OPAQUE(PointArray);
-
 
 namespace h5geopy {
 

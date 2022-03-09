@@ -95,3 +95,5 @@ set(TBB_MALLOC_PROXY_LIBRARY_RELEASE "${TBB_INSTALL_DIR}/tbb${tbb_ver}/${tbb_lib
 
 set(TBB_BIN_DIR "${TBB_INSTALL_DIR}/tbb${tbb_ver}/${tbb_bindir}")
 set(TBB_LIB_DIR "${TBB_INSTALL_DIR}/tbb${tbb_ver}/${tbb_libdir}")
+
+set(TBB_RUNTIME_DIR ${TBB_LIB_DIR})

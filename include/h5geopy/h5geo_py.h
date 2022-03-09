@@ -37,6 +37,11 @@ namespace py = pybind11;
 namespace h5geo{};
 using namespace h5geo;
 
+// opaque types must be included to every translation unit or ODR falls (warnings is given)
+#include <h5geo/h5points.h>
+
+PYBIND11_MAKE_OPAQUE(h5geo::PointArray);
+
 /* to generate .pyi the returned type should be declared before it
  * is called. For example `createGroup` returns `Group` so I need to
  * place `py::class_<Group, Object>(m, "Group")`

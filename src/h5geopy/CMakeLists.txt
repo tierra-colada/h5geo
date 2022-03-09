@@ -3,6 +3,9 @@ project(h5geopy VERSION ${COMMON_PROJECT_VERSION} LANGUAGES C CXX)
 message("project: ${PROJECT_NAME} ${COMMON_PROJECT_VERSION}")
 
 set(HDF5_RUNTIME_DIR "" CACHE PATH "hdf5 runtime is a dependency of h5geopy")
+set(UNITS_RUNTIME_DIR "" CACHE PATH "units runtime is a dependency of h5geopy")
+set(TBB_RUNTIME_DIR "" CACHE PATH "TBB runtime is an optional dependency of h5geopy")
+set(GDAL_RUNTIME_DIR "" CACHE PATH "GDAL runtime is an optional dependency of h5geopy")
 set(H5GEO_RUNTIME_DIR "" CACHE PATH "h5geo runtime is a dependency of h5geopy
   (usually you don't need to set it)")
 option(COPY_H5GEOPY_RUNTIME_DEPS "Copy hdf5 and h5geo runtime to python site-packages
