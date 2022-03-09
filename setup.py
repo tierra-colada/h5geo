@@ -45,8 +45,9 @@ class build_ext(build_ext_orig):
         '-DH5GEO_BUILD_h5geopy=ON',
         '-DH5GEO_USE_THREADS=ON',
         '-DH5GEO_BUILD_SHARED_LIBS=ON',
-        '-DH5GEO_USE_GDAL=ON',
-        '-DH5GEO_BUILD_TESTS=ON'
+        '-DH5GEO_USE_GDAL=OFF',
+        '-DH5GEO_BUILD_TESTS=ON',
+        '-DCOPY_H5GEOPY_RUNTIME_DEPS=OFF'
     ]
 
     # example of build args
@@ -97,7 +98,6 @@ setuptools.setup(
     classifiers=classifiers,
 	  install_requires=[
       'numpy',
-		  'h5gtpy',
     ],
     keywords='python cpp hdf5 seismic surfaces wells geo-data',
     python_requires='>=3',
