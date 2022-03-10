@@ -4,6 +4,7 @@
 #include "../../include/h5geo/impl/h5wellimpl.h"
 #include "../../include/h5geo/misc/h5enum_string.h"
 
+#include <optional>
 #include <filesystem>
 namespace fs = std::filesystem;
 

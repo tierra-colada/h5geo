@@ -2,6 +2,7 @@
 #include "../../include/h5geo/h5map.h"
 #include "../../include/h5geo/impl/h5mapimpl.h"
 
+#include <optional>
 #include <filesystem>
 namespace fs = std::filesystem;
 
