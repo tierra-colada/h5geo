@@ -6,12 +6,6 @@ void Point_py(
     py::class_<Point>
     &py_obj){
   py_obj
-      .def(py::init<>())
-      .def(py::init<
-           const double&,
-           const double&,
-           const double&>())
-
       .def("setX", &Point::setX)
       .def("setY", &Point::setY)
       .def("setZ", &Point::setZ)

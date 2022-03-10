@@ -28,7 +28,7 @@ option(H5GEO_BUILD_h5geopy "Build python wrapper (make sure to disable HDF5_USE_
 option(HDF5_USE_STATIC_LIBRARIES "Use static hdf5 lib" OFF)
 option(HDF5_PREFER_PARALLEL "Prefer parallel hdf5 if available" OFF)
 
-set(H5GEO_CHAR_ARR_SIZE "50" CACHE STRING "Number > 1 used to init char array for h5geo::Point for example")
+set(H5GEO_CHAR_ARRAY_SIZE "50" CACHE STRING "Number > 1 used to init char array for h5geo::Point for example")
 
 set(gtest_force_shared_crt ON CACHE BOOL "Prevent overriding the parent project's compiler/linker settings on Windows")
 set(GDAL_LIBS "" CACHE FILEPATH "Path to all GDAL dependcy (probably geos, proj etc.)")
@@ -53,7 +53,7 @@ if(H5GEO_BUILD_SHARED_LIBS)
 else()
   add_library(h5geo STATIC ${src_files_h5geo} ${include_files_h5geo})
 endif()
-target_compile_definitions(h5geo PUBLIC H5GEO_CHAR_ARR_SIZE=${H5GEO_CHAR_ARR_SIZE})
+target_compile_definitions(h5geo PUBLIC H5GEO_CHAR_ARRAY_SIZE=${H5GEO_CHAR_ARRAY_SIZE})
 target_include_directories(h5geo PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>

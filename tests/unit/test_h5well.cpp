@@ -13,6 +13,7 @@
 #include <h5gt/H5Group.hpp>
 #include <h5gt/H5DataSet.hpp>
 
+#include <type_traits>
 #include <fstream>
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -606,6 +607,9 @@ TEST_F(H5WellFixture, getCurveFromDifferentWell){
 }
 
 TEST_F(H5WellFixture, createPointsFromWellTop){
+
+  ASSERT_TRUE(std::is_trivial<h5geo::Point>::value);
+
   std::string fileName = "welltops.h5";
   H5WellCnt_ptr wellCnt(
         h5geo::createWellContainerByName(
@@ -623,8 +627,8 @@ TEST_F(H5WellFixture, createPointsFromWellTop){
           pointsName, pointsParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
 
   h5geo::PointArray pArrIn, pArrOut;
-  pArrIn.push_back({headXY(0), headXY(1), kb, "one"});
-  pArrIn.push_back({headXY(0), headXY(1), kb, "two"});
+  pArrIn.push_back({headXY(0), headXY(1), kb, {'o', 'n', 'e', '\0'}});
+  pArrIn.push_back({headXY(0), headXY(1), kb, {'t', 'w', 'o', '\0'}});
 
   points->writeData(pArrIn);
   pArrOut = points->getData("km");
