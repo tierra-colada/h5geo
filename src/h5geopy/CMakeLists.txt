@@ -3,6 +3,7 @@ project(h5geopy VERSION ${COMMON_PROJECT_VERSION} LANGUAGES C CXX)
 message("project: ${PROJECT_NAME} ${COMMON_PROJECT_VERSION}")
 
 set(HDF5_RUNTIME_DIR "" CACHE PATH "hdf5 runtime is a dependency of h5geopy")
+set(ZLIB_RUNTIME_DIR "" CACHE PATH "zlib runtime is an optional dependency of hdf5")
 set(UNITS_RUNTIME_DIR "" CACHE PATH "units runtime is a dependency of h5geopy")
 set(TBB_RUNTIME_DIR "" CACHE PATH "TBB runtime is an optional dependency of h5geopy")
 set(GDAL_RUNTIME_DIR "" CACHE PATH "GDAL runtime is an optional dependency of h5geopy")

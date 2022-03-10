@@ -86,7 +86,7 @@ classifiers = [
 
 setuptools.setup(
     name='h5geopy',
-    version='0.0.1',
+    version='0.1.0',
     packages=setuptools.find_packages(),
     url='https://github.com/tierra-colada/h5geo',
     license='MIT',

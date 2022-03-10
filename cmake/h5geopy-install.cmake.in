@@ -27,6 +27,7 @@ file(GET_RUNTIME_DEPENDENCIES
     ${h5geo_runtime_dir}
   PRE_INCLUDE_REGEXES 
     "^.*([Hh][Dd][Ff][5]).*$"
+    "^.*([Zz][Ll][Ii][Bb]).*$"
     "^.*([Hh][5][Gg][Ee][Oo]).*$"
     "^.*([Uu][Nn][Ii][Tt][Ss]).*$"
     "^.*([Tt][Bb][Bb]).*$"
@@ -55,14 +56,14 @@ endforeach()
 list(LENGTH unres_deps unres_deps_LEN)
 if(${unres_deps_LEN} GREATER 0)
   message(FATAL_ERROR "There are UNRESOLVED runtime dependencies.
-  Try setting `HDF5_RUNTIME_DIR, UNITS_RUNTIME_DIR, GDAL_RUNTIME_DIR, TBB_RUNTIME_DIR` and rerun `cmake .` and `cmake --install .`
+  Try setting `HDF5_RUNTIME_DIR, ZLIB_RUNTIME_DIR, UNITS_RUNTIME_DIR, GDAL_RUNTIME_DIR, TBB_RUNTIME_DIR` and rerun `cmake .` and `cmake --install .`
   (you don't have to rebuild the project)")
 endif()
 
 list(LENGTH confl_deps confl_deps_LEN)
 if(${confl_deps_LEN} GREATER 0)
   message(FATAL_ERROR "There are CNFLICTING runtime dependencies.
-  Try setting `HDF5_RUNTIME_DIR, UNITS_RUNTIME_DIR, GDAL_RUNTIME_DIR, TBB_RUNTIME_DIR` and rerun `cmake .` and `cmake --install .`
+  Try setting `HDF5_RUNTIME_DIR, ZLIB_RUNTIME_DIR, UNITS_RUNTIME_DIR, GDAL_RUNTIME_DIR, TBB_RUNTIME_DIR` and rerun `cmake .` and `cmake --install .`
   (you don't have to rebuild the project)")
 endif()
 
