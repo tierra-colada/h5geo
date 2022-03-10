@@ -126,7 +126,7 @@ else()
   foreach(_dir ${res_deps_dirs})
     set(PYTHON_INIT_PATH_VAR "${PYTHON_INIT_PATH_VAR}\n
 if not os.environ['PATH'].__contains__('${_dir}'):
-  os.environ['PATH'] += ';${_dir}'")
+  os.environ['PATH'] = '${_dir}' + os.pathsep + os.environ['PATH']")
   endforeach()
 endif()
 
