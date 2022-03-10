@@ -1445,7 +1445,7 @@ bool H5SeisImpl::generatePRESTKGeometry(
     Eigen::VectorXd cdp_y = (src_y+rec_y)/2;
     Eigen::VectorXd il, xl;
     if (moveRec){
-      if (rec_dy == 0 and src_dy == 0)
+      if (rec_dy == 0 && src_dy == 0)
         il = ones_arr;
       else if (rec_dy == 0)
         il = ((rec_y.array()-rec_ymin)/abs(src_dy)).rint() + 1;

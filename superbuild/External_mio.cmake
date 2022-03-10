@@ -14,8 +14,8 @@ set(DEPENDENCIES "")
 
 if(NOT DEFINED mio_FOUND OR NOT mio_FOUND)
   ExternalProject_Add(mio
-    GIT_REPOSITORY "https://github.com/mandreyel/mio.git"
-    GIT_TAG "3f86a95c0784d73ce6815237ec33ed25f233b643"
+    GIT_REPOSITORY "https://github.com/tierra-colada/mio.git"
+    GIT_TAG "ce7b245ca54f62ce1e8de85764feeb1894889e56"
     SOURCE_DIR ${EP_SOURCE_DIR}
     BINARY_DIR ${EP_BINARY_DIR}
     INSTALL_DIR ${EP_INSTALL_DIR}

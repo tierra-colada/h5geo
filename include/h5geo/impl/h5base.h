@@ -109,13 +109,13 @@ class OGRCoordinateTransformation;
 namespace h5geo
 {
 
-struct ObjectDeleter
+struct H5GEO_EXPORT ObjectDeleter
 {
   void operator()(H5Base * ptr) const;
 };
 
 #ifdef H5GEO_USE_GDAL
-struct OGRCoordinateTransformationDeleter
+struct  H5GEO_EXPORT OGRCoordinateTransformationDeleter
 {
   void operator()(OGRCoordinateTransformation * ptr) const;
 };

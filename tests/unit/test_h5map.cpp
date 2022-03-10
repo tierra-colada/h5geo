@@ -79,14 +79,6 @@ public:
 
 TEST_F(H5MapFixture, createContainer){
   ASSERT_TRUE(fs::exists(FILE_NAME1));
-
-  H5MapCnt_ptr mapCnt(h5geo::openMapContainerByName("/home/kerim/Documents/Colada_prj/default/DATA/horizons/Seismic horizon 1.h5"));
-  H5Map_ptr map(mapCnt->openMap("Seismic horizon 1"));
-  Eigen::VectorXd origin = map->getOrigin("m", true);
-  std::cout << origin << std::endl;
-
-  Eigen::MatrixXd M = map->getData("ms");
-  std::cout << "M mean: " << M.mean() << std::endl;
 }
 
 TEST_F(H5MapFixture, createMapWithDifferentCreateFlags){
@@ -169,6 +161,7 @@ TEST_F(H5MapFixture, writeAndGetDataFromMap){
           MAP_NAME2, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(map != nullptr);
   ASSERT_TRUE(map->writeData(m));
+
   Eigen::MatrixXd M = map->getData("mm/sec");
   ASSERT_TRUE(m.isApprox(M/1000));
 }
