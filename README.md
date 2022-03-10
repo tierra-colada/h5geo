@@ -18,8 +18,10 @@
 * [h5gt](https://github.com/tierra-colada/h5gt) (header only)
 * [Eigen3](https://gitlab.com/libeigen/eigen) (header only)
 * [magic-enum](https://github.com/Neargye/magic_enum) (header only)
-* [units](https://github.com/LLNL/units) (for now it must be built as static library)
+* [units](https://github.com/LLNL/units)
+* [mio](https://github.com/mandreyel/mio) (header only)
 * optionally: [tbb](https://github.com/oneapi-src/oneTBB) (MSVC compiler includes it by default)
+* optionally: [GDAL](https://github.com/OSGeo/gdal)
 * optionally: [h5gtpy](https://github.com/tierra-colada/h5gt) (needed only when building with python support `-DH5GEO_BUILD_h5geopy=ON`)
 
 You can use superbuild or build every dependency by yourself. Then do:
@@ -30,6 +32,7 @@ cmake ..
   -DCMAKE_BUILD_TYPE=Release
   -DEigen3_ROOT:PATH=/path/to/eigen 
   -Dmagic_enum_ROOT:PATH=/path/to/magic_enum 
+  -Dmio_ROOT:PATH=/path/to/mio
   -Dh5gt_ROOT:PATH=/path/to/h5gt 
   -DH5GEO_SUPERBUILD:BOOL=OFF
   -DH5GEO_USE_THREADS:BOOL=ON
@@ -46,7 +49,7 @@ cmake --build .
 ```
 **NOTE:** instead of `<prefix>_ROOT` path (root directory of every package) you can pass `<prefix>_DIR` path containing some `<prefix>-config.cmake` file of every package.
 
-**NOTE:** to run **h5geopy** python must know where HDF5-runtime and h5geo-runtime are. You may choose whether to copy them to `site-packages/h5geopy` dir or add their dirs to `PATH` env. By default cmake try to search h5geo-runtime in `h5geo-install/lib` folder. Also **h5geopy** depends on **h5gtpy**. So you would need to have installed **h5gtpy**.
+**NOTE:** to run **h5geopy** python must know where HDF5-runtime, units-runtime, tbb-runtime and h5geo-runtime are located. You may choose whether to copy them to `site-packages/h5geopy` dir or add their dirs to `PATH` env. By default cmake try to search h5geo-runtime in `h5geo-install/lib` folder. Also **h5geopy** depends on **h5gtpy**. So you would need to have installed **h5gtpy**.
 
 ## Installation h5geo with h5geopy
 
@@ -58,6 +61,17 @@ cmake --install . --prefix /some/path --config Release
 Then you can find **h5geopy** in `site-packages` of your python env.
 
 **NOTE:** cmake tries to find runtime dependencies at `install` step. If there are unresolved or conflict dependencies then you need to modify `PATH` env, rerun `cmake ..` and `cmake --install . --prefix /some/path --config Release`. **You don't have to rebuild the project!**
+
+## Build & Install using `pip`
+It is possible to build and install the library using the following command:
+```
+pip install git+https://github.com/tierra-colada/h5geo.git --verbose
+```
+This will automatically run **CMake Superbuild** to build build **h5geo** and its dependencies (without GDAL support) in the `site-pakages/h5geopy` dir. 
+
+On modern PC this usually takes a couple of minutes.
+
+**NOTE:** CMake and C++ compiler are needed.
 
 ## Usage
 Importing is done via:
@@ -90,4 +104,4 @@ You don't need to provide stub file to PyCharm as it handles this by its own.
 1.10, 1.12 (recommended)
 
 ## Supported platforms
-Windows 10, Linux, OSX
+Windows 10/11, Linux, OSX

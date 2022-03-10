@@ -36,25 +36,25 @@ class build_ext(build_ext_orig):
     # example of cmake args
     # config = 'Debug' if self.debug else 'Release'
     config = 'Release'
-    import site
-    install_dir = site.getsitepackages()[0] + '/h5geopy'
+    import sysconfig  # to get site-packages dir
+    install_dir = sysconfig.get_paths()["purelib"] + '/h5geopy'
     cmake_args = [
-        '-DCMAKE_INSTALL_PREFIX=' + install_dir,
-        '-DCMAKE_BUILD_TYPE=' + config,
-        '-DH5GEO_SUPERBUILD=ON',
-        '-DH5GEO_BUILD_h5geopy=ON',
-        '-DH5GEO_USE_THREADS=ON',
-        '-DH5GEO_BUILD_SHARED_LIBS=ON',
-        '-DH5GEO_USE_GDAL=OFF',
-        '-DH5GEO_BUILD_TESTS=ON',
-        '-DCOPY_H5GEOPY_RUNTIME_DEPS=OFF'
+      '-DCMAKE_INSTALL_PREFIX=' + install_dir,
+      '-DCMAKE_BUILD_TYPE=' + config,
+      '-DH5GEO_SUPERBUILD=ON',
+      '-DH5GEO_BUILD_h5geopy=ON',
+      '-DH5GEO_USE_THREADS=ON',
+      '-DH5GEO_BUILD_SHARED_LIBS=ON',
+      '-DH5GEO_USE_GDAL=OFF',
+      '-DH5GEO_BUILD_TESTS=ON',
+      '-DCOPY_H5GEOPY_RUNTIME_DEPS=OFF'
     ]
 
     # example of build args
     import multiprocessing
     build_args = [
-        '--config', config,
-        '-j'+str(multiprocessing.cpu_count())
+      '--config', config,
+      '-j'+str(multiprocessing.cpu_count())
     ]
 
     # example of install args
@@ -71,16 +71,16 @@ class build_ext(build_ext_orig):
 
 
 classifiers = [
-    'Development Status :: 5 - Production/Stable',
-    'Intended Audience :: Developers',
-    'Intended Audience :: Science/Research',
-    'License :: OSI Approved :: MIT',
-    'Operating System :: OS Independent',
-    'Programming Language :: Python :: 3',
-    'Programming Language :: C',
-    'Programming Language :: C++',
-    'Topic :: Scientific/Engineering',
-    'Topic :: Software Development :: Libraries :: Python Modules'
+  'Development Status :: 5 - Production/Stable',
+  'Intended Audience :: Developers',
+  'Intended Audience :: Science/Research',
+  'License :: OSI Approved :: MIT',
+  'Operating System :: OS Independent',
+  'Programming Language :: Python :: 3',
+  'Programming Language :: C',
+  'Programming Language :: C++',
+  'Topic :: Scientific/Engineering',
+  'Topic :: Software Development :: Libraries :: Python Modules'
 ]
 
 
