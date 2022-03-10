@@ -28,6 +28,7 @@
 #include <gdal/gdal_priv.h>
 #endif
 
+#include <optional>
 #include <filesystem>
 namespace fs = std::filesystem;
 
