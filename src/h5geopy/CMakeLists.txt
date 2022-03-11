@@ -26,6 +26,9 @@ if(NOT pybind11_POPULATED)
   message(STATUS "PYTHON_EXECUTABLE: ${PYTHON_EXECUTABLE}")
 endif()
 
+# Needed to get info about Version and is used in installation script
+find_package(Python REQUIRED)
+
 include("${CMAKE_SOURCE_DIR}/cmake/h5geopy-include.cmake")
 include("${CMAKE_SOURCE_DIR}/cmake/h5geopy-src.cmake")
 
