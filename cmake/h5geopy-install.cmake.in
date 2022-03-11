@@ -11,6 +11,8 @@ cmake_policy(SET CMP0012 NEW)
 #-----------------------------------------------------------------------------
 message(STATUS "Resolving h5geopy RUNTIME dependencies...")
 
+get_filename_component(CMAKE_ABS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX} ABSOLUTE)
+list(APPEND runtime_dirs "${CMAKE_ABS_INSTALL_PREFIX}/lib")  # add h5geo dir
 get_filename_component(_runtime_dir "$<$<TARGET_EXISTS:h5geo>:$<TARGET_FILE:h5geo>>" DIRECTORY)
 list(APPEND runtime_dirs "${_runtime_dir}")
 get_filename_component(_runtime_dir "$<$<TARGET_EXISTS:ZLIB::ZLIB>:$<TARGET_FILE:ZLIB::ZLIB>>" DIRECTORY)
@@ -26,11 +28,11 @@ list(APPEND runtime_dirs "${_runtime_dir}")
 
 message(STATUS "Detected runtime_dirs: ${runtime_dirs}")
 message(STATUS "HDF5_RUNTIME_DIR: @HDF5_RUNTIME_DIR@")
-message(STATUS "ZLIB_RUNTIME_DIR: @HDF5_RUNTIME_DIR@")
-message(STATUS "H5GEO_RUNTIME_DIR: @HDF5_RUNTIME_DIR@")
-message(STATUS "H5UNITS_RUNTIME_DIR: @HDF5_RUNTIME_DIR@")
-message(STATUS "H5GDAL_RUNTIME_DIR: @HDF5_RUNTIME_DIR@")
-message(STATUS "H5TBB_RUNTIME_DIR: @HDF5_RUNTIME_DIR@")
+message(STATUS "ZLIB_RUNTIME_DIR: @ZLIB_RUNTIME_DIR@")
+message(STATUS "H5GEO_RUNTIME_DIR: @H5GEO_RUNTIME_DIR@")
+message(STATUS "H5UNITS_RUNTIME_DIR: @H5UNITS_RUNTIME_DIR@")
+message(STATUS "H5GDAL_RUNTIME_DIR: @H5GDAL_RUNTIME_DIR@")
+message(STATUS "H5TBB_RUNTIME_DIR: @H5TBB_RUNTIME_DIR@")
 
 file(GET_RUNTIME_DEPENDENCIES
   LIBRARIES "$<TARGET_FILE:_h5geo>"
@@ -136,9 +138,6 @@ else()
     get_filename_component(_dir "${_file}" DIRECTORY)
     list(APPEND res_deps_dirs "${_dir}")
   endforeach()
-
-  get_filename_component(CMAKE_ABS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX} ABSOLUTE)
-  list(APPEND res_deps_dirs "${CMAKE_ABS_INSTALL_PREFIX}/lib")  # add h5geo dir
   list(REMOVE_DUPLICATES res_deps_dirs)   # remove repeating dirs
 
   # `PYTHON_INIT_PATH_VAR` is used to configure `INIT_PY_IN` file
