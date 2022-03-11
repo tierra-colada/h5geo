@@ -7,7 +7,7 @@ set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/Eigen3-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
-set(Eigen3_ROOT PATH ${EP_SOURCE_DIR})
+set(Eigen3_ROOT PATH ${EP_INSTALL_DIR})
 find_package(Eigen3)
 
 set(DEPENDENCIES "")
