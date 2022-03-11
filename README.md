@@ -65,9 +65,9 @@ Then you can find **h5geopy** in `site-packages` of your python env.
 ## Build & Install using `pip`
 It is possible to build and install the library using the following command:
 ```
-pip install git+https://github.com/tierra-colada/h5geo.git --verbose
+pip install git+https://github.com/tierra-colada/h5geo.git@v0.1.0 --verbose
 ```
-This will automatically run **CMake Superbuild** to build build **h5geo** and its dependencies (without GDAL support) in the `site-pakages/h5geopy` dir. 
+This will automatically run **CMake Superbuild** to build build **h5geo v0.1.0** and its dependencies (without GDAL support) in the `site-pakages/h5geopy` dir. 
 
 On modern PC this usually takes a couple of minutes.
 
