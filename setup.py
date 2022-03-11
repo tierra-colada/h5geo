@@ -46,7 +46,7 @@ class build_ext(build_ext_orig):
       '-DH5GEO_USE_THREADS=ON',
       '-DH5GEO_BUILD_SHARED_LIBS=ON',
       '-DH5GEO_USE_GDAL=OFF',
-      '-DH5GEO_BUILD_TESTS=ON',
+      '-DH5GEO_BUILD_TESTS=OFF',
       '-DCOPY_H5GEOPY_RUNTIME_DEPS=OFF'
     ]
 
