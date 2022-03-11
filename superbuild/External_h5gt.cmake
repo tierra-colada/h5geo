@@ -7,11 +7,11 @@ set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/h5gt-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
-set(h5gt_ROOT PATH ${EP_INSTALL_DIR})
+set(h5gt_ROOT ${EP_INSTALL_DIR})
 find_package(h5gt)
 
 set(DEPENDENCIES Eigen3 ZLIB HDF5)
-
+message("h5gt HDF5_RUNTIME_DIR: ${HDF5_RUNTIME_DIR}")
 ExternalProject_Add(h5gt
   GIT_REPOSITORY "https://github.com/TierraColada/h5gt.git"
   GIT_TAG "main"

@@ -7,11 +7,11 @@ set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/hdf5-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
-set(HDF5_ROOT PATH ${EP_INSTALL_DIR})
+set(HDF5_ROOT ${EP_INSTALL_DIR})
 if(WIN32)
-  set(HDF5_RUNTIME_DIR PATH "${HDF5_ROOT}/bin")
+  set(HDF5_RUNTIME_DIR "${HDF5_ROOT}/bin")
 else()
-  set(HDF5_RUNTIME_DIR PATH "${HDF5_ROOT}/lib")
+  set(HDF5_RUNTIME_DIR "${HDF5_ROOT}/lib")
 endif()
 find_package(HDF5)
 

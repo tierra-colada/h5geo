@@ -7,7 +7,7 @@ set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/mio-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
-set(mio_ROOT PATH ${EP_INSTALL_DIR})
+set(mio_ROOT ${EP_INSTALL_DIR})
 find_package(mio)
 
 set(DEPENDENCIES "")

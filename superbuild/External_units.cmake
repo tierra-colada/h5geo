@@ -7,12 +7,12 @@ set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/units-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
-set(units_ROOT PATH ${EP_INSTALL_DIR})
-set(units_DIR PATH ${units_ROOT}/lib/cmake/units)
+set(units_ROOT ${EP_INSTALL_DIR})
+set(units_DIR ${units_ROOT}/lib/cmake/units)
 if(WIN32)
-  set(UNITS_RUNTIME_DIR PATH "${units_ROOT}/bin")
+  set(UNITS_RUNTIME_DIR "${units_ROOT}/bin")
 else()
-  set(UNITS_RUNTIME_DIR PATH "${units_ROOT}/lib")
+  set(UNITS_RUNTIME_DIR "${units_ROOT}/lib")
 endif()
 find_package(units)
 

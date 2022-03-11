@@ -1,6 +1,6 @@
 message("external project: h5geo")
 
-set(h5geo_DIR PATH "${CMAKE_INSTALL_PREFIX}/cmake/h5geo")
+set(h5geo_DIR "${CMAKE_INSTALL_PREFIX}/cmake/h5geo")
 
 set(DEPENDENCIES Eigen3 mio ZLIB HDF5 h5gt magic_enum units)
 

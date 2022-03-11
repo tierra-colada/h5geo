@@ -7,7 +7,7 @@ set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/magic_enum-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
-set(magic_enum_ROOT PATH ${EP_INSTALL_DIR})
+set(magic_enum_ROOT ${EP_INSTALL_DIR})
 find_package(magic_enum)
 
 set(DEPENDENCIES "")

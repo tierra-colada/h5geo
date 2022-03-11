@@ -7,11 +7,11 @@ set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/zlib-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
-set(ZLIB_ROOT PATH ${EP_INSTALL_DIR})
+set(ZLIB_ROOT ${EP_INSTALL_DIR})
 if(WIN32)
-  set(ZLIB_RUNTIME_DIR PATH "${ZLIB_ROOT}/bin")
+  set(ZLIB_RUNTIME_DIR "${ZLIB_ROOT}/bin")
 else()
-  set(ZLIB_RUNTIME_DIR PATH "${ZLIB_ROOT}/lib")
+  set(ZLIB_RUNTIME_DIR "${ZLIB_ROOT}/lib")
 endif()
 find_package(ZLIB)
 

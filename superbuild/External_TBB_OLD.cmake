@@ -7,8 +7,8 @@ set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/TBB-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
-set(TBB_ROOT PATH ${EP_INSTALL_DIR})
-set(TBB_DIR PATH "${EP_INSTALL_DIR}/lib/cmake/TBB")
+set(TBB_ROOT ${EP_INSTALL_DIR})
+set(TBB_DIR "${EP_INSTALL_DIR}/lib/cmake/TBB")
 find_package(TBB)
 
 set(DEPENDENCIES "")
