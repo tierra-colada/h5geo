@@ -48,6 +48,7 @@ bool H5SeisImpl::readSEGYTraces(
   if (nSamp < 1)
     return false;
 
+  size_t nTrcOverall = 0;
   std::vector<size_t> nTrcVec;
   for (size_t i = 0; i < segyFiles.size(); i++){
     if (h5geo::getSEGYNSamp(segyFiles[i]) != nSamp)
@@ -57,14 +58,9 @@ bool H5SeisImpl::readSEGYTraces(
     if (nTrc < 1)
       return false;
 
+    nTrcOverall += nTrc;
     nTrcVec.push_back(nTrc);
   }
-
-  if (!readSEGYTextHeader(segyFiles[0]))
-    return false;
-
-  if (!readSEGYBinHeader(segyFiles[0]))
-    return false;
 
   size_t fromTrc = 0;
   for (size_t i = 0; i < segyFiles.size(); i++){

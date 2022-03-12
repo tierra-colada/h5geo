@@ -14,7 +14,7 @@ set(DEPENDENCIES Eigen3 ZLIB HDF5)
 message("h5gt HDF5_RUNTIME_DIR: ${HDF5_RUNTIME_DIR}")
 ExternalProject_Add(h5gt
   GIT_REPOSITORY "https://github.com/TierraColada/h5gt.git"
-  GIT_TAG "main"
+  GIT_TAG "v0.1.0"
   SOURCE_DIR ${EP_SOURCE_DIR}
   BINARY_DIR ${EP_BINARY_DIR}
   INSTALL_DIR ${EP_INSTALL_DIR}

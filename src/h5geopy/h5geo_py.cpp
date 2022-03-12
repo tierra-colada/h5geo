@@ -12,6 +12,7 @@
 #include "../../include/h5geopy/h5logcurve_py.h"
 #include "../../include/h5geopy/h5points_py.h"
 #include "../../include/h5geopy/h5seis_py.h"
+#include "../../include/h5geopy/h5segy_py.h"
 #include "../../include/h5geopy/h5seiscontainer_py.h"
 #include "../../include/h5geopy/h5sort_py.h"
 #include "../../include/h5geopy/h5map_py.h"
@@ -268,6 +269,7 @@ PYBIND11_MODULE(_h5geo, m) {
   defineDeviationFunctions(m);
   defineEasyHullFunctions(m);
   defineSortFunctions(m);
+  defineSEGYFunctions(m);
   defineInterpolationFunctions(m);
 
 #ifdef H5GEO_USE_GDAL

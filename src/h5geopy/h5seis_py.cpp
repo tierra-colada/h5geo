@@ -64,7 +64,15 @@ void H5Seis_py(
     std::unique_ptr<H5Seis, ObjectDeleter>>
     &py_obj){
   py_obj
-      //  WRITERS
+      // WRITERS
+      .def("readSEGYTextHeader", &H5Seis::readSEGYTextHeader,
+           py::arg("segy"))
+      .def("readSEGYBinHeader", &H5Seis::readSEGYBinHeader,
+           py::arg("segy"))
+      .def("readSEGYTraces", &H5Seis::readSEGYTraces,
+           py::arg("segyFiles"),
+           py::arg_v("trcBuffer", 10000, "10000"))
+
       .def("writeTextHeader", py::overload_cast<
            const std::vector<std::string>&>(
              &H5Seis::writeTextHeader),
