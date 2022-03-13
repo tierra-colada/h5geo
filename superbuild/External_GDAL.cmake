@@ -2,37 +2,55 @@ message("external project: GDAL")
 
 # SET DIRS
 set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/GDAL")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/GDAL-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/GDAL-install")
+list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
-if(WIN32)
-  set(GDAL_URL "https://download.lfd.uci.edu/pythonlibs/x6hvwk7i/GDAL-3.4.1-cp39-cp39-win_amd64.whl")  # https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal
-elseif(UNIX)
-  set(GDAL_URL "https://master.dl.sourceforge.net/project/gdal-wheels-for-linux/GDAL-3.4.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.whl?viasf=1")  # https://sourceforge.net/projects/gdal-wheels-for-linux/files/
+#-----------------------------------------------------------------------------
+set(GDAL_ROOT ${EP_INSTALL_DIR})
+set(GDAL_DIR "${GDAL_ROOT}/lib/cmake/gdal")
+find_package(GDAL)
+
+set(DEPENDENCIES ZLIB HDF5 SQLite3 PROJ GEOS)
+
+if(NOT DEFINED GDAL_FOUND OR NOT GDAL_FOUND)
+  ExternalProject_Add(GDAL
+    GIT_REPOSITORY "https://github.com/OSGeo/gdal.git"
+    GIT_TAG "68ceec0be4541da11cf9860141fb6aeae22f95e4"
+    SOURCE_DIR ${EP_SOURCE_DIR}
+    BINARY_DIR ${EP_BINARY_DIR}
+    INSTALL_DIR ${EP_INSTALL_DIR}
+    CMAKE_CACHE_ARGS
+      # CMake settings
+      -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}
+      -DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
+      -DCMAKE_CXX_STANDARD:STRING=${CMAKE_CXX_STANDARD}
+      -DCMAKE_CXX_STANDARD_REQUIRED:BOOL=${CMAKE_CXX_STANDARD_REQUIRED}
+      -DCMAKE_CXX_EXTENSIONS:BOOL=${CMAKE_CXX_EXTENSIONS}
+      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+      # Lib settings
+      -DBUILD_TESTING:BOOL=OFF 
+      -DZLIB_ROOT:PATH=${ZLIB_ROOT}
+      -DPROJ_DIR:PATH=${PROJ_DIR}
+      -DGEOS_DIR:PATH=${GEOS_DIR}
+      -DHDF5_ROOT:PATH=${HDF5_ROOT}
+      -DSQLite3_INCLUDE_DIR:PATH=${SQLite3_INCLUDE_DIRS}
+      -DSQLite3_LIBRARY:PATH=${SQLite3_LIBRARIES}
+      -DSQLite3_HAS_RTREE:BOOL=ON 
+      -DSQLite3_HAS_COLUMN_METADATA:BOOL=ON 
+      -DPython_EXECUTABLE:PATH=${Python_EXECUTABLE}
+    DEPENDS ${DEPENDENCIES}
+    )
 else()
-  message(FATAL_ERROR "Unsupported platform (in the future MACOS support will be added)")
-endif()
-
-set(DEPENDENCIES "")
-
-ExternalProject_Add(GDAL
-  DOWNLOAD_COMMAND ""
-  DOWNLOAD_DIR ${EP_SOURCE_DIR}
-  CONFIGURE_COMMAND ""
-  BUILD_COMMAND ""
-  INSTALL_COMMAND ${Python_EXECUTABLE} -m pip install ${GDAL_URL}
-  DEPENDS ${DEPENDENCIES}
-)
-
-set(GDAL_ROOT "${Python_SITELIB}/osgeo")
-set(GDAL_DIR "${Python_SITELIB}/osgeo")
-set(GDAL_INCLUDE_DIR "${Python_SITELIB}/osgeo/include") # needed by FindGDAL
-if(WIN32)
-  set(GDAL_RUNTIME_DIR "${GDAL_ROOT}")
-  set(GDAL_LIBRARY "${Python_SITELIB}/osgeo/lib/gdal_i.lib")
-else()
-  set(GDAL_RUNTIME_DIR "${GDAL_ROOT}/lib;${GDAL_ROOT}/GDAL.libs")
-  set(GDAL_LIBRARY "${Python_SITELIB}/osgeo/lib/libgdal.so")
-  set(GDAL_LIBS_DIR "${Python_SITELIB}/GDAL.libs")
-  file(GLOB GDAL_LIBS
-    "${GDAL_LIBS_DIR}/lib*"
-  )
+  # Add empty project that exports target GDAL
+  ExternalProject_Add(GDAL
+    SOURCE_DIR ${EP_SOURCE_DIR}
+    BINARY_DIR ${EP_BINARY_DIR}
+    INSTALL_DIR ${EP_INSTALL_DIR}
+    DOWNLOAD_COMMAND ""
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ""
+    DEPENDS ${DEPENDENCIES}
+    )
 endif()
