@@ -25,7 +25,7 @@ set(DEPENDENCIES "")
 if(NOT DEFINED SQLite3_FOUND OR NOT SQLite3_FOUND)
   ExternalProject_Add(SQLite3
     GIT_REPOSITORY "https://github.com/tierra-colada/sqlite-amalgamation.git"
-    GIT_TAG "54a352c6bfad22909c3e7d0c913118b2a9fe13d5"
+    GIT_TAG "3fad63ffdead0a53750e388d5681f22ac65c55eb"
     SOURCE_DIR ${EP_SOURCE_DIR}
     BINARY_DIR ${EP_BINARY_DIR}
     INSTALL_DIR ${EP_INSTALL_DIR}
