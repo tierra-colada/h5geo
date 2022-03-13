@@ -8,12 +8,16 @@ list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
 set(PROJ_ROOT ${EP_INSTALL_DIR})
+set(PROJ_DIR "${PROJ_ROOT}/lib/cmake/proj")
+find_package(PROJ CONFIG)
+
 if(WIN32)
-  set(PROJ_RUNTIME_DIR "${PROJ_ROOT}/bin")
+  list(APPEND GDAL_RUNTIME_DIR "${PROJ_ROOT}/bin")
+  list(APPEND GDAL_LIBS "${PROJ_LIBRARY_DIRS}/proj.lib")
 else()
-  set(PROJ_RUNTIME_DIR "${PROJ_ROOT}/lib")
+  list(APPEND GDAL_RUNTIME_DIR "${PROJ_ROOT}/lib")
+  list(APPEND GDAL_LIBS "${PROJ_LIBRARY_DIRS}/libproj.so")
 endif()
-find_package(PROJ)
 
 set(DEPENDENCIES SQLite3)
 

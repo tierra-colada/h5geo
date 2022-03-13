@@ -11,7 +11,7 @@ set(h5gt_ROOT ${EP_INSTALL_DIR})
 find_package(h5gt)
 
 set(DEPENDENCIES Eigen3 ZLIB HDF5)
-message("h5gt HDF5_RUNTIME_DIR: ${HDF5_RUNTIME_DIR}")
+
 ExternalProject_Add(h5gt
   GIT_REPOSITORY "https://github.com/TierraColada/h5gt.git"
   GIT_TAG "main"
@@ -41,5 +41,7 @@ ExternalProject_Add(h5gt
     -DEigen3_ROOT:PATH=${Eigen3_ROOT}
     -DZLIB_ROOT:PATH=${ZLIB_ROOT}
     -DHDF5_ROOT:PATH=${HDF5_ROOT}
+    # h5gt and h5geo use pybind11 (PYTHON_EXECUTABLE)
+    -DPYTHON_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
   DEPENDS ${DEPENDENCIES}
   )
