@@ -26,7 +26,7 @@ endif()
 
 if(H5GEO_USE_GDAL)
   if(H5GEO_BUILD_h5geopy)
-    include("External_sqlite.cmake")
+    include("External_SQLite3.cmake")
     include("External_PROJ.cmake")
     include("External_GEOS.cmake")
     include("External_GDAL.cmake")
