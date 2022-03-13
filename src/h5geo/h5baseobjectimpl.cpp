@@ -9,8 +9,8 @@
 #include "../../include/h5geo/misc/h5enum_string.h"
 
 #ifdef H5GEO_USE_GDAL
-#include <gdal/gdal.h>
-#include <gdal/gdal_priv.h>
+#include <gdal.h>
+#include <gdal_priv.h>
 #include "../../include/h5geo/impl/h5sr_settings.h"
 #endif
 

@@ -13,8 +13,8 @@
 #include <Eigen/Dense>
 
 #ifdef H5GEO_USE_GDAL
-#include <gdal/gdal.h>
-#include <gdal/gdal_priv.h>
+#include <gdal.h>
+#include <gdal_priv.h>
 #endif
 
 #include <pybind11/pybind11.h>
@@ -26,8 +26,8 @@
 #include <pybind11/cast.h>
 
 #ifdef H5GEO_USE_GDAL
-#include <gdal/gdal.h>
-#include <gdal/gdal_priv.h>
+#include <gdal.h>
+#include <gdal_priv.h>
 #endif
 
 // DON'T WRITE 'using namespace h5gt' AS h5gt AND h5geo ARE INCOPATIBLE

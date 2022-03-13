@@ -8,8 +8,8 @@
 #include <units/units.hpp>
 
 #ifdef H5GEO_USE_GDAL
-#include <gdal/gdal.h>
-#include <gdal/gdal_priv.h>
+#include <gdal.h>
+#include <gdal_priv.h>
 #endif
 
 H5WellImpl::H5WellImpl(const h5gt::Group &group) :

@@ -5,8 +5,8 @@
 #include <units/units.hpp>
 #include <magic_enum.hpp>
 
-#include <gdal/gdal.h>
-#include <gdal/gdal_priv.h>
+#include <gdal.h>
+#include <gdal_priv.h>
 
 #include <iostream>
 
