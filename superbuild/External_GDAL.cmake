@@ -12,9 +12,9 @@ set(GDAL_DIR "${GDAL_ROOT}/lib/cmake/gdal")
 find_package(GDAL)
 
 if(WIN32)
-  list(APPEND GDAL_RUNTIME_DIR "${GDAL_ROOT}/bin")
+  list(APPEND GDAL_RUNTIME_DIRS "${GDAL_ROOT}/bin")
 else()
-  list(APPEND GDAL_RUNTIME_DIR "${GDAL_ROOT}/lib")
+  list(APPEND GDAL_RUNTIME_DIRS "${GDAL_ROOT}/lib")
 endif()
 
 set(DEPENDENCIES ZLIB HDF5 SQLite3 PROJ GEOS)

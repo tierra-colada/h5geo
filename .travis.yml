@@ -13,7 +13,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR=""
+        - HDF5_RUNTIME_DIRS=""
         - COPY_H5GEOPY_RUNTIME_DEPS=False
         - CMAKE_GENERATOR="Ninja"
         - TESTS_TARGET="test"
@@ -34,7 +34,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR=""
+        - HDF5_RUNTIME_DIRS=""
         - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Ninja"
         - TESTS_TARGET="test"
@@ -55,7 +55,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR=""
+        - HDF5_RUNTIME_DIRS=""
         - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Ninja"
         - TESTS_TARGET="test"
@@ -73,7 +73,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
+        - HDF5_RUNTIME_DIRS="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
         - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
         - TESTS_TARGET="RUN_TESTS"
@@ -86,7 +86,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
+        - HDF5_RUNTIME_DIRS="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
         - COPY_H5GEOPY_RUNTIME_DEPS=False
         - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
         - TESTS_TARGET="RUN_TESTS"
@@ -101,7 +101,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
-        - HDF5_RUNTIME_DIR=""
+        - HDF5_RUNTIME_DIRS=""
         - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Ninja"
         - TESTS_TARGET="test"
@@ -193,7 +193,7 @@ before_script:
         -DH5GT_UNIT_TESTS:BOOL=OFF
         -DH5GT_EXAMPLES:BOOL=OFF
         -DH5GT_BUILD_h5gtpy:BOOL=ON
-        -DHDF5_RUNTIME_DIR:PATH=${HDF5_RUNTIME_DIR};
+        -DHDF5_RUNTIME_DIR:PATH=${HDF5_RUNTIME_DIRS};
       cmake --build . --config Release;
       cmake --install . --config Release --prefix ${CMAKE_INSTALL_PREFIX};
     fi
@@ -213,7 +213,7 @@ script:
     -DH5GEO_USE_THREADS:BOOL=${H5GEO_USE_THREADS}
     -DH5GEO_BUILD_SHARED_LIBS:BOOL=${H5GEO_BUILD_SHARED_LIBS}
     -DH5GEO_BUILD_h5geopy:BOOL=${H5GEO_BUILD_h5geopy}
-    -DHDF5_RUNTIME_DIR:PATH=${HDF5_RUNTIME_DIR}
+    -DHDF5_RUNTIME_DIR:PATH=${HDF5_RUNTIME_DIRS}
     -DCOPY_H5GEOPY_RUNTIME_DEPS:BOOL=${COPY_H5GEOPY_RUNTIME_DEPS}
     -DH5GEO_BUILD_TESTS:BOOL=${H5GEO_BUILD_TESTS}
     -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}

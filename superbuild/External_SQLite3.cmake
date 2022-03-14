@@ -11,17 +11,20 @@ set(SQLite3_ROOT ${EP_INSTALL_DIR})
 find_package(SQLite3)
 
 if(WIN32)
-  list(APPEND GDAL_RUNTIME_DIR "${SQLite3_ROOT}/bin")
   set(SQLite3_EXE "${SQLite3_ROOT}/bin/sqlite3.exe")
+  set(SQLite3_LIBRARIES "${SQLite3_ROOT}/lib/sqlite3.lib")
+  list(APPEND GDAL_RUNTIME_DIRS "${SQLite3_ROOT}/bin")
 else()
-  list(APPEND GDAL_RUNTIME_DIR "${SQLite3_ROOT}/lib")
   set(SQLite3_EXE "${SQLite3_ROOT}/bin/sqlite3")
+  set(SQLite3_LIBRARIES "${SQLite3_ROOT}/lib/libsqlite3.so")
+  list(APPEND GDAL_RUNTIME_DIRS "${SQLite3_ROOT}/lib")
 endif()
+set(SQLite3_INCLUDE_DIRS "${SQLite3_ROOT}/include")
 list(APPEND GDAL_LIBS ${SQLite3_LIBRARIES})
 
 set(DEPENDENCIES "")
 
-# if(NOT DEFINED SQLite3_FOUND OR NOT SQLite3_FOUND)
+if(NOT DEFINED SQLite3_FOUND OR NOT SQLite3_FOUND)
   ExternalProject_Add(SQLite3
     GIT_REPOSITORY "https://github.com/tierra-colada/sqlite-amalgamation.git"
     GIT_TAG "3fad63ffdead0a53750e388d5681f22ac65c55eb"
@@ -51,16 +54,16 @@ set(DEPENDENCIES "")
       -DBUILD_RECOMMENDED_OPTS:BOOL=ON # if python build fails then set it to OFF
     DEPENDS ${DEPENDENCIES}
     )
-# else()
-#   # Add empty project that exports target SQLite3
-#   ExternalProject_Add(SQLite3
-#     SOURCE_DIR ${EP_SOURCE_DIR}
-#     BINARY_DIR ${EP_BINARY_DIR}
-#     INSTALL_DIR ${EP_INSTALL_DIR}
-#     DOWNLOAD_COMMAND ""
-#     CONFIGURE_COMMAND ""
-#     BUILD_COMMAND ""
-#     INSTALL_COMMAND ""
-#     DEPENDS ${DEPENDENCIES}
-#     )
-# endif()
+else()
+  # Add empty project that exports target SQLite3
+  ExternalProject_Add(SQLite3
+    SOURCE_DIR ${EP_SOURCE_DIR}
+    BINARY_DIR ${EP_BINARY_DIR}
+    INSTALL_DIR ${EP_INSTALL_DIR}
+    DOWNLOAD_COMMAND ""
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
+    INSTALL_COMMAND ""
+    DEPENDS ${DEPENDENCIES}
+    )
+endif()

@@ -2,12 +2,12 @@ project(h5geopy VERSION ${COMMON_PROJECT_VERSION} LANGUAGES C CXX)
 
 message("project: ${PROJECT_NAME} ${COMMON_PROJECT_VERSION}")
 
-set(HDF5_RUNTIME_DIR "" CACHE PATH "hdf5 runtime is a dependency of h5geopy")
-set(ZLIB_RUNTIME_DIR "" CACHE PATH "zlib runtime is an optional dependency of hdf5")
-set(UNITS_RUNTIME_DIR "" CACHE PATH "units runtime is a dependency of h5geopy")
-set(TBB_RUNTIME_DIR "" CACHE PATH "TBB runtime is an optional dependency of h5geopy")
-set(GDAL_RUNTIME_DIR "" CACHE PATH "GDAL runtime is an optional dependency of h5geopy")
-set(H5GEO_RUNTIME_DIR "" CACHE PATH "h5geo runtime is a dependency of h5geopy
+set(HDF5_RUNTIME_DIRS "" CACHE PATH "hdf5 runtime is a dependency of h5geopy")
+set(ZLIB_RUNTIME_DIRS "" CACHE PATH "zlib runtime is an optional dependency of hdf5")
+set(UNITS_RUNTIME_DIRS "" CACHE PATH "units runtime is a dependency of h5geopy")
+set(TBB_RUNTIME_DIRS "" CACHE PATH "TBB runtime is an optional dependency of h5geopy")
+set(GDAL_RUNTIME_DIRS "" CACHE PATH "GDAL runtime is an optional dependency of h5geopy")
+set(H5GEO_RUNTIME_DIRS "" CACHE PATH "h5geo runtime is a dependency of h5geopy
   (usually you don't need to set it)")
 option(COPY_H5GEOPY_RUNTIME_DEPS "Copy hdf5 and h5geo runtime to python site-packages
   (otherwise it will simply add to ENV PATH these dirs in `__init__.py`)" ON)

@@ -26,10 +26,10 @@ set(GDAL_ROOT "${Python_SITELIB}/osgeo")
 set(GDAL_DIR "${Python_SITELIB}/osgeo")
 set(GDAL_INCLUDE_DIR "${Python_SITELIB}/osgeo/include") # needed by FindGDAL
 if(WIN32)
-  set(GDAL_RUNTIME_DIR "${GDAL_ROOT}")
+  set(GDAL_RUNTIME_DIRS "${GDAL_ROOT}")
   set(GDAL_LIBRARY "${Python_SITELIB}/osgeo/lib/gdal_i.lib")
 else()
-  set(GDAL_RUNTIME_DIR "${GDAL_ROOT}/lib;${GDAL_ROOT}/GDAL.libs")
+  set(GDAL_RUNTIME_DIRS "${GDAL_ROOT}/lib;${GDAL_ROOT}/GDAL.libs")
   set(GDAL_LIBRARY "${Python_SITELIB}/osgeo/lib/libgdal.so")
   set(GDAL_LIBS_DIR "${Python_SITELIB}/GDAL.libs")
   file(GLOB GDAL_LIBS

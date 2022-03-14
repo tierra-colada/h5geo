@@ -12,12 +12,13 @@ set(GEOS_DIR "${GEOS_ROOT}/lib/cmake/GEOS")
 find_package(GEOS)
 
 if(WIN32)
-  list(APPEND GDAL_RUNTIME_DIR "${GEOS_ROOT}/bin")
-  set(GEOS_LIBRARIES "${GEOS_ROOT}/lib/geos_c.lib;${GEOS_ROOT}/lib/geos.lib")
+  set(GEOS_LIBRARIES "${GEOS_ROOT}/lib/geos_c.lib")
+  list(APPEND GDAL_RUNTIME_DIRS "${GEOS_ROOT}/bin")
 else()
-  list(APPEND GDAL_RUNTIME_DIR "${GEOS_ROOT}/lib")
-  set(GEOS_LIBRARIES "${GEOS_ROOT}/lib/libgeos_c.so;${GEOS_ROOT}/lib/libgeos.so")
+  set(GEOS_LIBRARIES "${GEOS_ROOT}/lib/libgeos_c.so")
+  list(APPEND GDAL_RUNTIME_DIRS "${GEOS_ROOT}/lib")
 endif()
+list(APPEND GDAL_LIBS ${GEOS_LIBRARIES})
 
 set(DEPENDENCIES "")
 
