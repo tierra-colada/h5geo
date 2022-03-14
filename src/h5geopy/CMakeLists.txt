@@ -50,7 +50,7 @@ if(NOT HDF5_USE_STATIC_LIBRARIES)
 
   if(H5GEO_USE_GDAL)
     target_link_libraries(_h5geo PRIVATE GDAL::GDAL)
-    target_link_libraries(_h5geo PRIVATE ${_GDAL_LIBS})  # must be linked or undef ref to GEOS
+    target_link_libraries(_h5geo PRIVATE ${GDAL_LIBS})  # must be linked or undef ref to GEOS
     target_include_directories(_h5geo PRIVATE ${GDAL_TOP_LEVEL_INCLUDE_DIR})
   endif()
 else()

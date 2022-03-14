@@ -107,8 +107,8 @@ if(H5GEO_USE_GDAL)
   endforeach()
 
   if(IS_DIRECTORY ${GDAL_LIBS_DIR})
-    file(GLOB _GDAL_LIBS "${GDAL_LIBS_DIR}/lib*")
-    target_link_libraries(GDAL::GDAL INTERFACE ${_GDAL_LIBS})
+    file(GLOB GDAL_LIBS "${GDAL_LIBS_DIR}/lib*")
+    target_link_libraries(GDAL::GDAL INTERFACE ${GDAL_LIBS})
   endif()
 
   target_link_libraries(h5geo PRIVATE GDAL::GDAL)

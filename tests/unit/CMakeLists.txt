@@ -43,7 +43,7 @@ endif()
 
 if(H5GEO_USE_GDAL)
   target_link_libraries(H5GeoTest PRIVATE GDAL::GDAL)
-  target_link_libraries(H5GeoTest PRIVATE ${_GDAL_LIBS})  # must be linked or undef ref to GEOS
+  target_link_libraries(H5GeoTest PRIVATE ${GDAL_LIBS})  # must be linked or undef ref to GEOS
   target_include_directories(H5GeoTest PRIVATE ${GDAL_TOP_LEVEL_INCLUDE_DIR})
 endif()
 
