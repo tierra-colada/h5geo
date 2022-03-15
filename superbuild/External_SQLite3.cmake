@@ -26,7 +26,7 @@ set(DEPENDENCIES "")
 
 ExternalProject_Add(SQLite3
   GIT_REPOSITORY "https://github.com/tierra-colada/sqlite-amalgamation.git"
-  GIT_TAG "3fad63ffdead0a53750e388d5681f22ac65c55eb"
+  GIT_TAG "86fdaf7ab15d31e02f92befc1b3f9b22c1028e3a"
   SOURCE_DIR ${EP_SOURCE_DIR}
   BINARY_DIR ${EP_BINARY_DIR}
   INSTALL_DIR ${EP_INSTALL_DIR}
