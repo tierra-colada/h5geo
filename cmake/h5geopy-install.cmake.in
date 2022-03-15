@@ -50,14 +50,17 @@ file(GET_RUNTIME_DEPENDENCIES
   CONFLICTING_DEPENDENCIES_PREFIX confl_deps
   DIRECTORIES ${runtime_dirs}
   PRE_INCLUDE_REGEXES 
-    "^.*([Hh][Dd][Ff][5]).*$"
-    "^.*([Zz][Ll][Ii][Bb]).*$"
-    "^.*([Hh][5][Gg][Ee][Oo]).*$"
-    "^.*([Uu][Nn][Ii][Tt][Ss]).*$"
-    "^.*([Tt][Bb][Bb]).*$"
-    "^.*([Gg][Dd][Aa][Ll]).*$"
-    "^.*([Pp][Rr][Oo][Jj]).*$"
-    "^.*([Gg][Ee][Oo][Ss]).*$"
+    "^.*([Hh][Dd][Ff][5])*.*$"
+    "^.*([Zz][Ll][Ii][Bb])*.*$"
+    "^.*([Hh][5][Gg][Ee][Oo])*.*$"
+    "^.*([Uu][Nn][Ii][Tt][Ss])*.*$"
+    "^.*([Tt][Bb][Bb])*.*$"
+    "^.*([Gg][Dd][Aa][Ll])*.*$"
+    "^.*([Pp][Rr][Oo][Jj])*.*$"
+    "^.*([Gg][Ee][Oo][Ss])*.*$"
+    "^.*([Ss][Qq][Ll][Ii][Tt][Ee])*.*$"
+    "^.*([Tt][Ii][Ff][Ff])*.*$"
+    "^.*([Ss][Pp][Aa][Tt][Ii][Aa][Ll][Ii][Tt][Ee])*.*$"
   PRE_EXCLUDE_REGEXES "[^\n]+"
 )
 
