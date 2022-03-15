@@ -16,9 +16,9 @@ typedef struct Point{
   void setY(const double& y) { p[1] = y; }
   void setZ(const double& z) { p[2] = z; }
 
-  double& x() { return p[0]; }
-  double& y() { return p[1]; }
-  double& z() { return p[2]; }
+  double& getX() { return p[0]; }
+  double& getY() { return p[1]; }
+  double& getZ() { return p[2]; }
 
   void setName(const std::string& s){
     size_t nChar2copy = std::min(s.size(), size_t(H5GEO_CHAR_ARRAY_SIZE - 1));

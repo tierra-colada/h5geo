@@ -10,9 +10,9 @@ void Point_py(
       .def("setY", &Point::setY)
       .def("setZ", &Point::setZ)
 
-      .def("x", &Point::x)
-      .def("y", &Point::y)
-      .def("z", &Point::z)
+      .def("getX", &Point::getX)
+      .def("getY", &Point::getY)
+      .def("getZ", &Point::getZ)
 
       .def("setName", &Point::setName)
       .def("getName", &Point::getName);

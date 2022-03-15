@@ -638,14 +638,14 @@ TEST_F(H5WellFixture, createPointsFromWellTop){
   ASSERT_TRUE(h5geo::isPoints(points->getObjG()));
 
   ASSERT_TRUE(pArrIn[0].getName() == pArrOut[0].getName());
-  ASSERT_EQ(pArrIn[0].x(), pArrOut[0].x()*1000);
-  ASSERT_EQ(pArrIn[0].y(), pArrOut[0].y()*1000);
-  ASSERT_EQ(pArrIn[0].z(), pArrOut[0].z()*1000);
+  ASSERT_EQ(pArrIn[0].getX(), pArrOut[0].getX()*1000);
+  ASSERT_EQ(pArrIn[0].getY(), pArrOut[0].getY()*1000);
+  ASSERT_EQ(pArrIn[0].getZ(), pArrOut[0].getZ()*1000);
 
   ASSERT_TRUE(pArrIn[1].getName() == pArrOut[1].getName());
-  ASSERT_EQ(pArrIn[1].x(), pArrOut[1].x()*1000);
-  ASSERT_EQ(pArrIn[1].y(), pArrOut[1].y()*1000);
-  ASSERT_EQ(pArrIn[1].z(), pArrOut[1].z()*1000);
+  ASSERT_EQ(pArrIn[1].getX(), pArrOut[1].getX()*1000);
+  ASSERT_EQ(pArrIn[1].getY(), pArrOut[1].getY()*1000);
+  ASSERT_EQ(pArrIn[1].getZ(), pArrOut[1].getZ()*1000);
 }
 
 TEST_F(H5WellFixture, getDevCurveGroupList){
