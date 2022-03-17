@@ -173,9 +173,9 @@ TEST_F(H5MapFixture, addAndGetAttribute){
   H5Map* map2 = mapContainer1->createMap(MAP_NAME2, p, h5geo::CreationType::CREATE_OR_OVERWRITE);
   ASSERT_TRUE(map2 != nullptr);
 
-  ASSERT_TRUE(map1->addAttribute(map2, "myAttr"));
-  ASSERT_TRUE(map1->getAttribute("myAttr") != nullptr);
-  ASSERT_TRUE(map1->removeAttribute("myAttr"));
+  ASSERT_TRUE(map1->addAttributeMap(map2, "myAttr"));
+  ASSERT_TRUE(map1->getAttributeMap("myAttr") != nullptr);
+  ASSERT_TRUE(map1->removeAttributeMap("myAttr"));
 }
 
 TEST_F(H5MapFixture, addAndGetExternalAttribute){
@@ -185,7 +185,7 @@ TEST_F(H5MapFixture, addAndGetExternalAttribute){
   H5Map* map2 = mapContainer2->createMap(MAP_NAME2, p, h5geo::CreationType::CREATE_OR_OVERWRITE);
   ASSERT_TRUE(map2 != nullptr);
 
-  ASSERT_TRUE(map1->addExternalAttribute(map2, "myAttr"));
-  ASSERT_TRUE(map1->getAttribute("myAttr") != nullptr);
-  ASSERT_TRUE(map1->removeAttribute("myAttr"));
+  ASSERT_TRUE(map1->addExternalAttributeMap(map2, "myAttr"));
+  ASSERT_TRUE(map1->getAttributeMap("myAttr") != nullptr);
+  ASSERT_TRUE(map1->removeAttributeMap("myAttr"));
 }

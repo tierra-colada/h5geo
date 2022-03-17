@@ -31,10 +31,10 @@ public:
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
 
-  virtual bool addAttribute(H5Map* map, std::string name = "") override;
-  virtual bool addExternalAttribute(H5Map* map, std::string name = "") override;
-  virtual bool removeAttribute(const std::string& name) override;
-  virtual H5Map* getAttribute(const std::string& name) override;
+  virtual bool addAttributeMap(H5Map* map, std::string name = "") override;
+  virtual bool addExternalAttributeMap(H5Map* map, std::string name = "") override;
+  virtual bool removeAttributeMap(const std::string& name) override;
+  virtual H5Map* getAttributeMap(const std::string& name) override;
 
   virtual h5geo::Domain getDomain() override;
   virtual Eigen::VectorXd getOrigin(

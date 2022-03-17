@@ -31,15 +31,15 @@ void H5Map_py(
            py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
 
-      .def("addAttribute", &H5Map::addAttribute,
+      .def("addAttributeMap", &H5Map::addAttributeMap,
            py::arg("map"),
            py::arg_v("name", "", "str()"))
-      .def("addExternalAttribute", &H5Map::addExternalAttribute,
+      .def("addExternalAttributeMap", &H5Map::addExternalAttributeMap,
            py::arg("map"),
            py::arg_v("name", "", "str()"))
-      .def("removeAttribute", &H5Map::removeAttribute,
+      .def("removeAttributeMap", &H5Map::removeAttributeMap,
            py::arg("name"))
-      .def("getAttribute", &H5Map::getAttribute,
+      .def("getAttributeMap", &H5Map::getAttributeMap,
            py::arg("name"))
 
       .def("getDomain", &H5Map::getDomain)

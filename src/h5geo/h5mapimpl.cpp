@@ -124,7 +124,7 @@ bool H5MapImpl::setPoint2(
         v, lengthUnits, getLengthUnits());
 }
 
-bool H5MapImpl::addAttribute(H5Map* map, std::string name){
+bool H5MapImpl::addAttributeMap(H5Map* map, std::string name){
   if (this->getH5File() != map->getH5File())
     return false;
 
@@ -138,7 +138,7 @@ bool H5MapImpl::addAttribute(H5Map* map, std::string name){
   return true;
 }
 
-bool H5MapImpl::addExternalAttribute(H5Map* map, std::string name){
+bool H5MapImpl::addExternalAttributeMap(H5Map* map, std::string name){
   if (this->getH5File() == map->getH5File())
     return false;
 
@@ -152,7 +152,7 @@ bool H5MapImpl::addExternalAttribute(H5Map* map, std::string name){
   return true;
 }
 
-bool H5MapImpl::removeAttribute(const std::string& name){
+bool H5MapImpl::removeAttributeMap(const std::string& name){
   if (name.empty())
     return false;
 
@@ -163,7 +163,7 @@ bool H5MapImpl::removeAttribute(const std::string& name){
   return true;
 }
 
-H5Map* H5MapImpl::getAttribute(const std::string& name){
+H5Map* H5MapImpl::getAttributeMap(const std::string& name){
   if (!objG.hasObject(name, h5gt::ObjectType::Group))
     return nullptr;
 

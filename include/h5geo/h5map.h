@@ -33,10 +33,10 @@ public:
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
 
-  virtual bool addAttribute(H5Map* map, std::string name = "") = 0;
-  virtual bool addExternalAttribute(H5Map* map, std::string name = "") = 0;
-  virtual bool removeAttribute(const std::string& name) = 0;
-  virtual H5Map* getAttribute(const std::string& name) = 0;
+  virtual bool addAttributeMap(H5Map* map, std::string name = "") = 0;
+  virtual bool addExternalAttributeMap(H5Map* map, std::string name = "") = 0;
+  virtual bool removeAttributeMap(const std::string& name) = 0;
+  virtual H5Map* getAttributeMap(const std::string& name) = 0;
 
   virtual h5geo::Domain getDomain() = 0;
   virtual Eigen::VectorXd getOrigin(
