@@ -39,11 +39,11 @@ public:
   /// \param map
   /// \param 'name' name for an attribute map
   /// \return
-  virtual bool addAttributeMap(H5Map* map, std::string name = "") = 0;
+  virtual std::optional<h5gt::Group> addAttributeMap(H5Map* map, std::string name = "") = 0;
   /// 'internal' both map and attribute reside in the same hdf5 container
-  virtual bool addInternalAttributeMap(H5Map* map, std::string name = "") = 0;
+  virtual std::optional<h5gt::Group> addInternalAttributeMap(H5Map* map, std::string name = "") = 0;
   /// 'internal' map and attribute reside in different hdf5 containers
-  virtual bool addExternalAttributeMap(H5Map* map, std::string name = "") = 0;
+  virtual std::optional<h5gt::Group> addExternalAttributeMap(H5Map* map, std::string name = "") = 0;
   virtual bool removeAttributeMap(const std::string& name) = 0;
   virtual H5Map* getAttributeMap(const std::string& name) = 0;
 

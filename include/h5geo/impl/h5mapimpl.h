@@ -31,9 +31,9 @@ public:
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
 
-  virtual bool addAttributeMap(H5Map* map, std::string name = "") override;
-  virtual bool addInternalAttributeMap(H5Map* map, std::string name = "") override;
-  virtual bool addExternalAttributeMap(H5Map* map, std::string name = "") override;
+  virtual std::optional<h5gt::Group> addAttributeMap(H5Map* map, std::string name = "") override;
+  virtual std::optional<h5gt::Group> addInternalAttributeMap(H5Map* map, std::string name = "") override;
+  virtual std::optional<h5gt::Group> addExternalAttributeMap(H5Map* map, std::string name = "") override;
   virtual bool removeAttributeMap(const std::string& name) override;
   virtual H5Map* getAttributeMap(const std::string& name) override;
 

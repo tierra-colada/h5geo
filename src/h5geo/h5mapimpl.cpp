@@ -124,53 +124,51 @@ bool H5MapImpl::setPoint2(
         v, lengthUnits, getLengthUnits());
 }
 
-bool H5MapImpl::addAttributeMap(H5Map* map, std::string name){
+std::optional<h5gt::Group> H5MapImpl::addAttributeMap(H5Map* map, std::string name){
   if (this->getH5File() == map->getH5File())
     return addInternalAttributeMap(map, name);
   else
     return addExternalAttributeMap(map, name);
 }
 
-bool H5MapImpl::addInternalAttributeMap(H5Map* map, std::string name){
+std::optional<h5gt::Group> H5MapImpl::addInternalAttributeMap(H5Map* map, std::string name){
   if (!map)
-    return false;
+    return std::nullopt;
 
   if (this->getH5File() != map->getH5File())
-    return false;
+    return std::nullopt;
 
   if (this->getNX() != map->getNX() ||
       this->getNY() != map->getNY())
-    return false;
+    return std::nullopt;
 
   if (name.empty())
     name = map->getName();
 
   if (objG.hasObject(name, h5gt::ObjectType::Group))
-    return false;
+    return std::nullopt;
 
-  objG.createLink(map->getObjG(), name, h5gt::LinkType::Soft);
-  return true;
+  return objG.createLink(map->getObjG(), name, h5gt::LinkType::Soft);
 }
 
-bool H5MapImpl::addExternalAttributeMap(H5Map* map, std::string name){
+std::optional<h5gt::Group> H5MapImpl::addExternalAttributeMap(H5Map* map, std::string name){
   if (!map)
-    return false;
+    return std::nullopt;
 
   if (this->getH5File() == map->getH5File())
-    return false;
+    return std::nullopt;
 
   if (this->getNX() != map->getNX() ||
       this->getNY() != map->getNY())
-    return false;
+    return std::nullopt;
 
   if (name.empty())
     name = map->getName();
 
   if (objG.hasObject(name, h5gt::ObjectType::Group))
-    return false;
+    return std::nullopt;
 
-  objG.createLink(map->getObjG(), name, h5gt::LinkType::External);
-  return true;
+  return objG.createLink(map->getObjG(), name, h5gt::LinkType::External);
 }
 
 bool H5MapImpl::removeAttributeMap(const std::string& name){
