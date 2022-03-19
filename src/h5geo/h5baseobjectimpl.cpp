@@ -268,14 +268,20 @@ std::string H5BaseObjectImpl<TBase>::getFullName() const {
 
 template <typename TBase>
 std::vector<h5gt::Group>
-H5BaseObjectImpl<TBase>::getObjGroupList(const h5geo::ObjectType& objType){
-  return H5BaseImpl<TBase>::getChildGroupList(objG, objType);
+H5BaseObjectImpl<TBase>::getObjGroupList(const h5geo::ObjectType& objType, bool recursive){
+  return H5BaseImpl<TBase>::getChildGroupList(objG, objType, recursive);
 }
 
 template <typename TBase>
 std::vector<std::string>
-H5BaseObjectImpl<TBase>::getObjNameList(const h5geo::ObjectType& objType){
-  return H5BaseImpl<TBase>::getChildNameList(objG, objType);
+H5BaseObjectImpl<TBase>::getObjNameList(const h5geo::ObjectType& objType, bool recursive){
+  return H5BaseImpl<TBase>::getChildNameList(objG, objType, objG.getPath(), recursive);
+}
+
+template <typename TBase>
+size_t
+H5BaseObjectImpl<TBase>::getObjCount(const h5geo::ObjectType& objType, bool recursive){
+  return H5BaseImpl<TBase>::getChildCount(objG, objType, recursive);
 }
 
 template <typename TBase>

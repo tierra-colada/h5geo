@@ -193,6 +193,18 @@ H5Map* H5MapImpl::getAttributeMap(const std::string& name){
   return new H5MapImpl(group);
 }
 
+std::vector<h5gt::Group> H5MapImpl::getAttributeMapGroupList(){
+  return getChildGroupList(objG, h5geo::ObjectType::MAP, false);
+}
+
+std::vector<std::string> H5MapImpl::getAttributeMapNameList(){
+  return getChildNameList(objG, h5geo::ObjectType::MAP, objG.getPath());
+}
+
+size_t H5MapImpl::getAttributeMapCount(){
+  return getChildCount(objG, h5geo::ObjectType::MAP);
+}
+
 h5geo::Domain H5MapImpl::getDomain(){
   return static_cast<h5geo::Domain>(
         h5geo::readEnumAttribute(

@@ -49,8 +49,9 @@ public:
   virtual std::string getName() const override;
   virtual std::string getFullName() const override;
 
-  virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType) override;
-  virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType) override;
+  virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType, bool recursive) override;
+  virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType, bool recursive) override;
+  virtual size_t getObjCount(const h5geo::ObjectType& objType, bool recursive) override;
 
   virtual bool isEqual(H5BaseObject* other) const override;
 

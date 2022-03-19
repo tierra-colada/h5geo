@@ -50,6 +50,7 @@ struct H5BaseObject_py
 
         .def("getObjGroupList", &H5BaseObject::getObjGroupList)
         .def("getObjNameList", &H5BaseObject::getObjNameList)
+        .def("getObjCount", &H5BaseObject::getObjCount)
 
         .def("isEqual", &H5BaseObject::isEqual)
 

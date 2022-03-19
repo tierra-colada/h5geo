@@ -71,7 +71,9 @@ public:
   /// return all logCurve names in the form 'TYPE/NAME'
   virtual std::vector<std::string> getLogCurveNameList() = 0;
   /// return all objG child group names that are not logCurves
-  virtual std::vector<std::string> getLogTypeNameList() = 0;
+  virtual std::vector<std::string> getLogTypeList() = 0;
+  virtual size_t getDevCurveCount() = 0;
+  virtual size_t getLogCurveCount() = 0;
 
   virtual H5WellContainer* openWellContainer() = 0;
 

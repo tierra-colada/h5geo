@@ -305,45 +305,45 @@ std::string splitPathToParentAndObj(
     return std::string();
   }
 
-  std::string parentPath;
+  std::string referencePath;
   if (path[0] == '/')
-    parentPath = '/';
+    referencePath = '/';
 
   for (size_t i = 0; i < pathVec.size()-1; i++){
     if (i < pathVec.size()-2)
-      parentPath += pathVec[i] + '/';
+      referencePath += pathVec[i] + '/';
     else
-      parentPath += pathVec[i];
+      referencePath += pathVec[i];
   }
 
   objName = pathVec.back();
-  return parentPath;
+  return referencePath;
 }
 
 std::string getRelativePath(
-    const std::string& parentPath,
+    const std::string& referencePath,
     const std::string& objPath,
     const CaseSensitivity& caseSensitivity)
 {
-  if (parentPath.empty())
+  if (referencePath.empty())
     return objPath;
 
   if (objPath.empty())
     return std::string();
 
-  if (parentPath.size() >= objPath.size())
+  if (referencePath.size() >= objPath.size())
     return std::string();
 
-  bool val = compareStrings(objPath, parentPath, caseSensitivity);
+  bool val = compareStrings(objPath, referencePath, caseSensitivity);
 
   if (!val)
     return std::string();
 
-  if (objPath[parentPath.size()] == '/' &&
-      objPath.size() > parentPath.size()+1){
-    return objPath.substr(parentPath.size()+1, objPath.size()-parentPath.size()-1);
+  if (objPath[referencePath.size()] == '/' &&
+      objPath.size() > referencePath.size()+1){
+    return objPath.substr(referencePath.size()+1, objPath.size()-referencePath.size()-1);
   } else {
-    return objPath.substr(parentPath.size(), objPath.size()-parentPath.size());
+    return objPath.substr(referencePath.size(), objPath.size()-referencePath.size());
   }
 }
 

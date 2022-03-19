@@ -30,8 +30,9 @@ public:
 
   virtual h5gt::File getH5File() const override;
 
-  virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType) override;
-  virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType) override;
+  virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType, bool recursive) override;
+  virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType, bool recursive) override;
+  virtual size_t getObjCount(const h5geo::ObjectType& objType, bool recursive) override;
   virtual h5geo::ContainerType getContainerType() override;
 
   /// Does the same as operator '=='

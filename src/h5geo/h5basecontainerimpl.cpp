@@ -93,16 +93,23 @@ h5gt::File H5BaseContainerImpl<TBase>::getH5File() const{
 
 template <typename TBase>
 std::vector<h5gt::Group>
-H5BaseContainerImpl<TBase>::getObjGroupList(const h5geo::ObjectType& objType){
+H5BaseContainerImpl<TBase>::getObjGroupList(const h5geo::ObjectType& objType, bool recursive){
   h5gt::Group group = h5File.getGroup("/");
-  return H5BaseImpl<TBase>::getChildGroupList(group, objType);
+  return H5BaseImpl<TBase>::getChildGroupList(group, objType, recursive);
 }
 
 template <typename TBase>
 std::vector<std::string>
-H5BaseContainerImpl<TBase>::getObjNameList(const h5geo::ObjectType& objType){
+H5BaseContainerImpl<TBase>::getObjNameList(const h5geo::ObjectType& objType, bool recursive){
   h5gt::Group group = h5File.getGroup("/");
-  return H5BaseImpl<TBase>::getChildNameList(group, objType);
+  return H5BaseImpl<TBase>::getChildNameList(group, objType, "/", recursive);
+}
+
+template <typename TBase>
+size_t
+H5BaseContainerImpl<TBase>::getObjCount(const h5geo::ObjectType& objType, bool recursive){
+  h5gt::Group group = h5File.getGroup("/");
+  return H5BaseImpl<TBase>::getChildCount(group, objType, recursive);
 }
 
 template <typename TBase>

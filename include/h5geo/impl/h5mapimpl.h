@@ -36,6 +36,9 @@ public:
   virtual std::optional<h5gt::Group> addExternalAttributeMap(H5Map* map, std::string name = "") override;
   virtual bool removeAttributeMap(const std::string& name) override;
   virtual H5Map* getAttributeMap(const std::string& name) override;
+  virtual std::vector<h5gt::Group> getAttributeMapGroupList() override;
+  virtual std::vector<std::string> getAttributeMapNameList() override;
+  virtual size_t getAttributeMapCount() override;
 
   virtual h5geo::Domain getDomain() override;
   virtual Eigen::VectorXd getOrigin(

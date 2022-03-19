@@ -16,10 +16,18 @@ public:
 protected:
   virtual std::vector<h5gt::Group>
   getChildGroupList(h5gt::Group& group,
-               const h5geo::ObjectType& objType);
+                    const h5geo::ObjectType& objType,
+                    bool recursive = false);
+  /// referencePath to get relative path from it (set to empty to get full path)
   virtual std::vector<std::string>
   getChildNameList(h5gt::Group& group,
-               const h5geo::ObjectType& objType);
+                   const h5geo::ObjectType& objType,
+                   const std::string& referencePath,
+                   bool recursive = false);
+  virtual size_t
+  getChildCount(h5gt::Group& group,
+                const h5geo::ObjectType& objType,
+                bool recursive = false);
 
   static std::optional<h5gt::File> createContainer(
       std::string& fileName,

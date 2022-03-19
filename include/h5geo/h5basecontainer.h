@@ -24,8 +24,9 @@ public:
 
   virtual h5gt::File getH5File() const = 0;
 
-  virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType) = 0;
-  virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType) = 0;
+  virtual std::vector<h5gt::Group> getObjGroupList(const h5geo::ObjectType& objType, bool recursive) = 0;
+  virtual std::vector<std::string> getObjNameList(const h5geo::ObjectType& objType, bool recursive) = 0;
+  virtual size_t getObjCount(const h5geo::ObjectType& objType, bool recursive) = 0;
   virtual h5geo::ContainerType getContainerType() = 0;
 
   /// Does the same as operator '=='

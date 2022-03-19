@@ -61,7 +61,9 @@ public:
   virtual std::vector<h5gt::Group> getLogCurveGroupList() override;
   virtual std::vector<std::string> getDevCurveNameList() override;
   virtual std::vector<std::string> getLogCurveNameList() override;
-  virtual std::vector<std::string> getLogTypeNameList() override;
+  virtual std::vector<std::string> getLogTypeList() override;
+  virtual size_t getDevCurveCount() override;
+  virtual size_t getLogCurveCount() override;
 
   virtual H5WellContainer* openWellContainer() override;
 

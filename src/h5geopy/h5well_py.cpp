@@ -42,7 +42,9 @@ void H5Well_py(
       .def("getLogCurveGroupList", &H5Well::getLogCurveGroupList)
       .def("getDevCurveNameList", &H5Well::getDevCurveNameList)
       .def("getLogCurveNameList", &H5Well::getLogCurveNameList)
-      .def("getLogTypeNameList", &H5Well::getLogTypeNameList)
+      .def("getLogTypeList", &H5Well::getLogTypeList)
+      .def("getDevCurveCount", &H5Well::getDevCurveCount)
+      .def("getLogCurveCount", &H5Well::getLogCurveCount)
 
       .def("openWellContainer", &H5Well::openWellContainer)
 

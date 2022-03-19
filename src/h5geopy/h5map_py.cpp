@@ -44,6 +44,9 @@ void H5Map_py(
            py::arg("name"))
       .def("getAttributeMap", &H5Map::getAttributeMap,
            py::arg("name"))
+      .def("getAttributeMapGroupList", &H5Map::getAttributeMapGroupList)
+      .def("getAttributeMapNameList", &H5Map::getAttributeMapNameList)
+      .def("getAttributeMapCount", &H5Map::getAttributeMapCount)
 
       .def("getDomain", &H5Map::getDomain)
       .def("getOrigin", &H5Map::getOrigin,

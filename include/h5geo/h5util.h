@@ -129,7 +129,7 @@ H5GEO_EXPORT std::string splitPathToParentAndObj(
     std::string& objName);
 
 H5GEO_EXPORT std::string getRelativePath(
-    const std::string& parentPath,
+    const std::string& referencePath,
     const std::string& objPath,
     const CaseSensitivity& caseSensitivity = CaseSensitivity::CASE_INSENSITIVE);
 

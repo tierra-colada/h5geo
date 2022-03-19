@@ -60,19 +60,25 @@ template <typename TBase>
 std::vector<h5gt::Group>
 H5BaseImpl<TBase>::getChildGroupList(
     h5gt::Group& group,
-    const h5geo::ObjectType& objType)
+    const h5geo::ObjectType& objType,
+    bool recursive)
 {
   std::vector<h5gt::Group> childList;
   std::vector<std::string> nameList = group.listObjectNames();
+  std::string activeDevName = std::string{h5geo::detail::ACTIVE};
   for (const auto& name : nameList){
     if (group.getObjectType(name) != h5gt::ObjectType::Group)
       continue;
 
     h5gt::Group childG = group.getGroup(name);
-    if (h5geo::isGeoObjectByType(childG, objType)){
+    if (objType != h5geo::ObjectType::DEVCURVE && h5geo::isGeoObjectByType(childG, objType)){
       childList.push_back(childG);
-    } else {
-      std::vector<h5gt::Group> subChildList = getChildGroupList(childG, objType);
+    } else if (objType == h5geo::ObjectType::DEVCURVE && h5geo::isGeoObjectByType(childG, objType)){
+      if (name == activeDevName)
+        continue;
+      childList.push_back(childG);
+    } else if (recursive) {
+      std::vector<h5gt::Group> subChildList = getChildGroupList(childG, objType, recursive);
       childList.reserve(childList.size() + subChildList.size());
       childList.insert(
             childList.end(),
@@ -90,19 +96,30 @@ template <typename TBase>
 std::vector<std::string>
 H5BaseImpl<TBase>::getChildNameList(
     h5gt::Group& group,
-    const h5geo::ObjectType& objType)
+    const h5geo::ObjectType& objType,
+    const std::string& referencePath,
+    bool recursive)
 {
   std::vector<std::string> childList;
   std::vector<std::string> nameList = group.listObjectNames();
+  std::string activeDevName = std::string{h5geo::detail::ACTIVE};
   for (const auto& name : nameList){
     if (group.getObjectType(name) != h5gt::ObjectType::Group)
       continue;
 
     h5gt::Group childG = group.getGroup(name);
-    if (h5geo::isGeoObjectByType(childG, objType)){
-      childList.push_back(childG.getPath());
-    } else {
-      std::vector<std::string> subChildList = getChildNameList(childG, objType);
+    if (objType != h5geo::ObjectType::DEVCURVE && h5geo::isGeoObjectByType(childG, objType)){
+      childList.push_back(h5geo::getRelativePath(
+                            referencePath, childG.getPath(),
+                            h5geo::CaseSensitivity::CASE_INSENSITIVE));
+    } else if (objType == h5geo::ObjectType::DEVCURVE && h5geo::isGeoObjectByType(childG, objType)){
+      if (name == activeDevName)
+        continue;
+      childList.push_back(h5geo::getRelativePath(
+                            referencePath, childG.getPath(),
+                            h5geo::CaseSensitivity::CASE_INSENSITIVE));
+    } else if (recursive){
+      std::vector<std::string> subChildList = getChildNameList(childG, objType, referencePath, recursive);
       childList.reserve(childList.size() + subChildList.size());
       childList.insert(
             childList.end(),
@@ -114,6 +131,34 @@ H5BaseImpl<TBase>::getChildNameList(
     }
   }
   return childList;
+}
+
+template <typename TBase>
+size_t
+H5BaseImpl<TBase>::getChildCount(
+    h5gt::Group& group,
+    const h5geo::ObjectType& objType,
+    bool recursive)
+{
+  size_t n = 0;
+  std::vector<std::string> nameList = group.listObjectNames();
+  std::string activeDevName = std::string{h5geo::detail::ACTIVE};
+  for (const auto& name : nameList){
+    if (group.getObjectType(name) != h5gt::ObjectType::Group)
+      continue;
+
+    h5gt::Group childG = group.getGroup(name);
+    if (objType != h5geo::ObjectType::DEVCURVE && h5geo::isGeoObjectByType(childG, objType)){
+      n += 1;
+    } else if (objType == h5geo::ObjectType::DEVCURVE && h5geo::isGeoObjectByType(childG, objType)){
+      if (name == activeDevName)
+        continue;
+      n += 1;
+    } else if (recursive) {
+      n += getChildCount(childG, objType, recursive);
+    }
+  }
+  return n;
 }
 
 template <typename TBase>
