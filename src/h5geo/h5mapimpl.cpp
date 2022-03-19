@@ -125,7 +125,21 @@ bool H5MapImpl::setPoint2(
 }
 
 bool H5MapImpl::addAttributeMap(H5Map* map, std::string name){
+  if (this->getH5File() == map->getH5File())
+    return addInternalAttributeMap(map, name);
+  else
+    return addExternalAttributeMap(map, name);
+}
+
+bool H5MapImpl::addInternalAttributeMap(H5Map* map, std::string name){
+  if (!map)
+    return false;
+
   if (this->getH5File() != map->getH5File())
+    return false;
+
+  if (this->getNX() != map->getNX() ||
+      this->getNY() != map->getNY())
     return false;
 
   if (name.empty())
@@ -139,7 +153,14 @@ bool H5MapImpl::addAttributeMap(H5Map* map, std::string name){
 }
 
 bool H5MapImpl::addExternalAttributeMap(H5Map* map, std::string name){
+  if (!map)
+    return false;
+
   if (this->getH5File() == map->getH5File())
+    return false;
+
+  if (this->getNX() != map->getNX() ||
+      this->getNY() != map->getNY())
     return false;
 
   if (name.empty())
@@ -265,6 +286,31 @@ Eigen::VectorXd H5MapImpl::getPoint2(
         getLengthUnits(), lengthUnits);
 }
 
+size_t H5MapImpl::getNX()
+{
+  auto opt = this->getMapD();
+  if (!opt.has_value())
+    return 0;
+
+  std::vector<size_t> dims = opt->getDimensions();
+  if (dims.size() < 2)
+    return 0;
+
+  return dims[1];
+}
+
+size_t H5MapImpl::getNY()
+{
+  auto opt = this->getMapD();
+  if (!opt.has_value())
+    return 0;
+
+  std::vector<size_t> dims = opt->getDimensions();
+  if (dims.size() < 2)
+    return 0;
+
+  return dims[0];
+}
 
 H5MapContainer* H5MapImpl::openMapContainer() const{
   h5gt::File file = getH5File();

@@ -34,6 +34,9 @@ void H5Map_py(
       .def("addAttributeMap", &H5Map::addAttributeMap,
            py::arg("map"),
            py::arg_v("name", "", "str()"))
+      .def("addInternalAttributeMap", &H5Map::addInternalAttributeMap,
+           py::arg("map"),
+           py::arg_v("name", "", "str()"))
       .def("addExternalAttributeMap", &H5Map::addExternalAttributeMap,
            py::arg("map"),
            py::arg_v("name", "", "str()"))
@@ -52,6 +55,8 @@ void H5Map_py(
       .def("getPoint2", &H5Map::getPoint2,
            py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
+      .def("getNX", &H5Map::getNX)
+      .def("getNY", &H5Map::getNY)
 
       .def("openMapContainer", &H5Map::openMapContainer)
 

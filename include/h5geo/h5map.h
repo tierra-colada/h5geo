@@ -33,7 +33,16 @@ public:
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
 
+  /// \brief addAttributeMap will check if the map and attribute reside in the
+  /// same hdf5 container or not (create 'Internal' or 'External' attribute map).
+  /// The nX and nY must be equal.
+  /// \param map
+  /// \param 'name' name for an attribute map
+  /// \return
   virtual bool addAttributeMap(H5Map* map, std::string name = "") = 0;
+  /// 'internal' both map and attribute reside in the same hdf5 container
+  virtual bool addInternalAttributeMap(H5Map* map, std::string name = "") = 0;
+  /// 'internal' map and attribute reside in different hdf5 containers
   virtual bool addExternalAttributeMap(H5Map* map, std::string name = "") = 0;
   virtual bool removeAttributeMap(const std::string& name) = 0;
   virtual H5Map* getAttributeMap(const std::string& name) = 0;
@@ -48,6 +57,8 @@ public:
   virtual Eigen::VectorXd getPoint2(
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
+  virtual size_t getNX() = 0;
+  virtual size_t getNY() = 0;
 
   virtual H5MapContainer* openMapContainer() const = 0;
 

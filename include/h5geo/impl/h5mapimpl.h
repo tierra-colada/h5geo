@@ -32,6 +32,7 @@ public:
       bool doCoordTransform = false) override;
 
   virtual bool addAttributeMap(H5Map* map, std::string name = "") override;
+  virtual bool addInternalAttributeMap(H5Map* map, std::string name = "") override;
   virtual bool addExternalAttributeMap(H5Map* map, std::string name = "") override;
   virtual bool removeAttributeMap(const std::string& name) override;
   virtual H5Map* getAttributeMap(const std::string& name) override;
@@ -46,6 +47,9 @@ public:
   virtual Eigen::VectorXd getPoint2(
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
+  virtual size_t getNX() override;
+  virtual size_t getNY() override;
+
   virtual H5MapContainer* openMapContainer() const override;
 
   virtual std::optional<h5gt::DataSet> getMapD() const override;
