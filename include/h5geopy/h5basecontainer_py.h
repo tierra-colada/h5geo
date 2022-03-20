@@ -19,6 +19,10 @@ struct H5BaseContainer_py
       &py_obj)
   {
     py_obj
+        .def("openObject", py::overload_cast<
+             const std::string&>(&H5BaseContainer::openObject))
+        .def("openObject", py::overload_cast<
+             h5gt::Group>(&H5BaseContainer::openObject))
         .def("openPoints", py::overload_cast<
              const std::string&>(&H5BaseContainer::openPoints))
         .def("openPoints", py::overload_cast<

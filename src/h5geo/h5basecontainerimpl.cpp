@@ -39,6 +39,24 @@ H5Base* H5BaseContainerImpl<H5WellContainer>::clone()
 }
 
 template <typename TBase>
+H5BaseObject* H5BaseContainerImpl<TBase>::openObject(
+    const std::string& name)
+{
+  if (!h5File.hasObject(name, h5gt::ObjectType::Group))
+    return nullptr;
+
+  h5gt::Group group = h5File.getGroup(name);
+  return openObject(group);
+}
+
+template <typename TBase>
+H5BaseObject* H5BaseContainerImpl<TBase>::openObject(
+    h5gt::Group group)
+{
+  return h5geo::openObject(group);
+}
+
+template <typename TBase>
 H5Points* H5BaseContainerImpl<TBase>::openPoints(
     const std::string& name)
 {
@@ -183,14 +201,17 @@ h5geo::openBaseContainer(h5gt::File h5File)
 H5BaseContainer*
 h5geo::openBaseContainerByName(const std::string& fileName)
 {
-  if (fs::exists(fileName) && H5Fis_hdf5(fileName.c_str()) > 0){
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) <= 0)
+    return nullptr;
+
+  try {
     h5gt::File h5File(
           fileName,
           h5gt::File::ReadWrite);
-
     return h5geo::openBaseContainer(h5File);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
   }
-  return nullptr;
 }
 
 H5BaseContainer*

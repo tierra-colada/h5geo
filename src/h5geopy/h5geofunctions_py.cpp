@@ -61,6 +61,7 @@ void defineGeoFunctions(py::module_& m){
   m.def("openWellContainer", &openWellContainer);
   m.def("openWellContainerByName", &openWellContainerByName);
   m.def("openObject", &openObject);
+  m.def("openObjectByName", &openObjectByName);
   m.def("openBaseObject", &openBaseObject);
   m.def("openSeis", &openSeis);
   m.def("openMap", &openMap);

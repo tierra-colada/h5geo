@@ -1355,6 +1355,26 @@ H5BaseObject* h5geo::openObject(h5gt::Group group)
   return obj;
 }
 
+H5BaseObject* h5geo::openObjectByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) <= 0)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openObject(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
 // explicit instantiation (requires that corresponding headers are included)
 template class H5BaseImpl<H5Base>;
 template class H5BaseImpl<H5BaseContainer>;

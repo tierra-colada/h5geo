@@ -104,13 +104,16 @@ h5geo::openWellContainer(h5gt::File h5File){
 
 H5WellContainer*
 h5geo::openWellContainerByName(const std::string& fileName){
-  if (fs::exists(fileName) && H5Fis_hdf5(fileName.c_str()) > 0){
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) <= 0)
+    return nullptr;
+
+  try {
     h5gt::File h5File(
           fileName,
           h5gt::File::ReadWrite);
-
     return h5geo::openWellContainer(h5File);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
   }
-  return nullptr;
 }
 

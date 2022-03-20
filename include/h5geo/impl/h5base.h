@@ -176,6 +176,8 @@ H5GEO_EXPORT bool isGeoContainerByType(
 /// Use dynamic_cast<> to cast it to the correct type.
 H5GEO_EXPORT H5BaseObject* openObject(
     h5gt::Group group);
+H5GEO_EXPORT H5BaseObject* openObjectByName(
+    const std::string& fileName, const std::string& objName);
 
 H5GEO_EXPORT bool isGeoObject(
     const h5gt::Group& group);

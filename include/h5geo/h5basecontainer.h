@@ -9,6 +9,11 @@ protected:
   virtual ~H5BaseContainer() = default;
 
 public:
+  /// Open either Seis/Map/Well etc
+  virtual H5BaseObject* openObject(
+      const std::string& name) = 0;
+  virtual H5BaseObject* openObject(
+      h5gt::Group group) = 0;
   virtual H5Points* openPoints(
       const std::string& name) = 0;
   virtual H5Points* openPoints(
