@@ -428,4 +428,5 @@ ptrdiff_t getIndexFromAttribute(
   return idx;
 }
 
-}
+
+} // h5gt
