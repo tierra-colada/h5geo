@@ -260,6 +260,11 @@ bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve){
   if (opt.has_value())
     objG.unlink(opt->getPath()); // must be getPath (not getTargetPath)
 
+  std::string devName;
+  h5geo::splitPathToParentAndObj(curve->getObjG().getPath(), devName);
+  if (devName == std::string{h5geo::detail::ACTIVE})
+    return false;
+
   objG.createLink(curve->getObjG(),
                   std::string{h5geo::detail::DEV} + "/" +
                   std::string{h5geo::detail::ACTIVE},
