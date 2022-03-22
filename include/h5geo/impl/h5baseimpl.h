@@ -146,7 +146,7 @@ protected:
   /// \param parentG
   /// \param childG
   /// \return
-  bool isSuccessor(h5gt::Group& parentG, h5gt::Group& childG);
+  bool isSuccessor(const h5gt::Group& parentG, const h5gt::Group& childG);
   /// \brief isSuccessor works only with absolute path!
   /// \param parent
   /// \param child

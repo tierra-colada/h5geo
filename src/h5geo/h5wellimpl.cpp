@@ -158,7 +158,6 @@ H5LogCurve* H5WellImpl::createLogCurve(
 
   auto opt = createObject(
         group, h5geo::ObjectType::LOGCURVE, &p, createFlag);
-
   if (!opt.has_value())
     return nullptr;
 
@@ -183,7 +182,6 @@ H5DevCurve* H5WellImpl::createDevCurve(
   std::optional<h5gt::Group> opt = createObject(
         devName, devG.value(), h5geo::ObjectType::DEVCURVE,
         &p, createFlag);
-
   if (!opt.has_value())
     return nullptr;
 
@@ -205,7 +203,6 @@ H5DevCurve* H5WellImpl::createDevCurve(
 
   std::optional<h5gt::Group> opt = createObject(
         group, h5geo::ObjectType::DEVCURVE, &p, createFlag);
-
   if (!opt.has_value())
     return nullptr;
 
@@ -255,20 +252,43 @@ bool H5WellImpl::setUWI(const std::string& str)
         str);
 }
 
-bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve){
+bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve)
+{
   auto opt = getActiveDevG();
   if (opt.has_value())
     objG.unlink(opt->getPath()); // must be getPath (not getTargetPath)
 
-  std::string devName;
-  h5geo::splitPathToParentAndObj(curve->getObjG().getPath(), devName);
-  if (devName == std::string{h5geo::detail::ACTIVE})
+  auto devG_opt = getDevG();
+  if (!devG_opt.has_value())
     return false;
 
+  if (!isSuccessor(devG_opt.value(), curve->getObjG()))
+    return false;
+
+  std::string curvePath = curve->getObjG().getPath();
+  std::string curveName;
+  h5geo::splitPathToParentAndObj(curvePath, curveName);
+  if (curveName == std::string{h5geo::detail::ACTIVE})
+    return false;
+
+  // curvePath is now relative to DEV group
+  h5geo::eraseSubStr(curvePath, devG_opt->getPath());
+  if (curvePath.empty())
+    return false;
+
+  if (curvePath[0] == '/')
+    curvePath.erase(0, 1);
+
+  if (curvePath.empty())
+    return false;
+
+  // create soft link with Relative path is important to keep
+  // well alive while moving it within container
   objG.createLink(curve->getObjG(),
                   std::string{h5geo::detail::DEV} + "/" +
                   std::string{h5geo::detail::ACTIVE},
-                  h5gt::LinkType::Soft);
+                  h5gt::LinkType::Soft, curvePath);
+  objG.flush();
 
   return true;
 }

@@ -1146,7 +1146,7 @@ H5BaseImpl<TBase>::createSort(
 }
 
 template <typename TBase>
-bool H5BaseImpl<TBase>::isSuccessor(h5gt::Group &parentG, h5gt::Group &childG)
+bool H5BaseImpl<TBase>::isSuccessor(const h5gt::Group &parentG, const h5gt::Group &childG)
 {
   return isSuccessor(parentG.getPath(), childG.getPath());
 }
