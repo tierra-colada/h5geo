@@ -121,12 +121,12 @@ std::string H5LogCurveImpl::getRelativeCurveName(){
   if (!optWellG.has_value())
     return std::string();
 
-  if (!optWellG->hasObject("LOG", h5gt::ObjectType::Group))
+  if (!optWellG->hasObject(std::string{h5geo::detail::LOG}, h5gt::ObjectType::Group))
     return std::string();
 
-  h5gt::Group logG = optWellG->getGroup("LOG");
+  h5gt::Group logG = optWellG->getGroup(std::string{h5geo::detail::LOG});
   return h5geo::getRelativePath(
-        logG.getTargetPath(), objG.getTargetPath(),
+        logG.getPath(), objG.getPath(),
         h5geo::CaseSensitivity::CASE_INSENSITIVE);
 }
 

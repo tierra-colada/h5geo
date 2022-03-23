@@ -286,12 +286,12 @@ std::string H5DevCurveImpl::getRelativeCurveName(){
   if (!optWellG.has_value())
     return std::string();
 
-  if (!optWellG->hasObject("DEV", h5gt::ObjectType::Group))
+  if (!optWellG->hasObject(std::string{h5geo::detail::DEV}, h5gt::ObjectType::Group))
     return std::string();
 
-  h5gt::Group devG = optWellG->getGroup("DEV");
+  h5gt::Group devG = optWellG->getGroup(std::string{h5geo::detail::DEV});
   return h5geo::getRelativePath(
-        devG.getTargetPath(), objG.getTargetPath(),
+        devG.getPath(), objG.getPath(),
         h5geo::CaseSensitivity::CASE_INSENSITIVE);
 }
 

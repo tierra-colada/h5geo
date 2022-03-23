@@ -257,13 +257,13 @@ H5BaseObjectImpl<TBase>::getDatasetOpt(
 template <typename TBase>
 std::string H5BaseObjectImpl<TBase>::getName() const {
   std::string objName;
-  h5geo::splitPathToParentAndObj(objG.getTargetPath(), objName);
+  h5geo::splitPathToParentAndObj(objG.getPath(), objName);
   return objName;
 }
 
 template <typename TBase>
 std::string H5BaseObjectImpl<TBase>::getFullName() const {
-  return objG.getTargetPath();
+  return objG.getPath();
 }
 
 template <typename TBase>
@@ -318,7 +318,7 @@ H5BaseObjectImpl<TBase>::getParentG(
 
   do {
     path = h5geo::splitPathToParentAndObj(
-          parentGroup.getTargetPath(), objName);
+          parentGroup.getPath(), objName);
     if (!parentGroup.hasObject(path, h5gt::ObjectType::Group))
       return std::nullopt;
 

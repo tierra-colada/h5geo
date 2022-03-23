@@ -26,7 +26,7 @@ H5LogCurve* H5WellImpl::openLogCurve(
   // if `logName` is full path then we need to be confident
   // that this curve belong to this well
   if (!logType.empty() && logType[0] == '/')
-    if (!isSuccessor(logG->getTargetPath(), logType))
+    if (!isSuccessor(logG->getPath(), logType))
       return nullptr;
 
   if (!logName.empty() && logName[0] == '/' &&
@@ -78,7 +78,7 @@ H5DevCurve* H5WellImpl::openDevCurve(
   /* if `logName` was full path then we need to be confident
    * that this curve belong to this well */
   if (!devName.empty() && devName[0] == '/')
-    if (!isSuccessor(devG->getTargetPath(), devName))
+    if (!isSuccessor(devG->getPath(), devName))
       return nullptr;
 
   if (!devG->hasObject(devName, h5gt::ObjectType::Group))
@@ -115,7 +115,7 @@ H5LogCurve* H5WellImpl::createLogCurve(
   /* If `logType` is full path then we need to be confident that
    * this `logType` (and `logName`) refers to this well */
   if (!logType.empty() && logType[0] == '/')
-    if (!isSuccessor(logG->getTargetPath(), logType))
+    if (!isSuccessor(logG->getPath(), logType))
       return nullptr;
 
   if (!logName.empty() && logName[0] == '/' &&
@@ -176,7 +176,7 @@ H5DevCurve* H5WellImpl::createDevCurve(
   /* If `devName` is full path then we need to be confident that
    * this `devName` refers to this well */
   if (!devName.empty() && devName[0] == '/')
-    if (!isSuccessor(devG->getTargetPath(), devName))
+    if (!isSuccessor(devG->getPath(), devName))
       return nullptr;
 
   std::optional<h5gt::Group> opt = createObject(
@@ -254,10 +254,6 @@ bool H5WellImpl::setUWI(const std::string& str)
 
 bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve)
 {
-  auto opt = getActiveDevG();
-  if (opt.has_value())
-    objG.unlink(opt->getPath()); // must be getPath (not getTargetPath)
-
   auto devG_opt = getDevG();
   if (!devG_opt.has_value())
     return false;
@@ -265,31 +261,23 @@ bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve)
   if (!isSuccessor(devG_opt.value(), curve->getObjG()))
     return false;
 
-  std::string curvePath = curve->getObjG().getPath();
   std::string curveName;
-  h5geo::splitPathToParentAndObj(curvePath, curveName);
+  h5geo::splitPathToParentAndObj(curve->getObjG().getPath(), curveName);
   if (curveName == std::string{h5geo::detail::ACTIVE})
     return false;
 
-  // curvePath is now relative to DEV group
-  h5geo::eraseSubStr(curvePath, devG_opt->getPath());
-  if (curvePath.empty())
-    return false;
-
-  if (curvePath[0] == '/')
-    curvePath.erase(0, 1);
-
-  if (curvePath.empty())
-    return false;
+  std::string relativeCurveName = curve->getRelativeCurveName();
+  auto opt = getActiveDevG();
+  if (opt.has_value())
+    objG.unlink(opt->getPath()); // must be getPath (not getPath)
 
   // create soft link with Relative path is important to keep
   // well alive while moving it within container
   objG.createLink(curve->getObjG(),
                   std::string{h5geo::detail::DEV} + "/" +
                   std::string{h5geo::detail::ACTIVE},
-                  h5gt::LinkType::Soft, curvePath);
+                  h5gt::LinkType::Soft, relativeCurveName);
   objG.flush();
-
   return true;
 }
 
@@ -341,9 +329,9 @@ H5DevCurve* H5WellImpl::openActiveDevCurve(){
   if (!opt.has_value())
     return nullptr;
 
-  std::string path = opt->getTargetPath();
+  std::string path = opt->getPath();
   opt->hasObject(path, h5gt::ObjectType::Group);
-  return openDevCurve(opt->getTargetPath());
+  return openDevCurve(opt->getPath());
 }
 
 std::vector<h5gt::Group>
@@ -370,7 +358,7 @@ H5WellImpl::getDevCurveNameList(){
   if (!devG.has_value())
     return std::vector<std::string>();
 
-  return getChildNameList(devG.value(), h5geo::ObjectType::DEVCURVE, devG->getTargetPath(), true);
+  return getChildNameList(devG.value(), h5geo::ObjectType::DEVCURVE, devG->getPath(), true);
 }
 
 std::vector<std::string>
@@ -379,7 +367,7 @@ H5WellImpl::getLogCurveNameList(){
   if (!logG.has_value())
     return std::vector<std::string>();
 
-  return getChildNameList(logG.value(), h5geo::ObjectType::LOGCURVE, logG->getTargetPath(), true);
+  return getChildNameList(logG.value(), h5geo::ObjectType::LOGCURVE, logG->getPath(), true);
 }
 
 std::vector<std::string>
