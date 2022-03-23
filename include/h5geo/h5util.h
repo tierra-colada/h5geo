@@ -172,18 +172,6 @@ template<typename Object,
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 bool deleteAllAttributes(Object& object);
 
-/// \brief unlinkObject Unlink object from container
-/// \param object parent object (File or Group) relatively
-/// to `objPath`
-/// \param objPath path to object from root
-///(like: /path/to/object)
-/// \return
-template<typename Parent,
-         typename std::enable_if<
-           std::is_same<Parent, h5gt::File>::value ||
-           std::is_same<Parent, h5gt::Group>::value>::type* = nullptr>
-bool unlinkObject(Parent& parent, const std::string& objPath);
-
 /// \brief unlinkContent Unlink everything in group
 /// \return
 template<typename Object,

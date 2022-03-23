@@ -33,19 +33,6 @@ inline bool deleteAllAttributes(Object& object){
   return true;
 }
 
-template<typename Parent,
-         typename std::enable_if<
-           std::is_same<Parent, h5gt::File>::value ||
-           std::is_same<Parent, h5gt::Group>::value>::type*>
-inline bool unlinkObject(Parent& parent, const std::string& objPath){
-  try {
-    parent.unlink(objPath);
-  }  catch (h5gt::Exception e) {
-    return false;
-  }
-  return true;
-}
-
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||

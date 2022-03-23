@@ -269,7 +269,7 @@ bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve)
   std::string relativeCurveName = curve->getRelativeCurveName();
   auto opt = getActiveDevG();
   if (opt.has_value())
-    objG.unlink(opt->getPath()); // must be getPath (not getPath)
+    opt->unlink(); // must be getPath (not getPath)
 
   // create soft link with Relative path is important to keep
   // well alive while moving it within container
