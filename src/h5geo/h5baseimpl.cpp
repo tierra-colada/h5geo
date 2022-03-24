@@ -1195,6 +1195,13 @@ bool h5geo::isGeoContainerByType(h5gt::File file,
   }
 }
 
+h5geo::ContainerType h5geo::getGeoContainerType(h5gt::File file)
+{
+  unsigned val = h5geo::readEnumAttribute(
+        file, std::string{h5geo::detail::ContainerType});
+  return static_cast<h5geo::ContainerType>(val);
+}
+
 bool h5geo::isGeoObject(const h5gt::Group& group){
   constexpr auto& objTypes = magic_enum::enum_values<h5geo::ObjectType>();
   for (const auto &objType : objTypes)
@@ -1223,6 +1230,25 @@ bool h5geo::isGeoObjectByType(const h5gt::Group& group,
   default:
     return false;
   }
+}
+
+h5geo::ObjectType h5geo::getGeoObjectType(
+    const h5gt::Group& group)
+{
+  if (h5geo::isPoints(group)){
+    return h5geo::ObjectType::POINTS;
+  } else if (h5geo::isMap(group)){
+    return h5geo::ObjectType::MAP;
+  } else if (h5geo::isWell(group)){
+    return h5geo::ObjectType::WELL;
+  } else if (h5geo::isDevCurve(group)){
+    return h5geo::ObjectType::DEVCURVE;
+  } else if (h5geo::isLogCurve(group)){
+    return h5geo::ObjectType::LOGCURVE;
+  } else if (h5geo::isSeis(group)){
+    return h5geo::ObjectType::SEISMIC;
+  }
+  return static_cast<h5geo::ObjectType>(0);
 }
 
 bool h5geo::isPoints(

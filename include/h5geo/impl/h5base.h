@@ -170,6 +170,9 @@ H5GEO_EXPORT bool isGeoContainerByType(
     h5gt::File file,
     const h5geo::ContainerType& cntType);
 
+H5GEO_EXPORT h5geo::ContainerType getGeoContainerType(
+    h5gt::File file);
+
 //----------- OBJECTS -----------
 /// Check if the group can be treated as H5Seis/H5Map/H5Well etc
 /// and create appropriate object.
@@ -185,6 +188,8 @@ H5GEO_EXPORT bool isGeoObjectByType(
     const h5gt::Group& group,
     const h5geo::ObjectType& objType);
 
+H5GEO_EXPORT h5geo::ObjectType getGeoObjectType(
+    const h5gt::Group& group);
 H5GEO_EXPORT bool isPoints(const h5gt::Group &group);
 H5GEO_EXPORT bool isMap(const h5gt::Group &group);
 H5GEO_EXPORT bool isWell(const h5gt::Group &group);
