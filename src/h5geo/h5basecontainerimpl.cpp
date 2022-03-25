@@ -201,7 +201,7 @@ h5geo::openBaseContainer(h5gt::File h5File)
 H5BaseContainer*
 h5geo::openBaseContainerByName(const std::string& fileName)
 {
-  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) <= 0)
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
     return nullptr;
 
   try {

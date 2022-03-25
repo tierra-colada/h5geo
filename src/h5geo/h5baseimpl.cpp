@@ -214,13 +214,11 @@ H5BaseImpl<TBase>::createContainer(
       if (createFlag == h5geo::CreationType::OPEN |
           createFlag == h5geo::CreationType::CREATE |
           createFlag == h5geo::CreationType::OPEN_OR_CREATE){
-        h5gt::FileAccessProps fapl;
-        if (H5Fis_hdf5(fileName.c_str()) > 0 &&
-            H5Fis_accessible(fileName.c_str(), fapl.getId()) > 0 ){
+        if (H5Fis_hdf5(fileName.c_str()) > 0){
           h5gt::File h5File(
                 fileName,
                 h5gt::File::ReadWrite |
-                h5gt::File::OpenOrCreate, fapl);
+                h5gt::File::OpenOrCreate);
           return createContainer(h5File, containerType, createFlag);
         }
         return std::nullopt;
@@ -1384,7 +1382,7 @@ H5BaseObject* h5geo::openObject(h5gt::Group group)
 H5BaseObject* h5geo::openObjectByName(
     const std::string& fileName, const std::string& objName)
 {
-  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) <= 0)
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
     return nullptr;
 
   try {

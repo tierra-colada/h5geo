@@ -83,7 +83,7 @@ H5SeisContainer* h5geo::openSeisContainer(
 
 H5SeisContainer* h5geo::openSeisContainerByName(
     const std::string& fileName){
-  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) <= 0)
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
     return nullptr;
 
   try {

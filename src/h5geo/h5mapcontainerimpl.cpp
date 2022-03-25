@@ -85,7 +85,7 @@ h5geo::openMapContainer(
 H5MapContainer*
 h5geo::openMapContainerByName(
     const std::string& fileName){
-  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) <= 0)
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
     return nullptr;
 
   try {

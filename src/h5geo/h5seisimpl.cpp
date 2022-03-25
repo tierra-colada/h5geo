@@ -808,7 +808,7 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
   Eigen::VectorX<size_t> traceIndexes = getPKeyIndexes(
         keyList[0], minList[0], maxList[0]);
 
-  if (traceIndexes.size() <= 0)
+  if (traceIndexes.size() < 1)
     return Eigen::VectorX<size_t>();
 
   Eigen::VectorX<size_t> headerIndex(keyList.size());
