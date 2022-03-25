@@ -222,7 +222,7 @@ std::string H5BaseObjectImpl<TBase>::getDataUnits(){
 
 template <typename TBase>
 h5gt::File H5BaseObjectImpl<TBase>::getH5File() const {
-  return h5gt::File::FromId(objG.getFileId(true), false);
+  return objG.getFile();
 }
 
 template <typename TBase>
