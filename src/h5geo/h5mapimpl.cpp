@@ -182,7 +182,7 @@ bool H5MapImpl::removeAttributeMap(const std::string& name){
   return true;
 }
 
-H5Map* H5MapImpl::getAttributeMap(const std::string& name){
+H5Map* H5MapImpl::openAttributeMap(const std::string& name){
   if (!objG.hasObject(name, h5gt::ObjectType::Group))
     return nullptr;
 

@@ -42,7 +42,7 @@ void H5Map_py(
            py::arg_v("name", "", "str()"))
       .def("removeAttributeMap", &H5Map::removeAttributeMap,
            py::arg("name"))
-      .def("getAttributeMap", &H5Map::getAttributeMap,
+      .def("openAttributeMap", &H5Map::openAttributeMap,
            py::arg("name"))
       .def("getAttributeMapGroupList", &H5Map::getAttributeMapGroupList)
       .def("getAttributeMapNameList", &H5Map::getAttributeMapNameList)

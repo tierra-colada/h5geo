@@ -45,7 +45,7 @@ public:
   /// 'internal' map and attribute reside in different hdf5 containers
   virtual std::optional<h5gt::Group> addExternalAttributeMap(H5Map* map, std::string name = "") = 0;
   virtual bool removeAttributeMap(const std::string& name) = 0;
-  virtual H5Map* getAttributeMap(const std::string& name) = 0;
+  virtual H5Map* openAttributeMap(const std::string& name) = 0;
   virtual std::vector<h5gt::Group> getAttributeMapGroupList() = 0;
   virtual std::vector<std::string> getAttributeMapNameList() = 0;
   virtual size_t getAttributeMapCount() = 0;
