@@ -1,3 +1,6 @@
 include h5geopy/*
+include h5geopy/h5geopy/*
+include h5geopy/tests/*
+include h5geopy/tests/data/*
 
 ${ADD_TO_MANIFEST}

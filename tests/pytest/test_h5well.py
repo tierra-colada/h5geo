@@ -123,10 +123,10 @@ class test_h5well(unittest.TestCase):
         devCurve = well.createDevCurve(self.DEV_NAME, self.devCurveParam, h5geo.CreationType.OPEN_OR_CREATE)
         self.assertFalse(devCurve is None)
 
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.MD, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 0])))
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.DX, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 5])))
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.DY, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 6])))
-        self.assertTrue(devCurve.writeCurve(h5geo.DevDataType.TVD, np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 3])))
+        self.assertTrue(devCurve.writeMD(np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 0])))
+        self.assertTrue(devCurve.writeDX(np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 5])))
+        self.assertTrue(devCurve.writeDY(np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 6])))
+        self.assertTrue(devCurve.writeTVD(np.asfortranarray(self.MD_X_Y_Z_TVD_DX_DY_AZ_INCL[:, 3])))
         devCurve.updateMdAzimIncl()
 
     def test_MdAzIncl2MdXYTvd(self):

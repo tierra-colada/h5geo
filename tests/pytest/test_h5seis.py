@@ -90,9 +90,6 @@ class test_h5seis(unittest.TestCase):
         binHdr = np.arange(30)
         self.assertTrue(seis.writeBinHeader(binHdr))
 
-        binHdr_out = seis.getBinHeader()
-        self.assertTrue(np.allclose(binHdr, binHdr_out))
-
         self.assertTrue(seis.writeBinHeader('SAMP_RATE', 2000))
         self.assertTrue(seis.getBinHeader('SAMP_RATE') == 2000)
 
@@ -117,7 +114,7 @@ class test_h5seis(unittest.TestCase):
         seis = self.seisContainer.createSeis(self.SEIS_NAME1, self.p, h5geo.CreationType.CREATE_OR_OVERWRITE)
         self.assertFalse(seis is None)
 
-        trcHdr = np.random.rand(seis.getNTrc(), seis.getNTrcHdr())
+        trcHdr = np.asfortranarray(np.random.rand(seis.getNTrc(), seis.getNTrcHdr()))
         self.assertTrue(seis.writeTraceHeader(trcHdr, 0, 0))     # write all trace header at once
 
         trcHdr_out = seis.getTraceHeader(0, seis.getNTrc())
@@ -134,7 +131,7 @@ class test_h5seis(unittest.TestCase):
         traces = np.random.rand(seis.getNSamp(), seis.getNTrc())
         self.assertTrue(seis.writeTrace(traces, 0, 0))     # write all traces at once
 
-        trcHdr = np.random.randint(0, 5, [seis.getNTrc(), seis.getNTrcHdr()])
+        trcHdr = np.asfortranarray(np.random.randint(0, 5, [seis.getNTrc(), seis.getNTrcHdr()]), dtype='float64')
         self.assertTrue(seis.writeTraceHeader(trcHdr, 0, 0))     # write all traces headers at once
 
         self.assertTrue(seis.addPKeySort('FFID'))
