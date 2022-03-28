@@ -13,6 +13,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
+        - H5GEO_USE_GDAL=False
         - HDF5_RUNTIME_DIRS=""
         - COPY_H5GEOPY_RUNTIME_DEPS=False
         - CMAKE_GENERATOR="Ninja"
@@ -34,6 +35,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
+        - H5GEO_USE_GDAL=False
         - HDF5_RUNTIME_DIRS=""
         - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Ninja"
@@ -55,6 +57,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
+        - H5GEO_USE_GDAL=False
         - HDF5_RUNTIME_DIRS=""
         - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Ninja"
@@ -73,6 +76,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
+        - H5GEO_USE_GDAL=True
         - HDF5_RUNTIME_DIRS="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
         - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
@@ -86,6 +90,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
+        - H5GEO_USE_GDAL=True
         - HDF5_RUNTIME_DIRS="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
         - COPY_H5GEOPY_RUNTIME_DEPS=False
         - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
@@ -101,6 +106,7 @@ matrix:
         - H5GEO_BUILD_SHARED_LIBS=True
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
+        - H5GEO_USE_GDAL=False
         - HDF5_RUNTIME_DIRS=""
         - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Ninja"
@@ -213,6 +219,7 @@ script:
     -DH5GEO_USE_THREADS:BOOL=${H5GEO_USE_THREADS}
     -DH5GEO_BUILD_SHARED_LIBS:BOOL=${H5GEO_BUILD_SHARED_LIBS}
     -DH5GEO_BUILD_h5geopy:BOOL=${H5GEO_BUILD_h5geopy}
+    -D- H5GEO_USE_GDAL:BOOL=${H5GEO_USE_GDAL}
     -DHDF5_RUNTIME_DIR:PATH=${HDF5_RUNTIME_DIRS}
     -DCOPY_H5GEOPY_RUNTIME_DEPS:BOOL=${COPY_H5GEOPY_RUNTIME_DEPS}
     -DH5GEO_BUILD_TESTS:BOOL=${H5GEO_BUILD_TESTS}
