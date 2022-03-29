@@ -77,7 +77,7 @@ matrix:
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
         - H5GEO_USE_GDAL=True
-        - HDF5_RUNTIME_DIRS="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
+        - HDF5_RUNTIME_DIRS="C:/Users/travis/build/tierra-colada/install/HDF5-install/bin"
         - COPY_H5GEOPY_RUNTIME_DEPS=True
         - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
         - TESTS_TARGET="RUN_TESTS"
@@ -91,7 +91,7 @@ matrix:
         - H5GEO_BUILD_TESTS=True
         - H5GEO_BUILD_h5geopy=True
         - H5GEO_USE_GDAL=True
-        - HDF5_RUNTIME_DIRS="C:/Users/travis/build/tierra-colada/install/hdf5-install/bin"
+        - HDF5_RUNTIME_DIRS="C:/Users/travis/build/tierra-colada/install/HDF5-install/bin"
         - COPY_H5GEOPY_RUNTIME_DEPS=False
         - CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
         - TESTS_TARGET="RUN_TESTS"
@@ -167,8 +167,8 @@ before_install:
       conda config --set always_yes yes --set changeps1 no;
       conda update -q conda;
       echo $PATH;
-      export PATH=$PATH:$CMAKE_INSTALL_PREFIX/zlib-install/bin;
-      export PATH=$PATH:$CMAKE_INSTALL_PREFIX/hdf5-install/bin;
+      export PATH=$PATH:$CMAKE_INSTALL_PREFIX/ZLIB-install/bin;
+      export PATH=$PATH:$CMAKE_INSTALL_PREFIX/HDF5-install/bin;
       export PATH=$PATH:$CMAKE_INSTALL_PREFIX/UNITS-install/bin;
       export PATH=$PATH:$CMAKE_INSTALL_PREFIX/UNITS-install/lib;
       export PATH=$PATH:$CMAKE_INSTALL_PREFIX/SQLite3-install/bin;
