@@ -238,7 +238,7 @@ script:
     -DH5GEO_BUILD_TESTS:BOOL=${H5GEO_BUILD_TESTS}
     -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
     -G "${CMAKE_GENERATOR}" ../
-  - cmake --build . --config Release
+  - cmake --build . --config Release -j
   # INSTALL before running test to simplify `h5geo` bin dir addition to PATH env
   - cmake --install . --prefix ../install --config Release
   - CTEST_OUTPUT_ON_FAILURE=1 cmake --build . --target ${TESTS_TARGET} --config Release
