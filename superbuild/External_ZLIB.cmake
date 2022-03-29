@@ -1,9 +1,10 @@
-message("external project: ZLIB")
+set(proj ZLIB)
+message("external project: ${proj}")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/zlib")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/zlib-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/zlib-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/${proj}")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/${proj}-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${proj}-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
@@ -16,7 +17,7 @@ endif()
 
 set(DEPENDENCIES "")
 
-ExternalProject_Add(ZLIB
+ExternalProject_Add(${proj}
   GIT_REPOSITORY "https://github.com/madler/zlib.git"
   GIT_TAG "v1.2.11"
   SOURCE_DIR ${EP_SOURCE_DIR}

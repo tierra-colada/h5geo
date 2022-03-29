@@ -1,9 +1,10 @@
-message("external project: SQLite3")
+set(proj SQLite3)
+message("external project: ${proj}")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/SQLite3")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/SQLite3-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/SQLite3-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/${proj}")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/${proj}-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${proj}-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
@@ -24,9 +25,9 @@ list(APPEND GDAL_LIBS ${SQLite3_LIBRARIES})
 
 set(DEPENDENCIES "")
 
-ExternalProject_Add(SQLite3
+ExternalProject_Add(${proj}
   GIT_REPOSITORY "https://github.com/tierra-colada/sqlite-amalgamation.git"
-  GIT_TAG "86fdaf7ab15d31e02f92befc1b3f9b22c1028e3a"
+  GIT_TAG "f2ada7ab2237696ed641f24fc2b07ad41ab83395"
   SOURCE_DIR ${EP_SOURCE_DIR}
   BINARY_DIR ${EP_BINARY_DIR}
   INSTALL_DIR ${EP_INSTALL_DIR}
@@ -48,6 +49,9 @@ ExternalProject_Add(SQLite3
     -DSQLITE_ENABLE_MATH_FUNCTIONS:BOOL=ON 
     -DSQLITE_ENABLE_COLUMN_METADATA:BOOL=ON 
     -DSQLITE_OMIT_DECLTYPE:BOOL=OFF # must be OFF if SQLITE_ENABLE_COLUMN_METADATA is ON
+    -DSQLITE_OMIT_DEPRECATED:BOOL=OFF # must be OFF or undefined external symbols on Windows
+    -DSQLITE_OMIT_PROGRESS_CALLBACK:BOOL=OFF # must be OFF or undefined external symbols on Windows
+    -DSQLITE_OMIT_SHARED_CACHE:BOOL=OFF # must be OFF or undefined external symbols on Windows
     # recommended options would define SQLITE_OMIT_DEPRECATED and SQLITE_OMIT_DECLTYPE,
     # which would cause build errors in Python, so go with default options instead
     -DBUILD_RECOMMENDED_OPTS:BOOL=ON # if python build fails then set it to OFF

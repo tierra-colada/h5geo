@@ -1,4 +1,5 @@
-message("external project: h5geo")
+set(proj h5geo)
+message("external project: ${proj}")
 
 set(h5geo_DIR "${CMAKE_INSTALL_PREFIX}/cmake/h5geo")
 
@@ -15,7 +16,7 @@ endif()
 set(H5GEO_RUNTIME_DIRS "${CMAKE_INSTALL_PREFIX}/lib")
 message("GDAL_LIBS: ${GDAL_LIBS}")
 
-ExternalProject_Add(h5geo
+ExternalProject_Add(${proj}
   DOWNLOAD_COMMAND ""
   INSTALL_COMMAND ""
   SOURCE_DIR ${CMAKE_SOURCE_DIR}

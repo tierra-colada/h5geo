@@ -1,9 +1,10 @@
-message("external project: GEOS")
+set(proj GEOS)
+message("external project: ${proj}")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/GEOS")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/GEOS-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/GEOS-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/${proj}")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/${proj}-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${proj}-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
@@ -21,7 +22,7 @@ list(APPEND GDAL_LIBS ${GEOS_LIBRARIES})
 
 set(DEPENDENCIES "")
 
-ExternalProject_Add(GEOS
+ExternalProject_Add(${proj}
   GIT_REPOSITORY "https://github.com/libgeos/geos.git"
   GIT_TAG "3.10.2"
   SOURCE_DIR ${EP_SOURCE_DIR}

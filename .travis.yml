@@ -123,6 +123,8 @@ env:
   - CMAKE_INSTALL_PREFIX=${TRAVIS_BUILD_DIR}/../install
   - EIGEN3_SRC=${TRAVIS_BUILD_DIR}/../eigen
   - EIGEN3_ROOT=${TRAVIS_BUILD_DIR}/../eigen
+  - mio_SRC=${TRAVIS_BUILD_DIR}/../mio
+  - mio_ROOT=${TRAVIS_BUILD_DIR}/../mio
   - magic_enum_SRC=${TRAVIS_BUILD_DIR}/../magic_enum
   - magic_enum_ROOT=${TRAVIS_BUILD_DIR}/../magic_enum
   - h5gt_SRC=${TRAVIS_BUILD_DIR}/../h5gt
@@ -137,12 +139,16 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
       git clone --branch 3.4.0 https://gitlab.com/libeigen/eigen.git $EIGEN3_SRC;
       git clone --branch v0.7.3 https://github.com/Neargye/magic_enum.git $magic_enum_SRC;
+      git clone https://github.com/mandreyel/mio.git $mio_SRC;
+      git --git-dir mio/.git checkout 3f86a95c0784d73ce6815237ec33ed25f233b643;
       git clone --branch main https://github.com/tierra-colada/h5gt $h5gt_SRC;
       export PATH=$PATH:$CMAKE_INSTALL_PREFIX/bin;
       export PATH=$PATH:$CMAKE_INSTALL_PREFIX/lib;
     elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
       git clone --branch 3.4.0 https://gitlab.com/libeigen/eigen.git $EIGEN3_SRC;
       git clone --branch v0.7.3 https://github.com/Neargye/magic_enum.git $magic_enum_SRC;
+      git clone https://github.com/mandreyel/mio.git $mio_SRC;
+      git --git-dir mio/.git checkout 3f86a95c0784d73ce6815237ec33ed25f233b643;
       git clone --branch main https://github.com/tierra-colada/h5gt $h5gt_SRC;
       wget "http://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh" -O miniconda.sh;
       bash miniconda.sh -b -p $HOME/miniconda;
@@ -165,6 +171,10 @@ before_install:
       export PATH=$PATH:$CMAKE_INSTALL_PREFIX/hdf5-install/bin;
       export PATH=$PATH:$CMAKE_INSTALL_PREFIX/UNITS-install/bin;
       export PATH=$PATH:$CMAKE_INSTALL_PREFIX/UNITS-install/lib;
+      export PATH=$PATH:$CMAKE_INSTALL_PREFIX/SQLite3-install/bin;
+      export PATH=$PATH:$CMAKE_INSTALL_PREFIX/PROG-install/bin;
+      export PATH=$PATH:$CMAKE_INSTALL_PREFIX/GEOS-install/bin;
+      export PATH=$PATH:$CMAKE_INSTALL_PREFIX/GDAL-install/bin;
       export PATH=$PATH:$TRAVIS_BUILD_DIR/build/Debug;
       export PATH=$PATH:$TRAVIS_BUILD_DIR/build/Release;
       export PATH=$PATH:$CMAKE_INSTALL_PREFIX/bin;

@@ -1,7 +1,8 @@
-message("external project: TBB")
+set(proj TBB)
+message("external project: ${proj}")
 
 # SET DIRS
-set(TBB_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/TBB-install")
+set(TBB_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${proj}-install")
 set(TBB_ROOT ${TBB_INSTALL_DIR})
 list(APPEND CMAKE_PREFIX_PATH ${TBB_INSTALL_DIR})
 
@@ -18,7 +19,7 @@ else ()
 endif ()
 
 #------------------------------------------------------------------------------
-ExternalProject_Add(TBB
+ExternalProject_Add(${proj}
   URL https://github.com/oneapi-src/oneTBB/releases/download/2019_U9/${tbb_file}
   URL_MD5 ${tbb_md5}
   DOWNLOAD_DIR ${CMAKE_BINARY_DIR}

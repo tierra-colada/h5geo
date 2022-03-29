@@ -1,9 +1,10 @@
-message("external project: PROJ")
+set(proj PROJ)
+message("external project: ${proj}")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/PROJ")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/PROJ-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/PROJ-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/${proj}")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/${proj}-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${proj}-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
@@ -22,7 +23,7 @@ list(APPEND GDAL_LIBS ${PROJ_LIBRARIES})
 
 set(DEPENDENCIES SQLite3)
 
-ExternalProject_Add(PROJ
+ExternalProject_Add(${proj}
   GIT_REPOSITORY "https://github.com/OSGeo/PROJ.git"
   GIT_TAG "9.0.0"
   SOURCE_DIR ${EP_SOURCE_DIR}

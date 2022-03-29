@@ -1,9 +1,10 @@
-message("external project: GDAL")
+set(proj GDAL)
+message("external project: ${proj}")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/GDAL")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/GDAL-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/GDAL-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/${proj}")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/${proj}-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${proj}-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
@@ -18,7 +19,7 @@ endif()
 
 set(DEPENDENCIES ZLIB HDF5 SQLite3 PROJ GEOS)
 
-ExternalProject_Add(GDAL
+ExternalProject_Add(${proj}
   GIT_REPOSITORY "https://github.com/OSGeo/gdal.git"
   GIT_TAG "68ceec0be4541da11cf9860141fb6aeae22f95e4"
   SOURCE_DIR ${EP_SOURCE_DIR}

@@ -1,9 +1,10 @@
-message("external project: Eigen3")
+set(proj Eigen3)
+message("external project: ${proj}")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/Eigen3")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/Eigen3-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/Eigen3-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/${proj}")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/${proj}-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${proj}-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
@@ -11,7 +12,7 @@ set(Eigen3_ROOT ${EP_INSTALL_DIR})
 
 set(DEPENDENCIES "")
 
-ExternalProject_Add(Eigen3
+ExternalProject_Add(${proj}
   GIT_REPOSITORY "https://gitlab.com/libeigen/eigen.git"
   GIT_TAG "3.4.0"
   SOURCE_DIR ${EP_SOURCE_DIR}

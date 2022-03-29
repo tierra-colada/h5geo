@@ -1,9 +1,10 @@
-message("external project: mio")
+set(proj mio)
+message("external project: ${proj}")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/mio")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/mio-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/mio-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/${proj}")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/${proj}-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${proj}-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
@@ -11,7 +12,7 @@ set(mio_ROOT ${EP_INSTALL_DIR})
 
 set(DEPENDENCIES "")
 
-ExternalProject_Add(mio
+ExternalProject_Add(${proj}
   GIT_REPOSITORY "https://github.com/tierra-colada/mio.git"
   GIT_TAG "ce7b245ca54f62ce1e8de85764feeb1894889e56"
   SOURCE_DIR ${EP_SOURCE_DIR}

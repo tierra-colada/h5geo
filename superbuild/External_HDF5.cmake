@@ -1,9 +1,10 @@
-message("external project: HDF5")
+set(proj HDF5)
+message("external project: ${proj}")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/hdf5")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/hdf5-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/hdf5-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/${proj}")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/${proj}-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${proj}-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
@@ -16,7 +17,7 @@ endif()
 
 set(DEPENDENCIES ZLIB)
 
-ExternalProject_Add(HDF5
+ExternalProject_Add(${proj}
   GIT_REPOSITORY "https://github.com/HDFGroup/hdf5.git"
   GIT_TAG "hdf5-1_12_1"
   SOURCE_DIR ${EP_SOURCE_DIR}

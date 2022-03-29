@@ -1,14 +1,15 @@
-message("external project: units")
+set(proj units)
+message("external project: ${proj}")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/units")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/units-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/units-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/${proj}")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/${proj}-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${proj}-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
 set(units_ROOT ${EP_INSTALL_DIR})
-set(units_DIR ${units_ROOT}/lib/cmake/units)
+set(units_DIR "${units_ROOT}/lib/cmake/units")
 if(WIN32)
   set(UNITS_RUNTIME_DIRS "${units_ROOT}/bin")
 else()
@@ -25,7 +26,7 @@ else()
   set(UNITS_BUILD_STATIC_LIBRARY ON)
 endif()
 
-ExternalProject_Add(units
+ExternalProject_Add(${proj}
   GIT_REPOSITORY "https://github.com/LLNL/units"
   GIT_TAG "v0.5.0"
   SOURCE_DIR ${EP_SOURCE_DIR}

@@ -1,9 +1,10 @@
-message("external project: magic_enum")
+set(proj magic_enum)
+message("external project: ${proj}")
 
 # SET DIRS
-set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/magic_enum")
-set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/magic_enum-build")
-set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/magic_enum-install")
+set(EP_SOURCE_DIR "${CMAKE_BINARY_DIR}/${proj}")
+set(EP_BINARY_DIR "${CMAKE_BINARY_DIR}/${proj}-build")
+set(EP_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${proj}-install")
 list(APPEND CMAKE_PREFIX_PATH ${EP_INSTALL_DIR})
 
 #-----------------------------------------------------------------------------
@@ -11,7 +12,7 @@ set(magic_enum_ROOT ${EP_INSTALL_DIR})
 
 set(DEPENDENCIES "")
 
-ExternalProject_Add(magic_enum
+ExternalProject_Add(${proj}
   GIT_REPOSITORY "https://github.com/Neargye/magic_enum.git"
   GIT_TAG "v0.7.3"
   SOURCE_DIR ${EP_SOURCE_DIR}
