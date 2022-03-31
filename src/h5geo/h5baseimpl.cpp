@@ -461,7 +461,7 @@ H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p)
 
     group.createDataSet(
           std::string{h5geo::detail::points_data},
-          dataspace, h5geo::compound_Point(), h5gt::LinkCreateProps(), props);
+          dataspace, h5geo::compound_Point3(), h5gt::LinkCreateProps(), props);
 
     return group;
 
@@ -1263,7 +1263,7 @@ bool h5geo::isPoints(
 
     h5gt::DataSet dset = group.getDataSet(std::string{name});
     auto dtype = dset.getDataType();
-    if (!dtype.isTypeEqual(h5geo::compound_Point())){
+    if (!dtype.isTypeEqual(h5geo::compound_Point3())){
       return false;
     }
   }

@@ -608,7 +608,7 @@ TEST_F(H5WellFixture, getCurveFromDifferentWell){
 
 TEST_F(H5WellFixture, createPointsFromWellTop){
 
-  ASSERT_TRUE(std::is_trivial<h5geo::Point>::value);
+  ASSERT_TRUE(std::is_trivial<h5geo::Point3>::value);
 
   std::string fileName = "welltops.h5";
   H5WellCnt_ptr wellCnt(
@@ -626,7 +626,7 @@ TEST_F(H5WellFixture, createPointsFromWellTop){
         wellCnt->createPoints(
           pointsName, pointsParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
 
-  h5geo::PointArray pArrIn, pArrOut;
+  h5geo::Point3Array pArrIn, pArrOut;
   pArrIn.push_back({headXY(0), headXY(1), kb, {'o', 'n', 'e', '\0'}});
   pArrIn.push_back({headXY(0), headXY(1), kb, {'t', 'w', 'o', '\0'}});
 

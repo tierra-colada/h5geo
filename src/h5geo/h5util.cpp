@@ -129,8 +129,8 @@ std::vector<std::string> getRawTraceHeaderNames()
     {"+ CDP Y	CDP_Y	185	4"},
     {"+ Number	INLINE	189	4"},
     {"+ Clossline Number	XLINE	193	4"},
-    {"+ Shot Point Number	SPN	197	4"},
-    {"+ Shot Point Scalar	SPS	201	2"},
+    {"+ Shot Point3 Number	SPN	197	4"},
+    {"+ Shot Point3 Scalar	SPS	201	2"},
     {"+ Trace value measurement unit	TVMU	203	2"}
   };
 }

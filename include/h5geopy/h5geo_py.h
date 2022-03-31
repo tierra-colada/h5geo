@@ -40,7 +40,7 @@ using namespace h5geo;
 // opaque types must be included to every translation unit or ODR falls (warnings is given)
 #include <h5geo/h5points.h>
 
-PYBIND11_MAKE_OPAQUE(h5geo::PointArray);
+PYBIND11_MAKE_OPAQUE(h5geo::Point3Array);
 
 /* to generate .pyi the returned type should be declared before it
  * is called. For example `createGroup` returns `Group` so I need to

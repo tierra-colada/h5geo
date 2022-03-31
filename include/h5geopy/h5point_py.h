@@ -8,7 +8,7 @@
 namespace h5geopy {
 
 void Point_py(
-    py::class_<Point>
+    py::class_<Point3>
     &py_obj);
 
 } // h5geopy

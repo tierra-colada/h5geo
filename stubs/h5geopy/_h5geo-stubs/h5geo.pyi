@@ -34,8 +34,8 @@ __all__ = [
     "MdAzIncl2MdXYTvd",
     "ObjectDeleter",
     "ObjectType",
-    "Point",
-    "PointArray",
+    "Point3",
+    "Point3Array",
     "PointsParam",
     "Endian",
     "SegyFormat",
@@ -539,11 +539,11 @@ class H5MapContainer(H5BaseContainer, H5Base):
     pass
 class H5Points(H5BaseObject, H5Base):
     def getContainer(self) -> H5BaseContainer: ...
-    def getData(self, lengthUnits: str = str(), temporalUnits: str = str(), doCoordTransform: bool = False) -> typing.List[Point]: ...
+    def getData(self, lengthUnits: str = str(), temporalUnits: str = str(), doCoordTransform: bool = False) -> typing.List[Point3]: ...
     def getDomain(self) -> Domain: ...
     def getPointsD(self) -> typing.Optional[h5gtpy._h5gt.DataSet]: ...
     def setDomain(self, arg0: Domain) -> bool: ...
-    def writeData(self, data: typing.List[Point], lengthUnits: str = str(), temporalUnits: str = str(), doCoordTransform: bool = False) -> bool: ...
+    def writeData(self, data: typing.List[Point3], lengthUnits: str = str(), temporalUnits: str = str(), doCoordTransform: bool = False) -> bool: ...
     pass
 class H5Seis(H5BaseObject, H5Base):
     def addPKeySort(self, pKeyName: str) -> bool: ...
@@ -917,7 +917,7 @@ class ObjectType():
     WELL: h5geopy._h5geo.ObjectType # value = <ObjectType.WELL: 2>
     __members__: dict # value = {'MAP': <ObjectType.MAP: 1>, 'WELL': <ObjectType.WELL: 2>, 'LOGCURVE': <ObjectType.LOGCURVE: 3>, 'DEVCURVE': <ObjectType.DEVCURVE: 4>, 'SEISMIC': <ObjectType.SEISMIC: 5>}
     pass
-class Point():
+class Point3():
     @typing.overload
     def __init__(self) -> None: ...
     @typing.overload
@@ -931,7 +931,7 @@ class Point():
     def y(self) -> float: ...
     def z(self) -> float: ...
     pass
-class PointArray():
+class Point3Array():
     def __bool__(self) -> bool: 
         """
         Check whether the list is nonempty
@@ -946,31 +946,31 @@ class PointArray():
     @typing.overload
     def __delitem__(self, arg0: slice) -> None: ...
     @typing.overload
-    def __getitem__(self, arg0: int) -> Point: 
+    def __getitem__(self, arg0: int) -> Point3: 
         """
         Retrieve list elements using a slice object
         """
     @typing.overload
-    def __getitem__(self, s: slice) -> PointArray: ...
+    def __getitem__(self, s: slice) -> Point3Array: ...
     @typing.overload
     def __init__(self) -> None: 
         """
         Copy constructor
         """
     @typing.overload
-    def __init__(self, arg0: PointArray) -> None: ...
+    def __init__(self, arg0: Point3Array) -> None: ...
     @typing.overload
     def __init__(self, arg0: typing.Iterable) -> None: ...
     def __iter__(self) -> typing.Iterator: ...
     def __len__(self) -> int: ...
     @typing.overload
-    def __setitem__(self, arg0: int, arg1: Point) -> None: 
+    def __setitem__(self, arg0: int, arg1: Point3) -> None: 
         """
         Assign list elements using a slice object
         """
     @typing.overload
-    def __setitem__(self, arg0: slice, arg1: PointArray) -> None: ...
-    def append(self, x: Point) -> None: 
+    def __setitem__(self, arg0: slice, arg1: Point3Array) -> None: ...
+    def append(self, x: Point3) -> None: 
         """
         Add an item to the end of the list
         """
@@ -979,7 +979,7 @@ class PointArray():
         Clear the contents
         """
     @typing.overload
-    def extend(self, L: PointArray) -> None: 
+    def extend(self, L: Point3Array) -> None: 
         """
         Extend the list by appending all the items in the given list
 
@@ -987,19 +987,19 @@ class PointArray():
         """
     @typing.overload
     def extend(self, L: typing.Iterable) -> None: ...
-    def insert(self, i: int, x: Point) -> None: 
+    def insert(self, i: int, x: Point3) -> None: 
         """
         Insert an item at a given position.
         """
     @typing.overload
-    def pop(self) -> Point: 
+    def pop(self) -> Point3: 
         """
         Remove and return the last item
 
         Remove and return the item at index ``i``
         """
     @typing.overload
-    def pop(self, i: int) -> Point: ...
+    def pop(self, i: int) -> Point3: ...
     pass
 class PointsParam(BaseObjectParam):
     def __init__(self) -> None: ...

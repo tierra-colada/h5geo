@@ -14,12 +14,12 @@ protected:
 
 public:
   virtual bool writeData(
-      h5geo::PointArray& data,
+      h5geo::Point3Array& data,
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "",
       bool doCoordTransform = false) = 0;
 
-  virtual h5geo::PointArray getData(
+  virtual h5geo::Point3Array getData(
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "",
       bool doCoordTransform = false) = 0;

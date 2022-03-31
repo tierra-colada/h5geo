@@ -3,19 +3,19 @@
 namespace h5geopy {
 
 void Point_py(
-    py::class_<Point>
+    py::class_<Point3>
     &py_obj){
   py_obj
-      .def("setX", &Point::setX)
-      .def("setY", &Point::setY)
-      .def("setZ", &Point::setZ)
+      .def("setX", &Point3::setX)
+      .def("setY", &Point3::setY)
+      .def("setZ", &Point3::setZ)
 
-      .def("getX", &Point::getX)
-      .def("getY", &Point::getY)
-      .def("getZ", &Point::getZ)
+      .def("getX", &Point3::getX)
+      .def("getY", &Point3::getY)
+      .def("getZ", &Point3::getZ)
 
-      .def("setName", &Point::setName)
-      .def("getName", &Point::getName);
+      .def("setName", &Point3::setName)
+      .def("getName", &Point3::getName);
 }
 
 } // h5geopy

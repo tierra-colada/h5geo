@@ -15,7 +15,7 @@ H5PointsImpl::H5PointsImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
 bool H5PointsImpl::writeData(
-    h5geo::PointArray& data,
+    h5geo::Point3Array& data,
     const std::string& lengthUnits,
     const std::string& temporalUnits,
     bool doCoordTransform)
@@ -27,20 +27,20 @@ bool H5PointsImpl::writeData(
         doCoordTransform);
 }
 
-h5geo::PointArray H5PointsImpl::getData(
+h5geo::Point3Array H5PointsImpl::getData(
     const std::string& lengthUnits,
     const std::string& temporalUnits,
     bool doCoordTransform)
 {
   auto opt = getPointsD();
   if (!opt.has_value())
-    return h5geo::PointArray();
+    return h5geo::Point3Array();
 
   auto dtype = opt->getDataType();
-  if (!dtype.isTypeEqual(h5geo::compound_Point()))
-    return h5geo::PointArray();
+  if (!dtype.isTypeEqual(h5geo::compound_Point3()))
+    return h5geo::Point3Array();
 
-  h5geo::PointArray data(opt->getElementCount());
+  h5geo::Point3Array data(opt->getElementCount());
   opt->read(data);
 
   bool val = transformPoints(
@@ -53,7 +53,7 @@ h5geo::PointArray H5PointsImpl::getData(
         doCoordTransform);
 
   if (!val)
-    return h5geo::PointArray();
+    return h5geo::Point3Array();
 
   return data;
 }
@@ -118,7 +118,7 @@ H5Points* h5geo::openPoints(h5gt::Group group){
 }
 
 bool H5PointsImpl::overwritePointsDataset(
-    h5geo::PointArray& data,
+    h5geo::Point3Array& data,
     const std::string& lengthUnits,
     const std::string& temporalUnits,
     bool doCoordTransform)
@@ -128,7 +128,7 @@ bool H5PointsImpl::overwritePointsDataset(
     return false;
 
   auto dtype = opt->getDataType();
-  if (!dtype.isTypeEqual(h5geo::compound_Point())){
+  if (!dtype.isTypeEqual(h5geo::compound_Point3())){
     return false;
   }
 
@@ -146,7 +146,7 @@ bool H5PointsImpl::overwritePointsDataset(
 
   try {
     opt->resize({data.size()});
-    opt->write_raw(data.data(), h5geo::compound_Point());
+    opt->write_raw(data.data(), h5geo::compound_Point3());
     objG.flush();
     return true;
   } catch (h5gt::Exception e) {
@@ -155,7 +155,7 @@ bool H5PointsImpl::overwritePointsDataset(
 }
 
 bool H5PointsImpl::transformPoints(
-    h5geo::PointArray& data,
+    h5geo::Point3Array& data,
     bool toReadData,
     const std::string& lengthUnitsFrom,
     const std::string& lengthUnitsTo,

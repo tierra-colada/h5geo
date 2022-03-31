@@ -97,8 +97,8 @@ PYBIND11_MODULE(_h5geo, m) {
 
   // H5GEO::POINT
   auto pyPoint =
-      py::class_<Point>
-      (m, "Point");
+      py::class_<Point3>
+      (m, "Point3");
 
   // POINTS
   auto pyPoints =
@@ -235,7 +235,7 @@ PYBIND11_MODULE(_h5geo, m) {
 
   // H5GEO::POINT
   Point_py(pyPoint);
-  py::bind_vector<PointArray>(m, "PointArray");
+  py::bind_vector<Point3Array>(m, "Point3Array");
 
   // POINTS
   H5Points_py(pyPoints);

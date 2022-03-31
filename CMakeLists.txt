@@ -28,7 +28,7 @@ option(H5GEO_BUILD_h5geopy "Build python wrapper (make sure to disable HDF5_USE_
 option(HDF5_USE_STATIC_LIBRARIES "Use static hdf5 lib" OFF)
 option(HDF5_PREFER_PARALLEL "Prefer parallel hdf5 if available" OFF)
 
-set(H5GEO_CHAR_ARRAY_SIZE "50" CACHE STRING "Number > 1 used to init char array for h5geo::Point for example")
+set(H5GEO_CHAR_ARRAY_SIZE "50" CACHE STRING "Number > 1 used to init char array for h5geo::Point3 for example")
 
 set(gtest_force_shared_crt ON CACHE BOOL "Prevent overriding the parent project's compiler/linker settings on Windows")
 set(GDAL_LIBS "" CACHE FILEPATH "Path to all GDAL dependcy (probably geos, proj etc.)")
