@@ -416,8 +416,14 @@ H5BaseImpl<TBase>::createNewObject(
     return createNewDevCurve(group, p);
   case h5geo::ObjectType::SEISMIC :
     return createNewSeis(group, p);
-  case h5geo::ObjectType::POINTS :
-    return createNewPoints(group, p);
+  case h5geo::ObjectType::POINTS_1 :
+    return createNewPoints(group, p, objType);
+  case h5geo::ObjectType::POINTS_2 :
+    return createNewPoints(group, p, objType);
+  case h5geo::ObjectType::POINTS_3 :
+    return createNewPoints(group, p, objType);
+  case h5geo::ObjectType::POINTS_4 :
+    return createNewPoints(group, p, objType);
   default:
     return std::nullopt;
   }
@@ -425,7 +431,7 @@ H5BaseImpl<TBase>::createNewObject(
 
 template <typename TBase>
 std::optional<h5gt::Group>
-H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p)
+H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p, h5geo::ObjectType pointsType)
 {
   PointsParam param = *(static_cast<PointsParam*>(p));
 
@@ -460,9 +466,30 @@ H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p)
           h5gt::DataSpace::From(param.temporalUnits)).
         write(param.temporalUnits);
 
-    group.createDataSet(
-          std::string{h5geo::detail::points_data},
-          dataspace, h5geo::compound_Point3(), h5gt::LinkCreateProps(), props);
+    switch (pointsType) {
+    case h5geo::ObjectType::POINTS_1 :
+      group.createDataSet(
+            std::string{h5geo::detail::points_data},
+            dataspace, h5geo::compound_Point1(), h5gt::LinkCreateProps(), props);
+      break;
+    case h5geo::ObjectType::POINTS_2 :
+      group.createDataSet(
+            std::string{h5geo::detail::points_data},
+            dataspace, h5geo::compound_Point2(), h5gt::LinkCreateProps(), props);
+      break;
+    case h5geo::ObjectType::POINTS_3 :
+      group.createDataSet(
+            std::string{h5geo::detail::points_data},
+            dataspace, h5geo::compound_Point3(), h5gt::LinkCreateProps(), props);
+      break;
+    case h5geo::ObjectType::POINTS_4 :
+      group.createDataSet(
+            std::string{h5geo::detail::points_data},
+            dataspace, h5geo::compound_Point4(), h5gt::LinkCreateProps(), props);
+      break;
+    default:
+      return std::nullopt;
+    }
 
     return group;
 
@@ -1224,8 +1251,14 @@ bool h5geo::isGeoObjectByType(const h5gt::Group& group,
     return h5geo::isDevCurve(group);
   case h5geo::ObjectType::SEISMIC :
     return h5geo::isSeis(group);
-  case h5geo::ObjectType::POINTS :
-    return h5geo::isPoints(group);
+  case h5geo::ObjectType::POINTS_1 :
+    return h5geo::isPoints1(group);
+  case h5geo::ObjectType::POINTS_2 :
+    return h5geo::isPoints2(group);
+  case h5geo::ObjectType::POINTS_3 :
+    return h5geo::isPoints3(group);
+  case h5geo::ObjectType::POINTS_4 :
+    return h5geo::isPoints4(group);
   default:
     return false;
   }
@@ -1234,8 +1267,14 @@ bool h5geo::isGeoObjectByType(const h5gt::Group& group,
 h5geo::ObjectType h5geo::getGeoObjectType(
     const h5gt::Group& group)
 {
-  if (h5geo::isPoints(group)){
-    return h5geo::ObjectType::POINTS;
+  if (h5geo::isPoints1(group)){
+    return h5geo::ObjectType::POINTS_1;
+  } else if (h5geo::isPoints2(group)){
+    return h5geo::ObjectType::POINTS_2;
+  } else if (h5geo::isPoints3(group)){
+    return h5geo::ObjectType::POINTS_3;
+  } else if (h5geo::isPoints4(group)){
+    return h5geo::ObjectType::POINTS_4;
   } else if (h5geo::isMap(group)){
     return h5geo::ObjectType::MAP;
   } else if (h5geo::isWell(group)){

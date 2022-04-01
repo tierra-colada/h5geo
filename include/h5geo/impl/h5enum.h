@@ -109,7 +109,10 @@ enum class ObjectType: unsigned{
   LOGCURVE = 3,
   DEVCURVE = 4,
   SEISMIC = 5,
-  POINTS = 6
+  POINTS_1 = 6,
+  POINTS_2 = 7,
+  POINTS_3 = 8,
+  POINTS_4 = 9
 };
 //ENABLE_BITMASK_OPERATORS(ObjectType);
 

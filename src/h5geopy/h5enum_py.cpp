@@ -16,7 +16,10 @@ void ObjectType_py(py::enum_<ObjectType> &py_obj){
       .value("LOGCURVE", ObjectType::LOGCURVE)
       .value("DEVCURVE", ObjectType::DEVCURVE)
       .value("SEISMIC", ObjectType::SEISMIC)
-      .value("POINTS", ObjectType::POINTS);
+      .value("POINTS_1", ObjectType::POINTS_1)
+      .value("POINTS_2", ObjectType::POINTS_2)
+      .value("POINTS_3", ObjectType::POINTS_3)
+      .value("POINTS_4", ObjectType::POINTS_4);
 }
 
 void Domain_py(py::enum_<Domain> &py_obj){

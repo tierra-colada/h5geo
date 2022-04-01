@@ -81,7 +81,7 @@ H5Points3* H5BaseContainerImpl<TBase>::createPoints3(
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(
-        name, h5File, h5geo::ObjectType::POINTS, &p, createFlag);
+        name, h5File, h5geo::ObjectType::POINTS_3, &p, createFlag);
 
   if (!opt.has_value())
     return nullptr;
@@ -96,7 +96,7 @@ H5Points3* H5BaseContainerImpl<TBase>::createPoints3(
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(
-        group, h5geo::ObjectType::POINTS, &p, createFlag);
+        group, h5geo::ObjectType::POINTS_3, &p, createFlag);
 
   if (!opt.has_value())
     return nullptr;

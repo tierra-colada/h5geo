@@ -19,7 +19,14 @@ struct H5BasePoints_py
       std::unique_ptr<H5BasePoints, ObjectDeleter>>
       &py_obj)
   {
+    py_obj
+        .def("setNPoints", &H5BasePoints::setNPoints)
+        .def("setDomain", &H5BasePoints::setDomain)
 
+        .def("openContainer", &H5BasePoints::openContainer)
+        .def("getNPoints", &H5BasePoints::getNPoints)
+        .def("getDomain", &H5BasePoints::getDomain)
+        .def("getPointsD", &H5BasePoints::getPointsD);
   }
 };
 
