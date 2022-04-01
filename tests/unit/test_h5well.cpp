@@ -5,7 +5,7 @@
 #include <h5geo/h5util.h>
 #include <h5geo/h5devcurve.h>
 #include <h5geo/h5logcurve.h>
-#include <h5geo/h5points.h>
+#include <h5geo/h5points3.h>
 #include <h5geo/misc/h5deviation.h>
 #include <h5geo/misc/h5core.h>
 
@@ -622,8 +622,8 @@ TEST_F(H5WellFixture, createPointsFromWellTop){
   auto kb = well->getKB();
   auto headXY = well->getHeadCoord();
   std::string pointsName = "well head";
-  H5Points_ptr points(
-        wellCnt->createPoints(
+  H5Points3_ptr points(
+        wellCnt->createPoints3(
           pointsName, pointsParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
 
   h5geo::Point3Array pArrIn, pArrOut;
@@ -633,7 +633,7 @@ TEST_F(H5WellFixture, createPointsFromWellTop){
   points->writeData(pArrIn);
   pArrOut = points->getData("km");
 
-  H5Points_ptr points_out(wellCnt->openPoints(pointsName));
+  H5BasePoints_ptr points_out(wellCnt->openPoints(pointsName));
   ASSERT_TRUE(points_out);
   ASSERT_TRUE(h5geo::isPoints(points->getObjG()));
 

@@ -38,7 +38,7 @@ namespace h5geo{};
 using namespace h5geo;
 
 // opaque types must be included to every translation unit or ODR falls (warnings is given)
-#include <h5geo/h5points.h>
+#include <h5geo/h5points3.h>
 
 PYBIND11_MAKE_OPAQUE(h5geo::Point3Array);
 

@@ -2,7 +2,7 @@
 #include "../../include/h5geo/impl/h5seiscontainerimpl.h"
 #include "../../include/h5geo/impl/h5mapcontainerimpl.h"
 #include "../../include/h5geo/impl/h5wellcontainerimpl.h"
-#include "../../include/h5geo/impl/h5pointsimpl.h"
+#include "../../include/h5geo/impl/h5points3impl.h"
 #include "../../include/h5geo/misc/h5core.h"
 #include "../../include/h5geo/misc/h5enum_string.h"
 
@@ -57,7 +57,7 @@ H5BaseObject* H5BaseContainerImpl<TBase>::openObject(
 }
 
 template <typename TBase>
-H5Points* H5BaseContainerImpl<TBase>::openPoints(
+H5BasePoints* H5BaseContainerImpl<TBase>::openPoints(
     const std::string& name)
 {
   if (!h5File.hasObject(name, h5gt::ObjectType::Group))
@@ -68,14 +68,14 @@ H5Points* H5BaseContainerImpl<TBase>::openPoints(
 }
 
 template <typename TBase>
-H5Points* H5BaseContainerImpl<TBase>::openPoints(
+H5BasePoints* H5BaseContainerImpl<TBase>::openPoints(
     h5gt::Group group)
 {
   return h5geo::openPoints(group);
 }
 
 template <typename TBase>
-H5Points* H5BaseContainerImpl<TBase>::createPoints(
+H5Points3* H5BaseContainerImpl<TBase>::createPoints3(
     std::string& name,
     PointsParam& p,
     h5geo::CreationType createFlag)
@@ -86,11 +86,11 @@ H5Points* H5BaseContainerImpl<TBase>::createPoints(
   if (!opt.has_value())
     return nullptr;
 
-  return new H5PointsImpl(opt.value());
+  return new H5Points3Impl(opt.value());
 }
 
 template <typename TBase>
-H5Points* H5BaseContainerImpl<TBase>::createPoints(
+H5Points3* H5BaseContainerImpl<TBase>::createPoints3(
     h5gt::Group group,
     PointsParam& p,
     h5geo::CreationType createFlag)
@@ -101,7 +101,7 @@ H5Points* H5BaseContainerImpl<TBase>::createPoints(
   if (!opt.has_value())
     return nullptr;
 
-  return new H5PointsImpl(opt.value());
+  return new H5Points3Impl(opt.value());
 }
 
 template <typename TBase>

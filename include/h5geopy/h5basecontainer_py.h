@@ -27,14 +27,14 @@ struct H5BaseContainer_py
              const std::string&>(&H5BaseContainer::openPoints))
         .def("openPoints", py::overload_cast<
              h5gt::Group>(&H5BaseContainer::openPoints))
-        .def("createPoints", py::overload_cast<
+        .def("createPoints3", py::overload_cast<
              std::string&,
              PointsParam&,
-             h5geo::CreationType>(&H5BaseContainer::createPoints))
-        .def("createPoints", py::overload_cast<
+             h5geo::CreationType>(&H5BaseContainer::createPoints3))
+        .def("createPoints3", py::overload_cast<
              h5gt::Group,
              PointsParam&,
-             h5geo::CreationType>(&H5BaseContainer::createPoints))
+             h5geo::CreationType>(&H5BaseContainer::createPoints3))
         .def("getH5File", &H5BaseContainer::getH5File)
         .def("getObjGroupList", &H5BaseContainer::getObjGroupList)
         .def("getObjNameList", &H5BaseContainer::getObjNameList)

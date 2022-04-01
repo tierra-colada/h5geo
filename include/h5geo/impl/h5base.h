@@ -43,7 +43,10 @@ class H5Map;
 class H5Well;
 class H5DevCurve;
 class H5LogCurve;
-class H5Points;
+class H5BasePoints;
+class H5Points1;
+class H5Points2;
+class H5Points3;
 
 ///
 /// \brief Base class for object params
@@ -190,6 +193,10 @@ H5GEO_EXPORT bool isGeoObjectByType(
 
 H5GEO_EXPORT h5geo::ObjectType getGeoObjectType(
     const h5gt::Group& group);
+H5GEO_EXPORT bool isPoints1(const h5gt::Group &group);
+H5GEO_EXPORT bool isPoints2(const h5gt::Group &group);
+H5GEO_EXPORT bool isPoints3(const h5gt::Group &group);
+H5GEO_EXPORT bool isPoints4(const h5gt::Group &group);
 H5GEO_EXPORT bool isPoints(const h5gt::Group &group);
 H5GEO_EXPORT bool isMap(const h5gt::Group &group);
 H5GEO_EXPORT bool isWell(const h5gt::Group &group);

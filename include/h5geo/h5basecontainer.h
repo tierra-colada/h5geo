@@ -14,15 +14,15 @@ public:
       const std::string& name) = 0;
   virtual H5BaseObject* openObject(
       h5gt::Group group) = 0;
-  virtual H5Points* openPoints(
+  virtual H5BasePoints* openPoints(
       const std::string& name) = 0;
-  virtual H5Points* openPoints(
+  virtual H5BasePoints* openPoints(
       h5gt::Group group) = 0;
-  virtual H5Points* createPoints(
+  virtual H5Points3* createPoints3(
       std::string& name,
       PointsParam& p,
       h5geo::CreationType createFlag) = 0;
-  virtual H5Points* createPoints(
+  virtual H5Points3* createPoints3(
       h5gt::Group group,
       PointsParam& p,
       h5geo::CreationType createFlag) = 0;

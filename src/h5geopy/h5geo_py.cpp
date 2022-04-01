@@ -10,7 +10,8 @@
 #include "../../include/h5geopy/h5geofunctions_py.h"
 #include "../../include/h5geopy/h5interpolation_py.h"
 #include "../../include/h5geopy/h5logcurve_py.h"
-#include "../../include/h5geopy/h5points_py.h"
+#include "../../include/h5geopy/h5basepoints_py.h"
+#include "../../include/h5geopy/h5points3_py.h"
 #include "../../include/h5geopy/h5seis_py.h"
 #include "../../include/h5geopy/h5segy_py.h"
 #include "../../include/h5geopy/h5seiscontainer_py.h"
@@ -96,19 +97,29 @@ PYBIND11_MODULE(_h5geo, m) {
       (m, "H5BaseObject");
 
   // H5GEO::POINT
-  auto pyPoint =
+  auto pyPoint3 =
       py::class_<Point3>
       (m, "Point3");
 
   // POINTS
-  auto pyPoints =
+  auto pyBasePoints =
       py::class_<
-      H5Points,
-      H5PointsImpl,
+      H5BasePoints,
+      H5BasePointsImpl<H5BasePoints>,
       H5BaseObject,
       H5Base,
-      std::unique_ptr<H5Points, ObjectDeleter>>
-      (m, "H5Points");
+      std::unique_ptr<H5BasePoints, ObjectDeleter>>
+      (m, "H5BasePoints");
+
+  auto pyPoints3 =
+      py::class_<
+      H5Points3,
+      H5Points3Impl,
+      H5BasePoints,
+      H5BaseObject,
+      H5Base,
+      std::unique_ptr<H5Points3, ObjectDeleter>>
+      (m, "H5Points3");
 
   // MAPCONTAINER
   auto pyMapContainer =
@@ -234,11 +245,12 @@ PYBIND11_MODULE(_h5geo, m) {
   H5BaseObject_py pyBaseObject_inst(pyBaseObject);
 
   // H5GEO::POINT
-  Point_py(pyPoint);
+  Point3_py(pyPoint3);
   py::bind_vector<Point3Array>(m, "Point3Array");
 
   // POINTS
-  H5Points_py(pyPoints);
+  H5BasePoints_py pyBasePoints_inst(pyBasePoints);
+  H5Points3_py(pyPoints3);
 
   // MAPCONTAINER
   H5MapContainer_py(pyMapContainer);

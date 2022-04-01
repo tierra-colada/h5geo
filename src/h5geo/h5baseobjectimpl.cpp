@@ -4,7 +4,8 @@
 #include "../../include/h5geo/impl/h5wellimpl.h"
 #include "../../include/h5geo/impl/h5devcurveimpl.h"
 #include "../../include/h5geo/impl/h5logcurveimpl.h"
-#include "../../include/h5geo/impl/h5pointsimpl.h"
+#include "../../include/h5geo/impl/h5basepointsimpl.h"
+#include "../../include/h5geo/impl/h5points3impl.h"
 #include "../../include/h5geo/misc/h5core.h"
 #include "../../include/h5geo/misc/h5enum_string.h"
 
@@ -55,9 +56,15 @@ H5Base* H5BaseObjectImpl<H5LogCurve>::clone()
 }
 
 template <>
-H5Base* H5BaseObjectImpl<H5Points>::clone()
+H5Base* H5BaseObjectImpl<H5BasePoints>::clone()
 {
-  return new H5PointsImpl(objG);
+  return new H5BasePointsImpl(objG);
+}
+
+template <>
+H5Base* H5BaseObjectImpl<H5Points3>::clone()
+{
+  return new H5Points3Impl(objG);
 }
 
 #ifdef H5GEO_USE_GDAL
@@ -344,4 +351,5 @@ template class H5BaseObjectImpl<H5Seis>;
 template class H5BaseObjectImpl<H5Well>;
 template class H5BaseObjectImpl<H5DevCurve>;
 template class H5BaseObjectImpl<H5LogCurve>;
-template class H5BaseObjectImpl<H5Points>;
+template class H5BaseObjectImpl<H5BasePoints>;
+template class H5BaseObjectImpl<H5Points3>;

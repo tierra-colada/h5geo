@@ -13,7 +13,8 @@ set(src_files_h5geopy
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5map_py.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5mapcontainer_py.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5point_py.cpp
-  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5points_py.cpp
+  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5basepoints_py.cpp
+  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5points3_py.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5seis_py.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5seiscontainer_py.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5segy_py.cpp

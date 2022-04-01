@@ -9,7 +9,8 @@
 #include "../../include/h5geo/impl/h5wellimpl.h"
 #include "../../include/h5geo/impl/h5devcurveimpl.h"
 #include "../../include/h5geo/impl/h5logcurveimpl.h"
-#include "../../include/h5geo/impl/h5pointsimpl.h"
+#include "../../include/h5geo/impl/h5basepointsimpl.h"
+#include "../../include/h5geo/impl/h5points3impl.h"
 #include "../../include/h5geo/misc/h5core.h"
 #include "../../include/h5geo/misc/h5enum_string.h"
 #include "../../include/h5geo/misc/h5segy.h"
@@ -1263,7 +1264,94 @@ bool h5geo::isPoints(
 
     h5gt::DataSet dset = group.getDataSet(std::string{name});
     auto dtype = dset.getDataType();
+    if (!dtype.isTypeEqual(h5geo::compound_Point1()) &&
+        !dtype.isTypeEqual(h5geo::compound_Point2()) &&
+        !dtype.isTypeEqual(h5geo::compound_Point3()) &&
+        !dtype.isTypeEqual(h5geo::compound_Point4())){
+      return false;
+    }
+  }
+  return true;
+}
+
+bool h5geo::isPoints1(
+    const h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::points_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::points_dsets){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
+      return false;
+
+    h5gt::DataSet dset = group.getDataSet(std::string{name});
+    auto dtype = dset.getDataType();
+    if (!dtype.isTypeEqual(h5geo::compound_Point1())){
+      return false;
+    }
+  }
+  return true;
+}
+
+bool h5geo::isPoints2(
+    const h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::points_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::points_dsets){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
+      return false;
+
+    h5gt::DataSet dset = group.getDataSet(std::string{name});
+    auto dtype = dset.getDataType();
+    if (!dtype.isTypeEqual(h5geo::compound_Point2())){
+      return false;
+    }
+  }
+  return true;
+}
+
+bool h5geo::isPoints3(
+    const h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::points_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::points_dsets){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
+      return false;
+
+    h5gt::DataSet dset = group.getDataSet(std::string{name});
+    auto dtype = dset.getDataType();
     if (!dtype.isTypeEqual(h5geo::compound_Point3())){
+      return false;
+    }
+  }
+  return true;
+}
+
+bool h5geo::isPoints4(
+    const h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::points_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::points_dsets){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
+      return false;
+
+    h5gt::DataSet dset = group.getDataSet(std::string{name});
+    auto dtype = dset.getDataType();
+    if (!dtype.isTypeEqual(h5geo::compound_Point4())){
       return false;
     }
   }
@@ -1411,4 +1499,5 @@ template class H5BaseImpl<H5Seis>;
 template class H5BaseImpl<H5Well>;
 template class H5BaseImpl<H5DevCurve>;
 template class H5BaseImpl<H5LogCurve>;
-template class H5BaseImpl<H5Points>;
+template class H5BaseImpl<H5BasePoints>;
+template class H5BaseImpl<H5Points3>;

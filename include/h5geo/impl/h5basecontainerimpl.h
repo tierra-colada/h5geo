@@ -20,15 +20,15 @@ public:
       const std::string& name) override;
   virtual H5BaseObject* openObject(
       h5gt::Group group) override;
-  virtual H5Points* openPoints(
+  virtual H5BasePoints* openPoints(
       const std::string& name) override;
-  virtual H5Points* openPoints(
+  virtual H5BasePoints* openPoints(
       h5gt::Group group) override;
-  virtual H5Points* createPoints(
+  virtual H5Points3* createPoints3(
       std::string& name,
       PointsParam& p,
       h5geo::CreationType createFlag) override;
-  virtual H5Points* createPoints(
+  virtual H5Points3* createPoints3(
       h5gt::Group group,
       PointsParam& p,
       h5geo::CreationType createFlag) override;

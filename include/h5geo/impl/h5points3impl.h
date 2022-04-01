@@ -1,17 +1,14 @@
-#ifndef H5POINTSIMPL_H
-#define H5POINTSIMPL_H
+#ifndef H5POINTS3IMPL_H
+#define H5POINTS3IMPL_H
 
-#include "../h5points.h"
-#include "h5baseobjectimpl.h"
+#include "../h5points3.h"
+#include "h5basepointsimpl.h"
 
-template <typename TBase>
-class H5BaseContainerImpl;
-
-class H5PointsImpl : public H5BaseObjectImpl<H5Points>
+class H5Points3Impl : public H5BasePointsImpl<H5Points3>
 {
 protected:
-  explicit H5PointsImpl(const h5gt::Group &group);
-  virtual ~H5PointsImpl() = default;
+  explicit H5Points3Impl(const h5gt::Group &group);
+  virtual ~H5Points3Impl() = default;
 
 public:
   virtual bool writeData(
@@ -25,14 +22,14 @@ public:
       const std::string& temporalUnits = "",
       bool doCoordTransform = false) override;
 
-  virtual bool setNPoints(size_t n) override;
-  virtual bool setDomain(const h5geo::Domain& domain) override;
+//  virtual bool setNPoints(size_t n) override;
+//  virtual bool setDomain(const h5geo::Domain& domain) override;
 
-  virtual H5BaseContainer* openContainer() const override;
-  virtual size_t getNPoints() override;
-  virtual h5geo::Domain getDomain() override;
+//  virtual H5BaseContainer* openContainer() const override;
+//  virtual size_t getNPoints() override;
+//  virtual h5geo::Domain getDomain() override;
 
-  virtual std::optional<h5gt::DataSet> getPointsD() const override;
+//  virtual std::optional<h5gt::DataSet> getPointsD() const override;
 
 protected:
   bool overwritePointsDataset(
@@ -52,12 +49,12 @@ protected:
       bool doCoordTransform = false);
 
   //----------- FRIEND CLASSES -----------
-  friend class H5BaseObjectImpl<H5Points>;
+  friend class H5BaseObjectImpl<H5Points3>;
   friend class H5BaseContainerImpl<H5BaseContainer>;
   friend class H5BaseContainerImpl<H5MapContainer>;
   friend class H5BaseContainerImpl<H5SeisContainer>;
   friend class H5BaseContainerImpl<H5WellContainer>;
-  friend H5Points* h5geo::openPoints(h5gt::Group group);
+  friend H5BasePoints* h5geo::openPoints(h5gt::Group group);
 };
 
-#endif // H5POINTS_H
+#endif // H5POINTS3IMPL_H
