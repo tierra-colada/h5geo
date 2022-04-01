@@ -15,11 +15,13 @@ public:
       h5geo::Point4Array& data,
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "",
+      const std::string& dataUnits = "",
       bool doCoordTransform = false) override;
 
   virtual h5geo::Point4Array getData(
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "",
+      const std::string& dataUnits = "",
       bool doCoordTransform = false) override;
 
 protected:
@@ -27,6 +29,7 @@ protected:
       h5geo::Point4Array& data,
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "",
+      const std::string& dataUnits = "",
       bool doCoordTransform = false);
   /// Do the coordinate transformation and units convertion
   /// \param toRead if true then OGRCT will be created to read data
@@ -37,6 +40,8 @@ protected:
       const std::string& lengthUnitsTo = "",
       const std::string& temporalUnitsFrom = "",
       const std::string& temporalUnitsTo = "",
+      const std::string& dataUnitsFrom = "",
+      const std::string& dataUnitsTo = "",
       bool doCoordTransform = false);
 
   //----------- FRIEND CLASSES -----------

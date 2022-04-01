@@ -12,7 +12,10 @@ namespace h5geo {
 // NO std::string as a var member
 // check it using 'std::is_trivial<h5geo::Point3>::value'
 
+
 //------------------------POINT1------------------------//
+
+/// X maybe length or time (depending on Domain)
 typedef struct Point1{
   void setX(const double& x) { p[0] = x; }
 
@@ -37,7 +40,10 @@ typedef struct Point1{
 
 typedef std::vector<h5geo::Point1> Point1Array;
 
+
 //------------------------POINT2------------------------//
+
+/// X, Y are always length
 typedef struct Point2{
   void setX(const double& x) { p[0] = x; }
   void setY(const double& y) { p[1] = y; }
@@ -64,7 +70,10 @@ typedef struct Point2{
 
 typedef std::vector<h5geo::Point2> Point2Array;
 
+
 //------------------------POINT3------------------------//
+
+/// X, Y are always length, Z either length or time (depending on Domain)
 typedef struct Point3{
   void setX(const double& x) { p[0] = x; }
   void setY(const double& y) { p[1] = y; }
@@ -93,6 +102,9 @@ typedef struct Point3{
 typedef std::vector<h5geo::Point3> Point3Array;
 
 //------------------------POINT4------------------------//
+
+/// X, Y are always length, Z either length or time (depending on Domain),
+/// VAL is in data units
 typedef struct Point4{
   void setX(const double& x) { p[0] = x; }
   void setY(const double& y) { p[1] = y; }
@@ -121,6 +133,8 @@ typedef struct Point4{
 } Point4;
 
 typedef std::vector<h5geo::Point4> Point4Array;
+
+
 
 inline h5gt::CompoundType compound_Point1() {
   h5gt::CompoundType t(

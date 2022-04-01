@@ -18,18 +18,21 @@ bool H5Points4Impl::writeData(
     h5geo::Point4Array& data,
     const std::string& lengthUnits,
     const std::string& temporalUnits,
+    const std::string& dataUnits,
     bool doCoordTransform)
 {
   return this->overwritePointsDataset(
         data,
         lengthUnits,
         temporalUnits,
+        dataUnits,
         doCoordTransform);
 }
 
 h5geo::Point4Array H5Points4Impl::getData(
     const std::string& lengthUnits,
     const std::string& temporalUnits,
+    const std::string& dataUnits,
     bool doCoordTransform)
 {
   auto opt = getPointsD();
@@ -50,6 +53,8 @@ h5geo::Point4Array H5Points4Impl::getData(
         lengthUnits,
         getTemporalUnits(),
         temporalUnits,
+        getDataUnits(),
+        dataUnits,
         doCoordTransform);
 
   if (!val)
@@ -62,6 +67,7 @@ bool H5Points4Impl::overwritePointsDataset(
     h5geo::Point4Array& data,
     const std::string& lengthUnits,
     const std::string& temporalUnits,
+    const std::string& dataUnits,
     bool doCoordTransform)
 {
   auto opt = getPointsD();
@@ -80,6 +86,8 @@ bool H5Points4Impl::overwritePointsDataset(
         getLengthUnits(),
         temporalUnits,
         getTemporalUnits(),
+        dataUnits,
+        getDataUnits(),
         doCoordTransform);
 
   if (!val)
@@ -102,6 +110,8 @@ bool H5Points4Impl::transformPoints(
     const std::string& lengthUnitsTo,
     const std::string& temporalUnitsFrom,
     const std::string& temporalUnitsTo,
+    const std::string& dataUnitsFrom,
+    const std::string& dataUnitsTo,
     bool doCoordTransform)
 {
   h5geo::Domain domain = getDomain();
@@ -143,6 +153,15 @@ bool H5Points4Impl::transformPoints(
         point.p[2] *= coef;
     }
 
+    if (!dataUnitsFrom.empty() &&
+        !dataUnitsTo.empty()){
+      coef = units::convert(
+            units::unit_from_string(dataUnitsFrom),
+            units::unit_from_string(dataUnitsTo));
+      for (auto& point : data)
+        point.p[3] *= coef;
+    }
+
     return true;
   }
 #endif
@@ -177,6 +196,15 @@ bool H5Points4Impl::transformPoints(
           units::unit_from_string(temporalUnitsTo));
     for (auto& point : data)
       point.p[2] *= coef;
+  }
+
+  if (!dataUnitsFrom.empty() &&
+      !dataUnitsTo.empty()){
+    coef = units::convert(
+          units::unit_from_string(dataUnitsFrom),
+          units::unit_from_string(dataUnitsTo));
+    for (auto& point : data)
+      point.p[3] *= coef;
   }
 
   return true;

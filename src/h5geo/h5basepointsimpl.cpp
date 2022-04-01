@@ -7,6 +7,14 @@
 #include "../../include/h5geo/misc/h5core.h"
 #include "../../include/h5geo/misc/h5enum_string.h"
 
+#include <units/units.hpp>
+
+#ifdef H5GEO_USE_GDAL
+#include <gdal.h>
+#include <gdal_priv.h>
+#endif
+
+
 template <typename TBase>
 H5BasePointsImpl<TBase>::H5BasePointsImpl(const h5gt::Group &group) :
   H5BaseObjectImpl<TBase>(group){}
@@ -72,8 +80,16 @@ H5BasePointsImpl<TBase>::getPointsD() const
 H5BasePoints*
 h5geo::openPoints(h5gt::Group group)
 {
+  if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_1))
+    return new H5Points1Impl(group);
+  else if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_2))
+    return new H5Points2Impl(group);
+  else if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_3))
+    return new H5Points3Impl(group);
+  else if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_4))
+    return new H5Points4Impl(group);
+
   return nullptr;
-//  return new H5BasePointsImpl<H5BasePoints>(group);
 }
 
 // explicit instantiation (requires that corresponding headers are included)

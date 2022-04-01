@@ -14,19 +14,16 @@ public:
   virtual bool writeData(
       h5geo::Point2Array& data,
       const std::string& lengthUnits = "",
-      const std::string& temporalUnits = "",
       bool doCoordTransform = false) override;
 
   virtual h5geo::Point2Array getData(
       const std::string& lengthUnits = "",
-      const std::string& temporalUnits = "",
       bool doCoordTransform = false) override;
 
 protected:
   bool overwritePointsDataset(
       h5geo::Point2Array& data,
       const std::string& lengthUnits = "",
-      const std::string& temporalUnits = "",
       bool doCoordTransform = false);
   /// Do the coordinate transformation and units convertion
   /// \param toRead if true then OGRCT will be created to read data
@@ -35,8 +32,6 @@ protected:
       bool toReadData,
       const std::string& lengthUnitsFrom = "",
       const std::string& lengthUnitsTo = "",
-      const std::string& temporalUnitsFrom = "",
-      const std::string& temporalUnitsTo = "",
       bool doCoordTransform = false);
 
   //----------- FRIEND CLASSES -----------

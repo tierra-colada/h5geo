@@ -17,19 +17,16 @@ H5Points2Impl::H5Points2Impl(const h5gt::Group &group) :
 bool H5Points2Impl::writeData(
     h5geo::Point2Array& data,
     const std::string& lengthUnits,
-    const std::string& temporalUnits,
     bool doCoordTransform)
 {
   return this->overwritePointsDataset(
         data,
         lengthUnits,
-        temporalUnits,
         doCoordTransform);
 }
 
 h5geo::Point2Array H5Points2Impl::getData(
     const std::string& lengthUnits,
-    const std::string& temporalUnits,
     bool doCoordTransform)
 {
   auto opt = getPointsD();
@@ -48,8 +45,6 @@ h5geo::Point2Array H5Points2Impl::getData(
         true,
         getLengthUnits(),
         lengthUnits,
-        getTemporalUnits(),
-        temporalUnits,
         doCoordTransform);
 
   if (!val)
@@ -61,7 +56,6 @@ h5geo::Point2Array H5Points2Impl::getData(
 bool H5Points2Impl::overwritePointsDataset(
     h5geo::Point2Array& data,
     const std::string& lengthUnits,
-    const std::string& temporalUnits,
     bool doCoordTransform)
 {
   auto opt = getPointsD();
@@ -78,8 +72,6 @@ bool H5Points2Impl::overwritePointsDataset(
         false,
         lengthUnits,
         getLengthUnits(),
-        temporalUnits,
-        getTemporalUnits(),
         doCoordTransform);
 
   if (!val)
@@ -100,11 +92,8 @@ bool H5Points2Impl::transformPoints(
     bool toReadData,
     const std::string& lengthUnitsFrom,
     const std::string& lengthUnitsTo,
-    const std::string& temporalUnitsFrom,
-    const std::string& temporalUnitsTo,
     bool doCoordTransform)
 {
-  h5geo::Domain domain = getDomain();
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCT_ptr coordTrans;
@@ -120,29 +109,6 @@ bool H5Points2Impl::transformPoints(
     for (auto& point : data)
       coordTrans->Transform(1, &point.p[0], &point.p[1]);
 
-    double coef;
-    if (!lengthUnitsFrom.empty() &&
-        !lengthUnitsTo.empty() &&
-        domain != h5geo::Domain::OWT &&
-        domain != h5geo::Domain::TWT){
-      coef = units::convert(
-            units::unit_from_string(lengthUnitsFrom),
-            units::unit_from_string(lengthUnitsTo));
-      for (auto& point : data)
-        point.p[2] *= coef;
-    }
-
-    if (!temporalUnitsFrom.empty() &&
-        !temporalUnitsTo.empty() &&
-        (domain == h5geo::Domain::OWT ||
-         domain == h5geo::Domain::TWT)){
-      coef = units::convert(
-            units::unit_from_string(temporalUnitsFrom),
-            units::unit_from_string(temporalUnitsTo));
-      for (auto& point : data)
-        point.p[2] *= coef;
-    }
-
     return true;
   }
 #endif
@@ -153,30 +119,10 @@ bool H5Points2Impl::transformPoints(
     coef = units::convert(
           units::unit_from_string(lengthUnitsFrom),
           units::unit_from_string(lengthUnitsTo));
-    if (domain == h5geo::Domain::OWT ||
-        domain == h5geo::Domain::TWT){
-      for (auto& point : data){
-        point.p[0] *= coef;
-        point.p[1] *= coef;
-      }
-    } else {
-      for (auto& point : data){
-        point.p[0] *= coef;
-        point.p[1] *= coef;
-        point.p[2] *= coef;
-      }
+    for (auto& point : data){
+      point.p[0] *= coef;
+      point.p[1] *= coef;
     }
-  }
-
-  if (!temporalUnitsFrom.empty() &&
-      !temporalUnitsTo.empty() &&
-      (domain == h5geo::Domain::OWT ||
-       domain == h5geo::Domain::TWT)){
-    coef = units::convert(
-          units::unit_from_string(temporalUnitsFrom),
-          units::unit_from_string(temporalUnitsTo));
-    for (auto& point : data)
-      point.p[2] *= coef;
   }
 
   return true;

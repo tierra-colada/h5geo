@@ -14,12 +14,10 @@ public:
   virtual bool writeData(
       h5geo::Point2Array& data,
       const std::string& lengthUnits = "",
-      const std::string& temporalUnits = "",
       bool doCoordTransform = false) = 0;
 
   virtual h5geo::Point2Array getData(
       const std::string& lengthUnits = "",
-      const std::string& temporalUnits = "",
       bool doCoordTransform = false) = 0;
 };
 

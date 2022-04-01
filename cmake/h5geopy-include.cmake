@@ -14,7 +14,7 @@ set(include_files_h5geopy
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5mapcontainer_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5point_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5basepoints_py.h
-  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5points3_py.h
+  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5points_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5seis_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5seiscontainer_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5segy_py.h

@@ -47,6 +47,7 @@ class H5BasePoints;
 class H5Points1;
 class H5Points2;
 class H5Points3;
+class H5Points4;
 
 ///
 /// \brief Base class for object params

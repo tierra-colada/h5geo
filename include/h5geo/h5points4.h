@@ -15,11 +15,13 @@ public:
       h5geo::Point4Array& data,
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "",
+      const std::string& dataUnits = "",
       bool doCoordTransform = false) = 0;
 
   virtual h5geo::Point4Array getData(
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "",
+      const std::string& dataUnits = "",
       bool doCoordTransform = false) = 0;
 };
 

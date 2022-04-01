@@ -18,11 +18,35 @@ public:
       const std::string& name) = 0;
   virtual H5BasePoints* openPoints(
       h5gt::Group group) = 0;
+  virtual H5Points1* createPoints1(
+      std::string& name,
+      PointsParam& p,
+      h5geo::CreationType createFlag) = 0;
+  virtual H5Points1* createPoints1(
+      h5gt::Group group,
+      PointsParam& p,
+      h5geo::CreationType createFlag) = 0;
+  virtual H5Points2* createPoints2(
+      std::string& name,
+      PointsParam& p,
+      h5geo::CreationType createFlag) = 0;
+  virtual H5Points2* createPoints2(
+      h5gt::Group group,
+      PointsParam& p,
+      h5geo::CreationType createFlag) = 0;
   virtual H5Points3* createPoints3(
       std::string& name,
       PointsParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Points3* createPoints3(
+      h5gt::Group group,
+      PointsParam& p,
+      h5geo::CreationType createFlag) = 0;
+  virtual H5Points4* createPoints4(
+      std::string& name,
+      PointsParam& p,
+      h5geo::CreationType createFlag) = 0;
+  virtual H5Points4* createPoints4(
       h5gt::Group group,
       PointsParam& p,
       h5geo::CreationType createFlag) = 0;

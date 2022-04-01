@@ -58,65 +58,6 @@ h5geo::Point3Array H5Points3Impl::getData(
   return data;
 }
 
-//bool H5Points3Impl::setNPoints(size_t n)
-//{
-//  auto opt = getPointsD();
-//  if (!opt.has_value())
-//    return false;
-
-//  try {
-//    opt->resize({n});
-//    objG.flush();
-//    return true;
-//  } catch (h5gt::Exception e) {
-//    return false;
-//  }
-//}
-
-//bool H5Points3Impl::setDomain(const h5geo::Domain& val){
-//  unsigned v = static_cast<unsigned>(val);
-//  return h5geo::overwriteAttribute(
-//        objG,
-//        std::string{h5geo::detail::Domain},
-//        v);
-//}
-
-//H5BaseContainer* H5Points3Impl::openContainer() const{
-//  h5gt::File file = getH5File();
-//  return h5geo::openContainer(file);
-//}
-
-//size_t H5Points3Impl::getNPoints()
-//{
-//  auto opt = getPointsD();
-//  if (!opt.has_value())
-//    return 0;
-
-//  return opt->getElementCount();
-//}
-
-//h5geo::Domain H5Points3Impl::getDomain(){
-//  return static_cast<h5geo::Domain>(
-//        h5geo::readEnumAttribute(
-//          objG,
-//          std::string{h5geo::detail::Domain}));
-//}
-
-//std::optional<h5gt::DataSet>
-//H5Points3Impl::getPointsD() const
-//{
-//  std::string name = std::string{h5geo::detail::points_data};
-
-//  return getDatasetOpt(objG, name);
-//}
-
-//H5Points3* h5geo::openPoints(h5gt::Group group){
-//  if (isGeoObjectByType(group, h5geo::ObjectType::POINTS))
-//      return new H5Points3Impl(group);
-
-//  return nullptr;
-//}
-
 bool H5Points3Impl::overwritePointsDataset(
     h5geo::Point3Array& data,
     const std::string& lengthUnits,

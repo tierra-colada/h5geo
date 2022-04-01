@@ -17,20 +17,17 @@ H5Points1Impl::H5Points1Impl(const h5gt::Group &group) :
 bool H5Points1Impl::writeData(
     h5geo::Point1Array& data,
     const std::string& lengthUnits,
-    const std::string& temporalUnits,
-    bool doCoordTransform)
+    const std::string& temporalUnits)
 {
   return this->overwritePointsDataset(
         data,
         lengthUnits,
-        temporalUnits,
-        doCoordTransform);
+        temporalUnits);
 }
 
 h5geo::Point1Array H5Points1Impl::getData(
     const std::string& lengthUnits,
-    const std::string& temporalUnits,
-    bool doCoordTransform)
+    const std::string& temporalUnits)
 {
   auto opt = getPointsD();
   if (!opt.has_value())
@@ -49,8 +46,7 @@ h5geo::Point1Array H5Points1Impl::getData(
         getLengthUnits(),
         lengthUnits,
         getTemporalUnits(),
-        temporalUnits,
-        doCoordTransform);
+        temporalUnits);
 
   if (!val)
     return h5geo::Point1Array();
@@ -61,8 +57,7 @@ h5geo::Point1Array H5Points1Impl::getData(
 bool H5Points1Impl::overwritePointsDataset(
     h5geo::Point1Array& data,
     const std::string& lengthUnits,
-    const std::string& temporalUnits,
-    bool doCoordTransform)
+    const std::string& temporalUnits)
 {
   auto opt = getPointsD();
   if (!opt.has_value())
@@ -79,8 +74,7 @@ bool H5Points1Impl::overwritePointsDataset(
         lengthUnits,
         getLengthUnits(),
         temporalUnits,
-        getTemporalUnits(),
-        doCoordTransform);
+        getTemporalUnits());
 
   if (!val)
     return false;
@@ -101,70 +95,19 @@ bool H5Points1Impl::transformPoints(
     const std::string& lengthUnitsFrom,
     const std::string& lengthUnitsTo,
     const std::string& temporalUnitsFrom,
-    const std::string& temporalUnitsTo,
-    bool doCoordTransform)
+    const std::string& temporalUnitsTo)
 {
   h5geo::Domain domain = getDomain();
-#ifdef H5GEO_USE_GDAL
-  if (doCoordTransform){
-    OGRCT_ptr coordTrans;
-    if (toReadData)
-      coordTrans.reset(createCoordinateTransformationToReadData(
-                         lengthUnitsTo));
-    else
-      coordTrans.reset(createCoordinateTransformationToWriteData(
-                         lengthUnitsFrom));
-    if (!coordTrans)
-      return false;
-
-    for (auto& point : data)
-      coordTrans->Transform(1, &point.p[0], &point.p[1]);
-
-    double coef;
-    if (!lengthUnitsFrom.empty() &&
-        !lengthUnitsTo.empty() &&
-        domain != h5geo::Domain::OWT &&
-        domain != h5geo::Domain::TWT){
-      coef = units::convert(
-            units::unit_from_string(lengthUnitsFrom),
-            units::unit_from_string(lengthUnitsTo));
-      for (auto& point : data)
-        point.p[2] *= coef;
-    }
-
-    if (!temporalUnitsFrom.empty() &&
-        !temporalUnitsTo.empty() &&
-        (domain == h5geo::Domain::OWT ||
-         domain == h5geo::Domain::TWT)){
-      coef = units::convert(
-            units::unit_from_string(temporalUnitsFrom),
-            units::unit_from_string(temporalUnitsTo));
-      for (auto& point : data)
-        point.p[2] *= coef;
-    }
-
-    return true;
-  }
-#endif
-
   double coef;
   if (!lengthUnitsFrom.empty() &&
-      !lengthUnitsTo.empty()){
+      !lengthUnitsTo.empty() &&
+      domain != h5geo::Domain::OWT &&
+      domain != h5geo::Domain::TWT){
     coef = units::convert(
           units::unit_from_string(lengthUnitsFrom),
           units::unit_from_string(lengthUnitsTo));
-    if (domain == h5geo::Domain::OWT ||
-        domain == h5geo::Domain::TWT){
-      for (auto& point : data){
-        point.p[0] *= coef;
-        point.p[1] *= coef;
-      }
-    } else {
-      for (auto& point : data){
-        point.p[0] *= coef;
-        point.p[1] *= coef;
-        point.p[2] *= coef;
-      }
+    for (auto& point : data){
+      point.p[0] *= coef;
     }
   }
 
@@ -175,8 +118,9 @@ bool H5Points1Impl::transformPoints(
     coef = units::convert(
           units::unit_from_string(temporalUnitsFrom),
           units::unit_from_string(temporalUnitsTo));
-    for (auto& point : data)
-      point.p[2] *= coef;
+    for (auto& point : data){
+      point.p[0] *= coef;
+    }
   }
 
   return true;

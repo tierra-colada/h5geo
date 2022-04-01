@@ -468,6 +468,10 @@ H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p, h5geo::ObjectTyp
           std::string{h5geo::detail::temporal_units},
           h5gt::DataSpace::From(param.temporalUnits)).
         write(param.temporalUnits);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::data_units},
+          h5gt::DataSpace::From(param.dataUnits)).
+        write(param.dataUnits);
 
     switch (pointsType) {
     case h5geo::ObjectType::POINTS_1 :
