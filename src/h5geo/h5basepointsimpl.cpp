@@ -1,5 +1,8 @@
 #include "../../include/h5geo/impl/h5basepointsimpl.h"
+#include "../../include/h5geo/impl/h5points1impl.h"
+#include "../../include/h5geo/impl/h5points2impl.h"
 #include "../../include/h5geo/impl/h5points3impl.h"
+#include "../../include/h5geo/impl/h5points4impl.h"
 #include "../../include/h5geo/h5basecontainer.h"
 #include "../../include/h5geo/misc/h5core.h"
 #include "../../include/h5geo/misc/h5enum_string.h"
@@ -75,4 +78,7 @@ h5geo::openPoints(h5gt::Group group)
 
 // explicit instantiation (requires that corresponding headers are included)
 template class H5BasePointsImpl<H5BasePoints>;
+template class H5BasePointsImpl<H5Points1>;
+template class H5BasePointsImpl<H5Points2>;
 template class H5BasePointsImpl<H5Points3>;
+template class H5BasePointsImpl<H5Points4>;

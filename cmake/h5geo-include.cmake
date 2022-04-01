@@ -28,7 +28,10 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5welltopsimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5point.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5basepointsimpl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5points1impl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5points2impl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5points3impl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/impl/h5points4impl.h
 
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5basecontainer.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5baseobject.h
@@ -43,7 +46,10 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5welltops.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5wellcontainer.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5basepoints.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5points1.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5points2.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5points3.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5points4.h
   )
 
 if(H5GEO_USE_GDAL)
