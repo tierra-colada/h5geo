@@ -3,6 +3,7 @@
 #include "../../include/h5geo/impl/h5points2impl.h"
 #include "../../include/h5geo/impl/h5points3impl.h"
 #include "../../include/h5geo/impl/h5points4impl.h"
+#include "../../include/h5geo/impl/h5welltopsimpl.h"
 #include "../../include/h5geo/h5basecontainer.h"
 #include "../../include/h5geo/misc/h5core.h"
 #include "../../include/h5geo/misc/h5enum_string.h"
@@ -98,3 +99,4 @@ template class H5BasePointsImpl<H5Points1>;
 template class H5BasePointsImpl<H5Points2>;
 template class H5BasePointsImpl<H5Points3>;
 template class H5BasePointsImpl<H5Points4>;
+template class H5BasePointsImpl<H5WellTops>;

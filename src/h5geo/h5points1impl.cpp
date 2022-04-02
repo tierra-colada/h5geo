@@ -1,4 +1,5 @@
 #include "../../include/h5geo/impl/h5points1impl.h"
+#include "../../include/h5geo/impl/h5welltopsimpl.h"
 #include "../../include/h5geo/h5basecontainer.h"
 #include "../../include/h5geo/misc/h5core.h"
 #include "../../include/h5geo/misc/h5enum_string.h"
@@ -11,10 +12,12 @@
 #endif
 
 
-H5Points1Impl::H5Points1Impl(const h5gt::Group &group) :
-  H5BasePointsImpl(group){}
+template <typename TBase>
+H5Points1Impl<TBase>::H5Points1Impl(const h5gt::Group &group) :
+  H5BasePointsImpl<TBase>(group){}
 
-bool H5Points1Impl::writeData(
+template <typename TBase>
+bool H5Points1Impl<TBase>::writeData(
     h5geo::Point1Array& data,
     const std::string& lengthUnits,
     const std::string& temporalUnits)
@@ -25,11 +28,12 @@ bool H5Points1Impl::writeData(
         temporalUnits);
 }
 
-h5geo::Point1Array H5Points1Impl::getData(
+template <typename TBase>
+h5geo::Point1Array H5Points1Impl<TBase>::getData(
     const std::string& lengthUnits,
     const std::string& temporalUnits)
 {
-  auto opt = getPointsD();
+  auto opt = this->getPointsD();
   if (!opt.has_value())
     return h5geo::Point1Array();
 
@@ -43,9 +47,9 @@ h5geo::Point1Array H5Points1Impl::getData(
   bool val = transformPoints(
         data,
         true,
-        getLengthUnits(),
+        this->getLengthUnits(),
         lengthUnits,
-        getTemporalUnits(),
+        this->getTemporalUnits(),
         temporalUnits);
 
   if (!val)
@@ -54,12 +58,13 @@ h5geo::Point1Array H5Points1Impl::getData(
   return data;
 }
 
-bool H5Points1Impl::overwritePointsDataset(
+template <typename TBase>
+bool H5Points1Impl<TBase>::overwritePointsDataset(
     h5geo::Point1Array& data,
     const std::string& lengthUnits,
     const std::string& temporalUnits)
 {
-  auto opt = getPointsD();
+  auto opt = this->getPointsD();
   if (!opt.has_value())
     return false;
 
@@ -72,9 +77,9 @@ bool H5Points1Impl::overwritePointsDataset(
         data,
         false,
         lengthUnits,
-        getLengthUnits(),
+        this->getLengthUnits(),
         temporalUnits,
-        getTemporalUnits());
+        this->getTemporalUnits());
 
   if (!val)
     return false;
@@ -82,14 +87,15 @@ bool H5Points1Impl::overwritePointsDataset(
   try {
     opt->resize({data.size()});
     opt->write_raw(data.data(), h5geo::compound_Point1());
-    objG.flush();
+    this->objG.flush();
     return true;
   } catch (h5gt::Exception e) {
     return false;
   }
 }
 
-bool H5Points1Impl::transformPoints(
+template <typename TBase>
+bool H5Points1Impl<TBase>::transformPoints(
     h5geo::Point1Array& data,
     bool toReadData,
     const std::string& lengthUnitsFrom,
@@ -97,7 +103,7 @@ bool H5Points1Impl::transformPoints(
     const std::string& temporalUnitsFrom,
     const std::string& temporalUnitsTo)
 {
-  h5geo::Domain domain = getDomain();
+  h5geo::Domain domain = this->getDomain();
   double coef;
   if (!lengthUnitsFrom.empty() &&
       !lengthUnitsTo.empty() &&
@@ -125,3 +131,7 @@ bool H5Points1Impl::transformPoints(
 
   return true;
 }
+
+// explicit instantiation (requires that corresponding headers are included)
+template class H5Points1Impl<H5Points1>;
+template class H5Points1Impl<H5WellTops>;

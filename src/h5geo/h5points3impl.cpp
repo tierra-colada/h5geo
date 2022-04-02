@@ -11,10 +11,12 @@
 #endif
 
 
-H5Points3Impl::H5Points3Impl(const h5gt::Group &group) :
-  H5BasePointsImpl(group){}
+template <typename TBase>
+H5Points3Impl<TBase>::H5Points3Impl(const h5gt::Group &group) :
+  H5BasePointsImpl<TBase>(group){}
 
-bool H5Points3Impl::writeData(
+template <typename TBase>
+bool H5Points3Impl<TBase>::writeData(
     h5geo::Point3Array& data,
     const std::string& lengthUnits,
     const std::string& temporalUnits,
@@ -27,12 +29,13 @@ bool H5Points3Impl::writeData(
         doCoordTransform);
 }
 
-h5geo::Point3Array H5Points3Impl::getData(
+template <typename TBase>
+h5geo::Point3Array H5Points3Impl<TBase>::getData(
     const std::string& lengthUnits,
     const std::string& temporalUnits,
     bool doCoordTransform)
 {
-  auto opt = getPointsD();
+  auto opt = this->getPointsD();
   if (!opt.has_value())
     return h5geo::Point3Array();
 
@@ -46,9 +49,9 @@ h5geo::Point3Array H5Points3Impl::getData(
   bool val = transformPoints(
         data,
         true,
-        getLengthUnits(),
+        this->getLengthUnits(),
         lengthUnits,
-        getTemporalUnits(),
+        this->getTemporalUnits(),
         temporalUnits,
         doCoordTransform);
 
@@ -58,13 +61,14 @@ h5geo::Point3Array H5Points3Impl::getData(
   return data;
 }
 
-bool H5Points3Impl::overwritePointsDataset(
+template <typename TBase>
+bool H5Points3Impl<TBase>::overwritePointsDataset(
     h5geo::Point3Array& data,
     const std::string& lengthUnits,
     const std::string& temporalUnits,
     bool doCoordTransform)
 {
-  auto opt = getPointsD();
+  auto opt = this->getPointsD();
   if (!opt.has_value())
     return false;
 
@@ -77,9 +81,9 @@ bool H5Points3Impl::overwritePointsDataset(
         data,
         false,
         lengthUnits,
-        getLengthUnits(),
+        this->getLengthUnits(),
         temporalUnits,
-        getTemporalUnits(),
+        this->getTemporalUnits(),
         doCoordTransform);
 
   if (!val)
@@ -88,14 +92,15 @@ bool H5Points3Impl::overwritePointsDataset(
   try {
     opt->resize({data.size()});
     opt->write_raw(data.data(), h5geo::compound_Point3());
-    objG.flush();
+    this->objG.flush();
     return true;
   } catch (h5gt::Exception e) {
     return false;
   }
 }
 
-bool H5Points3Impl::transformPoints(
+template <typename TBase>
+bool H5Points3Impl<TBase>::transformPoints(
     h5geo::Point3Array& data,
     bool toReadData,
     const std::string& lengthUnitsFrom,
@@ -104,15 +109,15 @@ bool H5Points3Impl::transformPoints(
     const std::string& temporalUnitsTo,
     bool doCoordTransform)
 {
-  h5geo::Domain domain = getDomain();
+  h5geo::Domain domain = this->getDomain();
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCT_ptr coordTrans;
     if (toReadData)
-      coordTrans.reset(createCoordinateTransformationToReadData(
+      coordTrans.reset(this->createCoordinateTransformationToReadData(
                          lengthUnitsTo));
     else
-      coordTrans.reset(createCoordinateTransformationToWriteData(
+      coordTrans.reset(this->createCoordinateTransformationToWriteData(
                          lengthUnitsFrom));
     if (!coordTrans)
       return false;
@@ -181,3 +186,6 @@ bool H5Points3Impl::transformPoints(
 
   return true;
 }
+
+// explicit instantiation (requires that corresponding headers are included)
+template class H5Points3Impl<H5Points3>;

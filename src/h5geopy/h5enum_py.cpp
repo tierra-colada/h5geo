@@ -19,7 +19,8 @@ void ObjectType_py(py::enum_<ObjectType> &py_obj){
       .value("POINTS_1", ObjectType::POINTS_1)
       .value("POINTS_2", ObjectType::POINTS_2)
       .value("POINTS_3", ObjectType::POINTS_3)
-      .value("POINTS_4", ObjectType::POINTS_4);
+      .value("POINTS_4", ObjectType::POINTS_4)
+      .value("WELLTOPS", ObjectType::WELLTOPS);
 }
 
 void Domain_py(py::enum_<Domain> &py_obj){

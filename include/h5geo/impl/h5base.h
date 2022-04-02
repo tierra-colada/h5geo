@@ -198,6 +198,7 @@ H5GEO_EXPORT bool isPoints1(const h5gt::Group &group);
 H5GEO_EXPORT bool isPoints2(const h5gt::Group &group);
 H5GEO_EXPORT bool isPoints3(const h5gt::Group &group);
 H5GEO_EXPORT bool isPoints4(const h5gt::Group &group);
+H5GEO_EXPORT bool isWellTops(const h5gt::Group &group);
 H5GEO_EXPORT bool isPoints(const h5gt::Group &group);
 H5GEO_EXPORT bool isMap(const h5gt::Group &group);
 H5GEO_EXPORT bool isWell(const h5gt::Group &group);

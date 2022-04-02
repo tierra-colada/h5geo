@@ -21,6 +21,7 @@ set(include_files_h5geopy
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5sort_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5well_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5wellcontainer_py.h
+  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5welltops_py.h
   )
 
 if(H5GEO_USE_GDAL)

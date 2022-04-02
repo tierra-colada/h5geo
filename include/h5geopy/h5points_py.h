@@ -3,7 +3,6 @@
 
 #include "h5geo_py.h"
 
-#include <h5geo/impl/h5basecontainerimpl.h>
 #include <h5geo/impl/h5points1impl.h>
 #include <h5geo/impl/h5points2impl.h>
 #include <h5geo/impl/h5points3impl.h>
@@ -14,7 +13,7 @@ namespace h5geopy {
 void H5Points1_py(
     py::class_<
     H5Points1,
-    H5Points1Impl,
+    H5Points1Impl<H5Points1>,
     H5BasePoints,
     H5BaseObject,
     H5Base,
@@ -24,7 +23,7 @@ void H5Points1_py(
 void H5Points2_py(
     py::class_<
     H5Points2,
-    H5Points2Impl,
+    H5Points2Impl<H5Points2>,
     H5BasePoints,
     H5BaseObject,
     H5Base,
@@ -34,7 +33,7 @@ void H5Points2_py(
 void H5Points3_py(
     py::class_<
     H5Points3,
-    H5Points3Impl,
+    H5Points3Impl<H5Points3>,
     H5BasePoints,
     H5BaseObject,
     H5Base,
@@ -44,7 +43,7 @@ void H5Points3_py(
 void H5Points4_py(
     py::class_<
     H5Points4,
-    H5Points4Impl,
+    H5Points4Impl<H5Points4>,
     H5BasePoints,
     H5BaseObject,
     H5Base,

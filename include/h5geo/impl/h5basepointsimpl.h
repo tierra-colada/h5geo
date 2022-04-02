@@ -1,5 +1,5 @@
-#ifndef H5POINTSIMPL_H
-#define H5POINTSIMPL_H
+#ifndef H5BASEPOINTSIMPL_H
+#define H5BASEPOINTSIMPL_H
 
 #include "../h5basepoints.h"
 #include "h5baseobjectimpl.h"
@@ -35,4 +35,4 @@ protected:
   friend H5BasePoints* openPoints(h5gt::Group group);
 };
 
-#endif // H5POINTSIMPL_H
+#endif // H5BASEPOINTSIMPL_H

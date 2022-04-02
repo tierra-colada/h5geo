@@ -9,6 +9,7 @@
 #include "../../include/h5geo/impl/h5points2impl.h"
 #include "../../include/h5geo/impl/h5points3impl.h"
 #include "../../include/h5geo/impl/h5points4impl.h"
+#include "../../include/h5geo/impl/h5welltopsimpl.h"
 #include "../../include/h5geo/misc/h5core.h"
 #include "../../include/h5geo/misc/h5enum_string.h"
 
@@ -86,6 +87,12 @@ template <>
 H5Base* H5BaseObjectImpl<H5Points4>::clone()
 {
   return new H5Points4Impl(objG);
+}
+
+template <>
+H5Base* H5BaseObjectImpl<H5WellTops>::clone()
+{
+  return new H5WellTopsImpl(objG);
 }
 
 #ifdef H5GEO_USE_GDAL
@@ -377,3 +384,4 @@ template class H5BaseObjectImpl<H5Points1>;
 template class H5BaseObjectImpl<H5Points2>;
 template class H5BaseObjectImpl<H5Points3>;
 template class H5BaseObjectImpl<H5Points4>;
+template class H5BaseObjectImpl<H5WellTops>;

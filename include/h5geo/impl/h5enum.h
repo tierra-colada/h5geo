@@ -112,7 +112,8 @@ enum class ObjectType: unsigned{
   POINTS_1 = 6,
   POINTS_2 = 7,
   POINTS_3 = 8,
-  POINTS_4 = 9
+  POINTS_4 = 9,
+  WELLTOPS = 10
 };
 //ENABLE_BITMASK_OPERATORS(ObjectType);
 

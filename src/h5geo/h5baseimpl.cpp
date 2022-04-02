@@ -14,6 +14,7 @@
 #include "../../include/h5geo/impl/h5points2impl.h"
 #include "../../include/h5geo/impl/h5points3impl.h"
 #include "../../include/h5geo/impl/h5points4impl.h"
+#include "../../include/h5geo/impl/h5welltopsimpl.h"
 #include "../../include/h5geo/misc/h5core.h"
 #include "../../include/h5geo/misc/h5enum_string.h"
 #include "../../include/h5geo/misc/h5segy.h"
@@ -505,6 +506,13 @@ H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p, h5geo::ObjectTyp
   }
 
 
+}
+
+template <typename TBase>
+std::optional<h5gt::Group>
+H5BaseImpl<TBase>::createNewWellTops(h5gt::Group &group, void* p)
+{
+  return createNewPoints(group, p, h5geo::ObjectType::POINTS_1);
 }
 
 template <typename TBase>
@@ -1266,6 +1274,8 @@ bool h5geo::isGeoObjectByType(const h5gt::Group& group,
     return h5geo::isPoints3(group);
   case h5geo::ObjectType::POINTS_4 :
     return h5geo::isPoints4(group);
+  case h5geo::ObjectType::WELLTOPS :
+    return h5geo::isWellTops(group);
   default:
     return false;
   }
@@ -1274,7 +1284,10 @@ bool h5geo::isGeoObjectByType(const h5gt::Group& group,
 h5geo::ObjectType h5geo::getGeoObjectType(
     const h5gt::Group& group)
 {
-  if (h5geo::isPoints1(group)){
+  // welltops must go before points as in hdf5 welltops == points1
+  if (h5geo::isWellTops(group)){
+    return h5geo::ObjectType::WELLTOPS;
+  } else if (h5geo::isPoints1(group)){
     return h5geo::ObjectType::POINTS_1;
   } else if (h5geo::isPoints2(group)){
     return h5geo::ObjectType::POINTS_2;
@@ -1299,25 +1312,16 @@ h5geo::ObjectType h5geo::getGeoObjectType(
 bool h5geo::isPoints(
     const h5gt::Group &group)
 {
-  for (const auto& name : h5geo::detail::points_attrs){
-    if (!group.hasAttribute(std::string{name}))
-      return false;
-  }
+  if (isPoints1(group))
+    return true;
+  if (isPoints2(group))
+    return true;
+  if (isPoints3(group))
+    return true;
+  if (isPoints4(group))
+    return true;
 
-  for (const auto& name : h5geo::detail::points_dsets){
-    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
-      return false;
-
-    h5gt::DataSet dset = group.getDataSet(std::string{name});
-    auto dtype = dset.getDataType();
-    if (!dtype.isTypeEqual(h5geo::compound_Point1()) &&
-        !dtype.isTypeEqual(h5geo::compound_Point2()) &&
-        !dtype.isTypeEqual(h5geo::compound_Point3()) &&
-        !dtype.isTypeEqual(h5geo::compound_Point4())){
-      return false;
-    }
-  }
-  return true;
+  return false;
 }
 
 bool h5geo::isPoints1(
@@ -1402,6 +1406,11 @@ bool h5geo::isPoints4(
     }
   }
   return true;
+}
+
+bool h5geo::isWellTops(const h5gt::Group &group)
+{
+  return h5geo::isPoints1(group);
 }
 
 bool h5geo::isMap(
@@ -1506,6 +1515,10 @@ H5BaseObject* h5geo::openObject(h5gt::Group group)
   obj = openLogCurve(group);
   if (obj)
     return obj;
+  // well tops must go before points as Points1 and WellTops are equal in hdf5
+  obj = openWellTops(group);
+  if (obj)
+    return obj;
   obj = openPoints(group);
   if (obj)
     return obj;
@@ -1550,3 +1563,4 @@ template class H5BaseImpl<H5Points1>;
 template class H5BaseImpl<H5Points2>;
 template class H5BaseImpl<H5Points3>;
 template class H5BaseImpl<H5Points4>;
+template class H5BaseImpl<H5WellTops>;

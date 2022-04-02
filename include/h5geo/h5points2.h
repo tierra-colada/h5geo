@@ -3,8 +3,6 @@
 
 #include "h5basepoints.h"
 
-class H5BaseContainer;
-
 class H5Points2 : public H5BasePoints
 {
 protected:

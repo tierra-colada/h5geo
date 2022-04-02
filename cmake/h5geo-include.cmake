@@ -50,6 +50,7 @@ set(include_files_h5geo
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5points2.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5points3.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5points4.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5points.h
   )
 
 if(H5GEO_USE_GDAL)

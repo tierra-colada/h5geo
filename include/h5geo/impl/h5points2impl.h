@@ -4,7 +4,8 @@
 #include "../h5points2.h"
 #include "h5basepointsimpl.h"
 
-class H5Points2Impl : public H5BasePointsImpl<H5Points2>
+template <typename TBase = H5Points2>
+class H5Points2Impl : public H5BasePointsImpl<TBase>
 {
 protected:
   explicit H5Points2Impl(const h5gt::Group &group);

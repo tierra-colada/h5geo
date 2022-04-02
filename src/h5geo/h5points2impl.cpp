@@ -11,10 +11,12 @@
 #endif
 
 
-H5Points2Impl::H5Points2Impl(const h5gt::Group &group) :
-  H5BasePointsImpl(group){}
+template <typename TBase>
+H5Points2Impl<TBase>::H5Points2Impl(const h5gt::Group &group) :
+  H5BasePointsImpl<TBase>(group){}
 
-bool H5Points2Impl::writeData(
+template <typename TBase>
+bool H5Points2Impl<TBase>::writeData(
     h5geo::Point2Array& data,
     const std::string& lengthUnits,
     bool doCoordTransform)
@@ -25,11 +27,12 @@ bool H5Points2Impl::writeData(
         doCoordTransform);
 }
 
-h5geo::Point2Array H5Points2Impl::getData(
+template <typename TBase>
+h5geo::Point2Array H5Points2Impl<TBase>::getData(
     const std::string& lengthUnits,
     bool doCoordTransform)
 {
-  auto opt = getPointsD();
+  auto opt = this->getPointsD();
   if (!opt.has_value())
     return h5geo::Point2Array();
 
@@ -43,7 +46,7 @@ h5geo::Point2Array H5Points2Impl::getData(
   bool val = transformPoints(
         data,
         true,
-        getLengthUnits(),
+        this->getLengthUnits(),
         lengthUnits,
         doCoordTransform);
 
@@ -53,12 +56,13 @@ h5geo::Point2Array H5Points2Impl::getData(
   return data;
 }
 
-bool H5Points2Impl::overwritePointsDataset(
+template <typename TBase>
+bool H5Points2Impl<TBase>::overwritePointsDataset(
     h5geo::Point2Array& data,
     const std::string& lengthUnits,
     bool doCoordTransform)
 {
-  auto opt = getPointsD();
+  auto opt = this->getPointsD();
   if (!opt.has_value())
     return false;
 
@@ -71,7 +75,7 @@ bool H5Points2Impl::overwritePointsDataset(
         data,
         false,
         lengthUnits,
-        getLengthUnits(),
+        this->getLengthUnits(),
         doCoordTransform);
 
   if (!val)
@@ -80,14 +84,15 @@ bool H5Points2Impl::overwritePointsDataset(
   try {
     opt->resize({data.size()});
     opt->write_raw(data.data(), h5geo::compound_Point2());
-    objG.flush();
+    this->objG.flush();
     return true;
   } catch (h5gt::Exception e) {
     return false;
   }
 }
 
-bool H5Points2Impl::transformPoints(
+template <typename TBase>
+bool H5Points2Impl<TBase>::transformPoints(
     h5geo::Point2Array& data,
     bool toReadData,
     const std::string& lengthUnitsFrom,
@@ -98,10 +103,10 @@ bool H5Points2Impl::transformPoints(
   if (doCoordTransform){
     OGRCT_ptr coordTrans;
     if (toReadData)
-      coordTrans.reset(createCoordinateTransformationToReadData(
+      coordTrans.reset(this->createCoordinateTransformationToReadData(
                          lengthUnitsTo));
     else
-      coordTrans.reset(createCoordinateTransformationToWriteData(
+      coordTrans.reset(this->createCoordinateTransformationToWriteData(
                          lengthUnitsFrom));
     if (!coordTrans)
       return false;
@@ -127,3 +132,6 @@ bool H5Points2Impl::transformPoints(
 
   return true;
 }
+
+// explicit instantiation (requires that corresponding headers are included)
+template class H5Points2Impl<H5Points2>;

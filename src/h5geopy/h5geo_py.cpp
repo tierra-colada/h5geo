@@ -20,6 +20,7 @@
 #include "../../include/h5geopy/h5mapcontainer_py.h"
 #include "../../include/h5geopy/h5well_py.h"
 #include "../../include/h5geopy/h5wellcontainer_py.h"
+#include "../../include/h5geopy/h5welltops_py.h"
 
 
 namespace h5geopy {
@@ -97,9 +98,21 @@ PYBIND11_MODULE(_h5geo, m) {
       (m, "H5BaseObject");
 
   // H5GEO::POINT
+  auto pyPoint1 =
+      py::class_<Point1>
+      (m, "Point1");
+
+  auto pyPoint2 =
+      py::class_<Point2>
+      (m, "Point2");
+
   auto pyPoint3 =
       py::class_<Point3>
       (m, "Point3");
+
+  auto pyPoint4 =
+      py::class_<Point4>
+      (m, "Point4");
 
   // POINTS
   auto pyBasePoints =
@@ -114,7 +127,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyPoints1 =
       py::class_<
       H5Points1,
-      H5Points1Impl,
+      H5Points1Impl<H5Points1>,
       H5BasePoints,
       H5BaseObject,
       H5Base,
@@ -124,7 +137,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyPoints2 =
       py::class_<
       H5Points2,
-      H5Points2Impl,
+      H5Points2Impl<H5Points2>,
       H5BasePoints,
       H5BaseObject,
       H5Base,
@@ -134,7 +147,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyPoints3 =
       py::class_<
       H5Points3,
-      H5Points3Impl,
+      H5Points3Impl<H5Points3>,
       H5BasePoints,
       H5BaseObject,
       H5Base,
@@ -144,12 +157,24 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyPoints4 =
       py::class_<
       H5Points4,
-      H5Points4Impl,
+      H5Points4Impl<H5Points4>,
       H5BasePoints,
       H5BaseObject,
       H5Base,
       std::unique_ptr<H5Points4, ObjectDeleter>>
       (m, "H5Points4");
+
+  // WELLTOPS
+  auto pyWellTops =
+      py::class_<
+      H5WellTops,
+      H5WellTopsImpl,
+      H5Points1,
+      H5BasePoints,
+      H5BaseObject,
+      H5Base,
+      std::unique_ptr<H5WellTops, ObjectDeleter>>
+      (m, "H5WellTops");
 
   // MAPCONTAINER
   auto pyMapContainer =
@@ -275,8 +300,14 @@ PYBIND11_MODULE(_h5geo, m) {
   H5BaseObject_py pyBaseObject_inst(pyBaseObject);
 
   // H5GEO::POINT
+  Point1_py(pyPoint1);
+  py::bind_vector<Point1Array>(m, "Point1Array");
+  Point2_py(pyPoint2);
+  py::bind_vector<Point2Array>(m, "Point2Array");
   Point3_py(pyPoint3);
   py::bind_vector<Point3Array>(m, "Point3Array");
+  Point4_py(pyPoint4);
+  py::bind_vector<Point4Array>(m, "Point4Array");
 
   // POINTS
   H5BasePoints_py pyBasePoints_inst(pyBasePoints);
@@ -284,6 +315,9 @@ PYBIND11_MODULE(_h5geo, m) {
   H5Points2_py(pyPoints2);
   H5Points3_py(pyPoints3);
   H5Points4_py(pyPoints4);
+
+  // WELLTOPS
+  H5WellTops_py(pyWellTops);
 
   // MAPCONTAINER
   H5MapContainer_py(pyMapContainer);

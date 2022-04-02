@@ -8,6 +8,8 @@
 #include <h5geo/h5well.h>
 #include <h5geo/h5devcurve.h>
 #include <h5geo/h5logcurve.h>
+#include <h5geo/h5points.h>
+#include <h5geo/h5welltops.h>
 #include <h5geo/h5util.h>
 
 namespace h5geopy {
@@ -68,6 +70,8 @@ void defineGeoFunctions(py::module_& m){
   m.def("openWell", &openWell);
   m.def("openDevCurve", &openDevCurve);
   m.def("openLogCurve", &openLogCurve);
+  m.def("openPoints", &openPoints);
+  m.def("openWellTops", &openWellTops);
 
   m.def("createContainer", &createContainer);
   m.def("createContainerByName", &createContainerByName);
@@ -91,6 +95,7 @@ void defineGeoFunctions(py::module_& m){
   m.def("isDevCurve", &isDevCurve);
   m.def("isSeis", &isSeis);
   m.def("isPoints", &isPoints);
+  m.def("isWellTops", &isWellTops);
 
   m.def("getTraceHeaderNames", &ext::getTraceHeaderNames);
   m.def("getBinHeaderNames", &ext::getTraceHeaderNames);
