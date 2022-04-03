@@ -20,6 +20,8 @@ public:
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "") override;
 
+  virtual H5Well* openWell() override;
+
   //----------- FRIEND CLASSES -----------
   friend class H5WellImpl;
   friend class H5BaseObjectImpl<H5WellTops>;

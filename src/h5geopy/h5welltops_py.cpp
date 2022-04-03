@@ -1,5 +1,7 @@
 #include "../../include/h5geopy/h5welltops_py.h"
 
+#include <h5geo/impl/h5wellimpl.h>
+
 namespace h5geopy {
 
 void H5WellTops_py(
@@ -19,7 +21,9 @@ void H5WellTops_py(
            py::arg_v("temporalUnits", false, "False"))
       .def("getWellTops", &H5WellTops::getWellTops,
            py::arg_v("lengthUnits", "", "str()"),
-           py::arg_v("temporalUnits", false, "False"));
+           py::arg_v("temporalUnits", false, "False"))
+
+      .def("openWell", &H5WellTops::openWell);
 }
 
 } // h5geopy

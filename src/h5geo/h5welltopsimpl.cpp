@@ -1,4 +1,5 @@
 #include "../../include/h5geo/impl/h5welltopsimpl.h"
+#include "../../include/h5geo/impl/h5wellimpl.h"
 
 H5WellTopsImpl::H5WellTopsImpl(const h5gt::Group &group) :
   H5Points1Impl(group){}
@@ -28,6 +29,15 @@ std::map<std::string, double> H5WellTopsImpl::getWellTops(
     m[point.name] = point.p[0];
 
   return m;
+}
+
+H5Well* H5WellTopsImpl::openWell()
+{
+  auto optWellG = getParentG(h5geo::ObjectType::WELL);
+  if (!optWellG.has_value())
+    return nullptr;
+
+  return new H5WellImpl(optWellG.value());
 }
 
 

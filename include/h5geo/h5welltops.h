@@ -17,6 +17,8 @@ public:
   virtual std::map<std::string, double> getWellTops(
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "") = 0;
+
+  virtual H5Well* openWell() = 0;
 };
 
 namespace h5geo {
