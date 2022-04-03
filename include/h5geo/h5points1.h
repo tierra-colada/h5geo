@@ -19,6 +19,12 @@ public:
       const std::string& temporalUnits = "") = 0;
 };
 
+namespace h5geo {
+  extern "C" {
+  H5GEO_EXPORT H5Points1* openPoints1(h5gt::Group group);
+  }
+}
+
 using H5Points1_ptr = std::unique_ptr<H5Points1, h5geo::ObjectDeleter>;
 
 #endif // H5POINTS1_H

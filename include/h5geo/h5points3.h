@@ -21,6 +21,12 @@ public:
       bool doCoordTransform = false) = 0;
 };
 
+namespace h5geo {
+  extern "C" {
+  H5GEO_EXPORT H5Points3* openPoints3(h5gt::Group group);
+  }
+}
+
 using H5Points3_ptr = std::unique_ptr<H5Points3, h5geo::ObjectDeleter>;
 
 #endif // H5POINTS3_H

@@ -78,8 +78,7 @@ H5BasePointsImpl<TBase>::getPointsD() const
   return this->getDatasetOpt(this->objG, name);
 }
 
-H5BasePoints*
-h5geo::openPoints(h5gt::Group group)
+H5BasePoints* h5geo::openPoints(h5gt::Group group)
 {
   if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_1))
     return new H5Points1Impl(group);

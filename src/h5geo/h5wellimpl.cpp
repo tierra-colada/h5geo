@@ -2,6 +2,7 @@
 #include "../../include/h5geo/h5wellcontainer.h"
 #include "../../include/h5geo/impl/h5devcurveimpl.h"
 #include "../../include/h5geo/impl/h5logcurveimpl.h"
+#include "../../include/h5geo/impl/h5welltopsimpl.h"
 #include "../../include/h5geo/misc/h5core.h"
 #include "../../include/h5geo/misc/h5enum_string.h"
 
@@ -100,6 +101,15 @@ H5DevCurve* H5WellImpl::openDevCurve(
     return nullptr;
 
   return h5geo::openDevCurve(group);
+}
+
+H5WellTops* H5WellImpl::openWellTops()
+{
+  auto wellTopsG = getWellTopsG();
+  if (!wellTopsG.has_value())
+    return nullptr;
+
+  h5geo::openWellTops(wellTopsG.value());
 }
 
 H5LogCurve* H5WellImpl::createLogCurve(
@@ -207,6 +217,20 @@ H5DevCurve* H5WellImpl::createDevCurve(
     return nullptr;
 
   return new H5DevCurveImpl(opt.value());
+}
+
+H5WellTops* H5WellImpl::createWellTops(
+    WellTopsParam& p,
+    h5geo::CreationType createFlag)
+{
+  std::string name = std::string{h5geo::WELLTOPS};
+  auto opt = createObject(
+        name, objG, h5geo::ObjectType::WELLTOPS, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5WellTopsImpl(opt.value());
 }
 
 bool H5WellImpl::setHeadCoord(
@@ -434,6 +458,12 @@ H5WellImpl::getActiveDevG()
       std::string{h5geo::detail::ACTIVE};
 
   return getGroupOpt(objG, name);
+}
+
+std::optional<h5gt::Group>
+H5WellImpl::getWellTopsG()
+{
+  return getGroupOpt(objG, std::string{h5geo::WELLTOPS});
 }
 
 std::optional<h5gt::Group>

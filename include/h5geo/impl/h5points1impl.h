@@ -43,6 +43,7 @@ protected:
   friend class H5BaseContainerImpl<H5SeisContainer>;
   friend class H5BaseContainerImpl<H5WellContainer>;
   friend H5BasePoints* h5geo::openPoints(h5gt::Group group);
+  friend H5Points1* h5geo::openPoints1(h5gt::Group group);
 };
 
 #endif // H5POINTS1IMPL_H

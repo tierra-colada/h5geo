@@ -8,6 +8,7 @@
 class H5WellContainer;
 class H5DevCurve;
 class H5LogCurve;
+class H5WellTops;
 
 class H5Well : public H5BaseObject
 {
@@ -25,6 +26,7 @@ public:
       const std::string &devName) = 0;
   virtual H5DevCurve* openDevCurve(
       h5gt::Group group) = 0;
+  virtual H5WellTops* openWellTops() = 0;
 
   /// logType maybe empty
   virtual H5LogCurve* createLogCurve(
@@ -43,6 +45,10 @@ public:
   virtual H5DevCurve* createDevCurve(
       h5gt::Group group,
       DevCurveParam& p,
+      h5geo::CreationType createFlag) = 0;
+  /// Created object under WELLTOPS name
+  virtual H5WellTops* createWellTops(
+      WellTopsParam& p,
       h5geo::CreationType createFlag) = 0;
 
   virtual bool setHeadCoord(
@@ -79,6 +85,7 @@ public:
 
   virtual std::optional<h5gt::Group> getDevG() = 0;
   virtual std::optional<h5gt::Group> getActiveDevG() = 0;
+  virtual std::optional<h5gt::Group> getWellTopsG() = 0;
   virtual std::optional<h5gt::Group> getLogG() = 0;
   virtual std::optional<h5gt::Group> getLogTypeG(const std::string& logType) = 0;
 };

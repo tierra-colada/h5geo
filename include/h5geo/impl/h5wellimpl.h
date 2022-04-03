@@ -20,6 +20,7 @@ public:
       const std::string &devName) override;
   virtual H5DevCurve* openDevCurve(
       h5gt::Group group) override;
+  virtual H5WellTops* openWellTops() override;
 
   virtual H5LogCurve* createLogCurve(
       std::string& logType,
@@ -37,6 +38,9 @@ public:
   virtual H5DevCurve* createDevCurve(
       h5gt::Group group,
       DevCurveParam& p,
+      h5geo::CreationType createFlag) override;
+  virtual H5WellTops* createWellTops(
+      WellTopsParam& p,
       h5geo::CreationType createFlag) override;
 
   virtual bool setHeadCoord(
@@ -69,6 +73,7 @@ public:
 
   virtual std::optional<h5gt::Group> getDevG() override;
   virtual std::optional<h5gt::Group> getActiveDevG() override;
+  virtual std::optional<h5gt::Group> getWellTopsG() override;
   virtual std::optional<h5gt::Group> getLogG() override;
   virtual std::optional<h5gt::Group> getLogTypeG(const std::string& logType) override;
 

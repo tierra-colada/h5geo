@@ -71,6 +71,10 @@ void defineGeoFunctions(py::module_& m){
   m.def("openDevCurve", &openDevCurve);
   m.def("openLogCurve", &openLogCurve);
   m.def("openPoints", &openPoints);
+  m.def("openPoints1", &openPoints1);
+  m.def("openPoints2", &openPoints2);
+  m.def("openPoints3", &openPoints3);
+  m.def("openPoints4", &openPoints4);
   m.def("openWellTops", &openWellTops);
 
   m.def("createContainer", &createContainer);

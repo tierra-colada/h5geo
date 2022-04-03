@@ -21,6 +21,7 @@ public:
       const std::string& temporalUnits = "") override;
 
   //----------- FRIEND CLASSES -----------
+  friend class H5WellImpl;
   friend class H5BaseObjectImpl<H5WellTops>;
   friend class H5BaseContainerImpl<H5BaseContainer>;
   friend class H5BaseContainerImpl<H5MapContainer>;

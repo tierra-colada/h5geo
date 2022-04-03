@@ -63,6 +63,9 @@ struct PointsParam : public BaseObjectParam{
   hsize_t chunkSize = 10;
 };
 
+// welltops params are the same as points params
+struct WellTopsParam : public PointsParam{};
+
 struct MapParam : public BaseObjectParam{
   double X0, Y0, X1, Y1, X2, Y2;
   size_t nX, nY;

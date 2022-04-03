@@ -70,6 +70,7 @@ PYBIND11_MODULE(_h5geo, m) {
   // BASE
   auto pyBaseObjectParam = py::class_<BaseObjectParam>(m, "BaseObjectParam");
   auto pyPointsParam = py::class_<PointsParam, BaseObjectParam>(m, "PointsParam");
+  auto pyWellTopsParam = py::class_<WellTopsParam, PointsParam, BaseObjectParam>(m, "WellTopsParam");
   auto pyMapParam = py::class_<MapParam, BaseObjectParam>(m, "MapParam");
   auto pyWellParam = py::class_<WellParam, BaseObjectParam>(m, "WellParam");
   auto pyDevCurveParam = py::class_<DevCurveParam, BaseObjectParam>(m, "DevCurveParam");
@@ -286,6 +287,7 @@ PYBIND11_MODULE(_h5geo, m) {
   // BASE
   BaseObjectParam_py(pyBaseObjectParam);
   PointsParam_py(pyPointsParam);
+  WellTopsParam_py(pyWellTopsParam);
   MapParam_py(pyMapParam);
   WellParam_py(pyWellParam);
   DevCurveParam_py(pyDevCurveParam);

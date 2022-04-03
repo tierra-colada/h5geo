@@ -108,6 +108,7 @@ inline constexpr auto& obj_types =
     magic_enum::enum_names<h5geo::ObjectType>();
 inline constexpr auto LOGCURVE = magic_enum::enum_name(h5geo::ObjectType::LOGCURVE);
 inline constexpr auto DEVCURVE = magic_enum::enum_name(h5geo::ObjectType::DEVCURVE);
+inline constexpr auto WELLTOPS = magic_enum::enum_name(h5geo::ObjectType::WELLTOPS);
 inline constexpr auto& domains =
     magic_enum::enum_names<h5geo::Domain>();
 inline constexpr auto TVD = magic_enum::enum_name(h5geo::Domain::TVD);

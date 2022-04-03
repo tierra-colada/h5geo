@@ -22,6 +22,12 @@ void PointsParam_py(py::class_<PointsParam, BaseObjectParam> &py_obj){
       .def_readwrite("chunkSize", &PointsParam::chunkSize);
 }
 
+void WellTopsParam_py(py::class_<WellTopsParam, PointsParam, BaseObjectParam> &py_obj){
+  py_obj
+      .def(
+        py::init<>());
+}
+
 void MapParam_py(py::class_<MapParam, BaseObjectParam> &py_obj){
   py_obj
       .def(
