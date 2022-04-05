@@ -15,11 +15,11 @@ void H5WellTops_py(
     std::unique_ptr<H5WellTops, ObjectDeleter>>
     &py_obj){
   py_obj
-      .def("writeWellTops", &H5WellTops::writeWellTops,
+      .def("writeData", &H5WellTops::writeData,
            py::arg("data"),
            py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("temporalUnits", false, "False"))
-      .def("getWellTops", &H5WellTops::getWellTops,
+      .def("getDataAsMap", &H5WellTops::getDataAsMap,
            py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("temporalUnits", false, "False"))
 

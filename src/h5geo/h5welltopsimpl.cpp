@@ -4,7 +4,7 @@
 H5WellTopsImpl::H5WellTopsImpl(const h5gt::Group &group) :
   H5Points1Impl(group){}
 
-bool H5WellTopsImpl::writeWellTops(
+bool H5WellTopsImpl::writeData(
     const std::map<std::string, double>& data,
     const std::string& lengthUnits,
     const std::string& temporalUnits)
@@ -19,7 +19,7 @@ bool H5WellTopsImpl::writeWellTops(
   return this->writeData(arr, lengthUnits, temporalUnits);
 }
 
-std::map<std::string, double> H5WellTopsImpl::getWellTops(
+std::map<std::string, double> H5WellTopsImpl::getDataAsMap(
     const std::string& lengthUnits,
     const std::string& temporalUnits)
 {

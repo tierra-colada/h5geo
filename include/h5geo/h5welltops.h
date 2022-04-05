@@ -9,12 +9,12 @@ protected:
   virtual ~H5WellTops() = default;
 
 public:
-  virtual bool writeWellTops(
+  virtual bool writeData(
       const std::map<std::string, double>& data,
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "") = 0;
 
-  virtual std::map<std::string, double> getWellTops(
+  virtual std::map<std::string, double> getDataAsMap(
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "") = 0;
 

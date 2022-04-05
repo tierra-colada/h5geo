@@ -11,16 +11,19 @@ protected:
   virtual ~H5WellTopsImpl() = default;
 
 public:
-  virtual bool writeWellTops(
+  virtual bool writeData(
       const std::map<std::string, double>& data,
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "") override;
 
-  virtual std::map<std::string, double> getWellTops(
+  virtual std::map<std::string, double> getDataAsMap(
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "") override;
 
   virtual H5Well* openWell() override;
+
+  //-- USE INHERITED OVERLOADED METHODS --
+  using H5Points1Impl<H5WellTops>::writeData;
 
   //----------- FRIEND CLASSES -----------
   friend class H5WellImpl;
