@@ -109,7 +109,7 @@ H5WellTops* H5WellImpl::openWellTops()
   if (!wellTopsG.has_value())
     return nullptr;
 
-  h5geo::openWellTops(wellTopsG.value());
+  return h5geo::openWellTops(wellTopsG.value());
 }
 
 H5LogCurve* H5WellImpl::createLogCurve(

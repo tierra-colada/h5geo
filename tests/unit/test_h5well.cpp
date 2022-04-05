@@ -702,6 +702,9 @@ TEST_F(H5WellFixture, wellTops){
   p.lengthUnits = "m";
   H5WellTops_ptr wellTops(well->createWellTops(p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(wellTops);
+
+  wellTops.reset(well->openWellTops());
+  ASSERT_TRUE(wellTops);
 }
 
 //TEST_F(H5WellFixture, customWell){
