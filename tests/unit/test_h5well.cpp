@@ -5,7 +5,8 @@
 #include <h5geo/h5util.h>
 #include <h5geo/h5devcurve.h>
 #include <h5geo/h5logcurve.h>
-#include <h5geo/h5points3.h>
+#include <h5geo/h5points.h>
+#include <h5geo/h5welltops.h>
 #include <h5geo/misc/h5deviation.h>
 #include <h5geo/misc/h5core.h>
 
@@ -687,6 +688,20 @@ TEST_F(H5WellFixture, getDevCurveGroupList){
   ASSERT_TRUE(logNameList[0] == LOG_TYPE + "/" + logName1);
   ASSERT_TRUE(logNameList[1] == LOG_TYPE + "/" + logName2);
   ASSERT_TRUE(logTypeList[0] == LOG_TYPE);
+}
+
+TEST_F(H5WellFixture, wellTops){
+  H5Well_ptr well(
+        wellContainer->createWell(
+          WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(well != nullptr);
+
+  WellTopsParam p;
+  p.nPoints = 10;
+  p.chunkSize = 10;
+  p.lengthUnits = "m";
+  H5WellTops_ptr wellTops(well->createWellTops(p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(wellTops);
 }
 
 //TEST_F(H5WellFixture, customWell){

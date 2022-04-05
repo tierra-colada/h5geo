@@ -428,6 +428,8 @@ H5BaseImpl<TBase>::createNewObject(
     return createNewPoints(group, p, objType);
   case h5geo::ObjectType::POINTS_4 :
     return createNewPoints(group, p, objType);
+  case h5geo::ObjectType::WELLTOPS :
+    return createNewWellTops(group, p);
   default:
     return std::nullopt;
   }
