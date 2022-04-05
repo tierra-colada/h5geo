@@ -49,6 +49,15 @@ static const union {
 
 namespace h5geo {
 
+H5GEO_EXPORT std::optional<h5gt::File> openFile(
+    const std::string& fileName);
+H5GEO_EXPORT std::optional<h5gt::Group> openGroup(
+    const std::string& fileName,
+    const std::string& groupName);
+H5GEO_EXPORT std::optional<h5gt::DataSet> openDataSet(
+    const std::string& fileName,
+    const std::string& dsetName);
+
 H5GEO_EXPORT std::vector<std::string> getRawBinHeaderNames();
 H5GEO_EXPORT std::vector<std::string> getRawTraceHeaderNames();
 

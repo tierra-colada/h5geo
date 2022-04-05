@@ -101,6 +101,11 @@ void defineGeoFunctions(py::module_& m){
   m.def("isPoints", &isPoints);
   m.def("isWellTops", &isWellTops);
 
+  // from UTIL
+  m.def("openFile", &openFile);
+  m.def("openGroup", &openGroup);
+  m.def("openDataSet", &openDataSet);
+
   m.def("getTraceHeaderNames", &ext::getTraceHeaderNames);
   m.def("getBinHeaderNames", &ext::getTraceHeaderNames);
   m.def("getTraceHeaderBytes", &ext::getTraceHeaderNames);

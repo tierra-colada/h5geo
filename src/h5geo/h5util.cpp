@@ -1,6 +1,9 @@
 #include "../../include/h5geo/h5util.h"
 
 #include <algorithm>
+#include <optional>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include <h5gt/H5File.hpp>
 #include <h5gt/H5Group.hpp>
@@ -10,6 +13,61 @@
 
 
 namespace h5geo {
+
+std::optional<h5gt::File> openFile(
+    const std::string& fileName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return std::nullopt;
+
+  try {
+    return h5gt::File(
+          fileName,
+          h5gt::File::ReadWrite);
+  } catch (h5gt::Exception& err) {
+    return std::nullopt;
+  }
+}
+
+std::optional<h5gt::Group> openGroup(
+    const std::string& fileName,
+    const std::string& groupName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return std::nullopt;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(groupName, h5gt::ObjectType::Group))
+      return std::nullopt;
+
+    return h5File.getGroup(groupName);
+  } catch (h5gt::Exception& err) {
+    return std::nullopt;
+  }
+}
+
+std::optional<h5gt::DataSet> openDataSet(
+    const std::string& fileName,
+    const std::string& dsetName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return std::nullopt;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(dsetName, h5gt::ObjectType::Dataset))
+      return std::nullopt;
+
+    return h5File.getDataSet(dsetName);
+  } catch (h5gt::Exception& err) {
+    return std::nullopt;
+  }
+}
 
 // strings are intensionally TAB delimited
 std::vector<std::string> getRawBinHeaderNames()
