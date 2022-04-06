@@ -18,10 +18,10 @@ void H5WellTops_py(
       .def("writeData", &H5WellTops::writeData,
            py::arg("data"),
            py::arg_v("lengthUnits", "", "str()"),
-           py::arg_v("temporalUnits", false, "False"))
+           py::arg_v("temporalUnits", "", "str()"))
       .def("getDataAsMap", &H5WellTops::getDataAsMap,
            py::arg_v("lengthUnits", "", "str()"),
-           py::arg_v("temporalUnits", false, "False"))
+           py::arg_v("temporalUnits", "", "str()"))
 
       .def("openWell", &H5WellTops::openWell);
 }
