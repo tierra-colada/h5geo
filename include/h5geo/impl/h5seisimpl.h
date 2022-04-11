@@ -102,7 +102,7 @@ public:
   virtual Eigen::VectorXd getTraceHeader(
       const std::string& hdrName,
       const size_t& fromTrc = 0,
-      const size_t& nTrc = std::numeric_limits<size_t>::max(),
+      const size_t& nTrc = 1,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
   virtual Eigen::MatrixXd getTraceHeader(

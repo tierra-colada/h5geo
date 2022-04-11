@@ -1320,11 +1320,12 @@ bool H5SeisImpl::checkTraceHeaderLimits(
     const size_t& fromHdr, size_t& nHdr)
 {
   size_t NHdr = getNTrcHdr();
-
   if (fromHdr > NHdr)
     return false;
 
-  if (fromHdr+nHdr > NHdr)
+  // nHdr maybe passed as std::numeric_limits<size_t> and
+  // then adding 1 to it results in 0 (nHdr > NHdr check is necessary)
+  if (nHdr > NHdr || fromHdr+nHdr > NHdr)
     nHdr = NHdr-fromHdr;
 
   return true;
@@ -1334,11 +1335,12 @@ bool H5SeisImpl::checkSampleLimits(
     const size_t& fromSampInd, size_t& nSamp)
 {
   size_t NSamp = getNSamp();
-
   if (fromSampInd > NSamp)
     return false;
 
-  if (fromSampInd+nSamp > NSamp)
+  // nSamp maybe passed as std::numeric_limits<size_t> and
+  // then adding 1 to it results in 0 (nSamp > NSamp check is necessary)
+  if (nSamp > NSamp || fromSampInd+nSamp > NSamp)
     nSamp = NSamp-fromSampInd;
 
   return true;

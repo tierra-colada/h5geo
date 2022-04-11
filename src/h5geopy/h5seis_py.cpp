@@ -208,7 +208,7 @@ void H5Seis_py(
              &H5Seis::getTraceHeader),
            py::arg("hdrName"),
            py::arg_v("fromTrc", 0, "0"),
-           py::arg_v("nTrc", std::numeric_limits<size_t>::max(), "sys.maxint"),
+           py::arg_v("nTrc", 1, "1"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
       .def("getTraceHeader", py::overload_cast<
