@@ -34,6 +34,8 @@ public:
 
   virtual std::string getRelativeCurveName() = 0;
 
+  virtual LogCurveParam getParam() = 0;
+
   virtual H5WellContainer* openWellContainer() = 0;
   virtual H5Well* openWell() = 0;
 

@@ -434,6 +434,27 @@ size_t H5WellImpl::getLogCurveCount(){
   return getChildCount(logG.value(), h5geo::ObjectType::LOGCURVE, true);
 }
 
+WellParam H5WellImpl::getParam(){
+  WellParam p;
+  // BaseObjectParam
+  p.spatialReference = getSpatialReference();
+  p.lengthUnits = getLengthUnits();
+  p.temporalUnits = getTemporalUnits();
+  p.angularUnits = getAngularUnits();
+  p.dataUnits = getDataUnits();
+
+  // WellParam
+  Eigen::VectorXd headXY = getHeadCoord();
+  if (headXY.size() == 2){
+    p.headX = headXY(0);
+    p.headY = headXY(1);
+  }
+
+  p.kb = getKB();
+  p.uwi = getUWI();
+  return p;
+}
+
 H5WellContainer* H5WellImpl::openWellContainer(){
   h5gt::File file = getH5File();
   return h5geo::createWellContainer(

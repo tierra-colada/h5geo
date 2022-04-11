@@ -413,6 +413,7 @@ void H5Seis_py(
       .def("getSEGYTraceHeader2BytesD", &H5Seis::getSEGYTraceHeader2BytesD)
       .def("getSEGYTraceHeader4BytesD", &H5Seis::getSEGYTraceHeader4BytesD)
       .def("getSEGYTraceFloatD", &H5Seis::getSEGYTraceFloatD)
+      .def("getParam", &H5Seis::getParam)
 
       .def("updateTraceHeaderLimits", &H5Seis::updateTraceHeaderLimits,
            py::arg_v("nTrcBuffer", 1e7, "int(1e7)")) // `int` is important

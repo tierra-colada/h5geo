@@ -69,6 +69,8 @@ public:
   virtual size_t getDevCurveCount() override;
   virtual size_t getLogCurveCount() override;
 
+  virtual WellParam getParam() override;
+
   virtual H5WellContainer* openWellContainer() override;
 
   virtual std::optional<h5gt::Group> getDevG() override;

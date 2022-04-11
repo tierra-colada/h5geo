@@ -63,6 +63,8 @@ public:
   virtual size_t getNX() = 0;
   virtual size_t getNY() = 0;
 
+  virtual MapParam getParam() = 0;
+
   virtual H5MapContainer* openMapContainer() const = 0;
 
   virtual std::optional<h5gt::DataSet> getMapD() const = 0;

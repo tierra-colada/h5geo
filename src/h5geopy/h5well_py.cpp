@@ -49,6 +49,7 @@ void H5Well_py(
       .def("getLogTypeList", &H5Well::getLogTypeList)
       .def("getDevCurveCount", &H5Well::getDevCurveCount)
       .def("getLogCurveCount", &H5Well::getLogCurveCount)
+      .def("getParam", &H5Well::getParam)
 
       .def("openWellContainer", &H5Well::openWellContainer)
 

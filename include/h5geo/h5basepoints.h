@@ -18,6 +18,8 @@ public:
   virtual size_t getNPoints() = 0;
   virtual h5geo::Domain getDomain() = 0;
 
+  virtual PointsParam getParam() = 0;
+
   virtual std::optional<h5gt::DataSet> getPointsD() const = 0;
 };
 

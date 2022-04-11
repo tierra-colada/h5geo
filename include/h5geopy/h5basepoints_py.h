@@ -26,7 +26,8 @@ struct H5BasePoints_py
         .def("openContainer", &H5BasePoints::openContainer)
         .def("getNPoints", &H5BasePoints::getNPoints)
         .def("getDomain", &H5BasePoints::getDomain)
-        .def("getPointsD", &H5BasePoints::getPointsD);
+        .def("getPointsD", &H5BasePoints::getPointsD)
+        .def("getParam", &H5BasePoints::getParam);
   }
 };
 

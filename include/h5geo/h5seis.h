@@ -247,6 +247,8 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
 
+  virtual SeisParam getParam() = 0;
+
   /// \brief checkTraceLimits check *fromTrc*, *nTrc* and diminish
   ///  *nTrc* to fit in data limits (if *fromTrc* is inside limit)
   /// \param fromTrc first trace (to read for example)

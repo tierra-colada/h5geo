@@ -322,6 +322,56 @@ size_t H5MapImpl::getNY()
   return dims[0];
 }
 
+MapParam H5MapImpl::getParam()
+{
+  MapParam p;
+  // BaseObjectParam
+  p.spatialReference = getSpatialReference();
+  p.lengthUnits = getLengthUnits();
+  p.temporalUnits = getTemporalUnits();
+  p.angularUnits = getAngularUnits();
+  p.dataUnits = getDataUnits();
+
+  // MapParam
+  Eigen::VectorXd origin = getOrigin();
+  if (origin.size() == 2){
+    p.X0 = origin(0);
+    p.Y0 = origin(1);
+  }
+
+  Eigen::VectorXd p1 = getPoint1();
+  if (p1.size() == 2){
+    p.X1 = p1(0);
+    p.Y1 = p1(1);
+  }
+
+  Eigen::VectorXd p2 = getPoint2();
+  if (p2.size() == 2){
+    p.X2 = p2(0);
+    p.Y2 = p2(1);
+  }
+
+  p.nX = getNX();
+  p.nY = getNY();
+
+  ptrdiff_t xChunkSize = -1;
+  ptrdiff_t yChunkSize = -1;
+  auto dsetOpt = getMapD();
+  if (!dsetOpt.has_value())
+    return p;
+
+  auto dsetCreateProps = dsetOpt->getCreateProps();
+  if (dsetCreateProps.isChunked()){
+    std::vector<hsize_t> chunkSizeVec = dsetCreateProps.getChunk(dsetOpt->getDimensions().size());
+    if (chunkSizeVec.size() > 1){
+      p.xChunkSize = dsetCreateProps.getChunk(dsetOpt->getDimensions().size())[1];
+      p.yChunkSize = dsetCreateProps.getChunk(dsetOpt->getDimensions().size())[0];
+    }
+  }
+
+  return p;
+}
+
 H5MapContainer* H5MapImpl::openMapContainer() const{
   h5gt::File file = getH5File();
   return h5geo::createMapContainer(

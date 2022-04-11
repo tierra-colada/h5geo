@@ -295,6 +295,18 @@ std::string H5DevCurveImpl::getRelativeCurveName(){
         h5geo::CaseSensitivity::CASE_INSENSITIVE);
 }
 
+DevCurveParam H5DevCurveImpl::getParam()
+{
+  DevCurveParam p;
+  // BaseObjectParam
+  p.spatialReference = getSpatialReference();
+  p.lengthUnits = getLengthUnits();
+  p.temporalUnits = getTemporalUnits();
+  p.angularUnits = getAngularUnits();
+  p.dataUnits = getDataUnits();
+  return p;
+}
+
 H5WellContainer* H5DevCurveImpl::openWellContainer(){
   h5gt::File file = getH5File();
   return h5geo::createWellContainer(

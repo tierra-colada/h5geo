@@ -60,6 +60,7 @@ void H5Map_py(
            py::arg_v("doCoordTransform", false, "False"))
       .def("getNX", &H5Map::getNX)
       .def("getNY", &H5Map::getNY)
+      .def("getParam", &H5Map::getParam)
 
       .def("openMapContainer", &H5Map::openMapContainer)
 

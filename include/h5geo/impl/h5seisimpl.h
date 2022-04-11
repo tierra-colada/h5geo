@@ -190,6 +190,8 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
 
+  virtual SeisParam getParam() override;
+
   virtual bool checkTraceLimits(
       const size_t& fromTrc, size_t& nTrc) override;
 

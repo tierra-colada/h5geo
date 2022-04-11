@@ -78,6 +78,24 @@ H5BasePointsImpl<TBase>::getPointsD() const
   return this->getDatasetOpt(this->objG, name);
 }
 
+template <typename TBase>
+PointsParam
+H5BasePointsImpl<TBase>::getParam()
+{
+  PointsParam p;
+  // BaseObjectParam
+  p.spatialReference = this->getSpatialReference();
+  p.lengthUnits = this->getLengthUnits();
+  p.temporalUnits = this->getTemporalUnits();
+  p.angularUnits = this->getAngularUnits();
+  p.dataUnits = this->getDataUnits();
+
+  // PointsParam
+  p.domain = this->getDomain();
+  p.nPoints = this->getNPoints();
+  return p;
+}
+
 H5BasePoints* h5geo::openPoints(h5gt::Group group)
 {
   if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_1))

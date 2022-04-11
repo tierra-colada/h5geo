@@ -130,6 +130,18 @@ std::string H5LogCurveImpl::getRelativeCurveName(){
         h5geo::CaseSensitivity::CASE_INSENSITIVE);
 }
 
+LogCurveParam H5LogCurveImpl::getParam()
+{
+  LogCurveParam p;
+  // BaseObjectParam
+  p.spatialReference = getSpatialReference();
+  p.lengthUnits = getLengthUnits();
+  p.temporalUnits = getTemporalUnits();
+  p.angularUnits = getAngularUnits();
+  p.dataUnits = getDataUnits();
+  return p;
+}
+
 H5WellContainer* H5LogCurveImpl::openWellContainer(){
   h5gt::File file = getH5File();
   return h5geo::createWellContainer(

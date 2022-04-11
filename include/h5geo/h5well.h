@@ -81,6 +81,8 @@ public:
   virtual size_t getDevCurveCount() = 0;
   virtual size_t getLogCurveCount() = 0;
 
+  virtual WellParam getParam() = 0;
+
   virtual H5WellContainer* openWellContainer() = 0;
 
   virtual std::optional<h5gt::Group> getDevG() = 0;

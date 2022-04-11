@@ -22,6 +22,8 @@ public:
   virtual size_t getNPoints() override;
   virtual h5geo::Domain getDomain() override;
 
+  virtual PointsParam getParam() override;
+
   virtual std::optional<h5gt::DataSet> getPointsD() const override;
 
 protected:

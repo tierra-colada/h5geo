@@ -1270,6 +1270,38 @@ double H5SeisImpl::getTraceHeaderMax(
   return hdr[ind];
 }
 
+SeisParam H5SeisImpl::getParam()
+{
+  SeisParam p;
+  // BaseObjectParam
+  p.spatialReference = getSpatialReference();
+  p.lengthUnits = getLengthUnits();
+  p.temporalUnits = getTemporalUnits();
+  p.angularUnits = getAngularUnits();
+  p.dataUnits = getDataUnits();
+
+  // SeisParam
+  p.domain = getDomain();
+  p.dataType = getDataType();
+  p.surveyType = getSurveyType();
+  p.nTrc = getNTrc();
+  p.nSamp = getNSamp();
+  p.srd = getSRD();
+
+  auto dsetOpt = getTraceD();
+  if (!dsetOpt.has_value())
+    return p;
+
+  auto dsetCreateProps = dsetOpt->getCreateProps();
+  if (dsetCreateProps.isChunked()){
+    std::vector<hsize_t> chunkSizeVec = dsetCreateProps.getChunk(dsetOpt->getDimensions().size());
+    if (chunkSizeVec.size() > 0)
+      p.trcChunk = dsetCreateProps.getChunk(dsetOpt->getDimensions().size())[0];
+  }
+
+  return p;
+}
+
 bool H5SeisImpl::checkTraceLimits(
     const size_t& fromTrc, size_t& nTrc)
 {
