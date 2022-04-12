@@ -378,6 +378,9 @@ void H5Seis_py(
       .def("setSampRate", &H5Seis::setSampRate,
            py::arg("value"),
            py::arg_v("units", "", "str()"))
+      .def("setFirstSample", &H5Seis::setFirstSample,
+           py::arg("value"),
+           py::arg_v("units", "", "str()"))
 
       .def("getDomain", &H5Seis::getDomain)
       .def("getDataType", &H5Seis::getDataType)

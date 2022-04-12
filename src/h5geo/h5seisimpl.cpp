@@ -1649,6 +1649,30 @@ bool H5SeisImpl::setSampRate(double val, const std::string& units){
   }
 }
 
+bool H5SeisImpl::setFirstSample(double val, const std::string& units){
+  if (!units.empty()){
+    double coef;
+    if (getDomain() == h5geo::Domain::OWT |
+        getDomain() == h5geo::Domain::TWT)
+      coef = units::convert(
+            units::unit_from_string(getTemporalUnits()),
+            units::unit_from_string(units));
+    else
+      coef = units::convert(
+            units::unit_from_string(getLengthUnits()),
+            units::unit_from_string(units));
+    val = val*coef;
+  }
+
+  size_t nTrc = getNTrc();
+  if (nTrc < 1)
+    return false;
+
+  Eigen::VectorXd v(nTrc);
+  v.fill(val);
+  return writeTraceHeader("DELRECT", v, 0);
+}
+
 h5geo::Domain H5SeisImpl::getDomain(){
   return static_cast<h5geo::Domain>(
         h5geo::readEnumAttribute(
