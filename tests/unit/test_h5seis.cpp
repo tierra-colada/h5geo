@@ -251,7 +251,7 @@ TEST_F(H5SeisFixture, writeAndGetTrace){
       << "Read single trace and compare it with original";
 }
 
-TEST_F(H5SeisFixture, writeAndGetTraceHeaderFinalize){
+TEST_F(H5SeisFixture, writeAndGetTraceHeader){
   H5Seis_ptr seis(seisContainer->createSeis(
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
@@ -271,7 +271,7 @@ TEST_F(H5SeisFixture, writeAndGetTraceHeaderFinalize){
   ASSERT_TRUE(seis->writeTraceHeader("CDP", trcHdr.col(40)))
       << "Write single header (CDP for example)";
 
-  trcHdr_out = seis->getTraceHeader("CDP");
+  trcHdr_out = seis->getTraceHeader("CDP", 0, seis->getNTrc());
 
   ASSERT_TRUE(trcHdr_out.isApprox(trcHdr.col(40)))
       << "Read and compare single header (CDP for example)";
@@ -330,7 +330,7 @@ TEST_F(H5SeisFixture, writeAndGetSortedData){
   ASSERT_TRUE(seis->writeTraceHeader("CDP", trcHdr.col(40)))
       << "Write single header (CDP for example)";
 
-  trcHdr_out = seis->getTraceHeader("CDP");
+  trcHdr_out = seis->getTraceHeader("CDP", 0, seis->getNTrc());
 
   ASSERT_TRUE(trcHdr_out.isApprox(trcHdr.col(40)))
       << "Read and compare single header (CDP for example)";
@@ -387,9 +387,9 @@ TEST_F(H5SeisFixture, generateGeometry){
   cdpx << 0, 1, 2, 0, 1, 2;
   cdpy << 0, 0, 0, 2, 2, 2;
 
-  Eigen::VectorXd cdp_out = seis->getTraceHeader("CDP");
-  Eigen::VectorXd cdpx_out = seis->getTraceHeader("CDP_X");
-  Eigen::VectorXd cdpy_out = seis->getTraceHeader("CDP_Y");
+  Eigen::VectorXd cdp_out = seis->getTraceHeader("CDP", 0, seis->getNTrc());
+  Eigen::VectorXd cdpx_out = seis->getTraceHeader("CDP_X", 0, seis->getNTrc());
+  Eigen::VectorXd cdpy_out = seis->getTraceHeader("CDP_Y", 0, seis->getNTrc());
 
   ASSERT_TRUE(cdp_out.isApprox(cdp));
   ASSERT_TRUE(cdpx_out.isApprox(cdpx));
@@ -427,7 +427,7 @@ TEST_F(H5SeisFixture, SEGY){
   ASSERT_EQ(seis->getNTrc(), 96);
   ASSERT_EQ(seis->getBinHeader("JOB"), 1);
   ASSERT_EQ(seis->getBinHeader("SAMP_RATE"), 2000);
-  Eigen::VectorXd grpx = seis->getTraceHeader("GRPX");
+  Eigen::VectorXd grpx = seis->getTraceHeader("GRPX", 0, seis->getNTrc());
   ASSERT_TRUE(grpx(1) == 50000);
   Eigen::VectorXf trace = seis->getTrace(0);
 
