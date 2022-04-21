@@ -36,12 +36,14 @@ public:
   virtual bool setTemporalUnits(const std::string& str) override;
   virtual bool setAngularUnits(const std::string& str) override;
   virtual bool setDataUnits(const std::string& str) override;
+  virtual bool setNullValue(double val) override;
 
   virtual std::string getSpatialReference() override;
   virtual std::string getLengthUnits() override;
   virtual std::string getTemporalUnits() override;
   virtual std::string getAngularUnits() override;
   virtual std::string getDataUnits() override;
+  virtual double getNullValue() override;
 
   virtual h5gt::File getH5File() const override;
   virtual h5gt::Group getObjG() const override;

@@ -221,6 +221,14 @@ bool H5BaseObjectImpl<TBase>::setDataUnits(const std::string& str){
 }
 
 template <typename TBase>
+bool H5BaseObjectImpl<TBase>::setNullValue(double val){
+  return h5geo::overwriteAttribute(
+        objG,
+        std::string{h5geo::detail::null_value},
+        val);
+}
+
+template <typename TBase>
 std::string H5BaseObjectImpl<TBase>::getSpatialReference(){
   return h5geo::readStringAttribute(
         objG,
@@ -253,6 +261,13 @@ std::string H5BaseObjectImpl<TBase>::getDataUnits(){
   return h5geo::readStringAttribute(
         objG,
         std::string{h5geo::detail::data_units});
+}
+
+template <typename TBase>
+double H5BaseObjectImpl<TBase>::getNullValue(){
+  return h5geo::readDoubleAttribute(
+        objG,
+        std::string{h5geo::detail::null_value});
 }
 
 template <typename TBase>

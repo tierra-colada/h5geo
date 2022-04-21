@@ -455,6 +455,10 @@ H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p, h5geo::ObjectTyp
 
   try {
 
+    group.createAttribute<double>(
+          std::string{h5geo::detail::null_value},
+          h5gt::DataSpace(1)).
+        write(param.nullValue);
     group.createAttribute<unsigned>(
           std::string{h5geo::detail::Domain},
           h5gt::DataSpace(1)).
@@ -543,6 +547,10 @@ H5BaseImpl<TBase>::createNewMap(h5gt::Group &group, void* p)
 
   try {
 
+    group.createAttribute<double>(
+          std::string{h5geo::detail::null_value},
+          h5gt::DataSpace(1)).
+        write(param.nullValue);
     group.createAttribute<unsigned>(
           std::string{h5geo::detail::Domain},
           h5gt::DataSpace(1)).
@@ -598,6 +606,10 @@ H5BaseImpl<TBase>::createNewWell(h5gt::Group &group, void* p)
 
   try {
 
+    group.createAttribute<double>(
+          std::string{h5geo::detail::null_value},
+          h5gt::DataSpace(1)).
+        write(param.nullValue);
     group.createAttribute<std::string>(
           std::string{h5geo::detail::spatial_reference},
           h5gt::DataSpace::From(param.spatialReference)).
@@ -652,6 +664,10 @@ H5BaseImpl<TBase>::createNewLogCurve(h5gt::Group &group, void* p)
 
   try {
 
+    group.createAttribute<double>(
+          std::string{h5geo::detail::null_value},
+          h5gt::DataSpace(1)).
+        write(param.nullValue);
     group.createAttribute<std::string>(
           std::string{h5geo::detail::spatial_reference},
           h5gt::DataSpace::From(param.spatialReference)).
@@ -700,6 +716,10 @@ H5BaseImpl<TBase>::createNewDevCurve(h5gt::Group &group, void* p)
 
   try {
 
+    group.createAttribute<double>(
+          std::string{h5geo::detail::null_value},
+          h5gt::DataSpace(1)).
+        write(param.nullValue);
     group.createAttribute<std::string>(
           std::string{h5geo::detail::spatial_reference},
           h5gt::DataSpace::From(param.spatialReference)).
@@ -809,6 +829,10 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
 
   try {
 
+    group.createAttribute<double>(
+          std::string{h5geo::detail::null_value},
+          h5gt::DataSpace(1)).
+        write(param.nullValue);
     group.createAttribute<unsigned>(
           std::string{h5geo::detail::Domain},
           h5gt::DataSpace(1)).

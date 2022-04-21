@@ -27,12 +27,14 @@ public:
   virtual bool setTemporalUnits(const std::string& str) = 0;
   virtual bool setAngularUnits(const std::string& str) = 0;
   virtual bool setDataUnits(const std::string& str) = 0;
+  virtual bool setNullValue(double val) = 0;
 
   virtual std::string getSpatialReference() = 0;
   virtual std::string getLengthUnits() = 0;
   virtual std::string getTemporalUnits() = 0;
   virtual std::string getAngularUnits() = 0;
   virtual std::string getDataUnits() = 0;
+  virtual double getNullValue() = 0;
 
   virtual h5gt::File getH5File() const = 0;
   virtual h5gt::Group getObjG() const = 0;

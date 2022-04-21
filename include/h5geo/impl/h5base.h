@@ -55,6 +55,7 @@ class H5Points4;
 struct BaseObjectParam{
   // 'spatialReference' in the form 'authName:code'
   std::string spatialReference, lengthUnits, temporalUnits, angularUnits, dataUnits;
+  double nullValue = NAN;
 };
 
 struct PointsParam : public BaseObjectParam{

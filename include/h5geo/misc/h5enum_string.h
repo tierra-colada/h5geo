@@ -33,6 +33,7 @@ inline constexpr auto length_units = "length_units";
 inline constexpr auto temporal_units = "temporal_units";
 inline constexpr auto data_units = "data_units";
 inline constexpr auto angular_units = "angular_units";
+inline constexpr auto null_value = "null_value";
 
 inline constexpr auto& cnt_attrs =
     magic_enum::enum_names<h5geo::detail::ContainerAttributes>();

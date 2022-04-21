@@ -35,12 +35,14 @@ struct H5BaseObject_py
         .def("setTemporalUnits", &H5BaseObject::setTemporalUnits)
         .def("setAngularUnits", &H5BaseObject::setAngularUnits)
         .def("setDataUnits", &H5BaseObject::setDataUnits)
+        .def("setNullValue", &H5BaseObject::setNullValue)
 
         .def("getSpatialReference", &H5BaseObject::getSpatialReference)
         .def("getLengthUnits", &H5BaseObject::getLengthUnits)
         .def("getTemporalUnits", &H5BaseObject::getTemporalUnits)
         .def("getAngularUnits", &H5BaseObject::getAngularUnits)
         .def("getDataUnits", &H5BaseObject::getDataUnits)
+        .def("getNullValue", &H5BaseObject::getNullValue)
 
         .def("getH5File", &H5BaseObject::getH5File)
         .def("getObjG", &H5BaseObject::getObjG)
