@@ -240,6 +240,20 @@ bool H5SeisImpl::writeTrace(
   return true;
 }
 
+bool H5SeisImpl::writeTrace(
+    const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
+    const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+    const size_t& fromSampInd)
+{
+  if (TRACE.cols() != trcInd.size())
+    return false;
+
+  bool status = true;
+  for (size_t i = 0; i < trcInd.size(); i++)
+    status &= writeTrace(TRACE.col(i), trcInd(i), fromSampInd);
+  return status;
+}
+
 bool H5SeisImpl::writeTraceHeader(
     const Eigen::Ref<const Eigen::MatrixXd>& HDR,
     const size_t& fromTrc,

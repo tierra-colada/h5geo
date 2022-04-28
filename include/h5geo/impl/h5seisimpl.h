@@ -44,6 +44,10 @@ public:
       const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
       const size_t& fromTrc = 0,
       const size_t& fromSampInd = 0) override;
+  virtual bool writeTrace(
+      const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+      const size_t& fromSampInd = 0) override;
   virtual bool writeTraceHeader(
       const Eigen::Ref<const Eigen::MatrixXd>& HDR,
       const size_t& fromTrc = 0,

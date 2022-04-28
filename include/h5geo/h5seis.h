@@ -53,6 +53,11 @@ public:
       const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
       const size_t& fromTrc = 0,
       const size_t& fromSampInd = 0) = 0;
+  /// Useful to call from python to avoid loops (may save a lot of time)
+  virtual bool writeTrace(
+      const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+      const size_t& fromSampInd = 0) = 0;
   virtual bool writeTraceHeader(
       const Eigen::Ref<const Eigen::MatrixXd>& HDR,
       const size_t& fromTrc = 0,
