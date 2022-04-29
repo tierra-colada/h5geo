@@ -255,7 +255,7 @@ bool H5SeisImpl::writeTrace(
     const size_t& fromSampInd,
     const std::string& dataUnits)
 {
-  if (TRACE.cols() != trcInd.size())
+  if (trcInd.size() < 1 || TRACE.cols() != trcInd.size())
     return false;
 
   if (trcInd.maxCoeff() >= getNTrc())
@@ -598,7 +598,7 @@ Eigen::MatrixXf H5SeisImpl::getTrace(
     size_t nSamp,
     const std::string& dataUnits)
 {
-  if (trcInd.maxCoeff() >= getNTrc())
+  if (trcInd.size() < 1 || trcInd.maxCoeff() >= getNTrc())
     return Eigen::MatrixXf();
 
   if (!checkSampleLimits(fromSampInd, nSamp))
@@ -620,7 +620,9 @@ Eigen::MatrixXf H5SeisImpl::getTrace(
   // h5gt rows/cols selection implicitly sorts the indexes
   // we need remove that effect
   traceD.select_rows(trcInd_stl, fromSampInd, nSamp).read(TRACE.data());
-  TRACE = TRACE(Eigen::all, ind).eval();
+  Eigen::VectorX<ptrdiff_t> lind =
+      Eigen::VectorX<ptrdiff_t>::LinSpaced(ind.size(), 0, ind.size()-1);
+  TRACE = TRACE(Eigen::all, lind(ind)).eval();
   if (!dataUnits.empty()){
     double coef = units::convert(
           units::unit_from_string(getDataUnits()),
