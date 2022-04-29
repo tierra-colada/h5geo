@@ -219,36 +219,76 @@ TEST_F(H5SeisFixture, writeAndGetBinHeader){
 }
 
 TEST_F(H5SeisFixture, writeAndGetTrace){
-  H5Seis_ptr seis(seisContainer->createSeis(
-                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
+  {
+    H5Seis_ptr seis(seisContainer->createSeis(
+                      SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+    ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
 
-  Eigen::MatrixXf traces = Eigen::MatrixXf::Random(
-        seis->getNSamp(), seis->getNTrc());
+    Eigen::MatrixXf traces = Eigen::MatrixXf::Random(
+          seis->getNSamp(), seis->getNTrc());
 
-  ASSERT_TRUE(seis->writeTrace(traces, 0))
-      << "Write all traces at once";
+    ASSERT_TRUE(seis->writeTrace(traces, 0))
+        << "Write all traces at once";
 
-  Eigen::MatrixXf traces_out = seis->getTrace(
-        0, seis->getNTrc(), 0, seis->getNSamp());
+    Eigen::MatrixXf traces_out = seis->getTrace(
+          0, seis->getNTrc(), 0, seis->getNSamp());
 
-  ASSERT_TRUE(traces_out.isApprox(traces))
-      << "Read all traces and compare them with original";
+    ASSERT_TRUE(traces_out.isApprox(traces))
+        << "Read all traces and compare them with original";
 
-  traces_out = seis->getTrace(
-        3, 10, 2, 5);
+    traces_out = seis->getTrace(
+          3, 10, 2, 5);
 
-  ASSERT_TRUE(traces_out.isApprox(traces.block(2, 3, 5, 10)))
-      << "Read all block of traces and compare them with original";
+    ASSERT_TRUE(traces_out.isApprox(traces.block(2, 3, 5, 10)))
+        << "Read all block of traces and compare them with original";
 
-  ASSERT_TRUE(seis->writeTrace(traces.col(10), 20))
-      << "Write single traces";
+    ASSERT_TRUE(seis->writeTrace(traces.col(10), 20))
+        << "Write single traces";
 
-  traces_out = seis->getTrace(
-        20, 1, 0, seis->getNSamp());
+    traces_out = seis->getTrace(
+          20, 1, 0, seis->getNSamp());
 
-  ASSERT_TRUE(traces_out.isApprox(traces.col(10)))
-      << "Read single trace and compare it with original";
+    ASSERT_TRUE(traces_out.isApprox(traces.col(10)))
+        << "Read single trace and compare it with original";
+  }
+
+  {
+    H5Seis_ptr seis(seisContainer->createSeis(
+                      SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+
+    // Write traces by indexes
+    size_t nSamp = seis->getNSamp();
+    size_t nTrc = seis->getNTrc();
+    size_t fromSampInd = 3;
+    size_t nSampIO = nSamp - fromSampInd;
+    size_t nTrcIO = 3;
+    Eigen::VectorX<size_t> trcInd(nTrcIO);
+    trcInd << 3, 7, 4;
+    Eigen::MatrixXf traces = Eigen::MatrixXf::Random(nSampIO, nTrcIO);
+
+    ASSERT_TRUE(seis->writeTrace(traces, trcInd, fromSampInd))
+        << "Write traces by indexes";
+
+    Eigen::MatrixXf traces_out = seis->getTrace(trcInd, fromSampInd, nSampIO);
+
+    ASSERT_TRUE(traces_out.isApprox(traces))
+        << "Read traces by indexes and compare it with original";
+
+    traces_out = seis->getTrace(
+          trcInd(0), 1, fromSampInd, nSampIO);
+    ASSERT_TRUE(traces_out.isApprox(traces.col(0)))
+        << "Read traces by indexes and compare it with original (0)";
+
+    traces_out = seis->getTrace(
+          trcInd(1), 1, fromSampInd, nSampIO);
+    ASSERT_TRUE(traces_out.isApprox(traces.col(1)))
+        << "Read traces by indexes and compare it with original (1)";
+
+    traces_out = seis->getTrace(
+          trcInd(2), 1, fromSampInd, nSampIO);
+    ASSERT_TRUE(traces_out.isApprox(traces.col(2)))
+        << "Read traces by indexes and compare it with original (2)";
+  }
 }
 
 TEST_F(H5SeisFixture, writeAndGetTraceHeader){
@@ -460,28 +500,3 @@ TEST_F(H5SeisFixture, SEGY){
   Eigen::VectorXf trace3 = seis3->getTrace(0);
   ASSERT_TRUE(trace.isApprox(trace3));
 }
-
-// ORIGIN POINT1 AND POINT2 ARE DEFINED ONLY FOR 3D STACK DATA AND AFTER 'Finalize()` is called
-//TEST_F(H5SeisFixture, writeAndGetOriginPoint1Point2){
-//  H5Seis_ptr seis(seisContainer->createSeis(
-//                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-
-//  double orientation = 1;
-//  Eigen::VectorXd origin(2), point1(2), point2(2);
-//  origin << 1, 1;
-//  point1 << 10, 1;
-//  point1 << 1, 10;
-
-//  seis->setOrigin(origin);
-//  seis->setPoint1(point1);
-//  seis->setPoint2(point2);
-
-//  Eigen::VectorXd originOut = seis->getOrigin();
-//  Eigen::VectorXd point1Out = seis->getPoint1();
-//  Eigen::VectorXd point2Out = seis->getPoint2();
-
-//  ASSERT_TRUE(origin.isApprox(originOut));
-//  ASSERT_TRUE(point1.isApprox(originOut));
-//  ASSERT_TRUE(point2.isApprox(point2Out));
-
-//}

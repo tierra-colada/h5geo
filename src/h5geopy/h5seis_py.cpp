@@ -12,7 +12,6 @@ getSortedData(
     const std::vector<double>& maxList,
     size_t fromSampInd = 0,
     size_t nSamp = std::numeric_limits<size_t>::max(),
-    bool readTraceByTrace = true,
     const std::string& dataUnits = "",
     const std::string& lengthUnits = "",
     bool doCoordTransform = false)
@@ -23,8 +22,7 @@ getSortedData(
         TRACE, HDR,
         keyList, minList, maxList,
         fromSampInd, nSamp,
-        readTraceByTrace, dataUnits,
-        lengthUnits, doCoordTransform);
+        dataUnits, lengthUnits, doCoordTransform);
   return std::make_tuple(std::move(TRACE), std::move(HDR), std::move(idx));
 }
 
@@ -102,21 +100,25 @@ void H5Seis_py(
            "write boundary of 2d (a line) or 3d (usually convex hull or concave hull) seismic survey. "
 "Input argument is `MatrixX2d` where first col - `X` coord, second - `Y` coord")
       .def("writeTrace", py::overload_cast<
-           const Eigen::Ref<const Eigen::MatrixXf>&,
+           Eigen::Ref<Eigen::MatrixXf>,
            const size_t&,
-           const size_t&>(
+           const size_t&,
+           const std::string&>(
              &H5Seis::writeTrace),
            py::arg("TRACE"),
            py::arg_v("fromTrc", 0, "0"),
-           py::arg_v("fromSampInd", 0, "0"))
+           py::arg_v("fromSampInd", 0, "0"),
+           py::arg_v("dataUnits", "", "str()"))
       .def("writeTrace", py::overload_cast<
-           const Eigen::Ref<const Eigen::MatrixXf>&,
+           Eigen::Ref<Eigen::MatrixXf>,
            const Eigen::Ref<const Eigen::VectorX<size_t>>&,
-           const size_t&>(
+           const size_t&,
+           const std::string&>(
              &H5Seis::writeTrace),
            py::arg("TRACE"),
-           py::arg("fromTrc"),
-           py::arg_v("fromSampInd", 0, "0"))
+           py::arg("trcInd"),
+           py::arg_v("fromSampInd", 0, "0"),
+           py::arg_v("dataUnits", "", "str()"))
       .def("writeTraceHeader", py::overload_cast<
            const Eigen::Ref<const Eigen::MatrixXd>&,
            const size_t&,
@@ -190,13 +192,29 @@ void H5Seis_py(
            py::arg("hdrName"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
-      .def("getTrace", &H5Seis::getTrace,
+      .def("getTrace", py::overload_cast<
+           const size_t&,
+           size_t,
+           const size_t&,
+           size_t,
+           const std::string&>(
+             &H5Seis::getTrace),
            py::arg("fromTrc"),
            py::arg_v("nTrc", 1, "1"),
            py::arg_v("fromSampInd", 0, "0"),
            py::arg_v("nSamp", std::numeric_limits<size_t>::max(), "sys.maxint"),
            py::arg_v("dataUnits", "", "str()"),
            "Get block of traces. If `nTrc` or `nSamp` exceed max values then these values are changed to max allowed (that is why they are not `const`)")
+      .def("getTrace", py::overload_cast<
+           const Eigen::Ref<const Eigen::VectorX<size_t>>&,
+           const size_t&,
+           size_t,
+           const std::string&>(
+             &H5Seis::getTrace),
+           py::arg("trcInd"),
+           py::arg_v("fromSampInd", 0, "0"),
+           py::arg_v("nSamp", std::numeric_limits<size_t>::max(), "sys.maxint"),
+           py::arg_v("dataUnits", "", "str()"))
       .def("getTraceHeader", py::overload_cast<
            const size_t&,
            size_t,
@@ -274,7 +292,6 @@ void H5Seis_py(
            py::arg("maxList"),
            py::arg_v("fromSampInd", 0, "0"),
            py::arg_v("nSamp", std::numeric_limits<size_t>::max(), "sys.maxint"),
-           py::arg_v("readTraceByTrace", true, "True"),
            py::arg_v("dataUnits", "", "str()"),
            py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"),

@@ -41,13 +41,15 @@ public:
       bool doCoordTransform = false) override;
 
   virtual bool writeTrace(
-      const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
+      Eigen::Ref<Eigen::MatrixXf> TRACE,
       const size_t& fromTrc = 0,
-      const size_t& fromSampInd = 0) override;
+      const size_t& fromSampInd = 0,
+      const std::string& dataUnits = "") override;
   virtual bool writeTrace(
-      const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
+      Eigen::Ref<Eigen::MatrixXf> TRACE,
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
-      const size_t& fromSampInd = 0) override;
+      const size_t& fromSampInd = 0,
+      const std::string& dataUnits = "") override;
   virtual bool writeTraceHeader(
       const Eigen::Ref<const Eigen::MatrixXd>& HDR,
       const size_t& fromTrc = 0,
@@ -92,6 +94,12 @@ public:
   virtual Eigen::MatrixXf getTrace(
       const size_t& fromTrc,
       size_t nTrc = 1,
+      const size_t& fromSampInd = 0,
+      size_t nSamp = std::numeric_limits<size_t>::max(),
+      const std::string& dataUnits = "") override;
+
+  virtual Eigen::MatrixXf getTrace(
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
       const size_t& fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
       const std::string& dataUnits = "") override;
@@ -150,7 +158,6 @@ public:
       const std::vector<double>& maxList,
       size_t fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
-      bool readTraceByTrace = true,
       const std::string& dataUnits = "",
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;

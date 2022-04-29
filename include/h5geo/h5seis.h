@@ -50,14 +50,16 @@ public:
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
   virtual bool writeTrace(
-      const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
+      Eigen::Ref<Eigen::MatrixXf> TRACE,
       const size_t& fromTrc = 0,
-      const size_t& fromSampInd = 0) = 0;
-  /// Useful to call from python to avoid loops (may save a lot of time)
+      const size_t& fromSampInd = 0,
+      const std::string& dataUnits = "") = 0;
+  /// May save a lot of time
   virtual bool writeTrace(
-      const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
+      Eigen::Ref<Eigen::MatrixXf> TRACE,
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
-      const size_t& fromSampInd = 0) = 0;
+      const size_t& fromSampInd = 0,
+      const std::string& dataUnits = "") = 0;
   virtual bool writeTraceHeader(
       const Eigen::Ref<const Eigen::MatrixXd>& HDR,
       const size_t& fromTrc = 0,
@@ -113,6 +115,12 @@ public:
   virtual Eigen::MatrixXf getTrace(
       const size_t& fromTrc,
       size_t nTrc = 1,
+      const size_t& fromSampInd = 0,
+      size_t nSamp = std::numeric_limits<size_t>::max(),
+      const std::string& dataUnits = "") = 0;
+
+  virtual Eigen::MatrixXf getTrace(
+      const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
       const size_t& fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
       const std::string& dataUnits = "") = 0;
@@ -191,7 +199,6 @@ public:
   /// (from 0 to getNSamp())
   /// \param nSamp Number of samples to read (if 0 then
   /// 'TRACE' will be empty). By default all samples
-  /// \param readTraceByTrace whether to read h5 in row or col order
   /// \param dataUnits you will get data transformed to these units
   /// \param lengthUnits works only in pair with 'doCoordTransform'
   /// \param doCoordTransform only works if two header names are passed (X and Y)
@@ -204,7 +211,6 @@ public:
       const std::vector<double>& maxList,
       size_t fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
-      bool readTraceByTrace = true,
       const std::string& dataUnits = "",
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;

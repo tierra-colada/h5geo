@@ -224,15 +224,24 @@ bool H5SeisImpl::writeBoundary(
 }
 
 bool H5SeisImpl::writeTrace(
-    const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
+    Eigen::Ref<Eigen::MatrixXf> TRACE,
     const size_t& fromTrc,
-    const size_t& fromSampInd)
+    const size_t& fromSampInd,
+    const std::string& dataUnits)
 {
   if (fromTrc+TRACE.cols() > getNTrc())
     return false;
 
   if (TRACE.rows()+fromSampInd > getNSamp())
     return false;
+
+  std::string unitsTo = getDataUnits();
+  if (!unitsTo.empty() && !dataUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(dataUnits),
+          units::unit_from_string(unitsTo));
+    TRACE = TRACE*coef;
+  }
 
   traceD.select({fromTrc, fromSampInd},
                 {(size_t)TRACE.cols(),
@@ -241,17 +250,42 @@ bool H5SeisImpl::writeTrace(
 }
 
 bool H5SeisImpl::writeTrace(
-    const Eigen::Ref<const Eigen::MatrixXf>& TRACE,
+    Eigen::Ref<Eigen::MatrixXf> TRACE,
     const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
-    const size_t& fromSampInd)
+    const size_t& fromSampInd,
+    const std::string& dataUnits)
 {
   if (TRACE.cols() != trcInd.size())
     return false;
 
-  bool status = true;
-  for (size_t i = 0; i < trcInd.size(); i++)
-    status &= writeTrace(TRACE.col(i), trcInd(i), fromSampInd);
-  return status;
+  if (trcInd.maxCoeff() >= getNTrc())
+    return false;
+
+  if (TRACE.rows()+fromSampInd > getNSamp())
+    return false;
+
+  std::string unitsTo = getDataUnits();
+  if (!unitsTo.empty() && !dataUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(dataUnits),
+          units::unit_from_string(unitsTo));
+    TRACE = TRACE*coef;
+  }
+
+  Eigen::VectorX<ptrdiff_t> ind = h5geo::sort(trcInd);
+  Eigen::VectorX<size_t> trcInd_sorted = trcInd(ind);
+  bool hasDuplicates = std::adjacent_find(
+        trcInd_sorted.begin(), trcInd_sorted.end()) != trcInd_sorted.end();
+  if (hasDuplicates)
+    return false;
+
+  std::vector<size_t> trcInd_stl;
+  trcInd_stl.resize(trcInd_sorted.size());
+  Eigen::VectorX<size_t>::Map(&trcInd_stl[0], trcInd_sorted.size()) = trcInd_sorted;
+
+  // don't move traces within TRACES as this may break the logic of outer application
+  traceD.select_rows(trcInd_stl, fromSampInd).write_raw(TRACE(Eigen::all, ind).eval().data());
+  return true;
 }
 
 bool H5SeisImpl::writeTraceHeader(
@@ -358,11 +392,11 @@ bool H5SeisImpl::writeXYTraceHeaders(
   }
 #endif
 
-  std::string unitsFrom = getLengthUnits();
-  if (!unitsFrom.empty() && !lengthUnits.empty()){
+  std::string unitsTo = getLengthUnits();
+  if (!unitsTo.empty() && !lengthUnits.empty()){
     double coef = units::convert(
-          units::unit_from_string(unitsFrom),
-          units::unit_from_string(lengthUnits));
+          units::unit_from_string(lengthUnits),
+          units::unit_from_string(unitsTo));
     xy = xy*coef;
   }
 
@@ -409,11 +443,11 @@ bool H5SeisImpl::writeXYTraceHeaders(
   }
 #endif
 
-  std::string unitsFrom = getLengthUnits();
-  if (!unitsFrom.empty() && !lengthUnits.empty()){
+  std::string unitsTo = getLengthUnits();
+  if (!unitsTo.empty() && !lengthUnits.empty()){
     double coef = units::convert(
-          units::unit_from_string(unitsFrom),
-          units::unit_from_string(lengthUnits));
+          units::unit_from_string(lengthUnits),
+          units::unit_from_string(unitsTo));
     xy = xy*coef;
   }
 
@@ -545,7 +579,48 @@ Eigen::MatrixXf H5SeisImpl::getTrace(
   std::vector<size_t> count({nTrc, nSamp});
 
   traceD.select(offset, count).read(TRACE.data());
+  if (!dataUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(getDataUnits()),
+          units::unit_from_string(dataUnits));
+    if (!isnan(coef))
+      return TRACE*coef;
 
+    return Eigen::MatrixXf();
+  }
+
+  return TRACE;
+}
+
+Eigen::MatrixXf H5SeisImpl::getTrace(
+    const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
+    const size_t& fromSampInd,
+    size_t nSamp,
+    const std::string& dataUnits)
+{
+  if (trcInd.maxCoeff() >= getNTrc())
+    return Eigen::MatrixXf();
+
+  if (!checkSampleLimits(fromSampInd, nSamp))
+    return Eigen::MatrixXf();
+
+  Eigen::VectorX<ptrdiff_t> ind = h5geo::sort(trcInd);
+  Eigen::VectorX<size_t> trcInd_sorted = trcInd(ind);
+  bool hasDuplicates = std::adjacent_find(
+        trcInd_sorted.begin(), trcInd_sorted.end()) != trcInd_sorted.end();
+  if (hasDuplicates)
+    return Eigen::MatrixXf();
+
+  std::vector<size_t> trcInd_stl;
+  trcInd_stl.resize(trcInd_sorted.size());
+  Eigen::VectorX<size_t>::Map(&trcInd_stl[0], trcInd_sorted.size()) = trcInd_sorted;
+
+  Eigen::MatrixXf TRACE(nSamp, trcInd.size());
+
+  // h5gt rows/cols selection implicitly sorts the indexes
+  // we need remove that effect
+  traceD.select_rows(trcInd_stl, fromSampInd, nSamp).read(TRACE.data());
+  TRACE = TRACE(Eigen::all, ind).eval();
   if (!dataUnits.empty()){
     double coef = units::convert(
           units::unit_from_string(getDataUnits()),
@@ -804,7 +879,6 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
     const std::vector<double>& maxList,
     size_t fromSampInd,
     size_t nSamp,
-    bool readTraceByTrace,
     const std::string& dataUnits,
     const std::string& lengthUnits,
     bool doCoordTransform)
@@ -876,27 +950,7 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
     return traceIndexes;
 
   checkSampleLimits(fromSampInd, nSamp);
-  if (readTraceByTrace){
-    TRACE.resize(nSamp, HDR.rows());
-    for (ptrdiff_t i = 0; i < traceIndexes.size(); i++){
-      TRACE.col(i) = H5SeisImpl::getTrace(
-            traceIndexes(i), 1, fromSampInd, nSamp);
-    }
-  } else {
-    TRACE.resize(HDR.rows(), nSamp);
-    for (size_t i = 0; i < nSamp; i++){
-      h5gt::ElementSet elSet = h5geo::rowsCol2ElementSet(traceIndexes, i);
-      traceD.select(elSet).read(TRACE.col(i).data());
-    }
-  }
-
-  if (!dataUnits.empty()){
-    double coef = units::convert(
-          units::unit_from_string(getDataUnits()),
-          units::unit_from_string(dataUnits));
-    TRACE *= coef;
-  }
-
+  TRACE = getTrace(traceIndexes, fromSampInd, nSamp, dataUnits);
   return traceIndexes;
 }
 
