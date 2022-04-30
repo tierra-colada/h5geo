@@ -258,9 +258,6 @@ bool H5SeisImpl::writeTrace(
   if (trcInd.size() < 1 || TRACE.cols() != trcInd.size())
     return false;
 
-  if (trcInd.maxCoeff() >= getNTrc())
-    return false;
-
   if (TRACE.rows()+fromSampInd > getNSamp())
     return false;
 
@@ -272,19 +269,16 @@ bool H5SeisImpl::writeTrace(
     TRACE = TRACE*coef;
   }
 
-  Eigen::VectorX<ptrdiff_t> ind = h5geo::sort(trcInd);
-  Eigen::VectorX<size_t> trcInd_sorted = trcInd(ind);
-  bool hasDuplicates = std::adjacent_find(
-        trcInd_sorted.begin(), trcInd_sorted.end()) != trcInd_sorted.end();
-  if (hasDuplicates)
-    return false;
-
-  std::vector<size_t> trcInd_stl;
-  trcInd_stl.resize(trcInd_sorted.size());
-  Eigen::VectorX<size_t>::Map(&trcInd_stl[0], trcInd_sorted.size()) = trcInd_sorted;
-
-  // don't move traces within TRACES as this may break the logic of outer application
-  traceD.select_rows(trcInd_stl, fromSampInd).write_raw(TRACE(Eigen::all, ind).eval().data());
+  std::vector<size_t> offset({0, fromSampInd});
+  std::vector<size_t> count({1, size_t(TRACE.rows())});
+  size_t nTrc = getNTrc();
+  for (size_t i = 0; i < trcInd.size(); i++){
+    size_t ind = trcInd(i);
+    if (ind < nTrc){
+      offset[0] = ind;
+      traceD.select(offset, count).write_raw(TRACE.col(i).data());
+    }
+  }
   return true;
 }
 
@@ -604,25 +598,21 @@ Eigen::MatrixXf H5SeisImpl::getTrace(
   if (!checkSampleLimits(fromSampInd, nSamp))
     return Eigen::MatrixXf();
 
-  Eigen::VectorX<ptrdiff_t> ind = h5geo::sort(trcInd);
-  Eigen::VectorX<size_t> trcInd_sorted = trcInd(ind);
-  bool hasDuplicates = std::adjacent_find(
-        trcInd_sorted.begin(), trcInd_sorted.end()) != trcInd_sorted.end();
-  if (hasDuplicates)
-    return Eigen::MatrixXf();
-
-  std::vector<size_t> trcInd_stl;
-  trcInd_stl.resize(trcInd_sorted.size());
-  Eigen::VectorX<size_t>::Map(&trcInd_stl[0], trcInd_sorted.size()) = trcInd_sorted;
-
+  std::vector<size_t> offset({0, fromSampInd});
+  std::vector<size_t> count({1, nSamp});
+  size_t nTrc = getNTrc();
+  double nullVal = getNullValue();
   Eigen::MatrixXf TRACE(nSamp, trcInd.size());
+  for (size_t i = 0; i < trcInd.size(); i++){
+    size_t ind = trcInd(i);
+    if (ind < nTrc){
+      offset[0] = ind;
+      traceD.select(offset, count).read(TRACE.col(i).data());
+    } else {
+      TRACE.col(i).array() = nullVal;
+    }
+  }
 
-  // h5gt rows/cols selection implicitly sorts the indexes
-  // we need remove that effect
-  traceD.select_rows(trcInd_stl, fromSampInd, nSamp).read(TRACE.data());
-  Eigen::VectorX<ptrdiff_t> lind =
-      Eigen::VectorX<ptrdiff_t>::LinSpaced(ind.size(), 0, ind.size()-1);
-  TRACE = TRACE(Eigen::all, lind(ind)).eval();
   if (!dataUnits.empty()){
     double coef = units::convert(
           units::unit_from_string(getDataUnits()),
