@@ -14,7 +14,7 @@
 
 // 'windows.h' contains min/max macros and thus std::min causes build fail
 #define NOMINMAX
-#include <mio/mio.hpp>
+#include <mio/mmap.hpp>
 
 // enum string is needed to include magic_enum with predefined macro
 #include "h5enum_string.h"
