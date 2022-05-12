@@ -1,5 +1,6 @@
 #include "../../include/h5geo/impl/h5welltopsimpl.h"
 #include "../../include/h5geo/impl/h5wellimpl.h"
+#include "../../include/h5geo/misc/h5core.h"  // to build on Windows
 
 H5WellTopsImpl::H5WellTopsImpl(const h5gt::Group &group) :
   H5Points1Impl(group){}
