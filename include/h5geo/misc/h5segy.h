@@ -1,5 +1,5 @@
-#ifndef H5CORE_SEGY_H
-#define H5CORE_SEGY_H
+#ifndef H5SEGY_H
+#define H5SEGY_H
 
 #include <vector>
 #include <cstring>
@@ -545,4 +545,4 @@ inline bool readSEGYTraces(
 
 }
 
-#endif // H5CORE_SEGY_H
+#endif // H5SEGY_H

@@ -1,5 +1,5 @@
-#ifndef EASYHULL_H
-#define EASYHULL_H
+#ifndef H5EASYHULL_H
+#define H5EASYHULL_H
 
 // Implementations of various convex hull algorithms
 // using the C++ Standard Library.
@@ -419,4 +419,4 @@ Eigen::MatrixX2<T> quickHull2D(
 }
 
 
-#endif // EASYHULL_H
+#endif // H5EASYHULL_H

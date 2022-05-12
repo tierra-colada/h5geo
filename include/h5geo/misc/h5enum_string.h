@@ -1,5 +1,5 @@
-#ifndef H5CORE_ENUM_STRING_H
-#define H5CORE_ENUM_STRING_H
+#ifndef H5ENUM_STRING_H
+#define H5ENUM_STRING_H
 
 #include "../impl/h5enum.h"
 
@@ -162,4 +162,4 @@ inline constexpr auto INCL = magic_enum::enum_name(h5geo::DevDataType::INCL);
 }
 
 
-#endif // H5CORE_ENUM_STRING_H
+#endif // H5ENUM_STRING_H

@@ -1,5 +1,5 @@
-#ifndef SORT_H
-#define SORT_H
+#ifndef H5SORT_H
+#define H5SORT_H
 
 #include <Eigen/Dense>
 
@@ -256,4 +256,4 @@ Eigen::VectorX<ptrdiff_t> sort_rows_unique(
 }
 
 
-#endif // SORT_H
+#endif // H5SORT_H

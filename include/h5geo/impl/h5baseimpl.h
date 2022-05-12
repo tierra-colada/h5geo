@@ -38,7 +38,6 @@ protected:
       const h5geo::ContainerType& containerType,
       h5geo::CreationType createFlag);
 
-  std::optional<h5gt::Group>
   /// \brief createObject Creates new object. If `CREATE_UNDER_NEW_NAME`
   /// then `objName` will be chaged to be unique in its parent file.
   /// \param objName
@@ -46,6 +45,7 @@ protected:
   /// \param objType
   /// \param p
   /// \param createFlag
+  std::optional<h5gt::Group>
   createObject(
       std::string& objName,
       h5gt::File parentFile,
@@ -53,7 +53,6 @@ protected:
       void* p,
       h5geo::CreationType createFlag);
 
-  std::optional<h5gt::Group>
   /// \brief createObject Creates new object. If `CREATE_UNDER_NEW_NAME`
   /// then `objName` will be chaged to be unique in its parent group.
   /// \param objName
@@ -61,6 +60,7 @@ protected:
   /// \param objType
   /// \param p
   /// \param createFlag
+  std::optional<h5gt::Group>
   createObject(
       std::string& objName,
       h5gt::Group parentGroup,
