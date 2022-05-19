@@ -34,6 +34,9 @@ ExternalProject_Add(${proj}
     -DCMAKE_PREFIX_PATH:PATH=${CMAKE_PREFIX_PATH} # pass dirs to find for libs needed
     # Output directories
     -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+    # GNUInstallDirs expands CMAKE_INSTALL_LIBDIR to 'lib' or to'lib64' depending on the OS
+    -DCMAKE_INSTALL_LIBDIR:PATH=lib
+    # Lib settings
     -DEigen3_ROOT:PATH=${Eigen3_ROOT}
     -Dmio_ROOT:PATH=${mio_ROOT}
     -DZLIB_ROOT:PATH=${ZLIB_ROOT}
