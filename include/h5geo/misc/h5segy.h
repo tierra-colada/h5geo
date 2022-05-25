@@ -8,7 +8,9 @@
 #include <fstream>
 #include <filesystem>
 #include <filesystem>
+#ifdef H5GEO_USE_THREADS
 #include <omp.h>
+#endif
 
 #include <Eigen/Dense>
 
