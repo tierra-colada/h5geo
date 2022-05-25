@@ -15,12 +15,9 @@
 
 #include <vector>
 #include <memory>
+#include <optional>
 
 typedef unsigned long long hsize_t ;
-
-namespace std {
-template<typename T> class optional;
-}
 
 namespace h5gt {
 class File;
