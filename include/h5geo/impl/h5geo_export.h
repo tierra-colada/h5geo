@@ -9,20 +9,20 @@
 #  ifndef H5GEO_EXPORT
 #    ifdef h5geo_EXPORTS
         /* We are building this library */
-#      define H5GEO_EXPORT __attribute__((visibility("default")))
+#      define H5GEO_EXPORT __declspec(dllexport)
 #    else
         /* We are using this library */
-#      define H5GEO_EXPORT __attribute__((visibility("default")))
+#      define H5GEO_EXPORT __declspec(dllimport)
 #    endif
 #  endif
 
 #  ifndef H5GEO_NO_EXPORT
-#    define H5GEO_NO_EXPORT __attribute__((visibility("hidden")))
+#    define H5GEO_NO_EXPORT 
 #  endif
 #endif
 
 #ifndef H5GEO_DEPRECATED
-#  define H5GEO_DEPRECATED __attribute__ ((__deprecated__))
+#  define H5GEO_DEPRECATED __declspec(deprecated)
 #endif
 
 #ifndef H5GEO_DEPRECATED_EXPORT

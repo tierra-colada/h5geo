@@ -11,7 +11,7 @@ cmake_policy(SET CMP0074 NEW)
 cmake_policy(SET CMP0077 NEW)
 cmake_policy(SET CMP0087 NEW) # add generator expressions to `install` command
 
-set(COMMON_PROJECT_VERSION 0.1.0)
+set(COMMON_PROJECT_VERSION 0.2.0)
 project(h5geo VERSION ${COMMON_PROJECT_VERSION} LANGUAGES C CXX)
 
 message("project: ${CMAKE_PROJECT_NAME} ${COMMON_PROJECT_VERSION}")

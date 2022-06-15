@@ -14,7 +14,7 @@ classifiers = [
 ]
 
 setup(name='h5geopy',
-      version='0.1.0',
+      version='@COMMON_PROJECT_VERSION@',
       url='https://github.com/tierra-colada/h5geo',
       author="Kerim Khemraev",
       author_email="tierracolada@gmail.com",
@@ -29,4 +29,4 @@ setup(name='h5geopy',
 		  'h5gtpy',
       ],
 	  include_package_data=True
-      )
+)

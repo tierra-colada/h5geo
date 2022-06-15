@@ -49,3 +49,24 @@ ExternalProject_Add(${proj}
     -DPython_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
   DEPENDS ${DEPENDENCIES}
   )
+
+# copy site-packages from GDAL subdir to Slicer's python
+if(WIN32)
+  set(gdal_site_packages_dir ${EP_INSTALL_DIR}/Lib/site-packages)
+else()
+  set(gdal_site_packages_dir ${EP_INSTALL_DIR}/lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages)
+endif()
+
+ExternalProject_Add(${proj}-copy-site-packages
+  SOURCE_DIR ${EP_SOURCE_DIR}
+  BINARY_DIR ${EP_BINARY_DIR}
+  INSTALL_DIR ${EP_INSTALL_DIR}
+  DOWNLOAD_COMMAND ""
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND ""
+  # https://cmake.org/cmake/help/latest/manual/cmake.1.html#command-line-tool-mode
+  INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory 
+    ${gdal_site_packages_dir}
+    ${Python_SITELIB}
+  DEPENDS ${proj}
+  )

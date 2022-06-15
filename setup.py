@@ -32,12 +32,14 @@ class build_ext(build_ext_orig):
     build_temp.mkdir(parents=True, exist_ok=True)
     extdir = pathlib.Path(self.get_ext_fullpath(ext.name))
     extdir.mkdir(parents=True, exist_ok=True)
+    install_dir = str(extdir.absolute())
 
-    # example of cmake args
+    # cmake args
     # config = 'Debug' if self.debug else 'Release'
     config = 'Release'
-    import sysconfig  # to get site-packages dir
-    install_dir = sysconfig.get_paths()["purelib"] + '/h5geopy'
+
+    import sys
+    python_exe = sys.executable
     cmake_args = [
       '-DCMAKE_INSTALL_PREFIX=' + install_dir,
       '-DCMAKE_BUILD_TYPE=' + config,
@@ -45,20 +47,27 @@ class build_ext(build_ext_orig):
       '-DH5GEO_BUILD_h5geopy=ON',
       '-DH5GEO_USE_THREADS=ON',
       '-DH5GEO_BUILD_SHARED_LIBS=ON',
-      '-DH5GEO_USE_GDAL=OFF',
+      '-DH5GEO_USE_GDAL=ON',
       '-DH5GEO_BUILD_TESTS=OFF',
-      '-DCOPY_H5GEOPY_RUNTIME_DEPS=OFF'
+      '-DCOPY_H5GTPY_RUNTIME_DEPS=OFF',
+      '-DRESOLVE_H5GTPY_RUNTIME_DEPS=ON',
+      '-DCOPY_H5GEOPY_RUNTIME_DEPS=OFF',
+      '-DRESOLVE_H5GEOPY_RUNTIME_DEPS=ON',
+      '-DPYTHON_EXECUTABLE=' + python_exe
     ]
 
-    # example of build args
+    # build args
     import multiprocessing
+    nthreads = 4 if multiprocessing.cpu_count() > 4 else 1
     build_args = [
       '--config', config,
-      '-j'+str(multiprocessing.cpu_count())
+      '-j'+str(nthreads)
     ]
 
-    # example of install args
-    install_args = []
+    # install args
+    install_args = [
+      '--config', config
+    ]
 
     os.chdir(str(build_temp))
     self.spawn(['cmake', str(cwd)] + cmake_args)
@@ -83,27 +92,29 @@ classifiers = [
   'Topic :: Software Development :: Libraries :: Python Modules'
 ]
 
-
+# When installing locally on Windows an error may arise:
+# CUSTOMBUILD : error : unable to create file autotest/gdrivers... 2: Filename too long [...GDAL.vcxproj]
+# To solve this try (https://stackoverflow.com/questions/22575662/filename-too-long-in-git-for-windows): 
+# git config --system core.longpaths true
 setuptools.setup(
-    name='h5geopy',
-    version='0.1.0',
-    packages=setuptools.find_packages(),
-    url='https://github.com/tierra-colada/h5geo',
-    license='MIT',
-    author='kerim khemrev',
-    author_email='tierracolada@gmail.com',
-    description='h5geo: API to work with geo-data (seismic, wells, maps, other in process) based on HDF5 and originally written in C++',
-    long_description=long_description,
-    long_description_content_type='text/markdown',
-    classifiers=classifiers,
-	  install_requires=[
-      'numpy',
-    ],
-    keywords='python cpp hdf5 seismic surfaces wells geo-data',
-    python_requires='>=3',
-    # include_package_data=True,   # important to copy MANIFEST.in files
-    ext_modules=[CMakeExtension('.')],
-    cmdclass={
-      'build_ext': build_ext,
-    }
+  name='h5geopy',
+  version='0.2.0',
+  packages=setuptools.find_packages(),
+  url='https://github.com/tierra-colada/h5geo',
+  license='MIT',
+  author='kerim khemrev',
+  author_email='tierracolada@gmail.com',
+  description='h5geo: API to work with geo-data (seismic, wells, maps, other in process) based on HDF5 and originally written in C++',
+  long_description=long_description,
+  long_description_content_type='text/markdown',
+  classifiers=classifiers,
+  install_requires=[
+    'numpy',
+  ],
+  keywords='python cpp hdf5 seismic surfaces wells geo-data',
+  python_requires='>=3',
+  ext_modules=[CMakeExtension('h5geopy')],  # name of 'ext.name' dir where to build
+  cmdclass={
+    'build_ext': build_ext,
+  }
 )
