@@ -22,7 +22,7 @@ endif()
 
 ExternalProject_Add(${proj}
   GIT_REPOSITORY "https://github.com/TierraColada/h5gt.git"
-  GIT_TAG "5376240dfef334a66b0dae22d87b8487fb3320fc"
+  GIT_TAG "b5c5f702ddb9803d802ae7baefd5da564e005c6c"
   SOURCE_DIR ${EP_SOURCE_DIR}
   BINARY_DIR ${EP_BINARY_DIR}
   INSTALL_DIR ${EP_INSTALL_DIR}

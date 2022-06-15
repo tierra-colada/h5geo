@@ -58,7 +58,7 @@ target_include_directories(h5geo PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include>
-)
+  )
 
 set(h5geo_export_header ${PROJECT_BINARY_DIR}/h5geo_export.h)
 list(APPEND include_files_h5geo_public ${h5geo_export_header})
