@@ -9,9 +9,9 @@
 #include "h5sr_settings.h"
 #endif
 
-#include "h5enum.h"
-#include "h5point.h"
 #include "h5geo_export.h"
+#include "private/h5enum.h"
+#include "private/h5point.h"
 
 #include <vector>
 #include <memory>

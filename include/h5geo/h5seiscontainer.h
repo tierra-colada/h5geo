@@ -1,7 +1,7 @@
 #ifndef H5SEISCONTAINER_H
 #define H5SEISCONTAINER_H
 
-#include "impl/h5geo_export.h"
+#include "h5geo_export.h"
 #include "h5basecontainer.h"
 
 #include <memory>

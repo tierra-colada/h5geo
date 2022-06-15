@@ -1,22 +1,22 @@
-#include "../../include/h5geo/impl/h5baseobjectimpl.h"
-#include "../../include/h5geo/impl/h5mapimpl.h"
-#include "../../include/h5geo/impl/h5seisimpl.h"
-#include "../../include/h5geo/impl/h5wellimpl.h"
-#include "../../include/h5geo/impl/h5devcurveimpl.h"
-#include "../../include/h5geo/impl/h5logcurveimpl.h"
-#include "../../include/h5geo/impl/h5basepointsimpl.h"
-#include "../../include/h5geo/impl/h5points1impl.h"
-#include "../../include/h5geo/impl/h5points2impl.h"
-#include "../../include/h5geo/impl/h5points3impl.h"
-#include "../../include/h5geo/impl/h5points4impl.h"
-#include "../../include/h5geo/impl/h5welltopsimpl.h"
-#include "../../include/h5geo/misc/h5core.h"
-#include "../../include/h5geo/misc/h5enum_string.h"
+#include "../../include/h5geo/private/h5baseobjectimpl.h"
+#include "../../include/h5geo/private/h5mapimpl.h"
+#include "../../include/h5geo/private/h5seisimpl.h"
+#include "../../include/h5geo/private/h5wellimpl.h"
+#include "../../include/h5geo/private/h5devcurveimpl.h"
+#include "../../include/h5geo/private/h5logcurveimpl.h"
+#include "../../include/h5geo/private/h5basepointsimpl.h"
+#include "../../include/h5geo/private/h5points1impl.h"
+#include "../../include/h5geo/private/h5points2impl.h"
+#include "../../include/h5geo/private/h5points3impl.h"
+#include "../../include/h5geo/private/h5points4impl.h"
+#include "../../include/h5geo/private/h5welltopsimpl.h"
+#include "../../include/h5geo/h5core.h"
+#include "../../include/h5geo/private/h5enum_string.h"
 
 #ifdef H5GEO_USE_GDAL
 #include <gdal.h>
 #include <gdal_priv.h>
-#include "../../include/h5geo/impl/h5sr_settings.h"
+#include "../../include/h5geo/h5sr_settings.h"
 #endif
 
 template <typename TBase>

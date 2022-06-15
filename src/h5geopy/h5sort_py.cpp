@@ -1,6 +1,6 @@
 #include "../../include/h5geopy/h5sort_py.h"
 
-#include <h5geo/impl/h5sort.h>
+#include <h5geo/private/h5sort.h>
 
 namespace h5geopy {
 

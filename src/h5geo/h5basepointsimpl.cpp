@@ -1,12 +1,12 @@
-#include "../../include/h5geo/impl/h5basepointsimpl.h"
-#include "../../include/h5geo/impl/h5points1impl.h"
-#include "../../include/h5geo/impl/h5points2impl.h"
-#include "../../include/h5geo/impl/h5points3impl.h"
-#include "../../include/h5geo/impl/h5points4impl.h"
-#include "../../include/h5geo/impl/h5welltopsimpl.h"
+#include "../../include/h5geo/private/h5basepointsimpl.h"
+#include "../../include/h5geo/private/h5points1impl.h"
+#include "../../include/h5geo/private/h5points2impl.h"
+#include "../../include/h5geo/private/h5points3impl.h"
+#include "../../include/h5geo/private/h5points4impl.h"
+#include "../../include/h5geo/private/h5welltopsimpl.h"
 #include "../../include/h5geo/h5basecontainer.h"
-#include "../../include/h5geo/misc/h5core.h"
-#include "../../include/h5geo/misc/h5enum_string.h"
+#include "../../include/h5geo/h5core.h"
+#include "../../include/h5geo/private/h5enum_string.h"
 
 #include <units/units.hpp>
 

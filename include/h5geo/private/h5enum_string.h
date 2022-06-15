@@ -1,7 +1,7 @@
 #ifndef H5ENUM_STRING_H
 #define H5ENUM_STRING_H
 
-#include "../impl/h5enum.h"
+#include "../private/h5enum.h"
 
 #include <type_traits> // for enum class operators
 #include <string>

@@ -1,6 +1,6 @@
 #include "../../include/h5geopy/h5welltops_py.h"
 
-#include <h5geo/impl/h5wellimpl.h>
+#include <h5geo/private/h5wellimpl.h>
 
 namespace h5geopy {
 

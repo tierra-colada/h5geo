@@ -2,15 +2,15 @@
 #define H5UTIL_H
 
 #ifdef H5GEO_USE_GDAL
-#include "impl/h5sr_settings.h"
+#include "h5sr_settings.h"
 #endif
 
-#include "impl/h5geo_export.h"
-#include "impl/h5enum.h"
-#include "impl/h5easyhull.h"
-#include "impl/h5interpolation.h"
-#include "impl/h5polyfit.h"
-#include "impl/h5sort.h"
+#include "h5geo_export.h"
+#include "private/h5enum.h"
+#include "private/h5easyhull.h"
+#include "private/h5interpolation.h"
+#include "private/h5polyfit.h"
+#include "private/h5sort.h"
 
 #include <vector>
 #include <string>
@@ -252,6 +252,6 @@ h5gt::ElementSet rowsCols2ElementSet(
 
 }
 
-#include "impl/h5utilimpl.h"
+#include "private/h5utilimpl.h"
 
 #endif // H5UTIL_H

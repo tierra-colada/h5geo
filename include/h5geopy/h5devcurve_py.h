@@ -3,7 +3,7 @@
 
 #include "h5geo_py.h"
 
-#include <h5geo/impl/h5devcurveimpl.h>
+#include <h5geo/private/h5devcurveimpl.h>
 
 namespace h5geopy {
 

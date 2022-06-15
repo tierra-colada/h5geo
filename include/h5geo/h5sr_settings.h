@@ -2,7 +2,7 @@
 #define H5SR_SETTINGS_H
 
 #include "h5geo_export.h"
-#include "h5enum.h"
+#include "private/h5enum.h"
 
 #include <string>
 

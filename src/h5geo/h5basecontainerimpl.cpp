@@ -1,13 +1,13 @@
-#include "../../include/h5geo/impl/h5basecontainerimpl.h"
-#include "../../include/h5geo/impl/h5seiscontainerimpl.h"
-#include "../../include/h5geo/impl/h5mapcontainerimpl.h"
-#include "../../include/h5geo/impl/h5wellcontainerimpl.h"
-#include "../../include/h5geo/impl/h5points1impl.h"
-#include "../../include/h5geo/impl/h5points2impl.h"
-#include "../../include/h5geo/impl/h5points3impl.h"
-#include "../../include/h5geo/impl/h5points4impl.h"
-#include "../../include/h5geo/misc/h5core.h"
-#include "../../include/h5geo/misc/h5enum_string.h"
+#include "../../include/h5geo/private/h5basecontainerimpl.h"
+#include "../../include/h5geo/private/h5seiscontainerimpl.h"
+#include "../../include/h5geo/private/h5mapcontainerimpl.h"
+#include "../../include/h5geo/private/h5wellcontainerimpl.h"
+#include "../../include/h5geo/private/h5points1impl.h"
+#include "../../include/h5geo/private/h5points2impl.h"
+#include "../../include/h5geo/private/h5points3impl.h"
+#include "../../include/h5geo/private/h5points4impl.h"
+#include "../../include/h5geo/h5core.h"
+#include "../../include/h5geo/private/h5enum_string.h"
 
 #include <optional>
 #include <filesystem>

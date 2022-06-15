@@ -7,8 +7,8 @@
 #include <h5geo/h5logcurve.h>
 #include <h5geo/h5points.h>
 #include <h5geo/h5welltops.h>
-#include <h5geo/misc/h5deviation.h>
-#include <h5geo/misc/h5core.h>
+#include <h5geo/private/h5deviation.h>
+#include <h5geo/h5core.h>
 
 #include <h5gt/H5File.hpp>
 #include <h5gt/H5Group.hpp>

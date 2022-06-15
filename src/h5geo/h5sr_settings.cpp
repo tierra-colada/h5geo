@@ -1,6 +1,6 @@
-#include "../../include/h5geo/impl/h5sr_settings.h"
-#include "../../include/h5geo/impl/h5enum.h"
-#include "../../include/h5geo/impl/h5base.h"
+#include "../../include/h5geo/h5sr_settings.h"
+#include "../../include/h5geo/private/h5enum.h"
+#include "../../include/h5geo/h5base.h"
 
 #include <units/units.hpp>
 #include <magic_enum.hpp>

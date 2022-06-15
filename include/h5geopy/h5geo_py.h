@@ -61,7 +61,7 @@ PYBIND11_MAKE_OPAQUE(h5geo::Point4Array);
 
 /* All declarations are here. And all functions are invoked in `h5gt.cpp` */
 
-#include <h5geo/impl/h5base.h>
+#include <h5geo/h5base.h>
 
 class H5BasePy : public H5Base {
 public:

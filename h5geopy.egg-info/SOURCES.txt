@@ -1,8 +1,0 @@
-LICENSE
-README.md
-setup.py
-h5geopy.egg-info/PKG-INFO
-h5geopy.egg-info/SOURCES.txt
-h5geopy.egg-info/dependency_links.txt
-h5geopy.egg-info/requires.txt
-h5geopy.egg-info/top_level.txt

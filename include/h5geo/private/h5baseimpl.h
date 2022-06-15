@@ -1,7 +1,7 @@
 #ifndef H5BASEIMPL_H
 #define H5BASEIMPL_H
 
-#include "h5base.h"
+#include "../h5base.h"
 
 template <typename TBase = H5Base>
 class H5BaseImpl : public TBase

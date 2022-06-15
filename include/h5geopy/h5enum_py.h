@@ -3,7 +3,7 @@
 
 #include "h5geo_py.h"
 
-#include <h5geo/impl/h5enum.h>
+#include <h5geo/private/h5enum.h>
 
 namespace h5geopy {
 

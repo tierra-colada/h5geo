@@ -5,8 +5,8 @@
 #define H5GT_USE_EIGEN // should be defined before including h5gt
 #endif
 
-#include "../impl/h5enum.h"
-#include "../impl/h5geo_export.h"
+#include "h5geo_export.h"
+#include "private/h5enum.h"
 
 #include <type_traits>
 #include <string>
@@ -409,7 +409,7 @@ Eigen::VectorX<T> getDataFromIndexedDataset(
 } // namespace h5geo
 
 
-#include "../impl/h5coreimpl.h"
+#include "private/h5coreimpl.h"
 
 
 #endif // H5CORE_H

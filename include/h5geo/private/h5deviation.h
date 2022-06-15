@@ -1,7 +1,7 @@
 #ifndef H5DEVIATION_H
 #define H5DEVIATION_H
 
-#include "../impl/h5enum.h"
+#include "../private/h5enum.h"
 
 #define _USE_MATH_DEFINES   // should be before <cmath>, include 'pi' val
 

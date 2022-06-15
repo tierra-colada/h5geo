@@ -5,7 +5,7 @@ if(NOT DEFINED CMAKE_CXX_STANDARD)
 endif()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-message("-- Setting C++ standard - " ${CMAKE_CXX_STANDARD})
+message(STATUS "Setting C++ standard - " ${CMAKE_CXX_STANDARD})
 
 cmake_policy(SET CMP0074 NEW)
 cmake_policy(SET CMP0077 NEW)
@@ -49,23 +49,33 @@ include("cmake/h5geo-include.cmake")
 include("cmake/h5geo-src.cmake")
 
 if(H5GEO_BUILD_SHARED_LIBS)
-  add_library(h5geo SHARED ${src_files_h5geo} ${include_files_h5geo})
+  add_library(h5geo SHARED ${src_files_h5geo} ${include_files_h5geo_public} ${include_files_h5geo_private})
 else()
-  add_library(h5geo STATIC ${src_files_h5geo} ${include_files_h5geo})
+  add_library(h5geo STATIC ${src_files_h5geo} ${include_files_h5geo_public} ${include_files_h5geo_private})
 endif()
 target_compile_definitions(h5geo PUBLIC H5GEO_CHAR_ARRAY_SIZE=${H5GEO_CHAR_ARRAY_SIZE})
 target_include_directories(h5geo PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include>
 )
-install(TARGETS h5geo DESTINATION lib EXPORT h5geo-targets)
+
+set(h5geo_export_header ${PROJECT_BINARY_DIR}/h5geo_export.h)
+list(APPEND include_files_h5geo_public ${h5geo_export_header})
 
 # EXPORT DLL
 include(GenerateExportHeader)
 generate_export_header(
   h5geo
-  EXPORT_FILE_NAME ${CMAKE_CURRENT_SOURCE_DIR}/include/h5geo/impl/h5geo_export.h
+  EXPORT_FILE_NAME 
+    ${h5geo_export_header}
   )
+
+set_target_properties(h5geo
+                      PROPERTIES 
+                        PUBLIC_HEADER "${include_files_h5geo_public}"
+                        PRIVATE_HEADER "${include_files_h5geo_private}"
+                      )
 
 # LINK DEPENDENCIES
 find_package(Eigen3 REQUIRED)
@@ -127,18 +137,13 @@ endif()
 #-----------------------------------------------------------------------------
 # Create config files
 #-----------------------------------------------------------------------------
-set(INCLUDE_INSTALL_DIR "include/")
-set(LIB_INSTALL_DIR "lib/")
-# set(SYSCONFIG_INSTALL_DIR "etc/h5geo/")
-
+include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/h5geo-config.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/h5geo-config.cmake"
-  INSTALL_DESTINATION "${LIB_INSTALL_DIR}/cmake/h5geo/"
-  PATH_VARS INCLUDE_INSTALL_DIR
+  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/h5geo
+  PATH_VARS CMAKE_INSTALL_INCLUDEDIR
   )
-
-install(EXPORT h5geo-targets DESTINATION "${LIB_INSTALL_DIR}/cmake/h5geo/")
 
 write_basic_package_version_file(
   "${CMAKE_CURRENT_BINARY_DIR}/h5geo-config-version.cmake"
@@ -148,9 +153,21 @@ write_basic_package_version_file(
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/h5geo-config.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/h5geo-config-version.cmake"
-        DESTINATION "${LIB_INSTALL_DIR}/cmake/h5geo/"
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/h5geo
         )
 
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/" DESTINATION "include")
+install(TARGETS h5geo
+        EXPORT h5geo-targets
+        RUNTIME
+          DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY
+          DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE
+          DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        PUBLIC_HEADER
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/h5geo
+        PRIVATE_HEADER
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/h5geo/private
+        )
 
-install(TARGETS h5geo DESTINATION "lib")
+install(EXPORT h5geo-targets DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/h5geo)

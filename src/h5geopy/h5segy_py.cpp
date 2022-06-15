@@ -1,6 +1,6 @@
 #include "../../include/h5geopy/h5segy_py.h"
 
-#include <h5geo/misc/h5segy.h>
+#include <h5geo/private/h5segy.h>
 
 namespace h5geopy {
 

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <h5geo/misc/h5core.h>
+#include <h5geo/h5core.h>
 
 #include <h5gt/H5File.hpp>
 #include <h5gt/H5Group.hpp>

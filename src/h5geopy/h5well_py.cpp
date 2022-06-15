@@ -1,8 +1,8 @@
 #include "../../include/h5geopy/h5well_py.h"
 
-#include <h5geo/impl/h5devcurveimpl.h>
-#include <h5geo/impl/h5logcurveimpl.h>
-#include <h5geo/impl/h5welltopsimpl.h>
+#include <h5geo/private/h5devcurveimpl.h>
+#include <h5geo/private/h5logcurveimpl.h>
+#include <h5geo/private/h5welltopsimpl.h>
 
 namespace h5geopy {
 

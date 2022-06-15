@@ -3,10 +3,10 @@
 
 #include "h5geo_py.h"
 
-#include <h5geo/impl/h5points1impl.h>
-#include <h5geo/impl/h5points2impl.h>
-#include <h5geo/impl/h5points3impl.h>
-#include <h5geo/impl/h5points4impl.h>
+#include <h5geo/private/h5points1impl.h>
+#include <h5geo/private/h5points2impl.h>
+#include <h5geo/private/h5points3impl.h>
+#include <h5geo/private/h5points4impl.h>
 
 namespace h5geopy {
 

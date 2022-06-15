@@ -1,6 +1,6 @@
 #include "../../include/h5geopy/h5deviation_py.h"
 
-#include <h5geo/misc/h5deviation.h>
+#include <h5geo/private/h5deviation.h>
 
 namespace h5geopy {
 

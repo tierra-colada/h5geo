@@ -3,8 +3,8 @@
 
 #include "h5geo_py.h"
 
-#include <h5geo/impl/h5seiscontainerimpl.h>
-#include <h5geo/impl/h5seisimpl.h>
+#include <h5geo/private/h5seiscontainerimpl.h>
+#include <h5geo/private/h5seisimpl.h>
 
 namespace h5geopy {
 

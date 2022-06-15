@@ -1,7 +1,7 @@
 #ifndef H5BASEOBJECT_H
 #define H5BASEOBJECT_H
 
-#include "impl/h5base.h"
+#include "h5base.h"
 
 #ifdef H5GEO_USE_GDAL
 class OGRCoordinateTransformation;
