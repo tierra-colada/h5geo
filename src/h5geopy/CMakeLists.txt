@@ -9,9 +9,9 @@ set(TBB_RUNTIME_DIRS "" CACHE PATH "TBB runtime is an optional dependency of h5g
 set(GDAL_RUNTIME_DIRS "" CACHE PATH "GDAL runtime is an optional dependency of h5geopy")
 set(H5GEO_RUNTIME_DIRS "" CACHE PATH "h5geo runtime is a dependency of h5geopy
   (usually you don't need to set it)")
-option(COPY_H5GEOPY_RUNTIME_DEPS "Copy hdf5 and h5geo runtime to python site-packages
+option(H5GEOPY_COPY_RUNTIME_DEPS "Copy hdf5 and h5geo runtime to python site-packages
   (otherwise it will simply add to ENV PATH these dirs in `__init__.py`)" OFF)
-option(RESOLVE_H5GEOPY_RUNTIME_DEPS "If OFF then nothing will be done to resolve deps" ON)
+option(H5GEOPY_RESOLVE_RUNTIME_DEPS "If OFF then nothing will be done to resolve deps" ON)
 
 include(FetchContent)
 FetchContent_Declare(

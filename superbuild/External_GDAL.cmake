@@ -37,6 +37,7 @@ ExternalProject_Add(${proj}
     -DCMAKE_INSTALL_LIBDIR:PATH=lib
     # Lib settings
     -DBUILD_TESTING:BOOL=OFF 
+    # find package dirs
     -DZLIB_ROOT:PATH=${ZLIB_ROOT}
     -DPROJ_DIR:PATH=${PROJ_DIR}
     -DGEOS_DIR:PATH=${GEOS_DIR}

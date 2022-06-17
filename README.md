@@ -1,5 +1,6 @@
 # h5geo
-[![Build Status](https://travis-ci.com/tierra-colada/h5geo.svg?branch=main)](https://travis-ci.com/tierra-colada/h5geo)
+[![][build-img]][build-status]
+[![][docs-stable-img]][docs-stable-status]
 
 **h5geo** provides API to work with geo-data that is based on [HDF5](https://www.hdfgroup.org/solutions/hdf5/) containers via [h5gt](https://travis-ci.com/tierra-colada/h5geo) header only library. For now **h5geo** provides API to work with:
 * seismic data
@@ -40,7 +41,7 @@ cmake ..
   -DH5GEO_BUILD_SHARED_LIBS:BOOL=ON
   -DH5GEO_BUILD_h5geopy:BOOL=ON
   -DHDF5_RUNTIME_DIR:PATH=/path/to/dir/containing/hdf5-runtime
-  -DCOPY_H5GEOPY_RUNTIME_DEPS:BOOL=ON
+  -DH5GEOPY_COPY_RUNTIME_DEPS:BOOL=ON
   -DPYTHON_EXECUTABLE=/path/to/python.exe 
   -DH5GEO_BUILD_TESTS:BOOL=OFF
   -DCMAKE_INSTALL_PREFIX:PATH=/install/prefix
@@ -105,3 +106,8 @@ You don't need to provide stub file to PyCharm as it handles this by its own.
 
 ## Supported platforms
 Windows 10/11, Linux, OSX
+
+[build-img]:https://travis-ci.com/tierra-colada/h5geo.svg?branch=main
+[build-status]:https://app.travis-ci.com/tierra-colada/h5geo
+[docs-stable-img]:https://img.shields.io/badge/docs-stable-blue.svg?style=plastic
+[docs-stable-status]:https://tierra-colada.github.io/h5geo/
