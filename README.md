@@ -107,7 +107,7 @@ You don't need to provide stub file to PyCharm as it handles this by its own.
 ## Supported platforms
 Windows 10/11, Linux, OSX
 
-[build-img]:https://travis-ci.com/tierra-colada/h5geo.svg?branch=main
+[build-img]:https://img.shields.io/travis/com/tierra-colada/h5geo?style=plastic
 [build-status]:https://app.travis-ci.com/tierra-colada/h5geo
 [docs-stable-img]:https://img.shields.io/badge/docs-stable-blue.svg?style=plastic
 [docs-stable-status]:https://h5geo.readthedocs.io/en/latest/?badge=latest
