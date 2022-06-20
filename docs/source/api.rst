@@ -25,8 +25,12 @@ Next in the hierarchy follows more specific classes:
 .. note::
    A designated container may store only appropriated geo-objects.
    In that sense you can't store ``H5Map`` in ``H5SeisContaner`` for example.
-   But as you can see there is no container for points. 
+   But as you can see there is no container for ``H5Points``. 
    That means you are free to create and store points in any container.
+
+..  warning::
+   **h5geo** works with **column-major** Eigen matrices only
+   (the default Eigen storage order)!
 
 Usage
 -----
@@ -130,10 +134,9 @@ The preffered way to create objects:
 
 .. code:: c++
 
+   #include <iostream>
    #include <h5geo/h5wellcontainer.h>
    #include <h5geo/h5well.h>
-   #include <iostream>
-
 
    int main(){
       std::string fileName = "path/to/container";
@@ -142,18 +145,23 @@ The preffered way to create objects:
       
       if (!wellCnt){
          std::cout << "Unable to open or create well container" << std::endl;
-         return 1;
+         return -1;
       }
 
+      WellParam p;
+      p.headX = 444363;
+      p.headY = 7425880;
+      p.kb = 50.88;
+      p.uwi = "my_uwi";
+      p.lengthUnits = "meter";
+
       std::string wellName = "myWell";
-      WellParam wellParam;
-      wellParam.headX = 444363;
-      wellParam.headY = 7425880;
-      wellParam.kb = 50.88;
-      wellParam.uwi = "my_uwi";
-      wellParam.lengthUnits = "meter";
       H5Well_ptr well(wellCnt->createWell(
-         wellName, wellParam, h5geo::CreationType::OPEN_OR_CREATE));
+         wellName, p, h5geo::CreationType::OPEN_OR_CREATE));
+      if (!well){
+         std::cout << "Unable to open or create well" << std::endl;
+         return -1;
+      }
       
       return 0;
    }

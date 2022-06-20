@@ -52,11 +52,10 @@ public:
     p.Y0 = 0;
     p.X1 = 100;
     p.Y1 = 0;
-    p.X2 = 100;
-    p.Y2 = 0;
+    p.X2 = 0;
+    p.Y2 = 100;
     p.nX = 10;
     p.nY = 20;
-    p.domain = h5geo::Domain::TVD;
     p.lengthUnits = "millimeter";
     p.dataUnits = "m/s";
     p.xChunkSize = 5;
