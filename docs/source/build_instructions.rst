@@ -15,7 +15,7 @@ Dependencies
 * `h5gt <https://github.com/tierra-colada/h5gt>`_ (header only)
 * `Eigen <https://gitlab.com/libeigen/eigen>`_ (header only)
 * `magic_enum <https://github.com/Neargye/magic_enum>`_ (header only)
-* `mio <https://github.com/tierra-colada/mio>`_ (header only, optional)
+* `mio <https://github.com/tierra-colada/mio>`_ (header only)
 * `TBB <https://github.com/oneapi-src/oneTBB>`_ (optional)
 * `GDAL <https://github.com/OSGeo/gdal>`_ with `PROJ <https://github.com/OSGeo/PROJ>`_ support (optional)
 
