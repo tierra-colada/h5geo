@@ -1,4 +1,4 @@
-Tutorial: Maps
+Maps
 ==============
 
 Map is an object that is represented by a matrix with 

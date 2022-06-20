@@ -1,4 +1,4 @@
-Tutorial: Wells
+Wells
 ===============
 
 Well is an object that is responsible for well head coordinates,
