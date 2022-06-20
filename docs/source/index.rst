@@ -12,7 +12,6 @@ Welcome to h5geo's documentation!
    about
    build_instructions
    api
-   examples/index
    tutorial/index
 
 

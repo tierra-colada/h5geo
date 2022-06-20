@@ -22,8 +22,8 @@ the coordinates are given in ``millimeters``.
 
 
    int main(){
-      std::string fileName = "path/to/container";
-      H5cnt_ptr cnt(h5geo::createMapContainerByName(
+      std::string fileName = "maps.h5";
+      H5MapCnt_ptr cnt(h5geo::createMapContainerByName(
          fileName, h5geo::CreationType::OPEN_OR_CREATE));
       if (!cnt){
          std::cout << "Unable to open or create map container" << std::endl;
@@ -56,8 +56,9 @@ the coordinates are given in ``millimeters``.
       return 0;
    }
 
-Write data
-----------
+Write/Read data
+---------------
+
 Let's suppose that we have data in ``sec`` and we want to write it.
 To be sure that **h5geo** is able to convert ``sec`` to ``ms`` we can use 
 `the web-service <https://units.readthedocs.io/en/latest/_static/convert.html>`_.
@@ -70,9 +71,6 @@ To be sure that **h5geo** is able to convert ``sec`` to ``ms`` we can use
       return -1;
    }
 
-Read data
----------
-
 Now we want to read the data in ``sec``:
 
 .. code:: c++
@@ -83,8 +81,8 @@ Now we want to read the data in ``sec``:
       return -1;
    }
 
-Adding attribute map
---------------------
+Working with attribute map
+--------------------------
 
 Let's suppose the created time-domain map has velocity attribute 
 i.e. we have somehow sliced volume of velocities and kept the data.

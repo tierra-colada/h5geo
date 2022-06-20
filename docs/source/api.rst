@@ -139,7 +139,7 @@ The preffered way to create objects:
    #include <h5geo/h5well.h>
 
    int main(){
-      std::string fileName = "path/to/container";
+      std::string fileName = "wells.h5";
       H5WellCnt_ptr wellCnt(h5geo::createWellContainerByName(
          fileName, h5geo::CreationType::OPEN_OR_CREATE));
       
