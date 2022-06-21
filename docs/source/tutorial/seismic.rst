@@ -85,6 +85,7 @@ To read text header:
       seis->getTextHeader();
    if (txtHdr_out.size() < 1){
       std::cout << "Unable to read text header" << std::endl;
+      return -1;
    }
 
 Write/Read binary header
