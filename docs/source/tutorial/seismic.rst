@@ -75,7 +75,7 @@ Write/Read text header
 .. note:: 
 
    Text header is a dataset of size ``[40, 80]``. 
-   Thus everything outside this range will be lost.
+   Thus everything outside of this range will be lost.
 
 To read text header:
 
@@ -95,7 +95,7 @@ The simplest way to write binary header is:
 
 .. code:: c++
 
-   // convert seconds to the temporal units of seis object
+   // convert 'seconds' to the temporal units of seis object
    if (!seis->writeBinHeader("SAMP_RATE", 0.002, "sec", seis->getTemporalUnits())){
       std::cout << "Unable to write samp rate" << std::endl;
       return -1;
@@ -106,9 +106,9 @@ and to get it back:
 .. code:: c++
 
    double sampRate = seis->getBinHeader("SAMP_RATE", seis->getTemporalUnits(), "ms");
-   // convert seconds to the temporal units of seis object
    if (isnan(sampRate))
       std::cout << "Unable to get samp rate" << std::endl;
+      return -1;
    }
 
 .. note:: 
@@ -157,7 +157,7 @@ and to get it back:
 
 .. warning:: 
 
-   Call ``updateTraceHeaderLimits`` everytime when trace header min/max values changed.
+   Call ``updateTraceHeaderLimits`` everytime when trace header ``min/max`` values changed.
 
 Write/Read trace data
 ^^^^^^^^^^^^^^^^^^^^^
@@ -183,11 +183,12 @@ Get traces back:
    traces_out = seis->getTrace(3, 10, 2, 5);
    if (traces_out.size() < 1){
       std::cout << "Unable to get traces">> std::endl;
+      return -1;
    }
 
 .. note:: 
 
-   Write/get trace headers and trace data have pretty wide opportunities
+   ``write/get`` trace headers and trace data have pretty wide opportunities
    including trace selection and working with sorted data.
    Take a look at `seis.h <https://github.com/tierra-colada/h5geo/blob/main/include/h5geo/h5seis.h>`_ 
    to see all them.
@@ -243,6 +244,7 @@ For 2D stack data it simply shows coordinates of traces.
 
    if (!seis->updateBoundary()){
       std::cout << "Unable to update boundary" << std::endl;
+      return -1;
    }
 
 To get calculated values:
@@ -253,6 +255,7 @@ To get calculated values:
    Eigen::MatrixXd xy_boundary = getBoundary("m", false);
    if (!xy_boundary.size() < 1){
       std::endl << "Unable to get boundary" << std::endl;
+      return -1;
    }
 
 Read SEGY
@@ -264,13 +267,16 @@ Reading ``SEGY`` is pretty simple:
 
    if (!seis->readSEGYTextHeader("file.sgy")){
       std::cout << "Unable to read segy text header" << std::endl;
+      return -1;
    }
    if (!seis->readSEGYBinHeader("file.sgy")){
       std::cout << "Unable to read segy binary header" << std::endl;
+      return -1;
    }
    // SEGY files will be concatenated
    if (!seis->readSEGYTraces({"file1.sgy", "file2.sgy", "file3.sgy"})){
       std::cout << "Unable to read segy binary header" << std::endl;
+      return -1;
    }
 
 .. note:: 
@@ -284,7 +290,7 @@ Reading ``SEGY`` is pretty simple:
 Map SEGY
 --------
 
-The user may want not to spend time on reading ``SEGY`` file  but simple map it.
+The user may want not to spend time on reading ``SEGY`` file  but simply map it.
 In **h5geo** you are allowed to do this at ``H5Seis`` creation time:
 
 .. code:: c++
@@ -303,6 +309,6 @@ In **h5geo** you are allowed to do this at ``H5Seis`` creation time:
 
 Then you are free to use it as with regular seis object but with some limitations:
 
-* probably when resizing file
-* data loss when writing to trace headers and binary header (``double`` casts to ``int`` and ``short``)
-* only ``SEGY-ieee-32`` are supported
+* probably it is impossible to resize file
+* data loss when writing to trace headers and binary header (``double`` is casted to ``int`` and ``short``)
+* only ``SEGY ieee-32`` format are supported

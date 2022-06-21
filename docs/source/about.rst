@@ -19,7 +19,7 @@ Being written in C++ it uses `pybind11 <https://github.com/pybind/pybind11>`_ to
 `units <https://github.com/LLNL/units>`_ for units conversion
 and `Eigen <https://gitlab.com/libeigen/eigen>`_ as container for storing numerics in memory.
 
-For now h5geo provides API to work with:
+For now **h5geo** provides API to work with:
 
 * seismic
 * wells
@@ -36,7 +36,7 @@ Originally the project was started as part of a free and open source geophysical
 License
 -------
 
-`MIT <https://github.com/tierra-colada/h5geo/blob/main/LICENSE>`_.
+`MIT <https://github.com/tierra-colada/h5geo/blob/main/LICENSE>`_
 
 .. toctree::
    :maxdepth: 2
