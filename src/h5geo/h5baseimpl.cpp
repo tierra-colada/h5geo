@@ -1523,6 +1523,237 @@ bool h5geo::isSeis(
   return true;
 }
 
+// containers
+H5BaseContainer*
+h5geo::createContainer(
+    h5gt::File h5File,
+    h5geo::ContainerType cntType,
+    h5geo::CreationType createFlag)
+{
+  switch (static_cast<h5geo::ContainerType>(cntType)) {
+  case h5geo::ContainerType::MAP :
+    return h5geo::createMapContainer(h5File, createFlag);
+  case h5geo::ContainerType::SEISMIC :
+    return h5geo::createSeisContainer(h5File, createFlag);
+  case h5geo::ContainerType::WELL :
+    return h5geo::createWellContainer(h5File, createFlag);
+  default :
+    return nullptr;
+  }
+}
+
+H5BaseContainer*
+h5geo::createContainerByName(
+    std::string& fileName,
+    h5geo::ContainerType cntType,
+    h5geo::CreationType createFlag)
+{
+  switch (static_cast<h5geo::ContainerType>(cntType)) {
+  case h5geo::ContainerType::MAP :
+    return h5geo::createMapContainerByName(fileName, createFlag);
+  case h5geo::ContainerType::SEISMIC :
+    return h5geo::createSeisContainerByName(fileName, createFlag);
+  case h5geo::ContainerType::WELL :
+    return h5geo::createWellContainerByName(fileName, createFlag);
+  default :
+    return nullptr;
+  }
+}
+
+H5BaseContainer*
+h5geo::openBaseContainer(h5gt::File h5File)
+{
+  return new H5BaseContainerImpl<H5BaseContainer>(h5File);
+}
+
+H5BaseContainer*
+h5geo::openBaseContainerByName(const std::string& fileName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    return h5geo::openBaseContainer(h5File);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
+H5BaseContainer*
+h5geo::openContainer(h5gt::File h5File)
+{
+  H5BaseContainer* baseContainer = nullptr;
+  baseContainer = h5geo::openMapContainer(h5File);
+  if (baseContainer)
+    return baseContainer;
+  baseContainer = h5geo::openWellContainer(h5File);
+  if (baseContainer)
+    return baseContainer;
+  baseContainer = h5geo::openSeisContainer(h5File);
+  if (baseContainer)
+    return baseContainer;
+
+  return h5geo::openBaseContainer(h5File);
+}
+
+H5BaseContainer*
+h5geo::openContainerByName(const std::string& fileName)
+{
+  H5BaseContainer* baseContainer = nullptr;
+  baseContainer = h5geo::openMapContainerByName(fileName);
+  if (baseContainer)
+    return baseContainer;
+  baseContainer = h5geo::openWellContainerByName(fileName);
+  if (baseContainer)
+    return baseContainer;
+  baseContainer = h5geo::openSeisContainerByName(fileName);
+  if (baseContainer)
+    return baseContainer;
+
+  return h5geo::openBaseContainerByName(fileName);
+}
+
+// Map containers
+H5MapContainer*
+h5geo::createMapContainer(
+    h5gt::File h5File, h5geo::CreationType createFlag)
+{
+  auto opt = H5MapContainerImpl::createContainer(
+        h5File, h5geo::ContainerType::MAP, createFlag);
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5MapContainerImpl(opt.value());
+}
+
+H5MapContainer*
+h5geo::createMapContainerByName(
+    std::string& fileName, h5geo::CreationType createFlag)
+{
+  auto opt = H5MapContainerImpl::createContainer(
+        fileName, h5geo::ContainerType::MAP, createFlag);
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5MapContainerImpl(opt.value());
+}
+
+H5MapContainer*
+h5geo::openMapContainer(
+    h5gt::File h5File){
+  return createMapContainer(h5File, h5geo::CreationType::OPEN);
+}
+
+H5MapContainer*
+h5geo::openMapContainerByName(
+    const std::string& fileName){
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    return h5geo::openMapContainer(h5File);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
+// Seis containers
+H5SeisContainer*
+h5geo::createSeisContainer(
+    h5gt::File h5File, h5geo::CreationType createFlag)
+{
+  auto opt = H5SeisContainerImpl::createContainer(
+        h5File, h5geo::ContainerType::SEISMIC, createFlag);
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5SeisContainerImpl(opt.value());
+}
+
+H5SeisContainer*
+h5geo::createSeisContainerByName(
+    std::string& fileName, h5geo::CreationType createFlag)
+{
+  auto opt = H5SeisContainerImpl::createContainer(
+        fileName, h5geo::ContainerType::SEISMIC, createFlag);
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5SeisContainerImpl(opt.value());
+}
+
+H5SeisContainer* h5geo::openSeisContainer(
+    h5gt::File h5File){
+  return createSeisContainer(h5File, h5geo::CreationType::OPEN);
+}
+
+H5SeisContainer* h5geo::openSeisContainerByName(
+    const std::string& fileName){
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    return h5geo::openSeisContainer(h5File);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
+// Well containers
+H5WellContainer*
+h5geo::createWellContainer(
+    h5gt::File h5File, h5geo::CreationType createFlag)
+{
+  auto opt = H5WellContainerImpl::createContainer(
+        h5File, h5geo::ContainerType::WELL, createFlag);
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5WellContainerImpl(opt.value());
+}
+
+H5WellContainer*
+h5geo::createWellContainerByName(
+    std::string& fileName, h5geo::CreationType createFlag)
+{
+  auto opt = H5WellContainerImpl::createContainer(
+        fileName, h5geo::ContainerType::WELL, createFlag);
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5WellContainerImpl(opt.value());
+}
+
+H5WellContainer*
+h5geo::openWellContainer(h5gt::File h5File){
+  return createWellContainer(h5File, h5geo::CreationType::OPEN);
+}
+
+H5WellContainer*
+h5geo::openWellContainerByName(const std::string& fileName){
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    return h5geo::openWellContainer(h5File);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
+
 H5BaseObject* h5geo::openObject(h5gt::Group group)
 {
   H5BaseObject* obj = nullptr;

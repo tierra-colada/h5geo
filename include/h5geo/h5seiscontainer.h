@@ -28,15 +28,6 @@ public:
       h5geo::CreationType createFlag) = 0;
 };
 
-namespace h5geo {
-  extern "C" {
-  H5GEO_EXPORT H5SeisContainer* createSeisContainer(
-    h5gt::File h5File, h5geo::CreationType createFlag);
-  H5GEO_EXPORT H5SeisContainer* createSeisContainerByName(
-    std::string& fileName, h5geo::CreationType createFlag);
-  }
-}
-
 using H5SeisCnt_ptr = std::unique_ptr<H5SeisContainer, h5geo::ObjectDeleter>;
 
 #endif // H5SEISCONTAINER_H

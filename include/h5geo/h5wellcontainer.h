@@ -31,15 +31,6 @@ public:
       const std::string& name) = 0;
 };
 
-namespace h5geo {
-  extern "C" {
-  H5GEO_EXPORT H5WellContainer* createWellContainer(
-    h5gt::File h5File, h5geo::CreationType createFlag);
-  H5GEO_EXPORT H5WellContainer* createWellContainerByName(
-    std::string& fileName, h5geo::CreationType createFlag);
-  }
-}
-
 using H5WellCnt_ptr = std::unique_ptr<H5WellContainer, h5geo::ObjectDeleter>;
 
 #endif // H5WELLCONTAINER_H
