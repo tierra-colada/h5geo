@@ -1,5 +1,5 @@
 Maps
-==============
+====
 
 Map is an object that is represented by a matrix with 
 coordinates of **upper-left** matrix corner (origin ``X0``, ``Y0``), 
