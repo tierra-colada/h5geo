@@ -2,7 +2,7 @@
 #define H5COREIMPL_H
 
 #include "h5enum.h"
-#include "../h5util.h"
+#include "h5core_util.h"
 
 #include <type_traits>
 #include <string>

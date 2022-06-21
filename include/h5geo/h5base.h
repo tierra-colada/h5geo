@@ -6,7 +6,7 @@
 #endif
 
 #ifdef H5GEO_USE_GDAL
-#include "h5sr_settings.h"
+#include "private/h5core_sr_settings.h"
 #endif
 
 #include "h5geo_export.h"

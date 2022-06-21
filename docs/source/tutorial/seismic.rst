@@ -114,7 +114,7 @@ and to get it back:
 .. note:: 
 
    List of binary header names is available through ``getBinHeaderNames`` 
-   function declared in `h5util.h <https://github.com/tierra-colada/h5geo/blob/main/include/h5geo/h5util.h>`_.
+   function declared in `h5core_util.h <https://github.com/tierra-colada/h5geo/blob/main/include/h5geo/private/h5core_util.h>`_.
    Header names are consistent to those used in ``SEGY`` viewer `SeiSee <https://mail.dmng.ru/freeware/>`_
 
 Write/Read trace headers
@@ -152,7 +152,7 @@ and to get it back:
 .. note:: 
 
    List of trace header names is available through ``getTraceHeaderNames`` 
-   function declared in `h5util.h <https://github.com/tierra-colada/h5geo/blob/main/include/h5geo/h5util.h>`_.
+   function declared in `h5core_util.h <https://github.com/tierra-colada/h5geo/blob/main/include/h5geo/private/h5core_util.h>`_.
    Header names are consistent to those used in ``SEGY`` viewer `SeiSee <https://mail.dmng.ru/freeware/>`_
 
 .. warning:: 

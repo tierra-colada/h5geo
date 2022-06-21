@@ -9,7 +9,8 @@ set(include_files_h5geo_private
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5enum.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5enum_operators.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5coreimpl.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5utilimpl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5core_util.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5core_utilimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5basecontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5baseimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5baseobjectimpl.h
@@ -30,12 +31,15 @@ set(include_files_h5geo_private
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5points4impl.h
   )
 
+if(H5GEO_USE_GDAL)
+  list(APPEND include_files_h5geo_private ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5core_sr_settings.h)
+endif()
+
 set(include_files_h5geo_public
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5core.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5base.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5basecontainer.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5baseobject.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/h5util.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5devcurve.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5logcurve.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5seis.h
@@ -52,7 +56,3 @@ set(include_files_h5geo_public
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5points4.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5points.h
   )
-
-if(H5GEO_USE_GDAL)
-  list(APPEND include_files_h5geo_public ${CMAKE_SOURCE_DIR}/include/h5geo/h5sr_settings.h)
-endif()

@@ -2,7 +2,7 @@
 #include "../../include/h5geopy/h5basecontainer_py.h"
 #include "../../include/h5geopy/h5baseobject_py.h"
 #include "../../include/h5geopy/h5enum_py.h"
-#include "../../include/h5geopy/h5sr_settings_py.h"
+#include "../../include/h5geopy/h5core_sr_settings_py.h"
 #include "../../include/h5geopy/h5point_py.h"
 #include "../../include/h5geopy/h5devcurve_py.h"
 #include "../../include/h5geopy/h5deviation_py.h"

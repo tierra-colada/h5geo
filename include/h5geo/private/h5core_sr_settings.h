@@ -1,8 +1,8 @@
-#ifndef H5SR_SETTINGS_H
-#define H5SR_SETTINGS_H
+#ifndef H5CORE_SR_SETTINGS_H
+#define H5CORE_SR_SETTINGS_H
 
 #include "h5geo_export.h"
-#include "private/h5enum.h"
+#include "h5enum.h"
 
 #include <string>
 
@@ -111,4 +111,4 @@ H5GEO_EXPORT bool transformCoordTo(
 } // h5geo
 
 
-#endif // H5SR_SETTINGS_H
+#endif // H5CORE_SR_SETTINGS_H

@@ -2,7 +2,6 @@
 #include <gmock/gmock.h>
 #include <h5geo/h5wellcontainer.h>
 #include <h5geo/h5well.h>
-#include <h5geo/h5util.h>
 #include <h5geo/h5devcurve.h>
 #include <h5geo/h5logcurve.h>
 #include <h5geo/h5points.h>

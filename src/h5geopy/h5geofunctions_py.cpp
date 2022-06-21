@@ -10,7 +10,7 @@
 #include <h5geo/h5logcurve.h>
 #include <h5geo/h5points.h>
 #include <h5geo/h5welltops.h>
-#include <h5geo/h5util.h>
+#include <h5geo/h5core.h>
 
 namespace h5geopy {
 

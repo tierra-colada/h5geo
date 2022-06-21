@@ -1,5 +1,5 @@
 set(src_files_h5geo
-  ${CMAKE_SOURCE_DIR}/src/h5geo/h5util.cpp
+  ${CMAKE_SOURCE_DIR}/src/h5geo/h5core_util.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5baseimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5basecontainerimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5baseobjectimpl.cpp
@@ -20,5 +20,5 @@ set(src_files_h5geo
   )
 
 if(H5GEO_USE_GDAL)
-  list(APPEND src_files_h5geo ${CMAKE_SOURCE_DIR}/src/h5geo/h5sr_settings.cpp)
+  list(APPEND src_files_h5geo ${CMAKE_SOURCE_DIR}/src/h5geo/h5core_sr_settings.cpp)
 endif()

@@ -1,4 +1,4 @@
-#include "../../include/h5geo/h5util.h"
+#include "../../include/h5geo/private/h5core_util.h"
 
 #include <algorithm>
 #include <optional>

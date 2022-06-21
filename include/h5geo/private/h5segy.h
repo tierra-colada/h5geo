@@ -22,7 +22,7 @@
 
 // enum string is needed to include magic_enum with predefined macro
 #include "h5enum_string.h"
-#include "../h5util.h"
+#include "h5core_util.h"
 #include "../h5seis.h"
 
 

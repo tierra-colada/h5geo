@@ -25,5 +25,5 @@ set(include_files_h5geopy
   )
 
 if(H5GEO_USE_GDAL)
-  list(APPEND include_files_h5geopy ${CMAKE_SOURCE_DIR}/include/h5geopy/h5sr_settings_py.h)
+  list(APPEND include_files_h5geopy ${CMAKE_SOURCE_DIR}/include/h5geopy/h5core_sr_settings_py.h)
 endif()

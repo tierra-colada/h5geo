@@ -221,4 +221,4 @@ function is used to create spatial reference object.
 If you work with many objects that belong to different spatial reference
 you may want to set a spatial reference for the session and pass ``doCoordTransform`` 
 as ``true`` when writing/getting the data.
-Take a look at `h5sr_settings.h <https://github.com/tierra-colada/h5geo/blob/main/include/h5geo/h5sr_settings.h>`_.
+Take a look at `h5core_sr_settings.h <https://github.com/tierra-colada/h5geo/blob/main/include/h5geo/private/h5core_sr_settings.h>`_.

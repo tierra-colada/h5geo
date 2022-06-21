@@ -1,16 +1,12 @@
-#ifndef H5UTIL_H
-#define H5UTIL_H
-
-#ifdef H5GEO_USE_GDAL
-#include "h5sr_settings.h"
-#endif
+#ifndef H5CORE_UTIL_H
+#define H5CORE_UTIL_H
 
 #include "h5geo_export.h"
-#include "private/h5enum.h"
-#include "private/h5easyhull.h"
-#include "private/h5interpolation.h"
-#include "private/h5polyfit.h"
-#include "private/h5sort.h"
+#include "h5enum.h"
+#include "h5easyhull.h"
+#include "h5interpolation.h"
+#include "h5polyfit.h"
+#include "h5sort.h"
 
 #include <vector>
 #include <string>
@@ -252,6 +248,6 @@ h5gt::ElementSet rowsCols2ElementSet(
 
 }
 
-#include "private/h5utilimpl.h"
+#include "h5core_utilimpl.h"
 
-#endif // H5UTIL_H
+#endif // H5CORE_UTIL_H

@@ -1,5 +1,5 @@
-#ifndef H5UTILIMPL_H
-#define H5UTILIMPL_H
+#ifndef H5CORE_UTILIMPL_H
+#define H5CORE_UTILIMPL_H
 
 #ifndef H5GT_USE_EIGEN
 #define H5GT_USE_EIGEN // should be defined before including h5gt
@@ -173,4 +173,4 @@ inline h5gt::ElementSet rowsCols2ElementSet(
 
 }
 
-#endif // H5UTILIMPL_H
+#endif // H5CORE_UTILIMPL_H

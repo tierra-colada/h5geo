@@ -21,7 +21,6 @@
 #include <h5gt/H5DataSpace.hpp>
 #include <h5gt/H5Attribute.hpp>
 
-
 namespace h5geo
 {
 
@@ -408,6 +407,11 @@ Eigen::VectorX<T> getDataFromIndexedDataset(
 
 } // namespace h5geo
 
+
+#include "private/h5core_util.h"
+#ifdef H5GEO_USE_GDAL
+#include "private/h5core_sr_settings.h"
+#endif
 
 #include "private/h5coreimpl.h"
 

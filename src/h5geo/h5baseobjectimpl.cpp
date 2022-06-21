@@ -16,7 +16,7 @@
 #ifdef H5GEO_USE_GDAL
 #include <gdal.h>
 #include <gdal_priv.h>
-#include "../../include/h5geo/h5sr_settings.h"
+#include "../../include/h5geo/private/h5core_sr_settings.h"
 #endif
 
 template <typename TBase>
