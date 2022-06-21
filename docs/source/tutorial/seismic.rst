@@ -195,13 +195,16 @@ Sorting
 -------
 
 The idea behind sorting is to prepare sorting by primary keys (PKey).
-For example there is widely used sorting ``CDP-OFFSET``.
 To accelerate the IO process the user need to add PKey sorting first
 ``addPKeySort`` and then use ``getSortedData`` function to retrieve
 the data. 
 No need to manually resort data, **h5geo** only keeps indexes
 and unique values of prepared sortings. 
 In theory this should make work with big data pretty effective.
+
+For example there is widely used sorting ``CDP-OFFSET`` 
+(``OFFSET`` is called ``DSREG`` in **h5geo**).
+Add Pkey ``CDP`` and then you are free to retrieve any ``CDP-...`` sorted data.
 
 .. code:: c++
 
@@ -211,6 +214,12 @@ In theory this should make work with big data pretty effective.
    }
 
    // then you are allowed to use convenient 'getSortedData' function
+   Eigen::MatrixXf trace_out;
+   Eigen::MatrixXd trc_header_out;
+   // from CDP 1 to 2, from DSREG 0 to 500
+   // 'trc_ind' - contains indices of selected traces
+   Eigen::VectorX<size_t> trc_ind = seis->getSortedData(
+      trace_out, trc_header_out, {"CDP", "DSREG"}, {1, 0}, {2, 500});
 
 .. note:: 
 
