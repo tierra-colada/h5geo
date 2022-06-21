@@ -1753,7 +1753,6 @@ h5geo::openWellContainerByName(const std::string& fileName){
   }
 }
 
-
 H5BaseObject* h5geo::openObject(h5gt::Group group)
 {
   H5BaseObject* obj = nullptr;
@@ -1809,6 +1808,162 @@ h5geo::openBaseObject(h5gt::Group group)
   return new H5BaseObjectImpl<H5BaseObject>(group);
 }
 
+H5BaseObject*
+h5geo::openBaseObjectByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openBaseObject(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
+H5Map* h5geo::openMap(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::MAP))
+      return new H5MapImpl(group);
+
+  return nullptr;
+}
+
+H5Map* h5geo::openMapByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openMap(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
+H5Seis* h5geo::openSeis(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::SEISMIC))
+    return new H5SeisImpl(group);
+
+  return nullptr;
+}
+
+H5Seis* h5geo::openSeisByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openSeis(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
+H5Well* h5geo::openWell(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::WELL))
+    return new H5WellImpl(group);
+
+  return nullptr;
+}
+
+H5Well* h5geo::openWellByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openWell(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
+H5DevCurve* h5geo::openDevCurve(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::DEVCURVE))
+    return new H5DevCurveImpl(group);
+
+  return nullptr;
+}
+
+H5DevCurve* h5geo::openDevCurveByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openDevCurve(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
+H5LogCurve* h5geo::openLogCurve(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::LOGCURVE))
+    return new H5LogCurveImpl(group);
+
+  return nullptr;
+}
+
+H5LogCurve* h5geo::openLogCurveByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openLogCurve(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
 H5BasePoints* h5geo::openPoints(h5gt::Group group)
 {
   if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_1))
@@ -1823,32 +1978,52 @@ H5BasePoints* h5geo::openPoints(h5gt::Group group)
   return nullptr;
 }
 
-H5DevCurve* h5geo::openDevCurve(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::DEVCURVE))
-    return new H5DevCurveImpl(group);
+H5BasePoints* h5geo::openPointsByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
 
-  return nullptr;
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openPoints(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
 }
 
-H5LogCurve* h5geo::openLogCurve(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::LOGCURVE))
-    return new H5LogCurveImpl(group);
-
-  return nullptr;
-}
-
-H5Map* h5geo::openMap(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::MAP))
-      return new H5MapImpl(group);
-
-  return nullptr;
-}
 
 H5Points1* h5geo::openPoints1(h5gt::Group group){
   if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_1))
     return new H5Points1Impl(group);
 
   return nullptr;
+}
+
+H5Points1* h5geo::openPoints1ByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openPoints1(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
 }
 
 H5Points2* h5geo::openPoints2(h5gt::Group group){
@@ -1858,11 +2033,51 @@ H5Points2* h5geo::openPoints2(h5gt::Group group){
   return nullptr;
 }
 
+H5Points2* h5geo::openPoints2ByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openPoints2(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
 H5Points3* h5geo::openPoints3(h5gt::Group group){
   if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_3))
     return new H5Points3Impl(group);
 
   return nullptr;
+}
+
+H5Points3* h5geo::openPoints3ByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openPoints3(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
 }
 
 H5Points4* h5geo::openPoints4(h5gt::Group group){
@@ -1872,18 +2087,24 @@ H5Points4* h5geo::openPoints4(h5gt::Group group){
   return nullptr;
 }
 
-H5Seis* h5geo::openSeis(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::SEISMIC))
-    return new H5SeisImpl(group);
+H5Points4* h5geo::openPoints4ByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
 
-  return nullptr;
-}
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
 
-H5Well* h5geo::openWell(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::WELL))
-    return new H5WellImpl(group);
-
-  return nullptr;
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openPoints4(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
 }
 
 H5WellTops* h5geo::openWellTops(h5gt::Group group){
@@ -1891,6 +2112,26 @@ H5WellTops* h5geo::openWellTops(h5gt::Group group){
     return new H5WellTopsImpl(group);
 
   return nullptr;
+}
+
+H5WellTops* h5geo::openWellTopsByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openWellTops(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
 }
 
 // explicit instantiation (requires that corresponding headers are included)

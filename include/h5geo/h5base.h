@@ -132,7 +132,6 @@ extern "C" {
 //----------- CONTAINERS -----------
 H5GEO_EXPORT H5BaseContainer* createContainer(
     h5gt::File h5File, h5geo::ContainerType cntType, h5geo::CreationType createFlag);
-
 H5GEO_EXPORT H5BaseContainer* createContainerByName(
     std::string& fileName, h5geo::ContainerType cntType, h5geo::CreationType createFlag);
 
@@ -205,28 +204,63 @@ H5GEO_EXPORT H5BaseObject* openObjectByName(
 
 H5GEO_EXPORT H5BaseObject* openBaseObject(
     h5gt::Group group);
-H5GEO_EXPORT H5BasePoints* openPoints(
-    h5gt::Group group);
-H5GEO_EXPORT H5DevCurve* openDevCurve(
-    h5gt::Group group);
-H5GEO_EXPORT H5LogCurve* openLogCurve(
-    h5gt::Group group);
+H5GEO_EXPORT H5BaseObject* openBaseObjectByName(
+    const std::string& fileName, const std::string& objName);
+
 H5GEO_EXPORT H5Map* openMap(
     h5gt::Group group);
-H5GEO_EXPORT H5Points1* openPoints1(
-    h5gt::Group group);
-H5GEO_EXPORT H5Points2* openPoints2(
-    h5gt::Group group);
-H5GEO_EXPORT H5Points3* openPoints3(
-    h5gt::Group group);
-H5GEO_EXPORT H5Points4* openPoints4(
-    h5gt::Group group);
+H5GEO_EXPORT H5Map* openMapByName(
+    const std::string& fileName, const std::string& objName);
+
 H5GEO_EXPORT H5Seis* openSeis(
     h5gt::Group group);
+H5GEO_EXPORT H5Seis* openSeisByName(
+    const std::string& fileName, const std::string& objName);
+
 H5GEO_EXPORT H5Well* openWell(
     h5gt::Group group);
+H5GEO_EXPORT H5Well* openWellByName(
+    const std::string& fileName, const std::string& objName);
+
+H5GEO_EXPORT H5DevCurve* openDevCurve(
+    h5gt::Group group);
+H5GEO_EXPORT H5DevCurve* openDevCurveByName(
+    const std::string& fileName, const std::string& objName);
+
+H5GEO_EXPORT H5LogCurve* openLogCurve(
+    h5gt::Group group);
+H5GEO_EXPORT H5LogCurve* openLogCurveByName(
+    const std::string& fileName, const std::string& objName);
+
+H5GEO_EXPORT H5BasePoints* openPoints(
+    h5gt::Group group);
+H5GEO_EXPORT H5BasePoints* openPointsByName(
+    const std::string& fileName, const std::string& objName);
+
+H5GEO_EXPORT H5Points1* openPoints1(
+    h5gt::Group group);
+H5GEO_EXPORT H5Points1* openPoints1ByName(
+    const std::string& fileName, const std::string& objName);
+
+H5GEO_EXPORT H5Points2* openPoints2(
+    h5gt::Group group);
+H5GEO_EXPORT H5Points2* openPoints2ByName(
+    const std::string& fileName, const std::string& objName);
+
+H5GEO_EXPORT H5Points3* openPoints3(
+    h5gt::Group group);
+H5GEO_EXPORT H5Points3* openPoints3ByName(
+    const std::string& fileName, const std::string& objName);
+
+H5GEO_EXPORT H5Points4* openPoints4(
+    h5gt::Group group);
+H5GEO_EXPORT H5Points4* openPoints4ByName(
+    const std::string& fileName, const std::string& objName);
+
 H5GEO_EXPORT H5WellTops* openWellTops(
     h5gt::Group group);
+H5GEO_EXPORT H5WellTops* openWellTopsByName(
+    const std::string& fileName, const std::string& objName);
 
 
 

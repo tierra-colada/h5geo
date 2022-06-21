@@ -118,7 +118,7 @@ To open a geo-object one may use parent object instance:
 .. note:: 
 
    There are helper functions to open them without having parent object:
-   ``h5geo::openWell``
+   ``h5geo::openWell``, ``h5geo::openWellByName``
 
    Or more generally (use it in pair with ``dynamic_cast<>``):
    ``h5geo::openObject``,
