@@ -23,12 +23,6 @@ public:
   virtual std::optional<h5gt::DataSet> getPointsD() const = 0;
 };
 
-namespace h5geo {
-  extern "C" {
-  H5GEO_EXPORT H5BasePoints* openPoints(h5gt::Group group);
-  }
-}
-
 using H5BasePoints_ptr = std::unique_ptr<H5BasePoints, h5geo::ObjectDeleter>;
 
 #endif // H5BASEPOINTS_H

@@ -164,10 +164,3 @@ H5LogCurveImpl::getLogCurveD()
 
   return getDatasetOpt(objG, name);
 }
-
-H5LogCurve* h5geo::openLogCurve(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::LOGCURVE))
-    return new H5LogCurveImpl(group);
-
-  return nullptr;
-}

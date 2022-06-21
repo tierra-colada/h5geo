@@ -42,12 +42,6 @@ public:
   virtual std::optional<h5gt::DataSet> getLogCurveD() = 0;
 };
 
-namespace h5geo {
-  extern "C" {
-  H5GEO_EXPORT H5LogCurve* openLogCurve(h5gt::Group group);
-  }
-}
-
 using H5LogCurve_ptr = std::unique_ptr<H5LogCurve, h5geo::ObjectDeleter>;
 
 #endif // H5LOGCURVE_H

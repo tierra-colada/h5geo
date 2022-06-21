@@ -45,6 +45,7 @@ class H5Points1;
 class H5Points2;
 class H5Points3;
 class H5Points4;
+class H5WellTops;
 
 ///
 /// \brief Base class for object params
@@ -186,6 +187,36 @@ H5GEO_EXPORT H5BaseObject* openObject(
     h5gt::Group group);
 H5GEO_EXPORT H5BaseObject* openObjectByName(
     const std::string& fileName, const std::string& objName);
+
+H5GEO_EXPORT H5BaseObject* openBaseObject(
+    h5gt::Group group);
+H5GEO_EXPORT H5BasePoints* openPoints(
+    h5gt::Group group);
+H5GEO_EXPORT H5DevCurve* openDevCurve(
+    h5gt::Group group);
+H5GEO_EXPORT H5LogCurve* openLogCurve(
+    h5gt::Group group);
+H5GEO_EXPORT H5Map* openMap(
+    h5gt::Group group);
+H5GEO_EXPORT H5Points1* openPoints1(
+    h5gt::Group group);
+H5GEO_EXPORT H5Points2* openPoints2(
+    h5gt::Group group);
+H5GEO_EXPORT H5Points3* openPoints3(
+    h5gt::Group group);
+H5GEO_EXPORT H5Points4* openPoints4(
+    h5gt::Group group);
+H5GEO_EXPORT H5Seis* openSeis(
+    h5gt::Group group);
+H5GEO_EXPORT H5Well* openWell(
+    h5gt::Group group);
+H5GEO_EXPORT H5WellTops* openWellTops(
+    h5gt::Group group);
+
+
+
+
+
 
 H5GEO_EXPORT bool isGeoObject(
     const h5gt::Group& group);

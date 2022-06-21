@@ -133,12 +133,5 @@ bool H5Points2Impl<TBase>::transformPoints(
   return true;
 }
 
-H5Points2* h5geo::openPoints2(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_2))
-    return new H5Points2Impl(group);
-
-  return nullptr;
-}
-
 // explicit instantiation (requires that corresponding headers are included)
 template class H5Points2Impl<H5Points2>;

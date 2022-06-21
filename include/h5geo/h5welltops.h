@@ -21,12 +21,6 @@ public:
   virtual H5Well* openWell() = 0;
 };
 
-namespace h5geo {
-  extern "C" {
-  H5GEO_EXPORT H5WellTops* openWellTops(h5gt::Group group);
-  }
-}
-
 using H5WellTops_ptr = std::unique_ptr<H5WellTops, h5geo::ObjectDeleter>;
 
 #endif // H5WELLTOPS_H

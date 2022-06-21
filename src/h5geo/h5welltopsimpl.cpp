@@ -40,11 +40,3 @@ H5Well* H5WellTopsImpl::openWell()
 
   return new H5WellImpl(optWellG.value());
 }
-
-
-H5WellTops* h5geo::openWellTops(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::WELLTOPS))
-    return new H5WellTopsImpl(group);
-
-  return nullptr;
-}

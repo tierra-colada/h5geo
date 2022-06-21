@@ -1572,6 +1572,96 @@ H5BaseObject* h5geo::openObjectByName(
   }
 }
 
+H5BaseObject*
+h5geo::openBaseObject(h5gt::Group group)
+{
+  return new H5BaseObjectImpl<H5BaseObject>(group);
+}
+
+H5BasePoints* h5geo::openPoints(h5gt::Group group)
+{
+  if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_1))
+    return new H5Points1Impl(group);
+  else if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_2))
+    return new H5Points2Impl(group);
+  else if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_3))
+    return new H5Points3Impl(group);
+  else if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_4))
+    return new H5Points4Impl(group);
+
+  return nullptr;
+}
+
+H5DevCurve* h5geo::openDevCurve(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::DEVCURVE))
+    return new H5DevCurveImpl(group);
+
+  return nullptr;
+}
+
+H5LogCurve* h5geo::openLogCurve(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::LOGCURVE))
+    return new H5LogCurveImpl(group);
+
+  return nullptr;
+}
+
+H5Map* h5geo::openMap(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::MAP))
+      return new H5MapImpl(group);
+
+  return nullptr;
+}
+
+H5Points1* h5geo::openPoints1(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_1))
+    return new H5Points1Impl(group);
+
+  return nullptr;
+}
+
+H5Points2* h5geo::openPoints2(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_2))
+    return new H5Points2Impl(group);
+
+  return nullptr;
+}
+
+H5Points3* h5geo::openPoints3(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_3))
+    return new H5Points3Impl(group);
+
+  return nullptr;
+}
+
+H5Points4* h5geo::openPoints4(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_4))
+    return new H5Points4Impl(group);
+
+  return nullptr;
+}
+
+H5Seis* h5geo::openSeis(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::SEISMIC))
+    return new H5SeisImpl(group);
+
+  return nullptr;
+}
+
+H5Well* h5geo::openWell(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::WELL))
+    return new H5WellImpl(group);
+
+  return nullptr;
+}
+
+H5WellTops* h5geo::openWellTops(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::WELLTOPS))
+    return new H5WellTopsImpl(group);
+
+  return nullptr;
+}
+
 // explicit instantiation (requires that corresponding headers are included)
 template class H5BaseImpl<H5Base>;
 template class H5BaseImpl<H5BaseContainer>;

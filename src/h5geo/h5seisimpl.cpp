@@ -2037,13 +2037,6 @@ std::optional<h5gt::DataSet> H5SeisImpl::getSEGYTraceFloatD()
   return opt->getDataSet(name);
 }
 
-H5Seis* h5geo::openSeis(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::SEISMIC))
-    return new H5SeisImpl(group);
-
-  return nullptr;
-}
-
 bool H5SeisImpl::updateTraceHeaderLimits(size_t nTrcBuffer)
 {
   if (nTrcBuffer < 1)

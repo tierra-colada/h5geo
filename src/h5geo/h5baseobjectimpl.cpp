@@ -381,12 +381,6 @@ H5BaseObjectImpl<TBase>::getParentG(
   return std::nullopt;
 }
 
-H5BaseObject*
-h5geo::openBaseObject(h5gt::Group group)
-{
-  return new H5BaseObjectImpl<H5BaseObject>(group);
-}
-
 // explicit instantiation (requires that corresponding headers are included)
 template class H5BaseObjectImpl<H5BaseObject>;
 template class H5BaseObjectImpl<H5Map>;

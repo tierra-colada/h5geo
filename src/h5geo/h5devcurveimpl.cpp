@@ -329,10 +329,3 @@ H5DevCurveImpl::getDevCurveD()
 
   return getDatasetOpt(objG, name);
 }
-
-H5DevCurve* h5geo::openDevCurve(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::DEVCURVE))
-    return new H5DevCurveImpl(group);
-
-  return nullptr;
-}

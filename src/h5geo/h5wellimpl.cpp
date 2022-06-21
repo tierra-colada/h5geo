@@ -507,10 +507,3 @@ H5WellImpl::getLogTypeG(const std::string& logType)
 
   return logG->getGroup(logType);
 }
-
-H5Well* h5geo::openWell(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::WELL))
-    return new H5WellImpl(group);
-
-  return nullptr;
-}

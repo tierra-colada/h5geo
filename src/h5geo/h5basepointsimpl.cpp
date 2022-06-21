@@ -96,20 +96,6 @@ H5BasePointsImpl<TBase>::getParam()
   return p;
 }
 
-H5BasePoints* h5geo::openPoints(h5gt::Group group)
-{
-  if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_1))
-    return new H5Points1Impl(group);
-  else if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_2))
-    return new H5Points2Impl(group);
-  else if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_3))
-    return new H5Points3Impl(group);
-  else if (isGeoObjectByType(group, h5geo::ObjectType::POINTS_4))
-    return new H5Points4Impl(group);
-
-  return nullptr;
-}
-
 // explicit instantiation (requires that corresponding headers are included)
 template class H5BasePointsImpl<H5BasePoints>;
 template class H5BasePointsImpl<H5Points1>;

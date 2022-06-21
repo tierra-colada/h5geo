@@ -385,10 +385,3 @@ H5MapImpl::getMapD() const
 
   return getDatasetOpt(objG, name);
 }
-
-H5Map* h5geo::openMap(h5gt::Group group){
-  if (isGeoObjectByType(group, h5geo::ObjectType::MAP))
-      return new H5MapImpl(group);
-
-  return nullptr;
-}
