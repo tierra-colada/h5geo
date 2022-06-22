@@ -1,6 +1,6 @@
 # h5geo
 [![][build-img]][build-status]
-[![][docs-stable-img]][docs-stable-status]
+[![][docs-dev-img]][docs-dev-status]
 
 **h5geo** provides API to work with geo-data that is based on [HDF5](https://www.hdfgroup.org/solutions/hdf5/) containers via [h5gt](https://travis-ci.com/tierra-colada/h5geo) header only library. For now **h5geo** provides API to work with:
 * seismic data
@@ -109,5 +109,6 @@ Windows 10/11, Linux, OSX
 
 [build-img]:https://img.shields.io/travis/com/tierra-colada/h5geo?style=plastic
 [build-status]:https://app.travis-ci.com/tierra-colada/h5geo
-[docs-stable-img]:https://img.shields.io/badge/docs-stable-blue.svg?style=plastic
-[docs-stable-status]:https://h5geo.readthedocs.io/en/latest/?badge=latest
+
+[docs-dev-img]:https://img.shields.io/badge/docs-dev-blue.svg?style=plastic
+[docs-dev-status]:https://h5geo.readthedocs.io/en/latest/?badge=latest
