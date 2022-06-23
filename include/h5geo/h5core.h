@@ -24,6 +24,7 @@
 namespace h5geo
 {
 
+/// \brief Resize and overwrite DataSet or create it if not exists
 template<typename Object, typename T,
          typename std::enable_if<
              std::is_same<Object, h5gt::File>::value ||
@@ -37,6 +38,7 @@ bool _overwriteResizableDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Resize and overwrite DataSet or create it if not exists
 template<typename Object, typename D,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -49,6 +51,7 @@ bool overwriteResizableDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Resize and overwrite DataSet or create it if not exists
 template<typename Object, typename T,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -61,6 +64,7 @@ bool overwriteResizableDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Resize and overwrite DataSet or create it if not exists
 template<typename Object, typename T,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -73,6 +77,7 @@ bool overwriteResizableDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Create or overwrite DataSet
 template<typename Object, typename T,
          typename std::enable_if<
              std::is_same<Object, h5gt::File>::value ||
@@ -86,6 +91,7 @@ bool _overwriteDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Create or overwrite DataSet
 template<typename Object, typename D,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -98,6 +104,7 @@ bool overwriteDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Create or overwrite DataSet
 template<typename Object, typename T,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -110,6 +117,7 @@ bool overwriteDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Create or overwrite DataSet
 template<typename Object, typename T,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -122,6 +130,7 @@ bool overwriteDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from DataSet to buffer
 template <typename Object, typename T,
           typename std::enable_if<
             std::is_same<Object, h5gt::File>::value ||
@@ -134,6 +143,7 @@ bool _readDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from DataSet
 template<typename Object, typename D,
          typename std::enable_if<
              (std::is_same<Object, h5gt::File>::value ||
@@ -147,6 +157,7 @@ bool readDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from DataSet
 template<typename Object,
          typename std::enable_if<
              std::is_same<Object, h5gt::File>::value ||
@@ -158,6 +169,7 @@ Eigen::MatrixXf readFloatEigenMtxDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from DataSet
 template<typename Object,
          typename std::enable_if<
              std::is_same<Object, h5gt::File>::value ||
@@ -169,6 +181,7 @@ Eigen::MatrixXd readDoubleEigenMtxDataset(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from Attribute
 template <typename Object, typename T,
           typename std::enable_if<
             std::is_same<Object, h5gt::File>::value ||
@@ -182,11 +195,7 @@ bool _readAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
-/// \brief readAttribute Read attribute only if it exist and
-/// its type is the same as passed buffer
-/// \param holder h5gt::Object that contains given attribute
-/// \param attrName
-/// \param v
+/// \brief Read data from Attribute
 template<typename Object, typename D,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
@@ -200,6 +209,7 @@ bool readAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from Attribute
 template <typename Object, typename T,
           typename std::enable_if<
             (std::is_same<Object, h5gt::File>::value ||
@@ -213,6 +223,7 @@ bool readAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from Attribute
 template <typename Object, typename T,
           typename std::enable_if<
             (std::is_same<Object, h5gt::File>::value ||
@@ -226,6 +237,7 @@ bool readAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Create or overwrite Attribute
 template <typename Object, typename T,
           typename std::enable_if<
             std::is_same<Object, h5gt::File>::value ||
@@ -239,6 +251,7 @@ bool _overwriteAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Create or overwrite Attribute
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -249,12 +262,7 @@ bool overwriteAttribute(
     const std::string& attrName,
     const std::string& str);
 
-/// \brief overwriteAttribute Create attribute if not exist.
-/// Delete attribute if type or size is different
-/// and create new one and write data to it
-/// \param holder h5gt::Object that contains given attribute
-/// \param attrName
-/// \param v
+/// \brief Create or overwrite Attribute
 template<typename Object, typename D,
          typename std::enable_if<
            (std::is_same<Object, h5gt::File>::value ||
@@ -268,6 +276,7 @@ bool overwriteAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Create or overwrite Attribute
 template <typename Object, typename T,
           typename std::enable_if<
             (std::is_same<Object, h5gt::File>::value ||
@@ -281,6 +290,7 @@ bool overwriteAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Create or overwrite Attribute
 template <typename Object, typename T,
           typename std::enable_if<
             (std::is_same<Object, h5gt::File>::value ||
@@ -294,11 +304,7 @@ bool overwriteAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
-/// \brief readEnumAttribute Read enum from `Object's`
-/// attribute as unsigned value. Return `0` if attribute
-/// not exists.
-/// \param object
-/// \param attrName
+/// \brief Read data from Attribute
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -306,12 +312,7 @@ template<typename Object,
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 unsigned readEnumAttribute(Object& object, const std::string& attrName);
 
-/// \brief readStringAttribute Read string from `Object's`
-/// attribute. Return `std::string()` (empty string) if attribute
-/// not exists.
-/// \param object
-/// \param attrName
-/// \return
+/// \brief Read data from Attribute
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -319,6 +320,7 @@ template<typename Object,
            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
 std::string readStringAttribute(Object& object, const std::string& attrName);
 
+/// \brief Read data from Attribute
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -329,6 +331,7 @@ float readFloatAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from Attribute
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -339,6 +342,7 @@ double readDoubleAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from Attribute
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -349,6 +353,7 @@ std::vector<float> readFloatVecAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from Attribute
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -359,6 +364,7 @@ std::vector<double> readDoubleVecAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from Attribute
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -369,6 +375,7 @@ Eigen::VectorXf readFloatEigenVecAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
+/// \brief Read data from Attribute
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||
@@ -387,6 +394,11 @@ Eigen::VectorXd readDoubleEigenVecAttribute(
 /// \param attrName
 /// \param resize resize if needed. Use it only for resizable dataset!
 /// \return
+
+/// \brief Write data to indexed DataSet
+///
+/// Indexed DataSet has attributes with names and values telling what \n
+/// rows/cols are responsible for storing data (like tables)
 template<typename D>
 bool writeData2IndexedDataset(
     h5gt::DataSet& dataset,
@@ -394,12 +406,10 @@ bool writeData2IndexedDataset(
     const Eigen::DenseBase<D>& v,
     bool resize);
 
-/// \brief getDataFromIndexedDataset Try to read data to vector
-/// from dataset with attribute where attribute is a single
-/// value reflecting row index of a corresponding dataset
-/// \param dataset
-/// \param attrName
-/// \return
+/// \brief Get data from indexed DataSet
+///
+/// Indexed DataSet has attributes with names and values telling what \n
+/// rows/cols are responsible for storing data (like tables)
 template<typename T>
 Eigen::VectorX<T> getDataFromIndexedDataset(
     h5gt::DataSet& dataset,
