@@ -16,7 +16,7 @@ class H5Well;
 /// That is done to prevent calculation errors i.e. everytime `MD_AZIM_INCL` is transformed to 
 /// `X_Y_TVD` an error is accumulating. 
 /// The same concerns when doing that in backward order: `X_Y_TVD` to `MD_AZIM_INCL`. \n
-/// H5DevCurve is located in HDF5 container using following pattern: `/well/DEV/relative_path_to_dev_curve`
+/// Dev curve is located in HDF5 container using following pattern: `/well/DEV/relative_path_to_dev_curve`
 class H5DevCurve : public H5BaseObject
 {
 protected:
@@ -52,9 +52,9 @@ public:
       Eigen::Ref<Eigen::VectorXd> v,
       const std::string& units = "") = 0;
 
-	/// \brief Set current H5DevCurve as active for the parent H5Well
+	/// \brief Set current dev curve as active for the parent H5Well
   virtual bool setActive() = 0;
-	/// \brief Check if current H5DevCurve is active for the parent H5Well
+	/// \brief Check if current dev curve is active for the parent H5Well
   virtual bool isActive() = 0;
 
 	/// \brief Calculate `MD`, `AZIM`, `INCL` based on `X`, `Y`, `TVD`
@@ -83,21 +83,21 @@ public:
       const std::string& units = "",
       bool doCoordTransform = false) = 0;
 
-	/// \brief Get current H5DevCurve's name
+	/// \brief Get current dev curve's name
 	///
 	/// Returned curve name is relative to `DEV` Group within H5Well.
 	/// It is possible to use this name when H5Well::openDevCurve for example.
   virtual std::string getRelativeName() = 0;
 
-	/// \brief Get parameters that were used to create current H5DevCurve
+	/// \brief Get parameters that were used to create current dev curve
   virtual DevCurveParam getParam() = 0;
 
-	/// \brief Open H5WellContainer where current H5DevCurve resides
+	/// \brief Open H5WellContainer where current dev curve resides
   virtual H5WellContainer* openWellContainer() = 0;
 	/// \brief Open parent H5Well
   virtual H5Well* openWell() = 0;
 
-	/// \brief Get current H5DevCurve's DataSet
+	/// \brief Get current dev curve's DataSet
   virtual std::optional<h5gt::DataSet> getDevCurveD() = 0;
 };
 

@@ -11,7 +11,7 @@ class H5Well;
 /// \class H5LogCurve
 /// \brief Provides API to work with well logs
 ///
-/// H5LogCurve stores the following curves: `MD`, `VAL`. \n
+/// Log curve stores the following curves: `MD`, `VAL`. \n
 /// Each log has its type and it is located in HDF5 container using following pattern: 
 /// `/well/LOG/log_type/relative_path_to_log_curve`
 class H5LogCurve : public H5BaseObject
@@ -44,21 +44,21 @@ public:
       const std::string& name,
       const std::string& units = "") = 0;
 
-	/// \brief Get current H5LogCurve's name
+	/// \brief Get current Log curve's name
 	///
 	/// Returned curve name is relative to `LOG` Group within H5Well.
 	/// It is possible to use this name when H5Well::openLogCurve for example.
   virtual std::string getRelativeName() = 0;
 
-  /// \brief Get parameters that were used to create current H5DevCurve
+  /// \brief Get parameters that were used to create current log curve
   virtual LogCurveParam getParam() = 0;
 
-  /// \brief Open H5WellContainer where current H5DevCurve resides
+  /// \brief Open H5WellContainer where current log curve resides
   virtual H5WellContainer* openWellContainer() = 0;
   /// \brief Open parent H5Well
   virtual H5Well* openWell() = 0;
 
-  /// \brief Get current H5LogCurve's DataSet
+  /// \brief Get current Log curve's DataSet
   virtual std::optional<h5gt::DataSet> getLogCurveD() = 0;
 };
 
