@@ -186,12 +186,12 @@ template<typename Object,
            std::is_same<Object, h5gt::Group>::value>::type* = nullptr>
 bool unlinkContent(Object& object);
 
-/// \brief find_index find all non-zero elements's indices.
+/// \brief find_index find all non-zero elements's indexes.
 /// Possible usage:
 /// Eigen::VectorX<ptrdiff_t> ind = find_index(M.array() > 20)
-/// M.array() > 20 returns bool matrix and then we find non-zero indices
+/// M.array() > 20 returns bool matrix and then we find non-zero indexes
 /// \param M
-/// \return ind indices of nonzero elements
+/// \return ind indexes of nonzero elements
 template<typename T>
 Eigen::VectorX<ptrdiff_t> find_index(
     Eigen::DenseBase<T> const & M);

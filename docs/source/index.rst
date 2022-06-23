@@ -16,7 +16,7 @@ Welcome to h5geo's documentation!
 
 
 
-Indices and tables
+indexes and tables
 ==================
 
 * :ref:`genindex`

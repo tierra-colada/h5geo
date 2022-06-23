@@ -1690,9 +1690,9 @@ def quickHull2D(M: numpy.ndarray[numpy.float64, _Shape[m, 2]]) -> numpy.ndarray[
 @typing.overload
 def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]]]:
     """
-    return indices such that `v_sorted = v(ind)`. Input parameter `v` is a vector
+    return indexes such that `v_sorted = v(ind)`. Input parameter `v` is a vector
 
-    return indices such that `v_sorted = v(ind)` and also return `v_sorted`. Input parameter `v` is a vector
+    return indexes such that `v_sorted = v(ind)` and also return `v_sorted`. Input parameter `v` is a vector
     """
 @typing.overload
 def sort(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> numpy.ndarray[numpy.int64, _Shape[m, 1]]:
@@ -1722,9 +1722,9 @@ def sort_rows(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tuple[num
 @typing.overload
 def sort_rows_unique(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
     """
-    find unique rows, sort them, identify unique rows start and end row-indices and return row-indices such that M_sorted = M(ind, Eigen::all).Return indices `ind`, `urows` and `urows_from_size`
+    find unique rows, sort them, identify unique rows start and end row-indexes and return row-indexes such that M_sorted = M(ind, Eigen::all).Return indexes `ind`, `urows` and `urows_from_size`
 
-    find unique rows, sort them, identify unique rows start and end row-indices and return row-indices such that M_sorted = M(ind, Eigen::all).Return indices `ind`, `urows` and `urows_from_size`. Also return `M_sorted`
+    find unique rows, sort them, identify unique rows start and end row-indexes and return row-indexes such that M_sorted = M(ind, Eigen::all).Return indexes `ind`, `urows` and `urows_from_size`. Also return `M_sorted`
     """
 @typing.overload
 def sort_rows_unique(M: numpy.ndarray[numpy.float32, _Shape[m, n]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, n]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float32, _Shape[m, n]]]:
@@ -1738,9 +1738,9 @@ def sort_rows_unique(M: numpy.ndarray[numpy.float64, _Shape[m, n]]) -> typing.Tu
 @typing.overload
 def sort_unique(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]]]:
     """
-    find unique elements, sort them, identify unique values start and end indices and return indices `ind` such that v_sorted = v(ind), `uvals` vector and two column matrix `uvals_from_size` wherefirst col - start index, second col - number of elements. Each row can be considered as v_sorted.segment(uvals_from_size.row(n)) gives the same unique value uval.
+    find unique elements, sort them, identify unique values start and end indexes and return indexes `ind` such that v_sorted = v(ind), `uvals` vector and two column matrix `uvals_from_size` wherefirst col - start index, second col - number of elements. Each row can be considered as v_sorted.segment(uvals_from_size.row(n)) gives the same unique value uval.
 
-    find unique elements, sort them, identify unique values start and end indices and return indices `ind` such that v_sorted = v(ind), `uvals` vector and two column matrix `uvals_from_size` wherefirst col - start index, second col - number of elements. Each row can be considered as v_sorted.segment(uvals_from_size.row(n)) gives the same unique value uval. Also return `v_sorted`
+    find unique elements, sort them, identify unique values start and end indexes and return indexes `ind` such that v_sorted = v(ind), `uvals` vector and two column matrix `uvals_from_size` wherefirst col - start index, second col - number of elements. Each row can be considered as v_sorted.segment(uvals_from_size.row(n)) gives the same unique value uval. Also return `v_sorted`
     """
 @typing.overload
 def sort_unique(v: numpy.ndarray[numpy.float32, _Shape[m, 1]]) -> typing.Tuple[numpy.ndarray[numpy.int64, _Shape[m, 1]], numpy.ndarray[numpy.float32, _Shape[m, 1]], numpy.ndarray[numpy.int64, _Shape[m, 2]], numpy.ndarray[numpy.float32, _Shape[m, 1]]]:

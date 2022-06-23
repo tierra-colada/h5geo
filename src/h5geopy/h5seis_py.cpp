@@ -154,7 +154,7 @@ void H5Seis_py(
 
       .def("writeXYTraceHeaders", py::overload_cast<
            const std::vector<std::string>&,
-           Eigen::Ref<Eigen::MatrixXd>&,
+           Eigen::Ref<Eigen::MatrixX2d>&,
            const size_t&,
            const std::string&,
            bool>(
@@ -166,7 +166,7 @@ void H5Seis_py(
            py::arg_v("doCoordTransform", false, "False"))
       .def("writeXYTraceHeaders", py::overload_cast<
            const std::vector<std::string>&,
-           Eigen::Ref<Eigen::MatrixXd>&,
+           Eigen::Ref<Eigen::MatrixX2d>&,
            const Eigen::Ref<const Eigen::VectorX<size_t>>&,
            const std::string&,
            bool>(
@@ -232,7 +232,7 @@ void H5Seis_py(
       .def("getTraceHeader", py::overload_cast<
            const std::string&,
            const size_t&,
-           const size_t&,
+           size_t,
            const std::string&,
            const std::string&>(
              &H5Seis::getTraceHeader),

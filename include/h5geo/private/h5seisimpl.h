@@ -69,13 +69,13 @@ public:
 
   virtual bool writeXYTraceHeaders(
       const std::vector<std::string>& xyHdrNames,
-      Eigen::Ref<Eigen::MatrixXd>& xy,
+      Eigen::Ref<Eigen::MatrixX2d>& xy,
       const size_t& fromTrc = 0,
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
   virtual bool writeXYTraceHeaders(
       const std::vector<std::string>& xyHdrNames,
-      Eigen::Ref<Eigen::MatrixXd>& xy,
+      Eigen::Ref<Eigen::MatrixX2d>& xy,
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
@@ -114,7 +114,7 @@ public:
   virtual Eigen::VectorXd getTraceHeader(
       const std::string& hdrName,
       const size_t& fromTrc = 0,
-      const size_t& nTrc = 1,
+      size_t nTrc = 1,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
   virtual Eigen::MatrixXd getTraceHeader(

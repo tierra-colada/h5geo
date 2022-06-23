@@ -12,7 +12,7 @@
 
 namespace h5geo
 {
-/// \brief sort return indices such that v_sorted = v(ind).
+/// \brief sort return indexes such that v_sorted = v(ind).
 /// \param v Vector (row/col)
 /// \return ind
 template <typename D>
@@ -124,7 +124,7 @@ Eigen::VectorX<ptrdiff_t> sort_rows(
 }
 
 /// \brief sort_unique find unique elements, sort them, identify unique values
-/// start and end indices and return indices such that v_sorted = v(ind).
+/// start and end indexes and return indexes such that v_sorted = v(ind).
 /// \param v vector
 /// \param uvals
 /// \param uvals_from_size first col - start index, second col - number of elements.
@@ -188,7 +188,7 @@ Eigen::VectorX<ptrdiff_t> sort_unique(
 }
 
 /// \brief sort_rows_unique find unique rows, sort them, identify unique rows
-/// start and end row-indices and return row-indices such that M_sorted = M(ind, Eigen::all).
+/// start and end row-indexes and return row-indexes such that M_sorted = M(ind, Eigen::all).
 /// \param M
 /// \param urows
 /// \param urows_from_size first col - start index, second col - number of elements.

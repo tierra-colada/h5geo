@@ -1399,7 +1399,7 @@ HTML_DYNAMIC_MENUS     = YES
 HTML_DYNAMIC_SECTIONS  = NO
 
 # With HTML_INDEX_NUM_ENTRIES one can control the preferred number of entries
-# shown in the various tree structured indices initially; the user can expand
+# shown in the various tree structured indexes initially; the user can expand
 # and collapse entries dynamically later on. Doxygen will expand the tree to
 # such a level that at most the specified number of entries are visible (unless
 # a fully collapsed tree already exceeds this amount). So setting the number of
@@ -2035,12 +2035,12 @@ USE_PDFLATEX           = YES
 
 LATEX_BATCHMODE        = NO
 
-# If the LATEX_HIDE_INDICES tag is set to YES then doxygen will not include the
+# If the LATEX_HIDE_indexes tag is set to YES then doxygen will not include the
 # index chapters (such as File Index, Compound Index, etc.) in the output.
 # The default value is: NO.
 # This tag requires that the tag GENERATE_LATEX is set to YES.
 
-LATEX_HIDE_INDICES     = NO
+LATEX_HIDE_indexes     = NO
 
 # The LATEX_BIB_STYLE tag can be used to specify the style to use for the
 # bibliography, e.g. plainnat, or ieeetr. See

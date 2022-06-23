@@ -29,7 +29,7 @@ public:
 	/// \brief Read data from DataSet
   virtual Eigen::MatrixXd getData(const std::string& dataUnits = "") = 0;
 
-	/// \brief Set domain for the map (time, depth etc)
+	/// \brief Set domain for the map (`TVD`, `TVDSS`, `TWT`, `OWT`)
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
 	/// \brief Set coordinates of upper-left matrix corner
   virtual bool setOrigin(
@@ -84,7 +84,7 @@ public:
 	/// \brief Get number of atribute maps within current map
   virtual size_t getAttributeMapCount() = 0;
 
-	/// \brief Get domain (time, depth etc)
+	/// \brief Get domain (`TVD`, `TVDSS`, `TWT`, `OWT`)
   virtual h5geo::Domain getDomain() = 0;
 	/// \brief Get coordinates of upper-left matrix corner
   virtual Eigen::VectorXd getOrigin(

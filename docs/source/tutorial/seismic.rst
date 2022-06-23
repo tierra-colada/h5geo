@@ -219,7 +219,7 @@ Add Pkey ``CDP`` and then you are free to retrieve any ``CDP-...`` sorted data.
    Eigen::MatrixXf trace_out;
    Eigen::MatrixXd trc_header_out;
    // from CDP 1 to 2, from DSREG 0 to 500
-   // 'trc_ind' - contains indices of selected traces
+   // 'trc_ind' - contains indexes of selected traces
    Eigen::VectorX<size_t> trc_ind = seis->getSortedData(
       trace_out, trc_header_out, {"CDP", "DSREG"}, {1, 0}, {2, 500});
 

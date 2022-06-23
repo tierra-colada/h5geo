@@ -351,7 +351,7 @@ bool H5SeisImpl::writeTraceHeader(
 
 bool H5SeisImpl::writeXYTraceHeaders(
     const std::vector<std::string>& xyHdrNames,
-    Eigen::Ref<Eigen::MatrixXd>& xy,
+    Eigen::Ref<Eigen::MatrixX2d>& xy,
     const size_t& fromTrc,
     const std::string& lengthUnits,
     bool doCoordTransform)
@@ -405,7 +405,7 @@ bool H5SeisImpl::writeXYTraceHeaders(
 
 bool H5SeisImpl::writeXYTraceHeaders(
     const std::vector<std::string>& xyHdrNames,
-    Eigen::Ref<Eigen::MatrixXd>& xy,
+    Eigen::Ref<Eigen::MatrixX2d>& xy,
     const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
     const std::string& lengthUnits,
     bool doCoordTransform)
@@ -666,7 +666,7 @@ Eigen::MatrixXd H5SeisImpl::getTraceHeader(
 Eigen::VectorXd H5SeisImpl::getTraceHeader(
     const std::string& hdrName,
     const size_t& fromTrc,
-    const size_t& nTrc,
+    size_t nTrc,
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
