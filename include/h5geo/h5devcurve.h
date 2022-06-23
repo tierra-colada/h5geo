@@ -15,7 +15,8 @@ class H5Well;
 /// All other curves are calculated based on these curves. 
 /// That is done to prevent calculation errors i.e. everytime `MD_AZIM_INCL` is transformed to 
 /// `X_Y_TVD` an error is accumulating. 
-/// The same concerns when doing that in backward order: `X_Y_TVD` to `MD_AZIM_INCL`
+/// The same concerns when doing that in backward order: `X_Y_TVD` to `MD_AZIM_INCL`. \n
+/// H5DevCurve is located in HDF5 container using following pattern: `/well/DEV/relative_path_to_dev_curve`
 class H5DevCurve : public H5BaseObject
 {
 protected:
@@ -84,7 +85,7 @@ public:
 
 	/// \brief Get current H5DevCurve's name
 	///
-	/// Returned curve name is relative to `DEV` group within H5Well.
+	/// Returned curve name is relative to `DEV` Group within H5Well.
 	/// It is possible to use this name when H5Well::openDevCurve for example.
   virtual std::string getRelativeName() = 0;
 
