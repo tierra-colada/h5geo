@@ -29,7 +29,7 @@ public:
       const std::string& name,
       const std::string& units = "") override;
 
-  virtual std::string getRelativeCurveName() override;
+  virtual std::string getRelativeName() override;
 
   virtual LogCurveParam getParam() override;
 

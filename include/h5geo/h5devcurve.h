@@ -86,7 +86,7 @@ public:
 	///
 	/// Returned curve name is relative to `DEV` group within H5Well.
 	/// It is possible to use this name when H5Well::openDevCurve for example.
-  virtual std::string getRelativeCurveName() = 0;
+  virtual std::string getRelativeName() = 0;
 
 	/// \brief Get parameters that were used to create current H5DevCurve
   virtual DevCurveParam getParam() = 0;

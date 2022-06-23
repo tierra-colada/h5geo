@@ -290,7 +290,7 @@ bool H5WellImpl::setActiveDevCurve(H5DevCurve* curve)
   if (curveName == std::string{h5geo::detail::ACTIVE})
     return false;
 
-  std::string relativeCurveName = curve->getRelativeCurveName();
+  std::string relativeCurveName = curve->getRelativeName();
   auto opt = getActiveDevG();
   if (opt.has_value())
     opt->unlink(); // must be getPath (not getPath)

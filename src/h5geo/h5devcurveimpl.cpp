@@ -281,7 +281,7 @@ Eigen::VectorXd H5DevCurveImpl::getCurve(
   return Eigen::VectorXd();
 }
 
-std::string H5DevCurveImpl::getRelativeCurveName(){
+std::string H5DevCurveImpl::getRelativeName(){
   auto optWellG = getParentG(h5geo::ObjectType::WELL);
   if (!optWellG.has_value())
     return std::string();

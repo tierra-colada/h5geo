@@ -50,7 +50,7 @@ public:
       const std::string& units = "",
       bool doCoordTransform = false) override;
 
-  virtual std::string getRelativeCurveName() override;
+  virtual std::string getRelativeName() override;
 
   virtual DevCurveParam getParam() override;
 

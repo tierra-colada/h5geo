@@ -32,7 +32,7 @@ public:
       const std::string& name,
       const std::string& units = "") = 0;
 
-  virtual std::string getRelativeCurveName() = 0;
+  virtual std::string getRelativeName() = 0;
 
   virtual LogCurveParam getParam() = 0;
 

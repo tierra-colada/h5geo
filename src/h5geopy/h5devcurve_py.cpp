@@ -61,7 +61,7 @@ void H5DevCurve_py(
            py::arg_v("units", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
 
-      .def("getRelativeCurveName", &H5DevCurve::getRelativeCurveName)
+      .def("getRelativeName", &H5DevCurve::getRelativeName)
       .def("getParam", &H5DevCurve::getParam)
 
       .def("openWellContainer", &H5DevCurve::openWellContainer)

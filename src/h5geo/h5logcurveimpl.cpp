@@ -116,7 +116,7 @@ Eigen::VectorXd H5LogCurveImpl::getCurve(
   return curve;
 }
 
-std::string H5LogCurveImpl::getRelativeCurveName(){
+std::string H5LogCurveImpl::getRelativeName(){
   auto optWellG = getParentG(h5geo::ObjectType::WELL);
   if (!optWellG.has_value())
     return std::string();
