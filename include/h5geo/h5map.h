@@ -26,7 +26,7 @@ public:
       Eigen::Ref<Eigen::MatrixXd> M,
       const std::string& dataUnits = "") = 0;
 
-	/// \brief WrReadite data from DataSet
+	/// \brief Read data from DataSet
   virtual Eigen::MatrixXd getData(const std::string& dataUnits = "") = 0;
 
 	/// \brief Set domain for the map (time, depth etc)

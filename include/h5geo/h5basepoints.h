@@ -9,8 +9,8 @@ class H5BaseContainer;
 /// \brief Base class for Points
 ///
 /// Points are objects that store data in the form: `XYZ`, `VAL` and `name`. \n
-/// H5Points1 have only `X`, `VAL` and `name`. \n
-/// H5Points2 have only `X`, `Y`, `VAL` and `name` etc. \n
+/// H5Points1 consists of `X` and `name`. \n
+/// H5Points2 consists of `X`, `VAL` and `name` etc. \n
 /// Maximal length of `name` is defined by `H5GEO_CHAR_ARRAY_SIZE` macro passed to cmake as CACHE var.
 class H5BasePoints : public H5BaseObject
 {
