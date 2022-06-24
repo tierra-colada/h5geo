@@ -10,36 +10,55 @@ on:
 
 
   
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+# # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# jobs:
+#   # This workflow contains a single job called "build"
+#   build:
+#     # The type of runner that the job will run on
+#     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v3
+#     # Steps represent a sequence of tasks that will be executed as part of the job
+#     steps:
+#     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#     - uses: actions/checkout@v3
 
-    - name: default content
-      run: ls
+#     - name: default content
+#       run: ls
 
-    - name: workspace content
-      run: ls ${{github.workspace}}
+#     - name: workspace content
+#       run: ls ${{github.workspace}}
 
-    - name: Doxygen Action
-      uses: mattnotmitt/doxygen-action@v1.9.4
-      with:
-        # Path to Doxyfile
-        doxyfile-path: "${{github.workspace}}/docs/Doxyfile" # default is ./Doxyfile
-        # Working directory
-        working-directory: "${{github.workspace}}/docs" # default is .
+#     - name: Doxygen Action
+#       uses: mattnotmitt/doxygen-action@v1.9.4
+#       with:
+#         # Path to Doxyfile
+#         doxyfile-path: "${{github.workspace}}/docs/Doxyfile" # default is ./Doxyfile
+#         # Working directory
+#         working-directory: "${{github.workspace}}/docs" # default is .
     
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        # Default Doxyfile build documentation to html directory. 
-        # Change the directory if changes in Doxyfile
-        publish_dir: ${{github.workspace}}/docs/build-doxygen/html
+#     - name: Deploy
+#       uses: peaceiris/actions-gh-pages@v3
+#       with:
+#         github_token: ${{ secrets.GITHUB_TOKEN }}
+#         # Default Doxyfile build documentation to html directory. 
+#         # Change the directory if changes in Doxyfile
+#         publish_dir: ${{github.workspace}}/docs/build-doxygen/html
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      # - run: mkdir build
+      - uses: mattnotmitt/doxygen-action@edge
+        with:
+          # Path to Doxyfile
+          doxyfile-path: "${{github.workspace}}/docs/Doxyfile" # default is ./Doxyfile
+          # Working directory
+          working-directory: "${{github.workspace}}/docs" # default is .
+      - name: Deploy Docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./docs/html
