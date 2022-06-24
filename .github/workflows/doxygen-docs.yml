@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - run: mkdir build
+      # - run: mkdir build
       - uses: mattnotmitt/doxygen-action@edge
         with:
           # Path to Doxyfile
