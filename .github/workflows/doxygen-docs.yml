@@ -21,7 +21,13 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-        
+
+    - name: default content
+      run: ls
+
+    - name: workspace content
+      run: ls ${{github.workspace}}
+
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@v1.9.4
       with:
