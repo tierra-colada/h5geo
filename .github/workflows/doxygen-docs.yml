@@ -49,13 +49,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      # - run: mkdir build
+      - run: mkdir build
       - uses: mattnotmitt/doxygen-action@edge
-        with:
-          # Path to Doxyfile
-          doxyfile-path: "${{github.workspace}}/docs/Doxyfile" # default is ./Doxyfile
-          # Working directory
-          working-directory: "${{github.workspace}}/docs" # default is .
+        # with:
+        #   # Path to Doxyfile
+        #   doxyfile-path: "${{github.workspace}}/docs/Doxyfile" # default is ./Doxyfile
+        #   # Working directory
+        #   working-directory: "${{github.workspace}}/docs" # default is .
       - name: Deploy Docs
         uses: peaceiris/actions-gh-pages@v3
         with:
