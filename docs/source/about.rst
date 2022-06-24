@@ -26,6 +26,7 @@ For now **h5geo** provides API to work with:
 
   * deviations
   * logs
+  * welltops
 
 * maps
 * points

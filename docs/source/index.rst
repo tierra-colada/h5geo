@@ -14,8 +14,7 @@ To see C++ API documentation please refer to `tierra-colada.github.io <https://t
    about
    build_instructions
    api
-   tutorial/index
-
+   tutorial/tutorial
 
 
 indexes and tables
