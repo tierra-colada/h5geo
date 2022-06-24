@@ -9,25 +9,25 @@
 class H5Map;
 
 /// \class H5MapContainer
-/// \brief Provides API to work with maps
+/// \brief A container built around HDF5 file and used for storing H5Map
 class H5MapContainer : public H5BaseContainer
 {
 protected:
   virtual ~H5MapContainer() = default;
 
 public:
-  /// \brief Open map
+  /// \brief Open H5Map
   virtual H5Map* openMap(
       const std::string& name) = 0;
-	/// \brief Open map
+	/// \brief Open H5Map
   virtual H5Map* openMap(
       h5gt::Group group) = 0;
-	/// \brief Create map
+	/// \brief Create H5Map
   virtual H5Map* createMap(
       std::string& name,
       MapParam &p,
       h5geo::CreationType createFlag) = 0;
-	/// \brief Create map
+	/// \brief Create H5Map
   virtual H5Map* createMap(
       h5gt::Group group,
       MapParam &p,
