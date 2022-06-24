@@ -9,7 +9,8 @@
 class H5Map;
 
 /// \class H5MapContainer
-/// \brief A container built around HDF5 file and used for storing H5Map
+/// \brief A container built around HDF5 file and used 
+/// for storing and manipulating H5Map objects
 class H5MapContainer : public H5BaseContainer
 {
 protected:

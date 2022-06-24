@@ -9,7 +9,8 @@
 class H5Seis;
 
 /// \class H5SeisContainer
-/// \brief A container built around HDF5 file and used for storing H5Seis
+/// \brief A container built around HDF5 file and used 
+/// for storing and manipulating H5Seis objects
 class H5SeisContainer : public H5BaseContainer
 {
 protected:
