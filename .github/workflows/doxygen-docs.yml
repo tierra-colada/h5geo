@@ -52,7 +52,7 @@ jobs:
       - uses: mattnotmitt/doxygen-action@edge
         with:
           # Path to Doxyfile
-          doxyfile-path: "docs/Doxyfile" # default is ./Doxyfile
+          doxyfile-path: "./docs/Doxyfile" # default is ./Doxyfile
           # Working directory
           working-directory: "." # default is .
       - name: Deploy Docs
