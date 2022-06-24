@@ -6,6 +6,8 @@
 Welcome to h5geo's documentation!
 =================================
 
+To see C++ API documentation please refer to `tierra-colada.github.io <https://tierra-colada.github.io/h5geo/annotated.html>`_
+
 .. toctree::
    :maxdepth: 2
 
