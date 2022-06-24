@@ -1,17 +1,21 @@
-# h5geo
+![h5geo](docs/logo_126x51.png?raw=true)
+ 
 [![][build-img]][build-status]
 [![][docs-dev-img]][docs-dev-status]
 
-**h5geo** provides API to work with geo-data that is based on [HDF5](https://www.hdfgroup.org/solutions/hdf5/) containers via [h5gt](https://travis-ci.com/tierra-colada/h5geo) header only library. For now **h5geo** provides API to work with:
+C++ and python API to work with geo-data based on [HDF5](https://www.hdfgroup.org/solutions/hdf5/) containers through [h5gt](https://travis-ci.com/tierra-colada/h5geo) header only library. 
+
+For now **h5geo** provides API to work with:
 * seismic data
-* wells (deviations and logs)
+* wells (deviations, logs, welltops)
 * maps
+* points
 
 **h5geo** also includes **h5geopy** project wich is a python wrapper. 
 
 ***h5geopy** uses [pybind11](https://github.com/pybind/pybind11) to make python bindings and there may be some perfomance penalty when copying matrices from C++ `Eigen3` matrices to `numpy` (or `std::vector` to `py::list`). I have not done any perfomance testing.*
 
-***This project is aimed at geoscientist developers***
+***This project is aimed at geoscientists and developers***
 
 ## Documentation
 Common documentation: [h5geo.readthedocs.io](https://h5geo.readthedocs.io/)
