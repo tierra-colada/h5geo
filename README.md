@@ -13,6 +13,11 @@
 
 ***This project is aimed at geoscientist developers***
 
+## Documentation
+Common documentation: [h5geo.readthedocs.io](https://h5geo.readthedocs.io/)
+
+C++ API documentation: [tierra-colada.github.io/h5geo](https://tierra-colada.github.io/h5geo/)
+
 ## Building h5geo with h5geopy support
 **h5geo** depends on:
 * [HDF5](https://github.com/HDFGroup/hdf5)
