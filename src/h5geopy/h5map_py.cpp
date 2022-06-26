@@ -11,6 +11,23 @@ void H5Map_py(
     std::unique_ptr<H5Map, ObjectDeleter>>
     &py_obj){
   py_obj
+      #ifdef H5GEO_USE_GDAL
+      .def("readRasterCoordinates", &H5Map::readRasterCoordinates,
+           py::arg("file"),
+           py::arg_v("lengthUnits", "", "str()"),
+           "`h5geopy.GDALAllRegister()` must be called before using GDAL readers")
+      .def("readRasterSpatialReference", &H5Map::readRasterSpatialReference,
+           py::arg("file"),
+           "`h5geopy.GDALAllRegister()` must be called before using GDAL readers")
+      .def("readRasterLengthUnits", &H5Map::readRasterLengthUnits,
+           py::arg("file"),
+           "`h5geopy.GDALAllRegister()` must be called before using GDAL readers")
+      .def("readRasterCoordinates", &H5Map::readRasterCoordinates,
+           py::arg("file"),
+           py::arg_v("dataUnits", "", "str()"),
+           "`h5geopy.GDALAllRegister()` must be called before using GDAL readers")
+      #endif  // H5GEO_USE_GDAL
+
       .def("writeData", &H5Map::writeData,
            py::arg("data"),
            py::arg_v("dataUnits", "", "str()"))

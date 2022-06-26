@@ -11,6 +11,18 @@ protected:
   virtual ~H5MapImpl() = default;
 
 public:
+
+  #ifdef H5GEO_USE_GDAL
+  virtual bool readRasterCoordinates(
+      const std::string& file,
+      const std::string& lengthUnits) override;
+  virtual bool readRasterSpatialReference(const std::string& file) override;
+  virtual bool readRasterLengthUnits(const std::string& file) override;
+  virtual bool readRasterData(
+      const std::string& file,
+      const std::string& dataUnits) override;
+  #endif  // H5GEO_USE_GDAL
+
   virtual bool writeData(
       Eigen::Ref<Eigen::MatrixXd> M,
       const std::string& dataUnits = "") override;

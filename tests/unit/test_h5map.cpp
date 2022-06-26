@@ -188,3 +188,4 @@ TEST_F(H5MapFixture, addAndGetExternalAttribute){
   ASSERT_TRUE(H5Map_ptr(map1->openAttributeMap("myAttr")) != nullptr);
   ASSERT_TRUE(map1->removeAttributeMap("myAttr"));
 }
+

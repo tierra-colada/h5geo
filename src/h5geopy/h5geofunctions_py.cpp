@@ -124,6 +124,12 @@ void defineGeoFunctions(py::module_& m){
   m.def("getBinHeaderBytes", &ext::getTraceHeaderNames);
   m.def("getTraceHeaderCount", &getTraceHeaderNames);
   m.def("getBinHeaderCount", &getTraceHeaderNames);
+
+  #ifdef H5GEO_USE_GDAL
+  // init GDAL readers
+  m.def("GDALAllRegister", &GDALAllRegister,
+        "Must be called before using any GDAL readers");
+  #endif  // H5GEO_USE_GDAL
 }
 
 

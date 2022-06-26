@@ -13,6 +13,119 @@
 H5MapImpl::H5MapImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
+#ifdef H5GEO_USE_GDAL
+bool H5MapImpl::readRasterCoordinates(
+    const std::string& file, const std::string& lengthUnits)
+{
+  GDALDS_ptr ds((GDALDataset *)GDALOpen(file.c_str(), GA_ReadOnly));
+  if(!ds)
+    return false;
+
+  int rasterXSize = ds->GetRasterXSize();
+  int rasterYSize = ds->GetRasterYSize();
+
+  if (rasterXSize < 1 || rasterYSize < 1)
+    return false;
+
+  double GT[6];
+  ds->GetGeoTransform(GT);
+
+  // from here:
+  // https://gdal.org/tutorials/geotransforms_tut.html
+  double x0 = GT[0];
+  double y0 = GT[3];
+  double x1 = GT[0] + 0*GT[1] + rasterYSize*GT[2];
+  double y1 = GT[3] + 0*GT[4] + rasterYSize*GT[5];
+  double x2 = GT[0] + rasterXSize*GT[1] + 0*GT[2];
+  double y2 = GT[3] + rasterXSize*GT[4] + 0*GT[5];
+
+  Eigen::Vector2d origin, p1, p2;
+  origin(0) = x0;
+  origin(1) = y0;
+  p1(0) = x1;
+  p1(1) = y1;
+  p2(0) = x2;
+  p2(1) = y2;
+
+  if (!setOrigin(origin, lengthUnits))
+    return false;
+
+  if (!setPoint1(p1, lengthUnits))
+    return false;
+
+  if (!setPoint2(p2, lengthUnits))
+    return false;
+
+  return true;
+}
+
+bool H5MapImpl::readRasterSpatialReference(const std::string& file)
+{
+  GDALDS_ptr ds((GDALDataset *)GDALOpen(file.c_str(), GA_ReadOnly));
+  if(!ds)
+    return false;
+
+  const OGRSpatialReference* crs = ds->GetGCPSpatialRef();
+  if (!crs)
+    return false;
+
+  std::string name, code;
+  if (crs->GetAuthorityName(NULL))
+    name = crs->GetAuthorityName(NULL);
+
+  if (crs->GetAuthorityCode(NULL))
+    code = crs->GetAuthorityCode(NULL);
+
+  if (name.empty() || code.empty())
+    return false;
+
+  return setSpatialReference(name + ":" + code);
+}
+
+bool H5MapImpl::readRasterLengthUnits(const std::string& file)
+{
+  GDALDS_ptr ds((GDALDataset *)GDALOpen(file.c_str(), GA_ReadOnly));
+  if(!ds)
+    return false;
+
+  const OGRSpatialReference* crs = ds->GetGCPSpatialRef();
+  if (!crs)
+    return false;
+
+  const char *units = nullptr;
+  crs->GetLinearUnits(&units);
+  if (!units)
+    return false;
+
+  if (!this->setLengthUnits(std::string(units)))
+    return false;
+
+  return true;
+}
+
+bool H5MapImpl::readRasterData(
+    const std::string& file, const std::string& dataUnits)
+{
+  GDALDS_ptr ds((GDALDataset *)GDALOpen(file.c_str(), GA_ReadOnly));
+  if(!ds)
+    return false;
+
+  GDALRasterBand *dsBand = ds->GetRasterBand(1);
+  if (!dsBand)
+    return false;
+
+  int nXSize = dsBand->GetXSize();
+  int nYSize = dsBand->GetYSize();
+  Eigen::MatrixXd m(nXSize, nYSize);
+  dsBand->RasterIO(GF_Read, 0, 0, nXSize, nYSize,
+                   m.data(), nXSize, nYSize, GDT_Float64,
+                   0, 0);
+  m.transposeInPlace();
+  return this->writeData(m, dataUnits);
+}
+
+#endif  // H5GEO_USE_GDAL
+
 bool H5MapImpl::writeData(
     Eigen::Ref<Eigen::MatrixXd> M,
     const std::string& dataUnits)

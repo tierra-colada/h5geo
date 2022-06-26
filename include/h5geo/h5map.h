@@ -21,6 +21,32 @@ protected:
   virtual ~H5Map() = default;
 
 public:
+
+  #ifdef H5GEO_USE_GDAL
+  /// \brief Read origin, point1 and point2
+  /// \param file path to file of supported by GDAL format
+  /// \param lengthUnits units that coordinates currently in file
+  /// \warning `GDALAllRegister()` must be called before using GDAL readers
+  virtual bool readRasterCoordinates(
+      const std::string& file,
+      const std::string& lengthUnits = "") = 0;
+  /// \brief Read spatial reference
+  /// \param file path to file of supported by GDAL format
+  /// \warning `GDALAllRegister()` must be called before using GDAL readers
+  virtual bool readRasterSpatialReference(const std::string& file) = 0;
+  /// \brief Read length units from spatial reference
+  /// \param file path to file of supported by GDAL format
+  /// \warning `GDALAllRegister()` must be called before using GDAL readers
+  virtual bool readRasterLengthUnits(const std::string& file) = 0;
+  /// \brief Read GDAL supported raster
+  /// \param file path to file of supported by GDAL format
+  /// \param dataUnits units that data currently in file
+  /// \warning `GDALAllRegister()` must be called before using GDAL readers
+  virtual bool readRasterData(
+      const std::string& file,
+      const std::string& dataUnits = "") = 0;
+  #endif  // H5GEO_USE_GDAL
+
   /// \brief Write data to DataSet
   virtual bool writeData(
       Eigen::Ref<Eigen::MatrixXd> M,

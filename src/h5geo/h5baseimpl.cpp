@@ -47,6 +47,11 @@ void h5geo::OGRCoordinateTransformationDeleter::operator()(OGRCoordinateTransfor
 {
   OGRCoordinateTransformation::DestroyCT(ptr);
 }
+
+void h5geo::GDALDatasetDeleter::operator()(GDALDataset * ptr) const
+{
+  GDALClose(ptr);
+}
 #endif
 
 template <typename TBase>

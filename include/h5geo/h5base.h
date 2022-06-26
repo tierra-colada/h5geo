@@ -155,6 +155,7 @@ public:
 
 #ifdef H5GEO_USE_GDAL
 class OGRCoordinateTransformation;
+class GDALDataset;
 #endif
 
 /// \namespace h5geo
@@ -175,6 +176,11 @@ struct H5GEO_EXPORT ObjectDeleter
 struct  H5GEO_EXPORT OGRCoordinateTransformationDeleter
 {
   void operator()(OGRCoordinateTransformation * ptr) const;
+};
+
+struct  H5GEO_EXPORT GDALDatasetDeleter
+{
+  void operator()(GDALDataset * ptr) const;
 };
 #endif
 
@@ -415,6 +421,7 @@ using H5Base_ptr = std::unique_ptr<H5Base, h5geo::ObjectDeleter>;
 
 #ifdef H5GEO_USE_GDAL
 using OGRCT_ptr = std::unique_ptr<OGRCoordinateTransformation, h5geo::OGRCoordinateTransformationDeleter>;
+using GDALDS_ptr = std::unique_ptr<GDALDataset, h5geo::GDALDatasetDeleter>;
 #endif
 
 #endif // H5BASE_H

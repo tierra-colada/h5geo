@@ -63,12 +63,16 @@ void setTemporalUnits(const std::string& units){
 std::string getLengthUnits(){
   const char *units = nullptr;
   SpatialReference.GetLinearUnits(&units);
+  if (!units)
+    return std::string();
   return std::string(units);
 }
 
 std::string getAngularUnits(){
-  const char *units;
+  const char *units = nullptr;
   SpatialReference.GetAngularUnits(&units);
+  if (!units)
+    return std::string();
   return std::string(units);
 }
 
