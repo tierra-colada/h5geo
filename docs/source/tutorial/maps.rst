@@ -81,6 +81,35 @@ Now we want to read the data in ``sec``:
       return -1;
    }
 
+Read data from GDAL supported file
+----------------------------------
+
+There are useful methods aimed at reading files using GDAL API.
+
+Before reading one should call `GDALAllRegister()` defined in `gdal.h` (the same also concerns when using **h5geopy**).
+
+.. code:: c++
+
+   // don't forget to initialize GDAL readers first (maybe at application initialization time)
+   GDALAllRegister();
+
+   if (!map->readRasterCoordinates("data_file.zmap", "meter")){
+      std::cout << "Unable to read coordinates from raster data" << std::endl;
+      return -1;
+   }
+   if (!map->readRasterSpatialReference("data_file.zmap")){
+      std::cout << "Unable to read spatial reference from raster data" << std::endl;
+      return -1;
+   }
+   if (!map->readRasterLengthUnits("data_file.zmap")){
+      std::cout << "Unable to read length from raster data" << std::endl;
+      return -1;
+   }
+   if (!map->readRasterData("data_file.zmap")){
+      std::cout << "Unable to read data from raster data" << std::endl;
+      return -1;
+   }
+
 Working with attribute map
 --------------------------
 
