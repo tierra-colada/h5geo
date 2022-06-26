@@ -38,11 +38,11 @@ bool H5BasePointsImpl<TBase>::setNPoints(size_t n)
 
 template <typename TBase>
 bool H5BasePointsImpl<TBase>::setDomain(const h5geo::Domain& val){
-  unsigned v = static_cast<unsigned>(val);
-  return h5geo::overwriteAttribute(
+  return h5geo::_overwriteEnumAttribute(
         this->objG,
         std::string{h5geo::detail::Domain},
-        v);
+        &val,
+        1);
 }
 
 template <typename TBase>
@@ -63,10 +63,9 @@ size_t H5BasePointsImpl<TBase>::getNPoints()
 
 template <typename TBase>
 h5geo::Domain H5BasePointsImpl<TBase>::getDomain(){
-  return static_cast<h5geo::Domain>(
-        h5geo::readEnumAttribute(
+  return h5geo::readEnumAttribute<h5gt::Group, h5geo::Domain>(
           this->objG,
-          std::string{h5geo::detail::Domain}));
+          std::string{h5geo::detail::Domain});
 }
 
 template <typename TBase>

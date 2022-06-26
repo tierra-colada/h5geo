@@ -227,8 +227,8 @@ template <typename TBase>
 h5geo::ContainerType
 H5BaseContainerImpl<TBase>::getContainerType()
 {
-  return static_cast<h5geo::ContainerType>(
-        h5geo::readEnumAttribute(h5File, std::string(h5geo::detail::ContainerType)));
+  return h5geo::readEnumAttribute<h5gt::File, h5geo::ContainerType>
+        (h5File, std::string(h5geo::detail::ContainerType));
 }
 
 template <typename TBase>

@@ -43,11 +43,10 @@ Eigen::MatrixXd H5MapImpl::getData(const std::string& dataUnits){
 }
 
 bool H5MapImpl::setDomain(const h5geo::Domain& val){
-  unsigned v = static_cast<unsigned>(val);
-  return h5geo::overwriteAttribute(
+  return h5geo::overwriteEnumAttribute(
         objG,
         std::string{h5geo::detail::Domain},
-        v);
+        val);
 }
 
 bool H5MapImpl::setOrigin(
@@ -206,10 +205,9 @@ size_t H5MapImpl::getAttributeMapCount(){
 }
 
 h5geo::Domain H5MapImpl::getDomain(){
-  return static_cast<h5geo::Domain>(
-        h5geo::readEnumAttribute(
+  return h5geo::readEnumAttribute<h5gt::Group, h5geo::Domain>(
           objG,
-          std::string{h5geo::detail::Domain}));
+          std::string{h5geo::detail::Domain});
 }
 
 Eigen::VectorXd H5MapImpl::getOrigin(

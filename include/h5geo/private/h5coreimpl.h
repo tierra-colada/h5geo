@@ -427,6 +427,76 @@ inline bool readAttribute(
 template <typename Object, typename T,
           typename std::enable_if<
             std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline bool _readEnumAttribute(
+    Object& holder,
+    const std::string& attrName,
+    T *v,
+    size_t nElem)
+{
+  if (attrName.empty() || !holder.hasAttribute(attrName))
+    return false;
+
+  if (nElem == 0)
+    return false;
+
+  h5gt::Attribute attr = holder.getAttribute(attrName);
+  auto dtype_enum = h5gt::create_datatype<
+      typename std::remove_pointer<
+      typename std::remove_cv<T>::type>::type>();
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(dtype_enum) ||
+      attr.getMemSpace().getElementCount() != nElem)
+    return false;
+
+  attr.read(v);
+  return true;
+}
+
+template<typename Object, typename T,
+         typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value) &&
+           std::is_enum<T>::value>::type*>
+inline T readEnumAttribute(Object& object, const std::string& attrName)
+{
+  T value = static_cast<T>(0);
+  _readEnumAttribute(object, attrName, &value, 1);
+  return value;
+}
+
+template<typename Object, typename T,
+         typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value) &&
+           std::is_enum<T>::value>::type*>
+inline std::vector<T> readEnumVecAttribute(Object& object, const std::string& attrName)
+{
+  // we don't want to resize vector if no data to read
+  if (attrName.empty() || !object.hasAttribute(attrName))
+    return false;
+
+  h5gt::Attribute attr = object.getAttribute(attrName);
+  auto dtype_enum = h5gt::create_datatype<
+      typename std::remove_pointer<
+      typename std::remove_cv<T>::type>::type>();
+  auto dtype = attr.getDataType();
+  if (!dtype.isTypeEqual(dtype_enum))
+    return false;
+
+  std::vector<T> v;
+  v.resize(object.getAttribute(attrName).getMemSpace().getElementCount());
+  _readEnumAttribute(
+      object, attrName, v.data(), v.size());
+  return v;
+}
+
+template <typename Object, typename T,
+          typename std::enable_if<
+            std::is_same<Object, h5gt::File>::value ||
             std::is_same<Object, h5gt::Group>::value||
             std::is_same<Object, h5gt::DataSet>::value>::type*>
 inline bool _overwriteAttribute(
@@ -548,6 +618,76 @@ inline bool overwriteAttribute(
 {
   return _overwriteAttribute(
       holder, attrName, &v, 1, unitsFrom, unitsTo);
+}
+
+template <typename Object, typename T,
+          typename std::enable_if<
+            std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value||
+            std::is_same<Object, h5gt::DataSet>::value>::type*>
+inline bool _overwriteEnumAttribute(
+    Object& holder,
+    const std::string& attrName,
+    T* v,
+    size_t nElem)
+{
+  if (attrName.empty())
+    return false;
+
+  if (nElem == 0)
+    return false;
+
+  auto dtype = h5gt::create_datatype<
+      typename std::remove_pointer<
+      typename std::remove_cv<T>::type>::type>();
+  if (!holder.hasAttribute(attrName))
+    holder.createAttribute(
+          attrName, h5gt::DataSpace({nElem}), dtype);
+
+  h5gt::Attribute attr = holder.getAttribute(attrName);
+  if (!dtype.isTypeEqual(dtype) ||
+      attr.getMemSpace().getElementCount() != nElem){
+    try {
+      holder.deleteAttribute(attrName);
+      attr = holder.createAttribute(
+            attrName, h5gt::DataSpace({nElem}), dtype);
+    }  catch (h5gt::Exception e) {
+      return false;
+    }
+  }
+
+  attr.write(v);
+  return true;
+}
+
+template <typename Object, typename T,
+          typename std::enable_if<
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_enum<T>::value>::type*>
+inline bool overwriteEnumAttribute(
+    Object& holder,
+    const std::string& attrName,
+    T& v)
+{
+  return _overwriteEnumAttribute(
+      holder, attrName, &v, 1);
+}
+
+template <typename Object, typename T,
+          typename std::enable_if<
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_enum<T>::value>::type*>
+inline bool overwriteEnumAttribute(
+    Object& holder,
+    const std::string& attrName,
+    std::vector<T>& v)
+{
+  return _overwriteEnumAttribute(
+      holder, attrName, v.data(), v.size());
 }
 
 template<typename Object,

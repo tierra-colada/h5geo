@@ -304,15 +304,73 @@ bool overwriteAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
-/// \brief Read data from Attribute
-template<typename Object,
-         typename std::enable_if<
-           std::is_same<Object, h5gt::File>::value ||
-           std::is_same<Object, h5gt::Group>::value ||
-           std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
-unsigned readEnumAttribute(Object& object, const std::string& attrName);
+/// \brief Create or overwrite registered enum Attribute
+template <typename Object, typename T,
+          typename std::enable_if<
+            std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value||
+            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+bool _overwriteEnumAttribute(
+    Object& holder,
+    const std::string& attrName,
+    T* v,
+    size_t nElem);
+
+/// \brief Create or overwrite registered enum Attribute
+template <typename Object, typename T,
+          typename std::enable_if<
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_enum<T>::value>::type* = nullptr>
+bool overwriteEnumAttribute(
+    Object& holder,
+    const std::string& attrName,
+    T& v);
+
+/// \brief Create or overwrite registered enum Attribute
+template <typename Object, typename T,
+          typename std::enable_if<
+            (std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value) &&
+            std::is_enum<T>::value>::type* = nullptr>
+bool overwriteEnumAttribute(
+    Object& holder,
+    const std::string& attrName,
+    std::vector<T>& v);
+
+/// \brief Read enum data from Attribute
+template <typename Object, typename T,
+          typename std::enable_if<
+            std::is_same<Object, h5gt::File>::value ||
+            std::is_same<Object, h5gt::Group>::value ||
+            std::is_same<Object, h5gt::DataSet>::value>::type* = nullptr>
+inline bool _readEnumAttribute(
+    Object& holder,
+    const std::string& attrName,
+    T *v,
+    size_t nElem);
 
 /// \brief Read data from Attribute
+template<typename Object, typename T,
+         typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value) &&
+           std::is_enum<T>::value>::type* = nullptr>
+T readEnumAttribute(Object& object, const std::string& attrName);
+
+/// \brief Read data from Attribute
+template<typename Object, typename T,
+         typename std::enable_if<
+           (std::is_same<Object, h5gt::File>::value ||
+           std::is_same<Object, h5gt::Group>::value ||
+           std::is_same<Object, h5gt::DataSet>::value) &&
+           std::is_enum<T>::value>::type* = nullptr>
+std::vector<T> readEnumVecAttribute(Object& object, const std::string& attrName);
+
+/// \brief Read enum data from Attribute
 template<typename Object,
          typename std::enable_if<
            std::is_same<Object, h5gt::File>::value ||

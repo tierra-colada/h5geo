@@ -373,27 +373,10 @@ H5BaseImpl<TBase>::createNewContainer(
     h5gt::File &file,
     const h5geo::ContainerType& containerType)
 {
-  std::string attrName = std::string{h5geo::detail::ContainerType};
-  if (file.hasAttribute(attrName)){
-    auto attr = file.getAttribute(attrName);
-    auto dtype = attr.getDataType();
-    if ((!dtype.isTypeEqual(h5gt::AtomicType<unsigned>()) &&
-         !dtype.isTypeEqual(h5gt::AtomicType<int>())) ||
-        attr.getMemSpace().getElementCount() != 1){
-      file.deleteAttribute(attrName); // after deletion `attr` is unavailable!
-      file.createAttribute<unsigned>(
-            attrName, h5gt::DataSpace(1)).
-          write(static_cast<unsigned>(containerType));
-      return file;
-    } else {
-      attr.write(static_cast<unsigned>(containerType));
-      return file;
-    }
-  }
-
-  file.createAttribute<unsigned>(
-        attrName, h5gt::DataSpace(1)).
-      write(static_cast<unsigned>(containerType));
+  h5geo::overwriteEnumAttribute(
+        file,
+        std::string{h5geo::detail::ContainerType},
+        containerType);
   return file;
 }
 
@@ -459,10 +442,10 @@ H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p, h5geo::ObjectTyp
           std::string{h5geo::detail::null_value},
           h5gt::DataSpace(1)).
         write(param.nullValue);
-    group.createAttribute<unsigned>(
+    group.createAttribute<h5geo::Domain>(
           std::string{h5geo::detail::Domain},
           h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.domain));
+        write(param.domain);
     group.createAttribute<std::string>(
           std::string{h5geo::detail::spatial_reference},
           h5gt::DataSpace::From(param.spatialReference)).
@@ -551,10 +534,10 @@ H5BaseImpl<TBase>::createNewMap(h5gt::Group &group, void* p)
           std::string{h5geo::detail::null_value},
           h5gt::DataSpace(1)).
         write(param.nullValue);
-    group.createAttribute<unsigned>(
+    group.createAttribute<h5geo::Domain>(
           std::string{h5geo::detail::Domain},
           h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.domain));
+        write(param.domain);
     group.createAttribute<std::string>(
           std::string{h5geo::detail::spatial_reference},
           h5gt::DataSpace::From(param.spatialReference)).
@@ -833,18 +816,18 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
           std::string{h5geo::detail::null_value},
           h5gt::DataSpace(1)).
         write(param.nullValue);
-    group.createAttribute<unsigned>(
+    group.createAttribute<h5geo::Domain>(
           std::string{h5geo::detail::Domain},
           h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.domain));
-    group.createAttribute<unsigned>(
+        write(param.domain);
+    group.createAttribute<h5geo::SeisDataType>(
           std::string{h5geo::detail::SeisDataType},
           h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.dataType));
-    group.createAttribute<unsigned>(
+        write(param.dataType);
+    group.createAttribute<h5geo::SurveyType>(
           std::string{h5geo::detail::SurveyType},
           h5gt::DataSpace(1)).
-        write(static_cast<unsigned>(param.surveyType));
+        write(param.surveyType);
     group.createAttribute<double>(
           std::string{h5geo::detail::SRD},
           h5gt::DataSpace(1)).
@@ -1248,15 +1231,15 @@ bool h5geo::isGeoContainer(h5gt::File file){
 bool h5geo::isGeoContainerByType(h5gt::File file,
                                  const h5geo::ContainerType& cntType)
 {
-  unsigned val = h5geo::readEnumAttribute(
+  h5geo::ContainerType val = h5geo::readEnumAttribute<h5gt::File, h5geo::ContainerType>(
         file, std::string{h5geo::detail::ContainerType});
   switch (cntType) {
   case h5geo::ContainerType::MAP:
-    return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::MAP;
+    return val == h5geo::ContainerType::MAP;
   case h5geo::ContainerType::WELL:
-    return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::WELL;
+    return val == h5geo::ContainerType::WELL;
   case h5geo::ContainerType::SEISMIC:
-    return static_cast<h5geo::ContainerType>(val) == h5geo::ContainerType::SEISMIC;
+    return val == h5geo::ContainerType::SEISMIC;
   default:
     return false;
   }
@@ -1264,9 +1247,8 @@ bool h5geo::isGeoContainerByType(h5gt::File file,
 
 h5geo::ContainerType h5geo::getGeoContainerType(h5gt::File file)
 {
-  unsigned val = h5geo::readEnumAttribute(
+  return h5geo::readEnumAttribute<h5gt::File, h5geo::ContainerType>(
         file, std::string{h5geo::detail::ContainerType});
-  return static_cast<h5geo::ContainerType>(val);
 }
 
 bool h5geo::isGeoObject(const h5gt::Group& group){

@@ -1669,27 +1669,24 @@ bool H5SeisImpl::generateSTKGeometry(
 }
 
 bool H5SeisImpl::setDomain(const h5geo::Domain& val){
-  unsigned v = static_cast<unsigned>(val);
-  return h5geo::overwriteAttribute(
+  return h5geo::overwriteEnumAttribute(
         objG,
         std::string{h5geo::detail::Domain},
-        v);
+        val);
 }
 
 bool H5SeisImpl::setDataType(const h5geo::SeisDataType& val){
-  unsigned v = static_cast<unsigned>(val);
-  return h5geo::overwriteAttribute(
+  return h5geo::overwriteEnumAttribute(
         objG,
         std::string{h5geo::detail::SeisDataType},
-        v);
+        val);
 }
 
 bool H5SeisImpl::setSurveyType(const h5geo::SurveyType& val){
-  unsigned v = static_cast<unsigned>(val);
-  return h5geo::overwriteAttribute(
+  return h5geo::overwriteEnumAttribute(
         objG,
         std::string{h5geo::detail::SurveyType},
-        v);
+        val);
 }
 
 bool H5SeisImpl::setSRD(double val, const std::string& lengthUnits){
@@ -1734,24 +1731,21 @@ bool H5SeisImpl::setFirstSample(double val, const std::string& units){
 }
 
 h5geo::Domain H5SeisImpl::getDomain(){
-  return static_cast<h5geo::Domain>(
-        h5geo::readEnumAttribute(
+  return h5geo::readEnumAttribute<h5gt::Group, h5geo::Domain>(
           objG,
-          std::string{h5geo::detail::Domain}));
+          std::string{h5geo::detail::Domain});
 }
 
 h5geo::SeisDataType H5SeisImpl::getDataType(){
-  return static_cast<h5geo::SeisDataType>(
-        h5geo::readEnumAttribute(
+  return h5geo::readEnumAttribute<h5gt::Group, h5geo::SeisDataType>(
           objG,
-          std::string{h5geo::detail::SeisDataType}));
+          std::string{h5geo::detail::SeisDataType});
 }
 
 h5geo::SurveyType H5SeisImpl::getSurveyType(){
-  return static_cast<h5geo::SurveyType>(
-        h5geo::readEnumAttribute(
+  return h5geo::readEnumAttribute<h5gt::Group, h5geo::SurveyType>(
           objG,
-          std::string{h5geo::detail::SurveyType}));
+          std::string{h5geo::detail::SurveyType});
 }
 
 double H5SeisImpl::getSRD(const std::string& lengthUnits){

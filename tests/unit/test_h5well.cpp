@@ -633,6 +633,10 @@ TEST_F(H5WellFixture, createPointsFromWellTop){
   points->writeData(pArrIn);
   pArrOut = points->getData("km");
 
+  points->setDomain(h5geo::Domain::OWT);
+
+  wellCnt->getH5File().flush();
+
   H5BasePoints_ptr points_out(wellCnt->openPoints(pointsName));
   ASSERT_TRUE(points_out);
   ASSERT_TRUE(h5geo::isPoints(points->getObjG()));
@@ -646,6 +650,8 @@ TEST_F(H5WellFixture, createPointsFromWellTop){
   ASSERT_EQ(pArrIn[1].getX(), pArrOut[1].getX()*1000);
   ASSERT_EQ(pArrIn[1].getY(), pArrOut[1].getY()*1000);
   ASSERT_EQ(pArrIn[1].getZ(), pArrOut[1].getZ()*1000);
+
+  ASSERT_EQ(points->getDomain(), points_out->getDomain());
 }
 
 TEST_F(H5WellFixture, getDevCurveGroupList){
