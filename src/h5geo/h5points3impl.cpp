@@ -40,7 +40,7 @@ h5geo::Point3Array H5Points3Impl<TBase>::getData(
     return h5geo::Point3Array();
 
   auto dtype = opt->getDataType();
-  if (!dtype.isTypeEqual(h5geo::compound_Point3()))
+  if (!dtype.isTypeEqual(h5geo::create_compound_Point3()))
     return h5geo::Point3Array();
 
   h5geo::Point3Array data(opt->getElementCount());
@@ -73,7 +73,7 @@ bool H5Points3Impl<TBase>::overwritePointsDataset(
     return false;
 
   auto dtype = opt->getDataType();
-  if (!dtype.isTypeEqual(h5geo::compound_Point3())){
+  if (!dtype.isTypeEqual(h5geo::create_compound_Point3())){
     return false;
   }
 
@@ -91,7 +91,7 @@ bool H5Points3Impl<TBase>::overwritePointsDataset(
 
   try {
     opt->resize({data.size()});
-    opt->write_raw(data.data(), h5geo::compound_Point3());
+    opt->write_raw(data.data(), h5geo::create_compound_Point3());
     this->objG.flush();
     return true;
   } catch (h5gt::Exception e) {

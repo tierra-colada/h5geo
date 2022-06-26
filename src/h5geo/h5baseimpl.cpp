@@ -467,22 +467,22 @@ H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p, h5geo::ObjectTyp
     case h5geo::ObjectType::POINTS_1 :
       group.createDataSet(
             std::string{h5geo::detail::points_data},
-            dataspace, h5geo::compound_Point1(), h5gt::LinkCreateProps(), props);
+            dataspace, h5geo::create_compound_Point1(), h5gt::LinkCreateProps(), props);
       break;
     case h5geo::ObjectType::POINTS_2 :
       group.createDataSet(
             std::string{h5geo::detail::points_data},
-            dataspace, h5geo::compound_Point2(), h5gt::LinkCreateProps(), props);
+            dataspace, h5geo::create_compound_Point2(), h5gt::LinkCreateProps(), props);
       break;
     case h5geo::ObjectType::POINTS_3 :
       group.createDataSet(
             std::string{h5geo::detail::points_data},
-            dataspace, h5geo::compound_Point3(), h5gt::LinkCreateProps(), props);
+            dataspace, h5geo::create_compound_Point3(), h5gt::LinkCreateProps(), props);
       break;
     case h5geo::ObjectType::POINTS_4 :
       group.createDataSet(
             std::string{h5geo::detail::points_data},
-            dataspace, h5geo::compound_Point4(), h5gt::LinkCreateProps(), props);
+            dataspace, h5geo::create_compound_Point4(), h5gt::LinkCreateProps(), props);
       break;
     default:
       return std::nullopt;
@@ -1346,7 +1346,7 @@ bool h5geo::isPoints1(
 
     h5gt::DataSet dset = group.getDataSet(std::string{name});
     auto dtype = dset.getDataType();
-    if (!dtype.isTypeEqual(h5geo::compound_Point1())){
+    if (!dtype.isTypeEqual(h5geo::create_compound_Point1())){
       return false;
     }
   }
@@ -1367,7 +1367,7 @@ bool h5geo::isPoints2(
 
     h5gt::DataSet dset = group.getDataSet(std::string{name});
     auto dtype = dset.getDataType();
-    if (!dtype.isTypeEqual(h5geo::compound_Point2())){
+    if (!dtype.isTypeEqual(h5geo::create_compound_Point2())){
       return false;
     }
   }
@@ -1388,7 +1388,7 @@ bool h5geo::isPoints3(
 
     h5gt::DataSet dset = group.getDataSet(std::string{name});
     auto dtype = dset.getDataType();
-    if (!dtype.isTypeEqual(h5geo::compound_Point3())){
+    if (!dtype.isTypeEqual(h5geo::create_compound_Point3())){
       return false;
     }
   }
@@ -1409,7 +1409,7 @@ bool h5geo::isPoints4(
 
     h5gt::DataSet dset = group.getDataSet(std::string{name});
     auto dtype = dset.getDataType();
-    if (!dtype.isTypeEqual(h5geo::compound_Point4())){
+    if (!dtype.isTypeEqual(h5geo::create_compound_Point4())){
       return false;
     }
   }

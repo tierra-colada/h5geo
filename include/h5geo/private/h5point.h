@@ -136,7 +136,7 @@ typedef std::vector<h5geo::Point4> Point4Array;
 
 
 
-inline h5gt::CompoundType compound_Point1() {
+inline h5gt::CompoundType create_compound_Point1() {
   h5gt::CompoundType t(
         {
           {"x", h5gt::AtomicType<double>{}, offsetof(Point1, p[0])},
@@ -146,7 +146,7 @@ inline h5gt::CompoundType compound_Point1() {
   return t;
 }
 
-inline h5gt::CompoundType compound_Point2() {
+inline h5gt::CompoundType create_compound_Point2() {
   h5gt::CompoundType t(
         {
           {"x", h5gt::AtomicType<double>{}, offsetof(Point2, p[0])},
@@ -157,7 +157,7 @@ inline h5gt::CompoundType compound_Point2() {
   return t;
 }
 
-inline h5gt::CompoundType compound_Point3() {
+inline h5gt::CompoundType create_compound_Point3() {
   h5gt::CompoundType t(
         {
           {"x", h5gt::AtomicType<double>{}, offsetof(Point3, p[0])},
@@ -169,7 +169,7 @@ inline h5gt::CompoundType compound_Point3() {
   return t;
 }
 
-inline h5gt::CompoundType compound_Point4() {
+inline h5gt::CompoundType create_compound_Point4() {
   h5gt::CompoundType t(
         {
           {"x", h5gt::AtomicType<double>{}, offsetof(Point4, p[0])},
@@ -186,9 +186,9 @@ inline h5gt::CompoundType compound_Point4() {
 } // h5geo
 
 
-H5GT_REGISTER_TYPE(h5geo::Point1, h5geo::compound_Point1);
-H5GT_REGISTER_TYPE(h5geo::Point2, h5geo::compound_Point2);
-H5GT_REGISTER_TYPE(h5geo::Point3, h5geo::compound_Point3);
-H5GT_REGISTER_TYPE(h5geo::Point4, h5geo::compound_Point4);
+H5GT_REGISTER_TYPE(h5geo::Point1, h5geo::create_compound_Point1);
+H5GT_REGISTER_TYPE(h5geo::Point2, h5geo::create_compound_Point2);
+H5GT_REGISTER_TYPE(h5geo::Point3, h5geo::create_compound_Point3);
+H5GT_REGISTER_TYPE(h5geo::Point4, h5geo::create_compound_Point4);
 
 #endif // H5CORE_TYPES_H
