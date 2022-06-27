@@ -98,7 +98,7 @@ classifiers = [
 # git config --system core.longpaths true
 setuptools.setup(
   name='h5geopy',
-  version='0.3.0',
+  version='0.4.0',
   packages=setuptools.find_packages(),
   url='https://github.com/tierra-colada/h5geo',
   license='MIT',
