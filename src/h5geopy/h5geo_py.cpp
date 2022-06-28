@@ -21,6 +21,7 @@
 #include "../../include/h5geopy/h5well_py.h"
 #include "../../include/h5geopy/h5wellcontainer_py.h"
 #include "../../include/h5geopy/h5welltops_py.h"
+#include "../../include/h5geopy/h5horizon_py.h"
 
 
 namespace h5geopy {
@@ -71,6 +72,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyBaseObjectParam = py::class_<BaseObjectParam>(m, "BaseObjectParam");
   auto pyPointsParam = py::class_<PointsParam, BaseObjectParam>(m, "PointsParam");
   auto pyWellTopsParam = py::class_<WellTopsParam, PointsParam, BaseObjectParam>(m, "WellTopsParam");
+  auto pyHorizonParam = py::class_<HorizonParam, BaseObjectParam>(m, "HorizonParam");
   auto pyMapParam = py::class_<MapParam, BaseObjectParam>(m, "MapParam");
   auto pyWellParam = py::class_<WellParam, BaseObjectParam>(m, "WellParam");
   auto pyDevCurveParam = py::class_<DevCurveParam, BaseObjectParam>(m, "DevCurveParam");
@@ -176,6 +178,16 @@ PYBIND11_MODULE(_h5geo, m) {
       H5Base,
       std::unique_ptr<H5WellTops, ObjectDeleter>>
       (m, "H5WellTops");
+
+  // HORIZON
+  auto pyHorizon =
+      py::class_<
+      H5Horizon,
+      H5HorizonImpl,
+      H5BaseObject,
+      H5Base,
+      std::unique_ptr<H5Horizon, ObjectDeleter>>
+      (m, "H5Horizon");
 
   // MAPCONTAINER
   auto pyMapContainer =
@@ -288,6 +300,7 @@ PYBIND11_MODULE(_h5geo, m) {
   BaseObjectParam_py(pyBaseObjectParam);
   PointsParam_py(pyPointsParam);
   WellTopsParam_py(pyWellTopsParam);
+  HorizonParam_py(pyHorizonParam);
   MapParam_py(pyMapParam);
   WellParam_py(pyWellParam);
   DevCurveParam_py(pyDevCurveParam);
@@ -320,6 +333,9 @@ PYBIND11_MODULE(_h5geo, m) {
 
   // WELLTOPS
   H5WellTops_py(pyWellTops);
+
+  // HORIZON
+  H5Horizon_py(pyHorizon);
 
   // MAPCONTAINER
   H5MapContainer_py(pyMapContainer);

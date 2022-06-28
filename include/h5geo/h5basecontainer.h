@@ -14,23 +14,30 @@ public:
   /// \brief Open geo-object
   ///
   /// Check if HDF5 object belongs to any H5BaseObject derived type
-	/// and create appropriate object. \n
-	/// Use dynamic_cast<> to cast it to the correct type.
+  /// and create appropriate object. \n
+  /// Use dynamic_cast<> to cast it to the correct type.
   virtual H5BaseObject* openObject(
       const std::string& name) = 0;
   /// \brief Open geo-object
   ///
   /// Check if HDF5 object belongs to any H5BaseObject derived type
-	/// and create appropriate object. \n
-	/// Use dynamic_cast<> to cast it to the correct type.
+  /// and create appropriate object. \n
+  /// Use dynamic_cast<> to cast it to the correct type.
   virtual H5BaseObject* openObject(
       h5gt::Group group) = 0;
+
 	/// \brief Open H5BasePoints derived points
   virtual H5BasePoints* openPoints(
       const std::string& name) = 0;
 	/// \brief Open H5BasePoints derived points
   virtual H5BasePoints* openPoints(
       h5gt::Group group) = 0;
+
+  virtual H5Horizon* openHorizon(
+      const std::string& name) = 0;
+  virtual H5Horizon* openHorizon(
+      h5gt::Group group) = 0;
+
   virtual H5Points1* createPoints1(
       std::string& name,
       PointsParam& p,
@@ -62,6 +69,15 @@ public:
   virtual H5Points4* createPoints4(
       h5gt::Group group,
       PointsParam& p,
+      h5geo::CreationType createFlag) = 0;
+
+  virtual H5Horizon* createHorizon(
+      std::string& name,
+      HorizonParam& p,
+      h5geo::CreationType createFlag) = 0;
+  virtual H5Horizon* createHorizon(
+      h5gt::Group group,
+      HorizonParam& p,
       h5geo::CreationType createFlag) = 0;
 
 	/// \brief Get HDF5 file

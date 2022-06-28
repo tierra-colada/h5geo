@@ -8,6 +8,7 @@ set(include_files_h5geopy
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5enum_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5geo_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5geofunctions_py.h
+  ${CMAKE_SOURCE_DIR}/include/h5geopy/h5horizon_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5interpolation_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5logcurve_py.h
   ${CMAKE_SOURCE_DIR}/include/h5geopy/h5map_py.h

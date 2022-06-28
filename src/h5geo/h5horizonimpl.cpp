@@ -7,6 +7,94 @@
 H5HorizonImpl::H5HorizonImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
+bool H5HorizonImpl::writeData(
+    Eigen::Ref<Eigen::MatrixXd> M,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
+{
+  auto opt = getHorizonD();
+  if (!opt.has_value())
+    return false;
+
+  bool val = h5geo::overwriteResizableDataset(
+        objG,
+        opt->getPath(),
+        M,
+        unitsFrom, unitsTo);
+
+  objG.flush();
+  return val;
+}
+
+Eigen::MatrixXd H5HorizonImpl::getData(
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
+{
+  auto opt = getHorizonD();
+  if (!opt.has_value())
+    return Eigen::MatrixXd();
+
+  return h5geo::readDoubleEigenMtxDataset(
+        objG,
+        opt->getPath(),
+        unitsFrom, unitsTo);
+}
+
+bool H5HorizonImpl::writeComponent(
+    Eigen::Ref<Eigen::VectorXd> v,
+    const std::string& componentName,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
+{
+  auto opt = getHorizonD();
+  if (!opt.has_value())
+    return false;
+
+  bool val;
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(unitsTo));
+
+    v *= coef;
+  }
+
+  val = h5geo::writeData2IndexedDataset(
+        opt.value(),
+        componentName,
+        v,
+        true);
+
+  objG.flush();
+  return val;
+}
+
+Eigen::VectorXd H5HorizonImpl::getComponent(
+    const std::string& componentName,
+    const std::string& unitsFrom,
+    const std::string& unitsTo)
+{
+  auto opt = getHorizonD();
+  if (!opt.has_value())
+    return Eigen::VectorXd();
+
+  Eigen::VectorXd v = h5geo::getDataFromIndexedDataset<double>(
+        opt.value(), componentName);
+
+  if (!unitsFrom.empty() && !unitsTo.empty()){
+    double coef = units::convert(
+          units::unit_from_string(unitsFrom),
+          units::unit_from_string(unitsTo));
+
+    if (!std::isnan(coef))
+      return v*coef;
+
+    return Eigen::VectorXd();
+  }
+
+  return v;
+}
+
 bool H5HorizonImpl::setNPoints(size_t n)
 {
   auto opt = getHorizonD();

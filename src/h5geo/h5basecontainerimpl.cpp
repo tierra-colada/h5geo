@@ -6,6 +6,7 @@
 #include "../../include/h5geo/private/h5points2impl.h"
 #include "../../include/h5geo/private/h5points3impl.h"
 #include "../../include/h5geo/private/h5points4impl.h"
+#include "../../include/h5geo/private/h5horizonimpl.h"
 #include "../../include/h5geo/h5core.h"
 #include "../../include/h5geo/private/h5enum_string.h"
 
@@ -75,6 +76,24 @@ H5BasePoints* H5BaseContainerImpl<TBase>::openPoints(
     h5gt::Group group)
 {
   return h5geo::openPoints(group);
+}
+
+template <typename TBase>
+H5Horizon* H5BaseContainerImpl<TBase>::openHorizon(
+    const std::string& name)
+{
+  if (!h5File.hasObject(name, h5gt::ObjectType::Group))
+    return nullptr;
+
+  h5gt::Group group = h5File.getGroup(name);
+  return openHorizon(group);
+}
+
+template <typename TBase>
+H5Horizon* H5BaseContainerImpl<TBase>::openHorizon(
+    h5gt::Group group)
+{
+  return openHorizon(group);
 }
 
 template <typename TBase>
@@ -195,6 +214,36 @@ H5Points4* H5BaseContainerImpl<TBase>::createPoints4(
     return nullptr;
 
   return new H5Points4Impl(opt.value());
+}
+
+template <typename TBase>
+H5Horizon* H5BaseContainerImpl<TBase>::createHorizon(
+    std::string& name,
+    HorizonParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        name, h5File, h5geo::ObjectType::HORIZON, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5HorizonImpl(opt.value());
+}
+
+template <typename TBase>
+H5Horizon* H5BaseContainerImpl<TBase>::createHorizon(
+    h5gt::Group group,
+    HorizonParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        group, h5geo::ObjectType::HORIZON, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5HorizonImpl(opt.value());
 }
 
 template <typename TBase>

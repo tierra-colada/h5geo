@@ -20,10 +20,17 @@ public:
       const std::string& name) override;
   virtual H5BaseObject* openObject(
       h5gt::Group group) override;
+
   virtual H5BasePoints* openPoints(
       const std::string& name) override;
   virtual H5BasePoints* openPoints(
       h5gt::Group group) override;
+
+  virtual H5Horizon* openHorizon(
+      const std::string& name) override;
+  virtual H5Horizon* openHorizon(
+      h5gt::Group group) override;
+
   virtual H5Points1* createPoints1(
       std::string& name,
       PointsParam& p,
@@ -55,6 +62,15 @@ public:
   virtual H5Points4* createPoints4(
       h5gt::Group group,
       PointsParam& p,
+      h5geo::CreationType createFlag) override;
+
+  virtual H5Horizon* createHorizon(
+      std::string& name,
+      HorizonParam& p,
+      h5geo::CreationType createFlag) override;
+  virtual H5Horizon* createHorizon(
+      h5gt::Group group,
+      HorizonParam& p,
       h5geo::CreationType createFlag) override;
 
   virtual h5gt::File getH5File() const override;

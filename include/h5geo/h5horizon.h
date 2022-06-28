@@ -9,12 +9,40 @@ class H5BaseContainer;
 
 /// \class H5Horizon
 /// \brief Provides API to work with horizons
+///
+/// Horizon is an object represented by a dataset with named
+/// rows within. Thus it can be `XYZ` and `VAL` - 4 component
+/// data. A single `X0 Y0 Z0 VAL0` would be called `point`.
 class H5Horizon : public H5BaseObject
 {
 protected:
   virtual ~H5Horizon() = default;
 
 public:
+  /// \brief Write data to DataSet
+  virtual bool writeData(
+      Eigen::Ref<Eigen::MatrixXd> M,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
+
+  /// \brief Read data from DataSet
+  virtual Eigen::MatrixXd getData(
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
+
+  /// \brief Write single component to DataSet
+  virtual bool writeComponent(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& componentName,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
+
+  /// \brief Read single component from DataSet
+  virtual Eigen::VectorXd getComponent(
+      const std::string& componentName,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") = 0;
+
   /// \brief Resize rows of HDF5 DataSet
   virtual bool setNPoints(size_t n) = 0;
   /// \brief Resize columns of  HDF5 DataSet

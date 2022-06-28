@@ -10,6 +10,7 @@ namespace h5geopy {
 void BaseObjectParam_py(py::class_<BaseObjectParam> &py_obj);
 void PointsParam_py(py::class_<PointsParam, BaseObjectParam> &py_obj);
 void WellTopsParam_py(py::class_<WellTopsParam, PointsParam, BaseObjectParam> &py_obj);
+void HorizonParam_py(py::class_<HorizonParam, BaseObjectParam> &py_obj);
 void MapParam_py(py::class_<MapParam, BaseObjectParam> &py_obj);
 void WellParam_py(py::class_<WellParam, BaseObjectParam> &py_obj);
 void DevCurveParam_py(py::class_<DevCurveParam, BaseObjectParam> &py_obj);

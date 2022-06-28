@@ -14,6 +14,26 @@ protected:
   virtual ~H5HorizonImpl() = default;
 
 public:
+  virtual bool writeData(
+      Eigen::Ref<Eigen::MatrixXd> M,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") override;
+
+  virtual Eigen::MatrixXd getData(
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") override;
+
+  virtual bool writeComponent(
+      Eigen::Ref<Eigen::VectorXd> v,
+      const std::string& componentName,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") override;
+
+  virtual Eigen::VectorXd getComponent(
+      const std::string& componentName,
+      const std::string& unitsFrom = "",
+      const std::string& unitsTo = "") override;
+
   virtual bool setNPoints(size_t n) override;
   virtual bool setNComponents(size_t n) override;
   virtual bool setComponents(const std::map<std::string, size_t>& components) override;

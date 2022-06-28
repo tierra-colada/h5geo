@@ -26,6 +26,15 @@ void WellTopsParam_py(py::class_<WellTopsParam, PointsParam, BaseObjectParam> &p
       .def(py::init<>());
 }
 
+void HorizonParam_py(py::class_<HorizonParam, BaseObjectParam> &py_obj){
+  py_obj
+      .def(py::init<>())
+      .def_readwrite("domain", &HorizonParam::domain)
+      .def_readwrite("nPoints", &HorizonParam::nPoints)
+      .def_readwrite("components", &HorizonParam::components)
+      .def_readwrite("chunkSize", &HorizonParam::pointsChunkSize);
+}
+
 void MapParam_py(py::class_<MapParam, BaseObjectParam> &py_obj){
   py_obj
       .def(py::init<>())

@@ -10,6 +10,7 @@
 #include <h5geo/h5logcurve.h>
 #include <h5geo/h5points.h>
 #include <h5geo/h5welltops.h>
+#include <h5geo/h5horizon.h>
 #include <h5geo/h5core.h>
 
 namespace h5geopy {
@@ -88,6 +89,8 @@ void defineGeoFunctions(py::module_& m){
   m.def("openPoints4ByName", &openPoints4ByName);
   m.def("openWellTops", &openWellTops);
   m.def("openWellTopsByName", &openWellTopsByName);
+  m.def("openHorizon", &openHorizon);
+  m.def("openHorizonByName", &openHorizonByName);
 
   m.def("createContainer", &createContainer);
   m.def("createContainerByName", &createContainerByName);

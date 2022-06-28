@@ -23,10 +23,33 @@ struct H5BaseContainer_py
              const std::string&>(&H5BaseContainer::openObject))
         .def("openObject", py::overload_cast<
              h5gt::Group>(&H5BaseContainer::openObject))
+
         .def("openPoints", py::overload_cast<
              const std::string&>(&H5BaseContainer::openPoints))
         .def("openPoints", py::overload_cast<
              h5gt::Group>(&H5BaseContainer::openPoints))
+
+        .def("openHorizon", py::overload_cast<
+             const std::string&>(&H5BaseContainer::openHorizon))
+        .def("openHorizon", py::overload_cast<
+             h5gt::Group>(&H5BaseContainer::openHorizon))
+
+        .def("createPoints1", py::overload_cast<
+             std::string&,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseContainer::createPoints3))
+        .def("createPoints1", py::overload_cast<
+             h5gt::Group,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseContainer::createPoints3))
+        .def("createPoints2", py::overload_cast<
+             std::string&,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseContainer::createPoints3))
+        .def("createPoints2", py::overload_cast<
+             h5gt::Group,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseContainer::createPoints3))
         .def("createPoints3", py::overload_cast<
              std::string&,
              PointsParam&,
@@ -35,6 +58,24 @@ struct H5BaseContainer_py
              h5gt::Group,
              PointsParam&,
              h5geo::CreationType>(&H5BaseContainer::createPoints3))
+        .def("createPoints4", py::overload_cast<
+             std::string&,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseContainer::createPoints3))
+        .def("createPoints4", py::overload_cast<
+             h5gt::Group,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseContainer::createPoints3))
+
+        .def("createHorizon", py::overload_cast<
+             std::string&,
+             HorizonParam&,
+             h5geo::CreationType>(&H5BaseContainer::createHorizon))
+        .def("createHorizon", py::overload_cast<
+             h5gt::Group,
+             HorizonParam&,
+             h5geo::CreationType>(&H5BaseContainer::createHorizon))
+
         .def("getH5File", &H5BaseContainer::getH5File)
         .def("getObjGroupList", &H5BaseContainer::getObjGroupList)
         .def("getObjNameList", &H5BaseContainer::getObjNameList)
