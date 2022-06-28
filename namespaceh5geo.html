@@ -199,6 +199,7 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<b>POINTS_4</b> = 9
 , <b>WELLTOPS</b> = 10
+, <b>HORIZON</b> = 11
 <br />
  }</td></tr>
 <tr class="separator:accf061aaef1b859114c867ed4e2835bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -500,6 +501,14 @@ H5GEO_EXPORT <a class="el" href="class_h5_well_tops.html">H5WellTops</a> *&#160;
 H5GEO_EXPORT <a class="el" href="class_h5_well_tops.html">H5WellTops</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>openWellTopsByName</b> (const std::string &amp;fileName, const std::string &amp;objName)</td></tr>
 <tr class="memdesc:ac1d971f0dce270216a4ed4bb9026fde2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factory function for opening <a class="el" href="class_h5_well_tops.html" title="Provides API to work with welltops.">H5WellTops</a>. <br /></td></tr>
 <tr class="separator:ac1d971f0dce270216a4ed4bb9026fde2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1a7135ef15800a8953440745a452033"><td class="memItemLeft" align="right" valign="top"><a id="ad1a7135ef15800a8953440745a452033" name="ad1a7135ef15800a8953440745a452033"></a>
+H5GEO_EXPORT <a class="el" href="class_h5_horizon.html">H5Horizon</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>openHorizon</b> (h5gt::Group group)</td></tr>
+<tr class="memdesc:ad1a7135ef15800a8953440745a452033"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factory function for opening <a class="el" href="class_h5_horizon.html" title="Provides API to work with horizons.">H5Horizon</a>. <br /></td></tr>
+<tr class="separator:ad1a7135ef15800a8953440745a452033"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f4ffba80aefbed58b08b24268771791"><td class="memItemLeft" align="right" valign="top"><a id="a9f4ffba80aefbed58b08b24268771791" name="a9f4ffba80aefbed58b08b24268771791"></a>
+H5GEO_EXPORT <a class="el" href="class_h5_horizon.html">H5Horizon</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>openHorizonByName</b> (const std::string &amp;fileName, const std::string &amp;objName)</td></tr>
+<tr class="memdesc:a9f4ffba80aefbed58b08b24268771791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factory function for opening <a class="el" href="class_h5_horizon.html" title="Provides API to work with horizons.">H5Horizon</a>. <br /></td></tr>
+<tr class="separator:a9f4ffba80aefbed58b08b24268771791"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59bb5c6fe56498abfc9c461391560544"><td class="memItemLeft" align="right" valign="top"><a id="a59bb5c6fe56498abfc9c461391560544" name="a59bb5c6fe56498abfc9c461391560544"></a>
 H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>isGeoObject</b> (const h5gt::Group &amp;group)</td></tr>
 <tr class="memdesc:a59bb5c6fe56498abfc9c461391560544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if HDF5 object belongs to any geo-type. <br /></td></tr>
@@ -508,6 +517,10 @@ H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>isGeoObj
 H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>isGeoObjectByType</b> (const h5gt::Group &amp;group, const h5geo::ObjectType &amp;objType)</td></tr>
 <tr class="memdesc:a8ab0238eb3af6f9ee4577aa06adfc401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if HDF5 object belongs to specified geo-type. <br /></td></tr>
 <tr class="separator:a8ab0238eb3af6f9ee4577aa06adfc401"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40081b05a9a6c0a7ddedb92ed11d110d"><td class="memItemLeft" align="right" valign="top"><a id="a40081b05a9a6c0a7ddedb92ed11d110d" name="a40081b05a9a6c0a7ddedb92ed11d110d"></a>
+H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>isHorizon</b> (const h5gt::Group &amp;group)</td></tr>
+<tr class="memdesc:a40081b05a9a6c0a7ddedb92ed11d110d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if HDF5 object is <a class="el" href="class_h5_horizon.html" title="Provides API to work with horizons.">H5Horizon</a>. <br /></td></tr>
+<tr class="separator:a40081b05a9a6c0a7ddedb92ed11d110d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa19c40ad24d715009b660f9eb3d9aebf"><td class="memItemLeft" align="right" valign="top"><a id="aa19c40ad24d715009b660f9eb3d9aebf" name="aa19c40ad24d715009b660f9eb3d9aebf"></a>
 H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>isPoints1</b> (const h5gt::Group &amp;group)</td></tr>
 <tr class="memdesc:aa19c40ad24d715009b660f9eb3d9aebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if HDF5 object is <a class="el" href="class_h5_points1.html" title="Provides API to work with 1D points.">H5Points1</a>. <br /></td></tr>
