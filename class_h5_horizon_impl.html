@@ -88,6 +88,18 @@ Inheritance diagram for H5HorizonImpl:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a9616dc580d3e9f5c3452b1744a1f53d5"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon_impl.html#a9616dc580d3e9f5c3452b1744a1f53d5">writeData</a> (Eigen::Ref&lt; Eigen::MatrixXd &gt; M, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;) override</td></tr>
+<tr class="memdesc:a9616dc580d3e9f5c3452b1744a1f53d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to DataSet.  <a href="class_h5_horizon_impl.html#a9616dc580d3e9f5c3452b1744a1f53d5">More...</a><br /></td></tr>
+<tr class="separator:a9616dc580d3e9f5c3452b1744a1f53d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72913d1518bac8d167678b8c7ffb8a7d"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon_impl.html#a72913d1518bac8d167678b8c7ffb8a7d">getData</a> (const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;) override</td></tr>
+<tr class="memdesc:a72913d1518bac8d167678b8c7ffb8a7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from DataSet.  <a href="class_h5_horizon_impl.html#a72913d1518bac8d167678b8c7ffb8a7d">More...</a><br /></td></tr>
+<tr class="separator:a72913d1518bac8d167678b8c7ffb8a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa34ba27de4b3b972440892ef7bdc3d49"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon_impl.html#aa34ba27de4b3b972440892ef7bdc3d49">writeComponent</a> (Eigen::Ref&lt; Eigen::VectorXd &gt; v, const std::string &amp;componentName, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;) override</td></tr>
+<tr class="memdesc:aa34ba27de4b3b972440892ef7bdc3d49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write single component to DataSet.  <a href="class_h5_horizon_impl.html#aa34ba27de4b3b972440892ef7bdc3d49">More...</a><br /></td></tr>
+<tr class="separator:aa34ba27de4b3b972440892ef7bdc3d49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fe2bd2d5ff28ca1c3f34e184a93f1cd"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon_impl.html#a0fe2bd2d5ff28ca1c3f34e184a93f1cd">getComponent</a> (const std::string &amp;componentName, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;) override</td></tr>
+<tr class="memdesc:a0fe2bd2d5ff28ca1c3f34e184a93f1cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read single component from DataSet.  <a href="class_h5_horizon_impl.html#a0fe2bd2d5ff28ca1c3f34e184a93f1cd">More...</a><br /></td></tr>
+<tr class="separator:a0fe2bd2d5ff28ca1c3f34e184a93f1cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae39422cdc1d427d1cb0c5caaa1b0bfca"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon_impl.html#ae39422cdc1d427d1cb0c5caaa1b0bfca">setNPoints</a> (size_t n) override</td></tr>
 <tr class="memdesc:ae39422cdc1d427d1cb0c5caaa1b0bfca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize rows of HDF5 DataSet.  <a href="class_h5_horizon_impl.html#ae39422cdc1d427d1cb0c5caaa1b0bfca">More...</a><br /></td></tr>
 <tr class="separator:ae39422cdc1d427d1cb0c5caaa1b0bfca"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,6 +212,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac2391503519cfbe9e51365fe12bd9b58 inherit pub_methods_class_h5_base_impl"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c18e63aef44cd5b5edc59d917415b99 inherit pub_methods_class_h5_base_impl"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_base_impl.html#a4c18e63aef44cd5b5edc59d917415b99">Delete</a> () override</td></tr>
 <tr class="separator:a4c18e63aef44cd5b5edc59d917415b99 inherit pub_methods_class_h5_base_impl"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3887713e00cb9eb4b90be6775014170f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon.html#a3887713e00cb9eb4b90be6775014170f">writeData</a> (Eigen::Ref&lt; Eigen::MatrixXd &gt; M, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)=0</td></tr>
+<tr class="memdesc:a3887713e00cb9eb4b90be6775014170f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to DataSet.  <a href="class_h5_horizon.html#a3887713e00cb9eb4b90be6775014170f">More...</a><br /></td></tr>
+<tr class="separator:a3887713e00cb9eb4b90be6775014170f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af273474cf933e5c92d2da7bdb4796b6c"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon.html#af273474cf933e5c92d2da7bdb4796b6c">getData</a> (const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)=0</td></tr>
+<tr class="memdesc:af273474cf933e5c92d2da7bdb4796b6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from DataSet.  <a href="class_h5_horizon.html#af273474cf933e5c92d2da7bdb4796b6c">More...</a><br /></td></tr>
+<tr class="separator:af273474cf933e5c92d2da7bdb4796b6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe086b9e95e1d1a7e507bc82f258e6c1"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon.html#abe086b9e95e1d1a7e507bc82f258e6c1">writeComponent</a> (Eigen::Ref&lt; Eigen::VectorXd &gt; v, const std::string &amp;componentName, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)=0</td></tr>
+<tr class="memdesc:abe086b9e95e1d1a7e507bc82f258e6c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write single component to DataSet.  <a href="class_h5_horizon.html#abe086b9e95e1d1a7e507bc82f258e6c1">More...</a><br /></td></tr>
+<tr class="separator:abe086b9e95e1d1a7e507bc82f258e6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a900e26531755ef210b32dc969517cbe7"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon.html#a900e26531755ef210b32dc969517cbe7">getComponent</a> (const std::string &amp;componentName, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)=0</td></tr>
+<tr class="memdesc:a900e26531755ef210b32dc969517cbe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read single component from DataSet.  <a href="class_h5_horizon.html#a900e26531755ef210b32dc969517cbe7">More...</a><br /></td></tr>
+<tr class="separator:a900e26531755ef210b32dc969517cbe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20912fba806e6920d6d8d6cc6dc619cb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon.html#a20912fba806e6920d6d8d6cc6dc619cb">setNPoints</a> (size_t n)=0</td></tr>
 <tr class="memdesc:a20912fba806e6920d6d8d6cc6dc619cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize rows of HDF5 DataSet.  <a href="class_h5_horizon.html#a20912fba806e6920d6d8d6cc6dc619cb">More...</a><br /></td></tr>
 <tr class="separator:a20912fba806e6920d6d8d6cc6dc619cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -389,6 +413,52 @@ h5gt::Group&#160;</td><td class="memItemRight" valign="bottom"><b>objG</b></td><
 <tr class="separator:ac70d6517f5c83edd473166b3fee04830 inherit pro_attribs_class_h5_base_object_impl"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0fe2bd2d5ff28ca1c3f34e184a93f1cd" name="a0fe2bd2d5ff28ca1c3f34e184a93f1cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fe2bd2d5ff28ca1c3f34e184a93f1cd">&#9670;&nbsp;</a></span>getComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd H5HorizonImpl::getComponent </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>componentName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>unitsFrom</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>unitsTo</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read single component from DataSet. </p>
+
+<p>Implements <a class="el" href="class_h5_horizon.html#a900e26531755ef210b32dc969517cbe7">H5Horizon</a>.</p>
+
+</div>
+</div>
 <a id="a4bcf35368bc5c224f51b828d12a1950e" name="a4bcf35368bc5c224f51b828d12a1950e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4bcf35368bc5c224f51b828d12a1950e">&#9670;&nbsp;</a></span>getComponents()</h2>
 
@@ -415,6 +485,46 @@ h5gt::Group&#160;</td><td class="memItemRight" valign="bottom"><b>objG</b></td><
 <p>Return component names and corresponding HDF5 rows. </p>
 
 <p>Implements <a class="el" href="class_h5_horizon.html#a17621362b1be224c31724d695b9b2a7b">H5Horizon</a>.</p>
+
+</div>
+</div>
+<a id="a72913d1518bac8d167678b8c7ffb8a7d" name="a72913d1518bac8d167678b8c7ffb8a7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72913d1518bac8d167678b8c7ffb8a7d">&#9670;&nbsp;</a></span>getData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::MatrixXd H5HorizonImpl::getData </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>unitsFrom</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>unitsTo</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read data from DataSet. </p>
+
+<p>Implements <a class="el" href="class_h5_horizon.html#af273474cf933e5c92d2da7bdb4796b6c">H5Horizon</a>.</p>
 
 </div>
 </div>
@@ -710,6 +820,104 @@ h5gt::Group&#160;</td><td class="memItemRight" valign="bottom"><b>objG</b></td><
 <p>Resize rows of HDF5 DataSet. </p>
 
 <p>Implements <a class="el" href="class_h5_horizon.html#a20912fba806e6920d6d8d6cc6dc619cb">H5Horizon</a>.</p>
+
+</div>
+</div>
+<a id="aa34ba27de4b3b972440892ef7bdc3d49" name="aa34ba27de4b3b972440892ef7bdc3d49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa34ba27de4b3b972440892ef7bdc3d49">&#9670;&nbsp;</a></span>writeComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool H5HorizonImpl::writeComponent </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt;&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>componentName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>unitsFrom</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>unitsTo</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Write single component to DataSet. </p>
+
+<p>Implements <a class="el" href="class_h5_horizon.html#abe086b9e95e1d1a7e507bc82f258e6c1">H5Horizon</a>.</p>
+
+</div>
+</div>
+<a id="a9616dc580d3e9f5c3452b1744a1f53d5" name="a9616dc580d3e9f5c3452b1744a1f53d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9616dc580d3e9f5c3452b1744a1f53d5">&#9670;&nbsp;</a></span>writeData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool H5HorizonImpl::writeData </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::MatrixXd &gt;&#160;</td>
+          <td class="paramname"><em>M</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>unitsFrom</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>unitsTo</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Write data to DataSet. </p>
+
+<p>Implements <a class="el" href="class_h5_horizon.html#a3887713e00cb9eb4b90be6775014170f">H5Horizon</a>.</p>
 
 </div>
 </div>
