@@ -739,10 +739,10 @@ template&lt;typename Object , typename std::enable_if&lt; std::is_same&lt; Objec
 <tr class="memitem:a0bc7548a6b0f8a680c0e5f858e205658"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memTemplItemRight" valign="bottom"><b>readDoubleEigenVecAttribute</b> (Object &amp;object, const std::string &amp;attrName, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)</td></tr>
 <tr class="memdesc:a0bc7548a6b0f8a680c0e5f858e205658"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from Attribute. <br /></td></tr>
 <tr class="separator:a0bc7548a6b0f8a680c0e5f858e205658"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafd1465fb291d5b0a3f6b411bc3b7f88"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
-<tr class="memitem:aafd1465fb291d5b0a3f6b411bc3b7f88"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#aafd1465fb291d5b0a3f6b411bc3b7f88">writeData2IndexedDataset</a> (h5gt::DataSet &amp;dataset, const std::string &amp;attrName, const Eigen::DenseBase&lt; D &gt; &amp;v, bool resize)</td></tr>
-<tr class="memdesc:aafd1465fb291d5b0a3f6b411bc3b7f88"><td class="mdescLeft">&#160;</td><td class="mdescRight">writeData2IndexedDataset Try to write vector to dataset with attribute where attribute is a single value reflecting row index of a corresponding dataset  <a href="namespaceh5geo.html#aafd1465fb291d5b0a3f6b411bc3b7f88">More...</a><br /></td></tr>
-<tr class="separator:aafd1465fb291d5b0a3f6b411bc3b7f88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b558176b6c85ebc83b3418efe2d8039"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
+<tr class="memitem:a5b558176b6c85ebc83b3418efe2d8039"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a5b558176b6c85ebc83b3418efe2d8039">writeDataToIndexedDataset</a> (h5gt::DataSet &amp;dataset, const std::string &amp;attrName, const Eigen::DenseBase&lt; D &gt; &amp;v, bool resize)</td></tr>
+<tr class="memdesc:a5b558176b6c85ebc83b3418efe2d8039"><td class="mdescLeft">&#160;</td><td class="mdescRight">writeDataToIndexedDataset Try to write vector to dataset with attribute where attribute is a single value reflecting row index of a corresponding dataset  <a href="namespaceh5geo.html#a5b558176b6c85ebc83b3418efe2d8039">More...</a><br /></td></tr>
+<tr class="separator:a5b558176b6c85ebc83b3418efe2d8039"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28c44b2584a7f41231e82c4916415cb7"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a28c44b2584a7f41231e82c4916415cb7"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a28c44b2584a7f41231e82c4916415cb7">getDataFromIndexedDataset</a> (h5gt::DataSet &amp;dataset, const std::string &amp;attrName)</td></tr>
 <tr class="memdesc:a28c44b2584a7f41231e82c4916415cb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data from indexed DataSet.  <a href="namespaceh5geo.html#a28c44b2584a7f41231e82c4916415cb7">More...</a><br /></td></tr>
@@ -3151,8 +3151,8 @@ template&lt;typename Object , typename std::enable_if&lt; std::is_same&lt; Objec
 
 </div>
 </div>
-<a id="aafd1465fb291d5b0a3f6b411bc3b7f88" name="aafd1465fb291d5b0a3f6b411bc3b7f88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aafd1465fb291d5b0a3f6b411bc3b7f88">&#9670;&nbsp;</a></span>writeData2IndexedDataset()</h2>
+<a id="a5b558176b6c85ebc83b3418efe2d8039" name="a5b558176b6c85ebc83b3418efe2d8039"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b558176b6c85ebc83b3418efe2d8039">&#9670;&nbsp;</a></span>writeDataToIndexedDataset()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3163,7 +3163,7 @@ template&lt;typename D &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool h5geo::writeData2IndexedDataset </td>
+          <td class="memname">bool h5geo::writeDataToIndexedDataset </td>
           <td>(</td>
           <td class="paramtype">h5gt::DataSet &amp;&#160;</td>
           <td class="paramname"><em>dataset</em>, </td>
@@ -3199,7 +3199,7 @@ template&lt;typename D &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>writeData2IndexedDataset Try to write vector to dataset with attribute where attribute is a single value reflecting row index of a corresponding dataset </p>
+<p>writeDataToIndexedDataset Try to write vector to dataset with attribute where attribute is a single value reflecting row index of a corresponding dataset </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">dataset</td><td></td></tr>
