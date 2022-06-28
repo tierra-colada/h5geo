@@ -444,7 +444,7 @@ Eigen::VectorXd readDoubleEigenVecAttribute(
     const std::string& unitsFrom = "",
     const std::string& unitsTo = "");
 
-/// \brief writeData2IndexedDataset Try to write vector to dataset with
+/// \brief writeDataToIndexedDataset Try to write vector to dataset with
 /// attribute where attribute is a single value reflecting
 /// row index of a corresponding dataset
 /// \param dataset
@@ -458,7 +458,7 @@ Eigen::VectorXd readDoubleEigenVecAttribute(
 /// Indexed DataSet has attributes with names and values telling what \n
 /// rows/cols are responsible for storing data (like tables)
 template<typename D>
-bool writeData2IndexedDataset(
+bool writeDataToIndexedDataset(
     h5gt::DataSet& dataset,
     const std::string& attrName,
     const Eigen::DenseBase<D>& v,

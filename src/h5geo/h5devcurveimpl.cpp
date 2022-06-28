@@ -96,7 +96,7 @@ bool H5DevCurveImpl::writeCurve(
 
     v *= coef;
 
-    val = h5geo::writeData2IndexedDataset(
+    val = h5geo::writeDataToIndexedDataset(
           opt.value(),
           name,
           v,
@@ -106,7 +106,7 @@ bool H5DevCurveImpl::writeCurve(
     return val;
   }
 
-  val = h5geo::writeData2IndexedDataset(
+  val = h5geo::writeDataToIndexedDataset(
         opt.value(),
         name,
         v,

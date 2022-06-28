@@ -59,7 +59,7 @@ bool H5HorizonImpl::writeComponent(
     v *= coef;
   }
 
-  val = h5geo::writeData2IndexedDataset(
+  val = h5geo::writeDataToIndexedDataset(
         opt.value(),
         componentName,
         v,

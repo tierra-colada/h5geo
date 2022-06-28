@@ -42,7 +42,7 @@ bool H5LogCurveImpl::writeCurve(
 
     v *= coef;
 
-    val = h5geo::writeData2IndexedDataset(
+    val = h5geo::writeDataToIndexedDataset(
           opt.value(),
           name,
           v,
@@ -52,7 +52,7 @@ bool H5LogCurveImpl::writeCurve(
     return val;
   }
 
-  val = h5geo::writeData2IndexedDataset(
+  val = h5geo::writeDataToIndexedDataset(
         opt.value(),
         name,
         v,

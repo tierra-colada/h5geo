@@ -813,7 +813,7 @@ inline Eigen::VectorXd readDoubleEigenVecAttribute(
 }
 
 template<typename D>
-inline bool writeData2IndexedDataset(
+inline bool writeDataToIndexedDataset(
     h5gt::DataSet& dataset,
     const std::string& attrName,
     const Eigen::DenseBase<D>& v,
