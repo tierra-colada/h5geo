@@ -45,69 +45,69 @@ public:
       const std::vector<std::string>& segyFiles,
       size_t trcBuffer = 10000) = 0;
 
-	/// \brief Write text header
+  /// \brief Write text header
   virtual bool writeTextHeader(const char (&txtHdr)[40][80]) = 0;
 
-	/// \brief Write text header
-	///
-	/// Maximum 40x80 chars are possible (vector of size 40 with string less or equal to 80)
+  /// \brief Write text header
+  ///
+  /// Maximum 40x80 chars are possible (vector of size 40 with string less or equal to 80)
   virtual bool writeTextHeader(const std::vector<std::string>& txtHdr) = 0;
-	/// \brief Write binary header
+  /// \brief Write binary header
   virtual bool writeBinHeader(const double (&binHdr)[30]) = 0;
 
-	/// \brief Write text header
-	///
-	/// Vector length should be equal to H5Seis::getNBinHdr()
+  /// \brief Write text header
+  ///
+  /// Vector length should be equal to H5Seis::getNBinHdr()
   virtual bool writeBinHeader(const std::vector<double>& binHdrVec) = 0;
-	/// \brief Write text header
-	///
-	/// Vector length should be equal to H5Seis::getNBinHdr()
+  /// \brief Write text header
+  ///
+  /// Vector length should be equal to H5Seis::getNBinHdr()
   virtual bool writeBinHeader(
       const Eigen::Ref<const Eigen::VectorXd>& binHdrVec) = 0;
-	/// \brief Write text header
+  /// \brief Write text header
   virtual bool writeBinHeader(
       const std::string& hdrName,
       const double& value,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
-	/// \brief Write boundary
-	///
-	/// Boundary is a 2D line (`XY`) around the survey. \n
-	/// Use H5Seis::updateBoundary() to automatically calculate and write it. \n
-	/// Not used by h5geo (for developper needs only).
+  /// \brief Write boundary
+  ///
+  /// Boundary is a 2D line (`XY`) around the survey. \n
+  /// Use H5Seis::updateBoundary() to automatically calculate and write it. \n
+  /// Not used by h5geo (for developper needs only).
   virtual bool writeBoundary(
       Eigen::Ref<Eigen::MatrixX2d> M,
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
-	/// \brief Write block of traces starting from trace `fromTrc` and from sample `fromSampInd`
+  /// \brief Write block of traces starting from trace `fromTrc` and from sample `fromSampInd`
   virtual bool writeTrace(
       Eigen::Ref<Eigen::MatrixXf> TRACE,
       const size_t& fromTrc = 0,
       const size_t& fromSampInd = 0,
       const std::string& dataUnits = "") = 0;
   /// \brief Write traces using indexes
-	///
-	/// Return `true` even if max `trcInd` exceeds `nTrc`.
+  ///
+  /// Return `true` even if max `trcInd` exceeds `nTrc`.
   virtual bool writeTrace(
       Eigen::Ref<Eigen::MatrixXf> TRACE,
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
       const size_t& fromSampInd = 0,
       const std::string& dataUnits = "") = 0;
-	/// \brief Write block of trace headers starting from trace `fromTrc` and from header index `fromHdrInd`
+  /// \brief Write block of trace headers starting from trace `fromTrc` and from header index `fromHdrInd`
   virtual bool writeTraceHeader(
       const Eigen::Ref<const Eigen::MatrixXd>& HDR,
       const size_t& fromTrc = 0,
       const size_t& fromHdrInd = 0) = 0;
-	/// \brief Write trace header by name
+  /// \brief Write trace header by name
   virtual bool writeTraceHeader(
       const std::string& hdrName,
       Eigen::Ref<Eigen::MatrixXd> hdr,
       const size_t& fromTrc = 0,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
-	/// \brief Write trace header by name and trace indexes
-	///
-	/// Return `true` even if max `trcInd` exceeds `nTrc`.
+  /// \brief Write trace header by name and trace indexes
+  ///
+  /// Return `true` even if max `trcInd` exceeds `nTrc`.
   virtual bool writeTraceHeader(
       const std::string& hdrName,
       Eigen::Ref<Eigen::MatrixXd> hdr,
@@ -115,19 +115,19 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
 
-	/// \brief Write `XY` trace headers (two columns in Eigen column-major matrix)
-	///
-	/// Same as H5Seis::writeTraceHeaders() but also able to do a coordinate transformation.
+  /// \brief Write `XY` trace headers (two columns in Eigen column-major matrix)
+  ///
+  /// Same as H5Seis::writeTraceHeaders() but also able to do a coordinate transformation.
   virtual bool writeXYTraceHeaders(
       const std::vector<std::string>& xyHdrNames,
       Eigen::Ref<Eigen::MatrixX2d>& xy,
       const size_t& fromTrc = 0,
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
-	/// \brief Write `XY` trace headers (two columns in Eigen column-major matrix)
-	///
-	/// Same as H5Seis::writeTraceHeaders() but also able to do a coordinate transformation. \n
-	/// Return `true` even if max `trcInd` exceeds `nTrc`.
+  /// \brief Write `XY` trace headers (two columns in Eigen column-major matrix)
+  ///
+  /// Same as H5Seis::writeTraceHeaders() but also able to do a coordinate transformation. \n
+  /// Return `true` even if max `trcInd` exceeds `nTrc`.
   virtual bool writeXYTraceHeaders(
       const std::vector<std::string>& xyHdrNames,
       Eigen::Ref<Eigen::MatrixX2d>& xy,
@@ -141,19 +141,19 @@ public:
   virtual bool setNSamp(size_t nSamp) = 0;
 
   // GETTERS
-	/// \brief Get text header
+  /// \brief Get text header
   virtual std::vector<std::string> getTextHeader() = 0;
-	/// \brief Get binary header
+  /// \brief Get binary header
   virtual std::map<std::string, double> getBinHeader() = 0;
-	/// \brief Get text header by name
+  /// \brief Get text header by name
   virtual double getBinHeader(
       const std::string& hdrName,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
 
   /// \brief Get block of traces
-	/// 
-	/// If `nTrc` or `nSamp` exceed max values then these values are
+  ///
+  /// If `nTrc` or `nSamp` exceed max values then these values are
   /// changed to max allowed (that is why they are not `const`)
   virtual Eigen::MatrixXf getTrace(
       const size_t& fromTrc,
@@ -163,19 +163,19 @@ public:
       const std::string& dataUnits = "") = 0;
 
   /// \brief Get traces by indexes
-	/// 
-	/// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
-	/// That is done intensionally to keep `trcInd` size and 
-	/// returned number of traces equal.
+  ///
+  /// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
+  /// That is done intensionally to keep `trcInd` size and
+  /// returned number of traces equal.
   virtual Eigen::MatrixXf getTrace(
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
       const size_t& fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
       const std::string& dataUnits = "") = 0;
 
-	/// \brief Get block of trace headers
-	/// 
-	/// If `nTrc` or `nHdr` exceed max values then these values are
+  /// \brief Get block of trace headers
+  ///
+  /// If `nTrc` or `nHdr` exceed max values then these values are
   /// changed to max allowed (that is why they are not `const`)
   virtual Eigen::MatrixXd getTraceHeader(
       const size_t& fromTrc,
@@ -184,9 +184,9 @@ public:
       size_t nHdr = std::numeric_limits<size_t>::max(),
       const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
       const std::vector<std::string>& unitsTo = std::vector<std::string>()) = 0;
-	/// \brief Get block of trace header by name
-	/// 
-	/// If `nTrc` exceeds max value then this value is
+  /// \brief Get block of trace header by name
+  ///
+  /// If `nTrc` exceeds max value then this value is
   /// changed to max allowed (that is why it is not `const`)
   virtual Eigen::VectorXd getTraceHeader(
       const std::string& hdrName,
@@ -194,62 +194,62 @@ public:
       size_t nTrc = 1,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
-	/// \brief Get trace headers by indexes
-	/// 
-	/// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
-	/// That is done intensionally to keep `trcInd` size and 
-	/// returned number of traces in trace headers equal.
+  /// \brief Get trace headers by indexes
+  ///
+  /// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
+  /// That is done intensionally to keep `trcInd` size and
+  /// returned number of traces in trace headers equal.
   virtual Eigen::MatrixXd getTraceHeader(
       const std::vector<size_t>& trcInd,
       const std::vector<size_t>& trcHdrInd,
       const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
       const std::vector<std::string>& unitsTo = std::vector<std::string>()) = 0;
-	/// \brief Get trace headers by indexes
-	/// 
-	/// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
-	/// That is done intensionally to keep `trcInd` size and 
-	/// returned number of traces in trace headers equal.
+  /// \brief Get trace headers by indexes
+  ///
+  /// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
+  /// That is done intensionally to keep `trcInd` size and
+  /// returned number of traces in trace headers equal.
   virtual Eigen::MatrixXd getTraceHeader(
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcHdrInd,
       const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
       const std::vector<std::string>& unitsTo = std::vector<std::string>()) = 0;
-	/// \brief Get trace header by indexes and name
-	/// 
-	/// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
-	/// That is done intensionally to keep `trcInd` size and 
-	/// returned number of traces in trace header equal.
+  /// \brief Get trace header by indexes and name
+  ///
+  /// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
+  /// That is done intensionally to keep `trcInd` size and
+  /// returned number of traces in trace header equal.
   virtual Eigen::MatrixXd getTraceHeader(
       const std::vector<std::string>& hdrNames,
       const std::vector<size_t>& trcInd,
       const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
       const std::vector<std::string>& unitsTo = std::vector<std::string>()) = 0;
-	/// \brief Get trace headers by indexes and names
-	/// 
-	/// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
-	/// That is done intensionally to keep `trcInd` size and 
-	/// returned number of traces in trace headers equal.
+  /// \brief Get trace headers by indexes and names
+  ///
+  /// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
+  /// That is done intensionally to keep `trcInd` size and
+  /// returned number of traces in trace headers equal.
   virtual Eigen::MatrixXd getTraceHeader(
       const std::vector<std::string>& hdrNames,
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
       const std::vector<std::string>& unitsFrom = std::vector<std::string>(),
       const std::vector<std::string>& unitsTo = std::vector<std::string>()) = 0;
 
-	/// \brief Get `XY` trace headers (two columns in Eigen column-major matrix)
-	///
-	/// Same as H5Seis::getTraceHeader() but also able to do a coordinate transformation.
+  /// \brief Get `XY` trace headers (two columns in Eigen column-major matrix)
+  ///
+  /// Same as H5Seis::getTraceHeader() but also able to do a coordinate transformation.
   virtual Eigen::MatrixXd getXYTraceHeaders(
       const std::vector<std::string>& xyHdrNames,
       const size_t& fromTrc = 0,
       size_t nTrc = std::numeric_limits<size_t>::max(),
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
-	/// \brief Get `XY` trace headers (two columns in Eigen column-major matrix)
-	///
-	/// Same as H5Seis::getTraceHeader() but also able to do a coordinate transformation. \n
-	/// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
-	/// That is done intensionally to keep `trcInd` size and 
-	/// returned number of traces in trace headers equal.
+  /// \brief Get `XY` trace headers (two columns in Eigen column-major matrix)
+  ///
+  /// Same as H5Seis::getTraceHeader() but also able to do a coordinate transformation. \n
+  /// Return empty matrix if max `trcInd` exceeds `nTrc`. \n
+  /// That is done intensionally to keep `trcInd` size and
+  /// returned number of traces in trace headers equal.
   virtual Eigen::MatrixXd getXYTraceHeaders(
       const std::vector<std::string>& xyHdrNames,
       const Eigen::Ref<const Eigen::VectorX<size_t>>& trcInd,
@@ -257,9 +257,9 @@ public:
       bool doCoordTransform = false) = 0;
 
 
-  /// \brief Get sorted data based on precalculated primary sort keys 
-	/// 
-	/// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
+  /// \brief Get sorted data based on precalculated primary sort keys
+  ///
+  /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
   /// \param TRACE not Eigen::Ref<> because Eigen::Ref<> doesn't allow to resize matrices
   /// \param HDR not Eigen::Ref<> because Eigen::Ref<> doesn't allow to resize matrices
   /// \param keyList trace header names to be worked with (first is treated as `PKey`)
@@ -283,75 +283,75 @@ public:
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
 
-	/// \brief Get index (position within 1D dataset) for a given binary header
+  /// \brief Get index (position within 1D dataset) for a given binary header
   virtual ptrdiff_t getBinHeaderIndex(const std::string& hdrName) = 0;
-	/// \brief Get index (row/col within 2D dataset) for a given trace header
+  /// \brief Get index (row/col within 2D dataset) for a given trace header
   virtual ptrdiff_t getTraceHeaderIndex(const std::string& hdrName) = 0;
 
-	/// \brief Get vector of equally spaced samples in specified units
+  /// \brief Get vector of equally spaced samples in specified units
   virtual Eigen::VectorXd getSamples(
       const size_t& trcInd,
       const std::string& units = "") = 0;
-	/// \brief Get first sample
+  /// \brief Get first sample
   virtual double getFirstSample(
       const size_t& trcInd,
       const std::string& units = "") = 0;
-	/// \brief Get last sample
+  /// \brief Get last sample
   virtual double getLastSample(
       const size_t& trcInd,
       const std::string& units = "") = 0;
-	/// \brief Get sampling rate
+  /// \brief Get sampling rate
   virtual double getSampRate(
       const std::string& units = "") = 0;
-	/// \brief Get number of samples
+  /// \brief Get number of samples
   virtual size_t getNSamp() = 0;
-	/// \brief Get number of traces
+  /// \brief Get number of traces
   virtual size_t getNTrc() = 0;
-	/// \brief Get number trace headers (usually 78)
+  /// \brief Get number trace headers (usually 78)
   virtual size_t getNTrcHdr() = 0;
-	/// \brief Get number of binary headers
+  /// \brief Get number of binary headers
   virtual size_t getNBinHdr() = 0;
-	/// \brief Get number of text header rows
+  /// \brief Get number of text header rows
   virtual size_t getNTextHdrRows() = 0;
-	/// \brief Get trace indexes for given `PKey`
-	/// 
-	/// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
+  /// \brief Get trace indexes for given `PKey`
+  ///
+  /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
   virtual Eigen::VectorX<size_t> getPKeyIndexes(
       const std::string& pKey,
-     double pMin, double pMax) = 0;
-	/// \brief Get `PKey` unique values
-	/// 
-	/// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
+      double pMin, double pMax) = 0;
+  /// \brief Get `PKey` unique values
+  ///
+  /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
   virtual Eigen::VectorXd getPKeyValues(
       const std::string& pKey,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
   /// \brief Get number of unique values for a given `PKey`
-	/// 
-	/// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
+  ///
+  /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
   virtual size_t getPKeySize(const std::string& pKey) = 0;
-	/// \brief Get number of traces to be selected for a given `PKey`
-	/// 
-	/// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
+  /// \brief Get number of traces to be selected for a given `PKey`
+  ///
+  /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
   virtual size_t getPKeyTraceSize(const std::string& pKey, double pMin, double pMax) = 0;
-	/// \brief Get names of prepared `PKeys` (names of prepared sortings `PKeys`)
+  /// \brief Get names of prepared `PKeys` (names of prepared sortings `PKeys`)
   virtual std::vector<std::string> getPKeyNames() = 0;
-	/// \brief Get trace header minimal values
+  /// \brief Get trace header minimal values
   virtual std::map<std::string, double> getTraceHeaderMin() = 0;
-	/// \brief Get trace header maximal values
+  /// \brief Get trace header maximal values
   virtual std::map<std::string, double> getTraceHeaderMax() = 0;
-	/// \brief Get trace header minimal value for a given trace header
+  /// \brief Get trace header minimal value for a given trace header
   virtual double getTraceHeaderMin(
       const std::string& hdrName,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
-	/// \brief Get trace header maximal value for a given trace header
+  /// \brief Get trace header maximal value for a given trace header
   virtual double getTraceHeaderMax(
       const std::string& hdrName,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
 
-	/// \brief Get parameters that were used to create current dev curve
+  /// \brief Get parameters that were used to create current dev curve
   virtual SeisParam getParam() = 0;
 
   /// \brief Check `fromTrc`, `nTrc` (passed by reference) and diminish
@@ -370,7 +370,7 @@ public:
   /// \return
   virtual bool checkTraceHeaderLimits(
       const size_t& fromHdr, size_t& nHdr) = 0;
-	/// \brief Check `fromSampInd` and `nSamp` (passed by reference) and diminish
+  /// \brief Check `fromSampInd` and `nSamp` (passed by reference) and diminish
   /// `nSamp` to fit in data limits (if `fromSampInd` is inside limit)
   /// \param fromSampInd first sample index
   /// \param nSamp number of samples (to read for example)
@@ -378,7 +378,7 @@ public:
   virtual bool checkSampleLimits(
       const size_t& fromSampInd, size_t& nSamp) = 0;
 
-	/// \brief Convenient function to prepare geometry for `PRESTACK` data
+  /// \brief Convenient function to prepare geometry for `PRESTACK` data
   virtual bool generatePRESTKGeometry(
       double src_x0, double src_dx, size_t src_nx,
       double src_y0, double src_dy, size_t src_ny,
@@ -389,7 +389,7 @@ public:
       bool moveRec,
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
-	/// \brief Convenient function to prepare geometry for `STACK` data
+  /// \brief Convenient function to prepare geometry for `STACK` data
   virtual bool generateSTKGeometry(
       double x0, double dx, size_t nx,
       double y0, double dy, size_t ny,
@@ -397,86 +397,86 @@ public:
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
 
-	/// \brief Set domain for the seismic (`TVD`, `TVDSS`, `TWT`, `OWT`)
+  /// \brief Set domain for the seismic (`TVD`, `TVDSS`, `TWT`, `OWT`)
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
-	/// \brief Set datatype for the seismic (`STACK` or `PRESTACK`)
+  /// \brief Set datatype for the seismic (`STACK` or `PRESTACK`)
   virtual bool setDataType(const h5geo::SeisDataType& seisType) = 0;
-	/// \brief Set survey type for the seismic (`TWO_D` or `THREE_D`)
+  /// \brief Set survey type for the seismic (`TWO_D` or `THREE_D`)
   virtual bool setSurveyType(const h5geo::SurveyType& surveyType) = 0;
-	/// \brief Set Seismic Reference Datum
+  /// \brief Set Seismic Reference Datum
   virtual bool setSRD(double val, const std::string& lengthUnits = "") = 0;
-	/// \brief Set sampling rate
+  /// \brief Set sampling rate
   virtual bool setSampRate(double val, const std::string& units = "") = 0;
-	/// \brief Set first sample
+  /// \brief Set first sample
   virtual bool setFirstSample(double val, const std::string& units = "") = 0;
 
-	/// \brief Get domain (`TVD`, `TVDSS`, `TWT`, `OWT`)
+  /// \brief Get domain (`TVD`, `TVDSS`, `TWT`, `OWT`)
   virtual h5geo::Domain getDomain() = 0;
-	/// \brief Get datatype for the seismic (`STACK` or `PRESTACK`)
+  /// \brief Get datatype for the seismic (`STACK` or `PRESTACK`)
   virtual h5geo::SeisDataType getDataType() = 0;
-	/// \brief Set survey type for the seismic (`TWO_D` or `THREE_D`)
+  /// \brief Set survey type for the seismic (`TWO_D` or `THREE_D`)
   virtual h5geo::SurveyType getSurveyType() = 0;
-	/// \brief Get Seismic Reference Datum
+  /// \brief Get Seismic Reference Datum
   virtual double getSRD(const std::string& lengthUnits = "") = 0;
-	/// \brief Get boundary
-	///
-	/// Boundary is a 2D line (`XY`) around the survey. \n
-	/// Use H5Seis::updateBoundary() to automatically calculate and write it. \n
-	/// Not used by h5geo (for developper needs only).
+  /// \brief Get boundary
+  ///
+  /// Boundary is a 2D line (`XY`) around the survey. \n
+  /// Use H5Seis::updateBoundary() to automatically calculate and write it. \n
+  /// Not used by h5geo (for developper needs only).
   virtual Eigen::MatrixXd getBoundary(
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
 
-	/// \brief Check if `PKey` sort is prepared
+  /// \brief Check if `PKey` sort is prepared
   virtual bool hasPKeySort(const std::string& pKeyName) = 0;
-	/// \brief Remove `PKey` sorting
+  /// \brief Remove `PKey` sorting
   virtual bool removePKeySort(const std::string& pKeyName) = 0;
-	/// \brief Prepare sorting
-	///
-	/// Sorting is needed for any sorting related operations (like H5Seis::getSortedData()). \n
-	/// If you plan to get `CDP-DSREG` data, you have to call H5Seis::addPKeySort("CDP") first.
+  /// \brief Prepare sorting
+  ///
+  /// Sorting is needed for any sorting related operations (like H5Seis::getSortedData()). \n
+  /// If you plan to get `CDP-DSREG` data, you have to call H5Seis::addPKeySort("CDP") first.
   virtual bool addPKeySort(const std::string& pKeyName) = 0;
 
-	/// \brief Open H5SeisContainer where current seismic resides
+  /// \brief Open H5SeisContainer where current seismic resides
   virtual H5SeisContainer* openSeisContainer() = 0;
 
-	/// \brief Get boundary DataSet
+  /// \brief Get boundary DataSet
   virtual std::optional<h5gt::DataSet> getBoundaryD() = 0;
-	/// \brief Get text header DataSet
+  /// \brief Get text header DataSet
   virtual std::optional<h5gt::DataSet> getTextHeaderD() = 0;
-	/// \brief Get binary header DataSet
+  /// \brief Get binary header DataSet
   virtual std::optional<h5gt::DataSet> getBinHeaderD() = 0;
-	/// \brief Get trace header DataSet
+  /// \brief Get trace header DataSet
   virtual std::optional<h5gt::DataSet> getTraceHeaderD() = 0;
-	/// \brief Get trace DataSet
+  /// \brief Get trace DataSet
   virtual std::optional<h5gt::DataSet> getTraceD() = 0;
-	/// \brief Get sorting Group
+  /// \brief Get sorting Group
   virtual std::optional<h5gt::Group> getSortG() = 0;
-	/// \brief Get sorting unique values Group
+  /// \brief Get sorting unique values Group
   virtual std::optional<h5gt::Group> getUValG() = 0;
-	/// \brief Get sorting indexes Group
+  /// \brief Get sorting indexes Group
   virtual std::optional<h5gt::Group> getIndexesG() = 0;
 
-	/// \brief Get `SEGY` Group (for mapped H5Seis only)
+  /// \brief Get `SEGY` Group (for mapped H5Seis only)
   virtual std::optional<h5gt::Group> getSEGYG() = 0;
-	/// \brief Get `SEGY` text header DataSet (for mapped H5Seis only)
+  /// \brief Get `SEGY` text header DataSet (for mapped H5Seis only)
   virtual std::optional<h5gt::DataSet> getSEGYTextHeaderD() = 0;
-	/// \brief Get `SEGY` 2-bytes binary header DataSet (for mapped H5Seis only)
+  /// \brief Get `SEGY` 2-bytes binary header DataSet (for mapped H5Seis only)
   virtual std::optional<h5gt::DataSet> getSEGYBinHeader2BytesD() = 0;
-	/// \brief Get `SEGY` 4-bytes binary header DataSet (for mapped H5Seis only)
+  /// \brief Get `SEGY` 4-bytes binary header DataSet (for mapped H5Seis only)
   virtual std::optional<h5gt::DataSet> getSEGYBinHeader4BytesD() = 0;
-	/// \brief Get `SEGY` 2-bytes trace header DataSet (for mapped H5Seis only)
+  /// \brief Get `SEGY` 2-bytes trace header DataSet (for mapped H5Seis only)
   virtual std::optional<h5gt::DataSet> getSEGYTraceHeader2BytesD() = 0;
-	/// \brief Get `SEGY` 4-bytes trace header DataSet (for mapped H5Seis only)
+  /// \brief Get `SEGY` 4-bytes trace header DataSet (for mapped H5Seis only)
   virtual std::optional<h5gt::DataSet> getSEGYTraceHeader4BytesD() = 0;
-	/// \brief Get `SEGY` float trace DataSet (for mapped H5Seis only)
+  /// \brief Get `SEGY` float trace DataSet (for mapped H5Seis only)
   virtual std::optional<h5gt::DataSet> getSEGYTraceFloatD() = 0;
 
   /// \brief Calculate and write min/max trace headers
   virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) = 0;
   /// \brief Calculate and write `XY` boundary based on `CDP_X` and `CDP_Y`
   virtual bool updateBoundary() = 0;
-	/// \brief Update sorting for prepared `PKey` 
+  /// \brief Update sorting for prepared `PKey`
   virtual bool updatePKeySort(const std::string& pKeyName) = 0;
 };
 
