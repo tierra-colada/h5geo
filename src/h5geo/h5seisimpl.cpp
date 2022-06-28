@@ -1356,7 +1356,7 @@ SeisParam H5SeisImpl::getParam()
   if (dsetCreateProps.isChunked()){
     std::vector<hsize_t> chunkSizeVec = dsetCreateProps.getChunk(dsetOpt->getDimensions().size());
     if (chunkSizeVec.size() > 0)
-      p.trcChunk = dsetCreateProps.getChunk(dsetOpt->getDimensions().size())[0];
+      p.trcChunk = chunkSizeVec[0];
   }
 
   return p;

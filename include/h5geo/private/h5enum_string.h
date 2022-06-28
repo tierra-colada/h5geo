@@ -43,6 +43,11 @@ inline constexpr auto& points_attrs =
 inline constexpr auto& points_dsets =
     magic_enum::enum_names<h5geo::detail::PointsDatasets>();
 inline constexpr auto points_data = magic_enum::enum_name(h5geo::detail::PointsDatasets::points_data);
+inline constexpr auto& horizon_attrs =
+    magic_enum::enum_names<h5geo::detail::HorizonAttributes>();
+inline constexpr auto& horizon_dsets =
+    magic_enum::enum_names<h5geo::detail::HorizonDatasets>();
+inline constexpr auto horizon_data = magic_enum::enum_name(h5geo::detail::HorizonDatasets::horizon_data);
 inline constexpr auto& seis_attrs =
     magic_enum::enum_names<h5geo::detail::SeisAttributes>();
 inline constexpr auto Domain = magic_enum::enum_name(h5geo::detail::SeisAttributes::Domain);

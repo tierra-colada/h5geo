@@ -475,8 +475,8 @@ MapParam H5MapImpl::getParam()
   if (dsetCreateProps.isChunked()){
     std::vector<hsize_t> chunkSizeVec = dsetCreateProps.getChunk(dsetOpt->getDimensions().size());
     if (chunkSizeVec.size() > 1){
-      p.xChunkSize = dsetCreateProps.getChunk(dsetOpt->getDimensions().size())[1];
-      p.yChunkSize = dsetCreateProps.getChunk(dsetOpt->getDimensions().size())[0];
+      p.xChunkSize = chunkSizeVec[1];
+      p.yChunkSize = chunkSizeVec[0];
     }
   }
 

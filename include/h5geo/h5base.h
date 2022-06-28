@@ -14,6 +14,7 @@
 #include "private/h5point.h"
 
 #include <vector>
+#include <map>
 #include <memory>
 #include <optional>
 
@@ -46,6 +47,7 @@ class H5Points2;
 class H5Points3;
 class H5Points4;
 class H5WellTops;
+class H5Horizon;
 
 /// \struct BaseObjectParam
 /// \brief Base class for object parameters
@@ -66,7 +68,7 @@ struct BaseObjectParam{
 /// Points parameters are needed when creating any Points geo-object.
 struct PointsParam : public BaseObjectParam{
   h5geo::Domain domain;	///< time or depth (TWT, TVD etc)
-  size_t nPoints;	///< number of points
+  size_t nPoints; ///< number of points
   hsize_t chunkSize = 10; ///< see HDF5 chunking
 };
 
@@ -75,6 +77,17 @@ struct PointsParam : public BaseObjectParam{
 ///
 /// WellTops parameters are needed when creating any WellTops geo-object.
 struct WellTopsParam : public PointsParam{};
+
+/// \struct HorizonParam
+/// \brief Class for creating H5Horizon
+///
+/// Horizon parameters are needed when creating any H5Horizon geo-object.
+struct HorizonParam : public BaseObjectParam{
+  h5geo::Domain domain;	///< time or depth (TWT, TVD etc)
+  size_t nPoints; ///< number of points (columns within HDF5 DataSet)
+  std::map<std::string, size_t> components; ///< component name and corresponding HDF5 row number
+  hsize_t pointsChunkSize = 10; ///< see HDF5 chunking
+};
 
 /// \struct MapParam
 /// \brief Class for creating H5Map
@@ -378,6 +391,13 @@ H5GEO_EXPORT H5WellTops* openWellTops(
 H5GEO_EXPORT H5WellTops* openWellTopsByName(
     const std::string& fileName, const std::string& objName);
 
+/// \brief Factory function for opening H5Horizon
+H5GEO_EXPORT H5Horizon* openHorizon(
+    h5gt::Group group);
+/// \brief Factory function for opening H5Horizon
+H5GEO_EXPORT H5Horizon* openHorizonByName(
+    const std::string& fileName, const std::string& objName);
+
 /// \brief Check if HDF5 object belongs to any geo-type
 H5GEO_EXPORT bool isGeoObject(
     const h5gt::Group& group);
@@ -386,6 +406,8 @@ H5GEO_EXPORT bool isGeoObjectByType(
     const h5gt::Group& group,
     const h5geo::ObjectType& objType);
 
+/// \brief Check if HDF5 object is H5Horizon
+H5GEO_EXPORT bool isHorizon(const h5gt::Group &group);
 /// \brief Check if HDF5 object is H5Points1
 H5GEO_EXPORT bool isPoints1(const h5gt::Group &group);
 /// \brief Check if HDF5 object is H5Points2

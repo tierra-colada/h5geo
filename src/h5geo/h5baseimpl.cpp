@@ -15,6 +15,7 @@
 #include "../../include/h5geo/private/h5points3impl.h"
 #include "../../include/h5geo/private/h5points4impl.h"
 #include "../../include/h5geo/private/h5welltopsimpl.h"
+#include "../../include/h5geo/private/h5horizonimpl.h"
 #include "../../include/h5geo/h5core.h"
 #include "../../include/h5geo/private/h5enum_string.h"
 #include "../../include/h5geo/private/h5segy.h"
@@ -418,6 +419,8 @@ H5BaseImpl<TBase>::createNewObject(
     return createNewPoints(group, p, objType);
   case h5geo::ObjectType::WELLTOPS :
     return createNewWellTops(group, p);
+  case h5geo::ObjectType::HORIZON :
+    return createNewHorizon(group, p);
   default:
     return std::nullopt;
   }
@@ -507,6 +510,69 @@ std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewWellTops(h5gt::Group &group, void* p)
 {
   return createNewPoints(group, p, h5geo::ObjectType::POINTS_1);
+}
+
+template <typename TBase>
+std::optional<h5gt::Group>
+H5BaseImpl<TBase>::createNewHorizon(h5gt::Group &group, void* p)
+{
+  HorizonParam param = *(static_cast<HorizonParam*>(p));
+
+  // try-catch can't handle this situation
+  if (param.nPoints < 1 ||
+      param.pointsChunkSize < 1 ||
+      param.components.size() < 1)
+    return std::nullopt;
+
+  std::vector<size_t> count = {param.components.size(), param.nPoints};
+  std::vector<size_t> max_count = {h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {param.components.size(), param.pointsChunkSize};
+  h5gt::DataSetCreateProps props;
+  props.setChunk(cdims);
+  h5gt::DataSpace dataspace(count, max_count);
+
+
+  try {
+
+    group.createAttribute<double>(
+          std::string{h5geo::detail::null_value},
+          h5gt::DataSpace(1)).
+        write(param.nullValue);
+    group.createAttribute<h5geo::Domain>(
+          std::string{h5geo::detail::Domain},
+          h5gt::DataSpace(1)).
+        write(param.domain);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::spatial_reference},
+          h5gt::DataSpace::From(param.spatialReference)).
+        write(param.spatialReference);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::length_units},
+          h5gt::DataSpace::From(param.lengthUnits)).
+        write(param.lengthUnits);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::temporal_units},
+          h5gt::DataSpace::From(param.temporalUnits)).
+        write(param.temporalUnits);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::data_units},
+          h5gt::DataSpace::From(param.dataUnits)).
+        write(param.dataUnits);
+
+    h5gt::DataSet dataset =
+        group.createDataSet<double>(
+          std::string{h5geo::detail::horizon_data},
+          dataspace, h5gt::LinkCreateProps(), props);
+    for (auto const& [key, val] : param.components){
+      dataset.createAttribute<size_t>(key, h5gt::DataSpace(1)).write(val);
+    }
+    return group;
+
+  } catch (h5gt::Exception& err) {
+    return std::nullopt;
+  }
+
+
 }
 
 template <typename TBase>
@@ -1289,6 +1355,8 @@ bool h5geo::isGeoObjectByType(const h5gt::Group& group,
     return h5geo::isPoints4(group);
   case h5geo::ObjectType::WELLTOPS :
     return h5geo::isWellTops(group);
+  case h5geo::ObjectType::HORIZON :
+    return h5geo::isHorizon(group);
   default:
     return false;
   }
@@ -1308,6 +1376,8 @@ h5geo::ObjectType h5geo::getGeoObjectType(
     return h5geo::ObjectType::POINTS_3;
   } else if (h5geo::isPoints4(group)){
     return h5geo::ObjectType::POINTS_4;
+  } else if (h5geo::isHorizon(group)){
+    return h5geo::ObjectType::HORIZON;
   } else if (h5geo::isMap(group)){
     return h5geo::ObjectType::MAP;
   } else if (h5geo::isWell(group)){
@@ -1424,6 +1494,21 @@ bool h5geo::isPoints4(
 bool h5geo::isWellTops(const h5gt::Group &group)
 {
   return h5geo::isPoints1(group);
+}
+
+bool h5geo::isHorizon(
+    const h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::horizon_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::horizon_dsets){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
+      return false;
+  }
+  return true;
 }
 
 bool h5geo::isMap(
@@ -1763,6 +1848,9 @@ H5BaseObject* h5geo::openObject(h5gt::Group group)
   if (obj)
     return obj;
   obj = openPoints(group);
+  if (obj)
+    return obj;
+  obj = openHorizon(group);
   if (obj)
     return obj;
   obj = openBaseObject(group);
@@ -2121,6 +2209,35 @@ H5WellTops* h5geo::openWellTopsByName(
   }
 }
 
+H5Horizon* h5geo::openHorizon(
+    h5gt::Group group)
+{
+  if (isGeoObjectByType(group, h5geo::ObjectType::HORIZON))
+    return new H5HorizonImpl(group);
+
+  return nullptr;
+}
+
+H5Horizon* h5geo::openHorizonByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openHorizon(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
 // explicit instantiation (requires that corresponding headers are included)
 template class H5BaseImpl<H5Base>;
 template class H5BaseImpl<H5BaseContainer>;
@@ -2139,3 +2256,4 @@ template class H5BaseImpl<H5Points2>;
 template class H5BaseImpl<H5Points3>;
 template class H5BaseImpl<H5Points4>;
 template class H5BaseImpl<H5WellTops>;
+template class H5BaseImpl<H5Horizon>;

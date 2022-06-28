@@ -48,6 +48,24 @@ inline h5gt::EnumType<PointsDatasetsUType> create_enum_PointsDatasets() {
   return {{"points_data", static_cast<PointsDatasetsUType>(PointsDatasets::points_data)}};
 }
 
+enum class HorizonAttributes : unsigned{
+  Domain = 1
+};
+
+typedef std::underlying_type<HorizonAttributes>::type HorizonAttributesUType;
+inline h5gt::EnumType<HorizonAttributesUType> create_enum_HorizonAttributes() {
+  return {{"Domain", static_cast<HorizonAttributesUType>(HorizonAttributes::Domain)}};
+}
+
+enum class HorizonDatasets : unsigned{
+  horizon_data = 1
+};
+
+typedef std::underlying_type<HorizonDatasets>::type HorizonDatasetsUType;
+inline h5gt::EnumType<HorizonDatasetsUType> create_enum_HorizonDatasets() {
+  return {{"horizon_data", static_cast<HorizonDatasetsUType>(HorizonDatasets::horizon_data)}};
+}
+
 enum class SeisAttributes : unsigned{
   Domain = 1,
   SeisDataType = 2,
@@ -214,7 +232,8 @@ enum class ObjectType: unsigned{
   POINTS_2 = 7,
   POINTS_3 = 8,
   POINTS_4 = 9,
-  WELLTOPS = 10
+  WELLTOPS = 10,
+  HORIZON = 11
 };
 //ENABLE_BITMASK_OPERATORS(ObjectType);
 
@@ -229,7 +248,8 @@ inline h5gt::EnumType<ObjectTypeUType> create_enum_ObjectType() {
           {"POINTS_2", static_cast<ObjectTypeUType>(ObjectType::POINTS_2)},
           {"POINTS_3", static_cast<ObjectTypeUType>(ObjectType::POINTS_3)},
           {"POINTS_4", static_cast<ObjectTypeUType>(ObjectType::POINTS_4)},
-          {"WELLTOPS", static_cast<ObjectTypeUType>(ObjectType::WELLTOPS)}};
+          {"WELLTOPS", static_cast<ObjectTypeUType>(ObjectType::WELLTOPS)},
+          {"HORIZON", static_cast<ObjectTypeUType>(ObjectType::HORIZON)}};
 }
 
 enum class Domain : unsigned{
@@ -472,6 +492,8 @@ inline h5gt::EnumType<DelimiterUType> create_enum_Delimiter() {
 H5GT_REGISTER_TYPE(h5geo::detail::ContainerAttributes, h5geo::detail::create_enum_ContainerAttributes)
 H5GT_REGISTER_TYPE(h5geo::detail::PointsAttributes, h5geo::detail::create_enum_PointsAttributes)
 H5GT_REGISTER_TYPE(h5geo::detail::PointsDatasets, h5geo::detail::create_enum_PointsDatasets)
+H5GT_REGISTER_TYPE(h5geo::detail::HorizonAttributes, h5geo::detail::create_enum_HorizonAttributes)
+H5GT_REGISTER_TYPE(h5geo::detail::HorizonDatasets, h5geo::detail::create_enum_HorizonDatasets)
 H5GT_REGISTER_TYPE(h5geo::detail::SeisAttributes, h5geo::detail::create_enum_SeisAttributes)
 H5GT_REGISTER_TYPE(h5geo::detail::SeisDatasets, h5geo::detail::create_enum_SeisDatasets)
 H5GT_REGISTER_TYPE(h5geo::detail::SeisGroups, h5geo::detail::create_enum_SeisGroups)

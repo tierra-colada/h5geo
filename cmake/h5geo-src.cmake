@@ -17,6 +17,7 @@ set(src_files_h5geo
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5points2impl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5points3impl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5points4impl.cpp
+  ${CMAKE_SOURCE_DIR}/src/h5geo/h5horizonimpl.cpp
   )
 
 if(H5GEO_USE_GDAL)

@@ -29,6 +29,7 @@ set(include_files_h5geo_private
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5points2impl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5points3impl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5points4impl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5horizonimpl.h
   )
 
 if(H5GEO_USE_GDAL)
@@ -55,4 +56,5 @@ set(include_files_h5geo_public
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5points3.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5points4.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5points.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5horizon.h
   )
