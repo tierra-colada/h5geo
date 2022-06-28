@@ -55,6 +55,18 @@ public:
   friend class H5BaseContainerImpl<H5MapContainer>;
   friend class H5BaseContainerImpl<H5SeisContainer>;
   friend class H5BaseContainerImpl<H5WellContainer>;
+  friend class H5BaseObjectImpl<H5BaseObject>;
+  friend class H5BaseObjectImpl<H5BasePoints>;
+  friend class H5BaseObjectImpl<H5Points1>;
+  friend class H5BaseObjectImpl<H5Points2>;
+  friend class H5BaseObjectImpl<H5Points3>;
+  friend class H5BaseObjectImpl<H5Points4>;
+  friend class H5BaseObjectImpl<H5WellTops>;
+  friend class H5BaseObjectImpl<H5Map>;
+  friend class H5BaseObjectImpl<H5Seis>;
+  friend class H5BaseObjectImpl<H5Well>;
+  friend class H5BaseObjectImpl<H5DevCurve>;
+  friend class H5BaseObjectImpl<H5LogCurve>;
   friend H5Horizon* h5geo::openHorizon(h5gt::Group group);
 };
 

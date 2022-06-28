@@ -15,6 +15,58 @@ protected:
   virtual ~H5BaseObjectImpl() = default;
 
 public:
+  virtual H5BasePoints* openPoints(
+      const std::string& name) override;
+  virtual H5BasePoints* openPoints(
+      h5gt::Group group) override;
+
+  virtual H5Horizon* openHorizon(
+      const std::string& name) override;
+  virtual H5Horizon* openHorizon(
+      h5gt::Group group) override;
+
+  virtual H5Points1* createPoints1(
+      std::string& name,
+      PointsParam& p,
+      h5geo::CreationType createFlag) override;
+  virtual H5Points1* createPoints1(
+      h5gt::Group group,
+      PointsParam& p,
+      h5geo::CreationType createFlag) override;
+  virtual H5Points2* createPoints2(
+      std::string& name,
+      PointsParam& p,
+      h5geo::CreationType createFlag) override;
+  virtual H5Points2* createPoints2(
+      h5gt::Group group,
+      PointsParam& p,
+      h5geo::CreationType createFlag) override;
+  virtual H5Points3* createPoints3(
+      std::string& name,
+      PointsParam& p,
+      h5geo::CreationType createFlag) override;
+  virtual H5Points3* createPoints3(
+      h5gt::Group group,
+      PointsParam& p,
+      h5geo::CreationType createFlag) override;
+  virtual H5Points4* createPoints4(
+      std::string& name,
+      PointsParam& p,
+      h5geo::CreationType createFlag) override;
+  virtual H5Points4* createPoints4(
+      h5gt::Group group,
+      PointsParam& p,
+      h5geo::CreationType createFlag) override;
+
+  virtual H5Horizon* createHorizon(
+      std::string& name,
+      HorizonParam& p,
+      h5geo::CreationType createFlag) override;
+  virtual H5Horizon* createHorizon(
+      h5gt::Group group,
+      HorizonParam& p,
+      h5geo::CreationType createFlag) override;
+
   virtual H5Base* clone() override;
 #ifdef H5GEO_USE_GDAL
   ///

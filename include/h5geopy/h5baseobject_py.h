@@ -19,6 +19,58 @@ struct H5BaseObject_py
       &py_obj)
   {
     py_obj
+        .def("openPoints", py::overload_cast<
+             const std::string&>(&H5BaseObject::openPoints))
+        .def("openPoints", py::overload_cast<
+             h5gt::Group>(&H5BaseObject::openPoints))
+
+        .def("openHorizon", py::overload_cast<
+             const std::string&>(&H5BaseObject::openHorizon))
+        .def("openHorizon", py::overload_cast<
+             h5gt::Group>(&H5BaseObject::openHorizon))
+
+        .def("createPoints1", py::overload_cast<
+             std::string&,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseObject::createPoints3))
+        .def("createPoints1", py::overload_cast<
+             h5gt::Group,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseObject::createPoints3))
+        .def("createPoints2", py::overload_cast<
+             std::string&,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseObject::createPoints3))
+        .def("createPoints2", py::overload_cast<
+             h5gt::Group,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseObject::createPoints3))
+        .def("createPoints3", py::overload_cast<
+             std::string&,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseObject::createPoints3))
+        .def("createPoints3", py::overload_cast<
+             h5gt::Group,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseObject::createPoints3))
+        .def("createPoints4", py::overload_cast<
+             std::string&,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseObject::createPoints3))
+        .def("createPoints4", py::overload_cast<
+             h5gt::Group,
+             PointsParam&,
+             h5geo::CreationType>(&H5BaseObject::createPoints3))
+
+        .def("createHorizon", py::overload_cast<
+             std::string&,
+             HorizonParam&,
+             h5geo::CreationType>(&H5BaseObject::createHorizon))
+        .def("createHorizon", py::overload_cast<
+             h5gt::Group,
+             HorizonParam&,
+             h5geo::CreationType>(&H5BaseObject::createHorizon))
+
 
       #ifdef H5GEO_USE_GDAL
         .def("createCoordinateTransformationToReadData",

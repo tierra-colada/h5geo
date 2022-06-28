@@ -26,10 +26,10 @@ public:
   virtual H5BaseObject* openObject(
       h5gt::Group group) = 0;
 
-	/// \brief Open H5BasePoints derived points
+  /// \brief Open H5BasePoints derived points
   virtual H5BasePoints* openPoints(
       const std::string& name) = 0;
-	/// \brief Open H5BasePoints derived points
+  /// \brief Open H5BasePoints derived points
   virtual H5BasePoints* openPoints(
       h5gt::Group group) = 0;
 

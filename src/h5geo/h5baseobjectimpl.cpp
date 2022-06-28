@@ -102,6 +102,192 @@ H5Base* H5BaseObjectImpl<H5Horizon>::clone()
   return new H5HorizonImpl(objG);
 }
 
+template <typename TBase>
+H5BasePoints* H5BaseObjectImpl<TBase>::openPoints(
+    const std::string& name)
+{
+  if (!objG.hasObject(name, h5gt::ObjectType::Group))
+    return nullptr;
+
+  h5gt::Group group = objG.getGroup(name);
+  return openPoints(group);
+}
+
+template <typename TBase>
+H5BasePoints* H5BaseObjectImpl<TBase>::openPoints(
+    h5gt::Group group)
+{
+  return h5geo::openPoints(group);
+}
+
+template <typename TBase>
+H5Horizon* H5BaseObjectImpl<TBase>::openHorizon(
+    const std::string& name)
+{
+  if (!objG.hasObject(name, h5gt::ObjectType::Group))
+    return nullptr;
+
+  h5gt::Group group = objG.getGroup(name);
+  return openHorizon(group);
+}
+
+template <typename TBase>
+H5Horizon* H5BaseObjectImpl<TBase>::openHorizon(
+    h5gt::Group group)
+{
+  return openHorizon(group);
+}
+
+template <typename TBase>
+H5Points1* H5BaseObjectImpl<TBase>::createPoints1(
+    std::string& name,
+    PointsParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        name, objG, h5geo::ObjectType::POINTS_1, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5Points1Impl(opt.value());
+}
+
+template <typename TBase>
+H5Points1* H5BaseObjectImpl<TBase>::createPoints1(
+    h5gt::Group group,
+    PointsParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        group, h5geo::ObjectType::POINTS_1, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5Points1Impl(opt.value());
+}
+
+template <typename TBase>
+H5Points2* H5BaseObjectImpl<TBase>::createPoints2(
+    std::string& name,
+    PointsParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        name, objG, h5geo::ObjectType::POINTS_2, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5Points2Impl(opt.value());
+}
+
+template <typename TBase>
+H5Points2* H5BaseObjectImpl<TBase>::createPoints2(
+    h5gt::Group group,
+    PointsParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        group, h5geo::ObjectType::POINTS_2, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5Points2Impl(opt.value());
+}
+
+template <typename TBase>
+H5Points3* H5BaseObjectImpl<TBase>::createPoints3(
+    std::string& name,
+    PointsParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        name, objG, h5geo::ObjectType::POINTS_3, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5Points3Impl(opt.value());
+}
+
+template <typename TBase>
+H5Points3* H5BaseObjectImpl<TBase>::createPoints3(
+    h5gt::Group group,
+    PointsParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        group, h5geo::ObjectType::POINTS_3, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5Points3Impl(opt.value());
+}
+
+template <typename TBase>
+H5Points4* H5BaseObjectImpl<TBase>::createPoints4(
+    std::string& name,
+    PointsParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        name, objG, h5geo::ObjectType::POINTS_4, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5Points4Impl(opt.value());
+}
+
+template <typename TBase>
+H5Points4* H5BaseObjectImpl<TBase>::createPoints4(
+    h5gt::Group group,
+    PointsParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        group, h5geo::ObjectType::POINTS_4, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5Points4Impl(opt.value());
+}
+
+template <typename TBase>
+H5Horizon* H5BaseObjectImpl<TBase>::createHorizon(
+    std::string& name,
+    HorizonParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        name, objG, h5geo::ObjectType::HORIZON, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5HorizonImpl(opt.value());
+}
+
+template <typename TBase>
+H5Horizon* H5BaseObjectImpl<TBase>::createHorizon(
+    h5gt::Group group,
+    HorizonParam& p,
+    h5geo::CreationType createFlag)
+{
+  auto opt = H5BaseImpl<TBase>::createObject(
+        group, h5geo::ObjectType::HORIZON, &p, createFlag);
+
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5HorizonImpl(opt.value());
+}
+
 #ifdef H5GEO_USE_GDAL
 
 template <typename TBase>
