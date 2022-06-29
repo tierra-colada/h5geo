@@ -60,7 +60,6 @@ inline constexpr auto text_header = magic_enum::enum_name(h5geo::detail::SeisDat
 inline constexpr auto bin_header = magic_enum::enum_name(h5geo::detail::SeisDatasets::bin_header);
 inline constexpr auto trace_header = magic_enum::enum_name(h5geo::detail::SeisDatasets::trace_header);
 inline constexpr auto trace = magic_enum::enum_name(h5geo::detail::SeisDatasets::trace);
-inline constexpr auto boundary = magic_enum::enum_name(h5geo::detail::SeisDatasets::boundary);
 inline constexpr auto& seis_groups =
     magic_enum::enum_names<h5geo::detail::SeisGroups>();
 inline constexpr auto sort = magic_enum::enum_name(h5geo::detail::SeisGroups::sort);

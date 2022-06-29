@@ -924,7 +924,6 @@ H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
     createBinHeader(group, 10, param.mapSEGY); // stdChunk may be too big for bin header
     createTrace(group, param.nTrc, param.nSamp, param.trcChunk, param.mapSEGY);
     createTraceHeader(group, param.nTrc, param.trcChunk, param.mapSEGY);
-    createBoundary(group, param.stdChunk);
     createSort(group);
 
     return group;
@@ -1214,31 +1213,6 @@ H5BaseImpl<TBase>::createTraceHeader(
             shortHeaderNames[i], h5gt::DataSpace(1));
       attribute.write(i);
     }
-    return dataset;
-
-  } catch (h5gt::Exception& err) {
-    return std::nullopt;
-  }
-}
-
-template <typename TBase>
-std::optional<h5gt::DataSet>
-H5BaseImpl<TBase>::createBoundary(
-    h5gt::Group &seisGroup,
-    const hsize_t& stdChunk)
-{
-  std::vector<size_t> count = {2, 1};
-  std::vector<size_t> max_count = {2, h5gt::DataSpace::UNLIMITED};
-  std::vector<hsize_t> cdims = {2, stdChunk};
-
-  try {
-
-    h5gt::DataSetCreateProps props;
-    props.setChunk(cdims);
-    h5gt::DataSpace dataspace(count, max_count);
-    h5gt::DataSet dataset = seisGroup.createDataSet<double>(
-          std::string{h5geo::detail::boundary},
-          dataspace, h5gt::LinkCreateProps(), props);
     return dataset;
 
   } catch (h5gt::Exception& err) {

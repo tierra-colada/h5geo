@@ -24,8 +24,8 @@ public:
       const std::string& unitsTo = "") override;
 
   virtual bool writeComponent(
-      Eigen::Ref<Eigen::VectorXd> v,
       const std::string& componentName,
+      Eigen::Ref<Eigen::VectorXd> v,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
 

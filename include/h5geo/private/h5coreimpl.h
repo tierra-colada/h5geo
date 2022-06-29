@@ -831,11 +831,11 @@ inline bool writeDataToIndexedDataset(
   std::vector dims = dataset.getDimensions();
 
   if (resize == false &&
-      dims[1] < v.size())
+      dims[1] != v.size())
     return false;
 
   if (resize == true  &&
-      dims[1] < v.size())
+      dims[1] != v.size())
     dataset.resize({dims[0], size_t(v.size())});
 
   try {

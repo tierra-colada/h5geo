@@ -93,12 +93,6 @@ void H5Seis_py(
            py::arg("value"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
-      .def("writeBoundary", &H5Seis::writeBoundary,
-           py::arg("boundary"),
-           py::arg_v("lengthUnits", "", "str()"),
-           py::arg_v("doCoordTransform", false, "False"),
-           "write boundary of 2d (a line) or 3d (usually convex hull or concave hull) seismic survey. "
-"Input argument is `MatrixX2d` where first col - `X` coord, second - `Y` coord")
       .def("writeTrace", py::overload_cast<
            Eigen::Ref<Eigen::MatrixXf>,
            const size_t&,
@@ -416,9 +410,6 @@ void H5Seis_py(
       .def("getSurveyType", &H5Seis::getSurveyType)
       .def("getSRD", &H5Seis::getSRD,
            py::arg_v("units", "", "str()"))
-      .def("getBoundary", &H5Seis::getBoundary,
-           py::arg_v("units", "", "str()"),
-           py::arg_v("doCoordTransform", false, "False"))
 
       .def("hasPKeySort", &H5Seis::hasPKeySort,
            py::arg("pKeyName"))
@@ -429,7 +420,6 @@ void H5Seis_py(
 
       .def("openSeisContainer", &H5Seis::openSeisContainer)
 
-      .def("getBoundaryD", &H5Seis::getBoundaryD)
       .def("getTextHeaderD", &H5Seis::getTextHeaderD)
       .def("getBinHeaderD", &H5Seis::getBinHeaderD)
       .def("getTraceHeaderD", &H5Seis::getTraceHeaderD)
@@ -449,9 +439,13 @@ void H5Seis_py(
 
       .def("updateTraceHeaderLimits", &H5Seis::updateTraceHeaderLimits,
            py::arg_v("nTrcBuffer", 1e7, "int(1e7)")) // `int` is important
-      .def("updateBoundary", &H5Seis::updateBoundary)
       .def("updatePKeySort", &H5Seis::updatePKeySort,
-           py::arg("pKeyName"));
+           py::arg("pKeyName"))
+
+      .def("calcBoundary", &H5Seis::calcBoundary,
+           py::arg_v("lengthUnits", "", "str()"),
+           py::arg_v("doCoordTransform", false, "False"),
+           "calculate boundary of 2D or 3D seismic survey");
 }
 
 

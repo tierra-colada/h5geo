@@ -20,7 +20,7 @@ class H5SeisContainer;
 ///  * binary header dataset
 ///  * trace header dataset
 ///  * trace data dataset
-///  * optional datasets for sorting, boundary and other purposes
+///  * optional datasets for sorting and other purposes
 /// 
 /// <b> Dont forget to call: </b>
 ///  * H5Seis::updateTraceHeaderLimits() when trace header limits were modified
@@ -70,15 +70,6 @@ public:
       const double& value,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
-  /// \brief Write boundary
-  ///
-  /// Boundary is a 2D line (`XY`) around the survey. \n
-  /// Use H5Seis::updateBoundary() to automatically calculate and write it. \n
-  /// Not used by h5geo (for developper needs only).
-  virtual bool writeBoundary(
-      Eigen::Ref<Eigen::MatrixX2d> M,
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) = 0;
   /// \brief Write block of traces starting from trace `fromTrc` and from sample `fromSampInd`
   virtual bool writeTrace(
       Eigen::Ref<Eigen::MatrixXf> TRACE,
@@ -418,14 +409,6 @@ public:
   virtual h5geo::SurveyType getSurveyType() = 0;
   /// \brief Get Seismic Reference Datum
   virtual double getSRD(const std::string& lengthUnits = "") = 0;
-  /// \brief Get boundary
-  ///
-  /// Boundary is a 2D line (`XY`) around the survey. \n
-  /// Use H5Seis::updateBoundary() to automatically calculate and write it. \n
-  /// Not used by h5geo (for developper needs only).
-  virtual Eigen::MatrixXd getBoundary(
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) = 0;
 
   /// \brief Check if `PKey` sort is prepared
   virtual bool hasPKeySort(const std::string& pKeyName) = 0;
@@ -440,8 +423,6 @@ public:
   /// \brief Open H5SeisContainer where current seismic resides
   virtual H5SeisContainer* openSeisContainer() = 0;
 
-  /// \brief Get boundary DataSet
-  virtual std::optional<h5gt::DataSet> getBoundaryD() = 0;
   /// \brief Get text header DataSet
   virtual std::optional<h5gt::DataSet> getTextHeaderD() = 0;
   /// \brief Get binary header DataSet
@@ -474,10 +455,15 @@ public:
 
   /// \brief Calculate and write min/max trace headers
   virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) = 0;
-  /// \brief Calculate and write `XY` boundary based on `CDP_X` and `CDP_Y`
-  virtual bool updateBoundary() = 0;
   /// \brief Update sorting for prepared `PKey`
   virtual bool updatePKeySort(const std::string& pKeyName) = 0;
+
+  /// \brief Calculate `XY` boundary around the survey
+  ///
+  /// Return two cols Eigen matrix. Use it to write as H5Horizon.
+  virtual Eigen::MatrixXd calcBoundary(
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) = 0;
 };
 
 using H5Seis_ptr = std::unique_ptr<H5Seis, h5geo::ObjectDeleter>;

@@ -85,8 +85,7 @@ enum class SeisDatasets : unsigned{
   text_header = 1,
   bin_header = 2,
   trace_header = 3,
-  trace = 4,
-  boundary = 5
+  trace = 4
 };
 
 typedef std::underlying_type<SeisDatasets>::type SeisDatasetsUType;
@@ -94,8 +93,7 @@ inline h5gt::EnumType<SeisDatasetsUType> create_enum_SeisDatasets() {
   return {{"text_header", static_cast<SeisDatasetsUType>(SeisDatasets::text_header)},
           {"bin_header", static_cast<SeisDatasetsUType>(SeisDatasets::bin_header)},
           {"trace_header", static_cast<SeisDatasetsUType>(SeisDatasets::trace_header)},
-          {"trace", static_cast<SeisDatasetsUType>(SeisDatasets::trace)},
-          {"boundary", static_cast<SeisDatasetsUType>(SeisDatasets::boundary)}};
+          {"trace", static_cast<SeisDatasetsUType>(SeisDatasets::trace)}};
 }
 
 enum class SeisGroups : unsigned{

@@ -35,11 +35,6 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
 
-  virtual bool writeBoundary(
-      Eigen::Ref<Eigen::MatrixX2d> M,
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) override;
-
   virtual bool writeTrace(
       Eigen::Ref<Eigen::MatrixXf> TRACE,
       const size_t& fromTrc = 0,
@@ -243,9 +238,6 @@ public:
   virtual h5geo::SeisDataType getDataType() override;
   virtual h5geo::SurveyType getSurveyType() override;
   virtual double getSRD(const std::string& lengthUnits = "") override;
-  virtual Eigen::MatrixXd getBoundary(
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) override;
 
   virtual bool hasPKeySort(const std::string& pKeyName) override;
   virtual bool removePKeySort(const std::string& pKeyName) override;
@@ -253,7 +245,6 @@ public:
 
   virtual H5SeisContainer* openSeisContainer() override;
 
-  virtual std::optional<h5gt::DataSet> getBoundaryD() override;
   virtual std::optional<h5gt::DataSet> getTextHeaderD() override;
   virtual std::optional<h5gt::DataSet> getBinHeaderD() override;
   virtual std::optional<h5gt::DataSet> getTraceHeaderD() override;
@@ -271,12 +262,15 @@ public:
   virtual std::optional<h5gt::DataSet> getSEGYTraceFloatD() override;
 
   virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) override;
-  virtual bool updateBoundary() override;
   virtual bool updatePKeySort(const std::string& pKeyName) override;
 
+  virtual Eigen::MatrixXd calcBoundary(
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) override;
+
 protected:
-  virtual Eigen::MatrixX2d calcBoundaryStk2D();
-  virtual Eigen::MatrixX2d calcConvexHullBoundary();
+  virtual Eigen::MatrixXd calcBoundaryStk2D();
+  virtual Eigen::MatrixXd calcConvexHullBoundary();
   virtual void calcGrid3D(
       const Eigen::Ref<Eigen::VectorXd>& x,
       const Eigen::Ref<Eigen::VectorXd>& y,

@@ -17,6 +17,7 @@ data type (stack or prestack), number of traces, number of samples etc:
    #include <iostream>
    #include <h5geo/h5seiscontainer.h>
    #include <h5geo/h5seis.h>
+   #include <h5geo/h5horizon.h>
 
 
    int main(){
@@ -233,12 +234,12 @@ Add Pkey ``CDP`` and then you are free to retrieve any ``CDP-...`` sorted data.
 
    Sorting idea is effetive only if the chosen PKey has many repeating values.
 
-Updating XY boundary around the survey
+Calculating XY boundary around the survey
 --------------------------------------
 
-There is a convenient function to prepare XY boundary around survey.
+There is a convenient function to calculate XY boundary around survey.
 For 3D and 2D prestack data it uses convex hull algorithm.
-For 2D stack data it simply shows coordinates of traces.
+For 2D stack data it simply shows  ``CDP`` coordinates of traces.
 
 .. code:: c++
 
@@ -247,14 +248,54 @@ For 2D stack data it simply shows coordinates of traces.
       return -1;
    }
 
+   Eigen::MatrixXd boundary = seis->calcBoundary();
+   if (!boundary.size() < 1){
+      std::cout << "Unable to calculate boundary" << std::endl;
+      return -1;
+   }
+
+   std::string horizonName = "boundary";
+   HorizonParam p_hrz;
+   p_hrz.components["X"] = 0;
+   p_hrz.components["Y"] = 1;
+   p_hrz.nPoints = 10;
+   p_hrz.pointsChunkSize = 10;
+   p_hrz.domain = h5geo::Domain::TWT;
+   p_hrz.lengthUnits = p.lengthUnits;
+   p_hrz.spatialReference = p.spatialReference;
+
+   H5Horizon_ptr hrz(
+      seis->createHorizon(
+         horizonName, p_hrz, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(hrz != nullptr);
+   if (!hrz){
+      std::cout << "Unable to create horizon (boundary)" << std::endl;
+      return -1;
+   }
+
+   if (!hrz->writeComponent("X", boundary.col(0))){
+      std::cout << "Unable to write X to boundary" << std::endl;
+      return -1;
+   }
+
+   if (!hrz->writeComponent("Y", boundary.col(1))){
+      std::cout << "Unable to write Y to boundary" << std::endl;
+      return -1;
+   }
+
 To get calculated values:
 
 .. code:: c++
 
-   // returned values (two column array) in 'meters' without coordinate system transformation
-   Eigen::MatrixXd xy_boundary = getBoundary("m", false);
-   if (!xy_boundary.size() < 1){
-      std::endl << "Unable to get boundary" << std::endl;
+   Eigen::VectorXd X = hrz->getComponent("X");
+   if (X.size() < 1){
+      std::cout << "Unable to get X from boundary" << std::endl;
+      return -1;
+   }
+
+   Eigen::VectorXd Y = hrz->getComponent("Y");
+   if (Y.size() < 1){
+      std::cout << "Unable to get Y from boundary" << std::endl;
       return -1;
    }
 

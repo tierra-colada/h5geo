@@ -20,12 +20,12 @@ void H5Horizon_py(
            py::arg_v("unitsTo", "", "str()"))
 
       .def("writeComponent", &H5Horizon::writeComponent,
+           py::arg("componentName"),
            py::arg("data"),
-           py::arg_v("componentName", "", "str()"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
       .def("getComponent", &H5Horizon::getComponent,
-           py::arg_v("componentName", "", "str()"),
+           py::arg("componentName"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
 

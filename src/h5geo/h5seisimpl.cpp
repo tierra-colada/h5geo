@@ -186,43 +186,6 @@ bool H5SeisImpl::writeBinHeader(
   return true;
 }
 
-bool H5SeisImpl::writeBoundary(
-    Eigen::Ref<Eigen::MatrixX2d> M,
-    const std::string& lengthUnits,
-    bool doCoordTransform)
-{
-  auto opt = getBoundaryD();
-  if (!opt.has_value())
-    return false;
-
-  bool val;
-#ifdef H5GEO_USE_GDAL
-  if (doCoordTransform){
-    OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
-    if (!coordTrans)
-      return false;
-
-    coordTrans->Transform(M.rows(), M.col(0).data(), M.col(1).data());
-    val = h5geo::overwriteResizableDataset(
-          objG,
-          opt->getPath(),
-          M);
-
-    objG.flush();
-    return val;
-  }
-#endif
-
-  val = h5geo::overwriteResizableDataset(
-        objG,
-        opt->getPath(),
-        M,
-        lengthUnits, getDataUnits());
-
-  objG.flush();
-  return val;
-}
-
 bool H5SeisImpl::writeTrace(
     Eigen::Ref<Eigen::MatrixXf> TRACE,
     const size_t& fromTrc,
@@ -1755,38 +1718,6 @@ double H5SeisImpl::getSRD(const std::string& lengthUnits){
         getLengthUnits(), lengthUnits);
 }
 
-Eigen::MatrixXd H5SeisImpl::getBoundary(
-    const std::string& lengthUnits,
-    bool doCoordTransform)
-{
-  auto opt = getBoundaryD();
-  if (!opt.has_value())
-    return Eigen::MatrixXd();
-
-#ifdef H5GEO_USE_GDAL
-  if (doCoordTransform){
-    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
-    if (!coordTrans)
-      return Eigen::MatrixXd();
-
-    Eigen::MatrixXd M = h5geo::readDoubleEigenMtxDataset(
-          objG,
-          opt->getPath());
-
-    if (M.cols() != 2)
-      return Eigen::MatrixXd();
-
-    coordTrans->Transform(M.rows(), M.col(0).data(), M.col(1).data());
-    return M;
-  }
-#endif
-
-  return h5geo::readDoubleEigenMtxDataset(
-        objG,
-        opt->getPath(),
-        getLengthUnits(), lengthUnits);
-}
-
 bool H5SeisImpl::hasPKeySort(const std::string& pKeyName)
 {
   auto optUValG = getUValG();
@@ -1874,13 +1805,6 @@ H5SeisContainer* H5SeisImpl::openSeisContainer(){
   h5gt::File file = getH5File();
   return h5geo::createSeisContainer(
         file, h5geo::CreationType::OPEN_OR_CREATE);
-}
-
-std::optional<h5gt::DataSet>
-H5SeisImpl::getBoundaryD()
-{
-  std::string name = std::string{h5geo::detail::boundary};
-  return getDatasetOpt(objG, name);
 }
 
 std::optional<h5gt::DataSet>
@@ -2071,50 +1995,58 @@ bool H5SeisImpl::updateTraceHeaderLimits(size_t nTrcBuffer)
   return true;
 }
 
-bool H5SeisImpl::updateBoundary()
-{
-  auto opt = getBoundaryD();
-  if (!opt.has_value())
-    return false;
-
-  Eigen::MatrixX2d boundary;
-
-  if (getDataType() == h5geo::SeisDataType::STACK &&
-      getSurveyType() == h5geo::SurveyType::TWO_D){
-    boundary = calcBoundaryStk2D();
-    if (boundary.size() == 0)
-      return false;
-  } else {
-    boundary = calcConvexHullBoundary();
-    if (boundary.size() == 0)
-      return false;
-  }
-
-  bool val = h5geo::overwriteResizableDataset(
-        objG,
-        opt->getPath(),
-        boundary);
-
-  objG.flush();
-  return val;
-}
-
 bool H5SeisImpl::updatePKeySort(const std::string& pKeyName)
 {
   removePKeySort(pKeyName);
   return addPKeySort(pKeyName);
 }
 
+Eigen::MatrixXd H5SeisImpl::calcBoundary(
+    const std::string& lengthUnits,
+    bool doCoordTransform)
+{
+  Eigen::MatrixX2d boundary;
+  if (getDataType() == h5geo::SeisDataType::STACK &&
+      getSurveyType() == h5geo::SurveyType::TWO_D){
+    boundary = calcBoundaryStk2D();
+  } else {
+    boundary = calcConvexHullBoundary();
+  }
+
+  if (boundary.size() == 0 || boundary.cols() < 2)
+    return Eigen::MatrixXd();
+
+#ifdef H5GEO_USE_GDAL
+  if (doCoordTransform){
+    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
+    if (!coordTrans)
+      return Eigen::MatrixXd();
+
+    coordTrans->Transform(boundary.rows(), boundary.col(0).data(), boundary.col(1).data());
+    return boundary;
+  }
+#endif
+
+  if (!lengthUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(getLengthUnits()),
+          units::unit_from_string(lengthUnits));
+    boundary *= coef;
+  }
+
+  return boundary;
+}
+
 /*-------------------------------------------------------*/
 /*---------------------- PROTECTED ----------------------*/
 /*-------------------------------------------------------*/
 
-Eigen::MatrixX2d H5SeisImpl::calcBoundaryStk2D(){
+Eigen::MatrixXd H5SeisImpl::calcBoundaryStk2D(){
   if (getDataType() != h5geo::SeisDataType::STACK ||
       getSurveyType() != h5geo::SurveyType::TWO_D)
-    return Eigen::MatrixX2d();
+    return Eigen::MatrixXd();
 
-  Eigen::MatrixX3d hdr(getNTrc(), 3), hdrSorted(getNTrc(), 3);
+  Eigen::MatrixXd hdr(getNTrc(), 3), hdrSorted(getNTrc(), 3);
   hdr.col(0) = getTraceHeader("CDP", 0, getNTrc());
   hdr.col(1) = getTraceHeader("CDP_X", 0, getNTrc());
   hdr.col(2) = getTraceHeader("CDP_Y", 0, getNTrc());
@@ -2124,7 +2056,7 @@ Eigen::MatrixX2d H5SeisImpl::calcBoundaryStk2D(){
   return hdrSorted.rightCols(2);
 }
 
-Eigen::MatrixX2d H5SeisImpl::calcConvexHullBoundary(){
+Eigen::MatrixXd H5SeisImpl::calcConvexHullBoundary(){
   Eigen::MatrixX2d hdr(getNTrc(), 2);
   hdr.col(0) = getTraceHeader("CDP_X", 0, getNTrc());
   hdr.col(1) = getTraceHeader("CDP_Y", 0, getNTrc());

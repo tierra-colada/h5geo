@@ -2,6 +2,7 @@
 #include <gmock/gmock.h>
 #include <h5geo/h5seiscontainer.h>
 #include <h5geo/h5seis.h>
+#include <h5geo/h5horizon.h>
 #include <h5geo/private/h5segy.h>
 
 #include <h5gt/H5File.hpp>
@@ -376,10 +377,10 @@ TEST_F(H5SeisFixture, writeAndGetSortedData){
       << "Read and compare single header (CDP for example)";
 }
 
-TEST_F(H5SeisFixture, updateBoundary){
+TEST_F(H5SeisFixture, boundary){
   H5Seis_ptr seis(seisContainer->createSeis(
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
+  ASSERT_TRUE(seis != nullptr);
 
   Eigen::MatrixXf traces = Eigen::MatrixXf::Random(
         seis->getNSamp(), seis->getNTrc());
@@ -399,9 +400,32 @@ TEST_F(H5SeisFixture, updateBoundary){
   ASSERT_TRUE(seis->writeTraceHeader(trcHdr, 0))
       << "Write all trace headers at once";
 
-  seis->updateBoundary();
-  auto boundary = seis->getBoundary();
-  ASSERT_TRUE(!boundary.isZero(0));
+  Eigen::MatrixXd boundary = seis->calcBoundary();
+  ASSERT_TRUE(boundary.size() > 0);
+
+  std::string horizonName = "boundary";
+  HorizonParam p_hrz;
+  p_hrz.components["X"] = 0;
+  p_hrz.components["Y"] = 1;
+  p_hrz.nPoints = 10;
+  p_hrz.pointsChunkSize = 10;
+  p_hrz.domain = h5geo::Domain::TWT;
+  p_hrz.lengthUnits = p.lengthUnits;
+  p_hrz.spatialReference = p.spatialReference;
+
+  H5Horizon_ptr hrz(
+        seis->createHorizon(
+          horizonName, p_hrz, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(hrz != nullptr);
+
+  ASSERT_TRUE(hrz->writeComponent("X", boundary.col(0)));
+  ASSERT_TRUE(hrz->writeComponent("Y", boundary.col(1)));
+
+  Eigen::VectorXd X = hrz->getComponent("X");
+  Eigen::VectorXd Y = hrz->getComponent("Y");
+
+  ASSERT_TRUE(boundary.col(0).isApprox(X));
+  ASSERT_TRUE(boundary.col(1).isApprox(Y));
 }
 
 TEST_F(H5SeisFixture, generateGeometry){

@@ -41,8 +41,8 @@ Eigen::MatrixXd H5HorizonImpl::getData(
 }
 
 bool H5HorizonImpl::writeComponent(
-    Eigen::Ref<Eigen::VectorXd> v,
     const std::string& componentName,
+    Eigen::Ref<Eigen::VectorXd> v,
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {

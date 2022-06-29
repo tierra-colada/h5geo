@@ -125,10 +125,6 @@ private:
       const size_t& nTrc,
       const hsize_t& trcChunk,
       bool mapSEGY);
-  std::optional<h5gt::DataSet>
-  createBoundary(
-      h5gt::Group &seisGroup,
-      const hsize_t& stdChunk);
   std::optional<h5gt::Group>
   createSort(
       h5gt::Group &seisGroup);
