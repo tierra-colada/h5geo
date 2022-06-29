@@ -10,6 +10,7 @@ For now **h5geo** provides API to work with:
 * wells (deviations, logs, welltops)
 * maps
 * points
+* horizons
 
 **h5geo** also includes **h5geopy** project wich is a python wrapper. 
 
@@ -30,7 +31,7 @@ C++ API documentation: [tierra-colada.github.io/h5geo](https://tierra-colada.git
 * [magic-enum](https://github.com/Neargye/magic_enum) (header only)
 * [units](https://github.com/LLNL/units)
 * [mio](https://github.com/mandreyel/mio) (header only)
-* optionally: [tbb](https://github.com/oneapi-src/oneTBB) (MSVC compiler includes it by default)
+* optionally: [TBB](https://github.com/oneapi-src/oneTBB)
 * optionally: [GDAL](https://github.com/OSGeo/gdal)
 * optionally: [h5gtpy](https://github.com/tierra-colada/h5gt) (needed only when building with python support `-DH5GEO_BUILD_h5geopy=ON`)
 
