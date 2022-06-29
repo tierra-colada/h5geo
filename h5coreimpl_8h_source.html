@@ -904,11 +904,11 @@ $(function() {
 <div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span>  std::vector dims = dataset.getDimensions();</div>
 <div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span> </div>
 <div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span>  <span class="keywordflow">if</span> (resize == <span class="keyword">false</span> &amp;&amp;</div>
-<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>      dims[1] &lt; v.size())</div>
+<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>      dims[1] != v.size())</div>
 <div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span> </div>
 <div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span>  <span class="keywordflow">if</span> (resize == <span class="keyword">true</span>  &amp;&amp;</div>
-<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>      dims[1] &lt; v.size())</div>
+<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>      dims[1] != v.size())</div>
 <div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span>    dataset.resize({dims[0], size_t(v.size())});</div>
 <div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span> </div>
 <div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>  <span class="keywordflow">try</span> {</div>

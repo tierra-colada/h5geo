@@ -116,9 +116,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a07a19d126aabd4717db44089b5146ab3"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a07a19d126aabd4717db44089b5146ab3">writeBinHeader</a> (const std::string &amp;hdrName, const double &amp;value, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;) override</td></tr>
 <tr class="memdesc:a07a19d126aabd4717db44089b5146ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write text header.  <a href="class_h5_seis_impl.html#a07a19d126aabd4717db44089b5146ab3">More...</a><br /></td></tr>
 <tr class="separator:a07a19d126aabd4717db44089b5146ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac017d126df0687b05e73899383ed1634"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#ac017d126df0687b05e73899383ed1634">writeBoundary</a> (Eigen::Ref&lt; Eigen::MatrixX2d &gt; M, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false) override</td></tr>
-<tr class="memdesc:ac017d126df0687b05e73899383ed1634"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write boundary.  <a href="class_h5_seis_impl.html#ac017d126df0687b05e73899383ed1634">More...</a><br /></td></tr>
-<tr class="separator:ac017d126df0687b05e73899383ed1634"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b1e7ffa243a119cfc51823cb0f28026"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a1b1e7ffa243a119cfc51823cb0f28026">writeTrace</a> (Eigen::Ref&lt; Eigen::MatrixXf &gt; TRACE, const size_t &amp;fromTrc=0, const size_t &amp;fromSampInd=0, const std::string &amp;dataUnits=&quot;&quot;) override</td></tr>
 <tr class="memdesc:a1b1e7ffa243a119cfc51823cb0f28026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write block of traces starting from trace <code>fromTrc</code> and from sample <code>fromSampInd</code>  <a href="class_h5_seis_impl.html#a1b1e7ffa243a119cfc51823cb0f28026">More...</a><br /></td></tr>
 <tr class="separator:a1b1e7ffa243a119cfc51823cb0f28026"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -293,9 +290,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aaa1bc94c54a0e0471ef06b182397a557"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#aaa1bc94c54a0e0471ef06b182397a557">getSRD</a> (const std::string &amp;lengthUnits=&quot;&quot;) override</td></tr>
 <tr class="memdesc:aaa1bc94c54a0e0471ef06b182397a557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Seismic Reference Datum.  <a href="class_h5_seis_impl.html#aaa1bc94c54a0e0471ef06b182397a557">More...</a><br /></td></tr>
 <tr class="separator:aaa1bc94c54a0e0471ef06b182397a557"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19c824da74cf739fa3bfb2304b25afce"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a19c824da74cf739fa3bfb2304b25afce">getBoundary</a> (const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false) override</td></tr>
-<tr class="memdesc:a19c824da74cf739fa3bfb2304b25afce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get boundary.  <a href="class_h5_seis_impl.html#a19c824da74cf739fa3bfb2304b25afce">More...</a><br /></td></tr>
-<tr class="separator:a19c824da74cf739fa3bfb2304b25afce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc776719da5029f9094b6b02accef6c6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#abc776719da5029f9094b6b02accef6c6">hasPKeySort</a> (const std::string &amp;pKeyName) override</td></tr>
 <tr class="memdesc:abc776719da5029f9094b6b02accef6c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if <code>PKey</code> sort is prepared.  <a href="class_h5_seis_impl.html#abc776719da5029f9094b6b02accef6c6">More...</a><br /></td></tr>
 <tr class="separator:abc776719da5029f9094b6b02accef6c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -308,9 +302,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1eb18d0f6249cb0e9fa0543a04a16852"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_h5_seis_container.html">H5SeisContainer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a1eb18d0f6249cb0e9fa0543a04a16852">openSeisContainer</a> () override</td></tr>
 <tr class="memdesc:a1eb18d0f6249cb0e9fa0543a04a16852"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open <a class="el" href="class_h5_seis_container.html" title="A container built around HDF5 file and used for storing and manipulating H5Seis objects.">H5SeisContainer</a> where current seismic resides.  <a href="class_h5_seis_impl.html#a1eb18d0f6249cb0e9fa0543a04a16852">More...</a><br /></td></tr>
 <tr class="separator:a1eb18d0f6249cb0e9fa0543a04a16852"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2e701d75e9bebecb767030bc863649f"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; h5gt::DataSet &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#ab2e701d75e9bebecb767030bc863649f">getBoundaryD</a> () override</td></tr>
-<tr class="memdesc:ab2e701d75e9bebecb767030bc863649f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get boundary DataSet.  <a href="class_h5_seis_impl.html#ab2e701d75e9bebecb767030bc863649f">More...</a><br /></td></tr>
-<tr class="separator:ab2e701d75e9bebecb767030bc863649f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ba6845d9a8b3ed85c1d6f486d2bf63a"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; h5gt::DataSet &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a1ba6845d9a8b3ed85c1d6f486d2bf63a">getTextHeaderD</a> () override</td></tr>
 <tr class="memdesc:a1ba6845d9a8b3ed85c1d6f486d2bf63a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get text header DataSet.  <a href="class_h5_seis_impl.html#a1ba6845d9a8b3ed85c1d6f486d2bf63a">More...</a><br /></td></tr>
 <tr class="separator:a1ba6845d9a8b3ed85c1d6f486d2bf63a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -356,12 +347,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2c3f80c1a378e872a3930616d7fd890f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a2c3f80c1a378e872a3930616d7fd890f">updateTraceHeaderLimits</a> (size_t nTrcBuffer=1e7) override</td></tr>
 <tr class="memdesc:a2c3f80c1a378e872a3930616d7fd890f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate and write min/max trace headers.  <a href="class_h5_seis_impl.html#a2c3f80c1a378e872a3930616d7fd890f">More...</a><br /></td></tr>
 <tr class="separator:a2c3f80c1a378e872a3930616d7fd890f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7f94e23d66d054708c0d8cf891759d8"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#aa7f94e23d66d054708c0d8cf891759d8">updateBoundary</a> () override</td></tr>
-<tr class="memdesc:aa7f94e23d66d054708c0d8cf891759d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate and write <code>XY</code> boundary based on <code>CDP_X</code> and <code>CDP_Y</code>  <a href="class_h5_seis_impl.html#aa7f94e23d66d054708c0d8cf891759d8">More...</a><br /></td></tr>
-<tr class="separator:aa7f94e23d66d054708c0d8cf891759d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6fc5d8832f3bd851512b1a6a96b0bc5"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#aa6fc5d8832f3bd851512b1a6a96b0bc5">updatePKeySort</a> (const std::string &amp;pKeyName) override</td></tr>
 <tr class="memdesc:aa6fc5d8832f3bd851512b1a6a96b0bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update sorting for prepared <code>PKey</code>  <a href="class_h5_seis_impl.html#aa6fc5d8832f3bd851512b1a6a96b0bc5">More...</a><br /></td></tr>
 <tr class="separator:aa6fc5d8832f3bd851512b1a6a96b0bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f6905a4afa37d5474b94c5db4854aee"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a8f6905a4afa37d5474b94c5db4854aee">calcBoundary</a> (const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false) override</td></tr>
+<tr class="memdesc:a8f6905a4afa37d5474b94c5db4854aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate <code>XY</code> boundary around the survey.  <a href="class_h5_seis_impl.html#a8f6905a4afa37d5474b94c5db4854aee">More...</a><br /></td></tr>
+<tr class="separator:a8f6905a4afa37d5474b94c5db4854aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_h5_base_object_impl"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_h5_base_object_impl')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_h5_base_object_impl.html">H5BaseObjectImpl&lt; H5Seis &gt;</a></td></tr>
 <tr class="memitem:a023ce49b156a182d9ebb360d25849ead inherit pub_methods_class_h5_base_object_impl"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_h5_base_points.html">H5BasePoints</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_base_object_impl.html#a023ce49b156a182d9ebb360d25849ead">openPoints</a> (const std::string &amp;name) override</td></tr>
 <tr class="memdesc:a023ce49b156a182d9ebb360d25849ead inherit pub_methods_class_h5_base_object_impl"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open <a class="el" href="class_h5_base_points.html" title="Base class for Points.">H5BasePoints</a> derived points.  <a href="class_h5_base_object_impl.html#a023ce49b156a182d9ebb360d25849ead">More...</a><br /></td></tr>
@@ -498,9 +489,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0d6ef5645767aad824d4935e5eaf9a3e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a0d6ef5645767aad824d4935e5eaf9a3e">writeBinHeader</a> (const std::string &amp;hdrName, const double &amp;value, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:a0d6ef5645767aad824d4935e5eaf9a3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write text header.  <a href="class_h5_seis.html#a0d6ef5645767aad824d4935e5eaf9a3e">More...</a><br /></td></tr>
 <tr class="separator:a0d6ef5645767aad824d4935e5eaf9a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76dcfefee7a43c44c93449a8e422aae2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a76dcfefee7a43c44c93449a8e422aae2">writeBoundary</a> (Eigen::Ref&lt; Eigen::MatrixX2d &gt; M, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
-<tr class="memdesc:a76dcfefee7a43c44c93449a8e422aae2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write boundary.  <a href="class_h5_seis.html#a76dcfefee7a43c44c93449a8e422aae2">More...</a><br /></td></tr>
-<tr class="separator:a76dcfefee7a43c44c93449a8e422aae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2938476b63979f64751087eaa8a58343"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a2938476b63979f64751087eaa8a58343">writeTrace</a> (Eigen::Ref&lt; Eigen::MatrixXf &gt; TRACE, const size_t &amp;fromTrc=0, const size_t &amp;fromSampInd=0, const std::string &amp;dataUnits=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:a2938476b63979f64751087eaa8a58343"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write block of traces starting from trace <code>fromTrc</code> and from sample <code>fromSampInd</code>  <a href="class_h5_seis.html#a2938476b63979f64751087eaa8a58343">More...</a><br /></td></tr>
 <tr class="separator:a2938476b63979f64751087eaa8a58343"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -678,9 +666,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2b88f9fb1d125d751e9fa7df2d6a37d1"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a2b88f9fb1d125d751e9fa7df2d6a37d1">getSRD</a> (const std::string &amp;lengthUnits=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:a2b88f9fb1d125d751e9fa7df2d6a37d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Seismic Reference Datum.  <a href="class_h5_seis.html#a2b88f9fb1d125d751e9fa7df2d6a37d1">More...</a><br /></td></tr>
 <tr class="separator:a2b88f9fb1d125d751e9fa7df2d6a37d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4634238db0d67cb4fcd2dd82eddb8e11"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a4634238db0d67cb4fcd2dd82eddb8e11">getBoundary</a> (const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
-<tr class="memdesc:a4634238db0d67cb4fcd2dd82eddb8e11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get boundary.  <a href="class_h5_seis.html#a4634238db0d67cb4fcd2dd82eddb8e11">More...</a><br /></td></tr>
-<tr class="separator:a4634238db0d67cb4fcd2dd82eddb8e11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65c203caba05b46654ff4201feab6f3b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a65c203caba05b46654ff4201feab6f3b">hasPKeySort</a> (const std::string &amp;pKeyName)=0</td></tr>
 <tr class="memdesc:a65c203caba05b46654ff4201feab6f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if <code>PKey</code> sort is prepared.  <a href="class_h5_seis.html#a65c203caba05b46654ff4201feab6f3b">More...</a><br /></td></tr>
 <tr class="separator:a65c203caba05b46654ff4201feab6f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -693,9 +678,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a91f77c870fb2379fc0e6b2cba077fa5e"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_h5_seis_container.html">H5SeisContainer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a91f77c870fb2379fc0e6b2cba077fa5e">openSeisContainer</a> ()=0</td></tr>
 <tr class="memdesc:a91f77c870fb2379fc0e6b2cba077fa5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open <a class="el" href="class_h5_seis_container.html" title="A container built around HDF5 file and used for storing and manipulating H5Seis objects.">H5SeisContainer</a> where current seismic resides.  <a href="class_h5_seis.html#a91f77c870fb2379fc0e6b2cba077fa5e">More...</a><br /></td></tr>
 <tr class="separator:a91f77c870fb2379fc0e6b2cba077fa5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a969bf5379c8a7ee614d3238c53df63c0"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; h5gt::DataSet &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a969bf5379c8a7ee614d3238c53df63c0">getBoundaryD</a> ()=0</td></tr>
-<tr class="memdesc:a969bf5379c8a7ee614d3238c53df63c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get boundary DataSet.  <a href="class_h5_seis.html#a969bf5379c8a7ee614d3238c53df63c0">More...</a><br /></td></tr>
-<tr class="separator:a969bf5379c8a7ee614d3238c53df63c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5cff3e4f8d5825235c01b3eb5bbf334"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; h5gt::DataSet &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#af5cff3e4f8d5825235c01b3eb5bbf334">getTextHeaderD</a> ()=0</td></tr>
 <tr class="memdesc:af5cff3e4f8d5825235c01b3eb5bbf334"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get text header DataSet.  <a href="class_h5_seis.html#af5cff3e4f8d5825235c01b3eb5bbf334">More...</a><br /></td></tr>
 <tr class="separator:af5cff3e4f8d5825235c01b3eb5bbf334"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -741,12 +723,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a74181ce6c45fe7c42dc5cef3fb0fa6ca"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a74181ce6c45fe7c42dc5cef3fb0fa6ca">updateTraceHeaderLimits</a> (size_t nTrcBuffer=1e7)=0</td></tr>
 <tr class="memdesc:a74181ce6c45fe7c42dc5cef3fb0fa6ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate and write min/max trace headers.  <a href="class_h5_seis.html#a74181ce6c45fe7c42dc5cef3fb0fa6ca">More...</a><br /></td></tr>
 <tr class="separator:a74181ce6c45fe7c42dc5cef3fb0fa6ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5f5e6470a73a5ac17778514ac2e98a9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#aa5f5e6470a73a5ac17778514ac2e98a9">updateBoundary</a> ()=0</td></tr>
-<tr class="memdesc:aa5f5e6470a73a5ac17778514ac2e98a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate and write <code>XY</code> boundary based on <code>CDP_X</code> and <code>CDP_Y</code>  <a href="class_h5_seis.html#aa5f5e6470a73a5ac17778514ac2e98a9">More...</a><br /></td></tr>
-<tr class="separator:aa5f5e6470a73a5ac17778514ac2e98a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10ec4e2f38be2c284caeb8cf94557bef"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a10ec4e2f38be2c284caeb8cf94557bef">updatePKeySort</a> (const std::string &amp;pKeyName)=0</td></tr>
 <tr class="memdesc:a10ec4e2f38be2c284caeb8cf94557bef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update sorting for prepared <code>PKey</code>  <a href="class_h5_seis.html#a10ec4e2f38be2c284caeb8cf94557bef">More...</a><br /></td></tr>
 <tr class="separator:a10ec4e2f38be2c284caeb8cf94557bef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03dbbf5cca5beadeb8c01305b09144c8"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a03dbbf5cca5beadeb8c01305b09144c8">calcBoundary</a> (const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
+<tr class="memdesc:a03dbbf5cca5beadeb8c01305b09144c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate <code>XY</code> boundary around the survey.  <a href="class_h5_seis.html#a03dbbf5cca5beadeb8c01305b09144c8">More...</a><br /></td></tr>
+<tr class="separator:a03dbbf5cca5beadeb8c01305b09144c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa5ad17b35eb3d0e452d419be40134c1"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_h5_base_points.html">H5BasePoints</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_base_object.html#aaa5ad17b35eb3d0e452d419be40134c1">openPoints</a> (const std::string &amp;name)=0</td></tr>
 <tr class="memdesc:aaa5ad17b35eb3d0e452d419be40134c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open <a class="el" href="class_h5_base_points.html" title="Base class for Points.">H5BasePoints</a> derived points.  <a href="class_h5_base_object.html#aaa5ad17b35eb3d0e452d419be40134c1">More...</a><br /></td></tr>
 <tr class="separator:aaa5ad17b35eb3d0e452d419be40134c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -869,12 +851,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ab2c112263eff90102a09d2f4a7faf9a1"><td class="memItemLeft" align="right" valign="top"><a id="ab2c112263eff90102a09d2f4a7faf9a1" name="ab2c112263eff90102a09d2f4a7faf9a1"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>H5SeisImpl</b> (const h5gt::Group &amp;group)</td></tr>
 <tr class="separator:ab2c112263eff90102a09d2f4a7faf9a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8d975d025104591dc195d23e68df91b"><td class="memItemLeft" align="right" valign="top"><a id="ab8d975d025104591dc195d23e68df91b" name="ab8d975d025104591dc195d23e68df91b"></a>
-virtual Eigen::MatrixX2d&#160;</td><td class="memItemRight" valign="bottom"><b>calcBoundaryStk2D</b> ()</td></tr>
-<tr class="separator:ab8d975d025104591dc195d23e68df91b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0247684b9bad186b6b9e140e2b459000"><td class="memItemLeft" align="right" valign="top"><a id="a0247684b9bad186b6b9e140e2b459000" name="a0247684b9bad186b6b9e140e2b459000"></a>
-virtual Eigen::MatrixX2d&#160;</td><td class="memItemRight" valign="bottom"><b>calcConvexHullBoundary</b> ()</td></tr>
-<tr class="separator:a0247684b9bad186b6b9e140e2b459000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c04b967a0394e9ff64d9849d7e2af07"><td class="memItemLeft" align="right" valign="top"><a id="a8c04b967a0394e9ff64d9849d7e2af07" name="a8c04b967a0394e9ff64d9849d7e2af07"></a>
+virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><b>calcBoundaryStk2D</b> ()</td></tr>
+<tr class="separator:a8c04b967a0394e9ff64d9849d7e2af07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e3065e2d8fcaad0a1536fdc1dfc9a7c"><td class="memItemLeft" align="right" valign="top"><a id="a8e3065e2d8fcaad0a1536fdc1dfc9a7c" name="a8e3065e2d8fcaad0a1536fdc1dfc9a7c"></a>
+virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><b>calcConvexHullBoundary</b> ()</td></tr>
+<tr class="separator:a8e3065e2d8fcaad0a1536fdc1dfc9a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59f9dbdee7adb99b0fb1caa9d9c148cc"><td class="memItemLeft" align="right" valign="top"><a id="a59f9dbdee7adb99b0fb1caa9d9c148cc" name="a59f9dbdee7adb99b0fb1caa9d9c148cc"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>calcGrid3D</b> (const Eigen::Ref&lt; Eigen::VectorXd &gt; &amp;x, const Eigen::Ref&lt; Eigen::VectorXd &gt; &amp;y, double z, Eigen::VectorXd &amp;x_loc, Eigen::VectorXd &amp;y_loc, Eigen::VectorXd &amp;z_loc)</td></tr>
 <tr class="separator:a59f9dbdee7adb99b0fb1caa9d9c148cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -983,6 +965,47 @@ static std::optional&lt; h5gt::File &gt;&#160;</td><td class="memItemRight" vali
 If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" href="class_h5_seis.html#a797b0a608865af106f45af39f304915f" title="Prepare sorting.">H5Seis::addPKeySort</a>("CDP") first. </p>
 
 <p>Implements <a class="el" href="class_h5_seis.html#a797b0a608865af106f45af39f304915f">H5Seis</a>.</p>
+
+</div>
+</div>
+<a id="a8f6905a4afa37d5474b94c5db4854aee" name="a8f6905a4afa37d5474b94c5db4854aee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f6905a4afa37d5474b94c5db4854aee">&#9670;&nbsp;</a></span>calcBoundary()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::MatrixXd H5SeisImpl::calcBoundary </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>lengthUnits</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>doCoordTransform</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculate <code>XY</code> boundary around the survey. </p>
+<p >Return two cols Eigen matrix. Use it to write as <a class="el" href="class_h5_horizon.html" title="Provides API to work with horizons.">H5Horizon</a>. </p>
+
+<p>Implements <a class="el" href="class_h5_seis.html#a03dbbf5cca5beadeb8c01305b09144c8">H5Seis</a>.</p>
 
 </div>
 </div>
@@ -1471,78 +1494,6 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
 <p>Get index (position within 1D dataset) for a given binary header. </p>
 
 <p>Implements <a class="el" href="class_h5_seis.html#a50071218f31191f653697d9f66d4277d">H5Seis</a>.</p>
-
-</div>
-</div>
-<a id="a19c824da74cf739fa3bfb2304b25afce" name="a19c824da74cf739fa3bfb2304b25afce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19c824da74cf739fa3bfb2304b25afce">&#9670;&nbsp;</a></span>getBoundary()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::MatrixXd H5SeisImpl::getBoundary </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>lengthUnits</em> = <code>&quot;&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>doCoordTransform</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get boundary. </p>
-<p >Boundary is a 2D line (<code>XY</code>) around the survey. <br  />
-Use <a class="el" href="class_h5_seis.html#aa5f5e6470a73a5ac17778514ac2e98a9" title="Calculate and write XY boundary based on CDP_X and CDP_Y">H5Seis::updateBoundary()</a> to automatically calculate and write it. <br  />
-Not used by <a class="el" href="namespaceh5geo.html" title="Basic namespace.">h5geo</a> (for developper needs only). </p>
-
-<p>Implements <a class="el" href="class_h5_seis.html#a4634238db0d67cb4fcd2dd82eddb8e11">H5Seis</a>.</p>
-
-</div>
-</div>
-<a id="ab2e701d75e9bebecb767030bc863649f" name="ab2e701d75e9bebecb767030bc863649f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2e701d75e9bebecb767030bc863649f">&#9670;&nbsp;</a></span>getBoundaryD()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::optional&lt; h5gt::DataSet &gt; H5SeisImpl::getBoundaryD </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get boundary DataSet. </p>
-
-<p>Implements <a class="el" href="class_h5_seis.html#a969bf5379c8a7ee614d3238c53df63c0">H5Seis</a>.</p>
 
 </div>
 </div>
@@ -3903,35 +3854,6 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
 
 </div>
 </div>
-<a id="aa7f94e23d66d054708c0d8cf891759d8" name="aa7f94e23d66d054708c0d8cf891759d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7f94e23d66d054708c0d8cf891759d8">&#9670;&nbsp;</a></span>updateBoundary()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool H5SeisImpl::updateBoundary </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calculate and write <code>XY</code> boundary based on <code>CDP_X</code> and <code>CDP_Y</code> </p>
-
-<p>Implements <a class="el" href="class_h5_seis.html#aa5f5e6470a73a5ac17778514ac2e98a9">H5Seis</a>.</p>
-
-</div>
-</div>
 <a id="aa6fc5d8832f3bd851512b1a6a96b0bc5" name="aa6fc5d8832f3bd851512b1a6a96b0bc5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa6fc5d8832f3bd851512b1a6a96b0bc5">&#9670;&nbsp;</a></span>updatePKeySort()</h2>
 
@@ -4133,55 +4055,6 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
 <p >Vector length should be equal to <a class="el" href="class_h5_seis.html#a11412b0144665f7818a1f631573e8bd0" title="Get number of binary headers.">H5Seis::getNBinHdr()</a> </p>
 
 <p>Implements <a class="el" href="class_h5_seis.html#a1c7b80bb951544462adbeebae26aa5ad">H5Seis</a>.</p>
-
-</div>
-</div>
-<a id="ac017d126df0687b05e73899383ed1634" name="ac017d126df0687b05e73899383ed1634"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac017d126df0687b05e73899383ed1634">&#9670;&nbsp;</a></span>writeBoundary()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool H5SeisImpl::writeBoundary </td>
-          <td>(</td>
-          <td class="paramtype">Eigen::Ref&lt; Eigen::MatrixX2d &gt;&#160;</td>
-          <td class="paramname"><em>M</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>lengthUnits</em> = <code>&quot;&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>doCoordTransform</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Write boundary. </p>
-<p >Boundary is a 2D line (<code>XY</code>) around the survey. <br  />
-Use <a class="el" href="class_h5_seis.html#aa5f5e6470a73a5ac17778514ac2e98a9" title="Calculate and write XY boundary based on CDP_X and CDP_Y">H5Seis::updateBoundary()</a> to automatically calculate and write it. <br  />
-Not used by <a class="el" href="namespaceh5geo.html" title="Basic namespace.">h5geo</a> (for developper needs only). </p>
-
-<p>Implements <a class="el" href="class_h5_seis.html#a76dcfefee7a43c44c93449a8e422aae2">H5Seis</a>.</p>
 
 </div>
 </div>

@@ -97,9 +97,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af273474cf933e5c92d2da7bdb4796b6c"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon.html#af273474cf933e5c92d2da7bdb4796b6c">getData</a> (const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:af273474cf933e5c92d2da7bdb4796b6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from DataSet.  <a href="class_h5_horizon.html#af273474cf933e5c92d2da7bdb4796b6c">More...</a><br /></td></tr>
 <tr class="separator:af273474cf933e5c92d2da7bdb4796b6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe086b9e95e1d1a7e507bc82f258e6c1"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon.html#abe086b9e95e1d1a7e507bc82f258e6c1">writeComponent</a> (Eigen::Ref&lt; Eigen::VectorXd &gt; v, const std::string &amp;componentName, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)=0</td></tr>
-<tr class="memdesc:abe086b9e95e1d1a7e507bc82f258e6c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write single component to DataSet.  <a href="class_h5_horizon.html#abe086b9e95e1d1a7e507bc82f258e6c1">More...</a><br /></td></tr>
-<tr class="separator:abe086b9e95e1d1a7e507bc82f258e6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fd4d950d2ea9c9938b8b4ba88648f78"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon.html#a0fd4d950d2ea9c9938b8b4ba88648f78">writeComponent</a> (const std::string &amp;componentName, Eigen::Ref&lt; Eigen::VectorXd &gt; v, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)=0</td></tr>
+<tr class="memdesc:a0fd4d950d2ea9c9938b8b4ba88648f78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write single component to DataSet.  <a href="class_h5_horizon.html#a0fd4d950d2ea9c9938b8b4ba88648f78">More...</a><br /></td></tr>
+<tr class="separator:a0fd4d950d2ea9c9938b8b4ba88648f78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a900e26531755ef210b32dc969517cbe7"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_horizon.html#a900e26531755ef210b32dc969517cbe7">getComponent</a> (const std::string &amp;componentName, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:a900e26531755ef210b32dc969517cbe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read single component from DataSet.  <a href="class_h5_horizon.html#a900e26531755ef210b32dc969517cbe7">More...</a><br /></td></tr>
 <tr class="separator:a900e26531755ef210b32dc969517cbe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -669,8 +669,8 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Delete</b> ()
 
 </div>
 </div>
-<a id="abe086b9e95e1d1a7e507bc82f258e6c1" name="abe086b9e95e1d1a7e507bc82f258e6c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe086b9e95e1d1a7e507bc82f258e6c1">&#9670;&nbsp;</a></span>writeComponent()</h2>
+<a id="a0fd4d950d2ea9c9938b8b4ba88648f78" name="a0fd4d950d2ea9c9938b8b4ba88648f78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fd4d950d2ea9c9938b8b4ba88648f78">&#9670;&nbsp;</a></span>writeComponent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -681,14 +681,14 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Delete</b> ()
         <tr>
           <td class="memname">virtual bool H5Horizon::writeComponent </td>
           <td>(</td>
-          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt;&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>componentName</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>componentName</em>, </td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::VectorXd &gt;&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -717,7 +717,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Delete</b> ()
 
 <p>Write single component to DataSet. </p>
 
-<p>Implemented in <a class="el" href="class_h5_horizon_impl.html#aa34ba27de4b3b972440892ef7bdc3d49">H5HorizonImpl</a>.</p>
+<p>Implemented in <a class="el" href="class_h5_horizon_impl.html#aea053ccb5f38afdb145e1b54c5abbcd3">H5HorizonImpl</a>.</p>
 
 </div>
 </div>
