@@ -142,7 +142,7 @@ include(CMakePackageConfigHelpers)
 configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/h5geo-config.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/h5geo-config.cmake"
   INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/h5geo
-  PATH_VARS CMAKE_INSTALL_INCLUDEDIR
+  PATH_VARS CMAKE_INSTALL_INCLUDEDIR CMAKE_INSTALL_SYSCONFDIR
   )
 
 write_basic_package_version_file(
