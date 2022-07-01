@@ -45,15 +45,15 @@ inline bit_cast(const From &src) noexcept {
 inline float ibm2ieee(const int &from) {
   std::bitset<32> bits_from(from);
   float to;
-  const int constnum1 = 2.130706432e+09; // hex2dec('7f000000') (Matlab)
+  const int constnum1 = 2130706432;      // hex2dec('7f000000') (Matlab)
   const int constnum2 = 16777215;        // hex2dec('00ffffff') (Matlab)
   const float constnum3 = 16777216;      // 2^24
 
-  float sgn = (1 - 2 * bits_from[31]);
-  float expon = (from & constnum1) >> 24;
-  float mantiss = (from & constnum2);
+  int sgn = (1 - 2 * bits_from[31]);
+  int expon = (from & constnum1) >> 24;
+  int mantiss = (from & constnum2);
 
-  to = sgn * float(pow(16, expon - 64)) * mantiss / constnum3;
+  to = float(sgn) * float(pow(16, expon - 64)) * float(mantiss) / constnum3;
 
   return to;
 }
