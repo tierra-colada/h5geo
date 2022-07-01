@@ -118,15 +118,15 @@ $(function() {
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">inline</span> <span class="keywordtype">float</span> ibm2ieee(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;from) {</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  std::bitset&lt;32&gt; bits_from(from);</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keywordtype">float</span> to;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="keyword">const</span> <span class="keywordtype">int</span> constnum1 = 2.130706432e+09; <span class="comment">// hex2dec(&#39;7f000000&#39;) (Matlab)</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="keyword">const</span> <span class="keywordtype">int</span> constnum1 = 2130706432;      <span class="comment">// hex2dec(&#39;7f000000&#39;) (Matlab)</span></div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  <span class="keyword">const</span> <span class="keywordtype">int</span> constnum2 = 16777215;        <span class="comment">// hex2dec(&#39;00ffffff&#39;) (Matlab)</span></div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  <span class="keyword">const</span> <span class="keywordtype">float</span> constnum3 = 16777216;      <span class="comment">// 2^24</span></div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  <span class="keywordtype">float</span> sgn = (1 - 2 * bits_from[31]);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="keywordtype">float</span> expon = (from &amp; constnum1) &gt;&gt; 24;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keywordtype">float</span> mantiss = (from &amp; constnum2);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  <span class="keywordtype">int</span> sgn = (1 - 2 * bits_from[31]);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="keywordtype">int</span> expon = (from &amp; constnum1) &gt;&gt; 24;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keywordtype">int</span> mantiss = (from &amp; constnum2);</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  to = sgn * float(pow(16, expon - 64)) * mantiss / constnum3;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  to = float(sgn) * float(pow(16, expon - 64)) * float(mantiss) / constnum3;</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="keywordflow">return</span> to;</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
