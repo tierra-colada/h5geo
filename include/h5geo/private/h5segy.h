@@ -22,7 +22,7 @@
 
 // enum string is needed to include magic_enum with predefined macro
 #include "h5enum_string.h"
-#include "h5core_util.h"
+#include "../h5core.h"
 #include "../h5seis.h"
 
 
@@ -343,7 +343,7 @@ inline size_t getSEGYNSamp(
   double binHdr[30];
   readSEGYBinHeader(segy, binHdr, endian);
 
-  return binHdr[7];
+  return (size_t)binHdr[7];
 }
 
 inline size_t getSEGYNTrc(

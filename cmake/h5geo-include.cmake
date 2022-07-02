@@ -9,8 +9,6 @@ set(include_files_h5geo_private
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5enum.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5enum_operators.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5coreimpl.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5core_util.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5core_utilimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5basecontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5baseimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5baseobjectimpl.h

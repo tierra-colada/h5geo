@@ -48,7 +48,6 @@ bool H5SeisImpl::readSEGYTraces(
   if (nSamp < 1)
     return false;
 
-  size_t nTrcOverall = 0;
   std::vector<size_t> nTrcVec;
   for (size_t i = 0; i < segyFiles.size(); i++){
     if (h5geo::getSEGYNSamp(segyFiles[i]) != nSamp)
@@ -58,7 +57,6 @@ bool H5SeisImpl::readSEGYTraces(
     if (nTrc < 1)
       return false;
 
-    nTrcOverall += nTrc;
     nTrcVec.push_back(nTrc);
   }
 
@@ -956,7 +954,7 @@ Eigen::VectorXd H5SeisImpl::getSamples(
 
   if (!units.empty()){
     double coef;
-    if (getDomain() == h5geo::Domain::OWT |
+    if (getDomain() == h5geo::Domain::OWT ||
         getDomain() == h5geo::Domain::TWT)
       coef = units::convert(
             units::unit_from_string(getTemporalUnits()),
@@ -986,7 +984,7 @@ double H5SeisImpl::getFirstSample(
 
   if (!units.empty()){
     double coef;
-    if (getDomain() == h5geo::Domain::OWT |
+    if (getDomain() == h5geo::Domain::OWT ||
         getDomain() == h5geo::Domain::TWT)
       coef = units::convert(
             units::unit_from_string(getTemporalUnits()),
@@ -1011,7 +1009,7 @@ double H5SeisImpl::getSampRate(const std::string& units){
 
   if (!units.empty()){
     double coef;
-    if (getDomain() == h5geo::Domain::OWT |
+    if (getDomain() == h5geo::Domain::OWT ||
         getDomain() == h5geo::Domain::TWT)
       coef = units::convert(
             units::unit_from_string(getTemporalUnits()),
@@ -1459,33 +1457,22 @@ bool H5SeisImpl::generatePRESTKGeometry(
 
   double src_xmin = src_x.minCoeff();
   double src_ymin = src_y.minCoeff();
-  double src_xmax = src_x.maxCoeff();
-  double src_ymax = src_y.maxCoeff();
 
   double rec_xmin = rec_x.minCoeff();
   double rec_ymin = rec_y.minCoeff();
-  double rec_xmax = rec_x.maxCoeff();
-  double rec_ymax = rec_y.maxCoeff();
   if (moveRec){
     rec_xmin += src_xmin - src_x0;
     rec_ymin += src_ymin - src_y0;
-    rec_xmax += src_xmax - src_x0;
-    rec_ymax += src_ymax - src_y0;
   }
 
-  double cdp_xmin = (src_xmin + rec_xmin)/2;
-  double cdp_ymin = (src_ymin + rec_ymin)/2;
-  double cdp_xmax = (src_xmax + rec_xmax)/2;
-  double cdp_ymax = (src_ymax + rec_ymax)/2;
-
-  Eigen::VectorXd lind = Eigen::VectorXd::LinSpaced(nRec, 1, nRec);
+  Eigen::VectorXd lind = Eigen::VectorXd::LinSpaced(nRec, (double)1, (double)nRec);
   Eigen::VectorXd ones_arr = Eigen::VectorXd::Ones(nRec);
 
   rec_x = rec_xloc;
   rec_y = rec_yloc;
   for (size_t i = 0; i < nShot; i++){
     size_t fromTrc = i*nRec;
-    lind.array() += nRec*bool(i);
+    lind.array() += (double)nRec*bool(i);
     src_x = ones_arr*src_xloc(i);
     src_y = ones_arr*src_yloc(i);
     if (moveRec){
@@ -1557,7 +1544,7 @@ bool H5SeisImpl::generatePRESTKGeometry(
   // update cdp numbers
   Eigen::MatrixXd cdp_yx = this->getXYTraceHeaders({"CDP_Y", "CDP_X"});
   Eigen::VectorX<ptrdiff_t> cdp_yx_ind = h5geo::sort_rows(cdp_yx);
-  Eigen::VectorXd cdp = Eigen::VectorXd::LinSpaced(cdp_yx_ind.size(), 1, cdp_yx_ind.size())(cdp_yx_ind);
+  Eigen::VectorXd cdp = Eigen::VectorXd::LinSpaced(cdp_yx_ind.size(), (double)1, (double)cdp_yx_ind.size())(cdp_yx_ind);
   this->writeTraceHeader("CDP", cdp);
   this->setDataType(h5geo::SeisDataType::PRESTACK);
   return true;
@@ -1599,8 +1586,8 @@ bool H5SeisImpl::generateSTKGeometry(
   if (xloc.size() < 1 || yloc.size() < 1 || zloc.size() < 1)
     return false;
 
-  Eigen::VectorXd xl = Eigen::VectorXd::LinSpaced(nx, 1, nx);
-  Eigen::VectorXd il = Eigen::VectorXd::LinSpaced(ny, 1, ny);
+  Eigen::VectorXd xl = Eigen::VectorXd::LinSpaced(nx, (double)1, (double)nx);
+  Eigen::VectorXd il = Eigen::VectorXd::LinSpaced(ny, (double)1, (double)ny);
   Eigen::VectorXd xlloc, illoc, notUsed;
   this->calcGrid3D(xl, il, 0, xlloc, illoc, notUsed);
   if (xlloc.size() < 1 || illoc.size() < 1)
@@ -1611,7 +1598,7 @@ bool H5SeisImpl::generateSTKGeometry(
     if (!this->setNTrc(nTrc))
       return false;
 
-  Eigen::VectorXd lind = Eigen::VectorXd::LinSpaced(nTrc, 1, nTrc);
+  Eigen::VectorXd lind = Eigen::VectorXd::LinSpaced(nTrc, (double)1, (double)nTrc);
   Eigen::VectorXd ones_arr = Eigen::VectorXd::Ones(nTrc);
   this->writeTraceHeader("SEQWL", lind);
   this->writeTraceHeader("SEQWR", lind);
@@ -1672,7 +1659,7 @@ bool H5SeisImpl::setSampRate(double val, const std::string& units){
 bool H5SeisImpl::setFirstSample(double val, const std::string& units){
   if (!units.empty()){
     double coef;
-    if (getDomain() == h5geo::Domain::OWT |
+    if (getDomain() == h5geo::Domain::OWT ||
         getDomain() == h5geo::Domain::TWT)
       coef = units::convert(
             units::unit_from_string(getTemporalUnits()),
