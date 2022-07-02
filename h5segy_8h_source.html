@@ -95,7 +95,7 @@ $(function() {
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">// enum string is needed to include magic_enum with predefined macro</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;h5enum_string.h&quot;</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;h5core_util.h&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#include &quot;../h5core.h&quot;</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;../h5seis.h&quot;</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
@@ -412,7 +412,7 @@ $(function() {
 <div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>  <span class="keywordtype">double</span> binHdr[30];</div>
 <div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>  readSEGYBinHeader(segy, binHdr, endian);</div>
 <div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span> </div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>  <span class="keywordflow">return</span> binHdr[7];</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>  <span class="keywordflow">return</span> (<span class="keywordtype">size_t</span>)binHdr[7];</div>
 <div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>}</div>
 <div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span> </div>
 <div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span><span class="keyword">inline</span> <span class="keywordtype">size_t</span> getSEGYNTrc(</div>
