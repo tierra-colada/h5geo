@@ -95,9 +95,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac77e0608dc8118b0d1289f08b3b3466e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#ac77e0608dc8118b0d1289f08b3b3466e">readSEGYBinHeader</a> (const std::string &amp;segy) override</td></tr>
 <tr class="memdesc:ac77e0608dc8118b0d1289f08b3b3466e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read binary header from <code>SEGY</code> file.  <a href="class_h5_seis_impl.html#ac77e0608dc8118b0d1289f08b3b3466e">More...</a><br /></td></tr>
 <tr class="separator:ac77e0608dc8118b0d1289f08b3b3466e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4f0f505caa32352d54c20823922ac43"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#aa4f0f505caa32352d54c20823922ac43">readSEGYTraces</a> (const std::vector&lt; std::string &gt; &amp;segyFiles, size_t trcBuffer=10000) override</td></tr>
-<tr class="memdesc:aa4f0f505caa32352d54c20823922ac43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trace headers and trace data from <code>SEGY</code> file.  <a href="class_h5_seis_impl.html#aa4f0f505caa32352d54c20823922ac43">More...</a><br /></td></tr>
-<tr class="separator:aa4f0f505caa32352d54c20823922ac43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f26fa1ceafe33c7a16f03ba4ad2d21c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a7f26fa1ceafe33c7a16f03ba4ad2d21c">readSEGYTraces</a> (const std::vector&lt; std::string &gt; &amp;segyFiles, size_t trcBuffer=10000, int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr) override</td></tr>
+<tr class="memdesc:a7f26fa1ceafe33c7a16f03ba4ad2d21c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trace headers and trace data from <code>SEGY</code> file.  <a href="class_h5_seis_impl.html#a7f26fa1ceafe33c7a16f03ba4ad2d21c">More...</a><br /></td></tr>
+<tr class="separator:a7f26fa1ceafe33c7a16f03ba4ad2d21c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac41e1f8ca3f25a84d73a85d76e117dbe"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#ac41e1f8ca3f25a84d73a85d76e117dbe">writeTextHeader</a> (const char(&amp;txtHdr)[40][80]) override</td></tr>
 <tr class="memdesc:ac41e1f8ca3f25a84d73a85d76e117dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write text header.  <a href="class_h5_seis_impl.html#ac41e1f8ca3f25a84d73a85d76e117dbe">More...</a><br /></td></tr>
 <tr class="separator:ac41e1f8ca3f25a84d73a85d76e117dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -468,9 +468,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2bcc3a517aa9373e55103821a03d0ba4"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a2bcc3a517aa9373e55103821a03d0ba4">readSEGYBinHeader</a> (const std::string &amp;segy)=0</td></tr>
 <tr class="memdesc:a2bcc3a517aa9373e55103821a03d0ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read binary header from <code>SEGY</code> file.  <a href="class_h5_seis.html#a2bcc3a517aa9373e55103821a03d0ba4">More...</a><br /></td></tr>
 <tr class="separator:a2bcc3a517aa9373e55103821a03d0ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a256de8fecfc61613718113f7fb1451"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a7a256de8fecfc61613718113f7fb1451">readSEGYTraces</a> (const std::vector&lt; std::string &gt; &amp;segyFiles, size_t trcBuffer=10000)=0</td></tr>
-<tr class="memdesc:a7a256de8fecfc61613718113f7fb1451"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trace headers and trace data from <code>SEGY</code> file.  <a href="class_h5_seis.html#a7a256de8fecfc61613718113f7fb1451">More...</a><br /></td></tr>
-<tr class="separator:a7a256de8fecfc61613718113f7fb1451"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcaf24706a922d92c5c33144996245af"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#abcaf24706a922d92c5c33144996245af">readSEGYTraces</a> (const std::vector&lt; std::string &gt; &amp;segyFiles, size_t trcBuffer=10000, int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr)=0</td></tr>
+<tr class="memdesc:abcaf24706a922d92c5c33144996245af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trace headers and trace data from <code>SEGY</code> file.  <a href="class_h5_seis.html#abcaf24706a922d92c5c33144996245af">More...</a><br /></td></tr>
+<tr class="separator:abcaf24706a922d92c5c33144996245af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad48967e1b8f2f744799cd2bbbaaff843"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#ad48967e1b8f2f744799cd2bbbaaff843">writeTextHeader</a> (const char(&amp;txtHdr)[40][80])=0</td></tr>
 <tr class="memdesc:ad48967e1b8f2f744799cd2bbbaaff843"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write text header.  <a href="class_h5_seis.html#ad48967e1b8f2f744799cd2bbbaaff843">More...</a><br /></td></tr>
 <tr class="separator:ad48967e1b8f2f744799cd2bbbaaff843"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3514,8 +3514,8 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
 
 </div>
 </div>
-<a id="aa4f0f505caa32352d54c20823922ac43" name="aa4f0f505caa32352d54c20823922ac43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4f0f505caa32352d54c20823922ac43">&#9670;&nbsp;</a></span>readSEGYTraces()</h2>
+<a id="a7f26fa1ceafe33c7a16f03ba4ad2d21c" name="a7f26fa1ceafe33c7a16f03ba4ad2d21c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f26fa1ceafe33c7a16f03ba4ad2d21c">&#9670;&nbsp;</a></span>readSEGYTraces()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3533,7 +3533,19 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>trcBuffer</em> = <code>10000</code>&#160;</td>
+          <td class="paramname"><em>trcBuffer</em> = <code>10000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nThreads</em> = <code>-1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; void(double)&gt;&#160;</td>
+          <td class="paramname"><em>progressCallback</em> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3550,7 +3562,7 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
 
 <p>Read trace headers and trace data from <code>SEGY</code> file. </p>
 
-<p>Implements <a class="el" href="class_h5_seis.html#a7a256de8fecfc61613718113f7fb1451">H5Seis</a>.</p>
+<p>Implements <a class="el" href="class_h5_seis.html#abcaf24706a922d92c5c33144996245af">H5Seis</a>.</p>
 
 </div>
 </div>
