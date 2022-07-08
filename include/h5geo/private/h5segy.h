@@ -384,6 +384,8 @@ inline size_t getSEGYNTrc(
 /// \param endian Big or Little
 /// \param trcHdrNames use only those defined in 'getTraceHeaderShortNames',
 /// but you can change their order thus fix probably messed up trace header bytes
+/// \param nThreads number of threads (to use all threads pass any number `<1`)
+/// \param progressCallback callback function of form `void foo(double progress)`
 /// \return
 inline bool readSEGYTraces(
     H5Seis* seis,
@@ -394,7 +396,9 @@ inline bool readSEGYTraces(
     size_t trcBuffer = 10000,
     h5geo::SegyFormat format = static_cast<SegyFormat>(0),
     h5geo::Endian endian = static_cast<Endian>(0),
-    std::vector<std::string> trcHdrNames = getTraceHeaderShortNames())
+    std::vector<std::string> trcHdrNames = getTraceHeaderShortNames(),
+    int nThreads = -1,
+    std::function<void(double)> progressCallback = nullptr)
 {
   if (!seis || trcBuffer < 1)
     return false;
@@ -452,10 +456,14 @@ inline bool readSEGYTraces(
   size_t N = nTrc / trcBuffer;
 
 #ifdef H5GEO_USE_THREADS
-  int nThreads = omp_get_max_threads();
+  if (nThreads < 1)
+    nThreads = omp_get_max_threads();
 #pragma omp parallel for num_threads(nThreads) private(HDR, TRACE, J)
 #endif
   for (ptrdiff_t n = 0; n <= N; n++) {
+    if (progressCallback)
+      progressCallback( (double)fromTrc / (double)nTrc );
+
     if (n < N) {
       J = trcBuffer;
     } else {

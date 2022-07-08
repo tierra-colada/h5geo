@@ -39,7 +39,9 @@ bool H5SeisImpl::readSEGYBinHeader(const std::string& segy)
 
 bool H5SeisImpl::readSEGYTraces(
     const std::vector<std::string>& segyFiles,
-    size_t trcBuffer)
+    size_t trcBuffer,
+    int nThreads,
+    std::function<void(double)> progressCallback)
 {
   if (segyFiles.size() < 1)
     return false;
@@ -68,7 +70,12 @@ bool H5SeisImpl::readSEGYTraces(
           nSamp,
           nTrcVec[i],
           fromTrc,
-          trcBuffer);
+          trcBuffer,
+          static_cast<h5geo::SegyFormat>(0),
+          static_cast<h5geo::Endian>(0),
+          h5geo::getTraceHeaderShortNames(),
+          nThreads,
+          progressCallback);
 
     if (!val)
       return false;

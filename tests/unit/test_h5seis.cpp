@@ -525,65 +525,66 @@ TEST_F(H5SeisFixture, SEGY){
   ASSERT_TRUE(trace.isApprox(trace3));
 }
 
-//#include <chrono>
+#include <chrono>
 
-//TEST_F(H5SeisFixture, SEGY_BIG){
-//  std::string segy_big = "C:/Users/kerim/dev/DATA/CDP_FOR_REGLO_IL6-250.sgy";
+// prefix `DISABLED_` is to skip test
+TEST_F(H5SeisFixture, DISABLED_SEGY_BIG){
+  std::string segy_big = "C:/Users/kerim/dev/DATA/CDP_FOR_REGLO_IL6-250.sgy";
 
-//  // MAPPED
-//  p.mapSEGY = true;
-//  p.segyFiles = {segy_big};
-//  // important to create seis with NSamp match exactly to SEGY NSamp (affect of chunking)
-//  p.nSamp = h5geo::getSEGYNSamp(segy_big);
+  // MAPPED
+  p.mapSEGY = true;
+  p.segyFiles = {segy_big};
+  // important to create seis with NSamp match exactly to SEGY NSamp (affect of chunking)
+  p.nSamp = h5geo::getSEGYNSamp(segy_big);
 
-//  H5Seis_ptr seis(seisContainer->createSeis(
-//                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-//  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
+  H5Seis_ptr seis(seisContainer->createSeis(
+                    SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
 
-//  std::vector<std::string> txtHdr = seis->getTextHeader();
+  std::vector<std::string> txtHdr = seis->getTextHeader();
 
 
-//  // NOT MAPPED (read with h5geo::functions)
-//  p.mapSEGY = false;
-//  p.trcChunk = 10000;
-//  H5Seis_ptr seis2(seisContainer->createSeis(
-//                     SEIS_NAME2, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
-//  ASSERT_TRUE(seis2 != nullptr) << "CREATE_OR_OVERWRITE";
+  // NOT MAPPED (read with h5geo::functions)
+  p.mapSEGY = false;
+  p.trcChunk = 10000;
+  H5Seis_ptr seis2(seisContainer->createSeis(
+                     SEIS_NAME2, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(seis2 != nullptr) << "CREATE_OR_OVERWRITE";
 
-//  seis2->readSEGYTextHeader(segy_big);
-//  seis2->readSEGYBinHeader(segy_big);
+  seis2->readSEGYTextHeader(segy_big);
+  seis2->readSEGYBinHeader(segy_big);
 
-//  std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-//  seis2->readSEGYTraces({segy_big}, 10000);
-//  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-//  std::cout << "BIG SEGY read time = " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[seconds]" << std::endl;
+  std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+  seis2->readSEGYTraces({segy_big}, 10000, -1, [](double progress) { std::cout << "Progress:\t" << progress << std::endl; });
+  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+  std::cout << "BIG SEGY read time = " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[seconds]" << std::endl;
 
-//  begin = std::chrono::steady_clock::now();
-//  seis2->addPKeySort("INLINE");
-//  end = std::chrono::steady_clock::now();
-//  std::cout << "BIG SEGY sort INLINE = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[milliseconds]" << std::endl;
+  begin = std::chrono::steady_clock::now();
+  seis2->addPKeySort("INLINE");
+  end = std::chrono::steady_clock::now();
+  std::cout << "BIG SEGY sort INLINE = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[milliseconds]" << std::endl;
 
-//  begin = std::chrono::steady_clock::now();
-//  seis2->addPKeySort("XLINE");
-//  end = std::chrono::steady_clock::now();
-//  std::cout << "BIG SEGY sort XLINE = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[milliseconds]" << std::endl;
+  begin = std::chrono::steady_clock::now();
+  seis2->addPKeySort("XLINE");
+  end = std::chrono::steady_clock::now();
+  std::cout << "BIG SEGY sort XLINE = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[milliseconds]" << std::endl;
 
-//  begin = std::chrono::steady_clock::now();
-//  seis2->addPKeySort("CDP");
-//  end = std::chrono::steady_clock::now();
-//  std::cout << "BIG SEGY sort CDP = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[milliseconds]" << std::endl;
+  begin = std::chrono::steady_clock::now();
+  seis2->addPKeySort("CDP");
+  end = std::chrono::steady_clock::now();
+  std::cout << "BIG SEGY sort CDP = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[milliseconds]" << std::endl;
 
-//  Eigen::MatrixXf trc_sorted;
-//  Eigen::MatrixXd hdr_sorted;
-//  begin = std::chrono::steady_clock::now();
-//  seis2->getSortedData(trc_sorted, hdr_sorted,
-//                       {"XLINE", "INLINE"},
-//                       {125, -std::numeric_limits<double>::infinity()},
-//                       {125, std::numeric_limits<double>::infinity()});
-//  end = std::chrono::steady_clock::now();
-//  std::cout << "BIG SEGY getSortedData {XLINE, INLINE} = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[microseconds]" << std::endl;
-//  std::cout << "BIG SEGY getSortedData trc_sorted.rows() = " << trc_sorted.rows() << std::endl;
-//  std::cout << "BIG SEGY getSortedData trc_sorted.cols() = " << trc_sorted.cols() << std::endl;
-//  std::cout << "BIG SEGY getSortedData hdr_sorted.rows() = " << hdr_sorted.rows() << std::endl;
-//  std::cout << "BIG SEGY getSortedData hdr_sorted.cols() = " << hdr_sorted.cols() << std::endl;
-//}
+  Eigen::MatrixXf trc_sorted;
+  Eigen::MatrixXd hdr_sorted;
+  begin = std::chrono::steady_clock::now();
+  seis2->getSortedData(trc_sorted, hdr_sorted,
+                       {"XLINE", "INLINE"},
+                       {125, -std::numeric_limits<double>::infinity()},
+                       {125, std::numeric_limits<double>::infinity()});
+  end = std::chrono::steady_clock::now();
+  std::cout << "BIG SEGY getSortedData {XLINE, INLINE} = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[microseconds]" << std::endl;
+  std::cout << "BIG SEGY getSortedData trc_sorted.rows() = " << trc_sorted.rows() << std::endl;
+  std::cout << "BIG SEGY getSortedData trc_sorted.cols() = " << trc_sorted.cols() << std::endl;
+  std::cout << "BIG SEGY getSortedData hdr_sorted.rows() = " << hdr_sorted.rows() << std::endl;
+  std::cout << "BIG SEGY getSortedData hdr_sorted.cols() = " << hdr_sorted.cols() << std::endl;
+}

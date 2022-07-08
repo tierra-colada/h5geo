@@ -69,7 +69,9 @@ void H5Seis_py(
            py::arg("segy"))
       .def("readSEGYTraces", &H5Seis::readSEGYTraces,
            py::arg("segyFiles"),
-           py::arg_v("trcBuffer", 10000, "10000"))
+           py::arg_v("trcBuffer", 10000, "10000"),
+           py::arg_v("nThreads", -1, "-1"),
+           py::arg_v("progressCallback", nullptr, "None"))
 
       .def("writeTextHeader", py::overload_cast<
            const std::vector<std::string>&>(

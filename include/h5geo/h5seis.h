@@ -43,7 +43,9 @@ public:
   /// \brief Read trace headers and trace data from `SEGY` file
   virtual bool readSEGYTraces(
       const std::vector<std::string>& segyFiles,
-      size_t trcBuffer = 10000) = 0;
+      size_t trcBuffer = 10000,
+      int nThreads = -1,
+      std::function<void(double)> progressCallback = nullptr) = 0;
 
   /// \brief Write text header
   virtual bool writeTextHeader(const char (&txtHdr)[40][80]) = 0;

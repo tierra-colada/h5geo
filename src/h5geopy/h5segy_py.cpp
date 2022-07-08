@@ -56,11 +56,15 @@ void defineSEGYFunctions(py::module_& m){
   m.def("readSEGYTraces", &h5geo::readSEGYTraces,
         py::arg("seis"),
         py::arg("segy"),
-        py::arg("nSamp"), py::arg("nTrc"),
-        py::arg("fromTrc"), py::arg("trcBuffer"),
+        py::arg("nSamp"),
+        py::arg("nTrc"),
+        py::arg("fromTrc"),
+        py::arg("trcBuffer"),
         py::arg("segyFormat"),
         py::arg("endian"),
-        py::arg("trcHdrNames"));
+        py::arg("trcHdrNames"),
+        py::arg("nThreads"),
+        py::arg("progressCallback"));
 }
 
 
