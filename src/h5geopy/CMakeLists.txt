@@ -44,8 +44,7 @@ if(NOT HDF5_USE_STATIC_LIBRARIES)
   target_link_libraries(_h5geo PRIVATE units::units)
 
   if(H5GEO_USE_THREADS)
-    target_include_directories(_h5geo PRIVATE ${TBB_INCLUDE_DIRS})
-    target_link_libraries(_h5geo PRIVATE ${TBB_LIBRARIES_RELEASE})
+    target_link_libraries(_h5geo PRIVATE TBB::tbb)
     target_link_libraries(_h5geo PRIVATE OpenMP::OpenMP_CXX)
   endif()
 
