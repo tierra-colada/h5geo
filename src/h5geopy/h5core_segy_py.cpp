@@ -57,15 +57,15 @@ void defineSEGYFunctions(py::module_& m){
   m.def("readSEGYTraces", &h5geo::readSEGYTraces,
         py::arg("seis"),
         py::arg("segy"),
-        py::arg("nSamp"),
-        py::arg("nTrc"),
-        py::arg("fromTrc"),
-        py::arg("trcBuffer"),
-        py::arg("segyFormat"),
-        py::arg("endian"),
-        py::arg("trcHdrNames"),
-        py::arg("nThreads"),
-        py::arg("progressCallback"));
+        py::arg_v("appendTraces", false, "False"),
+        py::arg_v("nSamp", 0, "0"),
+        py::arg_v("nTrc", 0, "0"),
+        py::arg_v("segyFormat", static_cast<h5geo::SegyFormat>(0), "_h5geo.SegyFormat(0)"),
+        py::arg_v("endian", static_cast<h5geo::Endian>(0), "_h5geo.Endian(0)"),
+        py::arg_v("trcHdrNames", std::vector<std::string>(), "list()"),
+        py::arg_v("trcBuffer", 10000, "10000"),
+        py::arg_v("nThreads", -1, "-1"),
+        py::arg_v("progressCallback", nullptr, "None"));
 }
 
 

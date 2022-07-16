@@ -127,51 +127,52 @@ H5GEO_EXPORT TextEncoding getSEGYTextEncoding(const std::string& segy);
 H5GEO_EXPORT Endian getSEGYEndian(const std::string& segy);
 
 H5GEO_EXPORT SegyFormat getSEGYFormat(
-    const std::string& segy, h5geo::Endian endian = static_cast<Endian>(0));
+    const std::string& segy, h5geo::Endian endian = static_cast<h5geo::Endian>(0));
 
 H5GEO_EXPORT bool readSEGYTextHeader(
     const std::string& segy,
-    char txtHdr[40][80], h5geo::TextEncoding encoding = static_cast<TextEncoding>(0));
+    char txtHdr[40][80], h5geo::TextEncoding encoding = static_cast<h5geo::TextEncoding>(0));
 
 H5GEO_EXPORT bool readSEGYBinHeader(
     const std::string& segy,
-    double binHdr[30], h5geo::Endian endian = static_cast<Endian>(0));
+    double binHdr[30], h5geo::Endian endian = static_cast<h5geo::Endian>(0));
 
 H5GEO_EXPORT double getSEGYSampRate(
-    const std::string& segy, h5geo::Endian endian = static_cast<Endian>(0));
+    const std::string& segy, h5geo::Endian endian = static_cast<h5geo::Endian>(0));
 
 H5GEO_EXPORT size_t getSEGYNSamp(
-    const std::string& segy, h5geo::Endian endian = static_cast<Endian>(0));
+    const std::string& segy, h5geo::Endian endian = static_cast<h5geo::Endian>(0));
 
 H5GEO_EXPORT size_t getSEGYNTrc(
-    const std::string& segy, size_t nSamp = 0, h5geo::Endian endian = static_cast<Endian>(0));
+    const std::string& segy, size_t nSamp = 0, h5geo::Endian endian = static_cast<h5geo::Endian>(0));
 
 /// \brief readSEGYTraces read and write SEGY traces and trace headers to
 /// H5Seis object using memory mapping technique (OpenMP enabled)
 /// \param seis
 /// \param segy path to SEGY file
+/// \param appendTraces instead of overwriting existing H5Seis traces it simply
+/// adds new traces at the end of array
 /// \param nSamp number of samples in SEGY (if 0 then try automatically detect)
 /// \param nTrc number of traces in SEGY (if 0 then try automatically detect)
-/// \param fromTrc the starting trace index in H5Seis to be written (may be useful
-/// when reading multiple SEGY in the same H5Seis object)
-/// \param trcBuffer number of traces per thread to read before writing them at once
 /// \param format SEGY format (ibm32, ieee32 or int4)
 /// \param endian Big or Little
 /// \param trcHdrNames use only those defined in 'getTraceHeaderShortNames',
 /// but you can change their order thus fix probably messed up trace header bytes
+/// (empty to use defined in 'getTraceHeaderShortNames' func)
+/// \param trcBuffer number of traces per thread to read before writing them at once
 /// \param nThreads number of threads (to use all threads pass any number `<1`)
 /// \param progressCallback callback function of form `void foo(double progress)`
 /// \return
 H5GEO_EXPORT bool readSEGYTraces(
     H5Seis* seis,
     const std::string& segy,
+    bool appendTraces = false,
     size_t nSamp = 0,
     size_t nTrc = 0,
-    size_t fromTrc = 0,
+    h5geo::SegyFormat format = static_cast<h5geo::SegyFormat>(0),
+    h5geo::Endian endian = static_cast<h5geo::Endian>(0),
+    std::vector<std::string> trcHdrNames = std::vector<std::string>(),
     size_t trcBuffer = 10000,
-    h5geo::SegyFormat format = static_cast<SegyFormat>(0),
-    h5geo::Endian endian = static_cast<Endian>(0),
-    std::vector<std::string> trcHdrNames = getTraceHeaderShortNames(),
     int nThreads = -1,
     std::function<void(double)> progressCallback = nullptr);
 

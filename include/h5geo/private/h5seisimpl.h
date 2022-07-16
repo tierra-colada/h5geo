@@ -16,10 +16,17 @@ protected:
 
 public:
   // WRITERS
-  virtual bool readSEGYTextHeader(const std::string& segy) override;
-  virtual bool readSEGYBinHeader(const std::string& segy) override;
+  virtual bool readSEGYTextHeader(
+      const std::string& segy,
+      h5geo::TextEncoding encoding = static_cast<h5geo::TextEncoding>(0)) override;
+  virtual bool readSEGYBinHeader(
+      const std::string& segy,
+      h5geo::Endian endian = static_cast<h5geo::Endian>(0)) override;
   virtual bool readSEGYTraces(
       const std::vector<std::string>& segyFiles,
+      std::vector<h5geo::SegyFormat> formats = std::vector<h5geo::SegyFormat>(),
+      std::vector<h5geo::Endian> endians = std::vector<h5geo::Endian>(),
+      std::vector<std::vector<std::string>> trcHdrNamesArr = std::vector<std::vector<std::string>>(),
       size_t trcBuffer = 10000,
       int nThreads = -1,
       std::function<void(double)> progressCallback = nullptr) override;

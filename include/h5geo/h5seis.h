@@ -37,12 +37,28 @@ public:
 
   // WRITERS
   /// \brief Read text header from `SEGY` file
-  virtual bool readSEGYTextHeader(const std::string& segy) = 0;
+  virtual bool readSEGYTextHeader(
+      const std::string& segy,
+      h5geo::TextEncoding encoding = static_cast<h5geo::TextEncoding>(0)) = 0;
   /// \brief Read binary header from `SEGY` file
-  virtual bool readSEGYBinHeader(const std::string& segy) = 0;
+  virtual bool readSEGYBinHeader(
+      const std::string& segy,
+      h5geo::Endian endian = static_cast<h5geo::Endian>(0)) = 0;
   /// \brief Read trace headers and trace data from `SEGY` file
+  /// \param segyFiles segy files to read traces and trace headers
+  /// \param formats segy format for each segy (empty to autodefine)
+  /// \param endians PC endian for each segy (empty to autodefine)
+  /// \param trcHdrNamesArr use only those defined in 'getTraceHeaderShortNames',
+  /// but you can change their order thus fix probably messed up trace header bytes
+  /// (empty to use defined in 'getTraceHeaderShortNames' func)
+  /// \param trcBuffer number of traces per thread to read before writing them at once
+  /// \param nThreads number of threads (to use all threads pass any number `<1`)
+  /// \param progressCallback callback function of form `void foo(double progress)`
   virtual bool readSEGYTraces(
       const std::vector<std::string>& segyFiles,
+      std::vector<h5geo::SegyFormat> formats = std::vector<h5geo::SegyFormat>(),
+      std::vector<h5geo::Endian> endians = std::vector<h5geo::Endian>(),
+      std::vector<std::vector<std::string>> trcHdrNamesArr = std::vector<std::vector<std::string>>(),
       size_t trcBuffer = 10000,
       int nThreads = -1,
       std::function<void(double)> progressCallback = nullptr) = 0;

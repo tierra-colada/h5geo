@@ -64,11 +64,16 @@ void H5Seis_py(
   py_obj
       // WRITERS
       .def("readSEGYTextHeader", &H5Seis::readSEGYTextHeader,
-           py::arg("segy"))
+           py::arg("segy"),
+           py::arg_v("encoding", static_cast<h5geo::TextEncoding>(0), "_h5geo.TextEncoding(0)"))
       .def("readSEGYBinHeader", &H5Seis::readSEGYBinHeader,
-           py::arg("segy"))
+           py::arg("segy"),
+           py::arg_v("endian", static_cast<h5geo::Endian>(0), "_h5geo.Endian(0)"))
       .def("readSEGYTraces", &H5Seis::readSEGYTraces,
            py::arg("segyFiles"),
+           py::arg_v("formats", std::vector<h5geo::SegyFormat>(), "list()"),
+           py::arg_v("endians", std::vector<h5geo::Endian>(), "list()"),
+           py::arg_v("trcHdrNames", std::vector<std::vector<std::string>>(), "list()"),
            py::arg_v("trcBuffer", 10000, "10000"),
            py::arg_v("nThreads", -1, "-1"),
            py::arg_v("progressCallback", nullptr, "None"))

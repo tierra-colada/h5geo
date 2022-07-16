@@ -509,7 +509,7 @@ TEST_F(H5SeisFixture, SEGY){
   ASSERT_TRUE(h5geo::readSEGYTraces(
                 seis2.get(),
                 TEST_DATA_DIR"/1.segy",
-                nSamp, nTrc, 0, 10000, format, endian)); // for testing purpose I need to set value not less than 24 trc (10000) as OMP may save traces in different order
+                false, nSamp, nTrc, format, endian)); // for testing purpose I need to set value not less than 24 trc (10000) as OMP may save traces in different order
   Eigen::VectorXf trace2 = seis2->getTrace(0);
   ASSERT_TRUE(trace.isApprox(trace2));
 
@@ -555,7 +555,12 @@ TEST_F(H5SeisFixture, DISABLED_SEGY_BIG){
   seis2->readSEGYBinHeader(segy_big);
 
   std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-  seis2->readSEGYTraces({segy_big}, 10000, -1, [](double progress) { std::cout << "Progress:\t" << progress << std::endl; });
+  seis2->readSEGYTraces(
+        {segy_big},
+        std::vector<h5geo::SegyFormat>(),
+        std::vector<h5geo::Endian>(),
+        std::vector<std::vector<std::string>>(),
+        10000, -1, [](double progress) { std::cout << "Progress:\t" << progress << std::endl; });
   std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
   std::cout << "BIG SEGY read time = " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[seconds]" << std::endl;
 
