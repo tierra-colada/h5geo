@@ -89,15 +89,15 @@ Inheritance diagram for H5SeisImpl:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a33019e47de0221a8c6c7df81932c1e92"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a33019e47de0221a8c6c7df81932c1e92">readSEGYTextHeader</a> (const std::string &amp;segy) override</td></tr>
-<tr class="memdesc:a33019e47de0221a8c6c7df81932c1e92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read text header from <code>SEGY</code> file.  <a href="class_h5_seis_impl.html#a33019e47de0221a8c6c7df81932c1e92">More...</a><br /></td></tr>
-<tr class="separator:a33019e47de0221a8c6c7df81932c1e92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac77e0608dc8118b0d1289f08b3b3466e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#ac77e0608dc8118b0d1289f08b3b3466e">readSEGYBinHeader</a> (const std::string &amp;segy) override</td></tr>
-<tr class="memdesc:ac77e0608dc8118b0d1289f08b3b3466e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read binary header from <code>SEGY</code> file.  <a href="class_h5_seis_impl.html#ac77e0608dc8118b0d1289f08b3b3466e">More...</a><br /></td></tr>
-<tr class="separator:ac77e0608dc8118b0d1289f08b3b3466e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f26fa1ceafe33c7a16f03ba4ad2d21c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a7f26fa1ceafe33c7a16f03ba4ad2d21c">readSEGYTraces</a> (const std::vector&lt; std::string &gt; &amp;segyFiles, size_t trcBuffer=10000, int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr) override</td></tr>
-<tr class="memdesc:a7f26fa1ceafe33c7a16f03ba4ad2d21c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trace headers and trace data from <code>SEGY</code> file.  <a href="class_h5_seis_impl.html#a7f26fa1ceafe33c7a16f03ba4ad2d21c">More...</a><br /></td></tr>
-<tr class="separator:a7f26fa1ceafe33c7a16f03ba4ad2d21c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f754511c089449f1ea5dab7cd5c8e49"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a8f754511c089449f1ea5dab7cd5c8e49">readSEGYTextHeader</a> (const std::string &amp;segy, h5geo::TextEncoding encoding=static_cast&lt; h5geo::TextEncoding &gt;(0)) override</td></tr>
+<tr class="memdesc:a8f754511c089449f1ea5dab7cd5c8e49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read text header from <code>SEGY</code> file.  <a href="class_h5_seis_impl.html#a8f754511c089449f1ea5dab7cd5c8e49">More...</a><br /></td></tr>
+<tr class="separator:a8f754511c089449f1ea5dab7cd5c8e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae72dd44c62bac860ec4344335bc2846e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#ae72dd44c62bac860ec4344335bc2846e">readSEGYBinHeader</a> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0)) override</td></tr>
+<tr class="memdesc:ae72dd44c62bac860ec4344335bc2846e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read binary header from <code>SEGY</code> file.  <a href="class_h5_seis_impl.html#ae72dd44c62bac860ec4344335bc2846e">More...</a><br /></td></tr>
+<tr class="separator:ae72dd44c62bac860ec4344335bc2846e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad37307b9964f49f5d2573cf374a136ec"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#ad37307b9964f49f5d2573cf374a136ec">readSEGYTraces</a> (const std::vector&lt; std::string &gt; &amp;segyFiles, std::vector&lt; h5geo::SegyFormat &gt; formats=std::vector&lt; h5geo::SegyFormat &gt;(), std::vector&lt; h5geo::Endian &gt; endians=std::vector&lt; h5geo::Endian &gt;(), std::vector&lt; std::vector&lt; std::string &gt; &gt; trcHdrNamesArr=std::vector&lt; std::vector&lt; std::string &gt; &gt;(), size_t trcBuffer=10000, int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr) override</td></tr>
+<tr class="memdesc:ad37307b9964f49f5d2573cf374a136ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trace headers and trace data from <code>SEGY</code> file.  <a href="class_h5_seis_impl.html#ad37307b9964f49f5d2573cf374a136ec">More...</a><br /></td></tr>
+<tr class="separator:ad37307b9964f49f5d2573cf374a136ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac41e1f8ca3f25a84d73a85d76e117dbe"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#ac41e1f8ca3f25a84d73a85d76e117dbe">writeTextHeader</a> (const char(&amp;txtHdr)[40][80]) override</td></tr>
 <tr class="memdesc:ac41e1f8ca3f25a84d73a85d76e117dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write text header.  <a href="class_h5_seis_impl.html#ac41e1f8ca3f25a84d73a85d76e117dbe">More...</a><br /></td></tr>
 <tr class="separator:ac41e1f8ca3f25a84d73a85d76e117dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -462,15 +462,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac2391503519cfbe9e51365fe12bd9b58 inherit pub_methods_class_h5_base_impl"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c18e63aef44cd5b5edc59d917415b99 inherit pub_methods_class_h5_base_impl"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_base_impl.html#a4c18e63aef44cd5b5edc59d917415b99">Delete</a> () override</td></tr>
 <tr class="separator:a4c18e63aef44cd5b5edc59d917415b99 inherit pub_methods_class_h5_base_impl"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afeb052d3358c777f301c3f74240cec2f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#afeb052d3358c777f301c3f74240cec2f">readSEGYTextHeader</a> (const std::string &amp;segy)=0</td></tr>
-<tr class="memdesc:afeb052d3358c777f301c3f74240cec2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read text header from <code>SEGY</code> file.  <a href="class_h5_seis.html#afeb052d3358c777f301c3f74240cec2f">More...</a><br /></td></tr>
-<tr class="separator:afeb052d3358c777f301c3f74240cec2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bcc3a517aa9373e55103821a03d0ba4"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a2bcc3a517aa9373e55103821a03d0ba4">readSEGYBinHeader</a> (const std::string &amp;segy)=0</td></tr>
-<tr class="memdesc:a2bcc3a517aa9373e55103821a03d0ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read binary header from <code>SEGY</code> file.  <a href="class_h5_seis.html#a2bcc3a517aa9373e55103821a03d0ba4">More...</a><br /></td></tr>
-<tr class="separator:a2bcc3a517aa9373e55103821a03d0ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcaf24706a922d92c5c33144996245af"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#abcaf24706a922d92c5c33144996245af">readSEGYTraces</a> (const std::vector&lt; std::string &gt; &amp;segyFiles, size_t trcBuffer=10000, int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr)=0</td></tr>
-<tr class="memdesc:abcaf24706a922d92c5c33144996245af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trace headers and trace data from <code>SEGY</code> file.  <a href="class_h5_seis.html#abcaf24706a922d92c5c33144996245af">More...</a><br /></td></tr>
-<tr class="separator:abcaf24706a922d92c5c33144996245af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44293caf43471fae36d8364ebfe5130c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a44293caf43471fae36d8364ebfe5130c">readSEGYTextHeader</a> (const std::string &amp;segy, h5geo::TextEncoding encoding=static_cast&lt; h5geo::TextEncoding &gt;(0))=0</td></tr>
+<tr class="memdesc:a44293caf43471fae36d8364ebfe5130c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read text header from <code>SEGY</code> file.  <a href="class_h5_seis.html#a44293caf43471fae36d8364ebfe5130c">More...</a><br /></td></tr>
+<tr class="separator:a44293caf43471fae36d8364ebfe5130c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc2e5339d20e0ee5e1076159116ee004"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#abc2e5339d20e0ee5e1076159116ee004">readSEGYBinHeader</a> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0))=0</td></tr>
+<tr class="memdesc:abc2e5339d20e0ee5e1076159116ee004"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read binary header from <code>SEGY</code> file.  <a href="class_h5_seis.html#abc2e5339d20e0ee5e1076159116ee004">More...</a><br /></td></tr>
+<tr class="separator:abc2e5339d20e0ee5e1076159116ee004"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafc6679b5ba73c51247b618e3520138c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#aafc6679b5ba73c51247b618e3520138c">readSEGYTraces</a> (const std::vector&lt; std::string &gt; &amp;segyFiles, std::vector&lt; h5geo::SegyFormat &gt; formats=std::vector&lt; h5geo::SegyFormat &gt;(), std::vector&lt; h5geo::Endian &gt; endians=std::vector&lt; h5geo::Endian &gt;(), std::vector&lt; std::vector&lt; std::string &gt; &gt; trcHdrNamesArr=std::vector&lt; std::vector&lt; std::string &gt; &gt;(), size_t trcBuffer=10000, int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr)=0</td></tr>
+<tr class="memdesc:aafc6679b5ba73c51247b618e3520138c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trace headers and trace data from <code>SEGY</code> file.  <a href="class_h5_seis.html#aafc6679b5ba73c51247b618e3520138c">More...</a><br /></td></tr>
+<tr class="separator:aafc6679b5ba73c51247b618e3520138c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad48967e1b8f2f744799cd2bbbaaff843"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#ad48967e1b8f2f744799cd2bbbaaff843">writeTextHeader</a> (const char(&amp;txtHdr)[40][80])=0</td></tr>
 <tr class="memdesc:ad48967e1b8f2f744799cd2bbbaaff843"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write text header.  <a href="class_h5_seis.html#ad48967e1b8f2f744799cd2bbbaaff843">More...</a><br /></td></tr>
 <tr class="separator:ad48967e1b8f2f744799cd2bbbaaff843"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3454,8 +3454,8 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
 
 </div>
 </div>
-<a id="ac77e0608dc8118b0d1289f08b3b3466e" name="ac77e0608dc8118b0d1289f08b3b3466e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac77e0608dc8118b0d1289f08b3b3466e">&#9670;&nbsp;</a></span>readSEGYBinHeader()</h2>
+<a id="ae72dd44c62bac860ec4344335bc2846e" name="ae72dd44c62bac860ec4344335bc2846e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae72dd44c62bac860ec4344335bc2846e">&#9670;&nbsp;</a></span>readSEGYBinHeader()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3467,8 +3467,18 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
           <td class="memname">bool H5SeisImpl::readSEGYBinHeader </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>segy</em></td><td>)</td>
+          <td class="paramname"><em>segy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">h5geo::Endian&#160;</td>
+          <td class="paramname"><em>endian</em> = <code>static_cast&lt;&#160;h5geo::Endian&#160;&gt;(0)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -3480,12 +3490,12 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
 
 <p>Read binary header from <code>SEGY</code> file. </p>
 
-<p>Implements <a class="el" href="class_h5_seis.html#a2bcc3a517aa9373e55103821a03d0ba4">H5Seis</a>.</p>
+<p>Implements <a class="el" href="class_h5_seis.html#abc2e5339d20e0ee5e1076159116ee004">H5Seis</a>.</p>
 
 </div>
 </div>
-<a id="a33019e47de0221a8c6c7df81932c1e92" name="a33019e47de0221a8c6c7df81932c1e92"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33019e47de0221a8c6c7df81932c1e92">&#9670;&nbsp;</a></span>readSEGYTextHeader()</h2>
+<a id="a8f754511c089449f1ea5dab7cd5c8e49" name="a8f754511c089449f1ea5dab7cd5c8e49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f754511c089449f1ea5dab7cd5c8e49">&#9670;&nbsp;</a></span>readSEGYTextHeader()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3497,8 +3507,18 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
           <td class="memname">bool H5SeisImpl::readSEGYTextHeader </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>segy</em></td><td>)</td>
+          <td class="paramname"><em>segy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">h5geo::TextEncoding&#160;</td>
+          <td class="paramname"><em>encoding</em> = <code>static_cast&lt;&#160;h5geo::TextEncoding&#160;&gt;(0)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -3510,12 +3530,12 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
 
 <p>Read text header from <code>SEGY</code> file. </p>
 
-<p>Implements <a class="el" href="class_h5_seis.html#afeb052d3358c777f301c3f74240cec2f">H5Seis</a>.</p>
+<p>Implements <a class="el" href="class_h5_seis.html#a44293caf43471fae36d8364ebfe5130c">H5Seis</a>.</p>
 
 </div>
 </div>
-<a id="a7f26fa1ceafe33c7a16f03ba4ad2d21c" name="a7f26fa1ceafe33c7a16f03ba4ad2d21c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f26fa1ceafe33c7a16f03ba4ad2d21c">&#9670;&nbsp;</a></span>readSEGYTraces()</h2>
+<a id="ad37307b9964f49f5d2573cf374a136ec" name="ad37307b9964f49f5d2573cf374a136ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad37307b9964f49f5d2573cf374a136ec">&#9670;&nbsp;</a></span>readSEGYTraces()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3528,6 +3548,24 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
           <td>(</td>
           <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
           <td class="paramname"><em>segyFiles</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; h5geo::SegyFormat &gt;&#160;</td>
+          <td class="paramname"><em>formats</em> = <code>std::vector&lt;&#160;h5geo::SegyFormat&#160;&gt;()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; h5geo::Endian &gt;&#160;</td>
+          <td class="paramname"><em>endians</em> = <code>std::vector&lt;&#160;h5geo::Endian&#160;&gt;()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; std::string &gt; &gt;&#160;</td>
+          <td class="paramname"><em>trcHdrNamesArr</em> = <code>std::vector&lt;&#160;std::vector&lt;&#160;std::string&#160;&gt;&#160;&gt;()</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -3561,8 +3599,20 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
 </div><div class="memdoc">
 
 <p>Read trace headers and trace data from <code>SEGY</code> file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">segyFiles</td><td>segy files to read traces and trace headers </td></tr>
+    <tr><td class="paramname">formats</td><td>segy format for each segy (empty to autodefine) </td></tr>
+    <tr><td class="paramname">endians</td><td>PC endian for each segy (empty to autodefine) </td></tr>
+    <tr><td class="paramname">trcHdrNamesArr</td><td>use only those defined in 'getTraceHeaderShortNames', but you can change their order thus fix probably messed up trace header bytes (empty to use defined in 'getTraceHeaderShortNames' func) </td></tr>
+    <tr><td class="paramname">trcBuffer</td><td>number of traces per thread to read before writing them at once </td></tr>
+    <tr><td class="paramname">nThreads</td><td>number of threads (to use all threads pass any number <code>&lt;1</code>) </td></tr>
+    <tr><td class="paramname">progressCallback</td><td>callback function of form <code>void foo(double progress)</code> </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implements <a class="el" href="class_h5_seis.html#abcaf24706a922d92c5c33144996245af">H5Seis</a>.</p>
+<p>Implements <a class="el" href="class_h5_seis.html#aafc6679b5ba73c51247b618e3520138c">H5Seis</a>.</p>
 
 </div>
 </div>
