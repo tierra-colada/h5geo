@@ -867,6 +867,61 @@ template&lt;typename T , typename std::enable_if&lt; std::is_arithmetic&lt; T &g
 <tr class="memitem:a20f702bb751edff5febf5595a1c7c2d6"><td class="memTemplItemLeft" align="right" valign="top">h5gt::ElementSet&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a20f702bb751edff5febf5595a1c7c2d6">rowsCols2ElementSet</a> (const std::vector&lt; T &gt; &amp;rows, const std::vector&lt; T &gt; &amp;cols)</td></tr>
 <tr class="memdesc:a20f702bb751edff5febf5595a1c7c2d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">rowsCols2ElementSet select rectilinear block of elements, i.e. uses double loop to select every possible row-col intersection  <a href="namespaceh5geo.html#a20f702bb751edff5febf5595a1c7c2d6">More...</a><br /></td></tr>
 <tr class="separator:a20f702bb751edff5febf5595a1c7c2d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad67ec21b465bd770d9b9d021e818ddcf"><td class="memTemplParams" colspan="2"><a id="ad67ec21b465bd770d9b9d021e818ddcf" name="ad67ec21b465bd770d9b9d021e818ddcf"></a>
+template&lt;class To , class From &gt; </td></tr>
+<tr class="memitem:ad67ec21b465bd770d9b9d021e818ddcf"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt;(sizeof(To)==sizeof(From))&amp;&amp;std::is_trivially_copyable&lt; From &gt;::value &amp;&amp;std::is_trivial&lt; To &gt;::value, To &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>bit_cast</b> (const From &amp;src) noexcept</td></tr>
+<tr class="separator:ad67ec21b465bd770d9b9d021e818ddcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7e9a5f1570fa89a1107d6f4c44078e8"><td class="memItemLeft" align="right" valign="top"><a id="af7e9a5f1570fa89a1107d6f4c44078e8" name="af7e9a5f1570fa89a1107d6f4c44078e8"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>ibm2ieee</b> (const int &amp;from)</td></tr>
+<tr class="separator:af7e9a5f1570fa89a1107d6f4c44078e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb1b60d60a969d2dcd4b943543ef2bbd"><td class="memItemLeft" align="right" valign="top"><a id="adb1b60d60a969d2dcd4b943543ef2bbd" name="adb1b60d60a969d2dcd4b943543ef2bbd"></a>
+unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>ebc_to_ascii_table</b> (unsigned char ascii)</td></tr>
+<tr class="separator:adb1b60d60a969d2dcd4b943543ef2bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1e18c5c015e424fb4df2cc39cea7911"><td class="memTemplParams" colspan="2"><a id="ae1e18c5c015e424fb4df2cc39cea7911" name="ae1e18c5c015e424fb4df2cc39cea7911"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ae1e18c5c015e424fb4df2cc39cea7911"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>bswap</b> (T val)</td></tr>
+<tr class="separator:ae1e18c5c015e424fb4df2cc39cea7911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92b48dab09e69e22ce5e978c201aff6f"><td class="memTemplParams" colspan="2">template&lt;typename Scalar , typename II , typename OI &gt; </td></tr>
+<tr class="memitem:a92b48dab09e69e22ce5e978c201aff6f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a92b48dab09e69e22ce5e978c201aff6f">bswap</a> (II begin, II end, OI dest)</td></tr>
+<tr class="separator:a92b48dab09e69e22ce5e978c201aff6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d1026c87a242cee4fd7d0970d9598e7"><td class="memTemplParams" colspan="2"><a id="a0d1026c87a242cee4fd7d0970d9598e7" name="a0d1026c87a242cee4fd7d0970d9598e7"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a0d1026c87a242cee4fd7d0970d9598e7"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>to_native_endian</b> (T val, h5geo::Endian fromEndian)</td></tr>
+<tr class="separator:a0d1026c87a242cee4fd7d0970d9598e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad485017579a390d6503ae2de82d29974"><td class="memTemplParams" colspan="2"><a id="ad485017579a390d6503ae2de82d29974" name="ad485017579a390d6503ae2de82d29974"></a>
+template&lt;typename Scalar , typename II , typename OI &gt; </td></tr>
+<tr class="memitem:ad485017579a390d6503ae2de82d29974"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>to_native_endian</b> (II begin, II end, OI dest, h5geo::Endian fromEndian)</td></tr>
+<tr class="separator:ad485017579a390d6503ae2de82d29974"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c06bdd33a9071736fd8fb2dc06f4116"><td class="memItemLeft" align="right" valign="top"><a id="a9c06bdd33a9071736fd8fb2dc06f4116" name="a9c06bdd33a9071736fd8fb2dc06f4116"></a>
+H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>isSEGY</b> (const std::string &amp;segy)</td></tr>
+<tr class="separator:a9c06bdd33a9071736fd8fb2dc06f4116"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ea622f1d67d580949f470463d8b0134"><td class="memItemLeft" align="right" valign="top"><a id="a3ea622f1d67d580949f470463d8b0134" name="a3ea622f1d67d580949f470463d8b0134"></a>
+H5GEO_EXPORT TextEncoding&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYTextEncoding</b> (const std::string &amp;segy)</td></tr>
+<tr class="separator:a3ea622f1d67d580949f470463d8b0134"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb4583ebca16230c3ab83e11c5649c9a"><td class="memItemLeft" align="right" valign="top"><a id="afb4583ebca16230c3ab83e11c5649c9a" name="afb4583ebca16230c3ab83e11c5649c9a"></a>
+H5GEO_EXPORT Endian&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYEndian</b> (const std::string &amp;segy)</td></tr>
+<tr class="separator:afb4583ebca16230c3ab83e11c5649c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eb2ed4c061f59da93d711e26d2abe84"><td class="memItemLeft" align="right" valign="top"><a id="a7eb2ed4c061f59da93d711e26d2abe84" name="a7eb2ed4c061f59da93d711e26d2abe84"></a>
+H5GEO_EXPORT SegyFormat&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYFormat</b> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; Endian &gt;(0))</td></tr>
+<tr class="separator:a7eb2ed4c061f59da93d711e26d2abe84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad27d5d3ba5bf91bd59731c181241d01a"><td class="memItemLeft" align="right" valign="top"><a id="ad27d5d3ba5bf91bd59731c181241d01a" name="ad27d5d3ba5bf91bd59731c181241d01a"></a>
+H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGYTextHeader</b> (const std::string &amp;segy, char txtHdr[40][80], h5geo::TextEncoding encoding=static_cast&lt; TextEncoding &gt;(0))</td></tr>
+<tr class="separator:ad27d5d3ba5bf91bd59731c181241d01a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b8c8298a641acb31d45a5639003bea8"><td class="memItemLeft" align="right" valign="top"><a id="a6b8c8298a641acb31d45a5639003bea8" name="a6b8c8298a641acb31d45a5639003bea8"></a>
+H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGYBinHeader</b> (const std::string &amp;segy, double binHdr[30], h5geo::Endian endian=static_cast&lt; Endian &gt;(0))</td></tr>
+<tr class="separator:a6b8c8298a641acb31d45a5639003bea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60a0e8ceee6d344e122fa2b7ba4b0e20"><td class="memItemLeft" align="right" valign="top"><a id="a60a0e8ceee6d344e122fa2b7ba4b0e20" name="a60a0e8ceee6d344e122fa2b7ba4b0e20"></a>
+H5GEO_EXPORT double&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYSampRate</b> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; Endian &gt;(0))</td></tr>
+<tr class="separator:a60a0e8ceee6d344e122fa2b7ba4b0e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a360a30e8ced7a160d071c6e4261db011"><td class="memItemLeft" align="right" valign="top"><a id="a360a30e8ced7a160d071c6e4261db011" name="a360a30e8ced7a160d071c6e4261db011"></a>
+H5GEO_EXPORT size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYNSamp</b> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; Endian &gt;(0))</td></tr>
+<tr class="separator:a360a30e8ced7a160d071c6e4261db011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a46e2a60ae21ca0b8396607e4d0f240"><td class="memItemLeft" align="right" valign="top"><a id="a4a46e2a60ae21ca0b8396607e4d0f240" name="a4a46e2a60ae21ca0b8396607e4d0f240"></a>
+H5GEO_EXPORT size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYNTrc</b> (const std::string &amp;segy, size_t nSamp=0, h5geo::Endian endian=static_cast&lt; Endian &gt;(0))</td></tr>
+<tr class="separator:a4a46e2a60ae21ca0b8396607e4d0f240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e7e494e0af6a208a64095e44d8d9613"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a4e7e494e0af6a208a64095e44d8d9613">readSEGYTraces</a> (<a class="el" href="class_h5_seis.html">H5Seis</a> *seis, const std::string &amp;segy, size_t nSamp=0, size_t nTrc=0, size_t fromTrc=0, size_t trcBuffer=10000, h5geo::SegyFormat format=static_cast&lt; SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; Endian &gt;(0), std::vector&lt; std::string &gt; trcHdrNames=getTraceHeaderShortNames(), int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr)</td></tr>
+<tr class="memdesc:a4e7e494e0af6a208a64095e44d8d9613"><td class="mdescLeft">&#160;</td><td class="mdescRight">readSEGYTraces read and write SEGY traces and trace headers to <a class="el" href="class_h5_seis.html" title="Provides API to work with seismic.">H5Seis</a> object using memory mapping technique (OpenMP enabled)  <a href="namespaceh5geo.html#a4e7e494e0af6a208a64095e44d8d9613">More...</a><br /></td></tr>
+<tr class="separator:a4e7e494e0af6a208a64095e44d8d9613"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba7854092f88427d52ccfe45f3f69b53"><td class="memTemplParams" colspan="2"><a id="aba7854092f88427d52ccfe45f3f69b53" name="aba7854092f88427d52ccfe45f3f69b53"></a>
 template&lt;typename Object , typename std::enable_if&lt; std::is_same&lt; Object, h5gt::File &gt;::value||std::is_same&lt; Object, h5gt::Group &gt;::value||std::is_same&lt; Object, h5gt::DataSet &gt;::value &gt;::type * &gt; </td></tr>
 <tr class="memitem:aba7854092f88427d52ccfe45f3f69b53"><td class="memTemplItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memTemplItemRight" valign="bottom"><b>readEnumAttribute</b> (Object &amp;object, const std::string &amp;attrName)</td></tr>
@@ -1126,61 +1181,6 @@ template&lt;typename D &gt; </td></tr>
 <tr class="memitem:ac1e8d991134c7f5a3f5e31bdaecd934e"><td class="memTemplItemLeft" align="right" valign="top">Eigen::MatrixX&lt; typename D::Scalar &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>polyval</b> (const Eigen::DenseBase&lt; D &gt; &amp;coeffs, const Eigen::DenseBase&lt; D &gt; &amp;x)</td></tr>
 <tr class="memdesc:ac1e8d991134c7f5a3f5e31bdaecd934e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate a polynomial. <br /></td></tr>
 <tr class="separator:ac1e8d991134c7f5a3f5e31bdaecd934e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad67ec21b465bd770d9b9d021e818ddcf"><td class="memTemplParams" colspan="2"><a id="ad67ec21b465bd770d9b9d021e818ddcf" name="ad67ec21b465bd770d9b9d021e818ddcf"></a>
-template&lt;class To , class From &gt; </td></tr>
-<tr class="memitem:ad67ec21b465bd770d9b9d021e818ddcf"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt;(sizeof(To)==sizeof(From))&amp;&amp;std::is_trivially_copyable&lt; From &gt;::value &amp;&amp;std::is_trivial&lt; To &gt;::value, To &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>bit_cast</b> (const From &amp;src) noexcept</td></tr>
-<tr class="separator:ad67ec21b465bd770d9b9d021e818ddcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7e9a5f1570fa89a1107d6f4c44078e8"><td class="memItemLeft" align="right" valign="top"><a id="af7e9a5f1570fa89a1107d6f4c44078e8" name="af7e9a5f1570fa89a1107d6f4c44078e8"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>ibm2ieee</b> (const int &amp;from)</td></tr>
-<tr class="separator:af7e9a5f1570fa89a1107d6f4c44078e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb1b60d60a969d2dcd4b943543ef2bbd"><td class="memItemLeft" align="right" valign="top"><a id="adb1b60d60a969d2dcd4b943543ef2bbd" name="adb1b60d60a969d2dcd4b943543ef2bbd"></a>
-unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>ebc_to_ascii_table</b> (unsigned char ascii)</td></tr>
-<tr class="separator:adb1b60d60a969d2dcd4b943543ef2bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1e18c5c015e424fb4df2cc39cea7911"><td class="memTemplParams" colspan="2"><a id="ae1e18c5c015e424fb4df2cc39cea7911" name="ae1e18c5c015e424fb4df2cc39cea7911"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ae1e18c5c015e424fb4df2cc39cea7911"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>bswap</b> (T val)</td></tr>
-<tr class="separator:ae1e18c5c015e424fb4df2cc39cea7911"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92b48dab09e69e22ce5e978c201aff6f"><td class="memTemplParams" colspan="2">template&lt;typename Scalar , typename II , typename OI &gt; </td></tr>
-<tr class="memitem:a92b48dab09e69e22ce5e978c201aff6f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a92b48dab09e69e22ce5e978c201aff6f">bswap</a> (II begin, II end, OI dest)</td></tr>
-<tr class="separator:a92b48dab09e69e22ce5e978c201aff6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d1026c87a242cee4fd7d0970d9598e7"><td class="memTemplParams" colspan="2"><a id="a0d1026c87a242cee4fd7d0970d9598e7" name="a0d1026c87a242cee4fd7d0970d9598e7"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a0d1026c87a242cee4fd7d0970d9598e7"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>to_native_endian</b> (T val, h5geo::Endian fromEndian)</td></tr>
-<tr class="separator:a0d1026c87a242cee4fd7d0970d9598e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad485017579a390d6503ae2de82d29974"><td class="memTemplParams" colspan="2"><a id="ad485017579a390d6503ae2de82d29974" name="ad485017579a390d6503ae2de82d29974"></a>
-template&lt;typename Scalar , typename II , typename OI &gt; </td></tr>
-<tr class="memitem:ad485017579a390d6503ae2de82d29974"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>to_native_endian</b> (II begin, II end, OI dest, h5geo::Endian fromEndian)</td></tr>
-<tr class="separator:ad485017579a390d6503ae2de82d29974"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c06bdd33a9071736fd8fb2dc06f4116"><td class="memItemLeft" align="right" valign="top"><a id="a9c06bdd33a9071736fd8fb2dc06f4116" name="a9c06bdd33a9071736fd8fb2dc06f4116"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isSEGY</b> (const std::string &amp;segy)</td></tr>
-<tr class="separator:a9c06bdd33a9071736fd8fb2dc06f4116"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ea622f1d67d580949f470463d8b0134"><td class="memItemLeft" align="right" valign="top"><a id="a3ea622f1d67d580949f470463d8b0134" name="a3ea622f1d67d580949f470463d8b0134"></a>
-TextEncoding&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYTextEncoding</b> (const std::string &amp;segy)</td></tr>
-<tr class="separator:a3ea622f1d67d580949f470463d8b0134"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb4583ebca16230c3ab83e11c5649c9a"><td class="memItemLeft" align="right" valign="top"><a id="afb4583ebca16230c3ab83e11c5649c9a" name="afb4583ebca16230c3ab83e11c5649c9a"></a>
-Endian&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYEndian</b> (const std::string &amp;segy)</td></tr>
-<tr class="separator:afb4583ebca16230c3ab83e11c5649c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7eb2ed4c061f59da93d711e26d2abe84"><td class="memItemLeft" align="right" valign="top"><a id="a7eb2ed4c061f59da93d711e26d2abe84" name="a7eb2ed4c061f59da93d711e26d2abe84"></a>
-SegyFormat&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYFormat</b> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; Endian &gt;(0))</td></tr>
-<tr class="separator:a7eb2ed4c061f59da93d711e26d2abe84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad27d5d3ba5bf91bd59731c181241d01a"><td class="memItemLeft" align="right" valign="top"><a id="ad27d5d3ba5bf91bd59731c181241d01a" name="ad27d5d3ba5bf91bd59731c181241d01a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGYTextHeader</b> (const std::string &amp;segy, char txtHdr[40][80], h5geo::TextEncoding encoding=static_cast&lt; TextEncoding &gt;(0))</td></tr>
-<tr class="separator:ad27d5d3ba5bf91bd59731c181241d01a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b8c8298a641acb31d45a5639003bea8"><td class="memItemLeft" align="right" valign="top"><a id="a6b8c8298a641acb31d45a5639003bea8" name="a6b8c8298a641acb31d45a5639003bea8"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGYBinHeader</b> (const std::string &amp;segy, double binHdr[30], h5geo::Endian endian=static_cast&lt; Endian &gt;(0))</td></tr>
-<tr class="separator:a6b8c8298a641acb31d45a5639003bea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60a0e8ceee6d344e122fa2b7ba4b0e20"><td class="memItemLeft" align="right" valign="top"><a id="a60a0e8ceee6d344e122fa2b7ba4b0e20" name="a60a0e8ceee6d344e122fa2b7ba4b0e20"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYSampRate</b> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; Endian &gt;(0))</td></tr>
-<tr class="separator:a60a0e8ceee6d344e122fa2b7ba4b0e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a360a30e8ced7a160d071c6e4261db011"><td class="memItemLeft" align="right" valign="top"><a id="a360a30e8ced7a160d071c6e4261db011" name="a360a30e8ced7a160d071c6e4261db011"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYNSamp</b> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; Endian &gt;(0))</td></tr>
-<tr class="separator:a360a30e8ced7a160d071c6e4261db011"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a46e2a60ae21ca0b8396607e4d0f240"><td class="memItemLeft" align="right" valign="top"><a id="a4a46e2a60ae21ca0b8396607e4d0f240" name="a4a46e2a60ae21ca0b8396607e4d0f240"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYNTrc</b> (const std::string &amp;segy, size_t nSamp=0, h5geo::Endian endian=static_cast&lt; Endian &gt;(0))</td></tr>
-<tr class="separator:a4a46e2a60ae21ca0b8396607e4d0f240"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e7e494e0af6a208a64095e44d8d9613"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a4e7e494e0af6a208a64095e44d8d9613">readSEGYTraces</a> (<a class="el" href="class_h5_seis.html">H5Seis</a> *seis, const std::string &amp;segy, size_t nSamp=0, size_t nTrc=0, size_t fromTrc=0, size_t trcBuffer=10000, h5geo::SegyFormat format=static_cast&lt; SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; Endian &gt;(0), std::vector&lt; std::string &gt; trcHdrNames=getTraceHeaderShortNames(), int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr)</td></tr>
-<tr class="memdesc:a4e7e494e0af6a208a64095e44d8d9613"><td class="mdescLeft">&#160;</td><td class="mdescRight">readSEGYTraces read and write SEGY traces and trace headers to <a class="el" href="class_h5_seis.html" title="Provides API to work with seismic.">H5Seis</a> object using memory mapping technique (OpenMP enabled)  <a href="namespaceh5geo.html#a4e7e494e0af6a208a64095e44d8d9613">More...</a><br /></td></tr>
-<tr class="separator:a4e7e494e0af6a208a64095e44d8d9613"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8845e7bb8f055d47124be3a8ea9523f"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
 <tr class="memitem:ad8845e7bb8f055d47124be3a8ea9523f"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#ad8845e7bb8f055d47124be3a8ea9523f">sort</a> (const Eigen::DenseBase&lt; D &gt; &amp;v)</td></tr>
 <tr class="memdesc:ad8845e7bb8f055d47124be3a8ea9523f"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort return indexes such that v_sorted = v(ind).  <a href="namespaceh5geo.html#ad8845e7bb8f055d47124be3a8ea9523f">More...</a><br /></td></tr>
