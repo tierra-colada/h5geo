@@ -13,7 +13,7 @@
 #include "../../include/h5geopy/h5basepoints_py.h"
 #include "../../include/h5geopy/h5points_py.h"
 #include "../../include/h5geopy/h5seis_py.h"
-#include "../../include/h5geopy/h5segy_py.h"
+#include "../../include/h5geopy/h5core_segy_py.h"
 #include "../../include/h5geopy/h5seiscontainer_py.h"
 #include "../../include/h5geopy/h5sort_py.h"
 #include "../../include/h5geopy/h5map_py.h"

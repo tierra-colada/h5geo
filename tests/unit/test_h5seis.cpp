@@ -3,7 +3,7 @@
 #include <h5geo/h5seiscontainer.h>
 #include <h5geo/h5seis.h>
 #include <h5geo/h5horizon.h>
-#include <h5geo/private/h5segy.h>
+#include <h5geo/h5core.h>
 
 #include <h5gt/H5File.hpp>
 #include <h5gt/H5Group.hpp>

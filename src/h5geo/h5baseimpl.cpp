@@ -18,7 +18,6 @@
 #include "../../include/h5geo/private/h5horizonimpl.h"
 #include "../../include/h5geo/h5core.h"
 #include "../../include/h5geo/private/h5enum_string.h"
-#include "../../include/h5geo/private/h5segy.h"
 
 #include <h5gt/H5File.hpp>
 #include <h5gt/H5Group.hpp>

@@ -712,6 +712,7 @@ h5gt::ElementSet rowsCols2ElementSet(
 #endif
 
 #include "private/h5coreimpl.h"
+#include "private/h5core_segy.h"
 
 
 #endif // H5CORE_H

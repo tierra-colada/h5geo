@@ -1,6 +1,6 @@
 set(include_files_h5geo_private
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5enum_string.h
-  ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5segy.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5core_segy.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5deviation.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5easyhull.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5interpolation.h

@@ -55,10 +55,10 @@ class H5Horizon;
 /// Parameters are needed when creating geo-objects.
 struct BaseObjectParam{
   std::string spatialReference; ///< usually in the form `authName:code` given by 'proj.db' (probably using `name` will also work)
-	std::string lengthUnits; ///< all geo-object's `lengthUnits` data must follow it (if any)
-	std::string temporalUnits; ///< all geo-object's `temporalUnits` data must follow it (if any)
-	std::string angularUnits; ///< all geo-object's `angularUnits` data must follow it (if any)
-	std::string dataUnits; ///< all geo-object's `dataUnits` data must follow it (if any)
+  std::string lengthUnits; ///< all geo-object's `lengthUnits` data must follow it (if any)
+  std::string temporalUnits; ///< all geo-object's `temporalUnits` data must follow it (if any)
+  std::string angularUnits; ///< all geo-object's `angularUnits` data must follow it (if any)
+  std::string dataUnits; ///< all geo-object's `dataUnits` data must follow it (if any)
   double nullValue = NAN; ///< usually used for missed values
 };
 
@@ -95,16 +95,16 @@ struct HorizonParam : public BaseObjectParam{
 /// Map parameters are needed when creating any Map geo-object.
 struct MapParam : public BaseObjectParam{
   double X0; ///< X-coordinate of origin (upper-left corner of column-major Eigen matrix)
-	double Y0; ///< Y-coordinate of origin (upper-left corner of column-major Eigen matrix)
-	double X1; ///< X-coordinate of first point (upper-right corner of column-major Eigen matrix)
-	double Y1; ///< Y-coordinate of first point (upper-right corner of column-major Eigen matrix)
-	double X2; ///< X-coordinate of second point (lower-left corner of column-major Eigen matrix)
-	double Y2; ///< Y-coordinate of second point (lower-left corner of column-major Eigen matrix)
+  double Y0; ///< Y-coordinate of origin (upper-left corner of column-major Eigen matrix)
+  double X1; ///< X-coordinate of first point (upper-right corner of column-major Eigen matrix)
+  double Y1; ///< Y-coordinate of first point (upper-right corner of column-major Eigen matrix)
+  double X2; ///< X-coordinate of second point (lower-left corner of column-major Eigen matrix)
+  double Y2; ///< Y-coordinate of second point (lower-left corner of column-major Eigen matrix)
   size_t nX; ///< number of columns in column-major Eigen matrix
-	size_t nY; ///< number of rows in column-major Eigen matrix
+  size_t nY; ///< number of rows in column-major Eigen matrix
   h5geo::Domain domain; ///< time or depth (TWT, TVD etc)
   hsize_t xChunkSize = 10; ///< see HDF5 chunking
-	hsize_t yChunkSize = 10; ///< see HDF5 chunking
+  hsize_t yChunkSize = 10; ///< see HDF5 chunking
 };
 
 /// \struct WellParam
@@ -113,8 +113,8 @@ struct MapParam : public BaseObjectParam{
 /// Well parameters are needed when creating any Well geo-object.
 struct WellParam : public BaseObjectParam{
   double headX; ///< well head X-coordinate
-	double headY; ///< well head Y-coordinate
-	double kb = 0; ///< kelly bushing
+  double headY; ///< well head Y-coordinate
+  double kb = 0; ///< kelly bushing
   std::string uwi; /// Unique Well Identifier
 };
 
@@ -143,10 +143,10 @@ struct SeisParam : public BaseObjectParam{
   h5geo::SeisDataType dataType; ///< STACK or PRESTACK
   h5geo::SurveyType surveyType; ///< TWO_D or THREE_D
   size_t nTrc; ///< number of traces
-	size_t nSamp; ///< number of samples
+  size_t nSamp; ///< number of samples
   double srd = 0; ///< Seismic Reference Datum
   hsize_t trcChunk = 20000; ///< number of traces per chunk (see HDF5 chunking)
-	hsize_t stdChunk = 100; ///< used secondary for creating datasets within Seis geo-object (see HDF5 chunking)
+  hsize_t stdChunk = 100; ///< used secondary for creating datasets within Seis geo-object (see HDF5 chunking)
   bool mapSEGY = false; ///< SEGY mapping used at Seis creation time (use in pair with `segyFiles`)
   std::vector<std::string> segyFiles; ///< used to map SEGY files (use in pair with `mapSEGY`)
 };

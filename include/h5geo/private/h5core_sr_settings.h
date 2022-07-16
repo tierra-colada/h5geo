@@ -1,8 +1,8 @@
 #ifndef H5CORE_SR_SETTINGS_H
 #define H5CORE_SR_SETTINGS_H
 
-#include "h5geo_export.h"
-#include "h5enum.h"
+// to suppress undef var errors in IDE
+#include "h5geo/h5core.h"
 
 #include <string>
 

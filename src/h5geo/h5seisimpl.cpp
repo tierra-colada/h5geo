@@ -1,7 +1,7 @@
 #include "../../include/h5geo/private/h5seisimpl.h"
 #include "../../include/h5geo/h5seiscontainer.h"
 #include "../../include/h5geo/h5core.h"
-#include "../../include/h5geo/private/h5segy.h"
+#include "../../include/h5geo/private/h5enum_string.h"
 
 #include <fstream>
 #include <climits>

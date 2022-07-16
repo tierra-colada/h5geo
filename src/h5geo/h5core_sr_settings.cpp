@@ -1,5 +1,4 @@
-#include "../../include/h5geo/private/h5core_sr_settings.h"
-#include "../../include/h5geo/private/h5enum.h"
+#include "../../include/h5geo/h5core.h"
 #include "../../include/h5geo/h5base.h"
 
 #include <units/units.hpp>
