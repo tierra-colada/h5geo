@@ -3,8 +3,6 @@
 
 #include <h5gt/H5DataType.hpp>
 
-#include "h5geo_export.h"
-
 namespace h5geo {
 
 // Compound types must be trivial (POD)
