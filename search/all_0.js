@@ -12,5 +12,9 @@ var searchData=
   ['_5freaddataset_9',['_readDataset',['../namespaceh5geo.html#a2bcbe548a41df3240c934156a84ed534',1,'h5geo']]],
   ['_5freadenumattribute_10',['_readEnumAttribute',['../namespaceh5geo.html#a1a6840b76695a3ab62be32bac7c8cd22',1,'h5geo']]],
   ['_5fsegmentdist_11',['_segmentDist',['../namespaceh5geo.html#a61a91bfb64e3c9aabe6ef2661c624c0d',1,'h5geo']]],
-  ['_5fsegmentlen_12',['_segmentLen',['../namespaceh5geo.html#ac32099f81ff6a4439b7624d808b97297',1,'h5geo']]]
+  ['_5fsegmentlen_12',['_segmentLen',['../namespaceh5geo.html#ac32099f81ff6a4439b7624d808b97297',1,'h5geo']]],
+  ['_5fsort_13',['_sort',['../namespaceh5geo.html#a820e7292090e23c538d0482afc20caf6',1,'h5geo']]],
+  ['_5fsort_5frows_14',['_sort_rows',['../namespaceh5geo.html#a7938d2806f2c779c4c0fa584637167d2',1,'h5geo']]],
+  ['_5fsort_5frows_5funique_15',['_sort_rows_unique',['../namespaceh5geo.html#abd7917f55fc74e3f2b139f7cc2f9e6b1',1,'h5geo']]],
+  ['_5fsort_5funique_16',['_sort_unique',['../namespaceh5geo.html#accfe949b5414950028244faf1c33e795',1,'h5geo']]]
 ];
