@@ -1,6 +1,7 @@
 set(src_files_h5geo
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5core.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5core_segy.cpp
+  ${CMAKE_SOURCE_DIR}/src/h5geo/h5sort.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5baseimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5basecontainerimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5baseobjectimpl.cpp

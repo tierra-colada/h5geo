@@ -199,7 +199,7 @@ TEST_F(H5SeisFixture, writeAndGetBinHeader){
 
   std::vector<double> binHdrStd;
   for (size_t i = 0; i < seis->getNBinHdr(); i++)
-    binHdrStd.push_back(i);
+    binHdrStd.push_back((double)i);
 
   ASSERT_TRUE(seis->writeBinHeader(binHdrStd))
       << "write/read bin header from std::vector";

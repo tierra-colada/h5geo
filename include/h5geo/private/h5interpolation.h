@@ -3,13 +3,6 @@
 
 #include <Eigen/Dense>
 
-#include <iostream>
-#include <vector>
-#include <algorithm>    // std::sort, std::stable_sort
-#ifdef H5GEO_USE_THREADS
-#include <execution>
-#endif
-
 namespace h5geo
 {
 

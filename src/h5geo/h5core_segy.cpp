@@ -392,7 +392,7 @@ bool readSEGYTraces(
       } else if (format == h5geo::SegyFormat::FourByte_integer) {
         for (size_t i = 0; i < nSamp; i++) {
           TRACE(i, j) =
-              to_native_endian(m_int[j * bytesPerTrc / 4 + i + 60], endian);
+              (float)to_native_endian(m_int[j * bytesPerTrc / 4 + i + 60], endian);
         }
       } else if (format == h5geo::SegyFormat::FourByte_IEEE) {
         for (size_t i = 0; i < nSamp; i++) {
