@@ -77,20 +77,21 @@ TEST_F(H5CoreFixture, sort_vector){
   h5geo::sort(v.col(0));
   h5geo::sort(v(Eigen::lastN(2)));
   h5geo::sort(v(Eigen::seq(1,2)));
+//  h5geo::sort(v(ind));
 }
 
 void sort_matrix_ref(
     const Eigen::Ref<const Eigen::MatrixX<double>> v,
     const Eigen::Ref<const Eigen::MatrixX<double>> v_sorted)
 {
-  auto ind = h5geo::sort(v.col(0), v_sorted.col(0));
-  ASSERT_TRUE(ind(0) == 2);
-  ASSERT_TRUE(ind(1) == 1);
-  ASSERT_TRUE(ind(2) == 0);
+//  auto ind = h5geo::sort(v.col(0), v_sorted.col(0));
+//  ASSERT_TRUE(ind(0) == 2);
+//  ASSERT_TRUE(ind(1) == 1);
+//  ASSERT_TRUE(ind(2) == 0);
 
-  ASSERT_TRUE(v(0) == v_sorted(2));
-  ASSERT_TRUE(v(1) == v_sorted(1));
-  ASSERT_TRUE(v(2) == v_sorted(0));
+//  ASSERT_TRUE(v(0) == v_sorted(2));
+//  ASSERT_TRUE(v(1) == v_sorted(1));
+//  ASSERT_TRUE(v(2) == v_sorted(0));
 }
 
 

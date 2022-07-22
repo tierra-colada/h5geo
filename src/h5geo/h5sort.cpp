@@ -20,7 +20,7 @@ namespace detail
 
 template <typename D>
 void _sort(
-    const D& M,
+    const D &M,
     Eigen::VectorX<ptrdiff_t>& idx,
     std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun)
 {
@@ -900,6 +900,254 @@ template H5GEO_EXPORT void _sort(
     Eigen::Block<Eigen::VectorX<double>,1,-1,1> const &m,
     Eigen::VectorX<ptrdiff_t>& idx,
     std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+
+
+// From pybind11 to be able to bind sort functions
+using EigenDStride = Eigen::Stride<Eigen::Dynamic, Eigen::Dynamic>;
+template <typename MatrixType> using EigenDRef = Eigen::Ref<MatrixType, 0, EigenDStride>;
+template <typename MatrixType> using EigenDMap = Eigen::Map<MatrixType, 0, EigenDStride>;
+
+
+////====================
+//// MATRIX PYTBIND DREF
+////====================
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<bool,-1,1,0,-1,1>> m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<char,-1,1,0,-1,1>> m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<unsigned char,-1,1,0,-1,1>> m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<short,-1,1,0,-1,1>> m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<unsigned short,-1,1,0,-1,1>> m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<int,-1,1,0,-1,1>> m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<unsigned,-1,1,0,-1,1>> m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<ptrdiff_t,-1,1,0,-1,1>> m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<size_t,-1,1,0,-1,1>> m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<float,-1,1,0,-1,1>> m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<double,-1,1,0,-1,1>> m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+
+////==============================
+//// MATRIX PYTBIND DREF REF
+////==============================
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<bool,-1,1,0,-1,1>> &m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<char,-1,1,0,-1,1>> &m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<unsigned char,-1,1,0,-1,1>> &m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<short,-1,1,0,-1,1>> &m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<unsigned short,-1,1,0,-1,1>> &m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<int,-1,1,0,-1,1>> &m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<unsigned,-1,1,0,-1,1>> &m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<ptrdiff_t,-1,1,0,-1,1>> &m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<size_t,-1,1,0,-1,1>> &m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<float,-1,1,0,-1,1>> &m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+//template H5GEO_EXPORT void _sort(
+//    EigenDRef<Eigen::Matrix<double,-1,1,0,-1,1>> &m,
+//    Eigen::VectorX<ptrdiff_t>& idx,
+//    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+
+//==============================
+// MATRIX PYTBIND DREF CONST REF
+//==============================
+//template<typename Scalar_, int Rows_, int Cols_, int Options_, int MaxRows_, int MaxCols_>
+//class Eigen::Matrix< Scalar_, Rows_, Cols_, Options_, MaxRows_, MaxCols_ >
+
+// VECTOR X: COLUMN
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<bool,-1,1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<char,-1,1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<unsigned char,-1,1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<short,-1,1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<unsigned short,-1,1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<int,-1,1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<unsigned,-1,1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<ptrdiff_t,-1,1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<size_t,-1,1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<float,-1,1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<double,-1,1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+
+
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<bool,1,-1,0,1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<char,1,-1,0,1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<unsigned char,1,-1,0,1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<short,1,-1,0,1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<unsigned short,1,-1,0,1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<int,1,-1,0,1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<unsigned,1,-1,0,1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<ptrdiff_t,1,-1,0,1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<size_t,1,-1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<float,1,-1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<double,1,-1,0,-1,1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+
+// MATRIX XX=
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<bool,-1,-1,0,-1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<char,-1,-1,0,-1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<unsigned char,-1,-1,0,-1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<short,-1,-1,0,-1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<unsigned short,-1,-1,0,-1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<int,-1,-1,0,-1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<unsigned,-1,-1,0,-1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<ptrdiff_t,-1,-1,0,-1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<size_t,-1,-1,0,-1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<float,-1,-1,0,-1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+template H5GEO_EXPORT void _sort(
+    const EigenDRef<const Eigen::Matrix<double,-1,-1,0,-1,-1>> &m,
+    Eigen::VectorX<ptrdiff_t>& idx,
+    std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
+
 
 } // detail
 

@@ -15,7 +15,7 @@ namespace detail
 /// \param cmp_fun compare function
 template <typename D>
 void _sort(
-    const D& M,
+    const D &M,
     Eigen::VectorX<ptrdiff_t> &idx,
     std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
 
