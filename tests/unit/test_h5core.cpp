@@ -18,7 +18,7 @@ public:
 };
 
 TEST_F(H5CoreFixture, sort){
-  Eigen::VectorXd v(3), v_sorted;
+  Eigen::MatrixXd v(3), v_sorted;
   v << 3, 2, 1;
 
   auto ind = h5geo::sort(v, v_sorted);

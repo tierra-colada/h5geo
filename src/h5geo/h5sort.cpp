@@ -15,13 +15,11 @@
 namespace h5geo
 {
 
-/// \brief _sort return indexes such that v_sorted = v(ind).
+/// \brief sort return indexes such that v_sorted = v(ind).
 /// \param v Vector (row/col)
 /// \return ind
 template <typename D>
-Eigen::VectorX<ptrdiff_t> _sort(
-    const Eigen::DenseBase<D> &v)
-{
+Eigen::VectorX<ptrdiff_t> sort(const Eigen::DenseBase<D> &v){
 
   // initialize original index locations
   Eigen::VectorX<ptrdiff_t> idx =
@@ -45,23 +43,24 @@ Eigen::VectorX<ptrdiff_t> _sort(
   return idx;
 }
 
-template <typename T>
+/// \brief sort also calculates v_sorted_ = v(ind).
+/// \param v Vector (row/col)
+/// \param v_sorted_ Vector (row/col). Fundamental types of `v_sorted_` and `v` should be the same
+/// \return ind
+template <typename D>
 Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<T> &v)
+    const Eigen::DenseBase<D> &v,
+    Eigen::DenseBase<D> const &v_sorted_)
 {
-  return _sort(v);
-}
+  Eigen::VectorX<ptrdiff_t> idx = sort(v);
 
-template <typename T>
-Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<T> &v,
-    Eigen::VectorX<T>& v_sorted){
-  Eigen::VectorX<ptrdiff_t> idx = _sort(v);
-  v_sorted = v(idx);
+  Eigen::DenseBase<D>& v_sorted =
+      const_cast< Eigen::DenseBase<D>& >(v_sorted_);
+  v_sorted = v(idx, Eigen::all);
   return idx;
 }
 
-/// \brief _sort_rows  sorts the rows of a matrix in ascending order
+/// \brief sort_rows  sorts the rows of a matrix in ascending order
 /// based on the elements in the first column. When the first column
 /// contains repeated elements, sortrows sorts according to the values
 /// in the next column and repeats this behavior for succeeding equal values.
@@ -69,8 +68,7 @@ Eigen::VectorX<ptrdiff_t> sort(
 /// \param M
 /// \return ind
 template <typename D>
-Eigen::VectorX<ptrdiff_t> _sort_rows(
-    const Eigen::DenseBase<D> &M){
+Eigen::VectorX<ptrdiff_t> sort_rows(const Eigen::DenseBase<D> &M){
 
   // initialize original index locations
   Eigen::VectorX<ptrdiff_t> idx =
@@ -111,24 +109,24 @@ Eigen::VectorX<ptrdiff_t> _sort_rows(
   return idx;
 }
 
-template <typename T>
+/// \brief sort_rows also calculates M_sorted = M(ind, Eigen::all).
+/// \param M Matrix wich rows should be sorted
+/// \param M_sorted_ Row-sorted matrix. Fundamental type of
+/// M_sorted_ should be same as M type
+/// \return ind
+template <typename D>
 Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<T> &M)
+    const Eigen::DenseBase<D> &M,
+    Eigen::DenseBase<D> &M_sorted_)
 {
-  return _sort_rows(M);
-}
-
-template <typename T>
-Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<T> &M,
-    Eigen::MatrixX<T>& M_sorted)
-{
-  Eigen::VectorX<ptrdiff_t> idx = _sort_rows(M);
+  Eigen::VectorX<ptrdiff_t> idx = sort_rows(M);
+  Eigen::DenseBase<D>& M_sorted =
+      const_cast< Eigen::DenseBase<D>& >(M_sorted_);
   M_sorted = M(idx, Eigen::all);
   return idx;
 }
 
-/// \brief _sort_unique find unique elements, sort them, identify unique values
+/// \brief sort_unique find unique elements, sort them, identify unique values
 /// start and end indexes and return indexes such that v_sorted = v(ind).
 /// \param v vector
 /// \param uvals
@@ -138,7 +136,7 @@ Eigen::VectorX<ptrdiff_t> sort_rows(
 /// Also v_sorted.segment(uvals_from_size.row(n)) = v(ind.segment(uvals_from_size.row(n)))
 /// \return ind
 template <typename D>
-Eigen::VectorX<ptrdiff_t> _sort_unique(
+Eigen::VectorX<ptrdiff_t> sort_unique(
     const Eigen::DenseBase<D> &v,
     Eigen::VectorX<typename D::Scalar> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size)
@@ -146,7 +144,7 @@ Eigen::VectorX<ptrdiff_t> _sort_unique(
   if (v.size() < 1)
     return Eigen::VectorX<ptrdiff_t>();
 
-  Eigen::VectorX<ptrdiff_t> idx = _sort(v);
+  Eigen::VectorX<ptrdiff_t> idx = sort(v);
 
   uvals.resize(idx.size());
   uvals_from_size.resize(idx.size(), Eigen::NoChange);
@@ -172,28 +170,27 @@ Eigen::VectorX<ptrdiff_t> _sort_unique(
   return idx;
 }
 
-template <typename T>
+/// \brief sort_unique also calculates v_sorted = v(ind).
+/// \param v vector
+/// \param uvals
+/// \param uvals_from_size
+/// \param v_sorted_
+/// \return ind
+template <typename D>
 Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<T> &v,
-    Eigen::VectorX<T> &uvals,
-    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size)
-{
-  return _sort_unique(v, uvals, uvals_from_size);
-}
-
-template <typename T>
-Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<T> &v,
-    Eigen::VectorX<T> &uvals,
+    const Eigen::DenseBase<D> &v,
+    Eigen::VectorX<typename D::Scalar> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
-    Eigen::VectorX<T>& v_sorted)
+    Eigen::DenseBase<D> const &v_sorted_)
 {
-  Eigen::VectorX<ptrdiff_t> idx = _sort_unique(v, uvals, uvals_from_size);
-  v_sorted = v(idx);
+  Eigen::VectorX<ptrdiff_t> idx = sort_unique(v, uvals, uvals_from_size);
+  Eigen::DenseBase<D>& v_sorted =
+      const_cast< Eigen::DenseBase<D>& >(v_sorted_);
+  v_sorted = v(idx, Eigen::all);
   return idx;
 }
 
-/// \brief _sort_rows_unique find unique rows, sort them, identify unique rows
+/// \brief sort_rows_unique find unique rows, sort them, identify unique rows
 /// start and end row-indexes and return row-indexes such that M_sorted = M(ind, Eigen::all).
 /// \param M
 /// \param urows
@@ -205,7 +202,7 @@ Eigen::VectorX<ptrdiff_t> sort_unique(
 /// M_sorted.middleRows(urows_from_size.row(n)) = M(ind.segment(urows_from_size.row(n)))
 /// \return ind
 template <typename D>
-Eigen::VectorX<ptrdiff_t> _sort_rows_unique(
+Eigen::VectorX<ptrdiff_t> sort_rows_unique(
     const Eigen::DenseBase<D> &M,
     Eigen::MatrixX<typename D::Scalar> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size)
@@ -213,7 +210,7 @@ Eigen::VectorX<ptrdiff_t> _sort_rows_unique(
   if (M.rows() < 1)
     return Eigen::VectorX<ptrdiff_t>();
 
-  Eigen::VectorX<ptrdiff_t> idx = _sort_rows(M);
+  Eigen::VectorX<ptrdiff_t> idx = sort_rows(M);
 
   urows.resize(idx.size(), M.cols());
   urows_from_size.resize(idx.size(), Eigen::NoChange);
@@ -239,319 +236,539 @@ Eigen::VectorX<ptrdiff_t> _sort_rows_unique(
   return idx;
 }
 
-template <typename T>
+/// \brief sort_rows_unique also calculates M_sorted = M(ind, Eigen::all).
+/// \param M
+/// \param urows
+/// \param urows_from_size
+/// \param M_sorted_
+/// \return ind
+template <typename D>
 Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<T> &M,
-    Eigen::MatrixX<T> &urows,
-    Eigen::MatrixX2<ptrdiff_t> &urows_from_size)
-{
-  return _sort_rows_unique(M, urows, urows_from_size);
-}
-
-template <typename T>
-Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<T> &M,
-    Eigen::MatrixX<T> &urows,
+    const Eigen::DenseBase<D> &M,
+    Eigen::MatrixX<typename D::Scalar> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
-    Eigen::MatrixX<T>& M_sorted)
+    const Eigen::DenseBase<D> &M_sorted_)
 {
-  Eigen::VectorX<ptrdiff_t> idx = _sort_rows_unique(M, urows, urows_from_size);
+  Eigen::VectorX<ptrdiff_t> idx = sort_rows_unique(M, urows, urows_from_size);
+  Eigen::DenseBase<D>& M_sorted =
+      const_cast< Eigen::DenseBase<D>& >(M_sorted_);
   M_sorted = M(idx, Eigen::all);
   return idx;
 }
 
 
-// explicit instantiation
+//==================================================================
+// explicit instantiation to avoid TBB and Qt `emit` macro collision
+//==================================================================
+
+//============
+// MATRIX sort
+//============
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<bool> &v);
+    const Eigen::DenseBase<Eigen::MatrixX<bool>> &v);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<char> &v);
+    const Eigen::DenseBase<Eigen::MatrixX<char>> &v);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<unsigned char> &v);
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned char>> &v);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<short> &v);
+    const Eigen::DenseBase<Eigen::MatrixX<short>> &v);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<int> &v);
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned short>> &v);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<unsigned> &v);
+    const Eigen::DenseBase<Eigen::MatrixX<int>> &v);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<ptrdiff_t> &v);
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned>> &v);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<size_t> &v);
+    const Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> &v);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<float> &v);
+    const Eigen::DenseBase<Eigen::MatrixX<size_t>> &v);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<double> &v);
+    const Eigen::DenseBase<Eigen::MatrixX<float>> &v);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<double>> &v);
+
+//============
+// VECTOR sort
+//============
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<bool>> &v);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<char>> &v);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned char>> &v);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<short>> &v);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned short>> &v);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<int>> &v);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned>> &v);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<ptrdiff_t>> &v);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<size_t>> &v);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<float>> &v);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<double>> &v);
+
+//=====================
+// MATRIX sort overload
+//=====================
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<bool>> &v,
+    Eigen::DenseBase<Eigen::MatrixX<bool>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<char>> &v,
+    Eigen::DenseBase<Eigen::MatrixX<char>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned char>> &v,
+    Eigen::DenseBase<Eigen::MatrixX<unsigned char>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<short>> &v,
+    Eigen::DenseBase<Eigen::MatrixX<short>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned short>> &v,
+    Eigen::DenseBase<Eigen::MatrixX<unsigned short>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<int>> &v,
+    Eigen::DenseBase<Eigen::MatrixX<int>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned>> &v,
+    Eigen::DenseBase<Eigen::MatrixX<unsigned>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> &v,
+    Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<size_t>> &v,
+    Eigen::DenseBase<Eigen::MatrixX<size_t>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<float>> &v,
+    Eigen::DenseBase<Eigen::MatrixX<float>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::MatrixX<double>> &v,
+    Eigen::DenseBase<Eigen::MatrixX<double>> const &v_sorted_);
+
+//=====================
+// VECTOR sort overload
+//=====================
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<bool>> &v,
+    Eigen::DenseBase<Eigen::VectorX<bool>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<char>> &v,
+    Eigen::DenseBase<Eigen::VectorX<char>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned char>> &v,
+    Eigen::DenseBase<Eigen::VectorX<unsigned char>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<short>> &v,
+    Eigen::DenseBase<Eigen::VectorX<short>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned short>> &v,
+    Eigen::DenseBase<Eigen::VectorX<unsigned short>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<int>> &v,
+    Eigen::DenseBase<Eigen::VectorX<int>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned>> &v,
+    Eigen::DenseBase<Eigen::VectorX<unsigned>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<ptrdiff_t>> &v,
+    Eigen::DenseBase<Eigen::VectorX<ptrdiff_t>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<size_t>> &v,
+    Eigen::DenseBase<Eigen::VectorX<size_t>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<float>> &v,
+    Eigen::DenseBase<Eigen::VectorX<float>> const &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
+    const Eigen::DenseBase<Eigen::VectorX<double>> &v,
+    Eigen::DenseBase<Eigen::VectorX<double>> const &v_sorted_);
 
 
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<bool> &v,
-    Eigen::VectorX<bool>& v_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<char> &v,
-    Eigen::VectorX<char>& v_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<unsigned char> &v,
-    Eigen::VectorX<unsigned char>& v_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<short> &v,
-    Eigen::VectorX<short>& v_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<int> &v,
-    Eigen::VectorX<int>& v_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<unsigned> &v,
-    Eigen::VectorX<unsigned>& v_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<ptrdiff_t> &v,
-    Eigen::VectorX<ptrdiff_t>& v_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<size_t> &v,
-    Eigen::VectorX<size_t>& v_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<float> &v,
-    Eigen::VectorX<float>& v_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort(
-    const Eigen::VectorX<double> &v,
-    Eigen::VectorX<double>& v_sorted);
+//=================
+// MATRIX sort_rows
+//=================
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<bool>> &M);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<char>> &M);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned char>> &M);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<short>> &M);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned short>> &M);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<int>> &M);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned>> &M);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> &M);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<size_t>> &M);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<float>> &M);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<double>> &M);
+
+//==========================
+// MATRIX sort_rows overload
+//==========================
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<bool>> &M,
+    Eigen::DenseBase<Eigen::MatrixX<bool>> &M_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<char>> &M,
+    Eigen::DenseBase<Eigen::MatrixX<char>> &M_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned char>> &M,
+    Eigen::DenseBase<Eigen::MatrixX<unsigned char>> &M_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<short>> &M,
+    Eigen::DenseBase<Eigen::MatrixX<short>> &M_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned short>> &M,
+    Eigen::DenseBase<Eigen::MatrixX<unsigned short>> &M_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<int>> &M,
+    Eigen::DenseBase<Eigen::MatrixX<int>> &M_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned>> &M,
+    Eigen::DenseBase<Eigen::MatrixX<unsigned>> &M_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> &M,
+    Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> &M_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<size_t>> &M,
+    Eigen::DenseBase<Eigen::MatrixX<size_t>> &M_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<float>> &M,
+    Eigen::DenseBase<Eigen::MatrixX<float>> &M_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
+    const Eigen::DenseBase<Eigen::MatrixX<double>> &M,
+    Eigen::DenseBase<Eigen::MatrixX<double>> &M_sorted_);
 
 
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<bool> &M);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<char> &M);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<unsigned char> &M);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<short> &M);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<int> &M);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<unsigned> &M);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<ptrdiff_t> &M);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<size_t> &M);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<float> &M);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<double> &M);
-
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<bool> &M,
-    Eigen::MatrixX<bool>& M_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<char> &M,
-    Eigen::MatrixX<char>& M_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<unsigned char> &M,
-    Eigen::MatrixX<unsigned char>& M_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<short> &M,
-    Eigen::MatrixX<short>& M_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<int> &M,
-    Eigen::MatrixX<int>& M_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<unsigned> &M,
-    Eigen::MatrixX<unsigned>& M_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<ptrdiff_t> &M,
-    Eigen::MatrixX<ptrdiff_t>& M_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<size_t> &M,
-    Eigen::MatrixX<size_t>& M_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<float> &M,
-    Eigen::MatrixX<float>& M_sorted);
-template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows(
-    const Eigen::MatrixX<double> &M,
-    Eigen::MatrixX<double>& M_sorted);
-
-
+//===================
+// MATRIX sort_unique
+//===================
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<bool> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<bool>> &v,
     Eigen::VectorX<bool> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<char> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<char>> &v,
     Eigen::VectorX<char> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<unsigned char> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned char>> &v,
     Eigen::VectorX<unsigned char> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<short> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<short>> &v,
     Eigen::VectorX<short> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<int> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned short>> &v,
+    Eigen::VectorX<unsigned short> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::MatrixX<int>> &v,
     Eigen::VectorX<int> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<unsigned> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned>> &v,
     Eigen::VectorX<unsigned> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<ptrdiff_t> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> &v,
     Eigen::VectorX<ptrdiff_t> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<size_t> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<size_t>> &v,
     Eigen::VectorX<size_t> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<float> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<float>> &v,
     Eigen::VectorX<float> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<double> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<double>> &v,
     Eigen::VectorX<double> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
 
+//===================
+// VECTOR sort_unique
+//===================
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<bool> &v,
+    const Eigen::DenseBase<Eigen::VectorX<bool>> &v,
+    Eigen::VectorX<bool> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<char>> &v,
+    Eigen::VectorX<char> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned char>> &v,
+    Eigen::VectorX<unsigned char> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<short>> &v,
+    Eigen::VectorX<short> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned short>> &v,
+    Eigen::VectorX<unsigned short> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<int>> &v,
+    Eigen::VectorX<int> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned>> &v,
+    Eigen::VectorX<unsigned> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<ptrdiff_t>> &v,
+    Eigen::VectorX<ptrdiff_t> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<size_t>> &v,
+    Eigen::VectorX<size_t> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<float>> &v,
+    Eigen::VectorX<float> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<double>> &v,
+    Eigen::VectorX<double> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size);
+
+//============================
+// MATRIX sort_unique overload
+//============================
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::MatrixX<bool>> &v,
     Eigen::VectorX<bool> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
-    Eigen::VectorX<bool>& v_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<bool>> &v_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<char> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<char>> &v,
     Eigen::VectorX<char> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
-    Eigen::VectorX<char>& v_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<char>> &v_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<unsigned char> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned char>> &v,
     Eigen::VectorX<unsigned char> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
-    Eigen::VectorX<unsigned char>& v_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned char>> &v_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<short> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<short>> &v,
     Eigen::VectorX<short> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
-    Eigen::VectorX<short>& v_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<short>> &v_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<int> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned short>> &v,
+    Eigen::VectorX<unsigned short> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned short>> &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::MatrixX<int>> &v,
     Eigen::VectorX<int> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
-    Eigen::VectorX<int>& v_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<int>> &v_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<unsigned> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned>> &v,
     Eigen::VectorX<unsigned> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
-    Eigen::VectorX<unsigned>& v_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned>> &v_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<ptrdiff_t> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> &v,
     Eigen::VectorX<ptrdiff_t> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
-    Eigen::VectorX<ptrdiff_t>& v_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> &v_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<size_t> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<size_t>> &v,
     Eigen::VectorX<size_t> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
-    Eigen::VectorX<size_t>& v_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<size_t>> &v_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<float> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<float>> &v,
     Eigen::VectorX<float> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
-    Eigen::VectorX<float>& v_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<float>> &v_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
-    const Eigen::VectorX<double> &v,
+    const Eigen::DenseBase<Eigen::MatrixX<double>> &v,
     Eigen::VectorX<double> &uvals,
     Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
-    Eigen::VectorX<double>& v_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<double>> &v_sorted_);
+
+//============================
+// VECTOR sort_unique overload
+//============================
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<bool>> &v,
+    Eigen::VectorX<bool> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::VectorX<bool>> &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<char>> &v,
+    Eigen::VectorX<char> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::VectorX<char>> &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned char>> &v,
+    Eigen::VectorX<unsigned char> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::VectorX<unsigned char>> &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<short>> &v,
+    Eigen::VectorX<short> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::VectorX<short>> &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned short>> &v,
+    Eigen::VectorX<unsigned short> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::VectorX<unsigned short>> &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<int>> &v,
+    Eigen::VectorX<int> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::VectorX<int>> &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<unsigned>> &v,
+    Eigen::VectorX<unsigned> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::VectorX<unsigned>> &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<ptrdiff_t>> &v,
+    Eigen::VectorX<ptrdiff_t> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::VectorX<ptrdiff_t>> &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<size_t>> &v,
+    Eigen::VectorX<size_t> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::VectorX<size_t>> &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<float>> &v,
+    Eigen::VectorX<float> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::VectorX<float>> &v_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_unique(
+    const Eigen::DenseBase<Eigen::VectorX<double>> &v,
+    Eigen::VectorX<double> &uvals,
+    Eigen::MatrixX2<ptrdiff_t> &uvals_from_size,
+    const Eigen::DenseBase<Eigen::VectorX<double>> &v_sorted_);
 
 
+//========================
+// MATRIX sort_rows_unique
+//========================
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<bool> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<bool>> &M,
     Eigen::MatrixX<bool> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<char> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<char>> &M,
     Eigen::MatrixX<char> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<unsigned char> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned char>> &M,
     Eigen::MatrixX<unsigned char> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<short> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<short>> &M,
     Eigen::MatrixX<short> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<int> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned short>> &M,
+    Eigen::MatrixX<unsigned short> &urows,
+    Eigen::MatrixX2<ptrdiff_t> &urows_from_size);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
+    const Eigen::DenseBase<Eigen::MatrixX<int>> &M,
     Eigen::MatrixX<int> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<unsigned> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned>> &M,
     Eigen::MatrixX<unsigned> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<ptrdiff_t> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> &M,
     Eigen::MatrixX<ptrdiff_t> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<size_t> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<size_t>> &M,
     Eigen::MatrixX<size_t> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<float> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<float>> &M,
     Eigen::MatrixX<float> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<double> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<double>> &M,
     Eigen::MatrixX<double> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size);
 
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<bool> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<bool>> &M,
     Eigen::MatrixX<bool> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
-    Eigen::MatrixX<bool>& M_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<bool>> &M_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<char> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<char>> &M,
     Eigen::MatrixX<char> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
-    Eigen::MatrixX<char>& M_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<char>> &M_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<unsigned char> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned char>> &M,
     Eigen::MatrixX<unsigned char> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
-    Eigen::MatrixX<unsigned char>& M_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned char>> &M_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<short> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<short>> &M,
     Eigen::MatrixX<short> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
-    Eigen::MatrixX<short>& M_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<short>> &M_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<int> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned short>> &M,
+    Eigen::MatrixX<unsigned short> &urows,
+    Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned short>> &M_sorted_);
+template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
+    const Eigen::DenseBase<Eigen::MatrixX<int>> &M,
     Eigen::MatrixX<int> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
-    Eigen::MatrixX<int>& M_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<int>> &M_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<unsigned> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned>> &M,
     Eigen::MatrixX<unsigned> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
-    Eigen::MatrixX<unsigned>& M_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<unsigned>> &M_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<ptrdiff_t> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> &M,
     Eigen::MatrixX<ptrdiff_t> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
-    Eigen::MatrixX<ptrdiff_t>& M_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<ptrdiff_t>> &M_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<size_t> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<size_t>> &M,
     Eigen::MatrixX<size_t> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
-    Eigen::MatrixX<size_t>& M_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<size_t>> &M_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<float> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<float>> &M,
     Eigen::MatrixX<float> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
-    Eigen::MatrixX<float>& M_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<float>> &M_sorted_);
 template H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> sort_rows_unique(
-    const Eigen::MatrixX<double> &M,
+    const Eigen::DenseBase<Eigen::MatrixX<double>> &M,
     Eigen::MatrixX<double> &urows,
     Eigen::MatrixX2<ptrdiff_t> &urows_from_size,
-    Eigen::MatrixX<double>& M_sorted);
+    const Eigen::DenseBase<Eigen::MatrixX<double>> &M_sorted_);
 
 }
