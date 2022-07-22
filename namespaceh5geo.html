@@ -1181,294 +1181,434 @@ template&lt;typename D &gt; </td></tr>
 <tr class="memitem:ac1e8d991134c7f5a3f5e31bdaecd934e"><td class="memTemplItemLeft" align="right" valign="top">Eigen::MatrixX&lt; typename D::Scalar &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>polyval</b> (const Eigen::DenseBase&lt; D &gt; &amp;coeffs, const Eigen::DenseBase&lt; D &gt; &amp;x)</td></tr>
 <tr class="memdesc:ac1e8d991134c7f5a3f5e31bdaecd934e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate a polynomial. <br /></td></tr>
 <tr class="separator:ac1e8d991134c7f5a3f5e31bdaecd934e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86e7cb426e387088b137095284425242"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a86e7cb426e387088b137095284425242"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a86e7cb426e387088b137095284425242">sort</a> (const Eigen::VectorX&lt; T &gt; &amp;v)</td></tr>
-<tr class="memdesc:a86e7cb426e387088b137095284425242"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort return indexes such that v_sorted = v(ind).  <a href="namespaceh5geo.html#a86e7cb426e387088b137095284425242">More...</a><br /></td></tr>
-<tr class="separator:a86e7cb426e387088b137095284425242"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abae7a51fb06353da577d54de3d89ec16"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:abae7a51fb06353da577d54de3d89ec16"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#abae7a51fb06353da577d54de3d89ec16">sort</a> (const Eigen::VectorX&lt; T &gt; &amp;v, Eigen::VectorX&lt; T &gt; &amp;v_sorted)</td></tr>
-<tr class="memdesc:abae7a51fb06353da577d54de3d89ec16"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort also calculates v_sorted_ = v(ind).  <a href="namespaceh5geo.html#abae7a51fb06353da577d54de3d89ec16">More...</a><br /></td></tr>
-<tr class="separator:abae7a51fb06353da577d54de3d89ec16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeafc33678e06b820761c5b648996ab8a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aeafc33678e06b820761c5b648996ab8a"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#aeafc33678e06b820761c5b648996ab8a">sort_rows</a> (const Eigen::MatrixX&lt; T &gt; &amp;M)</td></tr>
-<tr class="memdesc:aeafc33678e06b820761c5b648996ab8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_rows sorts the rows of a matrix in ascending order based on the elements in the first column. When the first column contains repeated elements, sortrows sorts according to the values in the next column and repeats this behavior for succeeding equal values. M_sorted = M(ind, Eigen::all)  <a href="namespaceh5geo.html#aeafc33678e06b820761c5b648996ab8a">More...</a><br /></td></tr>
-<tr class="separator:aeafc33678e06b820761c5b648996ab8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2f281438d32bfd81f49fe31af6bf9ff"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab2f281438d32bfd81f49fe31af6bf9ff"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#ab2f281438d32bfd81f49fe31af6bf9ff">sort_rows</a> (const Eigen::MatrixX&lt; T &gt; &amp;M, Eigen::MatrixX&lt; T &gt; &amp;M_sorted)</td></tr>
-<tr class="memdesc:ab2f281438d32bfd81f49fe31af6bf9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_rows also calculates M_sorted = M(ind, Eigen::all).  <a href="namespaceh5geo.html#ab2f281438d32bfd81f49fe31af6bf9ff">More...</a><br /></td></tr>
-<tr class="separator:ab2f281438d32bfd81f49fe31af6bf9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af57b9ad7cb13c1254e6f8ca87e0f029b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:af57b9ad7cb13c1254e6f8ca87e0f029b"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#af57b9ad7cb13c1254e6f8ca87e0f029b">sort_unique</a> (const Eigen::VectorX&lt; T &gt; &amp;v, Eigen::VectorX&lt; T &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="memdesc:af57b9ad7cb13c1254e6f8ca87e0f029b"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_unique find unique elements, sort them, identify unique values start and end indexes and return indexes such that v_sorted = v(ind).  <a href="namespaceh5geo.html#af57b9ad7cb13c1254e6f8ca87e0f029b">More...</a><br /></td></tr>
-<tr class="separator:af57b9ad7cb13c1254e6f8ca87e0f029b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acad566d75bb0db113fd313894c86c772"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:acad566d75bb0db113fd313894c86c772"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#acad566d75bb0db113fd313894c86c772">sort_unique</a> (const Eigen::VectorX&lt; T &gt; &amp;v, Eigen::VectorX&lt; T &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::VectorX&lt; T &gt; &amp;v_sorted)</td></tr>
-<tr class="memdesc:acad566d75bb0db113fd313894c86c772"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_unique also calculates v_sorted = v(ind).  <a href="namespaceh5geo.html#acad566d75bb0db113fd313894c86c772">More...</a><br /></td></tr>
-<tr class="separator:acad566d75bb0db113fd313894c86c772"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a6b2e08cebd39d393e886609e364d6a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a4a6b2e08cebd39d393e886609e364d6a"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a4a6b2e08cebd39d393e886609e364d6a">sort_rows_unique</a> (const Eigen::MatrixX&lt; T &gt; &amp;M, Eigen::MatrixX&lt; T &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="memdesc:a4a6b2e08cebd39d393e886609e364d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_rows_unique find unique rows, sort them, identify unique rows start and end row-indexes and return row-indexes such that M_sorted = M(ind, Eigen::all).  <a href="namespaceh5geo.html#a4a6b2e08cebd39d393e886609e364d6a">More...</a><br /></td></tr>
-<tr class="separator:a4a6b2e08cebd39d393e886609e364d6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeea3fd3495de7bd1e0c8bf228030fee7"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aeea3fd3495de7bd1e0c8bf228030fee7"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#aeea3fd3495de7bd1e0c8bf228030fee7">sort_rows_unique</a> (const Eigen::MatrixX&lt; T &gt; &amp;M, Eigen::MatrixX&lt; T &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, Eigen::MatrixX&lt; T &gt; &amp;M_sorted)</td></tr>
-<tr class="memdesc:aeea3fd3495de7bd1e0c8bf228030fee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_rows_unique also calculates M_sorted = M(ind, Eigen::all).  <a href="namespaceh5geo.html#aeea3fd3495de7bd1e0c8bf228030fee7">More...</a><br /></td></tr>
-<tr class="separator:aeea3fd3495de7bd1e0c8bf228030fee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a820e7292090e23c538d0482afc20caf6"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
-<tr class="memitem:a820e7292090e23c538d0482afc20caf6"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a820e7292090e23c538d0482afc20caf6">_sort</a> (const Eigen::DenseBase&lt; D &gt; &amp;v)</td></tr>
-<tr class="memdesc:a820e7292090e23c538d0482afc20caf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">_sort return indexes such that v_sorted = v(ind).  <a href="namespaceh5geo.html#a820e7292090e23c538d0482afc20caf6">More...</a><br /></td></tr>
-<tr class="separator:a820e7292090e23c538d0482afc20caf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7938d2806f2c779c4c0fa584637167d2"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
-<tr class="memitem:a7938d2806f2c779c4c0fa584637167d2"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a7938d2806f2c779c4c0fa584637167d2">_sort_rows</a> (const Eigen::DenseBase&lt; D &gt; &amp;M)</td></tr>
-<tr class="memdesc:a7938d2806f2c779c4c0fa584637167d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">_sort_rows sorts the rows of a matrix in ascending order based on the elements in the first column. When the first column contains repeated elements, sortrows sorts according to the values in the next column and repeats this behavior for succeeding equal values. M_sorted = M(ind, Eigen::all)  <a href="namespaceh5geo.html#a7938d2806f2c779c4c0fa584637167d2">More...</a><br /></td></tr>
-<tr class="separator:a7938d2806f2c779c4c0fa584637167d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accfe949b5414950028244faf1c33e795"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
-<tr class="memitem:accfe949b5414950028244faf1c33e795"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#accfe949b5414950028244faf1c33e795">_sort_unique</a> (const Eigen::DenseBase&lt; D &gt; &amp;v, Eigen::VectorX&lt; typename D::Scalar &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="memdesc:accfe949b5414950028244faf1c33e795"><td class="mdescLeft">&#160;</td><td class="mdescRight">_sort_unique find unique elements, sort them, identify unique values start and end indexes and return indexes such that v_sorted = v(ind).  <a href="namespaceh5geo.html#accfe949b5414950028244faf1c33e795">More...</a><br /></td></tr>
-<tr class="separator:accfe949b5414950028244faf1c33e795"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd7917f55fc74e3f2b139f7cc2f9e6b1"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
-<tr class="memitem:abd7917f55fc74e3f2b139f7cc2f9e6b1"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#abd7917f55fc74e3f2b139f7cc2f9e6b1">_sort_rows_unique</a> (const Eigen::DenseBase&lt; D &gt; &amp;M, Eigen::MatrixX&lt; typename D::Scalar &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="memdesc:abd7917f55fc74e3f2b139f7cc2f9e6b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">_sort_rows_unique find unique rows, sort them, identify unique rows start and end row-indexes and return row-indexes such that M_sorted = M(ind, Eigen::all).  <a href="namespaceh5geo.html#abd7917f55fc74e3f2b139f7cc2f9e6b1">More...</a><br /></td></tr>
-<tr class="separator:abd7917f55fc74e3f2b139f7cc2f9e6b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67cbf210370d4ab374b17310a80d1001"><td class="memItemLeft" align="right" valign="top"><a id="a67cbf210370d4ab374b17310a80d1001" name="a67cbf210370d4ab374b17310a80d1001"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; bool &gt; &amp;v)</td></tr>
-<tr class="separator:a67cbf210370d4ab374b17310a80d1001"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3100cffd758b5c8a1de515f9103d2ae"><td class="memItemLeft" align="right" valign="top"><a id="af3100cffd758b5c8a1de515f9103d2ae" name="af3100cffd758b5c8a1de515f9103d2ae"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; char &gt; &amp;v)</td></tr>
-<tr class="separator:af3100cffd758b5c8a1de515f9103d2ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76bece093559e14e9cfe29352da642b4"><td class="memItemLeft" align="right" valign="top"><a id="a76bece093559e14e9cfe29352da642b4" name="a76bece093559e14e9cfe29352da642b4"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; unsigned char &gt; &amp;v)</td></tr>
-<tr class="separator:a76bece093559e14e9cfe29352da642b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e3f90dee96f3edb7ad1f1c5777865e0"><td class="memItemLeft" align="right" valign="top"><a id="a2e3f90dee96f3edb7ad1f1c5777865e0" name="a2e3f90dee96f3edb7ad1f1c5777865e0"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; short &gt; &amp;v)</td></tr>
-<tr class="separator:a2e3f90dee96f3edb7ad1f1c5777865e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d80ebface5e9beaaf698c6e383c39e8"><td class="memItemLeft" align="right" valign="top"><a id="a6d80ebface5e9beaaf698c6e383c39e8" name="a6d80ebface5e9beaaf698c6e383c39e8"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; int &gt; &amp;v)</td></tr>
-<tr class="separator:a6d80ebface5e9beaaf698c6e383c39e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53c138616e698b13e76e7ad14831ab7c"><td class="memItemLeft" align="right" valign="top"><a id="a53c138616e698b13e76e7ad14831ab7c" name="a53c138616e698b13e76e7ad14831ab7c"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; unsigned &gt; &amp;v)</td></tr>
-<tr class="separator:a53c138616e698b13e76e7ad14831ab7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a702234f1e7a71842b27c346632cb6d9d"><td class="memItemLeft" align="right" valign="top"><a id="a702234f1e7a71842b27c346632cb6d9d" name="a702234f1e7a71842b27c346632cb6d9d"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; ptrdiff_t &gt; &amp;v)</td></tr>
-<tr class="separator:a702234f1e7a71842b27c346632cb6d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0778964c3398873fb16a4a2f8a761ab"><td class="memItemLeft" align="right" valign="top"><a id="af0778964c3398873fb16a4a2f8a761ab" name="af0778964c3398873fb16a4a2f8a761ab"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; size_t &gt; &amp;v)</td></tr>
-<tr class="separator:af0778964c3398873fb16a4a2f8a761ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f608c8109ff0cbe0a20e4c4b3a28754"><td class="memItemLeft" align="right" valign="top"><a id="a8f608c8109ff0cbe0a20e4c4b3a28754" name="a8f608c8109ff0cbe0a20e4c4b3a28754"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; float &gt; &amp;v)</td></tr>
-<tr class="separator:a8f608c8109ff0cbe0a20e4c4b3a28754"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0683d95f52dbe019ef3b04b519c3c23"><td class="memItemLeft" align="right" valign="top"><a id="ac0683d95f52dbe019ef3b04b519c3c23" name="ac0683d95f52dbe019ef3b04b519c3c23"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; double &gt; &amp;v)</td></tr>
-<tr class="separator:ac0683d95f52dbe019ef3b04b519c3c23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82297def0be71e55cbedc398f3355f15"><td class="memItemLeft" align="right" valign="top"><a id="a82297def0be71e55cbedc398f3355f15" name="a82297def0be71e55cbedc398f3355f15"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; bool &gt; &amp;v, Eigen::VectorX&lt; bool &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a82297def0be71e55cbedc398f3355f15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c833a5c03385a866ae72d9012a3aa2a"><td class="memItemLeft" align="right" valign="top"><a id="a6c833a5c03385a866ae72d9012a3aa2a" name="a6c833a5c03385a866ae72d9012a3aa2a"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; char &gt; &amp;v, Eigen::VectorX&lt; char &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a6c833a5c03385a866ae72d9012a3aa2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affa19ea574b695bbde166674eeab5fb2"><td class="memItemLeft" align="right" valign="top"><a id="affa19ea574b695bbde166674eeab5fb2" name="affa19ea574b695bbde166674eeab5fb2"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; unsigned char &gt; &amp;v, Eigen::VectorX&lt; unsigned char &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:affa19ea574b695bbde166674eeab5fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08677a411146c36909fed0e68a3c07d6"><td class="memItemLeft" align="right" valign="top"><a id="a08677a411146c36909fed0e68a3c07d6" name="a08677a411146c36909fed0e68a3c07d6"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; short &gt; &amp;v, Eigen::VectorX&lt; short &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a08677a411146c36909fed0e68a3c07d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae027debd0cbe9d2aaadc46d432a07851"><td class="memItemLeft" align="right" valign="top"><a id="ae027debd0cbe9d2aaadc46d432a07851" name="ae027debd0cbe9d2aaadc46d432a07851"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; int &gt; &amp;v, Eigen::VectorX&lt; int &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:ae027debd0cbe9d2aaadc46d432a07851"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1825b36db74ab93ba56817bc49d95ea2"><td class="memItemLeft" align="right" valign="top"><a id="a1825b36db74ab93ba56817bc49d95ea2" name="a1825b36db74ab93ba56817bc49d95ea2"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; unsigned &gt; &amp;v, Eigen::VectorX&lt; unsigned &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a1825b36db74ab93ba56817bc49d95ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae23a8c2594e680c677ed6b60ca32aab0"><td class="memItemLeft" align="right" valign="top"><a id="ae23a8c2594e680c677ed6b60ca32aab0" name="ae23a8c2594e680c677ed6b60ca32aab0"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; ptrdiff_t &gt; &amp;v, Eigen::VectorX&lt; ptrdiff_t &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:ae23a8c2594e680c677ed6b60ca32aab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a2ff6ea35494589f4cb1f1b6d3358cd"><td class="memItemLeft" align="right" valign="top"><a id="a9a2ff6ea35494589f4cb1f1b6d3358cd" name="a9a2ff6ea35494589f4cb1f1b6d3358cd"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; size_t &gt; &amp;v, Eigen::VectorX&lt; size_t &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a9a2ff6ea35494589f4cb1f1b6d3358cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4ea74974e8a841260dd3d68a51a936d"><td class="memItemLeft" align="right" valign="top"><a id="ae4ea74974e8a841260dd3d68a51a936d" name="ae4ea74974e8a841260dd3d68a51a936d"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; float &gt; &amp;v, Eigen::VectorX&lt; float &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:ae4ea74974e8a841260dd3d68a51a936d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60c8b8486a151a984df10397f83e6a3e"><td class="memItemLeft" align="right" valign="top"><a id="a60c8b8486a151a984df10397f83e6a3e" name="a60c8b8486a151a984df10397f83e6a3e"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::VectorX&lt; double &gt; &amp;v, Eigen::VectorX&lt; double &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a60c8b8486a151a984df10397f83e6a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbd7934a0edf247a760828028450faff"><td class="memItemLeft" align="right" valign="top"><a id="afbd7934a0edf247a760828028450faff" name="afbd7934a0edf247a760828028450faff"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; bool &gt; &amp;M)</td></tr>
-<tr class="separator:afbd7934a0edf247a760828028450faff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37e73ff7adf724e24f4e5f2ac00b1e82"><td class="memItemLeft" align="right" valign="top"><a id="a37e73ff7adf724e24f4e5f2ac00b1e82" name="a37e73ff7adf724e24f4e5f2ac00b1e82"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; char &gt; &amp;M)</td></tr>
-<tr class="separator:a37e73ff7adf724e24f4e5f2ac00b1e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b4ebd859c79b024a9bd575ae2986aa1"><td class="memItemLeft" align="right" valign="top"><a id="a7b4ebd859c79b024a9bd575ae2986aa1" name="a7b4ebd859c79b024a9bd575ae2986aa1"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; unsigned char &gt; &amp;M)</td></tr>
-<tr class="separator:a7b4ebd859c79b024a9bd575ae2986aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f36513986a7be3f65c33612aae094f4"><td class="memItemLeft" align="right" valign="top"><a id="a8f36513986a7be3f65c33612aae094f4" name="a8f36513986a7be3f65c33612aae094f4"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; short &gt; &amp;M)</td></tr>
-<tr class="separator:a8f36513986a7be3f65c33612aae094f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65b6565f438fabaa62e952b41dd91f00"><td class="memItemLeft" align="right" valign="top"><a id="a65b6565f438fabaa62e952b41dd91f00" name="a65b6565f438fabaa62e952b41dd91f00"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; int &gt; &amp;M)</td></tr>
-<tr class="separator:a65b6565f438fabaa62e952b41dd91f00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac237a83d1fbe848c97a445ba11aad3c3"><td class="memItemLeft" align="right" valign="top"><a id="ac237a83d1fbe848c97a445ba11aad3c3" name="ac237a83d1fbe848c97a445ba11aad3c3"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; unsigned &gt; &amp;M)</td></tr>
-<tr class="separator:ac237a83d1fbe848c97a445ba11aad3c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a569d2338d3d66b0613cedce9701325ec"><td class="memItemLeft" align="right" valign="top"><a id="a569d2338d3d66b0613cedce9701325ec" name="a569d2338d3d66b0613cedce9701325ec"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; ptrdiff_t &gt; &amp;M)</td></tr>
-<tr class="separator:a569d2338d3d66b0613cedce9701325ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05050b9f4f7aec3a57c51f88bc1c556c"><td class="memItemLeft" align="right" valign="top"><a id="a05050b9f4f7aec3a57c51f88bc1c556c" name="a05050b9f4f7aec3a57c51f88bc1c556c"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; size_t &gt; &amp;M)</td></tr>
-<tr class="separator:a05050b9f4f7aec3a57c51f88bc1c556c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a340842ce49ad3ba087e60b505b36e711"><td class="memItemLeft" align="right" valign="top"><a id="a340842ce49ad3ba087e60b505b36e711" name="a340842ce49ad3ba087e60b505b36e711"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; float &gt; &amp;M)</td></tr>
-<tr class="separator:a340842ce49ad3ba087e60b505b36e711"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c0698322fffb44dc5ca8a8268966014"><td class="memItemLeft" align="right" valign="top"><a id="a5c0698322fffb44dc5ca8a8268966014" name="a5c0698322fffb44dc5ca8a8268966014"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; double &gt; &amp;M)</td></tr>
-<tr class="separator:a5c0698322fffb44dc5ca8a8268966014"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ff07232bf4f0ec7086920eb6a297d39"><td class="memItemLeft" align="right" valign="top"><a id="a6ff07232bf4f0ec7086920eb6a297d39" name="a6ff07232bf4f0ec7086920eb6a297d39"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; bool &gt; &amp;M, Eigen::MatrixX&lt; bool &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:a6ff07232bf4f0ec7086920eb6a297d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89ea9a22ffd9f5f326ce2becf1eaf268"><td class="memItemLeft" align="right" valign="top"><a id="a89ea9a22ffd9f5f326ce2becf1eaf268" name="a89ea9a22ffd9f5f326ce2becf1eaf268"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; char &gt; &amp;M, Eigen::MatrixX&lt; char &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:a89ea9a22ffd9f5f326ce2becf1eaf268"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a437c94152ec534393dcd18e22ae33d35"><td class="memItemLeft" align="right" valign="top"><a id="a437c94152ec534393dcd18e22ae33d35" name="a437c94152ec534393dcd18e22ae33d35"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; unsigned char &gt; &amp;M, Eigen::MatrixX&lt; unsigned char &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:a437c94152ec534393dcd18e22ae33d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04ada4fd1775b01c6c21e65a59f3ed31"><td class="memItemLeft" align="right" valign="top"><a id="a04ada4fd1775b01c6c21e65a59f3ed31" name="a04ada4fd1775b01c6c21e65a59f3ed31"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; short &gt; &amp;M, Eigen::MatrixX&lt; short &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:a04ada4fd1775b01c6c21e65a59f3ed31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb7b16fcb9943f9424f3d8b894804f24"><td class="memItemLeft" align="right" valign="top"><a id="abb7b16fcb9943f9424f3d8b894804f24" name="abb7b16fcb9943f9424f3d8b894804f24"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; int &gt; &amp;M, Eigen::MatrixX&lt; int &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:abb7b16fcb9943f9424f3d8b894804f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4e7ca7b0822b10efc0b6bda2fae8caf"><td class="memItemLeft" align="right" valign="top"><a id="aa4e7ca7b0822b10efc0b6bda2fae8caf" name="aa4e7ca7b0822b10efc0b6bda2fae8caf"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; unsigned &gt; &amp;M, Eigen::MatrixX&lt; unsigned &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:aa4e7ca7b0822b10efc0b6bda2fae8caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1d2f372ea12a64061def768d5cb9cae"><td class="memItemLeft" align="right" valign="top"><a id="aa1d2f372ea12a64061def768d5cb9cae" name="aa1d2f372ea12a64061def768d5cb9cae"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; ptrdiff_t &gt; &amp;M, Eigen::MatrixX&lt; ptrdiff_t &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:aa1d2f372ea12a64061def768d5cb9cae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25800cc8d0ae257ef7aca6bc1548d5b5"><td class="memItemLeft" align="right" valign="top"><a id="a25800cc8d0ae257ef7aca6bc1548d5b5" name="a25800cc8d0ae257ef7aca6bc1548d5b5"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; size_t &gt; &amp;M, Eigen::MatrixX&lt; size_t &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:a25800cc8d0ae257ef7aca6bc1548d5b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05ebc09576cec7819693290795a38579"><td class="memItemLeft" align="right" valign="top"><a id="a05ebc09576cec7819693290795a38579" name="a05ebc09576cec7819693290795a38579"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; float &gt; &amp;M, Eigen::MatrixX&lt; float &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:a05ebc09576cec7819693290795a38579"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa93b999ff20ba0269c517b265af39954"><td class="memItemLeft" align="right" valign="top"><a id="aa93b999ff20ba0269c517b265af39954" name="aa93b999ff20ba0269c517b265af39954"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::MatrixX&lt; double &gt; &amp;M, Eigen::MatrixX&lt; double &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:aa93b999ff20ba0269c517b265af39954"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad35a123527746e9a577c41aba6f49768"><td class="memItemLeft" align="right" valign="top"><a id="ad35a123527746e9a577c41aba6f49768" name="ad35a123527746e9a577c41aba6f49768"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; bool &gt; &amp;v, Eigen::VectorX&lt; bool &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="separator:ad35a123527746e9a577c41aba6f49768"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf162ff53458dbda8303f9922b4b2d37"><td class="memItemLeft" align="right" valign="top"><a id="acf162ff53458dbda8303f9922b4b2d37" name="acf162ff53458dbda8303f9922b4b2d37"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; char &gt; &amp;v, Eigen::VectorX&lt; char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="separator:acf162ff53458dbda8303f9922b4b2d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a5b9efd32eee97d70802b46aa01d9f2"><td class="memItemLeft" align="right" valign="top"><a id="a2a5b9efd32eee97d70802b46aa01d9f2" name="a2a5b9efd32eee97d70802b46aa01d9f2"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; unsigned char &gt; &amp;v, Eigen::VectorX&lt; unsigned char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="separator:a2a5b9efd32eee97d70802b46aa01d9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b5af470bfa6d2c4fe5f9cecd872f35d"><td class="memItemLeft" align="right" valign="top"><a id="a1b5af470bfa6d2c4fe5f9cecd872f35d" name="a1b5af470bfa6d2c4fe5f9cecd872f35d"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; short &gt; &amp;v, Eigen::VectorX&lt; short &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="separator:a1b5af470bfa6d2c4fe5f9cecd872f35d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6186afda175541bdd8d3f905b7992b2b"><td class="memItemLeft" align="right" valign="top"><a id="a6186afda175541bdd8d3f905b7992b2b" name="a6186afda175541bdd8d3f905b7992b2b"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; int &gt; &amp;v, Eigen::VectorX&lt; int &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="separator:a6186afda175541bdd8d3f905b7992b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72d683da8ea9149a8963ee8b200e46c6"><td class="memItemLeft" align="right" valign="top"><a id="a72d683da8ea9149a8963ee8b200e46c6" name="a72d683da8ea9149a8963ee8b200e46c6"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; unsigned &gt; &amp;v, Eigen::VectorX&lt; unsigned &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="separator:a72d683da8ea9149a8963ee8b200e46c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b51fcee8dc089a44dbbd1c80e2184a2"><td class="memItemLeft" align="right" valign="top"><a id="a5b51fcee8dc089a44dbbd1c80e2184a2" name="a5b51fcee8dc089a44dbbd1c80e2184a2"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; ptrdiff_t &gt; &amp;v, Eigen::VectorX&lt; ptrdiff_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="separator:a5b51fcee8dc089a44dbbd1c80e2184a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a651902826d1892f7c3ca2498e927375d"><td class="memItemLeft" align="right" valign="top"><a id="a651902826d1892f7c3ca2498e927375d" name="a651902826d1892f7c3ca2498e927375d"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; size_t &gt; &amp;v, Eigen::VectorX&lt; size_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="separator:a651902826d1892f7c3ca2498e927375d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74d90bc4d20890e28c45283bfe924984"><td class="memItemLeft" align="right" valign="top"><a id="a74d90bc4d20890e28c45283bfe924984" name="a74d90bc4d20890e28c45283bfe924984"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; float &gt; &amp;v, Eigen::VectorX&lt; float &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="separator:a74d90bc4d20890e28c45283bfe924984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad012f9a23c8b95c113ae60a630006e8e"><td class="memItemLeft" align="right" valign="top"><a id="ad012f9a23c8b95c113ae60a630006e8e" name="ad012f9a23c8b95c113ae60a630006e8e"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; double &gt; &amp;v, Eigen::VectorX&lt; double &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
-<tr class="separator:ad012f9a23c8b95c113ae60a630006e8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54788f04d5b9787faded39703b224cc7"><td class="memItemLeft" align="right" valign="top"><a id="a54788f04d5b9787faded39703b224cc7" name="a54788f04d5b9787faded39703b224cc7"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; bool &gt; &amp;v, Eigen::VectorX&lt; bool &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::VectorX&lt; bool &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a54788f04d5b9787faded39703b224cc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7014f860ac993dcccbfdd792a066ed62"><td class="memItemLeft" align="right" valign="top"><a id="a7014f860ac993dcccbfdd792a066ed62" name="a7014f860ac993dcccbfdd792a066ed62"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; char &gt; &amp;v, Eigen::VectorX&lt; char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::VectorX&lt; char &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a7014f860ac993dcccbfdd792a066ed62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4f8e570508f4b84ccfabed4f338d951"><td class="memItemLeft" align="right" valign="top"><a id="aa4f8e570508f4b84ccfabed4f338d951" name="aa4f8e570508f4b84ccfabed4f338d951"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; unsigned char &gt; &amp;v, Eigen::VectorX&lt; unsigned char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::VectorX&lt; unsigned char &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:aa4f8e570508f4b84ccfabed4f338d951"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b9accbe275e204e2568e9ee0ebd6f87"><td class="memItemLeft" align="right" valign="top"><a id="a6b9accbe275e204e2568e9ee0ebd6f87" name="a6b9accbe275e204e2568e9ee0ebd6f87"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; short &gt; &amp;v, Eigen::VectorX&lt; short &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::VectorX&lt; short &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a6b9accbe275e204e2568e9ee0ebd6f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ac9f3b6c5951115180f11a287662ef2"><td class="memItemLeft" align="right" valign="top"><a id="a7ac9f3b6c5951115180f11a287662ef2" name="a7ac9f3b6c5951115180f11a287662ef2"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; int &gt; &amp;v, Eigen::VectorX&lt; int &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::VectorX&lt; int &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a7ac9f3b6c5951115180f11a287662ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab31253433bcc5a29900eee5be0d79f14"><td class="memItemLeft" align="right" valign="top"><a id="ab31253433bcc5a29900eee5be0d79f14" name="ab31253433bcc5a29900eee5be0d79f14"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; unsigned &gt; &amp;v, Eigen::VectorX&lt; unsigned &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::VectorX&lt; unsigned &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:ab31253433bcc5a29900eee5be0d79f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3aace391b2edd5d308f0d6e2741a09c"><td class="memItemLeft" align="right" valign="top"><a id="af3aace391b2edd5d308f0d6e2741a09c" name="af3aace391b2edd5d308f0d6e2741a09c"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; ptrdiff_t &gt; &amp;v, Eigen::VectorX&lt; ptrdiff_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::VectorX&lt; ptrdiff_t &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:af3aace391b2edd5d308f0d6e2741a09c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b04e0c1795faebcb6d0d79cb8e43d9c"><td class="memItemLeft" align="right" valign="top"><a id="a7b04e0c1795faebcb6d0d79cb8e43d9c" name="a7b04e0c1795faebcb6d0d79cb8e43d9c"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; size_t &gt; &amp;v, Eigen::VectorX&lt; size_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::VectorX&lt; size_t &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a7b04e0c1795faebcb6d0d79cb8e43d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bac66ec19be5e6cef7df02ab82c2da8"><td class="memItemLeft" align="right" valign="top"><a id="a6bac66ec19be5e6cef7df02ab82c2da8" name="a6bac66ec19be5e6cef7df02ab82c2da8"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; float &gt; &amp;v, Eigen::VectorX&lt; float &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::VectorX&lt; float &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a6bac66ec19be5e6cef7df02ab82c2da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a561c977049ad2002d99bfeca60151754"><td class="memItemLeft" align="right" valign="top"><a id="a561c977049ad2002d99bfeca60151754" name="a561c977049ad2002d99bfeca60151754"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::VectorX&lt; double &gt; &amp;v, Eigen::VectorX&lt; double &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::VectorX&lt; double &gt; &amp;v_sorted)</td></tr>
-<tr class="separator:a561c977049ad2002d99bfeca60151754"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add624f9c8e03f7dd0f500d24be4d946e"><td class="memItemLeft" align="right" valign="top"><a id="add624f9c8e03f7dd0f500d24be4d946e" name="add624f9c8e03f7dd0f500d24be4d946e"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; bool &gt; &amp;M, Eigen::MatrixX&lt; bool &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="separator:add624f9c8e03f7dd0f500d24be4d946e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7612708cd7e60d3b12b011e498b11af"><td class="memItemLeft" align="right" valign="top"><a id="ad7612708cd7e60d3b12b011e498b11af" name="ad7612708cd7e60d3b12b011e498b11af"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; char &gt; &amp;M, Eigen::MatrixX&lt; char &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="separator:ad7612708cd7e60d3b12b011e498b11af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6729450e597e04675ec9bed77c909de2"><td class="memItemLeft" align="right" valign="top"><a id="a6729450e597e04675ec9bed77c909de2" name="a6729450e597e04675ec9bed77c909de2"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; unsigned char &gt; &amp;M, Eigen::MatrixX&lt; unsigned char &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="separator:a6729450e597e04675ec9bed77c909de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a829a03dd46c7168ac0fe6fa481b5766a"><td class="memItemLeft" align="right" valign="top"><a id="a829a03dd46c7168ac0fe6fa481b5766a" name="a829a03dd46c7168ac0fe6fa481b5766a"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; short &gt; &amp;M, Eigen::MatrixX&lt; short &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="separator:a829a03dd46c7168ac0fe6fa481b5766a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2bac92de549cab12bec81fca63e5d44"><td class="memItemLeft" align="right" valign="top"><a id="aa2bac92de549cab12bec81fca63e5d44" name="aa2bac92de549cab12bec81fca63e5d44"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; int &gt; &amp;M, Eigen::MatrixX&lt; int &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="separator:aa2bac92de549cab12bec81fca63e5d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77910103552e052ff41aa670aa5263ca"><td class="memItemLeft" align="right" valign="top"><a id="a77910103552e052ff41aa670aa5263ca" name="a77910103552e052ff41aa670aa5263ca"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; unsigned &gt; &amp;M, Eigen::MatrixX&lt; unsigned &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="separator:a77910103552e052ff41aa670aa5263ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e40463ba10a2a34e401276d385d53e9"><td class="memItemLeft" align="right" valign="top"><a id="a5e40463ba10a2a34e401276d385d53e9" name="a5e40463ba10a2a34e401276d385d53e9"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; ptrdiff_t &gt; &amp;M, Eigen::MatrixX&lt; ptrdiff_t &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="separator:a5e40463ba10a2a34e401276d385d53e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecbe6fcd68f3564a93f728d3e121e527"><td class="memItemLeft" align="right" valign="top"><a id="aecbe6fcd68f3564a93f728d3e121e527" name="aecbe6fcd68f3564a93f728d3e121e527"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; size_t &gt; &amp;M, Eigen::MatrixX&lt; size_t &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="separator:aecbe6fcd68f3564a93f728d3e121e527"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a848411a780e16769f3c5ebeb16ecfa9f"><td class="memItemLeft" align="right" valign="top"><a id="a848411a780e16769f3c5ebeb16ecfa9f" name="a848411a780e16769f3c5ebeb16ecfa9f"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; float &gt; &amp;M, Eigen::MatrixX&lt; float &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="separator:a848411a780e16769f3c5ebeb16ecfa9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba55229e53161e40ced5f4f224b13309"><td class="memItemLeft" align="right" valign="top"><a id="aba55229e53161e40ced5f4f224b13309" name="aba55229e53161e40ced5f4f224b13309"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; double &gt; &amp;M, Eigen::MatrixX&lt; double &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
-<tr class="separator:aba55229e53161e40ced5f4f224b13309"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab951c11e65ed19c463e4ba7cdc1b345d"><td class="memItemLeft" align="right" valign="top"><a id="ab951c11e65ed19c463e4ba7cdc1b345d" name="ab951c11e65ed19c463e4ba7cdc1b345d"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; bool &gt; &amp;M, Eigen::MatrixX&lt; bool &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, Eigen::MatrixX&lt; bool &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:ab951c11e65ed19c463e4ba7cdc1b345d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a750041d17404e883a83cf386b0c6174b"><td class="memItemLeft" align="right" valign="top"><a id="a750041d17404e883a83cf386b0c6174b" name="a750041d17404e883a83cf386b0c6174b"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; char &gt; &amp;M, Eigen::MatrixX&lt; char &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, Eigen::MatrixX&lt; char &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:a750041d17404e883a83cf386b0c6174b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a1a15cf820b7d83599505f2405e5fe9"><td class="memItemLeft" align="right" valign="top"><a id="a6a1a15cf820b7d83599505f2405e5fe9" name="a6a1a15cf820b7d83599505f2405e5fe9"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; unsigned char &gt; &amp;M, Eigen::MatrixX&lt; unsigned char &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, Eigen::MatrixX&lt; unsigned char &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:a6a1a15cf820b7d83599505f2405e5fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe01452bb871a00eb0eb485611819152"><td class="memItemLeft" align="right" valign="top"><a id="abe01452bb871a00eb0eb485611819152" name="abe01452bb871a00eb0eb485611819152"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; short &gt; &amp;M, Eigen::MatrixX&lt; short &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, Eigen::MatrixX&lt; short &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:abe01452bb871a00eb0eb485611819152"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8917b3803bf39ad2df30c2a332d0d106"><td class="memItemLeft" align="right" valign="top"><a id="a8917b3803bf39ad2df30c2a332d0d106" name="a8917b3803bf39ad2df30c2a332d0d106"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; int &gt; &amp;M, Eigen::MatrixX&lt; int &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, Eigen::MatrixX&lt; int &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:a8917b3803bf39ad2df30c2a332d0d106"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2e1c37a86c8b3ccc81cdb109b3f0bca"><td class="memItemLeft" align="right" valign="top"><a id="ac2e1c37a86c8b3ccc81cdb109b3f0bca" name="ac2e1c37a86c8b3ccc81cdb109b3f0bca"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; unsigned &gt; &amp;M, Eigen::MatrixX&lt; unsigned &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, Eigen::MatrixX&lt; unsigned &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:ac2e1c37a86c8b3ccc81cdb109b3f0bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf79821fed4da581f65df3999dc2c400"><td class="memItemLeft" align="right" valign="top"><a id="adf79821fed4da581f65df3999dc2c400" name="adf79821fed4da581f65df3999dc2c400"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; ptrdiff_t &gt; &amp;M, Eigen::MatrixX&lt; ptrdiff_t &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, Eigen::MatrixX&lt; ptrdiff_t &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:adf79821fed4da581f65df3999dc2c400"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecd4c42d3f9cc964a56263b070db5610"><td class="memItemLeft" align="right" valign="top"><a id="aecd4c42d3f9cc964a56263b070db5610" name="aecd4c42d3f9cc964a56263b070db5610"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; size_t &gt; &amp;M, Eigen::MatrixX&lt; size_t &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, Eigen::MatrixX&lt; size_t &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:aecd4c42d3f9cc964a56263b070db5610"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad054346592f2c502ee6515dd7a0040ae"><td class="memItemLeft" align="right" valign="top"><a id="ad054346592f2c502ee6515dd7a0040ae" name="ad054346592f2c502ee6515dd7a0040ae"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; float &gt; &amp;M, Eigen::MatrixX&lt; float &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, Eigen::MatrixX&lt; float &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:ad054346592f2c502ee6515dd7a0040ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf6670e90970df828bfdc0cbb0fdc130"><td class="memItemLeft" align="right" valign="top"><a id="aaf6670e90970df828bfdc0cbb0fdc130" name="aaf6670e90970df828bfdc0cbb0fdc130"></a>
-template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::MatrixX&lt; double &gt; &amp;M, Eigen::MatrixX&lt; double &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, Eigen::MatrixX&lt; double &gt; &amp;M_sorted)</td></tr>
-<tr class="separator:aaf6670e90970df828bfdc0cbb0fdc130"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8845e7bb8f055d47124be3a8ea9523f"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
+<tr class="memitem:ad8845e7bb8f055d47124be3a8ea9523f"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#ad8845e7bb8f055d47124be3a8ea9523f">sort</a> (const Eigen::DenseBase&lt; D &gt; &amp;v)</td></tr>
+<tr class="memdesc:ad8845e7bb8f055d47124be3a8ea9523f"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort return indexes such that v_sorted = v(ind).  <a href="namespaceh5geo.html#ad8845e7bb8f055d47124be3a8ea9523f">More...</a><br /></td></tr>
+<tr class="separator:ad8845e7bb8f055d47124be3a8ea9523f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea86a78619354cd9354766641ee6e5b3"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
+<tr class="memitem:aea86a78619354cd9354766641ee6e5b3"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#aea86a78619354cd9354766641ee6e5b3">sort</a> (const Eigen::DenseBase&lt; D &gt; &amp;v, Eigen::DenseBase&lt; D &gt; const &amp;v_sorted_)</td></tr>
+<tr class="memdesc:aea86a78619354cd9354766641ee6e5b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort also calculates v_sorted_ = v(ind).  <a href="namespaceh5geo.html#aea86a78619354cd9354766641ee6e5b3">More...</a><br /></td></tr>
+<tr class="separator:aea86a78619354cd9354766641ee6e5b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1163d30f8950204710b111e7964b7847"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
+<tr class="memitem:a1163d30f8950204710b111e7964b7847"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a1163d30f8950204710b111e7964b7847">sort_rows</a> (const Eigen::DenseBase&lt; D &gt; &amp;M)</td></tr>
+<tr class="memdesc:a1163d30f8950204710b111e7964b7847"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_rows sorts the rows of a matrix in ascending order based on the elements in the first column. When the first column contains repeated elements, sortrows sorts according to the values in the next column and repeats this behavior for succeeding equal values. M_sorted = M(ind, Eigen::all)  <a href="namespaceh5geo.html#a1163d30f8950204710b111e7964b7847">More...</a><br /></td></tr>
+<tr class="separator:a1163d30f8950204710b111e7964b7847"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a998a60c54317f7d8d48a6b4950c3504a"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
+<tr class="memitem:a998a60c54317f7d8d48a6b4950c3504a"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a998a60c54317f7d8d48a6b4950c3504a">sort_rows</a> (const Eigen::DenseBase&lt; D &gt; &amp;M, Eigen::DenseBase&lt; D &gt; &amp;M_sorted_)</td></tr>
+<tr class="memdesc:a998a60c54317f7d8d48a6b4950c3504a"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_rows also calculates M_sorted = M(ind, Eigen::all).  <a href="namespaceh5geo.html#a998a60c54317f7d8d48a6b4950c3504a">More...</a><br /></td></tr>
+<tr class="separator:a998a60c54317f7d8d48a6b4950c3504a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab09e8d6a96278540b13b0877993998d4"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
+<tr class="memitem:ab09e8d6a96278540b13b0877993998d4"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#ab09e8d6a96278540b13b0877993998d4">sort_unique</a> (const Eigen::DenseBase&lt; D &gt; &amp;v, Eigen::VectorX&lt; typename D::Scalar &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="memdesc:ab09e8d6a96278540b13b0877993998d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_unique find unique elements, sort them, identify unique values start and end indexes and return indexes such that v_sorted = v(ind).  <a href="namespaceh5geo.html#ab09e8d6a96278540b13b0877993998d4">More...</a><br /></td></tr>
+<tr class="separator:ab09e8d6a96278540b13b0877993998d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a762a2aee910e492888312a3e5b5c2233"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
+<tr class="memitem:a762a2aee910e492888312a3e5b5c2233"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a762a2aee910e492888312a3e5b5c2233">sort_unique</a> (const Eigen::DenseBase&lt; D &gt; &amp;v, Eigen::VectorX&lt; typename D::Scalar &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, Eigen::DenseBase&lt; D &gt; const &amp;v_sorted_)</td></tr>
+<tr class="memdesc:a762a2aee910e492888312a3e5b5c2233"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_unique also calculates v_sorted = v(ind).  <a href="namespaceh5geo.html#a762a2aee910e492888312a3e5b5c2233">More...</a><br /></td></tr>
+<tr class="separator:a762a2aee910e492888312a3e5b5c2233"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a302bd269b88b59396c274d9af21dd7c5"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
+<tr class="memitem:a302bd269b88b59396c274d9af21dd7c5"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a302bd269b88b59396c274d9af21dd7c5">sort_rows_unique</a> (const Eigen::DenseBase&lt; D &gt; &amp;M, Eigen::MatrixX&lt; typename D::Scalar &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="memdesc:a302bd269b88b59396c274d9af21dd7c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_rows_unique find unique rows, sort them, identify unique rows start and end row-indexes and return row-indexes such that M_sorted = M(ind, Eigen::all).  <a href="namespaceh5geo.html#a302bd269b88b59396c274d9af21dd7c5">More...</a><br /></td></tr>
+<tr class="separator:a302bd269b88b59396c274d9af21dd7c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a9af8318fdf39f92d79404c4259bb26"><td class="memTemplParams" colspan="2">template&lt;typename D &gt; </td></tr>
+<tr class="memitem:a4a9af8318fdf39f92d79404c4259bb26"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a4a9af8318fdf39f92d79404c4259bb26">sort_rows_unique</a> (const Eigen::DenseBase&lt; D &gt; &amp;M, Eigen::MatrixX&lt; typename D::Scalar &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; D &gt; &amp;M_sorted_)</td></tr>
+<tr class="memdesc:a4a9af8318fdf39f92d79404c4259bb26"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_rows_unique also calculates M_sorted = M(ind, Eigen::all).  <a href="namespaceh5geo.html#a4a9af8318fdf39f92d79404c4259bb26">More...</a><br /></td></tr>
+<tr class="separator:a4a9af8318fdf39f92d79404c4259bb26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3eb7453dcd567f3df1edee1f04077828"><td class="memItemLeft" align="right" valign="top"><a id="a3eb7453dcd567f3df1edee1f04077828" name="a3eb7453dcd567f3df1edee1f04077828"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:a3eb7453dcd567f3df1edee1f04077828"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64e04c2583aae3521521e2f280890f32"><td class="memItemLeft" align="right" valign="top"><a id="a64e04c2583aae3521521e2f280890f32" name="a64e04c2583aae3521521e2f280890f32"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:a64e04c2583aae3521521e2f280890f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd074b84bd131dcd70444f59799c0100"><td class="memItemLeft" align="right" valign="top"><a id="acd074b84bd131dcd70444f59799c0100" name="acd074b84bd131dcd70444f59799c0100"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:acd074b84bd131dcd70444f59799c0100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75630a4a0ce6787e4abbae39d31aac4f"><td class="memItemLeft" align="right" valign="top"><a id="a75630a4a0ce6787e4abbae39d31aac4f" name="a75630a4a0ce6787e4abbae39d31aac4f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:a75630a4a0ce6787e4abbae39d31aac4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfe35a23b7ba2f26527604fd36ab04c7"><td class="memItemLeft" align="right" valign="top"><a id="acfe35a23b7ba2f26527604fd36ab04c7" name="acfe35a23b7ba2f26527604fd36ab04c7"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:acfe35a23b7ba2f26527604fd36ab04c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a829ca36bb2e7f4f6c2f07924cd2964af"><td class="memItemLeft" align="right" valign="top"><a id="a829ca36bb2e7f4f6c2f07924cd2964af" name="a829ca36bb2e7f4f6c2f07924cd2964af"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:a829ca36bb2e7f4f6c2f07924cd2964af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab93c62918d8ba7c3fb129371548054b8"><td class="memItemLeft" align="right" valign="top"><a id="ab93c62918d8ba7c3fb129371548054b8" name="ab93c62918d8ba7c3fb129371548054b8"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:ab93c62918d8ba7c3fb129371548054b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a916ca9b03d1ae68b922ebf458935add3"><td class="memItemLeft" align="right" valign="top"><a id="a916ca9b03d1ae68b922ebf458935add3" name="a916ca9b03d1ae68b922ebf458935add3"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:a916ca9b03d1ae68b922ebf458935add3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a065971fbc6f89c5fb83bcd99a64d90f0"><td class="memItemLeft" align="right" valign="top"><a id="a065971fbc6f89c5fb83bcd99a64d90f0" name="a065971fbc6f89c5fb83bcd99a64d90f0"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:a065971fbc6f89c5fb83bcd99a64d90f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1227484796b13dc716ab16265423a051"><td class="memItemLeft" align="right" valign="top"><a id="a1227484796b13dc716ab16265423a051" name="a1227484796b13dc716ab16265423a051"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:a1227484796b13dc716ab16265423a051"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae067141877942622c9ade6755d9da862"><td class="memItemLeft" align="right" valign="top"><a id="ae067141877942622c9ade6755d9da862" name="ae067141877942622c9ade6755d9da862"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:ae067141877942622c9ade6755d9da862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6a9b9f49b0ca6ccadf672f197d4f6f9"><td class="memItemLeft" align="right" valign="top"><a id="ac6a9b9f49b0ca6ccadf672f197d4f6f9" name="ac6a9b9f49b0ca6ccadf672f197d4f6f9"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; bool &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:ac6a9b9f49b0ca6ccadf672f197d4f6f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8784127c858c075286f8756532b12c2f"><td class="memItemLeft" align="right" valign="top"><a id="a8784127c858c075286f8756532b12c2f" name="a8784127c858c075286f8756532b12c2f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; char &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:a8784127c858c075286f8756532b12c2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae96c29eca52b324c8f4d2bc35e5c263a"><td class="memItemLeft" align="right" valign="top"><a id="ae96c29eca52b324c8f4d2bc35e5c263a" name="ae96c29eca52b324c8f4d2bc35e5c263a"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned char &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:ae96c29eca52b324c8f4d2bc35e5c263a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba33e92c636cd268ed4a4cec7e3c255d"><td class="memItemLeft" align="right" valign="top"><a id="aba33e92c636cd268ed4a4cec7e3c255d" name="aba33e92c636cd268ed4a4cec7e3c255d"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; short &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:aba33e92c636cd268ed4a4cec7e3c255d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce6d19088c5f9feda3fff6491a6328d"><td class="memItemLeft" align="right" valign="top"><a id="a6ce6d19088c5f9feda3fff6491a6328d" name="a6ce6d19088c5f9feda3fff6491a6328d"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned short &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:a6ce6d19088c5f9feda3fff6491a6328d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcb49bc274bb1698b73c960138278075"><td class="memItemLeft" align="right" valign="top"><a id="afcb49bc274bb1698b73c960138278075" name="afcb49bc274bb1698b73c960138278075"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; int &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:afcb49bc274bb1698b73c960138278075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c3aa0db9b984954613d411b28411622"><td class="memItemLeft" align="right" valign="top"><a id="a7c3aa0db9b984954613d411b28411622" name="a7c3aa0db9b984954613d411b28411622"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:a7c3aa0db9b984954613d411b28411622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab18071569c8b213c88f1b19c38a4c354"><td class="memItemLeft" align="right" valign="top"><a id="ab18071569c8b213c88f1b19c38a4c354" name="ab18071569c8b213c88f1b19c38a4c354"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; ptrdiff_t &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:ab18071569c8b213c88f1b19c38a4c354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d5875718345d7ccca6f9e27824107c6"><td class="memItemLeft" align="right" valign="top"><a id="a4d5875718345d7ccca6f9e27824107c6" name="a4d5875718345d7ccca6f9e27824107c6"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; size_t &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:a4d5875718345d7ccca6f9e27824107c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadb4133b1c8bcbbf978096a87424c27a"><td class="memItemLeft" align="right" valign="top"><a id="aadb4133b1c8bcbbf978096a87424c27a" name="aadb4133b1c8bcbbf978096a87424c27a"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; float &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:aadb4133b1c8bcbbf978096a87424c27a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad40d49d3bc5bf95c5f0ea05d7d1a6491"><td class="memItemLeft" align="right" valign="top"><a id="ad40d49d3bc5bf95c5f0ea05d7d1a6491" name="ad40d49d3bc5bf95c5f0ea05d7d1a6491"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; double &gt; &gt; &amp;v)</td></tr>
+<tr class="separator:ad40d49d3bc5bf95c5f0ea05d7d1a6491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35dc992e48a3cd7ad0822f80a49f4d5c"><td class="memItemLeft" align="right" valign="top"><a id="a35dc992e48a3cd7ad0822f80a49f4d5c" name="a35dc992e48a3cd7ad0822f80a49f4d5c"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a35dc992e48a3cd7ad0822f80a49f4d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a186a50fba041a70bd830f16aca59115a"><td class="memItemLeft" align="right" valign="top"><a id="a186a50fba041a70bd830f16aca59115a" name="a186a50fba041a70bd830f16aca59115a"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a186a50fba041a70bd830f16aca59115a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25070b9beaab7c13e8f6f1f4ed4499c6"><td class="memItemLeft" align="right" valign="top"><a id="a25070b9beaab7c13e8f6f1f4ed4499c6" name="a25070b9beaab7c13e8f6f1f4ed4499c6"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a25070b9beaab7c13e8f6f1f4ed4499c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19e9569a7feaae74086a12ed2659f913"><td class="memItemLeft" align="right" valign="top"><a id="a19e9569a7feaae74086a12ed2659f913" name="a19e9569a7feaae74086a12ed2659f913"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a19e9569a7feaae74086a12ed2659f913"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f0271c152106e8cf75865409095a797"><td class="memItemLeft" align="right" valign="top"><a id="a4f0271c152106e8cf75865409095a797" name="a4f0271c152106e8cf75865409095a797"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a4f0271c152106e8cf75865409095a797"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a836a8588010de9ce1bbdb412b27b48fd"><td class="memItemLeft" align="right" valign="top"><a id="a836a8588010de9ce1bbdb412b27b48fd" name="a836a8588010de9ce1bbdb412b27b48fd"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a836a8588010de9ce1bbdb412b27b48fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab45a100c344e54af240819878fd82d3c"><td class="memItemLeft" align="right" valign="top"><a id="ab45a100c344e54af240819878fd82d3c" name="ab45a100c344e54af240819878fd82d3c"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:ab45a100c344e54af240819878fd82d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9728e171d71006cededbcb20d74f3441"><td class="memItemLeft" align="right" valign="top"><a id="a9728e171d71006cededbcb20d74f3441" name="a9728e171d71006cededbcb20d74f3441"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a9728e171d71006cededbcb20d74f3441"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac691014f811ed5cace8e2a3f82d55b3e"><td class="memItemLeft" align="right" valign="top"><a id="ac691014f811ed5cace8e2a3f82d55b3e" name="ac691014f811ed5cace8e2a3f82d55b3e"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:ac691014f811ed5cace8e2a3f82d55b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5747d47e8bfe76668fd43276c34603b8"><td class="memItemLeft" align="right" valign="top"><a id="a5747d47e8bfe76668fd43276c34603b8" name="a5747d47e8bfe76668fd43276c34603b8"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a5747d47e8bfe76668fd43276c34603b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae42bc8d3b5f897ac07be288b99109f5a"><td class="memItemLeft" align="right" valign="top"><a id="ae42bc8d3b5f897ac07be288b99109f5a" name="ae42bc8d3b5f897ac07be288b99109f5a"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:ae42bc8d3b5f897ac07be288b99109f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c98439a485c47550a317726e784738f"><td class="memItemLeft" align="right" valign="top"><a id="a1c98439a485c47550a317726e784738f" name="a1c98439a485c47550a317726e784738f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; bool &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::VectorX&lt; bool &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a1c98439a485c47550a317726e784738f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14f858874a528eb48cc988dcf8118f63"><td class="memItemLeft" align="right" valign="top"><a id="a14f858874a528eb48cc988dcf8118f63" name="a14f858874a528eb48cc988dcf8118f63"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; char &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::VectorX&lt; char &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a14f858874a528eb48cc988dcf8118f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09db51677a8a72ff22458e899f252840"><td class="memItemLeft" align="right" valign="top"><a id="a09db51677a8a72ff22458e899f252840" name="a09db51677a8a72ff22458e899f252840"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned char &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned char &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a09db51677a8a72ff22458e899f252840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa83ed7a48beb422104e2125536bf9e85"><td class="memItemLeft" align="right" valign="top"><a id="aa83ed7a48beb422104e2125536bf9e85" name="aa83ed7a48beb422104e2125536bf9e85"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; short &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::VectorX&lt; short &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:aa83ed7a48beb422104e2125536bf9e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b53d393804c71f36c041393833c4ba3"><td class="memItemLeft" align="right" valign="top"><a id="a5b53d393804c71f36c041393833c4ba3" name="a5b53d393804c71f36c041393833c4ba3"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned short &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned short &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a5b53d393804c71f36c041393833c4ba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e92e0f663b9558fd45302c4f5eb7ba7"><td class="memItemLeft" align="right" valign="top"><a id="a9e92e0f663b9558fd45302c4f5eb7ba7" name="a9e92e0f663b9558fd45302c4f5eb7ba7"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; int &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::VectorX&lt; int &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a9e92e0f663b9558fd45302c4f5eb7ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a197d7cebc42b47a4b59d0e8ea1a50153"><td class="memItemLeft" align="right" valign="top"><a id="a197d7cebc42b47a4b59d0e8ea1a50153" name="a197d7cebc42b47a4b59d0e8ea1a50153"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a197d7cebc42b47a4b59d0e8ea1a50153"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ca6e91a4262d051675bc84398c93f90"><td class="memItemLeft" align="right" valign="top"><a id="a3ca6e91a4262d051675bc84398c93f90" name="a3ca6e91a4262d051675bc84398c93f90"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; ptrdiff_t &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::VectorX&lt; ptrdiff_t &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a3ca6e91a4262d051675bc84398c93f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fefe98a3f0d5d29d49afe84aa54b11a"><td class="memItemLeft" align="right" valign="top"><a id="a3fefe98a3f0d5d29d49afe84aa54b11a" name="a3fefe98a3f0d5d29d49afe84aa54b11a"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; size_t &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::VectorX&lt; size_t &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a3fefe98a3f0d5d29d49afe84aa54b11a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bafd65ea42833c636be196ec22dc2e9"><td class="memItemLeft" align="right" valign="top"><a id="a1bafd65ea42833c636be196ec22dc2e9" name="a1bafd65ea42833c636be196ec22dc2e9"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; float &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::VectorX&lt; float &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:a1bafd65ea42833c636be196ec22dc2e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfe7543f9e9cf30b9942eecaab02d72b"><td class="memItemLeft" align="right" valign="top"><a id="adfe7543f9e9cf30b9942eecaab02d72b" name="adfe7543f9e9cf30b9942eecaab02d72b"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; double &gt; &gt; &amp;v, Eigen::DenseBase&lt; Eigen::VectorX&lt; double &gt; &gt; const &amp;v_sorted_)</td></tr>
+<tr class="separator:adfe7543f9e9cf30b9942eecaab02d72b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf105eb5ebe96b53eab543ee4b53b74c"><td class="memItemLeft" align="right" valign="top"><a id="abf105eb5ebe96b53eab543ee4b53b74c" name="abf105eb5ebe96b53eab543ee4b53b74c"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; &amp;M)</td></tr>
+<tr class="separator:abf105eb5ebe96b53eab543ee4b53b74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b9abafe6303a0bec9ff0cdf41031580"><td class="memItemLeft" align="right" valign="top"><a id="a7b9abafe6303a0bec9ff0cdf41031580" name="a7b9abafe6303a0bec9ff0cdf41031580"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; &amp;M)</td></tr>
+<tr class="separator:a7b9abafe6303a0bec9ff0cdf41031580"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22cc9d0f5e584b745c1b70013484f2f7"><td class="memItemLeft" align="right" valign="top"><a id="a22cc9d0f5e584b745c1b70013484f2f7" name="a22cc9d0f5e584b745c1b70013484f2f7"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; &amp;M)</td></tr>
+<tr class="separator:a22cc9d0f5e584b745c1b70013484f2f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f91a089d5e7783760d753e62cc73cf8"><td class="memItemLeft" align="right" valign="top"><a id="a3f91a089d5e7783760d753e62cc73cf8" name="a3f91a089d5e7783760d753e62cc73cf8"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; &amp;M)</td></tr>
+<tr class="separator:a3f91a089d5e7783760d753e62cc73cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a6906beeb6a42f4457dc51f4d32baaf"><td class="memItemLeft" align="right" valign="top"><a id="a3a6906beeb6a42f4457dc51f4d32baaf" name="a3a6906beeb6a42f4457dc51f4d32baaf"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; &amp;M)</td></tr>
+<tr class="separator:a3a6906beeb6a42f4457dc51f4d32baaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81a9fcff94e0e12e71ddb6fd84dcf22f"><td class="memItemLeft" align="right" valign="top"><a id="a81a9fcff94e0e12e71ddb6fd84dcf22f" name="a81a9fcff94e0e12e71ddb6fd84dcf22f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; &amp;M)</td></tr>
+<tr class="separator:a81a9fcff94e0e12e71ddb6fd84dcf22f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6691ccf3abcd3ba144ab04e8d3a9d2d"><td class="memItemLeft" align="right" valign="top"><a id="af6691ccf3abcd3ba144ab04e8d3a9d2d" name="af6691ccf3abcd3ba144ab04e8d3a9d2d"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; &amp;M)</td></tr>
+<tr class="separator:af6691ccf3abcd3ba144ab04e8d3a9d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a800fa8ca05b734d3e38c19c384c4545e"><td class="memItemLeft" align="right" valign="top"><a id="a800fa8ca05b734d3e38c19c384c4545e" name="a800fa8ca05b734d3e38c19c384c4545e"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; &amp;M)</td></tr>
+<tr class="separator:a800fa8ca05b734d3e38c19c384c4545e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac624b0f15a2da2c0e7ed64452925396b"><td class="memItemLeft" align="right" valign="top"><a id="ac624b0f15a2da2c0e7ed64452925396b" name="ac624b0f15a2da2c0e7ed64452925396b"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; &amp;M)</td></tr>
+<tr class="separator:ac624b0f15a2da2c0e7ed64452925396b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6587221144f81915cd0e500c500cb94f"><td class="memItemLeft" align="right" valign="top"><a id="a6587221144f81915cd0e500c500cb94f" name="a6587221144f81915cd0e500c500cb94f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; &amp;M)</td></tr>
+<tr class="separator:a6587221144f81915cd0e500c500cb94f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacb0e69f192b24eb16301b19f8cbc681"><td class="memItemLeft" align="right" valign="top"><a id="aacb0e69f192b24eb16301b19f8cbc681" name="aacb0e69f192b24eb16301b19f8cbc681"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; &amp;M)</td></tr>
+<tr class="separator:aacb0e69f192b24eb16301b19f8cbc681"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e00755c37495645db85105e73351ab6"><td class="memItemLeft" align="right" valign="top"><a id="a7e00755c37495645db85105e73351ab6" name="a7e00755c37495645db85105e73351ab6"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; &amp;M, Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a7e00755c37495645db85105e73351ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ea77cd00a90374da42ce3251b2c8905"><td class="memItemLeft" align="right" valign="top"><a id="a6ea77cd00a90374da42ce3251b2c8905" name="a6ea77cd00a90374da42ce3251b2c8905"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; &amp;M, Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a6ea77cd00a90374da42ce3251b2c8905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2c7b7be4388287cbce3f6a21d2a6b9b"><td class="memItemLeft" align="right" valign="top"><a id="ab2c7b7be4388287cbce3f6a21d2a6b9b" name="ab2c7b7be4388287cbce3f6a21d2a6b9b"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; &amp;M, Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:ab2c7b7be4388287cbce3f6a21d2a6b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a978e89191a7e9068b75663ff338aa418"><td class="memItemLeft" align="right" valign="top"><a id="a978e89191a7e9068b75663ff338aa418" name="a978e89191a7e9068b75663ff338aa418"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; &amp;M, Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a978e89191a7e9068b75663ff338aa418"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af03e0745a5393eb038d5e16e84cc5533"><td class="memItemLeft" align="right" valign="top"><a id="af03e0745a5393eb038d5e16e84cc5533" name="af03e0745a5393eb038d5e16e84cc5533"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; &amp;M, Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:af03e0745a5393eb038d5e16e84cc5533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0d0259b673312d97c4d7d95ccc878da"><td class="memItemLeft" align="right" valign="top"><a id="ab0d0259b673312d97c4d7d95ccc878da" name="ab0d0259b673312d97c4d7d95ccc878da"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; &amp;M, Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:ab0d0259b673312d97c4d7d95ccc878da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37dba8fcdaabb09cbd88aeabd429fc14"><td class="memItemLeft" align="right" valign="top"><a id="a37dba8fcdaabb09cbd88aeabd429fc14" name="a37dba8fcdaabb09cbd88aeabd429fc14"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; &amp;M, Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a37dba8fcdaabb09cbd88aeabd429fc14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75f2f2e83606a0d078528b6643016c12"><td class="memItemLeft" align="right" valign="top"><a id="a75f2f2e83606a0d078528b6643016c12" name="a75f2f2e83606a0d078528b6643016c12"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; &amp;M, Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a75f2f2e83606a0d078528b6643016c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81664d37ae69653b3bbc621e990071ac"><td class="memItemLeft" align="right" valign="top"><a id="a81664d37ae69653b3bbc621e990071ac" name="a81664d37ae69653b3bbc621e990071ac"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; &amp;M, Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a81664d37ae69653b3bbc621e990071ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff935d64d2eb9ac20c76f110cd9d6930"><td class="memItemLeft" align="right" valign="top"><a id="aff935d64d2eb9ac20c76f110cd9d6930" name="aff935d64d2eb9ac20c76f110cd9d6930"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; &amp;M, Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:aff935d64d2eb9ac20c76f110cd9d6930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a549cf397f10c388e0f74b8930ad6bd22"><td class="memItemLeft" align="right" valign="top"><a id="a549cf397f10c388e0f74b8930ad6bd22" name="a549cf397f10c388e0f74b8930ad6bd22"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; &amp;M, Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a549cf397f10c388e0f74b8930ad6bd22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae65f64cfcf345cc94626c2768dca9442"><td class="memItemLeft" align="right" valign="top"><a id="ae65f64cfcf345cc94626c2768dca9442" name="ae65f64cfcf345cc94626c2768dca9442"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; &amp;v, Eigen::VectorX&lt; bool &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:ae65f64cfcf345cc94626c2768dca9442"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d81e414dac04045187b33c8bd199a0f"><td class="memItemLeft" align="right" valign="top"><a id="a5d81e414dac04045187b33c8bd199a0f" name="a5d81e414dac04045187b33c8bd199a0f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; &amp;v, Eigen::VectorX&lt; char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a5d81e414dac04045187b33c8bd199a0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1610f0469e262ada81520db22a0edfb0"><td class="memItemLeft" align="right" valign="top"><a id="a1610f0469e262ada81520db22a0edfb0" name="a1610f0469e262ada81520db22a0edfb0"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a1610f0469e262ada81520db22a0edfb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedbe66d1ebdb6a968877b99dafde4001"><td class="memItemLeft" align="right" valign="top"><a id="aedbe66d1ebdb6a968877b99dafde4001" name="aedbe66d1ebdb6a968877b99dafde4001"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; &amp;v, Eigen::VectorX&lt; short &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:aedbe66d1ebdb6a968877b99dafde4001"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d3e454ad37366667ff64852b4c88911"><td class="memItemLeft" align="right" valign="top"><a id="a5d3e454ad37366667ff64852b4c88911" name="a5d3e454ad37366667ff64852b4c88911"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned short &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a5d3e454ad37366667ff64852b4c88911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7bc5c02ab4100f3943617113232d485"><td class="memItemLeft" align="right" valign="top"><a id="ab7bc5c02ab4100f3943617113232d485" name="ab7bc5c02ab4100f3943617113232d485"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; &amp;v, Eigen::VectorX&lt; int &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:ab7bc5c02ab4100f3943617113232d485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeeed592f67836ff0e9231da5eda134c2"><td class="memItemLeft" align="right" valign="top"><a id="aeeed592f67836ff0e9231da5eda134c2" name="aeeed592f67836ff0e9231da5eda134c2"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:aeeed592f67836ff0e9231da5eda134c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aec6d6a2d51b8d6d347a7fb222ef6a9"><td class="memItemLeft" align="right" valign="top"><a id="a3aec6d6a2d51b8d6d347a7fb222ef6a9" name="a3aec6d6a2d51b8d6d347a7fb222ef6a9"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; &amp;v, Eigen::VectorX&lt; ptrdiff_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a3aec6d6a2d51b8d6d347a7fb222ef6a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a855367c3e36cc37120d5ff7f5a47d5a4"><td class="memItemLeft" align="right" valign="top"><a id="a855367c3e36cc37120d5ff7f5a47d5a4" name="a855367c3e36cc37120d5ff7f5a47d5a4"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; &amp;v, Eigen::VectorX&lt; size_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a855367c3e36cc37120d5ff7f5a47d5a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82ffb1e8ca595e1cface785a6c0989cb"><td class="memItemLeft" align="right" valign="top"><a id="a82ffb1e8ca595e1cface785a6c0989cb" name="a82ffb1e8ca595e1cface785a6c0989cb"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; &amp;v, Eigen::VectorX&lt; float &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a82ffb1e8ca595e1cface785a6c0989cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90d605adcdd854f65fd587a06f4a51a2"><td class="memItemLeft" align="right" valign="top"><a id="a90d605adcdd854f65fd587a06f4a51a2" name="a90d605adcdd854f65fd587a06f4a51a2"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; &amp;v, Eigen::VectorX&lt; double &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a90d605adcdd854f65fd587a06f4a51a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf48a279af5a8dae8a3fcb9b431e81bb"><td class="memItemLeft" align="right" valign="top"><a id="abf48a279af5a8dae8a3fcb9b431e81bb" name="abf48a279af5a8dae8a3fcb9b431e81bb"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; bool &gt; &gt; &amp;v, Eigen::VectorX&lt; bool &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:abf48a279af5a8dae8a3fcb9b431e81bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7f13b3a8094347da8df359866b25470"><td class="memItemLeft" align="right" valign="top"><a id="aa7f13b3a8094347da8df359866b25470" name="aa7f13b3a8094347da8df359866b25470"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; char &gt; &gt; &amp;v, Eigen::VectorX&lt; char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:aa7f13b3a8094347da8df359866b25470"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0db1643549e61814bed3cdceb20e9feb"><td class="memItemLeft" align="right" valign="top"><a id="a0db1643549e61814bed3cdceb20e9feb" name="a0db1643549e61814bed3cdceb20e9feb"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned char &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a0db1643549e61814bed3cdceb20e9feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9565d1f45899409428ac911a41f34ce8"><td class="memItemLeft" align="right" valign="top"><a id="a9565d1f45899409428ac911a41f34ce8" name="a9565d1f45899409428ac911a41f34ce8"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; short &gt; &gt; &amp;v, Eigen::VectorX&lt; short &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a9565d1f45899409428ac911a41f34ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2781b263658dd9bca4912bf88106bce5"><td class="memItemLeft" align="right" valign="top"><a id="a2781b263658dd9bca4912bf88106bce5" name="a2781b263658dd9bca4912bf88106bce5"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned short &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned short &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a2781b263658dd9bca4912bf88106bce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98f1f24377ad7886167f393c0efcd744"><td class="memItemLeft" align="right" valign="top"><a id="a98f1f24377ad7886167f393c0efcd744" name="a98f1f24377ad7886167f393c0efcd744"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; int &gt; &gt; &amp;v, Eigen::VectorX&lt; int &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a98f1f24377ad7886167f393c0efcd744"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac70aa3409938acdfe95a5a388a8f0432"><td class="memItemLeft" align="right" valign="top"><a id="ac70aa3409938acdfe95a5a388a8f0432" name="ac70aa3409938acdfe95a5a388a8f0432"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:ac70aa3409938acdfe95a5a388a8f0432"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4264a99b59ff7d82a09ebb79ef7149b4"><td class="memItemLeft" align="right" valign="top"><a id="a4264a99b59ff7d82a09ebb79ef7149b4" name="a4264a99b59ff7d82a09ebb79ef7149b4"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; ptrdiff_t &gt; &gt; &amp;v, Eigen::VectorX&lt; ptrdiff_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a4264a99b59ff7d82a09ebb79ef7149b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af994ddca938ae08e1d647f73e91046ea"><td class="memItemLeft" align="right" valign="top"><a id="af994ddca938ae08e1d647f73e91046ea" name="af994ddca938ae08e1d647f73e91046ea"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; size_t &gt; &gt; &amp;v, Eigen::VectorX&lt; size_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:af994ddca938ae08e1d647f73e91046ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ecf716e81f16a33d73aa6d077148d5b"><td class="memItemLeft" align="right" valign="top"><a id="a1ecf716e81f16a33d73aa6d077148d5b" name="a1ecf716e81f16a33d73aa6d077148d5b"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; float &gt; &gt; &amp;v, Eigen::VectorX&lt; float &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a1ecf716e81f16a33d73aa6d077148d5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a82392d46e7812ab3327fe97c43be52"><td class="memItemLeft" align="right" valign="top"><a id="a7a82392d46e7812ab3327fe97c43be52" name="a7a82392d46e7812ab3327fe97c43be52"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; double &gt; &gt; &amp;v, Eigen::VectorX&lt; double &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size)</td></tr>
+<tr class="separator:a7a82392d46e7812ab3327fe97c43be52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdccaad238b0bbf831c7317d5ba02e73"><td class="memItemLeft" align="right" valign="top"><a id="abdccaad238b0bbf831c7317d5ba02e73" name="abdccaad238b0bbf831c7317d5ba02e73"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; &amp;v, Eigen::VectorX&lt; bool &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:abdccaad238b0bbf831c7317d5ba02e73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf33402fac10f2839b6f1630e6fa3287"><td class="memItemLeft" align="right" valign="top"><a id="aaf33402fac10f2839b6f1630e6fa3287" name="aaf33402fac10f2839b6f1630e6fa3287"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; &amp;v, Eigen::VectorX&lt; char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:aaf33402fac10f2839b6f1630e6fa3287"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35003536e36b1a5e28903cabcb1dad55"><td class="memItemLeft" align="right" valign="top"><a id="a35003536e36b1a5e28903cabcb1dad55" name="a35003536e36b1a5e28903cabcb1dad55"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a35003536e36b1a5e28903cabcb1dad55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ca41afa10a179cd1659416e0c4082e2"><td class="memItemLeft" align="right" valign="top"><a id="a5ca41afa10a179cd1659416e0c4082e2" name="a5ca41afa10a179cd1659416e0c4082e2"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; &amp;v, Eigen::VectorX&lt; short &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a5ca41afa10a179cd1659416e0c4082e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5591ba998505902520bdc264ac82756"><td class="memItemLeft" align="right" valign="top"><a id="aa5591ba998505902520bdc264ac82756" name="aa5591ba998505902520bdc264ac82756"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned short &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:aa5591ba998505902520bdc264ac82756"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbfcd2be1dd0f3677cff00b8d14a7b53"><td class="memItemLeft" align="right" valign="top"><a id="acbfcd2be1dd0f3677cff00b8d14a7b53" name="acbfcd2be1dd0f3677cff00b8d14a7b53"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; &amp;v, Eigen::VectorX&lt; int &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:acbfcd2be1dd0f3677cff00b8d14a7b53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdc97847b031458067266b5cf885839f"><td class="memItemLeft" align="right" valign="top"><a id="acdc97847b031458067266b5cf885839f" name="acdc97847b031458067266b5cf885839f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:acdc97847b031458067266b5cf885839f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14eed289dc60cd3c3ca9d5c19a38fb25"><td class="memItemLeft" align="right" valign="top"><a id="a14eed289dc60cd3c3ca9d5c19a38fb25" name="a14eed289dc60cd3c3ca9d5c19a38fb25"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; &amp;v, Eigen::VectorX&lt; ptrdiff_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a14eed289dc60cd3c3ca9d5c19a38fb25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d26dd165d81b10ea56bc301dd3880f6"><td class="memItemLeft" align="right" valign="top"><a id="a8d26dd165d81b10ea56bc301dd3880f6" name="a8d26dd165d81b10ea56bc301dd3880f6"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; &amp;v, Eigen::VectorX&lt; size_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a8d26dd165d81b10ea56bc301dd3880f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ebc66bacfaec845a93dec9aacd83fb7"><td class="memItemLeft" align="right" valign="top"><a id="a7ebc66bacfaec845a93dec9aacd83fb7" name="a7ebc66bacfaec845a93dec9aacd83fb7"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; &amp;v, Eigen::VectorX&lt; float &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a7ebc66bacfaec845a93dec9aacd83fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafd631a1b477371def7e390aee572317"><td class="memItemLeft" align="right" valign="top"><a id="aafd631a1b477371def7e390aee572317" name="aafd631a1b477371def7e390aee572317"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; &amp;v, Eigen::VectorX&lt; double &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:aafd631a1b477371def7e390aee572317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c4a256b2cebcfab0f979609c2469d85"><td class="memItemLeft" align="right" valign="top"><a id="a7c4a256b2cebcfab0f979609c2469d85" name="a7c4a256b2cebcfab0f979609c2469d85"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; bool &gt; &gt; &amp;v, Eigen::VectorX&lt; bool &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::VectorX&lt; bool &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a7c4a256b2cebcfab0f979609c2469d85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16d6e5bbf4a25e2306e92b8f5789b1aa"><td class="memItemLeft" align="right" valign="top"><a id="a16d6e5bbf4a25e2306e92b8f5789b1aa" name="a16d6e5bbf4a25e2306e92b8f5789b1aa"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; char &gt; &gt; &amp;v, Eigen::VectorX&lt; char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::VectorX&lt; char &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a16d6e5bbf4a25e2306e92b8f5789b1aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a232a0b8b37033cde5cd21a03c178562f"><td class="memItemLeft" align="right" valign="top"><a id="a232a0b8b37033cde5cd21a03c178562f" name="a232a0b8b37033cde5cd21a03c178562f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned char &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned char &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned char &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a232a0b8b37033cde5cd21a03c178562f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fddf8b2b11e02fa42e140e072d8b414"><td class="memItemLeft" align="right" valign="top"><a id="a9fddf8b2b11e02fa42e140e072d8b414" name="a9fddf8b2b11e02fa42e140e072d8b414"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; short &gt; &gt; &amp;v, Eigen::VectorX&lt; short &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::VectorX&lt; short &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a9fddf8b2b11e02fa42e140e072d8b414"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d843720905177be3a9459d622aa7d1f"><td class="memItemLeft" align="right" valign="top"><a id="a8d843720905177be3a9459d622aa7d1f" name="a8d843720905177be3a9459d622aa7d1f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned short &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned short &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned short &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a8d843720905177be3a9459d622aa7d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4249f4ebaceefaf91d3cabc68222f266"><td class="memItemLeft" align="right" valign="top"><a id="a4249f4ebaceefaf91d3cabc68222f266" name="a4249f4ebaceefaf91d3cabc68222f266"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; int &gt; &gt; &amp;v, Eigen::VectorX&lt; int &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::VectorX&lt; int &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a4249f4ebaceefaf91d3cabc68222f266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa335f57c2247a9cfc737abaf831d7e3f"><td class="memItemLeft" align="right" valign="top"><a id="aa335f57c2247a9cfc737abaf831d7e3f" name="aa335f57c2247a9cfc737abaf831d7e3f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned &gt; &gt; &amp;v, Eigen::VectorX&lt; unsigned &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::VectorX&lt; unsigned &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:aa335f57c2247a9cfc737abaf831d7e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabb2384a0905c19d43326b69e9785516"><td class="memItemLeft" align="right" valign="top"><a id="aabb2384a0905c19d43326b69e9785516" name="aabb2384a0905c19d43326b69e9785516"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; ptrdiff_t &gt; &gt; &amp;v, Eigen::VectorX&lt; ptrdiff_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::VectorX&lt; ptrdiff_t &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:aabb2384a0905c19d43326b69e9785516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9327ba4da4345533363b0cbd56bc8b01"><td class="memItemLeft" align="right" valign="top"><a id="a9327ba4da4345533363b0cbd56bc8b01" name="a9327ba4da4345533363b0cbd56bc8b01"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; size_t &gt; &gt; &amp;v, Eigen::VectorX&lt; size_t &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::VectorX&lt; size_t &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a9327ba4da4345533363b0cbd56bc8b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af73268cd47fcd44bcb196c970fa96c7f"><td class="memItemLeft" align="right" valign="top"><a id="af73268cd47fcd44bcb196c970fa96c7f" name="af73268cd47fcd44bcb196c970fa96c7f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; float &gt; &gt; &amp;v, Eigen::VectorX&lt; float &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::VectorX&lt; float &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:af73268cd47fcd44bcb196c970fa96c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3008c56c8321f59f250c050938e2637b"><td class="memItemLeft" align="right" valign="top"><a id="a3008c56c8321f59f250c050938e2637b" name="a3008c56c8321f59f250c050938e2637b"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_unique</b> (const Eigen::DenseBase&lt; Eigen::VectorX&lt; double &gt; &gt; &amp;v, Eigen::VectorX&lt; double &gt; &amp;uvals, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;uvals_from_size, const Eigen::DenseBase&lt; Eigen::VectorX&lt; double &gt; &gt; &amp;v_sorted_)</td></tr>
+<tr class="separator:a3008c56c8321f59f250c050938e2637b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a153fcac31eba444d389e649bcfebd7da"><td class="memItemLeft" align="right" valign="top"><a id="a153fcac31eba444d389e649bcfebd7da" name="a153fcac31eba444d389e649bcfebd7da"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; &amp;M, Eigen::MatrixX&lt; bool &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="separator:a153fcac31eba444d389e649bcfebd7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bc933f6356a67acdc32fbf9d6675747"><td class="memItemLeft" align="right" valign="top"><a id="a9bc933f6356a67acdc32fbf9d6675747" name="a9bc933f6356a67acdc32fbf9d6675747"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; &amp;M, Eigen::MatrixX&lt; char &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="separator:a9bc933f6356a67acdc32fbf9d6675747"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0ce3c259b9b1776c997c54501ef6109"><td class="memItemLeft" align="right" valign="top"><a id="ac0ce3c259b9b1776c997c54501ef6109" name="ac0ce3c259b9b1776c997c54501ef6109"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; &amp;M, Eigen::MatrixX&lt; unsigned char &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="separator:ac0ce3c259b9b1776c997c54501ef6109"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e64cd900e9258b0fdfa50c40c32a1f6"><td class="memItemLeft" align="right" valign="top"><a id="a0e64cd900e9258b0fdfa50c40c32a1f6" name="a0e64cd900e9258b0fdfa50c40c32a1f6"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; &amp;M, Eigen::MatrixX&lt; short &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="separator:a0e64cd900e9258b0fdfa50c40c32a1f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c1abe31e5257f872fb201392a3cf910"><td class="memItemLeft" align="right" valign="top"><a id="a2c1abe31e5257f872fb201392a3cf910" name="a2c1abe31e5257f872fb201392a3cf910"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; &amp;M, Eigen::MatrixX&lt; unsigned short &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="separator:a2c1abe31e5257f872fb201392a3cf910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46ac5e7c789895ecce62fba5de4f1927"><td class="memItemLeft" align="right" valign="top"><a id="a46ac5e7c789895ecce62fba5de4f1927" name="a46ac5e7c789895ecce62fba5de4f1927"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; &amp;M, Eigen::MatrixX&lt; int &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="separator:a46ac5e7c789895ecce62fba5de4f1927"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43e87146ce418e7090acef54c5fa8dc5"><td class="memItemLeft" align="right" valign="top"><a id="a43e87146ce418e7090acef54c5fa8dc5" name="a43e87146ce418e7090acef54c5fa8dc5"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; &amp;M, Eigen::MatrixX&lt; unsigned &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="separator:a43e87146ce418e7090acef54c5fa8dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07cc9967b150dcdc8aa1232f58fa978b"><td class="memItemLeft" align="right" valign="top"><a id="a07cc9967b150dcdc8aa1232f58fa978b" name="a07cc9967b150dcdc8aa1232f58fa978b"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; &amp;M, Eigen::MatrixX&lt; ptrdiff_t &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="separator:a07cc9967b150dcdc8aa1232f58fa978b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbc50b335b4949484a4c6d85e3133852"><td class="memItemLeft" align="right" valign="top"><a id="acbc50b335b4949484a4c6d85e3133852" name="acbc50b335b4949484a4c6d85e3133852"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; &amp;M, Eigen::MatrixX&lt; size_t &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="separator:acbc50b335b4949484a4c6d85e3133852"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3c030038191a864a1c013393d60981f"><td class="memItemLeft" align="right" valign="top"><a id="ae3c030038191a864a1c013393d60981f" name="ae3c030038191a864a1c013393d60981f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; &amp;M, Eigen::MatrixX&lt; float &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="separator:ae3c030038191a864a1c013393d60981f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a275c1c0d992aa78ce0dd08f78a47d8e7"><td class="memItemLeft" align="right" valign="top"><a id="a275c1c0d992aa78ce0dd08f78a47d8e7" name="a275c1c0d992aa78ce0dd08f78a47d8e7"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; &amp;M, Eigen::MatrixX&lt; double &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size)</td></tr>
+<tr class="separator:a275c1c0d992aa78ce0dd08f78a47d8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f84543f5e5c3ed2982aab9a229839df"><td class="memItemLeft" align="right" valign="top"><a id="a8f84543f5e5c3ed2982aab9a229839df" name="a8f84543f5e5c3ed2982aab9a229839df"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; &amp;M, Eigen::MatrixX&lt; bool &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; bool &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a8f84543f5e5c3ed2982aab9a229839df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a702edb5166d7c033043eab2a408c866c"><td class="memItemLeft" align="right" valign="top"><a id="a702edb5166d7c033043eab2a408c866c" name="a702edb5166d7c033043eab2a408c866c"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; &amp;M, Eigen::MatrixX&lt; char &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; char &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a702edb5166d7c033043eab2a408c866c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae462875f4d163f7121c49098b7c6a3b5"><td class="memItemLeft" align="right" valign="top"><a id="ae462875f4d163f7121c49098b7c6a3b5" name="ae462875f4d163f7121c49098b7c6a3b5"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; &amp;M, Eigen::MatrixX&lt; unsigned char &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned char &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:ae462875f4d163f7121c49098b7c6a3b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05e0fa08aef25310a80af20491a04368"><td class="memItemLeft" align="right" valign="top"><a id="a05e0fa08aef25310a80af20491a04368" name="a05e0fa08aef25310a80af20491a04368"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; &amp;M, Eigen::MatrixX&lt; short &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; short &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a05e0fa08aef25310a80af20491a04368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb316d6f5862126ed405f9b8d11ec4f9"><td class="memItemLeft" align="right" valign="top"><a id="afb316d6f5862126ed405f9b8d11ec4f9" name="afb316d6f5862126ed405f9b8d11ec4f9"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; &amp;M, Eigen::MatrixX&lt; unsigned short &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned short &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:afb316d6f5862126ed405f9b8d11ec4f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade3042eacac015a2a92b11dc2e2e550f"><td class="memItemLeft" align="right" valign="top"><a id="ade3042eacac015a2a92b11dc2e2e550f" name="ade3042eacac015a2a92b11dc2e2e550f"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; &amp;M, Eigen::MatrixX&lt; int &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; int &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:ade3042eacac015a2a92b11dc2e2e550f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6af7885099a7eff37cc416f766c380f2"><td class="memItemLeft" align="right" valign="top"><a id="a6af7885099a7eff37cc416f766c380f2" name="a6af7885099a7eff37cc416f766c380f2"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; &amp;M, Eigen::MatrixX&lt; unsigned &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; unsigned &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a6af7885099a7eff37cc416f766c380f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab13510fa51b6c9cc6762f993331b8b1"><td class="memItemLeft" align="right" valign="top"><a id="aab13510fa51b6c9cc6762f993331b8b1" name="aab13510fa51b6c9cc6762f993331b8b1"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; &amp;M, Eigen::MatrixX&lt; ptrdiff_t &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; ptrdiff_t &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:aab13510fa51b6c9cc6762f993331b8b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9e278c7f04a7e211e4cd2d25e356b90"><td class="memItemLeft" align="right" valign="top"><a id="af9e278c7f04a7e211e4cd2d25e356b90" name="af9e278c7f04a7e211e4cd2d25e356b90"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; &amp;M, Eigen::MatrixX&lt; size_t &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; size_t &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:af9e278c7f04a7e211e4cd2d25e356b90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8efec29896bca21741605eb5ef6776cc"><td class="memItemLeft" align="right" valign="top"><a id="a8efec29896bca21741605eb5ef6776cc" name="a8efec29896bca21741605eb5ef6776cc"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; &amp;M, Eigen::MatrixX&lt; float &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; float &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a8efec29896bca21741605eb5ef6776cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a874749ad321035429fede3fb44344c53"><td class="memItemLeft" align="right" valign="top"><a id="a874749ad321035429fede3fb44344c53" name="a874749ad321035429fede3fb44344c53"></a>
+template H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sort_rows_unique</b> (const Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; &amp;M, Eigen::MatrixX&lt; double &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; Eigen::MatrixX&lt; double &gt; &gt; &amp;M_sorted_)</td></tr>
+<tr class="separator:a874749ad321035429fede3fb44344c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -1876,158 +2016,6 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a820e7292090e23c538d0482afc20caf6" name="a820e7292090e23c538d0482afc20caf6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a820e7292090e23c538d0482afc20caf6">&#9670;&nbsp;</a></span>_sort()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename D &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::_sort </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>_sort return indexes such that v_sorted = v(ind). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">v</td><td>Vector (row/col) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ind </dd></dl>
-
-</div>
-</div>
-<a id="a7938d2806f2c779c4c0fa584637167d2" name="a7938d2806f2c779c4c0fa584637167d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7938d2806f2c779c4c0fa584637167d2">&#9670;&nbsp;</a></span>_sort_rows()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename D &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::_sort_rows </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
-          <td class="paramname"><em>M</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>_sort_rows sorts the rows of a matrix in ascending order based on the elements in the first column. When the first column contains repeated elements, sortrows sorts according to the values in the next column and repeats this behavior for succeeding equal values. M_sorted = M(ind, Eigen::all) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">M</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ind </dd></dl>
-
-</div>
-</div>
-<a id="abd7917f55fc74e3f2b139f7cc2f9e6b1" name="abd7917f55fc74e3f2b139f7cc2f9e6b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd7917f55fc74e3f2b139f7cc2f9e6b1">&#9670;&nbsp;</a></span>_sort_rows_unique()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename D &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::_sort_rows_unique </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
-          <td class="paramname"><em>M</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::MatrixX&lt; typename D::Scalar &gt; &amp;&#160;</td>
-          <td class="paramname"><em>urows</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;&#160;</td>
-          <td class="paramname"><em>urows_from_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>_sort_rows_unique find unique rows, sort them, identify unique rows start and end row-indexes and return row-indexes such that M_sorted = M(ind, Eigen::all). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">M</td><td></td></tr>
-    <tr><td class="paramname">urows</td><td></td></tr>
-    <tr><td class="paramname">urows_from_size</td><td>first col - start index, second col - number of elements. Each row can be considered as: M_sorted.middleRows(urows_from_size.row(n)) gives the same unique value uval. Also: M_sorted.middleRows(urows_from_size.row(n)) = M(ind.segment(urows_from_size.row(n))) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ind </dd></dl>
-
-</div>
-</div>
-<a id="accfe949b5414950028244faf1c33e795" name="accfe949b5414950028244faf1c33e795"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#accfe949b5414950028244faf1c33e795">&#9670;&nbsp;</a></span>_sort_unique()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename D &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::_sort_unique </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::VectorX&lt; typename D::Scalar &gt; &amp;&#160;</td>
-          <td class="paramname"><em>uvals</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;&#160;</td>
-          <td class="paramname"><em>uvals_from_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>_sort_unique find unique elements, sort them, identify unique values start and end indexes and return indexes such that v_sorted = v(ind). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">v</td><td>vector </td></tr>
-    <tr><td class="paramname">uvals</td><td></td></tr>
-    <tr><td class="paramname">uvals_from_size</td><td>first col - start index, second col - number of elements. Each row can be considered as v_sorted.segment(uvals_from_size.row(n)) gives the same unique value uval. Also v_sorted.segment(uvals_from_size.row(n)) = v(ind.segment(uvals_from_size.row(n))) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ind </dd></dl>
 
 </div>
 </div>
@@ -3091,18 +3079,18 @@ template&lt;typename T , typename std::enable_if&lt; std::is_arithmetic&lt; T &g
 
 </div>
 </div>
-<a id="a86e7cb426e387088b137095284425242" name="a86e7cb426e387088b137095284425242"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86e7cb426e387088b137095284425242">&#9670;&nbsp;</a></span>sort() <span class="overload">[1/2]</span></h2>
+<a id="ad8845e7bb8f055d47124be3a8ea9523f" name="ad8845e7bb8f055d47124be3a8ea9523f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8845e7bb8f055d47124be3a8ea9523f">&#9670;&nbsp;</a></span>sort() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename D &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::sort </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::VectorX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
           <td></td>
         </tr>
@@ -3120,25 +3108,25 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="abae7a51fb06353da577d54de3d89ec16" name="abae7a51fb06353da577d54de3d89ec16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abae7a51fb06353da577d54de3d89ec16">&#9670;&nbsp;</a></span>sort() <span class="overload">[2/2]</span></h2>
+<a id="aea86a78619354cd9354766641ee6e5b3" name="aea86a78619354cd9354766641ee6e5b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea86a78619354cd9354766641ee6e5b3">&#9670;&nbsp;</a></span>sort() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename D &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::sort </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::VectorX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
           <td class="paramname"><em>v</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::VectorX&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>v_sorted</em>&#160;</td>
+          <td class="paramtype">Eigen::DenseBase&lt; D &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>v_sorted_</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3160,18 +3148,18 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aeafc33678e06b820761c5b648996ab8a" name="aeafc33678e06b820761c5b648996ab8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeafc33678e06b820761c5b648996ab8a">&#9670;&nbsp;</a></span>sort_rows() <span class="overload">[1/2]</span></h2>
+<a id="a1163d30f8950204710b111e7964b7847" name="a1163d30f8950204710b111e7964b7847"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1163d30f8950204710b111e7964b7847">&#9670;&nbsp;</a></span>sort_rows() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename D &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::sort_rows </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::MatrixX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
           <td class="paramname"><em>M</em></td><td>)</td>
           <td></td>
         </tr>
@@ -3189,25 +3177,25 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ab2f281438d32bfd81f49fe31af6bf9ff" name="ab2f281438d32bfd81f49fe31af6bf9ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2f281438d32bfd81f49fe31af6bf9ff">&#9670;&nbsp;</a></span>sort_rows() <span class="overload">[2/2]</span></h2>
+<a id="a998a60c54317f7d8d48a6b4950c3504a" name="a998a60c54317f7d8d48a6b4950c3504a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a998a60c54317f7d8d48a6b4950c3504a">&#9670;&nbsp;</a></span>sort_rows() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename D &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::sort_rows </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::MatrixX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
           <td class="paramname"><em>M</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::MatrixX&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>M_sorted</em>&#160;</td>
+          <td class="paramtype">Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
+          <td class="paramname"><em>M_sorted_</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3229,24 +3217,24 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a4a6b2e08cebd39d393e886609e364d6a" name="a4a6b2e08cebd39d393e886609e364d6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a6b2e08cebd39d393e886609e364d6a">&#9670;&nbsp;</a></span>sort_rows_unique() <span class="overload">[1/2]</span></h2>
+<a id="a302bd269b88b59396c274d9af21dd7c5" name="a302bd269b88b59396c274d9af21dd7c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a302bd269b88b59396c274d9af21dd7c5">&#9670;&nbsp;</a></span>sort_rows_unique() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename D &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::sort_rows_unique </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::MatrixX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
           <td class="paramname"><em>M</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::MatrixX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">Eigen::MatrixX&lt; typename D::Scalar &gt; &amp;&#160;</td>
           <td class="paramname"><em>urows</em>, </td>
         </tr>
         <tr>
@@ -3276,24 +3264,24 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="aeea3fd3495de7bd1e0c8bf228030fee7" name="aeea3fd3495de7bd1e0c8bf228030fee7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeea3fd3495de7bd1e0c8bf228030fee7">&#9670;&nbsp;</a></span>sort_rows_unique() <span class="overload">[2/2]</span></h2>
+<a id="a4a9af8318fdf39f92d79404c4259bb26" name="a4a9af8318fdf39f92d79404c4259bb26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a9af8318fdf39f92d79404c4259bb26">&#9670;&nbsp;</a></span>sort_rows_unique() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename D &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::sort_rows_unique </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::MatrixX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
           <td class="paramname"><em>M</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::MatrixX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">Eigen::MatrixX&lt; typename D::Scalar &gt; &amp;&#160;</td>
           <td class="paramname"><em>urows</em>, </td>
         </tr>
         <tr>
@@ -3305,8 +3293,8 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::MatrixX&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>M_sorted</em>&#160;</td>
+          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
+          <td class="paramname"><em>M_sorted_</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3330,24 +3318,24 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="af57b9ad7cb13c1254e6f8ca87e0f029b" name="af57b9ad7cb13c1254e6f8ca87e0f029b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af57b9ad7cb13c1254e6f8ca87e0f029b">&#9670;&nbsp;</a></span>sort_unique() <span class="overload">[1/2]</span></h2>
+<a id="ab09e8d6a96278540b13b0877993998d4" name="ab09e8d6a96278540b13b0877993998d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab09e8d6a96278540b13b0877993998d4">&#9670;&nbsp;</a></span>sort_unique() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename D &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::sort_unique </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::VectorX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
           <td class="paramname"><em>v</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::VectorX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">Eigen::VectorX&lt; typename D::Scalar &gt; &amp;&#160;</td>
           <td class="paramname"><em>uvals</em>, </td>
         </tr>
         <tr>
@@ -3377,24 +3365,24 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="acad566d75bb0db113fd313894c86c772" name="acad566d75bb0db113fd313894c86c772"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acad566d75bb0db113fd313894c86c772">&#9670;&nbsp;</a></span>sort_unique() <span class="overload">[2/2]</span></h2>
+<a id="a762a2aee910e492888312a3e5b5c2233" name="a762a2aee910e492888312a3e5b5c2233"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a762a2aee910e492888312a3e5b5c2233">&#9670;&nbsp;</a></span>sort_unique() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename D &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">Eigen::VectorX&lt; ptrdiff_t &gt; h5geo::sort_unique </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::VectorX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">const Eigen::DenseBase&lt; D &gt; &amp;&#160;</td>
           <td class="paramname"><em>v</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::VectorX&lt; T &gt; &amp;&#160;</td>
+          <td class="paramtype">Eigen::VectorX&lt; typename D::Scalar &gt; &amp;&#160;</td>
           <td class="paramname"><em>uvals</em>, </td>
         </tr>
         <tr>
@@ -3406,8 +3394,8 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::VectorX&lt; T &gt; &amp;&#160;</td>
-          <td class="paramname"><em>v_sorted</em>&#160;</td>
+          <td class="paramtype">Eigen::DenseBase&lt; D &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>v_sorted_</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
