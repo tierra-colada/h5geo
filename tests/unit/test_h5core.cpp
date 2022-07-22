@@ -18,7 +18,7 @@ public:
 };
 
 TEST_F(H5CoreFixture, sort){
-  Eigen::MatrixXd v(3), v_sorted;
+  Eigen::VectorXd v(3), v_sorted;
   v << 3, 2, 1;
 
   auto ind = h5geo::sort(v, v_sorted);
@@ -29,6 +29,96 @@ TEST_F(H5CoreFixture, sort){
   ASSERT_TRUE(v(0) == v_sorted(2));
   ASSERT_TRUE(v(1) == v_sorted(1));
   ASSERT_TRUE(v(2) == v_sorted(0));
+}
+
+TEST_F(H5CoreFixture, sort_matrix){
+  Eigen::MatrixXd v(3, 3), v_sorted;
+  v << 3,3,3,2,2,2,1,1,1;
+
+  // v =  3 3 3
+  //      2 2 2
+  //      1 1 1
+
+  auto ind = h5geo::sort(v.col(0), v_sorted);
+  ASSERT_TRUE(ind(0) == 2);
+  ASSERT_TRUE(ind(1) == 1);
+  ASSERT_TRUE(ind(2) == 0);
+
+  ASSERT_TRUE(v(0) == v_sorted(2));
+  ASSERT_TRUE(v(1) == v_sorted(1));
+  ASSERT_TRUE(v(2) == v_sorted(0));
+
+  // check if there are unresolved external symbols in `h5geo::detail::_sort()`
+  h5geo::sort(v.row(0));
+  h5geo::sort(v(Eigen::lastN(2), 0));
+  h5geo::sort(v(Eigen::seq(1,2), 0));
+  h5geo::sort(v(0, Eigen::lastN(2)));
+  h5geo::sort(v(0, Eigen::seq(1,2)));
+}
+
+TEST_F(H5CoreFixture, sort_vector){
+  Eigen::VectorXd v(3), v_sorted;
+  v << 3,2,1;
+
+  // v =  3
+  //      2
+  //      1
+
+  auto ind = h5geo::sort(v, v_sorted);
+  ASSERT_TRUE(ind(0) == 2);
+  ASSERT_TRUE(ind(1) == 1);
+  ASSERT_TRUE(ind(2) == 0);
+
+  ASSERT_TRUE(v(0) == v_sorted(2));
+  ASSERT_TRUE(v(1) == v_sorted(1));
+  ASSERT_TRUE(v(2) == v_sorted(0));
+
+  // check if there are unresolved external symbols in `h5geo::detail::_sort()`
+  h5geo::sort(v.col(0));
+  h5geo::sort(v(Eigen::lastN(2)));
+  h5geo::sort(v(Eigen::seq(1,2)));
+}
+
+void sort_matrix_ref(
+    const Eigen::Ref<const Eigen::MatrixX<double>> v,
+    const Eigen::Ref<const Eigen::MatrixX<double>> v_sorted)
+{
+  auto ind = h5geo::sort(v.col(0), v_sorted.col(0));
+  ASSERT_TRUE(ind(0) == 2);
+  ASSERT_TRUE(ind(1) == 1);
+  ASSERT_TRUE(ind(2) == 0);
+
+  ASSERT_TRUE(v(0) == v_sorted(2));
+  ASSERT_TRUE(v(1) == v_sorted(1));
+  ASSERT_TRUE(v(2) == v_sorted(0));
+}
+
+
+TEST_F(H5CoreFixture, sort_matrix_ref){
+  Eigen::MatrixXd v(3, 3), v_sorted;
+  v << 3,3,3,2,2,2,1,1,1;
+
+  // v =  3 3 3
+  //      2 2 2
+  //      1 1 1
+
+  sort_matrix_ref(v.col(0), v_sorted);
+
+//  auto ind = h5geo::sort(v.col(0), v_sorted);
+//  ASSERT_TRUE(ind(0) == 2);
+//  ASSERT_TRUE(ind(1) == 1);
+//  ASSERT_TRUE(ind(2) == 0);
+
+//  ASSERT_TRUE(v(0) == v_sorted(2));
+//  ASSERT_TRUE(v(1) == v_sorted(1));
+//  ASSERT_TRUE(v(2) == v_sorted(0));
+
+//  // check if there are unresolved external symbols in `h5geo::detail::_sort()`
+//  h5geo::sort(v.row(0));
+//  h5geo::sort(v(Eigen::lastN(2), 0));
+//  h5geo::sort(v(Eigen::seq(1,2), 0));
+//  h5geo::sort(v(0, Eigen::lastN(2)));
+//  h5geo::sort(v(0, Eigen::seq(1,2)));
 }
 
 TEST_F(H5CoreFixture, getTraceHeaderNames){

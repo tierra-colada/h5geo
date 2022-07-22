@@ -55,40 +55,40 @@ sort_rows_unique(const py::EigenDRef<const D> M)
 
 void defineSortFunctions(py::module_& m){
   // SORT
-  m.def("sort", &ext::sort<const Eigen::VectorXf>,
-        py::arg("v"),
-        "return indexes such that `v_sorted = v(ind)`. Input parameter `v` is a vector");
-  m.def("sort", &ext::sort<const Eigen::VectorXd>,
-        py::arg("v"));
+//  m.def("sort", &ext::sort<const Eigen::VectorXf>,
+//        py::arg("v"),
+//        "return indexes such that `v_sorted = v(ind)`. Input parameter `v` is a vector");
+//  m.def("sort", &ext::sort<const Eigen::VectorXd>,
+//        py::arg("v"));
 
-  m.def("sort_rows", &ext::sort_rows<Eigen::MatrixXf>,
-        py::arg("M"),
-        "sorts the rows of a matrix in ascending order "
-"based on the elements in the first column. When the first column "
-"contains repeated elements, sortrows sorts according to the values "
-"in the next column and repeats this behavior for succeeding equal values. "
-"M_sorted = M(ind, Eigen::all)");
-  m.def("sort_rows", &ext::sort_rows<Eigen::MatrixXd>,
-        py::arg("M"));
+//  m.def("sort_rows", &ext::sort_rows<Eigen::MatrixXf>,
+//        py::arg("M"),
+//        "sorts the rows of a matrix in ascending order "
+//"based on the elements in the first column. When the first column "
+//"contains repeated elements, sortrows sorts according to the values "
+//"in the next column and repeats this behavior for succeeding equal values. "
+//"M_sorted = M(ind, Eigen::all)");
+//  m.def("sort_rows", &ext::sort_rows<Eigen::MatrixXd>,
+//        py::arg("M"));
 
-  m.def("sort_unique", &ext::sort_unique<Eigen::VectorXf>,
-        py::arg("v"),
-        "find unique elements, sort them, identify unique values "
-"start and end indexes and return indexes `ind` such that v_sorted = v(ind), "
-"`uvals` vector and two column matrix `uvals_from_size` where"
-"first col - start index, second col - number of elements. "
-"Each row can be considered as v_sorted.segment(uvals_from_size.row(n)) "
-"gives the same unique value uval.");
-  m.def("sort_unique", &ext::sort_unique<Eigen::VectorXd>,
-        py::arg("v"));
+//  m.def("sort_unique", &ext::sort_unique<Eigen::VectorXf>,
+//        py::arg("v"),
+//        "find unique elements, sort them, identify unique values "
+//"start and end indexes and return indexes `ind` such that v_sorted = v(ind), "
+//"`uvals` vector and two column matrix `uvals_from_size` where"
+//"first col - start index, second col - number of elements. "
+//"Each row can be considered as v_sorted.segment(uvals_from_size.row(n)) "
+//"gives the same unique value uval.");
+//  m.def("sort_unique", &ext::sort_unique<Eigen::VectorXd>,
+//        py::arg("v"));
 
-  m.def("sort_rows_unique", &ext::sort_rows_unique<Eigen::MatrixXf>,
-        py::arg("M"),
-        "find unique rows, sort them, identify unique rows "
-"start and end row-indexes and return row-indexes such that M_sorted = M(ind, Eigen::all)."
-"Return indexes `ind`, `urows` and `urows_from_size`");
-  m.def("sort_rows_unique", &ext::sort_rows_unique<Eigen::MatrixXd>,
-        py::arg("M"));
+//  m.def("sort_rows_unique", &ext::sort_rows_unique<Eigen::MatrixXf>,
+//        py::arg("M"),
+//        "find unique rows, sort them, identify unique rows "
+//"start and end row-indexes and return row-indexes such that M_sorted = M(ind, Eigen::all)."
+//"Return indexes `ind`, `urows` and `urows_from_size`");
+//  m.def("sort_rows_unique", &ext::sort_rows_unique<Eigen::MatrixXd>,
+//        py::arg("M"));
 }
 
 
