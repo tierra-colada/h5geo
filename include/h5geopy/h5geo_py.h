@@ -24,6 +24,7 @@
 #include <pybind11/complex.h>
 #include <pybind11/operators.h>
 #include <pybind11/cast.h>
+#include <pybind11/functional.h>
 
 #ifdef H5GEO_USE_GDAL
 #include <gdal.h>
