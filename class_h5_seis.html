@@ -184,9 +184,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af44ea64e2d2f08c730f7359d5f873ca6"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#af44ea64e2d2f08c730f7359d5f873ca6">getXYTraceHeaders</a> (const std::vector&lt; std::string &gt; &amp;xyHdrNames, const Eigen::Ref&lt; const Eigen::VectorX&lt; size_t &gt; &gt; &amp;trcInd, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
 <tr class="memdesc:af44ea64e2d2f08c730f7359d5f873ca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <code>XY</code> trace headers (two columns in Eigen column-major matrix)  <a href="class_h5_seis.html#af44ea64e2d2f08c730f7359d5f873ca6">More...</a><br /></td></tr>
 <tr class="separator:af44ea64e2d2f08c730f7359d5f873ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a932531c1d109843d81ba66a9f7e227ed"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorX&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a932531c1d109843d81ba66a9f7e227ed">getSortedData</a> (Eigen::MatrixXf &amp;TRACE, Eigen::MatrixXd &amp;HDR, const std::vector&lt; std::string &gt; &amp;keyList, const std::vector&lt; double &gt; &amp;minList, const std::vector&lt; double &gt; &amp;maxList, size_t fromSampInd=0, size_t nSamp=std::numeric_limits&lt; size_t &gt;::max(), const std::string &amp;dataUnits=&quot;&quot;, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
-<tr class="memdesc:a932531c1d109843d81ba66a9f7e227ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get sorted data based on precalculated primary sort keys.  <a href="class_h5_seis.html#a932531c1d109843d81ba66a9f7e227ed">More...</a><br /></td></tr>
-<tr class="separator:a932531c1d109843d81ba66a9f7e227ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebd17f7132d8f213fcebf9514f6e5ad1"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorX&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#aebd17f7132d8f213fcebf9514f6e5ad1">getSortedData</a> (Eigen::MatrixXf &amp;TRACE, Eigen::MatrixXd &amp;HDR, const std::vector&lt; std::string &gt; &amp;keyList, const std::vector&lt; double &gt; &amp;minList, const std::vector&lt; double &gt; &amp;maxList, size_t pStep=1, size_t fromSampInd=0, size_t nSamp=std::numeric_limits&lt; size_t &gt;::max(), const std::string &amp;dataUnits=&quot;&quot;, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
+<tr class="memdesc:aebd17f7132d8f213fcebf9514f6e5ad1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get sorted data based on precalculated primary sort keys.  <a href="class_h5_seis.html#aebd17f7132d8f213fcebf9514f6e5ad1">More...</a><br /></td></tr>
+<tr class="separator:aebd17f7132d8f213fcebf9514f6e5ad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50071218f31191f653697d9f66d4277d"><td class="memItemLeft" align="right" valign="top">virtual ptrdiff_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a50071218f31191f653697d9f66d4277d">getBinHeaderIndex</a> (const std::string &amp;hdrName)=0</td></tr>
 <tr class="memdesc:a50071218f31191f653697d9f66d4277d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get index (position within 1D dataset) for a given binary header.  <a href="class_h5_seis.html#a50071218f31191f653697d9f66d4277d">More...</a><br /></td></tr>
 <tr class="separator:a50071218f31191f653697d9f66d4277d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,18 +220,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa13bf77167bbb07547396187da4f5cfd"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#aa13bf77167bbb07547396187da4f5cfd">getNTextHdrRows</a> ()=0</td></tr>
 <tr class="memdesc:aa13bf77167bbb07547396187da4f5cfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of text header rows.  <a href="class_h5_seis.html#aa13bf77167bbb07547396187da4f5cfd">More...</a><br /></td></tr>
 <tr class="separator:aa13bf77167bbb07547396187da4f5cfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a204777494c2f87ef8e8b1f4f755d772f"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorX&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a204777494c2f87ef8e8b1f4f755d772f">getPKeyIndexes</a> (const std::string &amp;pKey, double pMin, double pMax)=0</td></tr>
-<tr class="memdesc:a204777494c2f87ef8e8b1f4f755d772f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get trace indexes for given <code>PKey</code>  <a href="class_h5_seis.html#a204777494c2f87ef8e8b1f4f755d772f">More...</a><br /></td></tr>
-<tr class="separator:a204777494c2f87ef8e8b1f4f755d772f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a564b205a05c10349c69bff492af8e30f"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorX&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a564b205a05c10349c69bff492af8e30f">getPKeyIndexes</a> (const std::string &amp;pKey, double pMin, double pMax, size_t pStep=1)=0</td></tr>
+<tr class="memdesc:a564b205a05c10349c69bff492af8e30f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get trace indexes for given <code>PKey</code>  <a href="class_h5_seis.html#a564b205a05c10349c69bff492af8e30f">More...</a><br /></td></tr>
+<tr class="separator:a564b205a05c10349c69bff492af8e30f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c93da143324daa5c3ffeec23d54cf51"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a5c93da143324daa5c3ffeec23d54cf51">getPKeyValues</a> (const std::string &amp;pKey, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:a5c93da143324daa5c3ffeec23d54cf51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <code>PKey</code> unique values.  <a href="class_h5_seis.html#a5c93da143324daa5c3ffeec23d54cf51">More...</a><br /></td></tr>
 <tr class="separator:a5c93da143324daa5c3ffeec23d54cf51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6bc91df3e89c628f97b2b7925ae3fe7"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#ad6bc91df3e89c628f97b2b7925ae3fe7">getPKeySize</a> (const std::string &amp;pKey)=0</td></tr>
 <tr class="memdesc:ad6bc91df3e89c628f97b2b7925ae3fe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of unique values for a given <code>PKey</code>  <a href="class_h5_seis.html#ad6bc91df3e89c628f97b2b7925ae3fe7">More...</a><br /></td></tr>
 <tr class="separator:ad6bc91df3e89c628f97b2b7925ae3fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff9424b25edb93cf59003ddbd6ec1f19"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#aff9424b25edb93cf59003ddbd6ec1f19">getPKeyTraceSize</a> (const std::string &amp;pKey, double pMin, double pMax)=0</td></tr>
-<tr class="memdesc:aff9424b25edb93cf59003ddbd6ec1f19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of traces to be selected for a given <code>PKey</code>  <a href="class_h5_seis.html#aff9424b25edb93cf59003ddbd6ec1f19">More...</a><br /></td></tr>
-<tr class="separator:aff9424b25edb93cf59003ddbd6ec1f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2882886dd984f699f399c1fbbf0164d5"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a2882886dd984f699f399c1fbbf0164d5">getPKeyTraceSize</a> (const std::string &amp;pKey, double pMin, double pMax, size_t pStep=1)=0</td></tr>
+<tr class="memdesc:a2882886dd984f699f399c1fbbf0164d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of traces to be selected for a given <code>PKey</code>  <a href="class_h5_seis.html#a2882886dd984f699f399c1fbbf0164d5">More...</a><br /></td></tr>
+<tr class="separator:a2882886dd984f699f399c1fbbf0164d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7c46d0eec6eafa3a3aa5d561aedcace"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#aa7c46d0eec6eafa3a3aa5d561aedcace">getPKeyNames</a> ()=0</td></tr>
 <tr class="memdesc:aa7c46d0eec6eafa3a3aa5d561aedcace"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get names of prepared <code>PKeys</code> (names of prepared sortings <code>PKeys</code>)  <a href="class_h5_seis.html#aa7c46d0eec6eafa3a3aa5d561aedcace">More...</a><br /></td></tr>
 <tr class="separator:aa7c46d0eec6eafa3a3aa5d561aedcace"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -519,7 +519,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Delete</b> ()
 </div><div class="memdoc">
 
 <p>Prepare sorting. </p>
-<p >Sorting is needed for any sorting related operations (like <a class="el" href="class_h5_seis.html#a932531c1d109843d81ba66a9f7e227ed" title="Get sorted data based on precalculated primary sort keys.">H5Seis::getSortedData()</a>). <br  />
+<p >Sorting is needed for any sorting related operations (like <a class="el" href="class_h5_seis.html#aebd17f7132d8f213fcebf9514f6e5ad1" title="Get sorted data based on precalculated primary sort keys.">H5Seis::getSortedData()</a>). <br  />
 If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" href="class_h5_seis.html#a797b0a608865af106f45af39f304915f" title="Prepare sorting.">H5Seis::addPKeySort</a>("CDP") first. </p>
 
 <p>Implemented in <a class="el" href="class_h5_seis_impl.html#a2f3078b621f4bfbbfb645b215683c1fe">H5SeisImpl</a>.</p>
@@ -1398,8 +1398,8 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
 
 </div>
 </div>
-<a id="a204777494c2f87ef8e8b1f4f755d772f" name="a204777494c2f87ef8e8b1f4f755d772f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a204777494c2f87ef8e8b1f4f755d772f">&#9670;&nbsp;</a></span>getPKeyIndexes()</h2>
+<a id="a564b205a05c10349c69bff492af8e30f" name="a564b205a05c10349c69bff492af8e30f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a564b205a05c10349c69bff492af8e30f">&#9670;&nbsp;</a></span>getPKeyIndexes()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1423,7 +1423,13 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>pMax</em>&#160;</td>
+          <td class="paramname"><em>pMax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>pStep</em> = <code>1</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1439,9 +1445,17 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
 </div><div class="memdoc">
 
 <p>Get trace indexes for given <code>PKey</code> </p>
-<p >Before using it one should prepare primary sort keys with <a class="el" href="class_h5_seis.html#a797b0a608865af106f45af39f304915f" title="Prepare sorting.">H5Seis::addPKeySort()</a> method. </p>
+<p >Before using it one should prepare primary sort keys with <a class="el" href="class_h5_seis.html#a797b0a608865af106f45af39f304915f" title="Prepare sorting.">H5Seis::addPKeySort()</a> method. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pKey</td><td>primary key name </td></tr>
+    <tr><td class="paramname">pMin</td><td>primary key minimal value </td></tr>
+    <tr><td class="paramname">pMax</td><td>primary key maximal value </td></tr>
+    <tr><td class="paramname">pStep</td><td>primary key step (0 and 1 means every pKey; else every n-th selected pKey) </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implemented in <a class="el" href="class_h5_seis_impl.html#a30ec32546358cebe1612bdadd1c3673f">H5SeisImpl</a>.</p>
+<p>Implemented in <a class="el" href="class_h5_seis_impl.html#a949c013c2bb688e01e6859e0819f5eb0">H5SeisImpl</a>.</p>
 
 </div>
 </div>
@@ -1505,8 +1519,8 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
 
 </div>
 </div>
-<a id="aff9424b25edb93cf59003ddbd6ec1f19" name="aff9424b25edb93cf59003ddbd6ec1f19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff9424b25edb93cf59003ddbd6ec1f19">&#9670;&nbsp;</a></span>getPKeyTraceSize()</h2>
+<a id="a2882886dd984f699f399c1fbbf0164d5" name="a2882886dd984f699f399c1fbbf0164d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2882886dd984f699f399c1fbbf0164d5">&#9670;&nbsp;</a></span>getPKeyTraceSize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1530,7 +1544,13 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>pMax</em>&#160;</td>
+          <td class="paramname"><em>pMax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>pStep</em> = <code>1</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1546,9 +1566,17 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
 </div><div class="memdoc">
 
 <p>Get number of traces to be selected for a given <code>PKey</code> </p>
-<p >Before using it one should prepare primary sort keys with <a class="el" href="class_h5_seis.html#a797b0a608865af106f45af39f304915f" title="Prepare sorting.">H5Seis::addPKeySort()</a> method. </p>
+<p >Before using it one should prepare primary sort keys with <a class="el" href="class_h5_seis.html#a797b0a608865af106f45af39f304915f" title="Prepare sorting.">H5Seis::addPKeySort()</a> method. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pKey</td><td>primary key name </td></tr>
+    <tr><td class="paramname">pMin</td><td>primary key minimal value </td></tr>
+    <tr><td class="paramname">pMax</td><td>primary key maximal value </td></tr>
+    <tr><td class="paramname">pStep</td><td>primary key step (0 and 1 means every pKey; else every n-th selected pKey) </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implemented in <a class="el" href="class_h5_seis_impl.html#a41002d4c272170b01427a768418b3b56">H5SeisImpl</a>.</p>
+<p>Implemented in <a class="el" href="class_h5_seis_impl.html#a1543d7fcb935bc28853a1857d42d778d">H5SeisImpl</a>.</p>
 
 </div>
 </div>
@@ -1872,8 +1900,8 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
 
 </div>
 </div>
-<a id="a932531c1d109843d81ba66a9f7e227ed" name="a932531c1d109843d81ba66a9f7e227ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a932531c1d109843d81ba66a9f7e227ed">&#9670;&nbsp;</a></span>getSortedData()</h2>
+<a id="aebd17f7132d8f213fcebf9514f6e5ad1" name="aebd17f7132d8f213fcebf9514f6e5ad1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebd17f7132d8f213fcebf9514f6e5ad1">&#9670;&nbsp;</a></span>getSortedData()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1910,6 +1938,12 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
           <td></td>
           <td class="paramtype">const std::vector&lt; double &gt; &amp;&#160;</td>
           <td class="paramname"><em>maxList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>pStep</em> = <code>1</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1962,6 +1996,7 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
     <tr><td class="paramname">keyList</td><td>trace header names to be worked with (first is treated as <code>PKey</code>) </td></tr>
     <tr><td class="paramname">minList</td><td>minimal value for each key </td></tr>
     <tr><td class="paramname">maxList</td><td>maximal value for each key </td></tr>
+    <tr><td class="paramname">pStep</td><td>retrieve only n-th pkeys (for ex: SP=[1,5,6,8,9], pStep=2 -&gt; SP_out=[1,6,9]) </td></tr>
     <tr><td class="paramname">fromSampInd</td><td>first sample index to read (in range [0, <a class="el" href="class_h5_seis.html#aa4bc6bb65853b756df8b2a50f0f54044" title="Get number of samples.">H5Seis::getNSamp()</a>]) </td></tr>
     <tr><td class="paramname">nSamp</td><td>number of samples to be read (if 0 then <code>TRACE</code> will be empty). By default all samples </td></tr>
     <tr><td class="paramname">dataUnits</td><td>tansform data to these units </td></tr>
@@ -1972,7 +2007,7 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>vector of trace indexes read </dd></dl>
 
-<p>Implemented in <a class="el" href="class_h5_seis_impl.html#aba253075b9996c825d65bdd134fc1b56">H5SeisImpl</a>.</p>
+<p>Implemented in <a class="el" href="class_h5_seis_impl.html#aa829e0084d96f6f717f512fa91d1a7fd">H5SeisImpl</a>.</p>
 
 </div>
 </div>
