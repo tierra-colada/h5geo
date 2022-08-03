@@ -1214,17 +1214,19 @@ size_t H5SeisImpl::getPKeySize(
     return 0;
 
   // make reverse iterator to start searching from the end
-  auto lastIt_rbegin = std::make_reverse_iterator(pVals.end());
-  auto lastIt_rend = std::make_reverse_iterator(pVals.begin());
-  auto lastIt = std::find_if(lastIt_rbegin, lastIt_rend, [&](const double& val){ return val >= pMin && val <= pMax; });
-  if (lastIt == lastIt_rend)
-    return 0;
-
-  if (*lastIt_rend < *firstIt)
+  auto pVals_rbegin = std::make_reverse_iterator(pVals.end());
+  auto pVals_rend = std::make_reverse_iterator(pVals.begin());
+  auto lastIt = std::find_if(pVals_rbegin, pVals_rend, [&](const double& val){ return val >= pMin && val <= pMax; });
+  if (lastIt == pVals_rend)
     return 0;
 
   // 'n' is the number of elements within [pMin, pMax]
-  size_t n = *lastIt_rend - *firstIt;
+  size_t first_ind = std::distance(pVals.begin(), firstIt);
+  size_t last_ind = std::distance(pVals_rbegin, lastIt);
+  if (last_ind < first_ind)
+    return 0;
+
+  size_t n = last_ind - first_ind + 1;
 
   if (pStep < 1)
     pStep = 1;
