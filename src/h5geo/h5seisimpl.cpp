@@ -859,6 +859,7 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
     const std::vector<std::string>& keyList,
     const std::vector<double>& minList,
     const std::vector<double>& maxList,
+    size_t pStep,
     size_t fromSampInd,
     size_t nSamp,
     const std::string& dataUnits,
@@ -876,7 +877,7 @@ Eigen::VectorX<size_t> H5SeisImpl::getSortedData(
   // define trace and header indexes, convert them to ElementSet
   // and read preliminary PKey indexed headers
   Eigen::VectorX<size_t> traceIndexes = getPKeyIndexes(
-        keyList[0], minList[0], maxList[0]);
+        keyList[0], minList[0], maxList[0], pStep);
 
   if (traceIndexes.size() < 1)
     return Eigen::VectorX<size_t>();
@@ -1086,7 +1087,7 @@ size_t H5SeisImpl::getNTextHdrRows(){
 
 Eigen::VectorX<size_t> H5SeisImpl::getPKeyIndexes(
     const std::string& pKey,
-    double pMin, double pMax)
+    double pMin, double pMax, size_t pStep)
 {
   auto optUValG = getUValG();
   if (!optUValG.has_value())
@@ -1105,10 +1106,19 @@ Eigen::VectorX<size_t> H5SeisImpl::getPKeyIndexes(
   optUValG->getDataSet(pKey).read(uHeader);
   std::vector<std::string> pDatasetsNames;
   pDatasetsNames.reserve(pGroup.getNumberObjects());
+  if (pStep < 1)
+    pStep = 1;
+  // first time always add dataset name
+  size_t pStepCounter = pStep;
   for (size_t i = 0; i < uHeader.size(); i++){
     if (uHeader[i] >= pMin &&
         uHeader[i] <= pMax){
-      pDatasetsNames.push_back(std::to_string(i));
+      if (pStepCounter == pStep){
+        pDatasetsNames.push_back(std::to_string(i));
+        pStepCounter = 1;
+      } else {
+        pStepCounter += 1;
+      }
     }
   }
   pDatasetsNames.shrink_to_fit();
@@ -1172,7 +1182,11 @@ size_t H5SeisImpl::getPKeySize(const std::string& pKey){
       getElementCount();
 }
 
-size_t H5SeisImpl::getPKeyTraceSize(const std::string& pKey, double pMin, double pMax){
+size_t H5SeisImpl::getPKeyTraceSize(
+    const std::string& pKey,
+    double pMin, double pMax,
+    size_t pStep)
+{
   auto optUValG = getUValG();
   if (!optUValG.has_value())
     return 0;
@@ -1190,10 +1204,19 @@ size_t H5SeisImpl::getPKeyTraceSize(const std::string& pKey, double pMin, double
   optUValG->getDataSet(pKey).read(uHeader);
   std::vector<std::string> pDatasetsNames;
   pDatasetsNames.reserve(pGroup.getNumberObjects());
+  if (pStep < 1)
+    pStep = 1;
+  // first time always add dataset name
+  size_t pStepCounter = pStep;
   for (size_t i = 0; i < uHeader.size(); i++){
     if (uHeader[i] >= pMin &&
         uHeader[i] <= pMax){
-      pDatasetsNames.push_back(std::to_string(i));
+      if (pStepCounter == pStep){
+        pDatasetsNames.push_back(std::to_string(i));
+        pStepCounter = 1;
+      } else {
+        pStepCounter += 1;
+      }
     }
   }
   pDatasetsNames.shrink_to_fit();

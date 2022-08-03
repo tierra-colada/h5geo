@@ -160,6 +160,7 @@ public:
       const std::vector<std::string>& keyList,
       const std::vector<double>& minList,
       const std::vector<double>& maxList,
+      size_t pStep = 1,
       size_t fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
       const std::string& dataUnits = "",
@@ -186,13 +187,18 @@ public:
   virtual size_t getNBinHdr() override;
   virtual size_t getNTextHdrRows() override;
   virtual Eigen::VectorX<size_t> getPKeyIndexes(
-      const std::string& pKey, double pMin, double pMax) override;
+      const std::string& pKey,
+      double pMin, double pMax,
+      size_t pStep = 1) override;
   virtual Eigen::VectorXd getPKeyValues(
       const std::string& pKey,
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
   virtual size_t getPKeySize(const std::string& pKey) override;
-  virtual size_t getPKeyTraceSize(const std::string& pKey, double pMin, double pMax) override;
+  virtual size_t getPKeyTraceSize(
+      const std::string& pKey,
+      double pMin, double pMax,
+      size_t pStep = 1) override;
   virtual std::vector<std::string> getPKeyNames() override;
   virtual std::map<std::string, double> getTraceHeaderMin() override;
   virtual std::map<std::string, double> getTraceHeaderMax() override;

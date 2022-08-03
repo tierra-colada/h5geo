@@ -265,7 +265,6 @@ public:
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
 
-
   /// \brief Get sorted data based on precalculated primary sort keys
   ///
   /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
@@ -274,6 +273,7 @@ public:
   /// \param keyList trace header names to be worked with (first is treated as `PKey`)
   /// \param minList minimal value for each key
   /// \param maxList maximal value for each key
+  /// \param pStep retrieve only n-th pkeys (for ex: SP=[1,5,6,8,9], pStep=2 -> SP_out=[1,6,9])
   /// \param fromSampInd first sample index to read (in range [0, H5Seis::getNSamp()])
   /// \param nSamp number of samples to be read (if 0 then `TRACE` will be empty). By default all samples
   /// \param dataUnits tansform data to these units
@@ -286,6 +286,7 @@ public:
       const std::vector<std::string>& keyList,
       const std::vector<double>& minList,
       const std::vector<double>& maxList,
+      size_t pStep = 1,
       size_t fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max(),
       const std::string& dataUnits = "",
@@ -325,9 +326,14 @@ public:
   /// \brief Get trace indexes for given `PKey`
   ///
   /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
+  /// \param pKey primary key name
+  /// \param pMin primary key minimal value
+  /// \param pMax primary key maximal value
+  /// \param pStep primary key step (0 and 1 means every pKey; else every n-th selected pKey)
   virtual Eigen::VectorX<size_t> getPKeyIndexes(
       const std::string& pKey,
-      double pMin, double pMax) = 0;
+      double pMin, double pMax,
+      size_t pStep = 1) = 0;
   /// \brief Get `PKey` unique values
   ///
   /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
@@ -342,7 +348,14 @@ public:
   /// \brief Get number of traces to be selected for a given `PKey`
   ///
   /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
-  virtual size_t getPKeyTraceSize(const std::string& pKey, double pMin, double pMax) = 0;
+  /// \param pKey primary key name
+  /// \param pMin primary key minimal value
+  /// \param pMax primary key maximal value
+  /// \param pStep primary key step (0 and 1 means every pKey; else every n-th selected pKey)
+  virtual size_t getPKeyTraceSize(
+      const std::string& pKey,
+      double pMin, double pMax,
+      size_t pStep = 1) = 0;
   /// \brief Get names of prepared `PKeys` (names of prepared sortings `PKeys`)
   virtual std::vector<std::string> getPKeyNames() = 0;
   /// \brief Get trace header minimal values

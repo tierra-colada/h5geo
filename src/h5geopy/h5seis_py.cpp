@@ -10,6 +10,7 @@ getSortedData(
     const std::vector<std::string>& keyList,
     const std::vector<double>& minList,
     const std::vector<double>& maxList,
+    size_t pStep = 1,
     size_t fromSampInd = 0,
     size_t nSamp = std::numeric_limits<size_t>::max(),
     const std::string& dataUnits = "",
@@ -21,6 +22,7 @@ getSortedData(
   Eigen::VectorX<size_t> idx = self->getSortedData(
         TRACE, HDR,
         keyList, minList, maxList,
+        pStep,
         fromSampInd, nSamp,
         dataUnits, lengthUnits, doCoordTransform);
   return std::make_tuple(std::move(TRACE), std::move(HDR), std::move(idx));
@@ -291,6 +293,7 @@ void H5Seis_py(
            py::arg("keyList"),
            py::arg("minList"),
            py::arg("maxList"),
+           py::arg_v("pStep", 1, "1"),
            py::arg_v("fromSampInd", 0, "0"),
            py::arg_v("nSamp", std::numeric_limits<size_t>::max(), "sys.maxint"),
            py::arg_v("dataUnits", "", "str()"),
@@ -332,7 +335,8 @@ void H5Seis_py(
       .def("getPKeyIndexes", &H5Seis::getPKeyIndexes,
            py::arg("pKey"),
            py::arg("pMin"),
-           py::arg("pMax"))
+           py::arg("pMax"),
+           py::arg_v("pStep", 1, "1"))
       .def("getPKeyValues", &H5Seis::getPKeyValues,
            py::arg("pkey"),
            py::arg_v("unitsFrom", "", "str()"),
@@ -340,7 +344,10 @@ void H5Seis_py(
       .def("getPKeySize", &H5Seis::getPKeySize,
            py::arg("pKey"))
       .def("getPKeyTraceSize", &H5Seis::getPKeyTraceSize,
-           py::arg("pKey"), py::arg("pMin"), py::arg("pMax"))
+           py::arg("pKey"),
+           py::arg("pMin"),
+           py::arg("pMax"),
+           py::arg_v("pStep", 1, "1"))
       .def("getPKeyNames", &H5Seis::getPKeyNames,
            "get primary key names (usually they are used in sorting)")
       .def("getTraceHeaderMin", py::overload_cast<>(
