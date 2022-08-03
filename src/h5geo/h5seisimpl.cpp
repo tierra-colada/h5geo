@@ -1222,7 +1222,7 @@ size_t H5SeisImpl::getPKeySize(
 
   // 'n' is the number of elements within [pMin, pMax]
   size_t first_ind = std::distance(pVals.begin(), firstIt);
-  size_t last_ind = std::distance(pVals_rbegin, lastIt);
+  size_t last_ind = (pVals.size()-1) - std::distance(pVals_rbegin, lastIt);
   if (last_ind < first_ind)
     return 0;
 

@@ -361,6 +361,10 @@ TEST_F(H5SeisFixture, writeAndGetSortedData){
   seis->getTraceHeader(trc_ind, trcHdrInd);
 
   std::cout << "hdr_sorted:\n" << hdr_sorted << std::endl;
+  std::cout << "seis->getPKeyValues(\"FFID\"):\n" << seis->getPKeyValues("FFID") << std::endl;
+  std::cout << "seis->getPKeySize(\"FFID\", 2,4,1):\t" << seis->getPKeySize("FFID", 2,4,1) << std::endl;
+  std::cout << "seis->getPKeySize(\"FFID\", 2,4,2):\t" << seis->getPKeySize("FFID", 2,4,2) << std::endl;
+  std::cout << "seis->getPKeySize(\"FFID\", 2,2,2):\t" << seis->getPKeySize("FFID", 2,2,2) << std::endl;
 
   Eigen::MatrixXd trcHdr_out = seis->getTraceHeader(
         0, seis->getNTrc());
