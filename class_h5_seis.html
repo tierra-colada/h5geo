@@ -229,6 +229,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad6bc91df3e89c628f97b2b7925ae3fe7"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#ad6bc91df3e89c628f97b2b7925ae3fe7">getPKeySize</a> (const std::string &amp;pKey)=0</td></tr>
 <tr class="memdesc:ad6bc91df3e89c628f97b2b7925ae3fe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of unique values for a given <code>PKey</code>  <a href="class_h5_seis.html#ad6bc91df3e89c628f97b2b7925ae3fe7">More...</a><br /></td></tr>
 <tr class="separator:ad6bc91df3e89c628f97b2b7925ae3fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9af479a7e3295b8d003cb01a34dfff2c"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a9af479a7e3295b8d003cb01a34dfff2c">getPKeySize</a> (const std::string &amp;pKey, double pMin, double pMax, size_t pStep=1)=0</td></tr>
+<tr class="memdesc:a9af479a7e3295b8d003cb01a34dfff2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of unique values for a given <code>PKey</code>  <a href="class_h5_seis.html#a9af479a7e3295b8d003cb01a34dfff2c">More...</a><br /></td></tr>
+<tr class="separator:a9af479a7e3295b8d003cb01a34dfff2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2882886dd984f699f399c1fbbf0164d5"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a2882886dd984f699f399c1fbbf0164d5">getPKeyTraceSize</a> (const std::string &amp;pKey, double pMin, double pMax, size_t pStep=1)=0</td></tr>
 <tr class="memdesc:a2882886dd984f699f399c1fbbf0164d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of traces to be selected for a given <code>PKey</code>  <a href="class_h5_seis.html#a2882886dd984f699f399c1fbbf0164d5">More...</a><br /></td></tr>
 <tr class="separator:a2882886dd984f699f399c1fbbf0164d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1489,7 +1492,7 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
 </div>
 </div>
 <a id="ad6bc91df3e89c628f97b2b7925ae3fe7" name="ad6bc91df3e89c628f97b2b7925ae3fe7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6bc91df3e89c628f97b2b7925ae3fe7">&#9670;&nbsp;</a></span>getPKeySize()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6bc91df3e89c628f97b2b7925ae3fe7">&#9670;&nbsp;</a></span>getPKeySize() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1516,6 +1519,59 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
 <p >Before using it one should prepare primary sort keys with <a class="el" href="class_h5_seis.html#a797b0a608865af106f45af39f304915f" title="Prepare sorting.">H5Seis::addPKeySort()</a> method. </p>
 
 <p>Implemented in <a class="el" href="class_h5_seis_impl.html#afd8e4df1ae54655821ad99f57dc35467">H5SeisImpl</a>.</p>
+
+</div>
+</div>
+<a id="a9af479a7e3295b8d003cb01a34dfff2c" name="a9af479a7e3295b8d003cb01a34dfff2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9af479a7e3295b8d003cb01a34dfff2c">&#9670;&nbsp;</a></span>getPKeySize() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual size_t H5Seis::getPKeySize </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>pKey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>pMin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>pMax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>pStep</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get number of unique values for a given <code>PKey</code> </p>
+<p >Before using it one should prepare primary sort keys with <a class="el" href="class_h5_seis.html#a797b0a608865af106f45af39f304915f" title="Prepare sorting.">H5Seis::addPKeySort()</a> method. </p>
+
+<p>Implemented in <a class="el" href="class_h5_seis_impl.html#a4430d4a982e059abe2d513e75be82560">H5SeisImpl</a>.</p>
 
 </div>
 </div>
