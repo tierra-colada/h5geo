@@ -6,6 +6,11 @@
 #include <fstream>
 #include <climits>
 #include <filesystem>
+#include <cmath>
+
+#ifdef H5GEO_USE_THREADS
+#include <execution>
+#endif
 
 #include <units/units.hpp>
 
@@ -1180,6 +1185,47 @@ size_t H5SeisImpl::getPKeySize(const std::string& pKey){
   return uvalG->getDataSet(pKey).
       getMemSpace().
       getElementCount();
+}
+
+size_t H5SeisImpl::getPKeySize(
+    const std::string& pKey,
+    double pMin, double pMax,
+    size_t pStep)
+{
+  auto uvalG = getUValG();
+  if (!uvalG.has_value())
+    return 0;
+
+  if (!uvalG->hasObject(pKey, h5gt::ObjectType::Dataset))
+    return 0;
+
+  h5gt::DataSet pDSet = uvalG->getDataSet(pKey);
+  Eigen::VectorXd pVals(
+        pDSet.
+        getMemSpace().
+        getElementCount());
+
+  pDSet.read(pVals.data());
+
+#ifdef H5GEO_USE_THREADS
+  size_t n = std::count_if(
+        std::execution::par,
+        pVals.begin(), pVals.end(),
+        [&pMin, &pMax](const double& i){return i >= pMin && i <= pMax;});
+#else
+  size_t n = std::count_if(
+        pVals.begin(), pVals.end(),
+        [&pMin, &pMax](double i){return i >= pMin && i <= pMax;});
+#endif
+
+  if (pStep < 1)
+    pStep = 1;
+
+  // 'double' is neccessary
+  // consider the following cases of using 'ceil':
+  // 1/2  ; 2/2 ;  3/2
+  // 1/2.0; 2/2.0; 3/2.0
+  return (size_t)ceil(n / double(pStep));
 }
 
 size_t H5SeisImpl::getPKeyTraceSize(

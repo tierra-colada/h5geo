@@ -323,6 +323,8 @@ bool readSEGYTraces(
   size_t J = trcBuffer;
   size_t N = nTrc / trcBuffer;
   ptrdiff_t n_passed = 0;
+  double progressOld = 0;
+  double progressNew = 0;
 
 #ifdef H5GEO_USE_THREADS
   if (nThreads < 1 || nThreads > omp_get_max_threads())
@@ -330,8 +332,14 @@ bool readSEGYTraces(
 #pragma omp parallel for num_threads(nThreads) private(HDR, TRACE, J)
 #endif
   for (ptrdiff_t n = 0; n <= N; n++) {
-    if (progressCallback)
-      progressCallback( (double)n_passed / (double)N );
+    if (progressCallback){
+      progressNew = n_passed / (double)N;
+      // update callback only if the difference >= 1% than the previous value
+      if (progressNew - progressOld >= 0.01){
+        progressCallback( progressNew );
+        progressOld = progressNew;
+      }
+    }
 
     if (n < N) {
       J = trcBuffer;
@@ -420,6 +428,9 @@ bool readSEGYTraces(
     }
     rw_mmap.unmap();
   }
+
+  if (progressCallback)
+    progressCallback( double(1) );
 
   return true;
 }

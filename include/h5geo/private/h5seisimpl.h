@@ -195,6 +195,10 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") override;
   virtual size_t getPKeySize(const std::string& pKey) override;
+  virtual size_t getPKeySize(
+      const std::string& pKey,
+      double pMin, double pMax,
+      size_t pStep = 1) override;
   virtual size_t getPKeyTraceSize(
       const std::string& pKey,
       double pMin, double pMax,

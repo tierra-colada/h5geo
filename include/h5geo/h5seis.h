@@ -345,6 +345,13 @@ public:
   ///
   /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
   virtual size_t getPKeySize(const std::string& pKey) = 0;
+  /// \brief Get number of unique values for a given `PKey`
+  ///
+  /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.
+  virtual size_t getPKeySize(
+      const std::string& pKey,
+      double pMin, double pMax,
+      size_t pStep = 1) = 0;
   /// \brief Get number of traces to be selected for a given `PKey`
   ///
   /// Before using it one should prepare primary sort keys with H5Seis::addPKeySort() method.

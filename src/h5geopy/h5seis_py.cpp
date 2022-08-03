@@ -341,7 +341,14 @@ void H5Seis_py(
            py::arg("pkey"),
            py::arg_v("unitsFrom", "", "str()"),
            py::arg_v("unitsTo", "", "str()"))
-      .def("getPKeySize", &H5Seis::getPKeySize,
+      .def("getPKeySize", py::overload_cast<const std::string&, double, double, size_t>(
+             &H5Seis::getPKeySize),
+           py::arg("pKey"),
+           py::arg("pMin"),
+           py::arg("pMax"),
+           py::arg_v("pStep", 1, "1"))
+      .def("getPKeySize", py::overload_cast<const std::string&>(
+             &H5Seis::getPKeySize),
            py::arg("pKey"))
       .def("getPKeyTraceSize", &H5Seis::getPKeyTraceSize,
            py::arg("pKey"),
