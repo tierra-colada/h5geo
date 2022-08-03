@@ -7,10 +7,8 @@
 #include <climits>
 #include <filesystem>
 #include <cmath>
-
-#ifdef H5GEO_USE_THREADS
-#include <execution>
-#endif
+#include <algorithm>
+#include <iterator>
 
 #include <units/units.hpp>
 
@@ -1207,16 +1205,26 @@ size_t H5SeisImpl::getPKeySize(
 
   pDSet.read(pVals.data());
 
-#ifdef H5GEO_USE_THREADS
-  size_t n = std::count_if(
-        std::execution::par,
+  // assuming that 'pVals' is sorted in ascending order we simply find
+  // first and last indexes meeting the condition
+  auto firstIt = std::find_if(
         pVals.begin(), pVals.end(),
-        [&pMin, &pMax](const double& i){return i >= pMin && i <= pMax;});
-#else
-  size_t n = std::count_if(
-        pVals.begin(), pVals.end(),
-        [&pMin, &pMax](double i){return i >= pMin && i <= pMax;});
-#endif
+        [&](const double& val){ return val >= pMin && val <= pMax; });
+  if (firstIt == pVals.end())
+    return 0;
+
+  // make reverse iterator to start searching from the end
+  auto lastIt_rbegin = std::make_reverse_iterator(pVals.end());
+  auto lastIt_rend = std::make_reverse_iterator(pVals.begin());
+  auto lastIt = std::find_if(lastIt_rbegin, lastIt_rend, [&](const double& val){ return val >= pMin && val <= pMax; });
+  if (lastIt == lastIt_rend)
+    return 0;
+
+  if (*lastIt_rend < *firstIt)
+    return 0;
+
+  // 'n' is the number of elements within [pMin, pMax]
+  size_t n = *lastIt_rend - *firstIt;
 
   if (pStep < 1)
     pStep = 1;
