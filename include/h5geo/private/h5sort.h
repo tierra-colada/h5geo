@@ -9,6 +9,9 @@ namespace h5geo
 namespace detail
 {
 
+// std::function to perfomance decrease but only non-capturing fuunctions may be converted to function pointer, see: 
+// https://stackoverflow.com/questions/73260538/passing-c-lambda-as-argument-to-non-templated-function
+
 /// \brief sort implements sorting while hiding std::execution within `.cpp`
 /// \param M matrix or vector to sort
 /// \param idx empty vector passed by referece to improve perfomance
@@ -28,8 +31,7 @@ template <typename D>
 Eigen::VectorX<ptrdiff_t> sort(const Eigen::DenseBase<D> &v){
 
   Eigen::VectorX<ptrdiff_t> idx;
-  std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun;
-  cmp_fun = [&v](
+  auto cmp_fun = [&v](
       const ptrdiff_t& i1,
       const ptrdiff_t& i2)->bool {return v(i1,0) < v(i2,0);};
   detail::_sort(v.derived(), idx, cmp_fun);
@@ -67,8 +69,7 @@ Eigen::VectorX<ptrdiff_t> sort_rows(const Eigen::DenseBase<D> &M){
   // initialize original index locations
   Eigen::VectorX<ptrdiff_t> idx;
 
-  std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun;
-  cmp_fun = [&M, &cmp_fun](
+  auto cmp_fun = [&M](
       const ptrdiff_t& row1,
       const ptrdiff_t& row2)->bool
   {
