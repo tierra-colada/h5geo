@@ -29,9 +29,9 @@ void _sort(
         M.rows(), 0, M.rows()-1);
 
 #ifdef H5GEO_USE_THREADS
-  stable_sort(std::execution::par, idx.begin(), idx.end(), cmp_fun);
+  std::stable_sort(std::execution::par, idx.begin(), idx.end(), cmp_fun);
 #else
-  stable_sort(idx.begin(), idx.end(), cmp_fun);
+  std::stable_sort(idx.begin(), idx.end(), cmp_fun);
 #endif
 }
 

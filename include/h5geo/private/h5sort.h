@@ -67,30 +67,26 @@ Eigen::VectorX<ptrdiff_t> sort_rows(const Eigen::DenseBase<D> &M){
   // initialize original index locations
   Eigen::VectorX<ptrdiff_t> idx;
 
-  ptrdiff_t col = 0;
-
   std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun;
-  cmp_fun = [&M, &col, &cmp_fun](
+  cmp_fun = [&M, &cmp_fun](
       const ptrdiff_t& row1,
       const ptrdiff_t& row2)->bool
   {
-    if (M(row1, col) < M(row2, col)){
-      col = 0;
+    ptrdiff_t N = M.cols()-1;
+    for (ptrdiff_t col = 0; col < N; col++){
+      if (M(row1, col) < M(row2, col))
+        return true;
+
+      if (M(row1, col) > M(row2, col))
+        return false;
+    }
+
+    // notice the operator is '<=' as it is the last column check
+    // i.e. when all other columns are equal at these rows
+    if (M(row1, Eigen::last) <= M(row2, Eigen::last))
       return true;
-    }
 
-    if (M(row1, col) > M(row2, col)){
-      col = 0;
-      return false;
-    }
-
-    if (col == M.cols()-1){
-      col = 0;
-      return false;
-    }
-
-    col++;
-    return cmp_fun(row1, row2);
+    return false;
   };
 
   detail::_sort(M.derived(), idx, cmp_fun);
