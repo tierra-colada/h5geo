@@ -585,45 +585,51 @@ bool _getSurveyInfoFromSortedData(
     isPlanReversed = true;
 
   // XL reversed when XL_min corresponds to X_max
-  isXLReversed = false;
   if (isPlanReversed && o_XL_IL(1) - o_XLr_IL(1) > 0){
     isXLReversed = true;
   } else if (!isPlanReversed && o_XL_IL(0) - o_XLr_IL(0) > 0) {
     isXLReversed = true;
+  } else {
+    isXLReversed = false;
   }
 
   // IL reversed when IL_min corresponds to Y_max
-  isILReversed = false;
   if (isPlanReversed && o_XL_IL(0) - o_XL_ILr(0) > 0){
     isILReversed = true;
   } else if (!isPlanReversed && o_XL_IL(1) - o_XL_ILr(1) > 0) {
     isILReversed = true;
+  } else {
+    isILReversed = false;
   }
 
   // p1/p2 - second point on the first IL/XL
-  Eigen::Vector2d origin, p1, p2;
+  Eigen::Vector2d p1, p2;
   if (!isXLReversed && !isILReversed){
-    origin = o_XL_IL;
+    origin_x = o_XL_IL(0);
+    origin_y = o_XL_IL(1);
     p1 = p1_XL_IL;
     p2 = p2_XL_IL;
   } else if (isXLReversed && !isILReversed){
-    origin = o_XLr_IL;
+    origin_x = o_XLr_IL(0);
+    origin_y = o_XLr_IL(1);
     p1 = p1_XLr_IL;
     p2 = p2_XLr_IL;
   } else if (!isXLReversed && isILReversed){
-    origin = o_XL_ILr;
+    origin_x = o_XL_ILr(0);
+    origin_y = o_XL_ILr(1);
     p1 = p1_XL_ILr;
     p2 = p2_XL_ILr;
   } else if (isXLReversed && isILReversed){
-    origin = o_XLr_ILr;
+    origin_x = o_XLr_ILr(0);
+    origin_y = o_XLr_ILr(1);
     p1 = p1_XLr_ILr;
     p2 = p2_XLr_ILr;
   }
 
-  double p1_dx = p1(0)-origin(0);
-  double p1_dy = p1(1)-origin(1);
-  double p2_dx = p2(0)-origin(0);
-  double p2_dy = p2(1)-origin(1);
+  double p1_dx = p1(0)-origin_x;
+  double p1_dy = p1(1)-origin_y;
+  double p2_dx = p2(0)-origin_x;
+  double p2_dy = p2(1)-origin_y;
 
   // orientation to p1 and p2 respectively
   double orientation1 = 180*std::atan2(p1_dy, p1_dx)/M_PI;
@@ -633,7 +639,6 @@ bool _getSurveyInfoFromSortedData(
   ilSpacing = std::hypot(p1_dx, p1_dy);
   xlSpacing = std::hypot(p2_dx, p2_dy);
 
-  orientation = 0.0;
   if (isPlanReversed){
     orientation = orientation2;
   } else {
