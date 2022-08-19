@@ -831,6 +831,18 @@ H5GEO_EXPORT size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getBin
 <tr class="memitem:a9a8736be75114dbb43e5f5488cd74a0c"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT ptrdiff_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a9a8736be75114dbb43e5f5488cd74a0c">getIndexFromAttribute</a> (h5gt::DataSet &amp;dataset, const std::string &amp;attrName)</td></tr>
 <tr class="memdesc:a9a8736be75114dbb43e5f5488cd74a0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">getIndexFromAttribute Get row/col from Datasets with attributes where attribute reflects the row/col index (like tables)  <a href="namespaceh5geo.html#a9a8736be75114dbb43e5f5488cd74a0c">More...</a><br /></td></tr>
 <tr class="separator:a9a8736be75114dbb43e5f5488cd74a0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73210e188a372ac8d0ff28833d849317"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a73210e188a372ac8d0ff28833d849317">getSurveyInfoFromSortedData</a> (const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;il, const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;xl, const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;x, const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;y, double &amp;origin_x, double &amp;origin_y, double &amp;orientation, double &amp;ilSpacing, double &amp;xlSpacing, bool &amp;isILReversed, bool &amp;isXLReversed, bool &amp;isPlanReversed)</td></tr>
+<tr class="memdesc:a73210e188a372ac8d0ff28833d849317"><td class="mdescLeft">&#160;</td><td class="mdescRight">getSurveyInfoFromSortedData It is assumed that <code>il, xl, x, y</code> are IL_XL sorted: ind=sort_rows(il_xl), il=il(ind,all).eval(), xl=xl(ind,all).eval(), x=x(ind,all).eval(), y=y(ind,all).eval()  <a href="namespaceh5geo.html#a73210e188a372ac8d0ff28833d849317">More...</a><br /></td></tr>
+<tr class="separator:a73210e188a372ac8d0ff28833d849317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ace6c6e1f4d1f92873fa6bc964f55f2"><td class="memItemLeft" align="right" valign="top"><a id="a1ace6c6e1f4d1f92873fa6bc964f55f2" name="a1ace6c6e1f4d1f92873fa6bc964f55f2"></a>
+H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>getSurveyInfoFromSortedData</b> (const Eigen::Ref&lt; const Eigen::VectorXd &gt; &amp;il, const Eigen::Ref&lt; const Eigen::VectorXd &gt; &amp;xl, const Eigen::Ref&lt; const Eigen::VectorXd &gt; &amp;x, const Eigen::Ref&lt; const Eigen::VectorXd &gt; &amp;y, double &amp;origin_x, double &amp;origin_y, double &amp;orientation, double &amp;ilSpacing, double &amp;xlSpacing, bool &amp;isILReversed, bool &amp;isXLReversed, bool &amp;isPlanReversed)</td></tr>
+<tr class="separator:a1ace6c6e1f4d1f92873fa6bc964f55f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26a77f6022c3e4be7208d8e3ff915b3e"><td class="memItemLeft" align="right" valign="top"><a id="a26a77f6022c3e4be7208d8e3ff915b3e" name="a26a77f6022c3e4be7208d8e3ff915b3e"></a>
+H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>getSurveyInfoFromUnsortedData</b> (Eigen::Ref&lt; Eigen::MatrixXf &gt; il_xl, Eigen::Ref&lt; Eigen::VectorXf &gt; x, Eigen::Ref&lt; Eigen::VectorXf &gt; y, double &amp;origin_x, double &amp;origin_y, double &amp;orientation, double &amp;ilSpacing, double &amp;xlSpacing, bool &amp;isILReversed, bool &amp;isXLReversed, bool &amp;isPlanReversed)</td></tr>
+<tr class="separator:a26a77f6022c3e4be7208d8e3ff915b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad00be597e3b7ff26492b683a5a495c07"><td class="memItemLeft" align="right" valign="top"><a id="ad00be597e3b7ff26492b683a5a495c07" name="ad00be597e3b7ff26492b683a5a495c07"></a>
+H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>getSurveyInfoFromUnsortedData</b> (Eigen::Ref&lt; Eigen::MatrixXd &gt; il_xl, Eigen::Ref&lt; Eigen::VectorXd &gt; x, Eigen::Ref&lt; Eigen::VectorXd &gt; y, double &amp;origin_x, double &amp;origin_y, double &amp;orientation, double &amp;ilSpacing, double &amp;xlSpacing, bool &amp;isILReversed, bool &amp;isXLReversed, bool &amp;isPlanReversed)</td></tr>
+<tr class="separator:ad00be597e3b7ff26492b683a5a495c07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af941e1ac8def9c08c3429db43876dbe3"><td class="memTemplParams" colspan="2"><a id="af941e1ac8def9c08c3429db43876dbe3" name="af941e1ac8def9c08c3429db43876dbe3"></a>
 template&lt;typename Object , typename std::enable_if&lt; std::is_same&lt; Object, h5gt::File &gt;::value||std::is_same&lt; Object, h5gt::Group &gt;::value||std::is_same&lt; Object, h5gt::DataSet &gt;::value &gt;::type *  = nullptr&gt; </td></tr>
 <tr class="memitem:af941e1ac8def9c08c3429db43876dbe3"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>deleteAllAttributes</b> (Object &amp;object)</td></tr>
@@ -1213,6 +1225,14 @@ template&lt;typename D &gt; </td></tr>
 <tr class="memitem:a59a63603ce9d9023e024ba29e6a6c46b"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a59a63603ce9d9023e024ba29e6a6c46b">sort_rows_unique</a> (const Eigen::DenseBase&lt; DRaw &gt; &amp;M, Eigen::MatrixX&lt; TUval &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; DSort &gt; &amp;M_sorted_)</td></tr>
 <tr class="memdesc:a59a63603ce9d9023e024ba29e6a6c46b"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_rows_unique also calculates M_sorted = M(ind, Eigen::all).  <a href="namespaceh5geo.html#a59a63603ce9d9023e024ba29e6a6c46b">More...</a><br /></td></tr>
 <tr class="separator:a59a63603ce9d9023e024ba29e6a6c46b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bcd93506cdf52099715992bfeee119f"><td class="memTemplParams" colspan="2"><a id="a9bcd93506cdf52099715992bfeee119f" name="a9bcd93506cdf52099715992bfeee119f"></a>
+template&lt;typename Scalar &gt; </td></tr>
+<tr class="memitem:a9bcd93506cdf52099715992bfeee119f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_getSurveyInfoFromSortedData</b> (const Eigen::Ref&lt; const Eigen::VectorX&lt; Scalar &gt; &gt; &amp;il, const Eigen::Ref&lt; const Eigen::VectorX&lt; Scalar &gt; &gt; &amp;xl, const Eigen::Ref&lt; const Eigen::VectorX&lt; Scalar &gt; &gt; &amp;x, const Eigen::Ref&lt; const Eigen::VectorX&lt; Scalar &gt; &gt; &amp;y, double &amp;origin_x, double &amp;origin_y, double &amp;orientation, double &amp;ilSpacing, double &amp;xlSpacing, bool &amp;isILReversed, bool &amp;isXLReversed, bool &amp;isPlanReversed)</td></tr>
+<tr class="separator:a9bcd93506cdf52099715992bfeee119f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f2af01256f29b02fdf605abdc4a36d3"><td class="memTemplParams" colspan="2"><a id="a3f2af01256f29b02fdf605abdc4a36d3" name="a3f2af01256f29b02fdf605abdc4a36d3"></a>
+template&lt;typename Scalar &gt; </td></tr>
+<tr class="memitem:a3f2af01256f29b02fdf605abdc4a36d3"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_getSurveyInfoFromUnsortedData</b> (Eigen::Ref&lt; Eigen::MatrixX&lt; Scalar &gt; &gt; il_xl, Eigen::Ref&lt; Eigen::VectorX&lt; Scalar &gt; &gt; x, Eigen::Ref&lt; Eigen::VectorX&lt; Scalar &gt; &gt; y, double &amp;origin_x, double &amp;origin_y, double &amp;orientation, double &amp;ilSpacing, double &amp;xlSpacing, bool &amp;isILReversed, bool &amp;isXLReversed, bool &amp;isPlanReversed)</td></tr>
+<tr class="separator:a3f2af01256f29b02fdf605abdc4a36d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -2073,6 +2093,157 @@ rows/cols are responsible for storing data (like tables) </p>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a73210e188a372ac8d0ff28833d849317" name="a73210e188a372ac8d0ff28833d849317"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73210e188a372ac8d0ff28833d849317">&#9670;&nbsp;</a></span>getSurveyInfoFromSortedData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool h5geo::getSurveyInfoFromSortedData </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;&#160;</td>
+          <td class="paramname"><em>il</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;&#160;</td>
+          <td class="paramname"><em>xl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>origin_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>origin_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>orientation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>ilSpacing</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>xlSpacing</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>isILReversed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>isXLReversed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>isPlanReversed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>getSurveyInfoFromSortedData It is assumed that <code>il, xl, x, y</code> are IL_XL sorted: ind=sort_rows(il_xl), il=il(ind,all).eval(), xl=xl(ind,all).eval(), x=x(ind,all).eval(), y=y(ind,all).eval() </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">il</td><td>vector of inlines </td></tr>
+    <tr><td class="paramname">xl</td><td>vector of xlines </td></tr>
+    <tr><td class="paramname">x</td><td>vector of x-coord </td></tr>
+    <tr><td class="paramname">y</td><td>vector of y-coord </td></tr>
+    <tr><td class="paramname">origin_x</td><td>out origin x-coord </td></tr>
+    <tr><td class="paramname">origin_y</td><td>out origin y-coord </td></tr>
+    <tr><td class="paramname">orientation</td><td>out orientation </td></tr>
+    <tr><td class="paramname">ilSpacing</td><td>out spacing ALONG inline (i.e. distance between two adjoint xlines) </td></tr>
+    <tr><td class="paramname">xlSpacing</td><td>out spacing ALONG xline (i.e. distance between two adjoint inlines) </td></tr>
+    <tr><td class="paramname">isILReversed</td><td>out true if inline grows while X or Y axis decrease </td></tr>
+    <tr><td class="paramname">isXLReversed</td><td>out true if xline grows while X or Y axis decrease </td></tr>
+    <tr><td class="paramname">isPlanReversed</td><td>out true if orientation to IL bigger than orientation to XL</td></tr>
+  </table>
+  </dd>
+</dl>
+<hr  />
+ <h1><a class="anchor" id="autotoc_md1"></a>
+======================NORMAL PLANS======================</h1>
+<p >Normal plans always have orientation to p2 bigger than orientation to p1 </p><pre class="fragment">         XL_IL                         XLr_IL
+</pre><p> IL + + + + + + + + + + + IL + + + + + + + + + + + (y) + + (y) + +</p><ul>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + + p2 + + p2 (-y) o p1+ + + + + + + + + (-y) + + + + + + + + + p1o XL XL (-x) (x) (x) (-x) <pre class="fragment">   XL_ILr                        XLr_ILr
+</pre> IL o p1+ + + + + + + + + IL + + + + + + + + + p1o (-y) p2 + (-y) + p2</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + + (y) + + + + + + + + + + + (y) + + + + + + + + + + + XL XL (-x) (x) (x) (-x)</li>
+</ul>
+<hr  />
+ <h1><a class="anchor" id="autotoc_md3"></a>
+=====================REVERSED PLANS=====================</h1>
+<p >Plan is reversed when XL mostly lies on Y axis and IL on X axis </p><pre class="fragment">         XL_IL                         XLr_IL
+</pre><p> XL + + + + + + + + + + + XL o p2+ + + + + + + + + (y) + + (y) p1 +</p><ul>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + + p1 + + + (-y) o p2+ + + + + + + + + (-y) + + + + + + + + + + + IL IL (-x) (x) (x) (-x) <pre class="fragment">   XL_ILr                        XLr_ILr
+</pre> XL + + + + + + + + + + + XL + + + + + + + + + p2o (-y) + + (-y) + p1</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>+ + +</li>
+<li>p1 + + (y) + + + + + + + + + p2o (y) + + + + + + + + + + + IL IL (-x) (x) (x) (-x) </li>
+</ul>
 
 </div>
 </div>
