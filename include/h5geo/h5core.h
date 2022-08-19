@@ -636,7 +636,7 @@ H5GEO_EXPORT ptrdiff_t getIndexFromAttribute(
 /// \param y vector of y-coord
 /// \param origin_x out origin x-coord
 /// \param origin_y out origin y-coord
-/// \param orientation out orientation
+/// \param orientation out orientation (degree)
 /// \param ilSpacing out spacing ALONG inline (i.e. distance between two adjoint xlines)
 /// \param xlSpacing out spacing ALONG xline (i.e. distance between two adjoint inlines)
 /// \param isILReversed out true if inline grows while X or Y axis decrease
