@@ -49,6 +49,80 @@ getBinHeaderBytes()
   return std::make_tuple(bytesStart, nBytes);
 }
 
+template<typename Scalar>
+std::tuple<
+bool,
+double, double, double, double, double,
+bool, bool, bool,
+Eigen::MatrixX<Scalar>, Eigen::VectorX<Scalar>, Eigen::VectorX<Scalar>>
+getSurveyInfoFromUnsortedData(
+    Eigen::Ref<Eigen::MatrixX<Scalar>> il_xl,
+    Eigen::Ref<Eigen::VectorX<Scalar>> x,
+    Eigen::Ref<Eigen::VectorX<Scalar>> y)
+{
+  double origin_x;
+  double origin_y;
+  double orientation;
+  double ilSpacing;
+  double xlSpacing;
+  bool isILReversed;
+  bool isXLReversed;
+  bool isPlanReversed;
+
+  bool status = h5geo::getSurveyInfoFromUnsortedData(
+        il_xl,
+        x, y,
+        origin_x, origin_y,
+        orientation,
+        ilSpacing, xlSpacing,
+        isILReversed, isXLReversed,
+        isPlanReversed);
+
+  return std::make_tuple(
+        std::move(status),
+        std::move(origin_x), std::move(origin_y), std::move(orientation),
+        std::move(ilSpacing), std::move(xlSpacing),
+        std::move(isILReversed), std::move(isXLReversed), std::move(isPlanReversed),
+        std::move(il_xl), std::move(x), std::move(y));
+}
+
+template<typename Scalar>
+std::tuple<
+bool,
+double, double, double, double, double,
+bool, bool, bool>
+getSurveyInfoFromSortedData(
+    const Eigen::Ref<const Eigen::VectorXd>& il,
+    const Eigen::Ref<const Eigen::VectorXd>& xl,
+    const Eigen::Ref<const Eigen::VectorXd>& x,
+    const Eigen::Ref<const Eigen::VectorXd>& y)
+{
+  double origin_x;
+  double origin_y;
+  double orientation;
+  double ilSpacing;
+  double xlSpacing;
+  bool isILReversed;
+  bool isXLReversed;
+  bool isPlanReversed;
+
+  bool status = h5geo::getSurveyInfoFromSortedData(
+        il, xl,
+        x, y,
+        origin_x, origin_y,
+        orientation,
+        ilSpacing, xlSpacing,
+        isILReversed, isXLReversed,
+        isPlanReversed);
+
+  return std::make_tuple(
+        std::move(status),
+        std::move(origin_x), std::move(origin_y), std::move(orientation),
+        std::move(ilSpacing), std::move(xlSpacing),
+        std::move(isILReversed), std::move(isXLReversed), std::move(isPlanReversed));
+}
+
+
 } // ext
 
 
@@ -127,6 +201,38 @@ void defineGeoFunctions(py::module_& m){
   m.def("getBinHeaderBytes", &ext::getTraceHeaderNames);
   m.def("getTraceHeaderCount", &getTraceHeaderNames);
   m.def("getBinHeaderCount", &getTraceHeaderNames);
+
+  m.def("getSurveyInfoFromUnsortedData", &ext::getSurveyInfoFromUnsortedData<float>,
+        py::arg("il_xl"),
+        py::arg("x"),
+        py::arg("y"),
+        "Return: status, origin_x, origin_y, orientation, ilSpacing, xlSpacing, "
+        "isILReversed, isXLReversed, isPlanReversed, "
+        "il_xl_sorted, x_sorted, y_sorted");
+  m.def("getSurveyInfoFromUnsortedData", &ext::getSurveyInfoFromUnsortedData<double>,
+        py::arg("il_xl"),
+        py::arg("x"),
+        py::arg("y"),
+        "Return: status, origin_x, origin_y, orientation, ilSpacing, xlSpacing, "
+        "isILReversed, isXLReversed, isPlanReversed, "
+        "il_xl_sorted, x_sorted, y_sorted");
+
+  m.def("getSurveyInfoFromSortedData", &ext::getSurveyInfoFromSortedData<float>,
+        py::arg("il"),
+        py::arg("xl"),
+        py::arg("x"),
+        py::arg("y"),
+        "It is assumed that `il, xl, x, y` are IL_XL sorted: ind=sort_rows([il, xl]), il=il[ind,:], xl=xl[ind,:], x=x[ind,:], y=y[ind,:]"
+        "Return: status, origin_x, origin_y, orientation, ilSpacing, xlSpacing, "
+        "isILReversed, isXLReversed, isPlanReversed");
+  m.def("getSurveyInfoFromSortedData", &ext::getSurveyInfoFromSortedData<double>,
+        py::arg("il"),
+        py::arg("xl"),
+        py::arg("x"),
+        py::arg("y"),
+        "It is assumed that `il, xl, x, y` are IL_XL sorted: ind=sort_rows([il, xl]), il=il[ind,:], xl=xl[ind,:], x=x[ind,:], y=y[ind,:]"
+        "Return: status, origin_x, origin_y, orientation, ilSpacing, xlSpacing, "
+        "isILReversed, isXLReversed, isPlanReversed");
 
   #ifdef H5GEO_USE_GDAL
   // init GDAL readers

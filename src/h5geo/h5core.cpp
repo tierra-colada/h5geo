@@ -1,5 +1,8 @@
 #include "../../include/h5geo/h5core.h"
 
+#define _USE_MATH_DEFINES   // should be before <cmath>, include 'pi' val
+
+#include <math.h>
 #include <algorithm>
 #include <optional>
 #include <filesystem>
@@ -486,5 +489,319 @@ ptrdiff_t getIndexFromAttribute(
   return idx;
 }
 
+template <typename Scalar>
+bool _getSurveyInfoFromSortedData(
+    const Eigen::Ref<const Eigen::VectorX<Scalar>>& il,
+    const Eigen::Ref<const Eigen::VectorX<Scalar>>& xl,
+    const Eigen::Ref<const Eigen::VectorX<Scalar>>& x,
+    const Eigen::Ref<const Eigen::VectorX<Scalar>>& y,
+    double &origin_x,
+    double &origin_y,
+    double &orientation,
+    double &ilSpacing,
+    double &xlSpacing,
+    bool &isILReversed,
+    bool &isXLReversed,
+    bool &isPlanReversed)
+{
+  if (il.size() < 2 ||
+      il.size() != xl.size() ||
+      xl.size() != x.size() ||
+      x.size() != y.size() ||
+      y.size() != il.size())
+    return false;
 
-} // h5gt
+  // IL is sorted
+  size_t nxl = 0;
+  for (ptrdiff_t i = 0; i < il.size()-1; i++){
+    nxl += 1;
+    if (il(i) != il(i+1))
+      break;
+  }
+
+  auto dv = std::div(il.size(), nxl);
+  if (dv.rem != 0)
+    return false;
+
+  size_t nil = dv.quot;
+  ptrdiff_t last_ind = nil*nxl-1;
+
+  Eigen::Vector2d o_XL_IL, o_XLr_IL, o_XL_ILr, o_XLr_ILr;
+  o_XL_IL(0) = x(0);
+  o_XL_IL(1) = y(0);
+  o_XLr_IL(0) = x(nxl-1);
+  o_XLr_IL(1) = y(nxl-1);
+  o_XL_ILr(0) = x(last_ind-(nxl-1));
+  o_XL_ILr(1) = y(last_ind-(nxl-1));
+  o_XLr_ILr(0) = x(last_ind);
+  o_XLr_ILr(1) = y(last_ind);
+
+  Eigen::Vector2d p1_XL_IL, p1_XLr_IL, p1_XL_ILr, p1_XLr_ILr;
+  p1_XL_IL(0) = x(1);
+  p1_XL_IL(1) = y(1);
+  p1_XLr_IL(0) = x(nxl-2);
+  p1_XLr_IL(1) = y(nxl-2);
+  p1_XL_ILr(0) = x(last_ind-(nxl-2));
+  p1_XL_ILr(1) = y(last_ind-(nxl-2));
+  p1_XLr_ILr(0) = x(last_ind-1);
+  p1_XLr_ILr(1) = y(last_ind-1);
+
+  Eigen::Vector2d p2_XL_IL, p2_XLr_IL, p2_XL_ILr, p2_XLr_ILr;
+  p2_XL_IL(0) = x(nxl);
+  p2_XL_IL(1) = y(nxl);
+  p2_XLr_IL(0) = x(2*nxl-1);
+  p2_XLr_IL(1) = y(2*nxl-1);
+  p2_XL_ILr(0) = x(last_ind-(2*nxl-1));
+  p2_XL_ILr(1) = y(last_ind-(2*nxl-1));
+  p2_XLr_ILr(0) = x(last_ind-nxl);
+  p2_XLr_ILr(1) = y(last_ind-nxl);
+
+  auto getOctantFromNonNegativeOrientation = [](double a)->int{
+    if (a >= 0 && a < 90)
+      return 1;
+    if (a >= 90 && a < 180)
+      return 2;
+    if (a >= 180 && a < 270)
+      return 3;
+    if (a >= 270 && a < 360)
+      return 4;
+    return -1;
+  };
+
+  // orientation to p1 and p2 respectively
+  double orientation_XL_IL_p1 = 180*std::atan2(p1_XL_IL(1)-o_XL_IL(1), p1_XL_IL(0)-o_XL_IL(0))/M_PI;
+  if (orientation_XL_IL_p1 < 0)
+    orientation_XL_IL_p1 += 360;
+  double orientation_XL_IL_p2 = 180*std::atan2(p2_XL_IL(1)-o_XL_IL(1), p2_XL_IL(0)-o_XL_IL(0))/M_PI;
+  if (orientation_XL_IL_p2 < 0)
+    orientation_XL_IL_p2 += 360;
+  int octant_XL_IL_p1 = getOctantFromNonNegativeOrientation(orientation_XL_IL_p1);
+  int octant_XL_IL_p2 = getOctantFromNonNegativeOrientation(orientation_XL_IL_p2);
+
+  // Plan reversed when p1 is ahead of p2
+  isPlanReversed = false;
+  if (octant_XL_IL_p1 >= octant_XL_IL_p2 &&
+      orientation_XL_IL_p2 - orientation_XL_IL_p1 < 0)
+    isPlanReversed = true;
+
+  // XL reversed when XL_min corresponds to X_max
+  isXLReversed = false;
+  if (isPlanReversed && o_XL_IL(1) - o_XLr_IL(1) > 0){
+    isXLReversed = true;
+  } else if (!isPlanReversed && o_XL_IL(0) - o_XLr_IL(0) > 0) {
+    isXLReversed = true;
+  }
+
+  // IL reversed when IL_min corresponds to Y_max
+  isILReversed = false;
+  if (isPlanReversed && o_XL_IL(0) - o_XL_ILr(0) > 0){
+    isILReversed = true;
+  } else if (!isPlanReversed && o_XL_IL(1) - o_XL_ILr(1) > 0) {
+    isILReversed = true;
+  }
+
+  // p1/p2 - second point on the first IL/XL
+  Eigen::Vector2d origin, p1, p2;
+  if (!isXLReversed && !isILReversed){
+    origin = o_XL_IL;
+    p1 = p1_XL_IL;
+    p2 = p2_XL_IL;
+  } else if (isXLReversed && !isILReversed){
+    origin = o_XLr_IL;
+    p1 = p1_XLr_IL;
+    p2 = p2_XLr_IL;
+  } else if (!isXLReversed && isILReversed){
+    origin = o_XL_ILr;
+    p1 = p1_XL_ILr;
+    p2 = p2_XL_ILr;
+  } else if (isXLReversed && isILReversed){
+    origin = o_XLr_ILr;
+    p1 = p1_XLr_ILr;
+    p2 = p2_XLr_ILr;
+  }
+
+  double p1_dx = p1(0)-origin(0);
+  double p1_dy = p1(1)-origin(1);
+  double p2_dx = p2(0)-origin(0);
+  double p2_dy = p2(1)-origin(1);
+
+  // orientation to p1 and p2 respectively
+  double orientation1 = 180*std::atan2(p1_dy, p1_dx)/M_PI;
+  double orientation2 = 180*std::atan2(p2_dy, p2_dx)/M_PI;
+
+  // hypotenuse
+  ilSpacing = std::hypot(p1_dx, p1_dy);
+  xlSpacing = std::hypot(p2_dx, p2_dy);
+
+  orientation = 0.0;
+  if (isPlanReversed){
+    orientation = orientation2;
+  } else {
+    orientation = orientation1;
+  }
+
+  return true;
+}
+
+template <typename Scalar>
+bool _getSurveyInfoFromUnsortedData(
+    Eigen::Ref<Eigen::MatrixX<Scalar>> il_xl,
+    Eigen::Ref<Eigen::VectorX<Scalar>> x,
+    Eigen::Ref<Eigen::VectorX<Scalar>> y,
+    double &origin_x,
+    double &origin_y,
+    double &orientation,
+    double &ilSpacing,
+    double &xlSpacing,
+    bool &isILReversed,
+    bool &isXLReversed,
+    bool &isPlanReversed)
+{
+  if (il_xl.size() < 2 ||
+      il_xl.rows() != x.size() ||
+      x.size() != y.size() ||
+      y.size() != il_xl.rows())
+    return false;
+
+  Eigen::MatrixX2<ptrdiff_t> uil_from_size, uxl_from_size;
+  Eigen::VectorXd uil, uxl;
+
+  Eigen::VectorX<ptrdiff_t> ind = h5geo::sort_rows(il_xl);
+  auto uil_ind = h5geo::sort_unique(il_xl.col(0), uil, uil_from_size);
+  auto uxl_ind = h5geo::sort_unique(il_xl.col(1), uxl, uxl_from_size);
+  if (ind.size() != il_xl.rows())
+    return false;
+
+  il_xl = il_xl(ind, Eigen::all).eval();
+  x = x(ind).eval();
+  y = y(ind).eval();
+
+  return _getSurveyInfoFromSortedData<Scalar>(
+        il_xl.col(0),
+        il_xl.col(1),
+        x,
+        y,
+        origin_x,
+        origin_y,
+        orientation,
+        ilSpacing,
+        xlSpacing,
+        isILReversed,
+        isXLReversed,
+        isPlanReversed);
+}
+
+bool getSurveyInfoFromSortedData(
+    const Eigen::Ref<const Eigen::VectorXf>& il,
+    const Eigen::Ref<const Eigen::VectorXf>& xl,
+    const Eigen::Ref<const Eigen::VectorXf>& x,
+    const Eigen::Ref<const Eigen::VectorXf>& y,
+    double &origin_x,
+    double &origin_y,
+    double &orientation,
+    double &ilSpacing,
+    double &xlSpacing,
+    bool &isILReversed,
+    bool &isXLReversed,
+    bool &isPlanReversed)
+{
+  return _getSurveyInfoFromSortedData(
+        il,
+        xl,
+        x,
+        y,
+        origin_x,
+        origin_y,
+        orientation,
+        ilSpacing,
+        xlSpacing,
+        isILReversed,
+        isXLReversed,
+        isPlanReversed);
+}
+
+bool getSurveyInfoFromSortedData(
+    const Eigen::Ref<const Eigen::VectorXd>& il,
+    const Eigen::Ref<const Eigen::VectorXd>& xl,
+    const Eigen::Ref<const Eigen::VectorXd>& x,
+    const Eigen::Ref<const Eigen::VectorXd>& y,
+    double &origin_x,
+    double &origin_y,
+    double &orientation,
+    double &ilSpacing,
+    double &xlSpacing,
+    bool &isILReversed,
+    bool &isXLReversed,
+    bool &isPlanReversed)
+{
+  return _getSurveyInfoFromSortedData(
+        il,
+        xl,
+        x,
+        y,
+        origin_x,
+        origin_y,
+        orientation,
+        ilSpacing,
+        xlSpacing,
+        isILReversed,
+        isXLReversed,
+        isPlanReversed);
+}
+
+bool getSurveyInfoFromUnsortedData(
+    Eigen::Ref<Eigen::MatrixXf> il_xl,
+    Eigen::Ref<Eigen::VectorXf> x,
+    Eigen::Ref<Eigen::VectorXf> y,
+    double &origin_x,
+    double &origin_y,
+    double &orientation,
+    double &ilSpacing,
+    double &xlSpacing,
+    bool &isILReversed,
+    bool &isXLReversed,
+    bool &isPlanReversed)
+{
+  return _getSurveyInfoFromUnsortedData(
+        il_xl,
+        x,
+        y,
+        origin_x,
+        origin_y,
+        orientation,
+        ilSpacing,
+        xlSpacing,
+        isILReversed,
+        isXLReversed,
+        isPlanReversed);
+}
+
+bool getSurveyInfoFromUnsortedData(
+    Eigen::Ref<Eigen::MatrixXd> il_xl,
+    Eigen::Ref<Eigen::VectorXd> x,
+    Eigen::Ref<Eigen::VectorXd> y,
+    double &origin_x,
+    double &origin_y,
+    double &orientation,
+    double &ilSpacing,
+    double &xlSpacing,
+    bool &isILReversed,
+    bool &isXLReversed,
+    bool &isPlanReversed)
+{
+  return _getSurveyInfoFromUnsortedData(
+        il_xl,
+        x,
+        y,
+        origin_x,
+        origin_y,
+        orientation,
+        ilSpacing,
+        xlSpacing,
+        isILReversed,
+        isXLReversed,
+        isPlanReversed);
+}
+
+
+} // h5geo
