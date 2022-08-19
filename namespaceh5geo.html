@@ -2200,51 +2200,77 @@ rows/cols are responsible for storing data (like tables) </p>
   </table>
   </dd>
 </dl>
-<hr  />
- <h1><a class="anchor" id="autotoc_md1"></a>
-======================NORMAL PLANS======================</h1>
-<p >Normal plans always have orientation to p2 bigger than orientation to p1 </p><pre class="fragment">         XL_IL                         XLr_IL
-</pre><p> IL + + + + + + + + + + + IL + + + + + + + + + + + (y) + + (y) + +</p><ul>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + + p2 + + p2 (-y) o p1+ + + + + + + + + (-y) + + + + + + + + + p1o XL XL (-x) (x) (x) (-x) <pre class="fragment">   XL_ILr                        XLr_ILr
-</pre> IL o p1+ + + + + + + + + IL + + + + + + + + + p1o (-y) p2 + (-y) + p2</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + + (y) + + + + + + + + + + + (y) + + + + + + + + + + + XL XL (-x) (x) (x) (-x)</li>
-</ul>
-<hr  />
- <h1><a class="anchor" id="autotoc_md3"></a>
-=====================REVERSED PLANS=====================</h1>
-<p >Plan is reversed when XL mostly lies on Y axis and IL on X axis </p><pre class="fragment">         XL_IL                         XLr_IL
-</pre><p> XL + + + + + + + + + + + XL o p2+ + + + + + + + + (y) + + (y) p1 +</p><ul>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + + p1 + + + (-y) o p2+ + + + + + + + + (-y) + + + + + + + + + + + IL IL (-x) (x) (x) (-x) <pre class="fragment">   XL_ILr                        XLr_ILr
-</pre> XL + + + + + + + + + + + XL + + + + + + + + + p2o (-y) + + (-y) + p1</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>+ + +</li>
-<li>p1 + + (y) + + + + + + + + + p2o (y) + + + + + + + + + + + IL IL (-x) (x) (x) (-x) </li>
-</ul>
+<h1><a class="anchor" id="autotoc_md0"></a>
+NORMAL PLANS</h1>
+<p >Normal plans always have orientation to p2 bigger than orientation to p1</p>
+<pre>
 
+             XL_IL                         XLr_IL
+  IL + + + + + + + + + + +      IL + + + + + + + + + + +
+ (y) + . . . . . . . . . +     (y) + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     p2. . . . . . . . . +         + . . . . . . . . .p2
+(-y) o p1+ + + + + + + + +    (-y) + + + + + + + + + p1o
+                        XL                            XL
+     (-x)              (x)         (x)              (-x)
+
+            XL_ILr                        XLr_ILr
+  IL o p1+ + + + + + + + +      IL + + + + + + + + + p1o
+(-y) p2. . . . . . . . . +    (-y) + . . . . . . . . .p2
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+ (y) + + + + + + + + + + +     (y) + + + + + + + + + + +
+                        XL                            XL
+     (-x)              (x)         (x)              (-x)
+
+</pre><h1><a class="anchor" id="autotoc_md1"></a>
+REVERSED PLANS</h1>
+<p >Plan is reversed when XL mostly lies on Y axis and IL on X axis</p>
+<pre>
+
+             XL_IL                         XLr_IL
+  XL + + + + + + + + + + +      XL o p2+ + + + + + + + +
+ (y) + . . . . . . . . . +     (y) p1. . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     p1. . . . . . . . . +         + . . . . . . . . . +
+(-y) o p2+ + + + + + + + +    (-y) + + + + + + + + + + +
+                        IL                            IL
+     (-x)              (x)         (x)              (-x)
+
+            XL_ILr                        XLr_ILr
+  XL + + + + + + + + + + +      XL + + + + + + + + + p2o
+(-y) + . . . . . . . . . +    (-y) + . . . . . . . . .p1
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . . +         + . . . . . . . . . +
+     + . . . . . . . . .p1         + . . . . . . . . . +
+ (y) + + + + + + + + + p2o     (y) + + + + + + + + + + +
+                        IL                            IL
+     (-x)              (x)         (x)              (-x)
+
+</pre> 
 </div>
 </div>
 <a id="acfb075ccd166dfe7b9e7518c13e7266e" name="acfb075ccd166dfe7b9e7518c13e7266e"></a>
