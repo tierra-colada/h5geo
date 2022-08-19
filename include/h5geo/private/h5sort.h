@@ -18,11 +18,12 @@ namespace detail
 /// \param cmp_fun compare function
 template <typename D>
 void _sort(
-    const D &M,
+    D M,
     Eigen::VectorX<ptrdiff_t> &idx,
     std::function<bool(ptrdiff_t, ptrdiff_t)> cmp_fun);
 
 } // detail
+
 
 /// \brief sort return indexes such that v_sorted = v(ind).
 /// \param v Vector (row/col)

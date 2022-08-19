@@ -628,6 +628,148 @@ H5GEO_EXPORT ptrdiff_t getIndexFromAttribute(
     h5gt::DataSet& dataset,
     const std::string& attrName);
 
+/// \brief getSurveyInfoFromSortedData It is assumed that `il, xl, x, y` are IL_XL sorted:
+/// ind=sort_rows(il_xl), il=il(ind,all).eval(), xl=xl(ind,all).eval(), x=x(ind,all).eval(), y=y(ind,all).eval()
+/// \param il vector of inlines
+/// \param xl vector of xlines
+/// \param x vector of x-coord
+/// \param y vector of y-coord
+/// \param origin_x out origin x-coord
+/// \param origin_y out origin y-coord
+/// \param orientation out orientation
+/// \param ilSpacing out spacing ALONG inline (i.e. distance between two adjoint xlines)
+/// \param xlSpacing out spacing ALONG xline (i.e. distance between two adjoint inlines)
+/// \param isILReversed out true if inline grows while X or Y axis decrease
+/// \param isXLReversed out true if xline grows while X or Y axis decrease
+/// \param isPlanReversed out true if orientation to IL bigger than orientation to XL
+///
+/// ========================================================
+/// ======================NORMAL PLANS======================
+/// ========================================================
+///
+/// Normal plans always have orientation to p2 bigger than orientation to p1
+///
+///              XL_IL                         XLr_IL
+///   IL + + + + + + + + + + +      IL + + + + + + + + + + +
+///  (y) +                   +     (y) +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      p2                  +         +                  p2
+/// (-y) o p1+ + + + + + + + +    (-y) + + + + + + + + + p1o
+///                         XL                            XL
+///      (-x)              (x)         (x)              (-x)
+///
+///             XL_ILr                        XLr_ILr
+///   IL o p1+ + + + + + + + +      IL + + + + + + + + + p1o
+/// (-y) p2                  +    (-y) +                  p2
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///  (y) + + + + + + + + + + +     (y) + + + + + + + + + + +
+///                         XL                            XL
+///      (-x)              (x)         (x)              (-x)
+///
+///
+///
+/// ========================================================
+/// =====================REVERSED PLANS=====================
+/// ========================================================
+///
+/// Plan is reversed when XL mostly lies on Y axis and IL on X axis
+///
+///              XL_IL                         XLr_IL
+///   XL + + + + + + + + + + +      XL o p2+ + + + + + + + +
+///  (y) +                   +     (y) p1                  +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      p1                  +         +                   +
+/// (-y) o p2+ + + + + + + + +    (-y) + + + + + + + + + + +
+///                         IL                            IL
+///      (-x)              (x)         (x)              (-x)
+///
+///             XL_ILr                        XLr_ILr
+///   XL + + + + + + + + + + +      XL + + + + + + + + + p2o
+/// (-y) +                   +    (-y) +                  p1
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                   +         +                   +
+///      +                  p1         +                   +
+///  (y) + + + + + + + + + p2o     (y) + + + + + + + + + + +
+///                         IL                            IL
+///      (-x)              (x)         (x)              (-x)
+H5GEO_EXPORT bool getSurveyInfoFromSortedData(
+    const Eigen::Ref<const Eigen::VectorXf>& il,
+    const Eigen::Ref<const Eigen::VectorXf>& xl,
+    const Eigen::Ref<const Eigen::VectorXf>& x,
+    const Eigen::Ref<const Eigen::VectorXf>& y,
+    double &origin_x,
+    double &origin_y,
+    double &orientation,
+    double &ilSpacing,
+    double &xlSpacing,
+    bool &isILReversed,
+    bool &isXLReversed,
+    bool &isPlanReversed);
+
+H5GEO_EXPORT bool getSurveyInfoFromSortedData(
+    const Eigen::Ref<const Eigen::VectorXd>& il,
+    const Eigen::Ref<const Eigen::VectorXd>& xl,
+    const Eigen::Ref<const Eigen::VectorXd>& x,
+    const Eigen::Ref<const Eigen::VectorXd>& y,
+    double &origin_x,
+    double &origin_y,
+    double &orientation,
+    double &ilSpacing,
+    double &xlSpacing,
+    bool &isILReversed,
+    bool &isXLReversed,
+    bool &isPlanReversed);
+
+H5GEO_EXPORT bool getSurveyInfoFromUnsortedData(
+    Eigen::Ref<Eigen::MatrixXf> il_xl,
+    Eigen::Ref<Eigen::VectorXf> x,
+    Eigen::Ref<Eigen::VectorXf> y,
+    double &origin_x,
+    double &origin_y,
+    double &orientation,
+    double &ilSpacing,
+    double &xlSpacing,
+    bool &isILReversed,
+    bool &isXLReversed,
+    bool &isPlanReversed);
+
+H5GEO_EXPORT bool getSurveyInfoFromUnsortedData(
+    Eigen::Ref<Eigen::MatrixXd> il_xl,
+    Eigen::Ref<Eigen::VectorXd> x,
+    Eigen::Ref<Eigen::VectorXd> y,
+    double &origin_x,
+    double &origin_y,
+    double &orientation,
+    double &ilSpacing,
+    double &xlSpacing,
+    bool &isILReversed,
+    bool &isXLReversed,
+    bool &isPlanReversed);
+
 
 template<typename Object,
          typename std::enable_if<
