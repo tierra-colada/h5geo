@@ -20,6 +20,7 @@ public:
     static bool trig = false;
 
     FILE_NAME = "seis.h5";
+    FILE_NAME_BIG = "seis_big.h5";
     SEIS_NAME1 = "path1/to/seis";
     SEIS_NAME2 = "path2/to/seis";
     SEIS_NAME3 = "path3/to/seis";
@@ -36,6 +37,12 @@ public:
             h5geo::createSeisContainer(
               file, h5geo::CreationType::CREATE_OR_OVERWRITE));
     }
+
+    // always open open or create big file (it allows to avoid rereading)
+    h5gt::File fileBig(FILE_NAME_BIG, h5gt::File::OpenOrCreate);
+    seisContainerBig = H5SeisCnt_ptr(
+          h5geo::createSeisContainer(
+            fileBig, h5geo::CreationType::OPEN_OR_CREATE));
 
     p.domain = h5geo::Domain::OWT;
     p.lengthUnits = "millimeter";
@@ -56,12 +63,14 @@ public:
 //    // ok to through exceptions from here if need be
 //    auto h5File = seisContainer->getH5File();
 //    h5geo::unlinkContent(h5File);
+//    auto h5FileBig = seisContainerBig->getH5File();
+//    h5geo::unlinkContent(h5FileBig);
 //  }
 
 public:
-  H5SeisCnt_ptr seisContainer;
+  H5SeisCnt_ptr seisContainer, seisContainerBig;
   SeisParam p;
-  std::string FILE_NAME, SEIS_NAME1, SEIS_NAME2, SEIS_NAME3;
+  std::string FILE_NAME, FILE_NAME_BIG, SEIS_NAME1, SEIS_NAME2, SEIS_NAME3;
 };
 
 TEST_F(H5SeisFixture, createContainer){
@@ -541,7 +550,7 @@ TEST_F(H5SeisFixture, DISABLED_SEGY_BIG){
   // important to create seis with NSamp match exactly to SEGY NSamp (affect of chunking)
   p.nSamp = h5geo::getSEGYNSamp(segy_big);
 
-  H5Seis_ptr seis(seisContainer->createSeis(
+  H5Seis_ptr seis(seisContainerBig->createSeis(
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
 
@@ -551,7 +560,7 @@ TEST_F(H5SeisFixture, DISABLED_SEGY_BIG){
   // NOT MAPPED (read with h5geo::functions)
   p.mapSEGY = false;
   p.trcChunk = 10000;
-  H5Seis_ptr seis2(seisContainer->createSeis(
+  H5Seis_ptr seis2(seisContainerBig->createSeis(
                      SEIS_NAME2, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(seis2 != nullptr) << "CREATE_OR_OVERWRITE";
 
@@ -596,4 +605,80 @@ TEST_F(H5SeisFixture, DISABLED_SEGY_BIG){
   std::cout << "BIG SEGY getSortedData trc_sorted.cols() = " << trc_sorted.cols() << std::endl;
   std::cout << "BIG SEGY getSortedData hdr_sorted.rows() = " << hdr_sorted.rows() << std::endl;
   std::cout << "BIG SEGY getSortedData hdr_sorted.cols() = " << hdr_sorted.cols() << std::endl;
+}
+
+TEST_F(H5SeisFixture, DISABLED_READ_ARBITRARY_TRACES){
+  std::string fileName = FILE_NAME_BIG; // path to h5 container
+  std::string seisName = SEIS_NAME2;    // path to seis within h5 container
+  H5Seis_ptr seis(h5geo::openSeisByName(fileName, seisName));
+  ASSERT_TRUE(seis != nullptr) << "Unable to open seis";
+
+  std::cout << "number of traces in seis: " << seis->getNTrc() << std::endl;
+  std::cout << "number of samples in seis: " << seis->getNSamp() << std::endl;
+
+  //==============================
+  // PART 1: READ ARBITRARY TRACES
+  //==============================
+  // N - is the number of traces to be read
+  auto get_traces_and_show_elapsed_time = [](H5Seis* seis, size_t nTrc){
+    ASSERT_TRUE(seis != nullptr) << "seis object is NULL";
+
+    // set limits for random numbers generation
+    size_t LO = 0;
+    size_t HI = seis->getNTrc()-1;
+    size_t range = HI-LO;
+
+    // generate random numbers in range [0, numbert of traces in file - 1]
+    Eigen::VectorX<float> trcIndF = Eigen::VectorX<float>::Random(nTrc); // Vector filled with random numbers between (-1,1)
+    trcIndF = (trcIndF + Eigen::VectorX<float>::Constant(nTrc, 1))*range/2.0; // add 1 to the matrix to have values between 0 and 2; multiply with range/2
+    trcIndF = (trcIndF + Eigen::VectorX<float>::Constant(nTrc, LO)); //set LO as the lower bound (offset)
+    Eigen::VectorX<size_t> trcInd = trcIndF.cast<size_t>();
+
+    // measure time to read N traces
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    Eigen::MatrixX<float> TRACE = seis->getTrace(trcInd, 1000, 1);
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::cout << "get " + std::to_string(nTrc) + " arbitrary traces, elapsed time: " <<
+                 std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[milliseconds]" << std::endl;
+
+    ASSERT_TRUE(TRACE.size() > 0) << "unable to read traces";
+  };
+
+  // call function where second arg is number of traces to be read
+  std::cout << "PART 1: reading arbitrary traces" << std::endl;
+  get_traces_and_show_elapsed_time(seis.get(), 100);
+  get_traces_and_show_elapsed_time(seis.get(), 1000);
+  get_traces_and_show_elapsed_time(seis.get(), 10000);
+  get_traces_and_show_elapsed_time(seis.get(), 100000);
+  get_traces_and_show_elapsed_time(seis.get(), 1000000);
+
+
+  //=======================
+  // PART 2: READ TIMESLICE
+  //=======================
+
+  // read timeslice
+  auto get_time_slice_and_show_elapsed_time = [](
+      H5Seis* seis, size_t fromTrc, size_t nTrc, size_t fromSamp, size_t nSamp)
+  {
+    ASSERT_TRUE(seis != nullptr) << "seis object is NULL";
+
+    // measure time to read timeslice
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    Eigen::MatrixX<float> TRACE = seis->getTrace(fromTrc, nTrc, fromSamp, nSamp);
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::cout << "get " + std::to_string(nTrc) + " traces and " +
+                 std::to_string(nSamp) + " samples as timeslice, elapsed time: " <<
+                 std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[milliseconds]" << std::endl;
+
+    ASSERT_TRUE(TRACE.size() > 0) << "unable to read timeslice";
+  };
+
+  // call function where second arg is number of traces to be read
+  std::cout << "PART 2: reading timeslice" << std::endl;
+  get_time_slice_and_show_elapsed_time(seis.get(), 0, 100, 0, 1);
+  get_time_slice_and_show_elapsed_time(seis.get(), 0, 1000, 0, 1);
+  get_time_slice_and_show_elapsed_time(seis.get(), 0, 10000, 0, 1);
+  get_time_slice_and_show_elapsed_time(seis.get(), 0, 100000, 0, 1);
+  get_time_slice_and_show_elapsed_time(seis.get(), 0, 1000000, 0, 1);
 }
