@@ -1,8 +1,6 @@
 Tutorial
 =========
 
-SUKA
-
 As **h5geo** consists of several independent geo-types then the tutorial
 is splitted in several parts. 
 
