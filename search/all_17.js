@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['y0_0',['Y0',['../struct_map_param.html#aa7b244988cc16bb321b14a40de15d580',1,'MapParam']]],
-  ['y1_1',['Y1',['../struct_map_param.html#a1eb5c62e634a69db99fce67e21a59300',1,'MapParam']]],
-  ['y2_2',['Y2',['../struct_map_param.html#a64b0e6d05d055760b639be17c99b1675',1,'MapParam']]],
-  ['ychunksize_3',['yChunkSize',['../struct_map_param.html#a1f58581aa09486cbf5ada44f8bc8a507',1,'MapParam']]]
+  ['x0_0',['X0',['../struct_map_param.html#a4f60c3a8c4418173ab07688db8c15156',1,'MapParam::X0()'],['../struct_vol_param.html#a3651c393a3e1f310810dd66746458993',1,'VolParam::X0()']]],
+  ['x1_1',['X1',['../struct_map_param.html#ab1862d74bbff29c1ef015388abb32cc5',1,'MapParam']]],
+  ['x2_2',['X2',['../struct_map_param.html#a71bea6d87808cb3872bc6dd387228b48',1,'MapParam']]],
+  ['xchunksize_3',['xChunkSize',['../struct_map_param.html#a2c491636ec7d8e94dddf3a148d70575c',1,'MapParam::xChunkSize()'],['../struct_vol_param.html#aa6a725619f29139b1b1f6559961f6714',1,'VolParam::xChunkSize()']]]
 ];
