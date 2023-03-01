@@ -161,6 +161,28 @@ inline h5gt::EnumType<MapDatasetsUType> create_enum_MapDatasets() {
   return {{"map_data", static_cast<MapDatasetsUType>(MapDatasets::map_data)}};
 }
 
+enum class VolAttributes : unsigned{
+  Domain = 1,
+  origin = 2,
+  orientation = 3
+};
+
+typedef std::underlying_type<VolAttributes>::type VolAttributesUType;
+inline h5gt::EnumType<VolAttributesUType> create_enum_VolAttributes() {
+  return {{"Domain", static_cast<VolAttributesUType>(VolAttributes::Domain)},
+          {"origin", static_cast<VolAttributesUType>(VolAttributes::origin)},
+          {"orientation", static_cast<VolAttributesUType>(VolAttributes::orientation)}};
+}
+
+enum class VolDatasets : unsigned{
+  vol_data = 1
+};
+
+typedef std::underlying_type<VolDatasets>::type VolDatasetsUType;
+inline h5gt::EnumType<VolDatasetsUType> create_enum_VolDatasets() {
+  return {{"vol_data", static_cast<VolDatasetsUType>(VolDatasets::vol_data)}};
+}
+
 enum class WellAttributes : unsigned{
   head_coord = 1,
   KB = 2,
@@ -209,7 +231,8 @@ inline h5gt::EnumType<LogDatasetsUType> create_enum_LogDatasets() {
 enum class ContainerType : unsigned{
   MAP = 1,
   WELL = 2,
-  SEISMIC = 3
+  SEISMIC = 3,
+  VOLUME = 4
 };
 //ENABLE_BITMASK_OPERATORS(ContainerType);
 
@@ -217,7 +240,8 @@ typedef std::underlying_type<ContainerType>::type ContainerTypeUType;
 inline h5gt::EnumType<ContainerTypeUType> create_enum_ContainerType() {
   return {{"MAP", static_cast<ContainerTypeUType>(ContainerType::MAP)},
           {"WELL", static_cast<ContainerTypeUType>(ContainerType::WELL)},
-          {"SEISMIC", static_cast<ContainerTypeUType>(ContainerType::SEISMIC)}};
+          {"SEISMIC", static_cast<ContainerTypeUType>(ContainerType::SEISMIC)},
+          {"VOLUME", static_cast<ContainerTypeUType>(ContainerType::VOLUME)}};
 }
 
 enum class ObjectType: unsigned{
@@ -226,12 +250,13 @@ enum class ObjectType: unsigned{
   LOGCURVE = 3,
   DEVCURVE = 4,
   SEISMIC = 5,
-  POINTS_1 = 6,
-  POINTS_2 = 7,
-  POINTS_3 = 8,
-  POINTS_4 = 9,
-  WELLTOPS = 10,
-  HORIZON = 11
+  VOLUME = 6,
+  POINTS_1 = 7,
+  POINTS_2 = 8,
+  POINTS_3 = 9,
+  POINTS_4 = 10,
+  WELLTOPS = 11,
+  HORIZON = 12
 };
 //ENABLE_BITMASK_OPERATORS(ObjectType);
 
@@ -242,6 +267,7 @@ inline h5gt::EnumType<ObjectTypeUType> create_enum_ObjectType() {
           {"LOGCURVE", static_cast<ObjectTypeUType>(ObjectType::LOGCURVE)},
           {"DEVCURVE", static_cast<ObjectTypeUType>(ObjectType::DEVCURVE)},
           {"SEISMIC", static_cast<ObjectTypeUType>(ObjectType::SEISMIC)},
+          {"VOLUME", static_cast<ObjectTypeUType>(ObjectType::VOLUME)},
           {"POINTS_1", static_cast<ObjectTypeUType>(ObjectType::POINTS_1)},
           {"POINTS_2", static_cast<ObjectTypeUType>(ObjectType::POINTS_2)},
           {"POINTS_3", static_cast<ObjectTypeUType>(ObjectType::POINTS_3)},
@@ -499,6 +525,8 @@ H5GT_REGISTER_TYPE(h5geo::detail::SeisSEGYGroups, h5geo::detail::create_enum_Sei
 H5GT_REGISTER_TYPE(h5geo::detail::SeisSEGYDatasets, h5geo::detail::create_enum_SeisSEGYDatasets)
 H5GT_REGISTER_TYPE(h5geo::detail::MapAttributes, h5geo::detail::create_enum_MapAttributes)
 H5GT_REGISTER_TYPE(h5geo::detail::MapDatasets, h5geo::detail::create_enum_MapDatasets)
+H5GT_REGISTER_TYPE(h5geo::detail::VolAttributes, h5geo::detail::create_enum_VolAttributes)
+H5GT_REGISTER_TYPE(h5geo::detail::VolDatasets, h5geo::detail::create_enum_VolDatasets)
 H5GT_REGISTER_TYPE(h5geo::detail::WellAttributes, h5geo::detail::create_enum_WellAttributes)
 H5GT_REGISTER_TYPE(h5geo::detail::WellGroups, h5geo::detail::create_enum_WellGroups)
 H5GT_REGISTER_TYPE(h5geo::detail::DevDatasets, h5geo::detail::create_enum_DevDatasets)

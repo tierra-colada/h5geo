@@ -2,10 +2,12 @@
 #include "../../include/h5geo/private/h5basecontainerimpl.h"
 #include "../../include/h5geo/private/h5mapcontainerimpl.h"
 #include "../../include/h5geo/private/h5seiscontainerimpl.h"
+#include "../../include/h5geo/private/h5volcontainerimpl.h"
 #include "../../include/h5geo/private/h5wellcontainerimpl.h"
 #include "../../include/h5geo/private/h5baseobjectimpl.h"
 #include "../../include/h5geo/private/h5mapimpl.h"
 #include "../../include/h5geo/private/h5seisimpl.h"
+#include "../../include/h5geo/private/h5volimpl.h"
 #include "../../include/h5geo/private/h5wellimpl.h"
 #include "../../include/h5geo/private/h5devcurveimpl.h"
 #include "../../include/h5geo/private/h5logcurveimpl.h"
@@ -408,6 +410,8 @@ H5BaseImpl<TBase>::createNewObject(
     return createNewDevCurve(group, p);
   case h5geo::ObjectType::SEISMIC :
     return createNewSeis(group, p);
+  case h5geo::ObjectType::VOLUME :
+    return createNewVol(group, p);
   case h5geo::ObjectType::POINTS_1 :
     return createNewPoints(group, p, objType);
   case h5geo::ObjectType::POINTS_2 :
@@ -646,8 +650,76 @@ H5BaseImpl<TBase>::createNewMap(h5gt::Group &group, void* p)
   } catch (h5gt::Exception& err) {
     return std::nullopt;
   }
+}
 
+template <typename TBase>
+std::optional<h5gt::Group>
+H5BaseImpl<TBase>::createNewVol(h5gt::Group &group, void* p)
+{
+  VolParam param = *(static_cast<VolParam*>(p));
 
+  // try-catch can't handle this situation
+  if (param.xChunkSize < 1 ||
+      param.yChunkSize < 1 ||
+      param.zChunkSize < 1 ||
+      param.nX < 1 ||
+      param.nY < 1 ||
+      param.nZ < 1)
+    return std::nullopt;
+
+  std::vector<size_t> count = {param.nX, param.nY, param.nZ};
+  std::vector<size_t> max_count = {h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {param.xChunkSize, param.yChunkSize, param.zChunkSize};
+  h5gt::DataSetCreateProps props;
+  props.setChunk(cdims);
+  h5gt::DataSpace dataspace(count, max_count);
+
+  std::vector<double> origin({param.X0, param.Y0, param.Z0});
+
+  try {
+
+    group.createAttribute<double>(
+          std::string{h5geo::detail::null_value},
+          h5gt::DataSpace(1)).
+        write(param.nullValue);
+    group.createAttribute<h5geo::Domain>(
+          std::string{h5geo::detail::Domain},
+          h5gt::DataSpace(1)).
+        write(param.domain);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::spatial_reference},
+          h5gt::DataSpace::From(param.spatialReference)).
+        write(param.spatialReference);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::length_units},
+          h5gt::DataSpace::From(param.lengthUnits)).
+        write(param.lengthUnits);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::temporal_units},
+          h5gt::DataSpace::From(param.temporalUnits)).
+        write(param.temporalUnits);
+    group.createAttribute<std::string>(
+          std::string{h5geo::detail::data_units},
+          h5gt::DataSpace::From(param.dataUnits)).
+        write(param.dataUnits);
+    group.createAttribute<double>(
+          std::string{h5geo::detail::origin},
+          h5gt::DataSpace({2})).
+        write(origin);
+    group.createAttribute<double>(
+          std::string{h5geo::detail::orientation},
+          h5gt::DataSpace(1)).
+        write(param.orientation);
+
+    group.createDataSet<double>(
+          std::string{h5geo::detail::vol_data},
+          dataspace, h5gt::LinkCreateProps(), props);
+
+    return group;
+
+  } catch (h5gt::Exception& err) {
+    return std::nullopt;
+  }
 }
 
 template <typename TBase>
@@ -1284,6 +1356,8 @@ bool h5geo::isGeoContainerByType(h5gt::File file,
     return val == h5geo::ContainerType::WELL;
   case h5geo::ContainerType::SEISMIC:
     return val == h5geo::ContainerType::SEISMIC;
+  case h5geo::ContainerType::VOLUME:
+    return val == h5geo::ContainerType::VOLUME;
   default:
     return false;
   }
@@ -1318,6 +1392,8 @@ bool h5geo::isGeoObjectByType(const h5gt::Group& group,
     return h5geo::isDevCurve(group);
   case h5geo::ObjectType::SEISMIC :
     return h5geo::isSeis(group);
+  case h5geo::ObjectType::VOLUME :
+    return h5geo::isVol(group);
   case h5geo::ObjectType::POINTS_1 :
     return h5geo::isPoints1(group);
   case h5geo::ObjectType::POINTS_2 :
@@ -1361,6 +1437,8 @@ h5geo::ObjectType h5geo::getGeoObjectType(
     return h5geo::ObjectType::LOGCURVE;
   } else if (h5geo::isSeis(group)){
     return h5geo::ObjectType::SEISMIC;
+  } else if (h5geo::isVol(group)){
+    return h5geo::ObjectType::VOLUME;
   }
   return static_cast<h5geo::ObjectType>(0);
 }
@@ -1568,6 +1646,21 @@ bool h5geo::isSeis(
   return true;
 }
 
+bool h5geo::isVol(
+    const h5gt::Group &group)
+{
+  for (const auto& name : h5geo::detail::vol_attrs){
+    if (!group.hasAttribute(std::string{name}))
+      return false;
+  }
+
+  for (const auto& name : h5geo::detail::vol_dsets){
+    if (!group.hasObject(std::string{name}, h5gt::ObjectType::Dataset))
+      return false;
+  }
+  return true;
+}
+
 // containers
 H5BaseContainer*
 h5geo::createContainer(
@@ -1580,6 +1673,8 @@ h5geo::createContainer(
     return h5geo::createMapContainer(h5File, createFlag);
   case h5geo::ContainerType::SEISMIC :
     return h5geo::createSeisContainer(h5File, createFlag);
+  case h5geo::ContainerType::VOLUME :
+    return h5geo::createVolContainer(h5File, createFlag);
   case h5geo::ContainerType::WELL :
     return h5geo::createWellContainer(h5File, createFlag);
   default :
@@ -1598,6 +1693,8 @@ h5geo::createContainerByName(
     return h5geo::createMapContainerByName(fileName, createFlag);
   case h5geo::ContainerType::SEISMIC :
     return h5geo::createSeisContainerByName(fileName, createFlag);
+  case h5geo::ContainerType::VOLUME :
+    return h5geo::createVolContainerByName(fileName, createFlag);
   case h5geo::ContainerType::WELL :
     return h5geo::createWellContainerByName(fileName, createFlag);
   default :
@@ -1640,6 +1737,9 @@ h5geo::openContainer(h5gt::File h5File)
   baseContainer = h5geo::openSeisContainer(h5File);
   if (baseContainer)
     return baseContainer;
+  baseContainer = h5geo::openVolContainer(h5File);
+  if (baseContainer)
+    return baseContainer;
 
   return h5geo::openBaseContainer(h5File);
 }
@@ -1655,6 +1755,9 @@ h5geo::openContainerByName(const std::string& fileName)
   if (baseContainer)
     return baseContainer;
   baseContainer = h5geo::openSeisContainerByName(fileName);
+  if (baseContainer)
+    return baseContainer;
+  baseContainer = h5geo::openVolContainerByName(fileName);
   if (baseContainer)
     return baseContainer;
 
@@ -1753,6 +1856,51 @@ H5SeisContainer* h5geo::openSeisContainerByName(
   }
 }
 
+// Vol containers
+H5VolContainer*
+h5geo::createVolContainer(
+    h5gt::File h5File, h5geo::CreationType createFlag)
+{
+  auto opt = H5VolContainerImpl::createContainer(
+        h5File, h5geo::ContainerType::VOLUME, createFlag);
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5VolContainerImpl(opt.value());
+}
+
+H5VolContainer*
+h5geo::createVolContainerByName(
+    std::string& fileName, h5geo::CreationType createFlag)
+{
+  auto opt = H5VolContainerImpl::createContainer(
+        fileName, h5geo::ContainerType::VOLUME, createFlag);
+  if (!opt.has_value())
+    return nullptr;
+
+  return new H5VolContainerImpl(opt.value());
+}
+
+H5VolContainer* h5geo::openVolContainer(
+    h5gt::File h5File){
+  return createVolContainer(h5File, h5geo::CreationType::OPEN);
+}
+
+H5VolContainer* h5geo::openVolContainerByName(
+    const std::string& fileName){
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    return h5geo::openVolContainer(h5File);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
 // Well containers
 H5WellContainer*
 h5geo::createWellContainer(
@@ -1802,6 +1950,9 @@ H5BaseObject* h5geo::openObject(h5gt::Group group)
 {
   H5BaseObject* obj = nullptr;
   obj = openSeis(group);
+  if (obj)
+    return obj;
+  obj = openVol(group);
   if (obj)
     return obj;
   obj = openMap(group);
@@ -1926,6 +2077,33 @@ H5Seis* h5geo::openSeisByName(
 
     h5gt::Group group = h5File.getGroup(objName);
     return h5geo::openSeis(group);
+  } catch (h5gt::Exception& err) {
+    return nullptr;
+  }
+}
+
+H5Vol* h5geo::openVol(h5gt::Group group){
+  if (isGeoObjectByType(group, h5geo::ObjectType::VOLUME))
+    return new H5VolImpl(group);
+
+  return nullptr;
+}
+
+H5Vol* h5geo::openVolByName(
+    const std::string& fileName, const std::string& objName)
+{
+  if (!fs::exists(fileName) || H5Fis_hdf5(fileName.c_str()) < 1)
+    return nullptr;
+
+  try {
+    h5gt::File h5File(
+          fileName,
+          h5gt::File::ReadWrite);
+    if (!h5File.hasObject(objName, h5gt::ObjectType::Group))
+      return nullptr;
+
+    h5gt::Group group = h5File.getGroup(objName);
+    return h5geo::openVol(group);
   } catch (h5gt::Exception& err) {
     return nullptr;
   }
@@ -2216,10 +2394,12 @@ template class H5BaseImpl<H5Base>;
 template class H5BaseImpl<H5BaseContainer>;
 template class H5BaseImpl<H5MapContainer>;
 template class H5BaseImpl<H5SeisContainer>;
+template class H5BaseImpl<H5VolContainer>;
 template class H5BaseImpl<H5WellContainer>;
 template class H5BaseImpl<H5BaseObject>;
 template class H5BaseImpl<H5Map>;
 template class H5BaseImpl<H5Seis>;
+template class H5BaseImpl<H5Vol>;
 template class H5BaseImpl<H5Well>;
 template class H5BaseImpl<H5DevCurve>;
 template class H5BaseImpl<H5LogCurve>;

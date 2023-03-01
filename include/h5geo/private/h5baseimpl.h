@@ -101,6 +101,8 @@ private:
   createNewDevCurve(h5gt::Group &group, void* p);
   std::optional<h5gt::Group>
   createNewSeis(h5gt::Group &group, void* p);
+  std::optional<h5gt::Group>
+  createNewVol(h5gt::Group &group, void* p);
 
   // Seismic
   std::optional<h5gt::DataSet>
@@ -155,6 +157,8 @@ protected:
 
   //----------- FRIEND CLASSES -----------
   friend H5SeisContainer* h5geo::openSeisContainer(
+      h5gt::File h5File);
+  friend H5VolContainer* h5geo::openVolContainer(
       h5gt::File h5File);
   friend H5MapContainer* h5geo::openMapContainer(
       h5gt::File h5File);

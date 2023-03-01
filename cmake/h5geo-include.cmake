@@ -16,6 +16,8 @@ set(include_files_h5geo_private
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5logcurveimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5seisimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5seiscontainerimpl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5volimpl.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5volcontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5mapcontainerimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5mapimpl.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/private/h5wellcontainerimpl.h
@@ -43,6 +45,8 @@ set(include_files_h5geo_public
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5logcurve.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5seis.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5seiscontainer.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5vol.h
+  ${CMAKE_SOURCE_DIR}/include/h5geo/h5volcontainer.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5mapcontainer.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5map.h
   ${CMAKE_SOURCE_DIR}/include/h5geo/h5well.h

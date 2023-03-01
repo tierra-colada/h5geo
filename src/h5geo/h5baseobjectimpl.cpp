@@ -1,6 +1,7 @@
 #include "../../include/h5geo/private/h5baseobjectimpl.h"
 #include "../../include/h5geo/private/h5mapimpl.h"
 #include "../../include/h5geo/private/h5seisimpl.h"
+#include "../../include/h5geo/private/h5volimpl.h"
 #include "../../include/h5geo/private/h5wellimpl.h"
 #include "../../include/h5geo/private/h5devcurveimpl.h"
 #include "../../include/h5geo/private/h5logcurveimpl.h"
@@ -40,6 +41,12 @@ template <>
 H5Base* H5BaseObjectImpl<H5Seis>::clone()
 {
   return new H5SeisImpl(objG);
+}
+
+template <>
+H5Base* H5BaseObjectImpl<H5Vol>::clone()
+{
+  return new H5VolImpl(objG);
 }
 
 template <>
@@ -578,6 +585,7 @@ H5BaseObjectImpl<TBase>::getParentG(
 template class H5BaseObjectImpl<H5BaseObject>;
 template class H5BaseObjectImpl<H5Map>;
 template class H5BaseObjectImpl<H5Seis>;
+template class H5BaseObjectImpl<H5Vol>;
 template class H5BaseObjectImpl<H5Well>;
 template class H5BaseObjectImpl<H5DevCurve>;
 template class H5BaseObjectImpl<H5LogCurve>;

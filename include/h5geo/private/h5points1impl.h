@@ -41,6 +41,7 @@ protected:
   friend class H5BaseContainerImpl<H5BaseContainer>;
   friend class H5BaseContainerImpl<H5MapContainer>;
   friend class H5BaseContainerImpl<H5SeisContainer>;
+  friend class H5BaseContainerImpl<H5VolContainer>;
   friend class H5BaseContainerImpl<H5WellContainer>;
   friend class H5BaseObjectImpl<H5BaseObject>;
   friend class H5BaseObjectImpl<H5BasePoints>;
@@ -51,6 +52,7 @@ protected:
   friend class H5BaseObjectImpl<H5Horizon>;
   friend class H5BaseObjectImpl<H5Map>;
   friend class H5BaseObjectImpl<H5Seis>;
+  friend class H5BaseObjectImpl<H5Vol>;
   friend class H5BaseObjectImpl<H5Well>;
   friend class H5BaseObjectImpl<H5DevCurve>;
   friend class H5BaseObjectImpl<H5LogCurve>;

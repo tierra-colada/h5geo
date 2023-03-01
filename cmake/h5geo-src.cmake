@@ -9,6 +9,8 @@ set(src_files_h5geo
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5logcurveimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5seisimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5seiscontainerimpl.cpp
+  ${CMAKE_SOURCE_DIR}/src/h5geo/h5volimpl.cpp
+  ${CMAKE_SOURCE_DIR}/src/h5geo/h5volcontainerimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5mapcontainerimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5mapimpl.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geo/h5wellimpl.cpp

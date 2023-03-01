@@ -83,6 +83,12 @@ inline constexpr auto point2 = magic_enum::enum_name(h5geo::detail::MapAttribute
 inline constexpr auto& map_dsets =
     magic_enum::enum_names<h5geo::detail::MapDatasets>();
 inline constexpr auto map_data = magic_enum::enum_name(h5geo::detail::MapDatasets::map_data);
+inline constexpr auto& vol_attrs =
+    magic_enum::enum_names<h5geo::detail::VolAttributes>();
+inline constexpr auto orientation = magic_enum::enum_name(h5geo::detail::VolAttributes::orientation);
+inline constexpr auto& vol_dsets =
+    magic_enum::enum_names<h5geo::detail::VolDatasets>();
+inline constexpr auto vol_data = magic_enum::enum_name(h5geo::detail::VolDatasets::vol_data);
 inline constexpr auto& well_attrs =
     magic_enum::enum_names<h5geo::detail::WellAttributes>();
 inline constexpr auto head_coord = magic_enum::enum_name(h5geo::detail::WellAttributes::head_coord);

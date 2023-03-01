@@ -34,9 +34,11 @@ enum class DevDataType: unsigned;
 class H5BaseContainer;
 class H5BaseObject;
 class H5SeisContainer;
+class H5VolContainer;
 class H5MapContainer;
 class H5WellContainer;
 class H5Seis;
+class H5Vol;
 class H5Map;
 class H5Well;
 class H5DevCurve;
@@ -105,6 +107,24 @@ struct MapParam : public BaseObjectParam{
   h5geo::Domain domain; ///< time or depth (TWT, TVD etc)
   hsize_t xChunkSize = 10; ///< see HDF5 chunking
   hsize_t yChunkSize = 10; ///< see HDF5 chunking
+};
+
+/// \struct VolParam
+/// \brief Class for creating H5Vol
+///
+/// Vol parameters are needed when creating any Volume geo-object.
+struct VolParam : public BaseObjectParam{
+  double X0; ///< X-coordinate of origin
+  double Y0; ///< Y-coordinate of origin
+  double Z0; ///< Z-coordinate of origin
+  size_t nX; ///< number of X-values
+  size_t nY; ///< number of Y-values
+  size_t nZ; ///< number of Z-values
+  double orientation; ///< XY plane orientation (in angularUnits)
+  h5geo::Domain domain; ///< time or depth (TWT, TVD etc)
+  hsize_t xChunkSize = 64; ///< see HDF5 chunking
+  hsize_t yChunkSize = 64; ///< see HDF5 chunking
+  hsize_t zChunkSize = 64; ///< see HDF5 chunking
 };
 
 /// \struct WellParam
@@ -227,6 +247,13 @@ H5GEO_EXPORT H5SeisContainer* createSeisContainer(
 H5GEO_EXPORT H5SeisContainer* createSeisContainerByName(
   std::string& fileName, h5geo::CreationType createFlag);
 
+/// \brief Factory function for creating H5VolContainer
+H5GEO_EXPORT H5VolContainer* createVolContainer(
+  h5gt::File h5File, h5geo::CreationType createFlag);
+/// \brief Factory function for creating H5VolContainer
+H5GEO_EXPORT H5VolContainer* createVolContainerByName(
+  std::string& fileName, h5geo::CreationType createFlag);
+
 /// \brief Factory function for creating H5WellContainer
 H5GEO_EXPORT H5WellContainer* createWellContainer(
   h5gt::File h5File, h5geo::CreationType createFlag);
@@ -262,6 +289,13 @@ H5GEO_EXPORT H5SeisContainer* openSeisContainer(
     h5gt::File h5File);
 /// \brief Factory function for opening H5SeisContainer
 H5GEO_EXPORT H5SeisContainer* openSeisContainerByName(
+    const std::string& fileName);
+
+/// \brief Factory function for opening H5VolContainer
+H5GEO_EXPORT H5VolContainer* openVolContainer(
+    h5gt::File h5File);
+/// \brief Factory function for opening H5VolContainer
+H5GEO_EXPORT H5VolContainer* openVolContainerByName(
     const std::string& fileName);
 
 /// \brief Factory function for opening H5MapContainer
@@ -326,6 +360,13 @@ H5GEO_EXPORT H5Seis* openSeis(
     h5gt::Group group);
 /// \brief Factory function for opening H5Seis
 H5GEO_EXPORT H5Seis* openSeisByName(
+    const std::string& fileName, const std::string& objName);
+
+/// \brief Factory function for opening H5Vol
+H5GEO_EXPORT H5Vol* openVol(
+    h5gt::Group group);
+/// \brief Factory function for opening H5Vol
+H5GEO_EXPORT H5Vol* openVolByName(
     const std::string& fileName, const std::string& objName);
 
 /// \brief Factory function for opening H5Well
@@ -430,6 +471,8 @@ H5GEO_EXPORT bool isLogCurve(const h5gt::Group &group);
 H5GEO_EXPORT bool isDevCurve(const h5gt::Group &group);
 /// \brief Check if HDF5 object is H5Seis
 H5GEO_EXPORT bool isSeis(const h5gt::Group &group);
+/// \brief Check if HDF5 object is H5Vol
+H5GEO_EXPORT bool isVol(const h5gt::Group &group);
 
 /// \brief Get HDF5 object's geo-type
 H5GEO_EXPORT h5geo::ObjectType getGeoObjectType(

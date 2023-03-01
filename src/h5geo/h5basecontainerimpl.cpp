@@ -1,5 +1,6 @@
 #include "../../include/h5geo/private/h5basecontainerimpl.h"
 #include "../../include/h5geo/private/h5seiscontainerimpl.h"
+#include "../../include/h5geo/private/h5volcontainerimpl.h"
 #include "../../include/h5geo/private/h5mapcontainerimpl.h"
 #include "../../include/h5geo/private/h5wellcontainerimpl.h"
 #include "../../include/h5geo/private/h5points1impl.h"
@@ -34,6 +35,12 @@ template <>
 H5Base* H5BaseContainerImpl<H5SeisContainer>::clone()
 {
   return new H5SeisContainerImpl(h5File);
+}
+
+template <>
+H5Base* H5BaseContainerImpl<H5VolContainer>::clone()
+{
+  return new H5VolContainerImpl(h5File);
 }
 
 template <>
@@ -302,4 +309,5 @@ bool H5BaseContainerImpl<TBase>::operator != (const H5BaseContainer& other) cons
 template class H5BaseContainerImpl<H5BaseContainer>;
 template class H5BaseContainerImpl<H5MapContainer>;
 template class H5BaseContainerImpl<H5SeisContainer>;
+template class H5BaseContainerImpl<H5VolContainer>;
 template class H5BaseContainerImpl<H5WellContainer>;
