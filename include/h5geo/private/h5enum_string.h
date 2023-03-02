@@ -86,6 +86,7 @@ inline constexpr auto map_data = magic_enum::enum_name(h5geo::detail::MapDataset
 inline constexpr auto& vol_attrs =
     magic_enum::enum_names<h5geo::detail::VolAttributes>();
 inline constexpr auto orientation = magic_enum::enum_name(h5geo::detail::VolAttributes::orientation);
+inline constexpr auto spacings = magic_enum::enum_name(h5geo::detail::VolAttributes::spacings);
 inline constexpr auto& vol_dsets =
     magic_enum::enum_names<h5geo::detail::VolDatasets>();
 inline constexpr auto vol_data = magic_enum::enum_name(h5geo::detail::VolDatasets::vol_data);

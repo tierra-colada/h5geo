@@ -12,6 +12,30 @@ protected:
 
 public:
 
+  virtual bool setDomain(const h5geo::Domain& domain) override;
+  virtual bool setOrigin(
+      Eigen::Ref<Eigen::Vector3d> v,
+      const std::string& lengthUnits,
+      bool doCoordTransform) override;
+  virtual bool setSpacings(
+      Eigen::Ref<Eigen::Vector3d> v,
+      const std::string& lengthUnits) override;
+  virtual bool setOrientation(
+      double val,
+      const std::string& angularUnits) override;
+
+  virtual h5geo::Domain getDomain() override;
+  virtual Eigen::VectorXd getOrigin(
+      const std::string& lengthUnits,
+      bool doCoordTransform) override;
+  virtual Eigen::VectorXd getSpacings(
+      const std::string& lengthUnits) override;
+  virtual double getOrientation(
+      const std::string& angularUnits) override;
+  virtual size_t getNX() override;
+  virtual size_t getNY() override;
+  virtual size_t getNZ() override;
+
   virtual VolParam getParam() override;
 
   virtual H5VolContainer* openVolContainer() const override;

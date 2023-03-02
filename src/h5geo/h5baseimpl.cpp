@@ -672,9 +672,11 @@ H5BaseImpl<TBase>::createNewVol(h5gt::Group &group, void* p)
   std::vector<hsize_t> cdims = {param.xChunkSize, param.yChunkSize, param.zChunkSize};
   h5gt::DataSetCreateProps props;
   props.setChunk(cdims);
+  props.setDeflate(param.compression_level);
   h5gt::DataSpace dataspace(count, max_count);
 
   std::vector<double> origin({param.X0, param.Y0, param.Z0});
+  std::vector<double> spacings({param.dX, param.dY, param.dZ});
 
   try {
 
@@ -704,7 +706,11 @@ H5BaseImpl<TBase>::createNewVol(h5gt::Group &group, void* p)
         write(param.dataUnits);
     group.createAttribute<double>(
           std::string{h5geo::detail::origin},
-          h5gt::DataSpace({2})).
+          h5gt::DataSpace({3})).
+        write(origin);
+    group.createAttribute<double>(
+          std::string{h5geo::detail::spacings},
+          h5gt::DataSpace({3})).
         write(origin);
     group.createAttribute<double>(
           std::string{h5geo::detail::orientation},

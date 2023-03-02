@@ -164,13 +164,15 @@ inline h5gt::EnumType<MapDatasetsUType> create_enum_MapDatasets() {
 enum class VolAttributes : unsigned{
   Domain = 1,
   origin = 2,
-  orientation = 3
+  spacings = 3,
+  orientation = 4
 };
 
 typedef std::underlying_type<VolAttributes>::type VolAttributesUType;
 inline h5gt::EnumType<VolAttributesUType> create_enum_VolAttributes() {
   return {{"Domain", static_cast<VolAttributesUType>(VolAttributes::Domain)},
           {"origin", static_cast<VolAttributesUType>(VolAttributes::origin)},
+          {"spacings", static_cast<VolAttributesUType>(VolAttributes::spacings)},
           {"orientation", static_cast<VolAttributesUType>(VolAttributes::orientation)}};
 }
 

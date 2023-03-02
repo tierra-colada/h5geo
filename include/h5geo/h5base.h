@@ -117,6 +117,9 @@ struct VolParam : public BaseObjectParam{
   double X0; ///< X-coordinate of origin
   double Y0; ///< Y-coordinate of origin
   double Z0; ///< Z-coordinate of origin
+  double dX; ///< unrotated X-spacing
+  double dY; ///< unrotated Y-spacing
+  double dZ; ///< unrotated Z-zpacing
   size_t nX; ///< number of X-values
   size_t nY; ///< number of Y-values
   size_t nZ; ///< number of Z-values
@@ -125,6 +128,7 @@ struct VolParam : public BaseObjectParam{
   hsize_t xChunkSize = 64; ///< see HDF5 chunking
   hsize_t yChunkSize = 64; ///< see HDF5 chunking
   hsize_t zChunkSize = 64; ///< see HDF5 chunking
+  unsigned compression_level = 6; ///< see HDF5 chunking and deflate
 };
 
 /// \struct WellParam
