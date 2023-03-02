@@ -667,7 +667,7 @@ H5BaseImpl<TBase>::createNewVol(h5gt::Group &group, void* p)
       param.nZ < 1)
     return std::nullopt;
 
-  std::vector<size_t> count = {param.nX, param.nY, param.nZ};
+  std::vector<size_t> count = {param.nZ, param.nY, param.nX};
   std::vector<size_t> max_count = {h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED};
   std::vector<hsize_t> cdims = {param.xChunkSize, param.yChunkSize, param.zChunkSize};
   h5gt::DataSetCreateProps props;
@@ -717,7 +717,7 @@ H5BaseImpl<TBase>::createNewVol(h5gt::Group &group, void* p)
           h5gt::DataSpace(1)).
         write(param.orientation);
 
-    group.createDataSet<double>(
+    group.createDataSet<float>(
           std::string{h5geo::detail::vol_data},
           dataspace, h5gt::LinkCreateProps(), props);
 

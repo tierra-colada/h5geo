@@ -106,10 +106,10 @@ TEST_F(H5MapFixture, createMapWithDifferentCreateFlags){
           MAP_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(map != nullptr) << "CREATE_OR_OVERWRITE";
 
-  std::string seisName_tmp = MAP_NAME1;
+  std::string mapName_tmp = MAP_NAME1;
   map = H5Map_ptr(mapContainer1->createMap(
-          seisName_tmp, p, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
-  ASSERT_TRUE(map != nullptr && seisName_tmp.compare(MAP_NAME1)) << "CREATE_UNDER_NEW_NAME";
+          mapName_tmp, p, h5geo::CreationType::CREATE_UNDER_NEW_NAME));
+  ASSERT_TRUE(map != nullptr && mapName_tmp.compare(MAP_NAME1)) << "CREATE_UNDER_NEW_NAME";
 }
 
 TEST_F(H5MapFixture, clone){

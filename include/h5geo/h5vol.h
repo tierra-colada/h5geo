@@ -18,6 +18,18 @@ protected:
 
 public:
 
+  /// \brief Write subvolume starting from iX0, iY0, iZ0 indices.
+  /// `data` matrix is of size: nRows=nX, nCols=nY*nZ
+  virtual bool writeData(
+      Eigen::Ref<Eigen::MatrixXf> data,
+      const size_t& iX0,
+      const size_t& iY0,
+      const size_t& iZ0,
+      const size_t& nX,
+      const size_t& nY,
+      const size_t& nZ,
+      const std::string& dataUnits = "") = 0;
+
 	/// \brief Set domain for the map (`TVD`, `TVDSS`, `TWT`, `OWT`)
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
 	/// \brief Set coordinates of origin
@@ -33,6 +45,17 @@ public:
   virtual bool setOrientation(
       double val,
       const std::string& angularUnits = "") = 0;
+
+  /// \brief Read subvolume starting from iX0, iY0, iZ0 indices.
+  /// `data` matrix is of size: nRows=nX, nCols=nY*nZ
+  virtual Eigen::MatrixXf getData(
+      const size_t& iX0,
+      const size_t& iY0,
+      const size_t& iZ0,
+      const size_t& nX,
+      const size_t& nY,
+      const size_t& nZ,
+      const std::string& dataUnits = "") = 0;
 
 	/// \brief Get domain (`TVD`, `TVDSS`, `TWT`, `OWT`)
   virtual h5geo::Domain getDomain() = 0;

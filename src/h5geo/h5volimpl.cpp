@@ -13,6 +13,42 @@
 H5VolImpl::H5VolImpl(const h5gt::Group &group) :
   H5BaseObjectImpl(group){}
 
+bool H5VolImpl::writeData(
+    Eigen::Ref<Eigen::MatrixXf> data,
+    const size_t& iX0,
+    const size_t& iY0,
+    const size_t& iZ0,
+    const size_t& nX,
+    const size_t& nY,
+    const size_t& nZ,
+    const std::string& dataUnits)
+{
+  auto opt = this->getVolD();
+  if (!opt.has_value())
+    return false;
+
+  std::vector<size_t> dims = opt->getDimensions();
+  if (dims.size() != 3)
+    return false;
+
+  if (iX0+nX > dims[2] ||
+      iY0+nY > dims[1] ||
+      iZ0+nZ > dims[0])
+    return false;
+
+  std::string unitsTo = getDataUnits();
+  if (!unitsTo.empty() && !dataUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(dataUnits),
+          units::unit_from_string(unitsTo));
+    data = data*coef;
+  }
+
+  opt->select({iZ0, iY0, iX0},
+              {nZ, nY, nX}).write_raw(data.data());
+  return true;
+}
+
 bool H5VolImpl::setDomain(const h5geo::Domain& val){
   return h5geo::overwriteEnumAttribute(
         objG,
@@ -63,6 +99,44 @@ bool H5VolImpl::setOrientation(
         objG,
         std::string{h5geo::detail::orientation},
         val, angularUnits, getAngularUnits());
+}
+
+Eigen::MatrixXf H5VolImpl::getData(
+    const size_t& iX0,
+    const size_t& iY0,
+    const size_t& iZ0,
+    const size_t& nX,
+    const size_t& nY,
+    const size_t& nZ,
+    const std::string& dataUnits)
+{
+  auto opt = this->getVolD();
+  if (!opt.has_value())
+    return Eigen::MatrixXf();
+
+  std::vector<size_t> dims = opt->getDimensions();
+  if (dims.size() != 3)
+    return Eigen::MatrixXf();
+
+  if (iX0+nX > dims[2] ||
+      iY0+nY > dims[1] ||
+      iZ0+nZ > dims[0])
+    return Eigen::MatrixXf();
+
+  Eigen::MatrixXf data(nX, nY*nZ);
+  opt->select({iZ0, iY0, iX0},
+              {nZ, nY, nX}).read(data.data());
+  if (!dataUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(getDataUnits()),
+          units::unit_from_string(dataUnits));
+    if (!isnan(coef))
+      return data*coef;
+
+    return Eigen::MatrixXf();
+  }
+
+  return data;
 }
 
 h5geo::Domain H5VolImpl::getDomain(){

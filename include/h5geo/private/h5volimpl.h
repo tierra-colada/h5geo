@@ -12,6 +12,16 @@ protected:
 
 public:
 
+  virtual bool writeData(
+      Eigen::Ref<Eigen::MatrixXf> data,
+      const size_t& iX0,
+      const size_t& iY0,
+      const size_t& iZ0,
+      const size_t& nX,
+      const size_t& nY,
+      const size_t& nZ,
+      const std::string& dataUnits) override;
+
   virtual bool setDomain(const h5geo::Domain& domain) override;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::Vector3d> v,
@@ -23,6 +33,15 @@ public:
   virtual bool setOrientation(
       double val,
       const std::string& angularUnits) override;
+
+  virtual Eigen::MatrixXf getData(
+      const size_t& iX0,
+      const size_t& iY0,
+      const size_t& iZ0,
+      const size_t& nX,
+      const size_t& nY,
+      const size_t& nZ,
+      const std::string& dataUnits) override;
 
   virtual h5geo::Domain getDomain() override;
   virtual Eigen::VectorXd getOrigin(
