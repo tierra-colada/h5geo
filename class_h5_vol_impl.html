@@ -93,6 +93,39 @@ Inheritance diagram for H5VolImpl:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a191bb4a0c74794e54794bda896e09e47"><td class="memItemLeft" align="right" valign="top"><a id="a191bb4a0c74794e54794bda896e09e47" name="a191bb4a0c74794e54794bda896e09e47"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setDomain</b> (const h5geo::Domain &amp;domain) override</td></tr>
+<tr class="separator:a191bb4a0c74794e54794bda896e09e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43c1c2e00093ef61e15af6f684c550fe"><td class="memItemLeft" align="right" valign="top"><a id="a43c1c2e00093ef61e15af6f684c550fe" name="a43c1c2e00093ef61e15af6f684c550fe"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setOrigin</b> (Eigen::Ref&lt; Eigen::Vector3d &gt; v, const std::string &amp;lengthUnits, bool doCoordTransform) override</td></tr>
+<tr class="separator:a43c1c2e00093ef61e15af6f684c550fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae201a1574c44fb197278793a8d020f14"><td class="memItemLeft" align="right" valign="top"><a id="ae201a1574c44fb197278793a8d020f14" name="ae201a1574c44fb197278793a8d020f14"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setSpacings</b> (Eigen::Ref&lt; Eigen::Vector3d &gt; v, const std::string &amp;lengthUnits) override</td></tr>
+<tr class="separator:ae201a1574c44fb197278793a8d020f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac39c511113d831dd17eb607cb26334d8"><td class="memItemLeft" align="right" valign="top"><a id="ac39c511113d831dd17eb607cb26334d8" name="ac39c511113d831dd17eb607cb26334d8"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setOrientation</b> (double val, const std::string &amp;angularUnits) override</td></tr>
+<tr class="separator:ac39c511113d831dd17eb607cb26334d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb87dc16ea383cfbf5ccfe2a4320970c"><td class="memItemLeft" align="right" valign="top"><a id="acb87dc16ea383cfbf5ccfe2a4320970c" name="acb87dc16ea383cfbf5ccfe2a4320970c"></a>
+virtual h5geo::Domain&#160;</td><td class="memItemRight" valign="bottom"><b>getDomain</b> () override</td></tr>
+<tr class="separator:acb87dc16ea383cfbf5ccfe2a4320970c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d0a7461cf23cfec34c93cb1a2383a37"><td class="memItemLeft" align="right" valign="top"><a id="a2d0a7461cf23cfec34c93cb1a2383a37" name="a2d0a7461cf23cfec34c93cb1a2383a37"></a>
+virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><b>getOrigin</b> (const std::string &amp;lengthUnits, bool doCoordTransform) override</td></tr>
+<tr class="separator:a2d0a7461cf23cfec34c93cb1a2383a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77bfd5633ab074fe4a0671726eb92c11"><td class="memItemLeft" align="right" valign="top"><a id="a77bfd5633ab074fe4a0671726eb92c11" name="a77bfd5633ab074fe4a0671726eb92c11"></a>
+virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><b>getSpacings</b> (const std::string &amp;lengthUnits) override</td></tr>
+<tr class="separator:a77bfd5633ab074fe4a0671726eb92c11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f757e6249f083698528b4d296e05789"><td class="memItemLeft" align="right" valign="top"><a id="a7f757e6249f083698528b4d296e05789" name="a7f757e6249f083698528b4d296e05789"></a>
+virtual double&#160;</td><td class="memItemRight" valign="bottom"><b>getOrientation</b> (const std::string &amp;angularUnits) override</td></tr>
+<tr class="separator:a7f757e6249f083698528b4d296e05789"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52c46e87c37fa44046f6bea4e2e9f810"><td class="memItemLeft" align="right" valign="top"><a id="a52c46e87c37fa44046f6bea4e2e9f810" name="a52c46e87c37fa44046f6bea4e2e9f810"></a>
+virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getNX</b> () override</td></tr>
+<tr class="separator:a52c46e87c37fa44046f6bea4e2e9f810"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a268c69ce1d8622e2d44c15c4380fd651"><td class="memItemLeft" align="right" valign="top"><a id="a268c69ce1d8622e2d44c15c4380fd651" name="a268c69ce1d8622e2d44c15c4380fd651"></a>
+virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getNY</b> () override</td></tr>
+<tr class="separator:a268c69ce1d8622e2d44c15c4380fd651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50978ecd98c8125b7a27a9f19b968c3b"><td class="memItemLeft" align="right" valign="top"><a id="a50978ecd98c8125b7a27a9f19b968c3b" name="a50978ecd98c8125b7a27a9f19b968c3b"></a>
+virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getNZ</b> () override</td></tr>
+<tr class="separator:a50978ecd98c8125b7a27a9f19b968c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e2eec172e8af163e24eb83a5f1682fc"><td class="memItemLeft" align="right" valign="top"><a id="a4e2eec172e8af163e24eb83a5f1682fc" name="a4e2eec172e8af163e24eb83a5f1682fc"></a>
 virtual <a class="el" href="struct_vol_param.html">VolParam</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getParam</b> () override</td></tr>
 <tr class="separator:a4e2eec172e8af163e24eb83a5f1682fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
