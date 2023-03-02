@@ -96,6 +96,10 @@ Inheritance diagram for H5Vol:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a87a4899d7fb5034eeab186f0dd3a6e5f"><td class="memItemLeft" align="right" valign="top"><a id="a87a4899d7fb5034eeab186f0dd3a6e5f" name="a87a4899d7fb5034eeab186f0dd3a6e5f"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>writeData</b> (Eigen::Ref&lt; Eigen::MatrixXf &gt; data, const size_t &amp;iX0, const size_t &amp;iY0, const size_t &amp;iZ0, const size_t &amp;nX, const size_t &amp;nY, const size_t &amp;nZ, const std::string &amp;dataUnits=&quot;&quot;)=0</td></tr>
+<tr class="memdesc:a87a4899d7fb5034eeab186f0dd3a6e5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write subvolume starting from iX0, iY0, iZ0 indices. <code>data</code> matrix is of size: nRows=nX, nCols=nY*nZ. <br /></td></tr>
+<tr class="separator:a87a4899d7fb5034eeab186f0dd3a6e5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40e5da4941d028a4f3fe35da6f2e7812"><td class="memItemLeft" align="right" valign="top"><a id="a40e5da4941d028a4f3fe35da6f2e7812" name="a40e5da4941d028a4f3fe35da6f2e7812"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setDomain</b> (const h5geo::Domain &amp;domain)=0</td></tr>
 <tr class="memdesc:a40e5da4941d028a4f3fe35da6f2e7812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set domain for the map (<code>TVD</code>, <code>TVDSS</code>, <code>TWT</code>, <code>OWT</code>) <br /></td></tr>
@@ -112,6 +116,10 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setSpacings</
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setOrientation</b> (double val, const std::string &amp;angularUnits=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:ab16d76ee8cb1b4235f3c3b500974b3f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set XY plane orientation. <br /></td></tr>
 <tr class="separator:ab16d76ee8cb1b4235f3c3b500974b3f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15c21074fdb5c48a07425353bd0a5769"><td class="memItemLeft" align="right" valign="top"><a id="a15c21074fdb5c48a07425353bd0a5769" name="a15c21074fdb5c48a07425353bd0a5769"></a>
+virtual Eigen::MatrixXf&#160;</td><td class="memItemRight" valign="bottom"><b>getData</b> (const size_t &amp;iX0, const size_t &amp;iY0, const size_t &amp;iZ0, const size_t &amp;nX, const size_t &amp;nY, const size_t &amp;nZ, const std::string &amp;dataUnits=&quot;&quot;)=0</td></tr>
+<tr class="memdesc:a15c21074fdb5c48a07425353bd0a5769"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read subvolume starting from iX0, iY0, iZ0 indices. <code>data</code> matrix is of size: nRows=nX, nCols=nY*nZ. <br /></td></tr>
+<tr class="separator:a15c21074fdb5c48a07425353bd0a5769"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24e32be7b3940fd9114573c73cd0a9b5"><td class="memItemLeft" align="right" valign="top"><a id="a24e32be7b3940fd9114573c73cd0a9b5" name="a24e32be7b3940fd9114573c73cd0a9b5"></a>
 virtual h5geo::Domain&#160;</td><td class="memItemRight" valign="bottom"><b>getDomain</b> ()=0</td></tr>
 <tr class="memdesc:a24e32be7b3940fd9114573c73cd0a9b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get domain (<code>TVD</code>, <code>TVDSS</code>, <code>TWT</code>, <code>OWT</code>) <br /></td></tr>
