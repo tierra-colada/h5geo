@@ -104,14 +104,14 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>writeData</b>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setDomain</b> (const h5geo::Domain &amp;domain)=0</td></tr>
 <tr class="memdesc:a40e5da4941d028a4f3fe35da6f2e7812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set domain for the map (<code>TVD</code>, <code>TVDSS</code>, <code>TWT</code>, <code>OWT</code>) <br /></td></tr>
 <tr class="separator:a40e5da4941d028a4f3fe35da6f2e7812"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aade79b08058ddc3f48dd92955cf5f9d7"><td class="memItemLeft" align="right" valign="top"><a id="aade79b08058ddc3f48dd92955cf5f9d7" name="aade79b08058ddc3f48dd92955cf5f9d7"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setOrigin</b> (Eigen::Ref&lt; Eigen::Vector3d &gt; v, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
-<tr class="memdesc:aade79b08058ddc3f48dd92955cf5f9d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set coordinates of origin. <br /></td></tr>
-<tr class="separator:aade79b08058ddc3f48dd92955cf5f9d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8148ddfa29a0b5938c47c8f138fea858"><td class="memItemLeft" align="right" valign="top"><a id="a8148ddfa29a0b5938c47c8f138fea858" name="a8148ddfa29a0b5938c47c8f138fea858"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setSpacings</b> (Eigen::Ref&lt; Eigen::Vector3d &gt; v, const std::string &amp;lengthUnits=&quot;&quot;)=0</td></tr>
-<tr class="memdesc:a8148ddfa29a0b5938c47c8f138fea858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set X,Y,Z unrotated spacings. <br /></td></tr>
-<tr class="separator:a8148ddfa29a0b5938c47c8f138fea858"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab75fcc8adb7487881aaf9652858fe146"><td class="memItemLeft" align="right" valign="top"><a id="ab75fcc8adb7487881aaf9652858fe146" name="ab75fcc8adb7487881aaf9652858fe146"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setOrigin</b> (Eigen::Ref&lt; Eigen::Vector3d &gt; v, const std::string &amp;lengthUnits=&quot;&quot;, const std::string &amp;temporalUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
+<tr class="memdesc:ab75fcc8adb7487881aaf9652858fe146"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set coordinates of origin. <br /></td></tr>
+<tr class="separator:ab75fcc8adb7487881aaf9652858fe146"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebece4b6b1b893d90c8adc1a5bce45ca"><td class="memItemLeft" align="right" valign="top"><a id="aebece4b6b1b893d90c8adc1a5bce45ca" name="aebece4b6b1b893d90c8adc1a5bce45ca"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setSpacings</b> (Eigen::Ref&lt; Eigen::Vector3d &gt; v, const std::string &amp;lengthUnits=&quot;&quot;, const std::string &amp;temporalUnits=&quot;&quot;)=0</td></tr>
+<tr class="memdesc:aebece4b6b1b893d90c8adc1a5bce45ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set X,Y,Z unrotated spacings. <br /></td></tr>
+<tr class="separator:aebece4b6b1b893d90c8adc1a5bce45ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab16d76ee8cb1b4235f3c3b500974b3f8"><td class="memItemLeft" align="right" valign="top"><a id="ab16d76ee8cb1b4235f3c3b500974b3f8" name="ab16d76ee8cb1b4235f3c3b500974b3f8"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setOrientation</b> (double val, const std::string &amp;angularUnits=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:ab16d76ee8cb1b4235f3c3b500974b3f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set XY plane orientation. <br /></td></tr>
@@ -124,14 +124,14 @@ virtual Eigen::MatrixXf&#160;</td><td class="memItemRight" valign="bottom"><b>ge
 virtual h5geo::Domain&#160;</td><td class="memItemRight" valign="bottom"><b>getDomain</b> ()=0</td></tr>
 <tr class="memdesc:a24e32be7b3940fd9114573c73cd0a9b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get domain (<code>TVD</code>, <code>TVDSS</code>, <code>TWT</code>, <code>OWT</code>) <br /></td></tr>
 <tr class="separator:a24e32be7b3940fd9114573c73cd0a9b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85350ce75f71cf7ee66b656ff225b7dc"><td class="memItemLeft" align="right" valign="top"><a id="a85350ce75f71cf7ee66b656ff225b7dc" name="a85350ce75f71cf7ee66b656ff225b7dc"></a>
-virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><b>getOrigin</b> (const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
-<tr class="memdesc:a85350ce75f71cf7ee66b656ff225b7dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get coordinates of origin. <br /></td></tr>
-<tr class="separator:a85350ce75f71cf7ee66b656ff225b7dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ef73141d31b3aee9a2c4651708944a7"><td class="memItemLeft" align="right" valign="top"><a id="a7ef73141d31b3aee9a2c4651708944a7" name="a7ef73141d31b3aee9a2c4651708944a7"></a>
-virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><b>getSpacings</b> (const std::string &amp;lengthUnits=&quot;&quot;)=0</td></tr>
-<tr class="memdesc:a7ef73141d31b3aee9a2c4651708944a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get X,Y,Z unrotated spacings. <br /></td></tr>
-<tr class="separator:a7ef73141d31b3aee9a2c4651708944a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01b10ba04d4985d4403ae0f796656124"><td class="memItemLeft" align="right" valign="top"><a id="a01b10ba04d4985d4403ae0f796656124" name="a01b10ba04d4985d4403ae0f796656124"></a>
+virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><b>getOrigin</b> (const std::string &amp;lengthUnits=&quot;&quot;, const std::string &amp;temporalUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
+<tr class="memdesc:a01b10ba04d4985d4403ae0f796656124"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get coordinates of origin. <br /></td></tr>
+<tr class="separator:a01b10ba04d4985d4403ae0f796656124"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ebbf57d0c50f787f2a5bae9bf2181b0"><td class="memItemLeft" align="right" valign="top"><a id="a1ebbf57d0c50f787f2a5bae9bf2181b0" name="a1ebbf57d0c50f787f2a5bae9bf2181b0"></a>
+virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><b>getSpacings</b> (const std::string &amp;lengthUnits=&quot;&quot;, const std::string &amp;temporalUnits=&quot;&quot;)=0</td></tr>
+<tr class="memdesc:a1ebbf57d0c50f787f2a5bae9bf2181b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get X,Y,Z unrotated spacings. <br /></td></tr>
+<tr class="separator:a1ebbf57d0c50f787f2a5bae9bf2181b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10fefb5700ec17c1ab24a4a00e68d235"><td class="memItemLeft" align="right" valign="top"><a id="a10fefb5700ec17c1ab24a4a00e68d235" name="a10fefb5700ec17c1ab24a4a00e68d235"></a>
 virtual double&#160;</td><td class="memItemRight" valign="bottom"><b>getOrientation</b> (const std::string &amp;angularUnits=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:a10fefb5700ec17c1ab24a4a00e68d235"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get XY plane orientation. <br /></td></tr>
