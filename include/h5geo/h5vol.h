@@ -36,11 +36,13 @@ public:
   virtual bool setOrigin(
       Eigen::Ref<Eigen::Vector3d> v,
       const std::string& lengthUnits = "",
+      const std::string& temporalUnits = "",
       bool doCoordTransform = false) = 0;
 	/// \brief Set X,Y,Z unrotated spacings
   virtual bool setSpacings(
       Eigen::Ref<Eigen::Vector3d> v,
-      const std::string& lengthUnits = "") = 0;
+      const std::string& lengthUnits = "",
+      const std::string& temporalUnits = "") = 0;
 	/// \brief Set XY plane orientation
   virtual bool setOrientation(
       double val,
@@ -62,10 +64,12 @@ public:
 	/// \brief Get coordinates of origin
   virtual Eigen::VectorXd getOrigin(
       const std::string& lengthUnits = "",
+      const std::string& temporalUnits = "",
       bool doCoordTransform = false) = 0;
 	/// \brief Get X,Y,Z unrotated spacings
   virtual Eigen::VectorXd getSpacings(
-      const std::string& lengthUnits = "") = 0;
+      const std::string& lengthUnits = "",
+      const std::string& temporalUnits = "") = 0;
 	/// \brief Get XY plane orientation
   virtual double getOrientation(
       const std::string& angularUnits = "") = 0;

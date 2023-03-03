@@ -58,42 +58,93 @@ bool H5VolImpl::setDomain(const h5geo::Domain& val){
 
 bool H5VolImpl::setOrigin(
     Eigen::Ref<Eigen::Vector3d> v,
-    const std::string& lengthUnits = "",
-    bool doCoordTransform = false)
+    const std::string& lengthUnits,
+    const std::string& temporalUnits,
+    bool doCoordTransform)
 {
+  std::string lengthUnitsTo = getLengthUnits();
+  double coef = 1.0;
+  if (!lengthUnits.empty() && !lengthUnitsTo.empty()){
+    coef = units::convert(
+          units::unit_from_string(lengthUnits),
+          units::unit_from_string(lengthUnitsTo));
+
+    v(0) = v(0)*coef;
+    v(1) = v(1)*coef;
+  }
+
+  h5geo::Domain domain = getDomain();
+  if (domain == h5geo::Domain::OWT ||
+      domain == h5geo::Domain::TWT){
+    std::string temporalUnitsTo = getTemporalUnits();
+    if (!temporalUnits.empty() && !temporalUnitsTo.empty()){
+      coef = units::convert(
+            units::unit_from_string(temporalUnits),
+            units::unit_from_string(temporalUnitsTo));
+
+      v(2) = v(2)*coef;
+    }
+  } else {
+    v(2) = v(2)*coef;
+  }
+
 #ifdef H5GEO_USE_GDAL
 if (doCoordTransform){
-  OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
+  // here we use `lengthUnitsTo` as `lengthUnitsFrom` as we already did units conversion
+  OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnitsTo));
   if (!coordTrans)
     return false;
 
   coordTrans->Transform(1, &v(0), &v(1));
-  return h5geo::overwriteAttribute(
-        objG,
-        std::string{h5geo::detail::origin},
-        v);
 }
 #endif
 
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::origin},
-        v, lengthUnits, getLengthUnits());
+        v);
 }
 
 bool H5VolImpl::setSpacings(
     Eigen::Ref<Eigen::Vector3d> v,
-    const std::string& lengthUnits = "")
+    const std::string& lengthUnits,
+    const std::string& temporalUnits)
 {
+  std::string lengthUnitsTo = getLengthUnits();
+  double coef = 1.0;
+  if (!lengthUnits.empty() && !lengthUnitsTo.empty()){
+    coef = units::convert(
+          units::unit_from_string(lengthUnits),
+          units::unit_from_string(lengthUnitsTo));
+
+    v(0) = v(0)*coef;
+    v(1) = v(1)*coef;
+  }
+
+  h5geo::Domain domain = getDomain();
+  if (domain == h5geo::Domain::OWT ||
+      domain == h5geo::Domain::TWT){
+    std::string temporalUnitsTo = getTemporalUnits();
+    if (!temporalUnits.empty() && !temporalUnitsTo.empty()){
+      coef = units::convert(
+            units::unit_from_string(temporalUnits),
+            units::unit_from_string(temporalUnitsTo));
+
+      v(2) = v(2)*coef;
+    }
+  } else {
+    v(2) = v(2)*coef;
+  }
+
   return h5geo::overwriteAttribute(
         objG,
         std::string{h5geo::detail::spacings},
-        v, lengthUnits, getLengthUnits());
+        v);
 }
 
 bool H5VolImpl::setOrientation(
     double val,
-    const std::string& angularUnits = "")
+    const std::string& angularUnits)
 {
     return h5geo::overwriteAttribute(
         objG,
@@ -146,44 +197,99 @@ h5geo::Domain H5VolImpl::getDomain(){
 }
 
 Eigen::VectorXd H5VolImpl::getOrigin(
-    const std::string& lengthUnits = "",
-    bool doCoordTransform = false)
+    const std::string& lengthUnits,
+    const std::string& temporalUnits,
+    bool doCoordTransform)
 {
+  Eigen::VectorXd v = h5geo::readDoubleEigenVecAttribute(
+      objG,
+      std::string{h5geo::detail::origin});
+
+  if (v.size() != 3)
+    return v;
+
+  std::string lengthUnitsFrom = getLengthUnits();
+  double coef = 1.0;
+  if (!lengthUnitsFrom.empty() && !lengthUnits.empty()){
+    coef = units::convert(
+          units::unit_from_string(lengthUnitsFrom),
+          units::unit_from_string(lengthUnits));
+
+    v(0) = v(0)*coef;
+    v(1) = v(1)*coef;
+  }
+
+  h5geo::Domain domain = getDomain();
+  if (domain == h5geo::Domain::OWT ||
+      domain == h5geo::Domain::TWT){
+    std::string temporalUnitsFrom = getTemporalUnits();
+    if (!temporalUnitsFrom.empty() && !temporalUnits.empty()){
+      coef = units::convert(
+            units::unit_from_string(temporalUnitsFrom),
+            units::unit_from_string(temporalUnits));
+
+      v(2) = v(2)*coef;
+    }
+  } else {
+    v(2) = v(2)*coef;
+  }
+
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
-    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
+    // here we use `lengthUnitsFrom` as `lengthUnitsTo` as we already did units conversion
+    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnitsFrom));
     if (!coordTrans)
       return Eigen::VectorXd();
 
-    Eigen::VectorXd v = h5geo::readDoubleEigenVecAttribute(
-          objG,
-          std::string{h5geo::detail::origin});
-
-    if (v.size() != 3)
-      return Eigen::VectorXd();
-
     coordTrans->Transform(1, &v(0), &v(1));
-    return v;
   }
 #endif
 
-  return h5geo::readDoubleEigenVecAttribute(
-        objG,
-        std::string{h5geo::detail::origin},
-        getLengthUnits(), lengthUnits);
+  return v;
 }
 
 Eigen::VectorXd H5VolImpl::getSpacings(
-    const std::string& lengthUnits = "")
+    const std::string& lengthUnits,
+    const std::string& temporalUnits)
 {
-  return h5geo::readDoubleEigenVecAttribute(
+  Eigen::VectorXd v = h5geo::readDoubleEigenVecAttribute(
       objG,
-      std::string{h5geo::detail::spacings},
-      getLengthUnits(), lengthUnits);
+      std::string{h5geo::detail::spacings});
+
+  if (v.size() != 3)
+    return v;
+
+  std::string lengthUnitsFrom = getLengthUnits();
+  double coef = 1.0;
+  if (!lengthUnitsFrom.empty() && !lengthUnits.empty()){
+    coef = units::convert(
+          units::unit_from_string(lengthUnitsFrom),
+          units::unit_from_string(lengthUnits));
+
+    v(0) = v(0)*coef;
+    v(1) = v(1)*coef;
+  }
+
+  h5geo::Domain domain = getDomain();
+  if (domain == h5geo::Domain::OWT ||
+      domain == h5geo::Domain::TWT){
+    std::string temporalUnitsFrom = getTemporalUnits();
+    if (!temporalUnitsFrom.empty() && !temporalUnits.empty()){
+      coef = units::convert(
+            units::unit_from_string(temporalUnitsFrom),
+            units::unit_from_string(temporalUnits));
+
+      v(2) = v(2)*coef;
+    }
+  } else {
+    v(2) = v(2)*coef;
+  }
+
+  return v;
 }
 
 double H5VolImpl::getOrientation(
-    const std::string& angularUnits = "")
+    const std::string& angularUnits)
 {
   return h5geo::readDoubleAttribute(
       objG,
@@ -198,7 +304,7 @@ size_t H5VolImpl::getNX()
     return 0;
 
   std::vector<size_t> dims = opt->getDimensions();
-  if (dims.size() < 3)
+  if (dims.size() != 3)
     return 0;
 
   return dims[2];
@@ -211,7 +317,7 @@ size_t H5VolImpl::getNY()
     return 0;
 
   std::vector<size_t> dims = opt->getDimensions();
-  if (dims.size() < 3)
+  if (dims.size() != 3)
     return 0;
 
   return dims[1];
@@ -224,7 +330,7 @@ size_t H5VolImpl::getNZ()
     return 0;
 
   std::vector<size_t> dims = opt->getDimensions();
-  if (dims.size() < 3)
+  if (dims.size() != 3)
     return 0;
 
   return dims[0];

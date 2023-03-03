@@ -20,19 +20,21 @@ public:
       const size_t& nX,
       const size_t& nY,
       const size_t& nZ,
-      const std::string& dataUnits) override;
+      const std::string& dataUnits = "") override;
 
   virtual bool setDomain(const h5geo::Domain& domain) override;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::Vector3d> v,
-      const std::string& lengthUnits,
-      bool doCoordTransform) override;
+      const std::string& lengthUnits = "",
+      const std::string& temporalUnits = "",
+      bool doCoordTransform = false) override;
   virtual bool setSpacings(
       Eigen::Ref<Eigen::Vector3d> v,
-      const std::string& lengthUnits) override;
+      const std::string& lengthUnits = "",
+      const std::string& temporalunits = "") override;
   virtual bool setOrientation(
       double val,
-      const std::string& angularUnits) override;
+      const std::string& angularUnits = "") override;
 
   virtual Eigen::MatrixXf getData(
       const size_t& iX0,
@@ -41,16 +43,18 @@ public:
       const size_t& nX,
       const size_t& nY,
       const size_t& nZ,
-      const std::string& dataUnits) override;
+      const std::string& dataUnits = "") override;
 
   virtual h5geo::Domain getDomain() override;
   virtual Eigen::VectorXd getOrigin(
-      const std::string& lengthUnits,
-      bool doCoordTransform) override;
+      const std::string& lengthUnits = "",
+      const std::string& temporalUnits = "",
+      bool doCoordTransform = false) override;
   virtual Eigen::VectorXd getSpacings(
-      const std::string& lengthUnits) override;
+      const std::string& lengthUnits = "",
+      const std::string& temporalUnits = "") override;
   virtual double getOrientation(
-      const std::string& angularUnits) override;
+      const std::string& angularUnits = "") override;
   virtual size_t getNX() override;
   virtual size_t getNY() override;
   virtual size_t getNZ() override;
