@@ -381,7 +381,7 @@ public:
       const std::string& unitsFrom = "",
       const std::string& unitsTo = "") = 0;
 
-  /// \brief Get parameters that were used to create current dev curve
+  /// \brief Get parameters that were used to create current seis
   virtual SeisParam getParam() = 0;
 
   /// \brief Check `fromTrc`, `nTrc` (passed by reference) and diminish
