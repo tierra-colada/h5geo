@@ -2119,6 +2119,9 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
   Eigen::MatrixXf TRACE;
   Eigen::MatrixXd HDR;
   std::vector<std::string> keyList = {ilHeader, xlHeader, xHeader, yHeader};
+  if (!this->hasPKeySort(keyList[0]))
+    this->addPKeySort(keyList[0]);
+    
   std::vector<double> minList = {ilMin, xlMin, std::numeric_limits<double>::min(), std::numeric_limits<double>::min()};
   std::vector<double> maxList = {ilMax, xlMax, std::numeric_limits<double>::max(), std::numeric_limits<double>::max()};
   Eigen::VectorX<size_t> ind = this->getSortedData(TRACE, HDR, keyList, minList, maxList, 1, 0, 0);
