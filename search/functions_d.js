@@ -18,5 +18,6 @@ var searchData=
   ['readstringattribute_15',['readStringAttribute',['../namespaceh5geo.html#ac050ee6fd2857f314551c811c3f7b885',1,'h5geo']]],
   ['removeattributemap_16',['removeAttributeMap',['../class_h5_map.html#a7507f9716ba920afe37b34cc6ab32193',1,'H5Map']]],
   ['removepkeysort_17',['removePKeySort',['../class_h5_seis.html#a0fab459bda81b376739f6c60a874ce53',1,'H5Seis']]],
-  ['rowscols2elementset_18',['rowsCols2ElementSet',['../namespaceh5geo.html#a1b0c379559c5f16c44b23bf274710b7b',1,'h5geo::rowsCols2ElementSet(const Eigen::DenseBase&lt; D &gt; &amp;rows, const Eigen::DenseBase&lt; D &gt; &amp;cols)'],['../namespaceh5geo.html#a20f702bb751edff5febf5595a1c7c2d6',1,'h5geo::rowsCols2ElementSet(const std::vector&lt; T &gt; &amp;rows, const std::vector&lt; T &gt; &amp;cols)']]]
+  ['resize_18',['resize',['../class_h5_vol.html#a4a3c99569fb39a668b559645b38c9d87',1,'H5Vol']]],
+  ['rowscols2elementset_19',['rowsCols2ElementSet',['../namespaceh5geo.html#a1b0c379559c5f16c44b23bf274710b7b',1,'h5geo::rowsCols2ElementSet(const Eigen::DenseBase&lt; D &gt; &amp;rows, const Eigen::DenseBase&lt; D &gt; &amp;cols)'],['../namespaceh5geo.html#a20f702bb751edff5febf5595a1c7c2d6',1,'h5geo::rowsCols2ElementSet(const std::vector&lt; T &gt; &amp;rows, const std::vector&lt; T &gt; &amp;cols)']]]
 ];

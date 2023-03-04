@@ -2228,7 +2228,7 @@ rows/cols are responsible for storing data (like tables) </p>
     <tr><td class="paramname">y</td><td>vector of y-coord </td></tr>
     <tr><td class="paramname">origin_x</td><td>out origin x-coord </td></tr>
     <tr><td class="paramname">origin_y</td><td>out origin y-coord </td></tr>
-    <tr><td class="paramname">orientation</td><td>out orientation (degree) </td></tr>
+    <tr><td class="paramname">orientation</td><td>out orientation (counterclock angle, degree) </td></tr>
     <tr><td class="paramname">ilSpacing</td><td>out spacing ALONG inline (i.e. distance between two adjoint xlines) </td></tr>
     <tr><td class="paramname">xlSpacing</td><td>out spacing ALONG xline (i.e. distance between two adjoint inlines) </td></tr>
     <tr><td class="paramname">isILReversed</td><td>out true if inline grows while X or Y axis decrease </td></tr>
@@ -2239,7 +2239,7 @@ rows/cols are responsible for storing data (like tables) </p>
 </dl>
 <h1><a class="anchor" id="autotoc_md0"></a>
 NORMAL PLANS</h1>
-<p>Normal plans always have orientation to p2 bigger than orientation to p1</p>
+<p>Normal plans always have orientation to p2 bigger than orientation to p1 </p><dl class="section note"><dt>Note</dt><dd><code>o</code> (origin) is always at [-x, -y] thus spacings are always positive</dd></dl>
 <pre>
 
              XL_IL                         XLr_IL
@@ -2279,7 +2279,7 @@ REVERSED PLANS</h1>
 
              XL_IL                         XLr_IL
   XL + + + + + + + + + + +      XL o p2+ + + + + + + + +
- (y) + . . . . . . . . . +     (y) p1. . . . . . . . . +
+ (y) + . . . . . . . . . +    (-y) p1. . . . . . . . . +
      + . . . . . . . . . +         + . . . . . . . . . +
      + . . . . . . . . . +         + . . . . . . . . . +
      + . . . . . . . . . +         + . . . . . . . . . +
@@ -2288,13 +2288,13 @@ REVERSED PLANS</h1>
      + . . . . . . . . . +         + . . . . . . . . . +
      + . . . . . . . . . +         + . . . . . . . . . +
      p1. . . . . . . . . +         + . . . . . . . . . +
-(-y) o p2+ + + + + + + + +    (-y) + + + + + + + + + + +
+(-y) o p2+ + + + + + + + +     (y) + + + + + + + + + + +
                         IL                            IL
-     (-x)              (x)         (x)              (-x)
+     (-x)              (x)         (-x)              (x)
 
             XL_ILr                        XLr_ILr
   XL + + + + + + + + + + +      XL + + + + + + + + + p2o
-(-y) + . . . . . . . . . +    (-y) + . . . . . . . . .p1
+ (y) + . . . . . . . . . +    (-y) + . . . . . . . . .p1
      + . . . . . . . . . +         + . . . . . . . . . +
      + . . . . . . . . . +         + . . . . . . . . . +
      + . . . . . . . . . +         + . . . . . . . . . +
@@ -2303,9 +2303,9 @@ REVERSED PLANS</h1>
      + . . . . . . . . . +         + . . . . . . . . . +
      + . . . . . . . . . +         + . . . . . . . . . +
      + . . . . . . . . .p1         + . . . . . . . . . +
- (y) + + + + + + + + + p2o     (y) + + + + + + + + + + +
+(-y) + + + + + + + + + p2o     (y) + + + + + + + + + + +
                         IL                            IL
-     (-x)              (x)         (x)              (-x)
+     (x)              (-x)         (x)              (-x)
 
 </pre> 
 </div>

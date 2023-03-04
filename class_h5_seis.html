@@ -424,6 +424,9 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>updateTraceHe
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>updatePKeySort</b> (const std::string &amp;pKeyName)=0</td></tr>
 <tr class="memdesc:a10ec4e2f38be2c284caeb8cf94557bef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update sorting for prepared <code>PKey</code> <br /></td></tr>
 <tr class="separator:a10ec4e2f38be2c284caeb8cf94557bef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99c25cca8711de3d03d293bdf7b0ca35"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a99c25cca8711de3d03d293bdf7b0ca35">exportToVol</a> (<a class="el" href="class_h5_vol.html">H5Vol</a> *vol, const std::string &amp;xHeader=&quot;CDP_X&quot;, const std::string &amp;yHeader=&quot;CDP_Y&quot;, const std::string &amp;ilHeader=&quot;INLINE&quot;, const std::string &amp;xlHeader=&quot;XLINE&quot;, double ilMin=std::numeric_limits&lt; double &gt;::min(), double ilMax=std::numeric_limits&lt; double &gt;::max(), double xlMin=std::numeric_limits&lt; double &gt;::min(), double xlMax=std::numeric_limits&lt; double &gt;::max(), size_t fromSampInd=0, size_t nSamp=std::numeric_limits&lt; size_t &gt;::max())=0</td></tr>
+<tr class="memdesc:a99c25cca8711de3d03d293bdf7b0ca35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Export seismic to <code><a class="el" href="class_h5_vol.html" title="Provides API to work with volumes.">H5Vol</a></code>.  <br /></td></tr>
+<tr class="separator:a99c25cca8711de3d03d293bdf7b0ca35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03dbbf5cca5beadeb8c01305b09144c8"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a03dbbf5cca5beadeb8c01305b09144c8">calcBoundary</a> (const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
 <tr class="memdesc:a03dbbf5cca5beadeb8c01305b09144c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate <code>XY</code> boundary around the survey.  <br /></td></tr>
 <tr class="separator:a03dbbf5cca5beadeb8c01305b09144c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -791,6 +794,99 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a99c25cca8711de3d03d293bdf7b0ca35" name="a99c25cca8711de3d03d293bdf7b0ca35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99c25cca8711de3d03d293bdf7b0ca35">&#9670;&#160;</a></span>exportToVol()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool H5Seis::exportToVol </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_h5_vol.html">H5Vol</a> *&#160;</td>
+          <td class="paramname"><em>vol</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>xHeader</em> = <code>&quot;CDP_X&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>yHeader</em> = <code>&quot;CDP_Y&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>ilHeader</em> = <code>&quot;INLINE&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>xlHeader</em> = <code>&quot;XLINE&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ilMin</em> = <code>std::numeric_limits&lt;&#160;double&#160;&gt;::min()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ilMax</em> = <code>std::numeric_limits&lt;&#160;double&#160;&gt;::max()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>xlMin</em> = <code>std::numeric_limits&lt;&#160;double&#160;&gt;::min()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>xlMax</em> = <code>std::numeric_limits&lt;&#160;double&#160;&gt;::max()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>fromSampInd</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>nSamp</em> = <code>std::numeric_limits&lt;&#160;size_t&#160;&gt;::max()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Export seismic to <code><a class="el" href="class_h5_vol.html" title="Provides API to work with volumes.">H5Vol</a></code>. </p>
+<dl class="section note"><dt>Note</dt><dd>Selected traces must shape a rectangle. </dd></dl>
 
 </div>
 </div>

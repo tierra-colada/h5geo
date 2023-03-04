@@ -116,6 +116,10 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setSpacings</
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setOrientation</b> (double val, const std::string &amp;angularUnits=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:ab16d76ee8cb1b4235f3c3b500974b3f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set XY plane orientation. <br /></td></tr>
 <tr class="separator:ab16d76ee8cb1b4235f3c3b500974b3f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a3c99569fb39a668b559645b38c9d87"><td class="memItemLeft" align="right" valign="top"><a id="a4a3c99569fb39a668b559645b38c9d87" name="a4a3c99569fb39a668b559645b38c9d87"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>resize</b> (size_t nx, size_t ny, size_t nz)=0</td></tr>
+<tr class="memdesc:a4a3c99569fb39a668b559645b38c9d87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize volume. <br /></td></tr>
+<tr class="separator:a4a3c99569fb39a668b559645b38c9d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15c21074fdb5c48a07425353bd0a5769"><td class="memItemLeft" align="right" valign="top"><a id="a15c21074fdb5c48a07425353bd0a5769" name="a15c21074fdb5c48a07425353bd0a5769"></a>
 virtual Eigen::MatrixXf&#160;</td><td class="memItemRight" valign="bottom"><b>getData</b> (const size_t &amp;iX0, const size_t &amp;iY0, const size_t &amp;iZ0, const size_t &amp;nX, const size_t &amp;nY, const size_t &amp;nZ, const std::string &amp;dataUnits=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:a15c21074fdb5c48a07425353bd0a5769"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read subvolume starting from iX0, iY0, iZ0 indices. <code>data</code> matrix is of size: nRows=nX, nCols=nY*nZ. <br /></td></tr>
