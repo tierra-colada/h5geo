@@ -263,16 +263,17 @@ bool H5SeisImpl::writeTrace(
     TRACE = TRACE*coef;
   }
 
-  std::vector<size_t> offset({0, fromSampInd});
-  std::vector<size_t> count({1, size_t(TRACE.rows())});
-  size_t nTrc = getNTrc();
-  for (size_t i = 0; i < trcInd.size(); i++){
-    size_t ind = trcInd(i);
-    if (ind < nTrc){
-      offset[0] = ind;
-      traceD.select(offset, count).write_raw(TRACE.col(i).data());
-    }
-  }
+  // copy Eigen vector to std::vector
+  std::vector<size_t> rows(trcInd.size());
+  Eigen::VectorX<size_t>::Map(&rows[0], trcInd.size()) = trcInd;
+
+  Eigen::VectorX<ptrdiff_t> sortInd = h5geo::sort(trcInd);
+
+  // Selection by rows may break the order of rows as it 
+  // works with sequentially increasing order.
+  // Thus  we should rearrange Eigen columns before writing.
+  traceD.select_rows(rows, fromSampInd, TRACE.rows()).write(TRACE(Eigen::all, sortInd).eval().data());
+
   return true;
 }
 
@@ -592,20 +593,20 @@ Eigen::MatrixXf H5SeisImpl::getTrace(
   if (!checkSampleLimits(fromSampInd, nSamp))
     return Eigen::MatrixXf();
 
-  std::vector<size_t> offset({0, fromSampInd});
-  std::vector<size_t> count({1, nSamp});
-  size_t nTrc = getNTrc();
-  double nullVal = getNullValue();
+  // copy Eigen vector to std::vector
+  std::vector<size_t> rows(trcInd.size());
+  Eigen::VectorX<size_t>::Map(&rows[0], trcInd.size()) = trcInd;
+
+  // Selection by rows may break the order of rows as it 
+  // works with sequentially increasing order.
+  // Thus after using it we should rearrange Eigen columns after reading.
   Eigen::MatrixXf TRACE(nSamp, trcInd.size());
-  for (size_t i = 0; i < trcInd.size(); i++){
-    size_t ind = trcInd(i);
-    if (ind < nTrc){
-      offset[0] = ind;
-      traceD.select(offset, count).read(TRACE.col(i).data());
-    } else {
-      TRACE.col(i).array() = nullVal;
-    }
-  }
+  traceD.select_rows(rows, fromSampInd, nSamp).read(TRACE.data());
+
+  Eigen::VectorX<ptrdiff_t> sortInd = h5geo::sort(trcInd);
+  // it is important to have `.eval()` thus right part 
+  // uses `Eigen::all` for both rows and cols
+  TRACE(Eigen::all, sortInd) = TRACE(Eigen::all, Eigen::all).eval();
 
   if (!dataUnits.empty()){
     double coef = units::convert(
@@ -2151,6 +2152,17 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
   if (!status)
     return false;
 
+  // make plan normal by exchanging INLINE and XLINE headers
+  if (isPlanReversed){
+    keyList = {xlHeader, ilHeader, xHeader, yHeader};
+    if (!this->hasPKeySort(keyList[0]) && !this->addPKeySort(keyList[0]))
+      return false;
+
+    minList = {xlMin, ilMin, std::numeric_limits<double>::min(), std::numeric_limits<double>::min()};
+    maxList = {xlMax, ilMax, std::numeric_limits<double>::max(), std::numeric_limits<double>::max()};
+    ind = this->getSortedData(TRACE, HDR, keyList, minList, maxList, 1, 0, 0);
+  }
+
   Eigen::VectorXd il = HDR.col(0);
   Eigen::VectorXd xl = HDR.col(1);
 
@@ -2167,111 +2179,98 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
     return false;
 
   size_t nil = dv.quot;
-
-  if (isPlanReversed)
-    status = vol->resize(nil, nxl, nSamp);
-  else
-    status = vol->resize(nxl, nil, nSamp);
-
-  if (!status)
+  if (!vol->resize(nxl, nil, nSamp))
     return false;
 
+  // N - number of slices written at once (usually 
+  // should be equal to Y-chunkSize to acieve best IO speed)
+  size_t N = 64;
+  VolParam vp = vol->getParam();
+  if (vp.yChunkSize > 0 &&
+      vp.nY > 0 &&
+      vp.yChunkSize < vp.nY){
+    N = vp.yChunkSize;
+  } else if (vp.yChunkSize > 0 &&
+      vp.nY > 0 &&
+      vp.yChunkSize > vp.nY &&
+      vp.nY < N){
+    N = vp.nY;
+  }
+
   double sampRate = this->getSampRate();
-  if (isPlanReversed){
-    if (isXLReversed && isILReversed){
-      for (int i = 0; i < nxl; i++){
-        size_t i0 = i;
-        size_t i1 = ind.size()-1;
-        Eigen::VectorX<size_t> ind_xl = ind(Eigen::seq(i0,i1,nil));
-        Eigen::MatrixXf XL = this->getTrace(ind_xl, fromSampInd, nSamp).
-            transpose().          // switch X and Z axes
-            colwise().reverse();  // vertical flip (X axis flip)
-        if (sampRate < 0)
-          XL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
-        vol->writeData(XL, 0, nxl-(i+1), 0, XL.rows(), 1, XL.cols());
+  if (isXLReversed && isILReversed){
+    for (int i = 0; i < nil; i+=N){
+      size_t i0 = i*nxl;
+      size_t i1 = i0+nxl*N-1;
+      if (i1 >= ind.size())
+        i1 = ind.size()-1;
+      size_t n_fact = (i1-i0+1)/nxl;
+      Eigen::VectorX<size_t> ind_il(i1-i0+1);
+      size_t ii1 = ind_il.size()-1;
+      for (int n = 0; n < N; n++){
+        size_t i1 = i0+nxl-1;
+        if (i1 >= ind.size())
+          i1 = ind.size()-1;
+        size_t ii0 = ii1-nxl+1;
+        ind_il(Eigen::seq(ii0,ii1)) = ind(Eigen::seq(i1,i0,Eigen::fix<-1>));
+        ii1 = ii0-1;
       }
-    } else if (isXLReversed){
-      for (int i = 0; i < nxl; i++){
-        size_t i0 = i;
-        size_t i1 = ind.size()-1;
-        Eigen::VectorX<size_t> ind_xl = ind(Eigen::seq(i0,i1,nil));
-        Eigen::MatrixXf XL = this->getTrace(ind_xl, fromSampInd, nSamp).
-            transpose().          // switch X and Z axes
-            colwise().reverse();  // vertical flip (X axis flip)
-        if (sampRate < 0)
-          XL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
-        vol->writeData(XL, 0, i, 0, XL.rows(), 1, XL.cols());
+      Eigen::MatrixXf IL = this->getTrace(ind_il, fromSampInd, nSamp).
+          transpose();          // switch X and Z axes
+      if (sampRate < 0)
+        IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
+      vol->writeData(IL, 0, nil-(i+1), 0, nxl, n_fact, nSamp);
+    }
+  } else if (isXLReversed){
+    for (int i = 0; i < nil; i+=N){
+      size_t i0 = i*nxl;
+      size_t i1 = i0+nxl*N-1;
+      if (i1 >= ind.size())
+        i1 = ind.size()-1;
+      size_t n_fact = (i1-i0+1)/nxl;
+      Eigen::VectorX<size_t> ind_il(i1-i0+1);
+      size_t ii1 = ind_il.size()-1;
+      for (int n = 0; n < N; n++){
+        size_t i1 = i0+nxl-1;
+        if (i1 >= ind.size())
+          i1 = ind.size()-1;
+        size_t ii0 = ii1-nxl+1;
+        ind_il(Eigen::seq(ii0,ii1)) = ind(Eigen::seq(i0,i1));
+        ii1 = ii0-1;
       }
-    } else if (isILReversed){
-      for (int i = 0; i < nxl; i++){
-        size_t i0 = i;
-        size_t i1 = ind.size()-1;
-        Eigen::VectorX<size_t> ind_xl = ind(Eigen::seq(i0,i1,nil));
-        Eigen::MatrixXf XL = this->getTrace(ind_xl, fromSampInd, nSamp).
-            transpose();          // switch X and Z axes
-        if (sampRate < 0)
-          XL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
-        vol->writeData(XL, 0, nxl-(i+1), 0, XL.rows(), 1, XL.cols());
-      }
-    } else {
-      for (int i = 0; i < nxl; i++){
-        size_t i0 = i;
-        size_t i1 = ind.size()-1;
-        Eigen::VectorX<size_t> ind_xl = ind(Eigen::seq(i0,i1,nil));
-        Eigen::MatrixXf XL = this->getTrace(ind_xl, fromSampInd, nSamp).
-            transpose();          // switch X and Z axes
-        if (sampRate < 0)
-          XL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
-        vol->writeData(XL, 0, i, 0, XL.rows(), 1, XL.cols());
-      }
+      Eigen::MatrixXf IL = this->getTrace(ind_il, fromSampInd, nSamp).
+          transpose();          // switch X and Z axes
+      if (sampRate < 0)
+        IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
+      vol->writeData(IL, 0, nil-(i+1), 0, nxl, n_fact, nSamp);
+    }
+  } else if (isILReversed){
+    for (int i = 0; i < nil; i+=N){
+      size_t i0 = i*nxl;
+      size_t i1 = i0+nxl*N-1;
+      if (i1 >= ind.size())
+        i1 = ind.size()-1;
+      size_t n_fact = (i1-i0+1)/nxl;
+      Eigen::VectorX<size_t> ind_il = ind(Eigen::seq(i1,i0,Eigen::fix<-1>));
+      Eigen::MatrixXf IL = this->getTrace(ind_il, fromSampInd, nSamp).
+          transpose();          // switch X and Z axes
+      if (sampRate < 0)
+        IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
+      vol->writeData(IL, 0, i, 0, nxl, n_fact, nSamp);
     }
   } else {
-    if (isXLReversed && isILReversed){
-      for (int i = 0; i < nil; i++){
-        size_t i0 = i*nxl;
-        size_t i1 = i0+nxl-1;
-        Eigen::VectorX<size_t> ind_il = ind(Eigen::seq(i0,i1));
-        Eigen::MatrixXf IL = this->getTrace(ind_il, fromSampInd, nSamp).
-            transpose().          // switch X and Z axes
-            colwise().reverse();  // vertical flip (X axis flip)
-        if (sampRate < 0)
-          IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
-        vol->writeData(IL, 0, nil-(i+1), 0, IL.rows(), 1, IL.cols());
-      }
-    } else if (isXLReversed){
-      for (int i = 0; i < nil; i++){
-        size_t i0 = i*nxl;
-        size_t i1 = i0+nxl-1;
-        Eigen::VectorX<size_t> ind_il = ind(Eigen::seq(i0,i1));
-        Eigen::MatrixXf IL = this->getTrace(ind_il, fromSampInd, nSamp).
-            transpose();          // switch X and Z axes
-        if (sampRate < 0)
-          IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
-        vol->writeData(IL, 0, nil-(i+1), 0, IL.rows(), 1, IL.cols());
-      }
-    } else if (isILReversed){
-      for (int i = 0; i < nil; i++){
-        size_t i0 = i*nxl;
-        size_t i1 = i0+nxl-1;
-        Eigen::VectorX<size_t> ind_il = ind(Eigen::seq(i0,i1));
-        Eigen::MatrixXf IL = this->getTrace(ind_il, fromSampInd, nSamp).
-            transpose().          // switch X and Z axes
-            colwise().reverse();  // vertical flip (X axis flip)
-        if (sampRate < 0)
-          IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
-        vol->writeData(IL, 0, i, 0, IL.rows(), 1, IL.cols());
-      }
-    } else {
-      for (int i = 0; i < nil; i++){
-        size_t i0 = i*nxl;
-        size_t i1 = i0+nxl-1;
-        Eigen::VectorX<size_t> ind_il = ind(Eigen::seq(i0,i1));
-        Eigen::MatrixXf IL = this->getTrace(ind_il, fromSampInd, nSamp).
-            transpose();          // switch X and Z axes
-        if (sampRate < 0)
-          IL.rowwise().reverseInPlace();
-        vol->writeData(IL, 0, i, 0, IL.rows(), 1, IL.cols());
-      }
+    for (int i = 0; i < nil; i+=N){
+      size_t i0 = i*nxl;
+      size_t i1 = i0+nxl*N-1;
+      if (i1 >= ind.size())
+        i1 = ind.size()-1;
+      size_t n_fact = (i1-i0+1)/nxl;
+      Eigen::VectorX<size_t> ind_il = ind(Eigen::seq(i0,i1));
+      Eigen::MatrixXf IL = this->getTrace(ind_il, fromSampInd, nSamp).
+          transpose();          // switch X and Z axes
+      if (sampRate < 0)
+        IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
+      vol->writeData(IL, 0, i, 0, nxl, n_fact, nSamp);
     }
   }
 
@@ -2285,6 +2284,8 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
   vol->setOrigin(origin);
 
   Eigen::Vector3d spacings;
+  // even though we made plan normal `ilSpacing` and `xlSpacing` 
+  // are defined relatively to original plan (it may be reversed)
   if (isPlanReversed){
     spacings(0) = xlSpacing;
     spacings(1) = ilSpacing;
