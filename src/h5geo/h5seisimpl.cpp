@@ -2165,7 +2165,6 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
 
   size_t nil = dv.quot;
 
-  bool status = false;
   if (isPlanReversed)
     status = vol->resize(nil, nxl, nSamp);
   else
