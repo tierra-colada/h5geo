@@ -48,6 +48,10 @@ public:
       double val,
       const std::string& angularUnits = "") = 0;
 
+  /// \brief Resize volume
+  virtual bool resize(
+      size_t nx, size_t ny, size_t nz) = 0;
+
   /// \brief Read subvolume starting from iX0, iY0, iZ0 indices.
   /// `data` matrix is of size: nRows=nX, nCols=nY*nZ
   virtual Eigen::MatrixXf getData(

@@ -636,7 +636,7 @@ H5GEO_EXPORT ptrdiff_t getIndexFromAttribute(
 /// \param y vector of y-coord
 /// \param origin_x out origin x-coord
 /// \param origin_y out origin y-coord
-/// \param orientation out orientation (degree)
+/// \param orientation out orientation (counterclock angle, degree)
 /// \param ilSpacing out spacing ALONG inline (i.e. distance between two adjoint xlines)
 /// \param xlSpacing out spacing ALONG xline (i.e. distance between two adjoint inlines)
 /// \param isILReversed out true if inline grows while X or Y axis decrease
@@ -645,8 +645,9 @@ H5GEO_EXPORT ptrdiff_t getIndexFromAttribute(
 ///
 /// NORMAL PLANS
 /// ============
-///
+/// 
 /// Normal plans always have orientation to p2 bigger than orientation to p1
+/// \note `o` (origin) is always at [-x, -y] thus spacings are always positive
 ///
 /// <pre>
 ///
@@ -692,7 +693,7 @@ H5GEO_EXPORT ptrdiff_t getIndexFromAttribute(
 ///
 ///              XL_IL                         XLr_IL
 ///   XL + + + + + + + + + + +      XL o p2+ + + + + + + + +
-///  (y) + . . . . . . . . . +     (y) p1. . . . . . . . . +
+///  (y) + . . . . . . . . . +    (-y) p1. . . . . . . . . +
 ///      + . . . . . . . . . +         + . . . . . . . . . +
 ///      + . . . . . . . . . +         + . . . . . . . . . +
 ///      + . . . . . . . . . +         + . . . . . . . . . +
@@ -701,13 +702,13 @@ H5GEO_EXPORT ptrdiff_t getIndexFromAttribute(
 ///      + . . . . . . . . . +         + . . . . . . . . . +
 ///      + . . . . . . . . . +         + . . . . . . . . . +
 ///      p1. . . . . . . . . +         + . . . . . . . . . +
-/// (-y) o p2+ + + + + + + + +    (-y) + + + + + + + + + + +
+/// (-y) o p2+ + + + + + + + +     (y) + + + + + + + + + + +
 ///                         IL                            IL
-///      (-x)              (x)         (x)              (-x)
+///      (-x)              (x)         (-x)              (x)
 ///
 ///             XL_ILr                        XLr_ILr
 ///   XL + + + + + + + + + + +      XL + + + + + + + + + p2o
-/// (-y) + . . . . . . . . . +    (-y) + . . . . . . . . .p1
+///  (y) + . . . . . . . . . +    (-y) + . . . . . . . . .p1
 ///      + . . . . . . . . . +         + . . . . . . . . . +
 ///      + . . . . . . . . . +         + . . . . . . . . . +
 ///      + . . . . . . . . . +         + . . . . . . . . . +
@@ -716,9 +717,9 @@ H5GEO_EXPORT ptrdiff_t getIndexFromAttribute(
 ///      + . . . . . . . . . +         + . . . . . . . . . +
 ///      + . . . . . . . . . +         + . . . . . . . . . +
 ///      + . . . . . . . . .p1         + . . . . . . . . . +
-///  (y) + + + + + + + + + p2o     (y) + + + + + + + + + + +
+/// (-y) + + + + + + + + + p2o     (y) + + + + + + + + + + +
 ///                         IL                            IL
-///      (-x)              (x)         (x)              (-x)
+///      (x)              (-x)         (x)              (-x)
 ///
 /// </pre>
 H5GEO_EXPORT bool getSurveyInfoFromSortedData(

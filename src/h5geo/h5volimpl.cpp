@@ -152,6 +152,27 @@ bool H5VolImpl::setOrientation(
         val, angularUnits, getAngularUnits());
 }
 
+bool H5VolImpl::resize(
+    size_t nx, size_t ny, size_t nz)
+{
+  if (nx < 1 || ny < 1 || nz < 1)
+    return false;
+
+  auto opt = getVolD();
+  if (!opt.has_value())
+    return false;
+
+  if (!opt->getCreateProps().isChunked())
+    return false;
+
+  try {
+    opt->resize({nz, ny, nx});
+    return true;
+  } catch (h5gt::Exception e) {
+    return false;
+  }
+}
+
 Eigen::MatrixXf H5VolImpl::getData(
     const size_t& iX0,
     const size_t& iY0,

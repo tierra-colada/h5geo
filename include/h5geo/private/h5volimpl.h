@@ -36,6 +36,9 @@ public:
       double val,
       const std::string& angularUnits = "") override;
 
+  virtual bool resize(
+      size_t nx, size_t ny, size_t nz) override;
+
   virtual Eigen::MatrixXf getData(
       const size_t& iX0,
       const size_t& iY0,

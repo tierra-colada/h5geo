@@ -283,6 +283,18 @@ public:
   virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) override;
   virtual bool updatePKeySort(const std::string& pKeyName) override;
 
+  virtual bool exportToVol(H5Vol* vol, 
+      const std::string& xHeader = "CDP_X",
+      const std::string& yHeader = "CDP_Y",
+      const std::string& ilHeader = "INLINE",
+      const std::string& xlHeader = "XLINE",
+      double ilMin = std::numeric_limits<double>::min(),
+      double ilMax = std::numeric_limits<double>::max(),
+      double xlMin = std::numeric_limits<double>::min(),
+      double xlMax = std::numeric_limits<double>::max(),
+      size_t fromSampInd = 0,
+      size_t nSamp = std::numeric_limits<size_t>::max()) override;
+
   virtual Eigen::MatrixXd calcBoundary(
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;

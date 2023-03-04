@@ -11,6 +11,7 @@
 #include <math.h>
 
 class H5SeisContainer;
+class H5Vol;
 
 /// \class H5Seis
 /// \brief Provides API to work with seismic
@@ -495,6 +496,20 @@ public:
   virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) = 0;
   /// \brief Update sorting for prepared `PKey`
   virtual bool updatePKeySort(const std::string& pKeyName) = 0;
+
+  /// \brief Export seismic to `H5Vol`. 
+  /// \note Selected traces must shape a rectangle.
+  virtual bool exportToVol(H5Vol* vol, 
+      const std::string& xHeader = "CDP_X",
+      const std::string& yHeader = "CDP_Y",
+      const std::string& ilHeader = "INLINE",
+      const std::string& xlHeader = "XLINE",
+      double ilMin = std::numeric_limits<double>::min(),
+      double ilMax = std::numeric_limits<double>::max(),
+      double xlMin = std::numeric_limits<double>::min(),
+      double xlMax = std::numeric_limits<double>::max(),
+      size_t fromSampInd = 0,
+      size_t nSamp = std::numeric_limits<size_t>::max()) = 0;
 
   /// \brief Calculate `XY` boundary around the survey
   ///
