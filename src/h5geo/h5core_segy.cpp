@@ -248,6 +248,228 @@ size_t getSEGYNTrc(
   return (fsize - 3600) / (nSamp * 4 + 240);
 }
 
+Eigen::VectorX<ptrdiff_t> readSEGYTraceHeader(
+    const std::string& segy,
+    const size_t& hdrOffset,
+    const size_t& hdrSize,
+    size_t nSamp,
+    size_t nTrc,
+    size_t fromTrc,
+    size_t toTrc,
+    h5geo::Endian endian,
+    std::function<void(double)> progressCallback)
+{
+  if (hdrOffset+hdrSize > 240)
+    return Eigen::VectorX<ptrdiff_t>();
+
+  if (hdrSize != 1 &&
+      hdrSize != 2 &&
+      hdrSize != 4 &&
+      hdrSize != 8)
+    return Eigen::VectorX<ptrdiff_t>();
+
+  if (std::string{magic_enum::enum_name(endian)}.empty())
+    endian = getSEGYEndian(segy);
+
+  if (std::string{magic_enum::enum_name(endian)}.empty())
+    return Eigen::VectorX<ptrdiff_t>();
+
+  if (nTrc < 1)
+    nTrc = getSEGYNTrc(segy, nSamp, endian);
+
+  if (nSamp < 1)
+    nSamp = getSEGYNSamp(segy, endian);
+
+  if (nSamp < 1 || nTrc < 1)
+    return Eigen::VectorX<ptrdiff_t>();
+
+  if (fromTrc >= nTrc)
+    return Eigen::VectorX<ptrdiff_t>();
+
+  if (toTrc >= nTrc)
+    toTrc = nTrc-1;
+
+  // must do the check as within OMP I cannot return 'false', only 'continue'
+  if (!isSEGY(segy))
+    return Eigen::VectorX<ptrdiff_t>();
+
+  std::ifstream file(segy);
+  if (!file.is_open())
+    return Eigen::VectorX<ptrdiff_t>();
+
+  size_t nTrcFact = toTrc-fromTrc+1;
+  ptrdiff_t n_passed = 0;
+  double progressOld = 0;
+  double progressNew = 0;
+
+  auto cbk = [&](){
+    progressNew = n_passed / (double)nTrcFact;
+    // update callback only if the difference >= 1% than the previous value
+    if (progressNew - progressOld >= 0.01){
+      progressCallback( progressNew );
+      progressOld = progressNew;
+    }
+    n_passed++;
+  };
+
+  size_t skipBytesPerTrc = 4 * nSamp + 240 - hdrSize;
+  Eigen::VectorX<ptrdiff_t> hdr(nTrcFact);
+  file.seekg(3600+hdrOffset);
+  if (hdrSize == 1){
+    char tmp;
+    for (size_t i = fromTrc; i < toTrc; i++){
+      if (progressCallback)
+        cbk();
+      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
+      file.read(bit_cast<char *>(&tmp), hdrSize);
+      hdr[i-fromTrc] = tmp;
+    }
+  } else if (hdrSize == 2){
+    short tmp;
+    for (size_t i = fromTrc; i < toTrc; i++){
+      if (progressCallback)
+        cbk();
+      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
+      file.read(bit_cast<char *>(&tmp), hdrSize);
+      hdr[i-fromTrc] = to_native_endian(tmp, endian);
+    }
+  } else if (hdrSize == 4){
+    int tmp;
+    for (size_t i = fromTrc; i < toTrc; i++){
+      if (progressCallback)
+        cbk();
+      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
+      file.read(bit_cast<char *>(&tmp), hdrSize);
+      hdr[i-fromTrc] = to_native_endian(tmp, endian);
+    }
+  } else if (hdrSize == 8){
+    ptrdiff_t tmp;
+    for (size_t i = fromTrc; i < toTrc; i++){
+      if (progressCallback)
+        cbk();
+      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
+      file.read(bit_cast<char *>(&tmp), hdrSize);
+      hdr[i-fromTrc] = to_native_endian(tmp, endian);
+    }
+  }
+
+  if (progressCallback)
+    progressCallback( double(1) );
+
+  return hdr;
+}
+
+Eigen::MatrixXf readSEGYTraces(
+    const std::string& segy,
+    size_t nSamp,
+    size_t nTrc,
+    size_t fromSamp,
+    size_t toSamp,
+    size_t fromTrc,
+    size_t toTrc,
+    h5geo::SegyFormat format,
+    h5geo::Endian endian,
+    std::function<void(double)> progressCallback)
+{
+  if (std::string{magic_enum::enum_name(format)}.empty())
+    format = getSEGYFormat(segy, endian);
+
+  if (std::string{magic_enum::enum_name(endian)}.empty())
+    endian = getSEGYEndian(segy);
+
+  if (std::string{magic_enum::enum_name(format)}.empty() ||
+      std::string{magic_enum::enum_name(endian)}.empty())
+    return Eigen::MatrixXf();
+
+  if (nTrc < 1)
+    nTrc = getSEGYNTrc(segy, nSamp, endian);
+
+  if (nSamp < 1)
+    nSamp = getSEGYNSamp(segy, endian);
+
+  if (nSamp < 1 || nTrc < 1)
+    return Eigen::MatrixXf();
+
+  if (fromSamp >= nSamp)
+    return Eigen::MatrixXf();
+
+  if (toSamp >= nSamp)
+    toSamp = nSamp-1;
+
+  if (fromTrc >= nTrc)
+    return Eigen::MatrixXf();
+
+  if (toTrc >= nTrc)
+    toTrc = nTrc-1;
+
+  // must do the check as within OMP I cannot return 'false', only 'continue'
+  if (!isSEGY(segy))
+    return Eigen::MatrixXf();
+
+  std::ifstream file(segy);
+  if (!file.is_open())
+    return Eigen::MatrixXf();
+
+  size_t nSampFact = toSamp-fromSamp+1;
+  size_t nTrcFact = toTrc-fromTrc+1;
+  ptrdiff_t n_passed = 0;
+  double progressOld = 0;
+  double progressNew = 0;
+
+  auto cbk = [&](){
+    progressNew = n_passed / (double)nTrcFact;
+    // update callback only if the difference >= 1% than the previous value
+    if (progressNew - progressOld >= 0.01){
+      progressCallback( progressNew );
+      progressOld = progressNew;
+    }
+    n_passed++;
+  };
+
+  size_t skipBytesPerTrc = 4 * nSamp + 240 - nSampFact*4;
+  Eigen::MatrixXf TRACE(nSampFact, nTrcFact);
+  file.seekg(3600+240+fromSamp*4);
+  if (format == h5geo::SegyFormat::FourByte_IBM) {
+    Eigen::VectorX<int> trace(nSampFact);
+    for (size_t i = fromTrc; i < toTrc; i++){
+      if (progressCallback)
+        cbk();
+      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
+      file.read(bit_cast<char *>(trace.data()), nSampFact*4);
+      for (size_t ii = 0; ii < nSampFact; ii++){
+        TRACE(ii,i-fromTrc) = ibm2ieee(to_native_endian(trace(ii), endian));
+      }
+    }
+  } else if (format == h5geo::SegyFormat::FourByte_integer) {
+    Eigen::VectorX<int> trace(nSampFact);
+    for (size_t i = fromTrc; i < toTrc; i++){
+      if (progressCallback)
+        cbk();
+      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
+      file.read(bit_cast<char *>(trace.data()), nSampFact*4);
+      for (size_t ii = 0; ii < nSampFact; ii++){
+        TRACE(ii,i-fromTrc) = (float)to_native_endian(trace(ii), endian);
+      }
+    }
+  } else if (format == h5geo::SegyFormat::FourByte_IEEE) {
+    Eigen::VectorX<float> trace(nSampFact);
+    for (size_t i = fromTrc; i < toTrc; i++){
+      if (progressCallback)
+        cbk();
+      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
+      file.read(bit_cast<char *>(trace.data()), nSampFact*4);
+      for (size_t ii = 0; ii < nSampFact; ii++){
+        TRACE(ii,i-fromTrc) = to_native_endian(trace(ii), endian);
+      }
+    }
+  }
+
+  if (progressCallback)
+    progressCallback( double(1) );
+  
+  return TRACE;
+}
+
 bool readSEGYTraces(
     H5Seis* seis,
     const std::string& segy,
@@ -264,15 +486,6 @@ bool readSEGYTraces(
   if (!seis || trcBuffer < 1)
     return false;
 
-  if (nTrc < 1)
-    nTrc = getSEGYNTrc(segy, nSamp, endian);
-
-  if (nSamp < 1)
-    nSamp = getSEGYNSamp(segy, endian);
-
-  if (nSamp < 1 || nTrc < 1)
-    return false;
-
   if (std::string{magic_enum::enum_name(format)}.empty())
     format = getSEGYFormat(segy, endian);
 
@@ -281,6 +494,15 @@ bool readSEGYTraces(
 
   if (std::string{magic_enum::enum_name(format)}.empty() ||
       std::string{magic_enum::enum_name(endian)}.empty())
+    return false;
+
+  if (nTrc < 1)
+    nTrc = getSEGYNTrc(segy, nSamp, endian);
+
+  if (nSamp < 1)
+    nSamp = getSEGYNSamp(segy, endian);
+
+  if (nSamp < 1 || nTrc < 1)
     return false;
 
   // must do the check as within OMP I cannot return 'false', only 'continue'

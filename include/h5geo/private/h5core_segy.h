@@ -146,6 +146,52 @@ H5GEO_EXPORT size_t getSEGYNSamp(
 H5GEO_EXPORT size_t getSEGYNTrc(
     const std::string& segy, size_t nSamp = 0, h5geo::Endian endian = static_cast<h5geo::Endian>(0));
 
+/// \brief readSEGYTraceHeader read selected header from all the traces (4 byte SEGY supported only)
+/// \param segy path to SEGY file
+/// \param hdrOffset in range [0, 238]
+/// \param hdrSize usually 2 or 4
+/// \param nSamp number of samples in SEGY (if 0 then try automatically detect)
+/// \param nTrc number of traces in SEGY (if 0 then try automatically detect)
+/// \param fromTrc first trace to read
+/// \param toTrc last trace to read
+/// \param endian Big or Little
+/// \param progressCallback callback function of form `void foo(double progress)`
+/// \return  
+H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> readSEGYTraceHeader(
+    const std::string& segy,
+    const size_t& hdrOffset,
+    const size_t& hdrSize,
+    size_t nSamp = 0,
+    size_t nTrc = 0,
+    size_t fromTrc = 0,
+    size_t toTrc = std::numeric_limits<size_t>::max(),
+    h5geo::Endian endian = static_cast<h5geo::Endian>(0),
+    std::function<void(double)> progressCallback = nullptr);
+
+/// \brief readSEGYTraces read traces
+/// \param segy path to SEGY file
+/// \param nSamp number of samples in SEGY (if 0 then try automatically detect)
+/// \param nTrc number of traces in SEGY (if 0 then try automatically detect)
+/// \param fromSamp first sample to read
+/// \param toSamp last sample to read
+/// \param fromTrc first trace to read
+/// \param toTrc last trace to read
+/// \param format SEGY format (ibm32, ieee32 or int4)
+/// \param endian Big or Little
+/// \param progressCallback callback function of form `void foo(double progress)`
+/// \return
+H5GEO_EXPORT Eigen::MatrixXf readSEGYTraces(
+    const std::string& segy,
+    size_t nSamp = 0,
+    size_t nTrc = 0,
+    size_t fromSamp = 0,
+    size_t toSamp = std::numeric_limits<size_t>::max(),
+    size_t fromTrc = 0,
+    size_t toTrc = std::numeric_limits<size_t>::max(),
+    h5geo::SegyFormat format = static_cast<h5geo::SegyFormat>(0),
+    h5geo::Endian endian = static_cast<h5geo::Endian>(0),
+    std::function<void(double)> progressCallback = nullptr);
+
 /// \brief readSEGYTraces read and write SEGY traces and trace headers to
 /// H5Seis object using memory mapping technique (OpenMP enabled)
 /// \param seis
