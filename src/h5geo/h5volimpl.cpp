@@ -314,7 +314,7 @@ double H5VolImpl::getOrientation(
 {
   return h5geo::readDoubleAttribute(
       objG,
-      std::string{h5geo::detail::spacings},
+      std::string{h5geo::detail::orientation},
       getAngularUnits(), angularUnits);
 }
 
