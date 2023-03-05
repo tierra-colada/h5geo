@@ -1251,34 +1251,23 @@ H5BaseImpl<TBase>::createTraceHeader(
     props.setChunk(cdims);
     h5gt::DataSpace space(count, max_count);
     if (mapSEGY){
-      h5gt::Selection vSel(space);
       auto segyG = seisGroup.getGroup(std::string{h5geo::detail::segy});
       auto srcDset2b = segyG.getDataSet(std::string{h5geo::detail::trace_header_2bytes});
       auto srcDset4b = segyG.getDataSet(std::string{h5geo::detail::trace_header_4bytes});
 
-      std::vector<size_t> srcCols_from = {0,12,8,32,17,42,44,98};
-      std::vector<size_t> srcCols_to = {6,16,16,34,21,88,49,100};
+      std::vector<int> bytesStart, nBytes;
+      h5geo::getTraceHeaderBytes(bytesStart, nBytes);
 
-      size_t I = srcCols_from.size();
-      size_t srcOffset = 0;
-      bool is4b = true;
-      for (size_t i = 0; i < I; i++){
-        size_t nCols = srcCols_to[i] - srcCols_from[i];
+      for (size_t i = 0; i < bytesStart.size(); i++){
         h5gt::Selection vSel(space);
-        // should work only line by line or incorrect result will be gotten
-        for (size_t ii = 0; ii < nCols; ii++){
-          vSel = vSel.select({srcOffset,0},{1,nTrc}); // SEGY is mapped as {nTrc,nSamp} while Seis Header is in reverse order {nSamp,nTrc}
-          if (is4b){
-            auto srcSel4b = srcDset4b.select({0,srcCols_from[i]+ii},{nTrc,1});
-            props.addVirtualDataSet(vSel.getSpace(), srcDset4b, srcSel4b.getSpace());
-          } else {
-            auto srcSel2b = srcDset2b.select({0,srcCols_from[i]+ii},{nTrc,1});
-            props.addVirtualDataSet(vSel.getSpace(), srcDset2b, srcSel2b.getSpace());
-          }
-          srcOffset++;
+        vSel = vSel.select({i,0},{1,nTrc}); // SEGY is mapped as {nTrc,nSamp} while Seis Header is in reverse order {nSamp,nTrc}
+        if (nBytes[i] == 4){
+          auto srcSel4b = srcDset4b.select({0,size_t(bytesStart[i]/4)},{nTrc,1});
+          props.addVirtualDataSet(vSel.getSpace(), srcDset4b, srcSel4b.getSpace());
+        } else if (nBytes[i] == 2){
+          auto srcSel2b = srcDset2b.select({0,size_t(bytesStart[i]/2)},{nTrc,1});
+          props.addVirtualDataSet(vSel.getSpace(), srcDset2b, srcSel2b.getSpace());
         }
-        // change 4 bytes to 2 bytes
-        is4b = !is4b;
       }
     }
 
