@@ -2300,7 +2300,7 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
   vol->setDomain(this->getDomain());
   vol->setLengthUnits(this->getLengthUnits());
   vol->setTemporalUnits(this->getTemporalUnits());
-  vol->setAngularUnits(this->getAngularUnits());
+  vol->setAngularUnits("degree");
   vol->setDataUnits(this->getDataUnits());
   vol->setNullValue(this->getNullValue());
   vol->setSpatialReference(this->getSpatialReference());
