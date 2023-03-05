@@ -29,7 +29,7 @@ bool isSEGY(const std::string& segy){
     return false;
   }
 
-  std::ifstream file(segy);
+  std::ifstream file(segy, std::ifstream::binary | std::ifstream::in);
   if (!file.is_open())
     return false;
 
@@ -40,7 +40,7 @@ TextEncoding getSEGYTextEncoding(const std::string& segy){
   if (!isSEGY(segy))
     return static_cast<h5geo::TextEncoding>(0);
 
-  std::ifstream file(segy);
+  std::ifstream file(segy, std::ifstream::binary | std::ifstream::in);
   if (!file.is_open())
     return static_cast<h5geo::TextEncoding>(0);
 
@@ -72,7 +72,7 @@ Endian getSEGYEndian(const std::string& segy){
   if (!isSEGY(segy))
     return static_cast<h5geo::Endian>(0);
 
-  std::ifstream file(segy);
+  std::ifstream file(segy, std::ifstream::binary | std::ifstream::in);
   if (!file.is_open())
     return static_cast<h5geo::Endian>(0);
 
@@ -102,7 +102,7 @@ SegyFormat getSEGYFormat(const std::string& segy, h5geo::Endian endian)
   if (!isSEGY(segy))
     return static_cast<h5geo::SegyFormat>(0);
 
-  std::ifstream file(segy);
+  std::ifstream file(segy, std::ifstream::binary | std::ifstream::in);
   if (!file.is_open())
     return static_cast<h5geo::SegyFormat>(0);
 
@@ -132,7 +132,7 @@ bool readSEGYTextHeader(
   if (!isSEGY(segy))
     return false;
 
-  std::ifstream file(segy);
+  std::ifstream file(segy, std::ifstream::binary | std::ifstream::in);
   if (!file.is_open())
     return false;
 
@@ -158,7 +158,7 @@ bool readSEGYBinHeader(
   if (!isSEGY(segy))
     return false;
 
-  std::ifstream file(segy);
+  std::ifstream file(segy, std::ifstream::binary | std::ifstream::in);
   if (!file.is_open())
     return false;
 
@@ -293,7 +293,7 @@ Eigen::VectorX<ptrdiff_t> readSEGYTraceHeader(
   if (!isSEGY(segy))
     return Eigen::VectorX<ptrdiff_t>();
 
-  std::ifstream file(segy);
+  std::ifstream file(segy, std::ifstream::binary | std::ifstream::in);
   if (!file.is_open())
     return Eigen::VectorX<ptrdiff_t>();
 
@@ -315,42 +315,23 @@ Eigen::VectorX<ptrdiff_t> readSEGYTraceHeader(
   size_t skipBytesPerTrc = 4 * nSamp + 240 - hdrSize;
   Eigen::VectorX<ptrdiff_t> hdr(nTrcFact);
   file.seekg(3600+hdrOffset);
-  if (hdrSize == 1){
-    char tmp;
-    for (size_t i = fromTrc; i < toTrc; i++){
-      if (progressCallback)
-        cbk();
-      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
-      file.read(bit_cast<char *>(&tmp), hdrSize);
-      hdr[i-fromTrc] = tmp;
-    }
-  } else if (hdrSize == 2){
-    short tmp;
-    for (size_t i = fromTrc; i < toTrc; i++){
-      if (progressCallback)
-        cbk();
-      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
-      file.read(bit_cast<char *>(&tmp), hdrSize);
-      hdr[i-fromTrc] = to_native_endian(tmp, endian);
-    }
+  for (size_t i = fromTrc; i <= toTrc; i++){
+    if (progressCallback)
+      cbk();
+    if (i != fromTrc)
+      file.seekg(skipBytesPerTrc, std::ios_base::cur);
+    file.read(bit_cast<char *>(&hdr(i-fromTrc)), hdrSize);
+  }
+
+  if (hdrSize == 2){
+    for (size_t i = 0; i < hdr.size(); i++)
+      hdr(i) = to_native_endian<short>(hdr(i), endian);
   } else if (hdrSize == 4){
-    int tmp;
-    for (size_t i = fromTrc; i < toTrc; i++){
-      if (progressCallback)
-        cbk();
-      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
-      file.read(bit_cast<char *>(&tmp), hdrSize);
-      hdr[i-fromTrc] = to_native_endian(tmp, endian);
-    }
+    for (size_t i = 0; i < hdr.size(); i++)
+      hdr(i) = to_native_endian<int>(hdr(i), endian);
   } else if (hdrSize == 8){
-    ptrdiff_t tmp;
-    for (size_t i = fromTrc; i < toTrc; i++){
-      if (progressCallback)
-        cbk();
-      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
-      file.read(bit_cast<char *>(&tmp), hdrSize);
-      hdr[i-fromTrc] = to_native_endian(tmp, endian);
-    }
+    for (size_t i = 0; i < hdr.size(); i++)
+      hdr(i) = to_native_endian<ptrdiff_t>(hdr(i), endian);
   }
 
   if (progressCallback)
@@ -406,7 +387,7 @@ Eigen::MatrixXf readSEGYTraces(
   if (!isSEGY(segy))
     return Eigen::MatrixXf();
 
-  std::ifstream file(segy);
+  std::ifstream file(segy, std::ifstream::binary | std::ifstream::in);
   if (!file.is_open())
     return Eigen::MatrixXf();
 
@@ -431,10 +412,10 @@ Eigen::MatrixXf readSEGYTraces(
   file.seekg(3600+240+fromSamp*4);
   if (format == h5geo::SegyFormat::FourByte_IBM) {
     Eigen::VectorX<int> trace(nSampFact);
-    for (size_t i = fromTrc; i < toTrc; i++){
+    for (size_t i = fromTrc; i <= toTrc; i++){
       if (progressCallback)
         cbk();
-      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
+      file.seekg(skipBytesPerTrc, std::ios_base::cur);
       file.read(bit_cast<char *>(trace.data()), nSampFact*4);
       for (size_t ii = 0; ii < nSampFact; ii++){
         TRACE(ii,i-fromTrc) = ibm2ieee(to_native_endian(trace(ii), endian));
@@ -442,10 +423,10 @@ Eigen::MatrixXf readSEGYTraces(
     }
   } else if (format == h5geo::SegyFormat::FourByte_integer) {
     Eigen::VectorX<int> trace(nSampFact);
-    for (size_t i = fromTrc; i < toTrc; i++){
+    for (size_t i = fromTrc; i <= toTrc; i++){
       if (progressCallback)
         cbk();
-      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
+      file.seekg(skipBytesPerTrc, std::ios_base::cur);
       file.read(bit_cast<char *>(trace.data()), nSampFact*4);
       for (size_t ii = 0; ii < nSampFact; ii++){
         TRACE(ii,i-fromTrc) = (float)to_native_endian(trace(ii), endian);
@@ -453,10 +434,10 @@ Eigen::MatrixXf readSEGYTraces(
     }
   } else if (format == h5geo::SegyFormat::FourByte_IEEE) {
     Eigen::VectorX<float> trace(nSampFact);
-    for (size_t i = fromTrc; i < toTrc; i++){
+    for (size_t i = fromTrc; i <= toTrc; i++){
       if (progressCallback)
         cbk();
-      file.seekg(skipBytesPerTrc*i, std::ios_base::cur);
+      file.seekg(skipBytesPerTrc, std::ios_base::cur);
       file.read(bit_cast<char *>(trace.data()), nSampFact*4);
       for (size_t ii = 0; ii < nSampFact; ii++){
         TRACE(ii,i-fromTrc) = to_native_endian(trace(ii), endian);

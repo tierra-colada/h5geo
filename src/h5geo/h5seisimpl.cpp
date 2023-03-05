@@ -272,7 +272,7 @@ bool H5SeisImpl::writeTrace(
   // Selection by rows may break the order of rows as it 
   // works with sequentially increasing order.
   // Thus  we should rearrange Eigen columns before writing.
-  traceD.select_rows(rows, fromSampInd, TRACE.rows()).write(TRACE(Eigen::all, sortInd).eval().data());
+  traceD.select_rows(rows, fromSampInd, TRACE.rows()).write_raw(TRACE(Eigen::all, sortInd).eval().data());
 
   return true;
 }

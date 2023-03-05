@@ -505,9 +505,8 @@ TEST_F(H5SeisFixture, SEGY){
   ASSERT_EQ(seis->getBinHeader("JOB"), 1);
   ASSERT_EQ(seis->getBinHeader("SAMP_RATE"), 2000);
   Eigen::VectorXd grpx = seis->getTraceHeader("GRPX", 0, seis->getNTrc());
-  ASSERT_TRUE(grpx(1) == 50000);
+  Eigen::VectorXd saed = seis->getTraceHeader("SAED", 0, seis->getNTrc());
   Eigen::VectorXf trace = seis->getTrace(0);
-
 
   // NOT MAPPED (read with h5geo::functions)
   p.mapSEGY = false;
@@ -536,6 +535,12 @@ TEST_F(H5SeisFixture, SEGY){
   ASSERT_TRUE(seis3->readSEGYTraces(p.segyFiles));
   Eigen::VectorXf trace3 = seis3->getTrace(0);
   ASSERT_TRUE(trace.isApprox(trace3));
+
+  auto grpx_2 = h5geo::readSEGYTraceHeader(TEST_DATA_DIR"/1.segy", 80, 4);
+  auto saed_2 = h5geo::readSEGYTraceHeader(TEST_DATA_DIR"/1.segy", 68, 2);
+
+  ASSERT_TRUE(grpx(Eigen::seq(0,grpx_2.size()-1)).isApprox(grpx_2.cast<double>()));
+  ASSERT_TRUE(saed(Eigen::seq(0,saed_2.size()-1)).isApprox(saed_2.cast<double>()));
 }
 
 #include <chrono>
@@ -630,8 +635,8 @@ TEST_F(H5SeisFixture, DISABLED_READ_ARBITRARY_TRACES){
 
     // generate random numbers in range [0, numbert of traces in file - 1]
     Eigen::VectorX<float> trcIndF = Eigen::VectorX<float>::Random(nTrc); // Vector filled with random numbers between (-1,1)
-    trcIndF = (trcIndF + Eigen::VectorX<float>::Constant(nTrc, 1))*range/2.0; // add 1 to the matrix to have values between 0 and 2; multiply with range/2
-    trcIndF = (trcIndF + Eigen::VectorX<float>::Constant(nTrc, LO)); //set LO as the lower bound (offset)
+    trcIndF = (trcIndF + Eigen::VectorX<float>::Constant(nTrc, 1.0))*range/2.0; // add 1 to the matrix to have values between 0 and 2; multiply with range/2
+    trcIndF = (trcIndF + Eigen::VectorX<float>::Constant(nTrc, float(LO))); //set LO as the lower bound (offset)
     Eigen::VectorX<size_t> trcInd = trcIndF.cast<size_t>();
 
     // measure time to read N traces
