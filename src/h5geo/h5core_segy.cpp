@@ -252,10 +252,10 @@ Eigen::VectorX<ptrdiff_t> readSEGYTraceHeader(
     const std::string& segy,
     const size_t& hdrOffset,
     const size_t& hdrSize,
-    size_t nSamp,
-    size_t nTrc,
     size_t fromTrc,
     size_t toTrc,
+    size_t nSamp,
+    size_t nTrc,
     h5geo::Endian endian,
     std::function<void(double)> progressCallback)
 {
@@ -342,12 +342,12 @@ Eigen::VectorX<ptrdiff_t> readSEGYTraceHeader(
 
 Eigen::MatrixXf readSEGYTraces(
     const std::string& segy,
-    size_t nSamp,
-    size_t nTrc,
     size_t fromSamp,
     size_t toSamp,
     size_t fromTrc,
     size_t toTrc,
+    size_t nSamp,
+    size_t nTrc,
     h5geo::SegyFormat format,
     h5geo::Endian endian,
     std::function<void(double)> progressCallback)
@@ -415,7 +415,8 @@ Eigen::MatrixXf readSEGYTraces(
     for (size_t i = fromTrc; i <= toTrc; i++){
       if (progressCallback)
         cbk();
-      file.seekg(skipBytesPerTrc, std::ios_base::cur);
+      if (i != fromTrc)
+        file.seekg(skipBytesPerTrc, std::ios_base::cur);
       file.read(bit_cast<char *>(trace.data()), nSampFact*4);
       for (size_t ii = 0; ii < nSampFact; ii++){
         TRACE(ii,i-fromTrc) = ibm2ieee(to_native_endian(trace(ii), endian));
@@ -426,7 +427,8 @@ Eigen::MatrixXf readSEGYTraces(
     for (size_t i = fromTrc; i <= toTrc; i++){
       if (progressCallback)
         cbk();
-      file.seekg(skipBytesPerTrc, std::ios_base::cur);
+      if (i != fromTrc)
+        file.seekg(skipBytesPerTrc, std::ios_base::cur);
       file.read(bit_cast<char *>(trace.data()), nSampFact*4);
       for (size_t ii = 0; ii < nSampFact; ii++){
         TRACE(ii,i-fromTrc) = (float)to_native_endian(trace(ii), endian);
@@ -437,7 +439,8 @@ Eigen::MatrixXf readSEGYTraces(
     for (size_t i = fromTrc; i <= toTrc; i++){
       if (progressCallback)
         cbk();
-      file.seekg(skipBytesPerTrc, std::ios_base::cur);
+      if (i != fromTrc)
+        file.seekg(skipBytesPerTrc, std::ios_base::cur);
       file.read(bit_cast<char *>(trace.data()), nSampFact*4);
       for (size_t ii = 0; ii < nSampFact; ii++){
         TRACE(ii,i-fromTrc) = to_native_endian(trace(ii), endian);

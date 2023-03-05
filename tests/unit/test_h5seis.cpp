@@ -536,11 +536,16 @@ TEST_F(H5SeisFixture, SEGY){
   Eigen::VectorXf trace3 = seis3->getTrace(0);
   ASSERT_TRUE(trace.isApprox(trace3));
 
-  auto grpx_2 = h5geo::readSEGYTraceHeader(TEST_DATA_DIR"/1.segy", 80, 4);
-  auto saed_2 = h5geo::readSEGYTraceHeader(TEST_DATA_DIR"/1.segy", 68, 2);
+  // READ USING SEGY FUNCTIONS
+  auto grpx4 = h5geo::readSEGYTraceHeader(TEST_DATA_DIR"/1.segy", 80, 4);
+  auto saed4 = h5geo::readSEGYTraceHeader(TEST_DATA_DIR"/1.segy", 68, 2);
 
-  ASSERT_TRUE(grpx(Eigen::seq(0,grpx_2.size()-1)).isApprox(grpx_2.cast<double>()));
-  ASSERT_TRUE(saed(Eigen::seq(0,saed_2.size()-1)).isApprox(saed_2.cast<double>()));
+  ASSERT_TRUE(grpx(Eigen::seq(0,grpx4.size()-1)).isApprox(grpx4.cast<double>()));
+  ASSERT_TRUE(saed(Eigen::seq(0,saed4.size()-1)).isApprox(saed4.cast<double>()));
+
+  auto trace4 = h5geo::readSEGYTraces(TEST_DATA_DIR"/1.segy",0,nSamp,0,0);
+
+  ASSERT_TRUE(trace.isApprox(trace4));
 }
 
 #include <chrono>

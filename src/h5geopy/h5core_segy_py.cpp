@@ -56,10 +56,10 @@ void defineSEGYFunctions(py::module_& m){
 
   m.def("readSEGYTraceHeader", &h5geo::readSEGYTraceHeader,
         py::arg("segy"), py::arg("hdrOffset"), py::arg("hdrSize"),
-        py::arg_v("nSamp", 0, "0"),
-        py::arg_v("nTrc", 0, "0"),
         py::arg_v("fromTrc", 0, "0"),
         py::arg_v("toTrc", std::numeric_limits<size_t>::max(), "sys.maxint"),
+        py::arg_v("nSamp", 0, "0"),
+        py::arg_v("nTrc", 0, "0"),
         py::arg_v("endian", static_cast<h5geo::Endian>(0), "_h5geo.Endian(0)"),
         py::arg_v("progressCallback", nullptr, "None"));
 
@@ -69,12 +69,12 @@ void defineSEGYFunctions(py::module_& m){
             h5geo::SegyFormat, h5geo::Endian,
             std::function<void(double)>>(&h5geo::readSEGYTraces),
         py::arg("segy"),
-        py::arg_v("nSamp", 0, "0"),
-        py::arg_v("nTrc", 0, "0"),
         py::arg_v("fromSamp", 0, "0"),
         py::arg_v("toSamp", std::numeric_limits<size_t>::max(), "sys.maxint"),
         py::arg_v("fromTrc", 0, "0"),
         py::arg_v("toTrc", std::numeric_limits<size_t>::max(), "sys.maxint"),
+        py::arg_v("nSamp", 0, "0"),
+        py::arg_v("nTrc", 0, "0"),
         py::arg_v("segyFormat", static_cast<h5geo::SegyFormat>(0), "_h5geo.SegyFormat(0)"),
         py::arg_v("endian", static_cast<h5geo::Endian>(0), "_h5geo.Endian(0)"),
         py::arg_v("progressCallback", nullptr, "None"));
