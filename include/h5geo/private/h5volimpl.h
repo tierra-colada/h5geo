@@ -22,6 +22,23 @@ public:
       const size_t& nZ,
       const std::string& dataUnits = "") override;
 
+  virtual bool readSEGYSTACK(
+      const std::string& segy,
+      const size_t& ilHdrOffset,
+      const size_t& ilHdrSize,
+      const size_t& xlHdrOffset,
+      const size_t& xlHdrSize,
+      const size_t& xHdrOffset,
+      const size_t& xHdrSize,
+      const size_t& yHdrOffset,
+      const size_t& yHdrSize,
+      double sampRate,
+      size_t nSamp = 0,
+      size_t nTrc = 0,
+      h5geo::SegyFormat format = static_cast<h5geo::SegyFormat>(0),
+      h5geo::Endian endian = static_cast<h5geo::Endian>(0),
+      std::function<void(double)> progressCallback = nullptr) override;
+
   virtual bool setDomain(const h5geo::Domain& domain) override;
   virtual bool setOrigin(
       Eigen::Ref<Eigen::Vector3d> v,

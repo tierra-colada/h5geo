@@ -17,6 +17,7 @@
 // enum string is needed to include magic_enum with predefined macro
 #include "../../include/h5geo/private/h5enum_string.h"
 #include "../../include/h5geo/h5seis.h"
+#include "../../include/h5geo/h5vol.h"
 
 namespace h5geo {
 
@@ -340,6 +341,34 @@ Eigen::VectorX<ptrdiff_t> readSEGYTraceHeader(
   return hdr;
 }
 
+void readSEGYTrace(
+    std::ifstream& file,
+    size_t trcInd,
+    h5geo::SegyFormat format,
+    h5geo::Endian endian,
+    Eigen::Ref<Eigen::VectorXf> trace)
+{
+  file.seekg(3600+240+trcInd*trace.size()*4, std::ios_base::beg);
+  if (format == h5geo::SegyFormat::FourByte_IBM) {
+    Eigen::VectorX<int> tmp(trace.size());
+    file.read(bit_cast<char *>(tmp.data()), tmp.size()*4);
+    for (size_t i = 0; i < trace.size(); i++){
+      trace(i) = ibm2ieee(to_native_endian(tmp(i), endian));
+    }
+  } else if (format == h5geo::SegyFormat::FourByte_integer) {
+    Eigen::VectorX<int> tmp(trace.size());
+    file.read(bit_cast<char *>(tmp.data()), tmp.size()*4);
+    for (size_t i = 0; i < trace.size(); i++){
+      trace(i) = (float)to_native_endian(tmp(i), endian);
+    }
+  } else if (format == h5geo::SegyFormat::FourByte_IEEE) {
+    file.read(bit_cast<char *>(trace.data()), trace.size()*4);
+    for (size_t i = 0; i < trace.size(); i++){
+      trace(i) = (float)to_native_endian(trace(i), endian);
+    }
+  }
+}
+
 Eigen::MatrixXf readSEGYTraces(
     const std::string& segy,
     size_t fromSamp,
@@ -634,6 +663,274 @@ bool readSEGYTraces(
     }
     rw_mmap.unmap();
   }
+
+  if (progressCallback)
+    progressCallback( double(1) );
+
+  return true;
+}
+
+bool readSEGYSTACK(
+    H5Vol* vol,
+    const std::string& segy,
+    const size_t& ilHdrOffset,
+    const size_t& ilHdrSize,
+    const size_t& xlHdrOffset,
+    const size_t& xlHdrSize,
+    const size_t& xHdrOffset,
+    const size_t& xHdrSize,
+    const size_t& yHdrOffset,
+    const size_t& yHdrSize,
+    double sampRate,
+    size_t nSamp,
+    size_t nTrc,
+    h5geo::SegyFormat format,
+    h5geo::Endian endian,
+    std::function<void(double)> progressCallback)
+{
+  if (!vol)
+    return false;
+
+  // these checks are necessary as `readSEGYTrace()` won't do that for you
+  if (std::string{magic_enum::enum_name(format)}.empty())
+    format = getSEGYFormat(segy, endian);
+
+  if (std::string{magic_enum::enum_name(endian)}.empty())
+    endian = getSEGYEndian(segy);
+
+  if (std::string{magic_enum::enum_name(format)}.empty() ||
+      std::string{magic_enum::enum_name(endian)}.empty())
+    return false;
+
+  if (nTrc < 1)
+    nTrc = getSEGYNTrc(segy, nSamp, endian);
+
+  if (nSamp < 1)
+    nSamp = getSEGYNSamp(segy, endian);
+
+  if (nSamp < 1 || nTrc < 1)
+    return false;
+
+  Eigen::MatrixXd HDR(nTrc, 4);
+  HDR.col(0) = readSEGYTraceHeader(
+      segy, ilHdrOffset, ilHdrSize, 
+      0, std::numeric_limits<size_t>::max(),
+      nSamp, nTrc, endian).cast<double>();
+  HDR.col(1) = readSEGYTraceHeader(
+      segy, xlHdrOffset, xlHdrSize, 
+      0, std::numeric_limits<size_t>::max(),
+      nSamp, nTrc, endian).cast<double>();
+  HDR.col(2) = readSEGYTraceHeader(
+      segy, xHdrOffset, xHdrSize, 
+      0, std::numeric_limits<size_t>::max(),
+      nSamp, nTrc, endian).cast<double>();
+  HDR.col(3) = readSEGYTraceHeader(
+      segy, yHdrOffset, yHdrSize, 
+      0, std::numeric_limits<size_t>::max(),
+      nSamp, nTrc, endian).cast<double>();
+
+  Eigen::VectorX<ptrdiff_t> ind = h5geo::sort_rows(HDR);
+  Eigen::MatrixXd HDR_sorted = HDR(ind, Eigen::all);
+
+  double origin_x;
+  double origin_y;
+  double orientation;
+  double ilSpacing;
+  double xlSpacing;
+  bool isILReversed;
+  bool isXLReversed;
+  bool isPlanReversed;
+  bool status = h5geo::getSurveyInfoFromSortedData(
+        HDR_sorted.col(0),
+        HDR_sorted.col(1),
+        HDR_sorted.col(2),
+        HDR_sorted.col(3),
+        origin_x,
+        origin_y,
+        orientation,
+        ilSpacing,
+        xlSpacing,
+        isILReversed,
+        isXLReversed,
+        isPlanReversed);
+
+  if (!status)
+    return false;
+
+  // make plan normal by exchanging INLINE and XLINE headers
+  if (isPlanReversed){
+    HDR(Eigen::all, Eigen::seq(0,1)) = HDR(Eigen::all, Eigen::seq(1,0,Eigen::fix<-1>)).eval();
+    ind = h5geo::sort_rows(HDR);
+    HDR_sorted = HDR(ind, Eigen::all);
+  }
+
+  // IL is sorted
+  size_t nxl = 0;
+  for (ptrdiff_t i = 0; i < HDR_sorted.rows()-1; i++){
+    nxl += 1;
+    if (HDR_sorted(i,0) != HDR_sorted(i+1,0))
+      break;
+  }
+
+  auto dv = std::div(HDR_sorted.rows(), nxl);
+  if (dv.rem != 0)
+    return false;
+
+  size_t nil = dv.quot;
+  if (!vol->resize(nxl, nil, nSamp))
+    return false;
+
+  // N - number of slices written at once (usually 
+  // should be equal to Y-chunkSize to acieve best IO speed)
+  size_t N = 64;
+  VolParam vp = vol->getParam();
+  if (vp.yChunkSize > 0 &&
+      vp.nY > 0 &&
+      vp.yChunkSize < vp.nY){
+    N = vp.yChunkSize;
+  } else if (vp.yChunkSize > 0 &&
+      vp.nY > 0 &&
+      vp.yChunkSize > vp.nY &&
+      vp.nY < N){
+    N = vp.nY;
+  }
+
+  double progressOld = 0;
+  double progressNew = 0;
+
+  auto cbk = [&](const size_t& i, const size_t& I){
+    progressNew = i / (double)I;
+    // update callback only if the difference >= 1% than the previous value
+    if (progressNew - progressOld >= 0.01){
+      progressCallback( progressNew );
+      progressOld = progressNew;
+    }
+  };
+
+  std::ifstream file(segy, std::ifstream::binary | std::ifstream::in);
+  if (!file.is_open())
+    return false;
+
+  if (isXLReversed && isILReversed){
+    for (size_t i = 0; i < nil; i+=N){
+      if (progressCallback)
+        cbk(i, nil);
+      size_t i0 = i*nxl;
+      size_t i1 = i0+nxl*N-1;
+      if (i1 >= ind.size())
+        i1 = ind.size()-1;
+      size_t n_fact = (i1-i0+1)/nxl;
+      Eigen::VectorX<ptrdiff_t> ind_il(i1-i0+1);
+      size_t ii1 = ind_il.size()-1;
+      for (size_t n = 0; n < N; n++){
+        size_t i1 = i0+nxl-1;
+        if (i1 >= ind.size())
+          i1 = ind.size()-1;
+        size_t ii0 = ii1-nxl+1;
+        ind_il(Eigen::seq(ii0,ii1)) = ind(Eigen::seq(i1,i0,Eigen::fix<-1>));
+        ii1 = ii0-1;
+      }
+      Eigen::MatrixXf IL(nSamp, ind_il.size());
+      for (size_t j = 0; j < ind_il.size(); j++){
+        h5geo::readSEGYTrace(file, ind_il(j), format, endian, IL.col(j));
+      }
+      IL.transposeInPlace();          // switch X and Z axes
+      if (sampRate < 0)
+        IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
+      vol->writeData(IL, 0, nil-(i+1), 0, nxl, n_fact, nSamp);
+    }
+  } else if (isXLReversed){
+    for (size_t i = 0; i < nil; i+=N){
+      if (progressCallback)
+        cbk(i, nil);
+      size_t i0 = i*nxl;
+      size_t i1 = i0+nxl*N-1;
+      if (i1 >= ind.size())
+        i1 = ind.size()-1;
+      size_t n_fact = (i1-i0+1)/nxl;
+      Eigen::VectorX<ptrdiff_t> ind_il(i1-i0+1);
+      size_t ii1 = ind_il.size()-1;
+      for (size_t n = 0; n < N; n++){
+        size_t i1 = i0+nxl-1;
+        if (i1 >= ind.size())
+          i1 = ind.size()-1;
+        size_t ii0 = ii1-nxl+1;
+        ind_il(Eigen::seq(ii0,ii1)) = ind(Eigen::seq(i0,i1));
+        ii1 = ii0-1;
+      }
+      Eigen::MatrixXf IL(nSamp, ind_il.size());
+      for (size_t j = 0; j < ind_il.size(); j++){
+        h5geo::readSEGYTrace(file, ind_il(j), format, endian, IL.col(j));
+      }
+      IL.transposeInPlace();          // switch X and Z axes
+      if (sampRate < 0)
+        IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
+      vol->writeData(IL, 0, nil-(i+1), 0, nxl, n_fact, nSamp);
+    }
+  } else if (isILReversed){
+    for (size_t i = 0; i < nil; i+=N){
+      if (progressCallback)
+        cbk(i, nil);
+      size_t i0 = i*nxl;
+      size_t i1 = i0+nxl*N-1;
+      if (i1 >= ind.size())
+        i1 = ind.size()-1;
+      size_t n_fact = (i1-i0+1)/nxl;
+      Eigen::VectorX<ptrdiff_t> ind_il = ind(Eigen::seq(i1,i0,Eigen::fix<-1>));
+      Eigen::MatrixXf IL(nSamp, ind_il.size());
+      for (size_t j = 0; j < ind_il.size(); j++){
+        h5geo::readSEGYTrace(file, ind_il(j), format, endian, IL.col(j));
+      }
+      IL.transposeInPlace();          // switch X and Z axes
+      if (sampRate < 0)
+        IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
+      vol->writeData(IL, 0, i, 0, nxl, n_fact, nSamp);
+    }
+  } else {
+    for (size_t i = 0; i < nil; i+=N){
+      if (progressCallback)
+        cbk(i, nil);
+      size_t i0 = i*nxl;
+      size_t i1 = i0+nxl*N-1;
+      if (i1 >= ind.size())
+        i1 = ind.size()-1;
+      size_t n_fact = (i1-i0+1)/nxl;
+      Eigen::VectorX<ptrdiff_t> ind_il = ind(Eigen::seq(i0,i1));
+      Eigen::MatrixXf IL(nSamp, ind_il.size());
+      for (size_t j = 0; j < ind_il.size(); j++){
+        h5geo::readSEGYTrace(file, ind_il(j), format, endian, IL.col(j));
+      }
+      IL.transposeInPlace();          // switch X and Z axes
+      if (sampRate < 0)
+        IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
+      vol->writeData(IL, 0, i, 0, nxl, n_fact, nSamp);
+    }
+  }
+
+  Eigen::Vector3d origin;
+  origin(0) = origin_x;
+  origin(1) = origin_y;
+  if (sampRate < 0)
+    origin(2) = sampRate*(nSamp-1);
+  else
+    origin(2) = 0;
+  vol->setOrigin(origin);
+
+  Eigen::Vector3d spacings;
+  // even though we made plan normal `ilSpacing` and `xlSpacing` 
+  // are defined relatively to original plan (it may be reversed)
+  if (isPlanReversed){
+    spacings(0) = xlSpacing;
+    spacings(1) = ilSpacing;
+  } else {
+    spacings(0) = ilSpacing;
+    spacings(1) = xlSpacing;
+  }
+  spacings(2) = std::fabs(sampRate);
+  vol->setSpacings(spacings);
+
+  vol->setOrientation(orientation);
+  vol->setAngularUnits("degree");
 
   if (progressCallback)
     progressCallback( double(1) );

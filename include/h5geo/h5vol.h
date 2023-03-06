@@ -30,6 +30,41 @@ public:
       const size_t& nZ,
       const std::string& dataUnits = "") = 0;
 
+  /// \brief Read SEGY STACK data, i.e. nTrc should be equal to nil*nxl.
+  /// After reading origin, spacings, orientation, and angular units will be set.
+  /// \param segy 
+  /// \param ilHdrOffset INLINE offset in bytes
+  /// \param ilHdrSize INLINE size in bytes
+  /// \param xlHdrOffset XLINE offset in bytes
+  /// \param xlHdrSize XLINE size in bytes
+  /// \param xHdrOffset X-coord offset in bytes
+  /// \param xHdrSize X-coord size in bytes
+  /// \param yHdrOffset Y-coord offset in bytes
+  /// \param yHdrSize Y-coord size in bytes
+  /// \param sampRate sampling rate of SEGY file (must know the sign)
+  /// \param nSamp number of samples in SEGY (if 0 then try automatically detect)
+  /// \param nTrc number of traces in SEGY (if 0 then try automatically detect)
+  /// \param format SEGY format (ibm32, ieee32 or int4)
+  /// \param endian Big or Little
+  /// \param progressCallback 
+  /// \return 
+  virtual bool readSEGYSTACK(
+      const std::string& segy,
+      const size_t& ilHdrOffset,
+      const size_t& ilHdrSize,
+      const size_t& xlHdrOffset,
+      const size_t& xlHdrSize,
+      const size_t& xHdrOffset,
+      const size_t& xHdrSize,
+      const size_t& yHdrOffset,
+      const size_t& yHdrSize,
+      double sampRate,
+      size_t nSamp = 0,
+      size_t nTrc = 0,
+      h5geo::SegyFormat format = static_cast<h5geo::SegyFormat>(0),
+      h5geo::Endian endian = static_cast<h5geo::Endian>(0),
+      std::function<void(double)> progressCallback = nullptr) = 0;
+
 	/// \brief Set domain for the map (`TVD`, `TVDSS`, `TWT`, `OWT`)
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
 	/// \brief Set coordinates of origin

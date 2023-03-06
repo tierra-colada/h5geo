@@ -2163,18 +2163,15 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
     ind = this->getSortedData(TRACE, HDR, keyList, minList, maxList, 1, 0, 0);
   }
 
-  Eigen::VectorXd il = HDR.col(0);
-  Eigen::VectorXd xl = HDR.col(1);
-
   // IL is sorted
   size_t nxl = 0;
-  for (ptrdiff_t i = 0; i < il.size()-1; i++){
+  for (ptrdiff_t i = 0; i < HDR.rows()-1; i++){
     nxl += 1;
-    if (il(i) != il(i+1))
+    if (HDR(i,0) != HDR(i+1,0))
       break;
   }
 
-  auto dv = std::div(il.size(), nxl);
+  auto dv = std::div(HDR.rows(), nxl);
   if (dv.rem != 0)
     return false;
 
@@ -2199,7 +2196,7 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
 
   double sampRate = this->getSampRate();
   if (isXLReversed && isILReversed){
-    for (int i = 0; i < nil; i+=N){
+    for (size_t i = 0; i < nil; i+=N){
       size_t i0 = i*nxl;
       size_t i1 = i0+nxl*N-1;
       if (i1 >= ind.size())
@@ -2207,7 +2204,7 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
       size_t n_fact = (i1-i0+1)/nxl;
       Eigen::VectorX<size_t> ind_il(i1-i0+1);
       size_t ii1 = ind_il.size()-1;
-      for (int n = 0; n < N; n++){
+      for (size_t n = 0; n < N; n++){
         size_t i1 = i0+nxl-1;
         if (i1 >= ind.size())
           i1 = ind.size()-1;
@@ -2222,7 +2219,7 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
       vol->writeData(IL, 0, nil-(i+1), 0, nxl, n_fact, nSamp);
     }
   } else if (isXLReversed){
-    for (int i = 0; i < nil; i+=N){
+    for (size_t i = 0; i < nil; i+=N){
       size_t i0 = i*nxl;
       size_t i1 = i0+nxl*N-1;
       if (i1 >= ind.size())
@@ -2230,7 +2227,7 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
       size_t n_fact = (i1-i0+1)/nxl;
       Eigen::VectorX<size_t> ind_il(i1-i0+1);
       size_t ii1 = ind_il.size()-1;
-      for (int n = 0; n < N; n++){
+      for (size_t n = 0; n < N; n++){
         size_t i1 = i0+nxl-1;
         if (i1 >= ind.size())
           i1 = ind.size()-1;
@@ -2245,7 +2242,7 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
       vol->writeData(IL, 0, nil-(i+1), 0, nxl, n_fact, nSamp);
     }
   } else if (isILReversed){
-    for (int i = 0; i < nil; i+=N){
+    for (size_t i = 0; i < nil; i+=N){
       size_t i0 = i*nxl;
       size_t i1 = i0+nxl*N-1;
       if (i1 >= ind.size())
@@ -2259,7 +2256,7 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
       vol->writeData(IL, 0, i, 0, nxl, n_fact, nSamp);
     }
   } else {
-    for (int i = 0; i < nil; i+=N){
+    for (size_t i = 0; i < nil; i+=N){
       size_t i0 = i*nxl;
       size_t i1 = i0+nxl*N-1;
       if (i1 >= ind.size())
@@ -2274,7 +2271,7 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
     }
   }
 
-  Eigen::Vector3d origin{origin_x,origin_y,this->getLastSample(0)};
+  Eigen::Vector3d origin;
   origin(0) = origin_x;
   origin(1) = origin_y;
   if (sampRate < 0)

@@ -49,6 +49,34 @@ bool H5VolImpl::writeData(
   return true;
 }
 
+bool H5VolImpl::readSEGYSTACK(
+    const std::string& segy,
+    const size_t& ilHdrOffset,
+    const size_t& ilHdrSize,
+    const size_t& xlHdrOffset,
+    const size_t& xlHdrSize,
+    const size_t& xHdrOffset,
+    const size_t& xHdrSize,
+    const size_t& yHdrOffset,
+    const size_t& yHdrSize,
+    double sampRate,
+    size_t nSamp,
+    size_t nTrc,
+    h5geo::SegyFormat format,
+    h5geo::Endian endian,
+    std::function<void(double)> progressCallback)
+{
+  return h5geo::readSEGYSTACK(
+    this, segy,
+    ilHdrOffset, ilHdrSize,
+    xlHdrOffset, xlHdrSize,
+    xHdrOffset, xHdrSize,
+    yHdrOffset, yHdrSize,
+    sampRate, nSamp, nTrc,
+    format, endian,
+    progressCallback);
+}
+
 bool H5VolImpl::setDomain(const h5geo::Domain& val){
   return h5geo::overwriteEnumAttribute(
         objG,
