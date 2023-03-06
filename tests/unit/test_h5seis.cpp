@@ -506,7 +506,8 @@ TEST_F(H5SeisFixture, SEGY){
   ASSERT_EQ(seis->getBinHeader("SAMP_RATE"), 2000);
   Eigen::VectorXd grpx = seis->getTraceHeader("GRPX", 0, seis->getNTrc());
   Eigen::VectorXd saed = seis->getTraceHeader("SAED", 0, seis->getNTrc());
-  Eigen::VectorXf trace = seis->getTrace(0);
+  size_t trcInd = 10;
+  Eigen::VectorXf trace = seis->getTrace(trcInd);
 
   // NOT MAPPED (read with h5geo::functions)
   p.mapSEGY = false;
@@ -522,7 +523,7 @@ TEST_F(H5SeisFixture, SEGY){
                 seis2.get(),
                 TEST_DATA_DIR"/1.segy",
                 false, nSamp, nTrc, format, endian)); // for testing purpose I need to set value not less than 24 trc (10000) as OMP may save traces in different order
-  Eigen::VectorXf trace2 = seis2->getTrace(0);
+  Eigen::VectorXf trace2 = seis2->getTrace(trcInd);
   ASSERT_TRUE(trace.isApprox(trace2));
 
 
@@ -533,7 +534,7 @@ TEST_F(H5SeisFixture, SEGY){
   ASSERT_TRUE(seis3->readSEGYTextHeader(p.segyFiles[0]));
   ASSERT_TRUE(seis3->readSEGYBinHeader(p.segyFiles[0]));
   ASSERT_TRUE(seis3->readSEGYTraces(p.segyFiles));
-  Eigen::VectorXf trace3 = seis3->getTrace(0);
+  Eigen::VectorXf trace3 = seis3->getTrace(trcInd);
   ASSERT_TRUE(trace.isApprox(trace3));
 
   // READ USING SEGY FUNCTIONS
@@ -543,9 +544,17 @@ TEST_F(H5SeisFixture, SEGY){
   ASSERT_TRUE(grpx(Eigen::seq(0,grpx4.size()-1)).isApprox(grpx4.cast<double>()));
   ASSERT_TRUE(saed(Eigen::seq(0,saed4.size()-1)).isApprox(saed4.cast<double>()));
 
-  auto trace4 = h5geo::readSEGYTraces(TEST_DATA_DIR"/1.segy",0,nSamp,0,0);
+  auto trace4 = h5geo::readSEGYTraces(TEST_DATA_DIR"/1.segy",0,nSamp,trcInd,trcInd);
 
   ASSERT_TRUE(trace.isApprox(trace4));
+
+  // CHECK TRACE READ THROUGH LOW LEVEL API
+  std::ifstream file(TEST_DATA_DIR"/1.segy", std::ifstream::binary | std::ifstream::in);
+  ASSERT_TRUE(file.is_open());
+
+  Eigen::VectorXf trace5(nSamp);
+  h5geo::readSEGYTrace(file, trcInd, format, endian, trace5);
+  ASSERT_TRUE(trace.isApprox(trace5));
 }
 
 #include <chrono>

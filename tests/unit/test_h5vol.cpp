@@ -165,7 +165,6 @@ TEST_F(H5VolFixture, writeAndGetDataFromVol){
     }
   }
 
-  std::cout << "m:\n" << m << std::endl;
   H5Vol_ptr vol(
         volContainer1->createVol(
           VOL_NAME2, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
@@ -174,4 +173,26 @@ TEST_F(H5VolFixture, writeAndGetDataFromVol){
 
   Eigen::MatrixXf M = vol->getData(0,0,0,p.nX,p.nY,p.nZ,"mm/sec");
   ASSERT_TRUE(m.isApprox(M/1000));
+}
+
+// prefix `DISABLED_` is to skip test
+TEST_F(H5VolFixture, DISABLED_SEGY){
+  std::string segyFile = "E:/Teapot Dome/DataSets/Seismic/CD files/3D_Seismic/filt_mig.sgy";
+
+  H5Vol_ptr vol(
+        volContainer1->createVol(
+          VOL_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(vol != nullptr);
+
+  ASSERT_TRUE(
+    vol->readSEGYSTACK(
+      segyFile,
+      180, 4,
+      184, 4,
+      188, 4,
+      192, 4, 
+      2, 0, 0,
+      static_cast<h5geo::SegyFormat>(0),
+      static_cast<h5geo::Endian>(0),
+      [](double progress) { std::cout << "Progress:\t" << progress << std::endl; }));
 }

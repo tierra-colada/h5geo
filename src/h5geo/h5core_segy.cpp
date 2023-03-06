@@ -348,7 +348,7 @@ void readSEGYTrace(
     h5geo::Endian endian,
     Eigen::Ref<Eigen::VectorXf> trace)
 {
-  file.seekg(3600+240+trcInd*trace.size()*4, std::ios_base::beg);
+  file.seekg(3600+(240+trace.size()*4)*trcInd+240, std::ios_base::beg);
   if (format == h5geo::SegyFormat::FourByte_IBM) {
     Eigen::VectorX<int> tmp(trace.size());
     file.read(bit_cast<char *>(tmp.data()), tmp.size()*4);
@@ -438,7 +438,7 @@ Eigen::MatrixXf readSEGYTraces(
 
   size_t skipBytesPerTrc = 4 * nSamp + 240 - nSampFact*4;
   Eigen::MatrixXf TRACE(nSampFact, nTrcFact);
-  file.seekg(3600+240+fromSamp*4);
+  file.seekg(3600+(240+nSamp*4)*fromTrc+240+fromSamp*4, std::ios_base::beg);
   if (format == h5geo::SegyFormat::FourByte_IBM) {
     Eigen::VectorX<int> trace(nSampFact);
     for (size_t i = fromTrc; i <= toTrc; i++){
@@ -756,6 +756,10 @@ bool readSEGYSTACK(
 
   if (!status)
     return false;
+
+  std::cout << "isPlanReversed: " << isPlanReversed << std::endl;
+  std::cout << "isILReversed: " << isILReversed << std::endl;
+  std::cout << "isXLReversed: " << isXLReversed << std::endl;
 
   // make plan normal by exchanging INLINE and XLINE headers
   if (isPlanReversed){
