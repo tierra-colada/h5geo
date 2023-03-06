@@ -757,10 +757,6 @@ bool readSEGYSTACK(
   if (!status)
     return false;
 
-  std::cout << "isPlanReversed: " << isPlanReversed << std::endl;
-  std::cout << "isILReversed: " << isILReversed << std::endl;
-  std::cout << "isXLReversed: " << isXLReversed << std::endl;
-
   // make plan normal by exchanging INLINE and XLINE headers
   if (isPlanReversed){
     HDR(Eigen::all, Eigen::seq(0,1)) = HDR(Eigen::all, Eigen::seq(1,0,Eigen::fix<-1>)).eval();
