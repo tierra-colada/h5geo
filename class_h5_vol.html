@@ -100,6 +100,9 @@ Public Member Functions</h2></td></tr>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>writeData</b> (Eigen::Ref&lt; Eigen::MatrixXf &gt; data, const size_t &amp;iX0, const size_t &amp;iY0, const size_t &amp;iZ0, const size_t &amp;nX, const size_t &amp;nY, const size_t &amp;nZ, const std::string &amp;dataUnits=&quot;&quot;)=0</td></tr>
 <tr class="memdesc:a87a4899d7fb5034eeab186f0dd3a6e5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write subvolume starting from iX0, iY0, iZ0 indices. <code>data</code> matrix is of size: nRows=nX, nCols=nY*nZ. <br /></td></tr>
 <tr class="separator:a87a4899d7fb5034eeab186f0dd3a6e5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76e33c175409dbada9732803c329f78d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_vol.html#a76e33c175409dbada9732803c329f78d">readSEGYSTACK</a> (const std::string &amp;segy, const size_t &amp;ilHdrOffset, const size_t &amp;ilHdrSize, const size_t &amp;xlHdrOffset, const size_t &amp;xlHdrSize, const size_t &amp;xHdrOffset, const size_t &amp;xHdrSize, const size_t &amp;yHdrOffset, const size_t &amp;yHdrSize, double sampRate, size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::function&lt; void(double)&gt; progressCallback=nullptr)=0</td></tr>
+<tr class="memdesc:a76e33c175409dbada9732803c329f78d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read SEGY STACK data, i.e. nTrc should be equal to nil*nxl. After reading origin, spacings, orientation, and angular units will be set.  <br /></td></tr>
+<tr class="separator:a76e33c175409dbada9732803c329f78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40e5da4941d028a4f3fe35da6f2e7812"><td class="memItemLeft" align="right" valign="top"><a id="a40e5da4941d028a4f3fe35da6f2e7812" name="a40e5da4941d028a4f3fe35da6f2e7812"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setDomain</b> (const h5geo::Domain &amp;domain)=0</td></tr>
 <tr class="memdesc:a40e5da4941d028a4f3fe35da6f2e7812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set domain for the map (<code>TVD</code>, <code>TVDSS</code>, <code>TWT</code>, <code>OWT</code>) <br /></td></tr>
@@ -310,7 +313,146 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Delete</b> ()
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides API to work with volumes. </p>
 <p>Volume is an object that is represented by a regular 3D grid. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a76e33c175409dbada9732803c329f78d" name="a76e33c175409dbada9732803c329f78d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76e33c175409dbada9732803c329f78d">&#9670;&#160;</a></span>readSEGYSTACK()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool H5Vol::readSEGYSTACK </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>segy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramname"><em>ilHdrOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramname"><em>ilHdrSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramname"><em>xlHdrOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramname"><em>xlHdrSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramname"><em>xHdrOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramname"><em>xHdrSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramname"><em>yHdrOffset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const size_t &amp;&#160;</td>
+          <td class="paramname"><em>yHdrSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>sampRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>nSamp</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>nTrc</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">h5geo::SegyFormat&#160;</td>
+          <td class="paramname"><em>format</em> = <code>static_cast&lt;&#160;h5geo::SegyFormat&#160;&gt;(0)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">h5geo::Endian&#160;</td>
+          <td class="paramname"><em>endian</em> = <code>static_cast&lt;&#160;h5geo::Endian&#160;&gt;(0)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; void(double)&gt;&#160;</td>
+          <td class="paramname"><em>progressCallback</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read SEGY STACK data, i.e. nTrc should be equal to nil*nxl. After reading origin, spacings, orientation, and angular units will be set. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">segy</td><td></td></tr>
+    <tr><td class="paramname">ilHdrOffset</td><td>INLINE offset in bytes </td></tr>
+    <tr><td class="paramname">ilHdrSize</td><td>INLINE size in bytes </td></tr>
+    <tr><td class="paramname">xlHdrOffset</td><td>XLINE offset in bytes </td></tr>
+    <tr><td class="paramname">xlHdrSize</td><td>XLINE size in bytes </td></tr>
+    <tr><td class="paramname">xHdrOffset</td><td>X-coord offset in bytes </td></tr>
+    <tr><td class="paramname">xHdrSize</td><td>X-coord size in bytes </td></tr>
+    <tr><td class="paramname">yHdrOffset</td><td>Y-coord offset in bytes </td></tr>
+    <tr><td class="paramname">yHdrSize</td><td>Y-coord size in bytes </td></tr>
+    <tr><td class="paramname">sampRate</td><td>sampling rate of SEGY file (must know the sign) </td></tr>
+    <tr><td class="paramname">nSamp</td><td>number of samples in SEGY (if 0 then try automatically detect) </td></tr>
+    <tr><td class="paramname">nTrc</td><td>number of traces in SEGY (if 0 then try automatically detect) </td></tr>
+    <tr><td class="paramname">format</td><td>SEGY format (ibm32, ieee32 or int4) </td></tr>
+    <tr><td class="paramname">endian</td><td>Big or Little </td></tr>
+    <tr><td class="paramname">progressCallback</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><br  />
+ </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>/github/workspace/include/h5geo/<a class="el" href="h5vol_8h_source.html">h5vol.h</a></li>
 </ul>
 </div><!-- contents -->
