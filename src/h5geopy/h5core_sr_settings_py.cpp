@@ -153,6 +153,9 @@ void defineSRSettingsFunctions(py::module_& m_sr){
   m_sr.def("setLengthUnits", &sr::setLengthUnits);
   m_sr.def("setAngularUnits", &sr::setAngularUnits);
   m_sr.def("setTemporalUnits", &sr::setTemporalUnits);
+  m_sr.def("getAuthName", &sr::getAuthName);
+  m_sr.def("getAuthCode", &sr::getAuthCode);
+  m_sr.def("getSRName", &sr::getSRName);
   m_sr.def("getLengthUnits", &sr::getLengthUnits);
   m_sr.def("getAngularUnits", &sr::getAngularUnits);
   m_sr.def("getTemporalUnits", &sr::getTemporalUnits);

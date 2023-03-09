@@ -18,8 +18,14 @@ namespace sr {
 namespace {
 
 OGRSpatialReference SpatialReference {};
+// GDAL sometimes is unable to retrieve AuthName, AuthCode and SRName 
+// info from OGRSpatialReference.
+// Thus we store these settings as strings
+std::string SRName {};
+std::string AuthName {};
+std::string AuthCode {};
 std::string TemporalUnits {};
-std::string Domain;
+std::string Domain {};
 
 } // namespace
 
@@ -29,11 +35,14 @@ void setSpatialReference(OGRSpatialReference sr){
 
 void setSpatialReferenceFromUserInput(
     const std::string& name){
+  SRName = name;
   SpatialReference.SetFromUserInput(name.c_str());
 }
 
 void setSpatialReferenceFromUserInput(
     const std::string& authName, const std::string& code){
+  AuthName = authName;
+  AuthCode = code;
   SpatialReference.SetFromUserInput((authName + ":" + code).c_str());
 }
 
@@ -57,6 +66,32 @@ void setAngularUnits(const std::string& units){
 
 void setTemporalUnits(const std::string& units){
   TemporalUnits = units;
+}
+
+std::string getAuthName(){
+  if (!AuthName.empty())
+    return AuthName;
+
+  const char* authName = SpatialReference.GetAuthorityName(nullptr);
+  if (authName)
+    return std::string(authName);
+
+  return std::string();
+}
+
+std::string getAuthCode(){
+  if (!AuthCode.empty())
+    return AuthCode;
+
+  const char* authCode = SpatialReference.GetAuthorityCode(nullptr);
+  if (authCode)
+    return std::string(authCode);
+
+  return std::string();
+}
+
+std::string getSRName(){
+  return SRName;
 }
 
 std::string getLengthUnits(){

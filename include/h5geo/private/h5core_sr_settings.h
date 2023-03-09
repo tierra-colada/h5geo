@@ -17,6 +17,11 @@ namespace h5geo
 namespace sr {
 
 
+/// \brief Set spatial reference from OGRSpatialReference.
+/// \param sr 
+/// \return 
+/// \note consider using other API through `std::string` to 
+/// avoid problems with returning back AuthName, AuthCode or SRName
 H5GEO_EXPORT void setSpatialReference(OGRSpatialReference sr);
 H5GEO_EXPORT void setSpatialReferenceFromUserInput(
     const std::string& name);
@@ -28,6 +33,12 @@ H5GEO_EXPORT void setLengthUnits(const std::string& units);
 H5GEO_EXPORT void setAngularUnits(const std::string& units);
 H5GEO_EXPORT void setTemporalUnits(const std::string& units);
 
+/// \brief may return empty string if spatial reference were set through OGRSpatialReference
+H5GEO_EXPORT std::string getAuthName();
+/// \brief may return empty string if spatial reference were set through OGRSpatialReference
+H5GEO_EXPORT std::string getAuthCode();
+/// \brief may return empty string if spatial reference were set through OGRSpatialReference
+H5GEO_EXPORT std::string getSRName();
 H5GEO_EXPORT std::string getLengthUnits();
 H5GEO_EXPORT std::string getAngularUnits();
 H5GEO_EXPORT std::string getTemporalUnits();
