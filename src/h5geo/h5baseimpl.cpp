@@ -711,7 +711,7 @@ H5BaseImpl<TBase>::createNewVol(h5gt::Group &group, void* p)
     group.createAttribute<double>(
           std::string{h5geo::detail::spacings},
           h5gt::DataSpace({3})).
-        write(origin);
+        write(spacings);
     group.createAttribute<double>(
           std::string{h5geo::detail::orientation},
           h5gt::DataSpace(1)).
