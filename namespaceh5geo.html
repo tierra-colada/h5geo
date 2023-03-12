@@ -89,6 +89,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structh5geo_1_1__ccw_sorter.html">_ccwSorter</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="structh5geo_1_1__ccw_sorter.html" title="The _ccwSorter struct Used to sort points in _ccw order about a pivot.">_ccwSorter</a> struct Used to sort points in _ccw order about a pivot.  <a href="structh5geo_1_1__ccw_sorter.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structh5geo_1_1_bin_header.html">BinHeader</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structh5geo_1_1_enable_bit_mask_operators.html">EnableBitMaskOperators</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structh5geo_1_1_object_deleter.html">ObjectDeleter</a></td></tr>
@@ -956,9 +958,15 @@ H5GEO_EXPORT SegyFormat&#160;</td><td class="memItemRight" valign="bottom"><b>ge
 <tr class="memitem:a75abcbf74ad8adf27a9f88f08049ab64"><td class="memItemLeft" align="right" valign="top"><a id="a75abcbf74ad8adf27a9f88f08049ab64" name="a75abcbf74ad8adf27a9f88f08049ab64"></a>
 H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGYTextHeader</b> (const std::string &amp;segy, char txtHdr[40][80], h5geo::TextEncoding encoding=static_cast&lt; h5geo::TextEncoding &gt;(0))</td></tr>
 <tr class="separator:a75abcbf74ad8adf27a9f88f08049ab64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fe4fad88bbbb092cd9fa10b36c1b95d"><td class="memItemLeft" align="right" valign="top"><a id="a0fe4fad88bbbb092cd9fa10b36c1b95d" name="a0fe4fad88bbbb092cd9fa10b36c1b95d"></a>
+H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>writeSEGYTextHeader</b> (const std::string &amp;segy, char txtHdr[40][80])</td></tr>
+<tr class="separator:a0fe4fad88bbbb092cd9fa10b36c1b95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73bafce521da391ab482b59b82db86b3"><td class="memItemLeft" align="right" valign="top"><a id="a73bafce521da391ab482b59b82db86b3" name="a73bafce521da391ab482b59b82db86b3"></a>
 H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGYBinHeader</b> (const std::string &amp;segy, double binHdr[30], h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0))</td></tr>
 <tr class="separator:a73bafce521da391ab482b59b82db86b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc777fa9ab684c3e03188d007f18afc7"><td class="memItemLeft" align="right" valign="top"><a id="acc777fa9ab684c3e03188d007f18afc7" name="acc777fa9ab684c3e03188d007f18afc7"></a>
+H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>writeSEGYBinHeader</b> (const std::string &amp;segy, ptrdiff_t binHdr[30])</td></tr>
+<tr class="separator:acc777fa9ab684c3e03188d007f18afc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9ba350f9de597dfbe48903fa9213efe"><td class="memItemLeft" align="right" valign="top"><a id="ad9ba350f9de597dfbe48903fa9213efe" name="ad9ba350f9de597dfbe48903fa9213efe"></a>
 H5GEO_EXPORT double&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYSampRate</b> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0))</td></tr>
 <tr class="separator:ad9ba350f9de597dfbe48903fa9213efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
