@@ -134,9 +134,17 @@ H5GEO_EXPORT bool readSEGYTextHeader(
     const std::string& segy,
     char txtHdr[40][80], h5geo::TextEncoding encoding = static_cast<h5geo::TextEncoding>(0));
 
+H5GEO_EXPORT bool writeSEGYTextHeader(
+    const std::string& segy,
+    char txtHdr[40][80]);
+
 H5GEO_EXPORT bool readSEGYBinHeader(
     const std::string& segy,
     double binHdr[30], h5geo::Endian endian = static_cast<h5geo::Endian>(0));
+
+H5GEO_EXPORT bool writeSEGYBinHeader(
+    const std::string& segy,
+    ptrdiff_t binHdr[30]);
 
 H5GEO_EXPORT double getSEGYSampRate(
     const std::string& segy, h5geo::Endian endian = static_cast<h5geo::Endian>(0));

@@ -9,6 +9,7 @@
 #include <h5gt/H5Group.hpp>
 #include <h5gt/H5DataSet.hpp>
 
+#include <cstring>
 #include <filesystem>
 namespace fs = std::filesystem;
 
@@ -555,6 +556,21 @@ TEST_F(H5SeisFixture, SEGY){
   Eigen::VectorXf trace5(nSamp);
   h5geo::readSEGYTrace(file, trcInd, format, endian, trace5);
   ASSERT_TRUE(trace.isApprox(trace5));
+
+  // TEST WRITE
+  std::string segy_out = "out.sgy";
+  char textHdr_out[40][80] = { " " };
+  for (size_t i = 0; i < txtHdr.size(); i++)
+    std::strncpy(std::begin(textHdr_out[i]), txtHdr[i].c_str(), txtHdr[i].size());
+
+  double binHdr[30] = { 0 };
+  ASSERT_TRUE(h5geo::readSEGYBinHeader(p.segyFiles[0], binHdr));
+    
+  ptrdiff_t binHdr_out[30] = { 0 };
+  std::copy(std::begin(binHdr), std::end(binHdr), binHdr_out);
+  
+  ASSERT_TRUE(h5geo::writeSEGYTextHeader(segy_out, textHdr_out));
+  ASSERT_TRUE(h5geo::writeSEGYBinHeader(segy_out, binHdr_out));
 }
 
 #include <chrono>

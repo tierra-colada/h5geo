@@ -20,6 +20,14 @@
 #include "../../include/h5geo/h5vol.h"
 
 namespace h5geo {
+  
+struct BinHeader {
+  int b0[3] = { 0 };
+  short b1[24] = { 0 };
+  short gap0[120] = { 0 };
+  short b2[3] = { 0 };
+  short gap1[46] = { 0 };
+};
 
 bool isSEGY(const std::string& segy){
   try {
@@ -152,6 +160,19 @@ bool readSEGYTextHeader(
   return true;
 }
 
+bool writeSEGYTextHeader(
+    const std::string& segy,
+    char txtHdr[40][80])
+{
+  // to open file without truncating it I have to pass both `std::ios::in | std::ios::out`
+  std::ofstream file(segy, std::ios::in | std::ios::out | std::ios::binary);
+  if (!file.is_open())
+    return false;
+
+  file.write(bit_cast<char *>(&txtHdr[0][0]), 3200);
+  return true;
+}
+
 bool readSEGYBinHeader(
     const std::string& segy,
     double binHdr[30], h5geo::Endian endian)
@@ -159,7 +180,7 @@ bool readSEGYBinHeader(
   if (!isSEGY(segy))
     return false;
 
-  std::ifstream file(segy, std::ifstream::binary | std::ifstream::in);
+  std::ifstream file(segy, std::ios::in | std::ios::binary);
   if (!file.is_open())
     return false;
 
@@ -191,6 +212,30 @@ bool readSEGYBinHeader(
     binHdr[i] = binHdr2[i - 3];
   }
 
+  return true;
+}
+
+bool writeSEGYBinHeader(
+    const std::string& segy,
+    ptrdiff_t binHdr[30])
+{
+  // to open file without truncating it I have to pass both `std::ios::in | std::ios::out`
+  std::ofstream file(segy, std::ios::in | std::ios::out | std::ios::binary);
+  if (!file.is_open())
+    return false;
+
+  file.seekp(3200);
+  BinHeader hdr;
+  for (int i = 0; i < 3; i++)
+    hdr.b0[i] = binHdr[i];
+
+  for (int i = 0; i < 24; i++)
+    hdr.b1[i] = binHdr[i+3];
+
+  for (int i = 0; i < 3; i++)
+    hdr.b2[i] = binHdr[i+27];
+
+  file.write(bit_cast<char *>(&hdr), sizeof(hdr));
   return true;
 }
 
