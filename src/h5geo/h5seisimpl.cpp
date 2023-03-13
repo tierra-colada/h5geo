@@ -2098,6 +2098,42 @@ bool H5SeisImpl::updatePKeySort(const std::string& pKeyName)
   return addPKeySort(pKeyName);
 }
 
+Eigen::MatrixXd H5SeisImpl::calcBoundary(
+    const std::string& lengthUnits,
+    bool doCoordTransform)
+{
+  Eigen::MatrixX2d boundary;
+  if (getDataType() == h5geo::SeisDataType::STACK &&
+      getSurveyType() == h5geo::SurveyType::TWO_D){
+    boundary = calcBoundaryStk2D();
+  } else {
+    boundary = calcConvexHullBoundary();
+  }
+
+  if (boundary.size() == 0 || boundary.cols() < 2)
+    return Eigen::MatrixXd();
+
+#ifdef H5GEO_USE_GDAL
+  if (doCoordTransform){
+    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
+    if (!coordTrans)
+      return Eigen::MatrixXd();
+
+    coordTrans->Transform(boundary.rows(), boundary.col(0).data(), boundary.col(1).data());
+    return boundary;
+  }
+#endif
+
+  if (!lengthUnits.empty()){
+    double coef = units::convert(
+          units::unit_from_string(getLengthUnits()),
+          units::unit_from_string(lengthUnits));
+    boundary *= coef;
+  }
+
+  return boundary;
+}
+
 bool H5SeisImpl::exportToVol(H5Vol* vol, 
     const std::string& xHeader,
     const std::string& yHeader,
@@ -2305,40 +2341,49 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
   return true;
 }
 
-Eigen::MatrixXd H5SeisImpl::calcBoundary(
-    const std::string& lengthUnits,
-    bool doCoordTransform)
+bool H5SeisImpl::exportToSEGY(
+    const std::string& segyFile, 
+    size_t trcBuffer, 
+    std::function<void(double)> progressCallback)
 {
-  Eigen::MatrixX2d boundary;
-  if (getDataType() == h5geo::SeisDataType::STACK &&
-      getSurveyType() == h5geo::SurveyType::TWO_D){
-    boundary = calcBoundaryStk2D();
-  } else {
-    boundary = calcConvexHullBoundary();
+  std::vector<std::string> txtHdr = this->getTextHeader();
+  char textHdr_out[40][80] = { " " };
+  for (size_t i = 0; i < std::min<size_t>(40, txtHdr.size()); i++)
+    std::strncpy(std::begin(textHdr_out[i]), txtHdr[i].c_str(), txtHdr[i].size());
+
+  if (!h5geo::writeSEGYTextHeader(segyFile, textHdr_out))
+    return false;
+
+  double binHdr_out[30] = { 0 };
+  std::map<std::string, double> binHdr = this->getBinHeader();
+  std::vector<std::string> binHdrShortNames = h5geo::getBinHeaderShortNames();
+  for (size_t i = 0; i < std::min((sizeof(binHdr_out)/sizeof(*binHdr_out)), 
+                         std::min(binHdr.size(), binHdrShortNames.size())); i++){
+    binHdr_out[i] = binHdr[binHdrShortNames[i]];
+  }
+  if (!h5geo::writeSEGYBinHeader(segyFile, binHdr_out))
+    return false;
+
+  double progressOld = 0;
+  double progressNew = 0;
+
+  size_t nTrc = this->getNTrc();
+  for (size_t i = 0; i < nTrc; i+=trcBuffer){
+    if (progressCallback){
+      progressNew = i / (double)nTrc;
+      if (progressNew - progressOld >= 0.01){
+        progressCallback( progressNew );
+        progressOld = progressNew;
+      }
+    }
+    Eigen::MatrixXd HDR = this->getTraceHeader(i,trcBuffer).transpose();
+    Eigen::MatrixXf TRACE = this->getTrace(i,trcBuffer);
+    h5geo::writeSEGYTraces(segyFile, HDR, TRACE);
   }
 
-  if (boundary.size() == 0 || boundary.cols() < 2)
-    return Eigen::MatrixXd();
-
-#ifdef H5GEO_USE_GDAL
-  if (doCoordTransform){
-    OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
-    if (!coordTrans)
-      return Eigen::MatrixXd();
-
-    coordTrans->Transform(boundary.rows(), boundary.col(0).data(), boundary.col(1).data());
-    return boundary;
-  }
-#endif
-
-  if (!lengthUnits.empty()){
-    double coef = units::convert(
-          units::unit_from_string(getLengthUnits()),
-          units::unit_from_string(lengthUnits));
-    boundary *= coef;
-  }
-
-  return boundary;
+  if (progressCallback)
+    progressCallback( double(1) );
+  return true;
 }
 
 /*-------------------------------------------------------*/

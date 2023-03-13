@@ -134,6 +134,10 @@ H5GEO_EXPORT bool readSEGYTextHeader(
     const std::string& segy,
     char txtHdr[40][80], h5geo::TextEncoding encoding = static_cast<h5geo::TextEncoding>(0));
 
+/// \brief create new file or open existing SEGY
+/// \param segy 
+/// \param txtHdr 
+/// \return 
 H5GEO_EXPORT bool writeSEGYTextHeader(
     const std::string& segy,
     char txtHdr[40][80]);
@@ -142,9 +146,13 @@ H5GEO_EXPORT bool readSEGYBinHeader(
     const std::string& segy,
     double binHdr[30], h5geo::Endian endian = static_cast<h5geo::Endian>(0));
 
+/// \brief create new file or open existing SEGY
+/// \param segy 
+/// \param binHdr 
+/// \return 
 H5GEO_EXPORT bool writeSEGYBinHeader(
     const std::string& segy,
-    ptrdiff_t binHdr[30]);
+    double binHdr[30]);
 
 H5GEO_EXPORT double getSEGYSampRate(
     const std::string& segy, h5geo::Endian endian = static_cast<h5geo::Endian>(0));
@@ -165,7 +173,7 @@ H5GEO_EXPORT size_t getSEGYNTrc(
 /// \param nTrc number of traces in SEGY (if 0 then try automatically detect)
 /// \param endian Big or Little
 /// \param progressCallback callback function of form `void foo(double progress)`
-/// \return  
+/// \return
 H5GEO_EXPORT Eigen::VectorX<ptrdiff_t> readSEGYTraceHeader(
     const std::string& segy,
     const size_t& hdrOffset,
@@ -191,6 +199,16 @@ H5GEO_EXPORT void readSEGYTrace(
     h5geo::SegyFormat format,
     h5geo::Endian endian,
     Eigen::Ref<Eigen::VectorXf> trace);
+
+/// \brief writeSEGYTraces write traces and their headers to the end of SEGY file
+/// \param segy path to SEGY file
+/// \param HDR one column per trace
+/// \param TRACE one column per trace
+/// \return 
+H5GEO_EXPORT bool writeSEGYTraces(
+    const std::string& segy,
+    Eigen::Ref<Eigen::MatrixXd> HDR,
+    Eigen::Ref<Eigen::MatrixXf> TRACE);
 
 /// \brief readSEGYTraces read traces
 /// \param segy path to SEGY file

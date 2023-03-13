@@ -497,6 +497,13 @@ public:
   /// \brief Update sorting for prepared `PKey`
   virtual bool updatePKeySort(const std::string& pKeyName) = 0;
 
+  /// \brief Calculate `XY` boundary around the survey
+  ///
+  /// Return two cols Eigen matrix. Use it to write as H5Horizon.
+  virtual Eigen::MatrixXd calcBoundary(
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) = 0;
+
   /// \brief Export seismic to `H5Vol`. 
   /// \note Selected traces must shape a rectangle.
   virtual bool exportToVol(H5Vol* vol, 
@@ -511,12 +518,10 @@ public:
       size_t fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max()) = 0;
 
-  /// \brief Calculate `XY` boundary around the survey
-  ///
-  /// Return two cols Eigen matrix. Use it to write as H5Horizon.
-  virtual Eigen::MatrixXd calcBoundary(
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) = 0;
+  virtual bool exportToSEGY(
+      const std::string& segyFile, 
+      size_t trcBuffer = 10000, 
+      std::function<void(double)> progressCallback = nullptr) = 0;
 };
 
 using H5Seis_ptr = std::unique_ptr<H5Seis, h5geo::ObjectDeleter>;

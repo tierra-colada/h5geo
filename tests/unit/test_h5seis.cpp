@@ -565,12 +565,19 @@ TEST_F(H5SeisFixture, SEGY){
 
   double binHdr[30] = { 0 };
   ASSERT_TRUE(h5geo::readSEGYBinHeader(p.segyFiles[0], binHdr));
-    
-  ptrdiff_t binHdr_out[30] = { 0 };
+
+  double binHdr_out[30] = { 0 };
   std::copy(std::begin(binHdr), std::end(binHdr), binHdr_out);
   
   ASSERT_TRUE(h5geo::writeSEGYTextHeader(segy_out, textHdr_out));
   ASSERT_TRUE(h5geo::writeSEGYBinHeader(segy_out, binHdr_out));
+
+  Eigen::MatrixXd HDR = seis->getTraceHeader(0,nTrc).transpose();
+  Eigen::MatrixXf TRACE = seis->getTrace(0,nTrc);
+  ASSERT_TRUE(h5geo::writeSEGYTraces(segy_out, HDR, TRACE));
+
+  std::string segy_out1 = "out1.sgy";
+  seis->exportToSEGY(segy_out1, 5, [](double progress) { std::cout << "Progress:\t" << progress << std::endl; });
 }
 
 #include <chrono>

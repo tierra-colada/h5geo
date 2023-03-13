@@ -283,6 +283,10 @@ public:
   virtual bool updateTraceHeaderLimits(size_t nTrcBuffer = 1e7) override;
   virtual bool updatePKeySort(const std::string& pKeyName) override;
 
+  virtual Eigen::MatrixXd calcBoundary(
+      const std::string& lengthUnits = "",
+      bool doCoordTransform = false) override;
+
   virtual bool exportToVol(H5Vol* vol, 
       const std::string& xHeader = "CDP_X",
       const std::string& yHeader = "CDP_Y",
@@ -295,9 +299,10 @@ public:
       size_t fromSampInd = 0,
       size_t nSamp = std::numeric_limits<size_t>::max()) override;
 
-  virtual Eigen::MatrixXd calcBoundary(
-      const std::string& lengthUnits = "",
-      bool doCoordTransform = false) override;
+  virtual bool exportToSEGY(
+      const std::string& segyFile, 
+      size_t trcBuffer = 10000, 
+      std::function<void(double)> progressCallback = nullptr) override;
 
 protected:
   virtual Eigen::MatrixXd calcBoundaryStk2D();

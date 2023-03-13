@@ -466,7 +466,13 @@ void H5Seis_py(
       .def("calcBoundary", &H5Seis::calcBoundary,
            py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"),
-           "calculate boundary of 2D or 3D seismic survey");
+           "calculate boundary of 2D or 3D seismic survey")
+
+      .def("exportToSEGY", &H5Seis::exportToSEGY,
+           py::arg("segyFile"),
+           py::arg_v("trcBuffer", 10000, "10000"),
+           py::arg_v("progressCallback", nullptr, "None"),
+           "export seismic to SEGY");
 }
 
 

@@ -20,13 +20,25 @@
 #include "../../include/h5geo/h5vol.h"
 
 namespace h5geo {
-  
+
 struct BinHeader {
   int b0[3] = { 0 };
   short b1[24] = { 0 };
   short gap0[120] = { 0 };
   short b2[3] = { 0 };
   short gap1[46] = { 0 };
+};
+
+struct TraceHeader {
+  int b0[7] = { 0 };
+  short b1[4] = { 0 };
+  int b2[8] = { 0 };
+  short b3[2] = { 0 };
+  int b4[4] = { 0 };
+  short b5[46] = { 0 };
+  int b6[5] = { 0 };
+  short b7[2] = { 0 };
+  short gap0[18] = { 0 };
 };
 
 bool isSEGY(const std::string& segy){
@@ -164,8 +176,14 @@ bool writeSEGYTextHeader(
     const std::string& segy,
     char txtHdr[40][80])
 {
-  // to open file without truncating it I have to pass both `std::ios::in | std::ios::out`
-  std::ofstream file(segy, std::ios::in | std::ios::out | std::ios::binary);
+  // open file and overwrite
+  int openFlag = std::ios::out | std::ios::binary;
+  // but if this is a SEGY file then don't overwrite it
+  // the file won't be created if `std::ios::in` is set
+  if (isSEGY(segy))
+    openFlag |= std::ios::in;
+
+  std::ofstream file(segy, openFlag);
   if (!file.is_open())
     return false;
 
@@ -187,53 +205,83 @@ bool readSEGYBinHeader(
   if (std::string{magic_enum::enum_name(endian)}.empty())
     endian = getSEGYEndian(segy);
 
-  int binHdr4[3];
-  short binHdr2[27], binHdr2tmp[3];
+  // int binHdr4[3];
+  // short binHdr2[27], binHdr2tmp[3];
 
   file.seekg(3200);
-  file.read(bit_cast<char *>(&binHdr4), 12);
-  file.read(bit_cast<char *>(&binHdr2), 48);
+  BinHeader hdr;
+  file.read(bit_cast<char *>(&hdr), sizeof(hdr));
+  // file.read(bit_cast<char *>(&binHdr4), 12);
+  // file.read(bit_cast<char *>(&binHdr2), 48);
 
-  file.seekg(3500);
-  file.read(bit_cast<char *>(&binHdr2tmp), 6);
+  // file.seekg(3500);
+  // file.read(bit_cast<char *>(&binHdr2tmp), 6);
 
-  binHdr2[24] = binHdr2tmp[0];
-  binHdr2[25] = binHdr2tmp[1];
-  binHdr2[26] = binHdr2tmp[2];
+  // binHdr2[24] = binHdr2tmp[0];
+  // binHdr2[25] = binHdr2tmp[1];
+  // binHdr2[26] = binHdr2tmp[2];
 
-  to_native_endian<int>(std::begin(binHdr4), std::end(binHdr4), std::begin(binHdr4), endian);
-  to_native_endian<short>(std::begin(binHdr2), std::end(binHdr2), std::begin(binHdr2), endian);
+  to_native_endian<int>(std::begin(hdr.b0), std::end(hdr.b0), std::begin(hdr.b0), endian);
+  to_native_endian<short>(std::begin(hdr.b1), std::end(hdr.b1), std::begin(hdr.b1), endian);
+  to_native_endian<int>(std::begin(hdr.b2), std::end(hdr.b2), std::begin(hdr.b2), endian);
+  // to_native_endian<int>(std::begin(binHdr4), std::end(binHdr4), std::begin(binHdr4), endian);
+  // to_native_endian<short>(std::begin(binHdr2), std::end(binHdr2), std::begin(binHdr2), endian);
 
-  for (int i = 0; i < 3; i++) {
-    binHdr[i] = binHdr4[i];
+  int ii = 0;
+  for (int i = 0; i < (sizeof(hdr.b0)/sizeof(*hdr.b0)); i++) {
+    binHdr[ii] = hdr.b0[i];
+    ii++;
+  }
+  for (int i = 0; i < (sizeof(hdr.b1)/sizeof(*hdr.b1)); i++) {
+    binHdr[ii] = hdr.b1[i];
+    ii++;
+  }
+  for (int i = 0; i < (sizeof(hdr.b2)/sizeof(*hdr.b2)); i++) {
+    binHdr[ii] = hdr.b2[i];
+    ii++;
   }
 
-  for (int i = 3; i < 30; i++) {
-    binHdr[i] = binHdr2[i - 3];
-  }
+  // for (int i = 0; i < 3; i++) {
+  //   binHdr[i] = binHdr4[i];
+  // }
+
+  // for (int i = 3; i < 30; i++) {
+  //   binHdr[i] = binHdr2[i - 3];
+  // }
 
   return true;
 }
 
 bool writeSEGYBinHeader(
     const std::string& segy,
-    ptrdiff_t binHdr[30])
+    double binHdr[30])
 {
-  // to open file without truncating it I have to pass both `std::ios::in | std::ios::out`
-  std::ofstream file(segy, std::ios::in | std::ios::out | std::ios::binary);
+    // open file and overwrite
+  int openFlag = std::ios::out | std::ios::binary;
+  // but if this is a SEGY file then don't overwrite it
+  // the file won't be created if `std::ios::in` is set
+  if (isSEGY(segy))
+    openFlag |= std::ios::in;
+
+  std::ofstream file(segy, openFlag);
   if (!file.is_open())
     return false;
 
   file.seekp(3200);
   BinHeader hdr;
-  for (int i = 0; i < 3; i++)
-    hdr.b0[i] = binHdr[i];
-
-  for (int i = 0; i < 24; i++)
-    hdr.b1[i] = binHdr[i+3];
-
-  for (int i = 0; i < 3; i++)
-    hdr.b2[i] = binHdr[i+27];
+  int ii = 0;
+  for (int i = 0; i < (sizeof(hdr.b0)/sizeof(*hdr.b0)); i++){
+    hdr.b0[i] = (int)binHdr[ii];
+    ii++;
+  }
+  for (int i = 0; i < (sizeof(hdr.b1)/sizeof(*hdr.b1)); i++){
+    hdr.b1[i] = (short)binHdr[ii];
+    ii++;
+  }
+  for (int i = 0; i < (sizeof(hdr.b2)/sizeof(*hdr.b2)); i++){
+    hdr.b2[i] = (short)binHdr[ii];
+    ii++;
+  }
 
   file.write(bit_cast<char *>(&hdr), sizeof(hdr));
   return true;
@@ -412,6 +460,77 @@ void readSEGYTrace(
       trace(i) = (float)to_native_endian(trace(i), endian);
     }
   }
+}
+
+bool writeSEGYTraces(
+    const std::string& segy,
+    Eigen::Ref<Eigen::MatrixXd> HDR,
+    Eigen::Ref<Eigen::MatrixXf> TRACE)
+{
+  // to open file without truncating it I have to pass both `std::ios::in | std::ios::out`
+  std::ofstream file(segy, std::ios::in | std::ios::out | std::ios::binary | std::ios::ate);
+  if (!file.is_open())
+    return false;
+
+  if (TRACE.cols() != HDR.cols())
+    return false;
+
+  TraceHeader hdr;
+  for (size_t j = 0; j < TRACE.cols(); j++){
+    int ii = 0;
+    for (int i = 0; i < (sizeof(hdr.b0)/sizeof(*hdr.b0)); i++){
+      if (ii >= HDR.rows())
+        break;
+      hdr.b0[i] = (int)HDR(ii,j);
+      ii++;
+    }
+    for (int i = 0; i < (sizeof(hdr.b1)/sizeof(*hdr.b1)); i++){
+      if (ii >= HDR.rows())
+        break;
+      hdr.b1[i] = (short)HDR(ii,j);
+      ii++;
+    }
+    for (int i = 0; i < (sizeof(hdr.b2)/sizeof(*hdr.b2)); i++){
+      if (ii >= HDR.rows())
+        break;
+      hdr.b2[i] = (int)HDR(ii,j);
+      ii++;
+    }
+    for (int i = 0; i < (sizeof(hdr.b3)/sizeof(*hdr.b3)); i++){
+      if (ii >= HDR.rows())
+        break;
+      hdr.b3[i] = (short)HDR(ii,j);
+      ii++;
+    }
+    for (int i = 0; i < (sizeof(hdr.b4)/sizeof(*hdr.b4)); i++){
+      if (ii >= HDR.rows())
+        break;
+      hdr.b4[i] = (int)HDR(ii,j);
+      ii++;
+    }
+    for (int i = 0; i < (sizeof(hdr.b5)/sizeof(*hdr.b5)); i++){
+      if (ii >= HDR.rows())
+        break;
+      hdr.b5[i] = (short)HDR(ii,j);
+      ii++;
+    }
+    for (int i = 0; i < (sizeof(hdr.b6)/sizeof(*hdr.b6)); i++){
+      if (ii >= HDR.rows())
+        break;
+      hdr.b6[i] = (int)HDR(ii,j);
+      ii++;
+    }
+    for (int i = 0; i < (sizeof(hdr.b7)/sizeof(*hdr.b7)); i++){
+      if (ii >= HDR.rows())
+        break;
+      hdr.b7[i] = (short)HDR(ii,j);
+      ii++;
+    }
+
+    file.write(bit_cast<char *>(&hdr), sizeof(hdr));
+    file.write(bit_cast<char *>(TRACE.col(j).data()), TRACE.rows()*4);
+  }
+  return true;
 }
 
 Eigen::MatrixXf readSEGYTraces(
