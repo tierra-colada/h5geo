@@ -166,11 +166,15 @@ $(function() {
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="class_h5_vol.html#a4188db16d647822ea68a2d650d6fae72">  126</a></span>  <span class="keyword">virtual</span> <a class="code hl_class" href="class_h5_vol_container.html">H5VolContainer</a>* <a class="code hl_function" href="class_h5_vol.html#a4188db16d647822ea68a2d650d6fae72">openVolContainer</a>() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="class_h5_vol.html#a4a17586538692445d561fce517e356ea">  129</a></span>  <span class="keyword">virtual</span> std::optional&lt;h5gt::DataSet&gt; <a class="code hl_function" href="class_h5_vol.html#a4a17586538692445d561fce517e356ea">getVolD</a>() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>};</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="keyword">using </span>H5Vol_ptr = std::unique_ptr&lt;H5Vol, h5geo::ObjectDeleter&gt;;</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="preprocessor">#endif </span><span class="comment">// H5VOL_H</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> exportToSEGY(</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    <span class="keyword">const</span> std::string&amp; segyFile, </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; progressCallback = <span class="keyword">nullptr</span>) = 0;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>};</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="keyword">using </span>H5Vol_ptr = std::unique_ptr&lt;H5Vol, h5geo::ObjectDeleter&gt;;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="preprocessor">#endif </span><span class="comment">// H5VOL_H</span></div>
 <div class="ttc" id="aclass_h5_base_object_html"><div class="ttname"><a href="class_h5_base_object.html">H5BaseObject</a></div><div class="ttdoc">Base class for geo-objects.</div><div class="ttdef"><b>Definition:</b> h5baseobject.h:13</div></div>
 <div class="ttc" id="aclass_h5_vol_container_html"><div class="ttname"><a href="class_h5_vol_container.html">H5VolContainer</a></div><div class="ttdoc">A container built around HDF5 file and used for storing and manipulating H5Vol objects.</div><div class="ttdef"><b>Definition:</b> h5volcontainer.h:15</div></div>
 <div class="ttc" id="aclass_h5_vol_html"><div class="ttname"><a href="class_h5_vol.html">H5Vol</a></div><div class="ttdoc">Provides API to work with volumes.</div><div class="ttdef"><b>Definition:</b> h5vol.h:15</div></div>

@@ -264,10 +264,10 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>checkTraceHea
 <tr class="memitem:a53b2749952fff57cbe357bd504ca31ae"><td class="memItemLeft" align="right" valign="top"><a id="a53b2749952fff57cbe357bd504ca31ae" name="a53b2749952fff57cbe357bd504ca31ae"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>checkSampleLimits</b> (const size_t &amp;fromSampInd, size_t &amp;nSamp) override</td></tr>
 <tr class="separator:a53b2749952fff57cbe357bd504ca31ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb98ae2673b761475fbd707c7e7a7f07"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#abb98ae2673b761475fbd707c7e7a7f07">generatePRESTKGeometry</a> (double src_x0, double src_dx, size_t src_nx, double src_y0, double src_dy, size_t src_ny, double src_z, double rec_x0, double rec_dx, size_t rec_nx, double rec_y0, double rec_dy, size_t rec_ny, double rec_z, bool moveRec, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false) override</td></tr>
-<tr class="separator:abb98ae2673b761475fbd707c7e7a7f07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2333b9da369d57b9f7d459e7e32a3c1"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#ab2333b9da369d57b9f7d459e7e32a3c1">generateSTKGeometry</a> (double x0, double dx, size_t nx, double y0, double dy, size_t ny, double z, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false) override</td></tr>
-<tr class="separator:ab2333b9da369d57b9f7d459e7e32a3c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a660478149f90d529686c2f80408e671a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a660478149f90d529686c2f80408e671a">generatePRESTKGeometry</a> (double src_x0, double src_dx, size_t src_nx, double src_y0, double src_dy, size_t src_ny, double src_z, double rec_x0, double rec_dx, size_t rec_nx, double rec_y0, double rec_dy, size_t rec_ny, double rec_z, double orientation, bool moveRec, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false) override</td></tr>
+<tr class="separator:a660478149f90d529686c2f80408e671a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23a34819cbd64e9f653ecc383e4efc06"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis_impl.html#a23a34819cbd64e9f653ecc383e4efc06">generateSTKGeometry</a> (double x0, double dx, size_t nx, double y0, double dy, size_t ny, double z, double orientation, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false) override</td></tr>
+<tr class="separator:a23a34819cbd64e9f653ecc383e4efc06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2bf17fa11d8e8dece09e1db0b9bd6d8"><td class="memItemLeft" align="right" valign="top"><a id="ad2bf17fa11d8e8dece09e1db0b9bd6d8" name="ad2bf17fa11d8e8dece09e1db0b9bd6d8"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setDomain</b> (const h5geo::Domain &amp;val) override</td></tr>
 <tr class="separator:ad2bf17fa11d8e8dece09e1db0b9bd6d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -505,9 +505,6 @@ virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><b>ca
 <tr class="memitem:a8e3065e2d8fcaad0a1536fdc1dfc9a7c"><td class="memItemLeft" align="right" valign="top"><a id="a8e3065e2d8fcaad0a1536fdc1dfc9a7c" name="a8e3065e2d8fcaad0a1536fdc1dfc9a7c"></a>
 virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><b>calcConvexHullBoundary</b> ()</td></tr>
 <tr class="separator:a8e3065e2d8fcaad0a1536fdc1dfc9a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59f9dbdee7adb99b0fb1caa9d9c148cc"><td class="memItemLeft" align="right" valign="top"><a id="a59f9dbdee7adb99b0fb1caa9d9c148cc" name="a59f9dbdee7adb99b0fb1caa9d9c148cc"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>calcGrid3D</b> (const Eigen::Ref&lt; Eigen::VectorXd &gt; &amp;x, const Eigen::Ref&lt; Eigen::VectorXd &gt; &amp;y, double z, Eigen::VectorXd &amp;x_loc, Eigen::VectorXd &amp;y_loc, Eigen::VectorXd &amp;z_loc)</td></tr>
-<tr class="separator:a59f9dbdee7adb99b0fb1caa9d9c148cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_h5_base_object_impl"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_h5_base_object_impl')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_h5_base_object_impl.html">H5BaseObjectImpl&lt; H5Seis &gt;</a></td></tr>
 <tr class="memitem:a57cefbb8f15f54f790023947e866200a inherit pro_methods_class_h5_base_object_impl"><td class="memItemLeft" align="right" valign="top"><a id="a57cefbb8f15f54f790023947e866200a" name="a57cefbb8f15f54f790023947e866200a"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>H5BaseObjectImpl</b> (const h5gt::Group &amp;group)</td></tr>
@@ -584,8 +581,8 @@ static std::optional&lt; h5gt::File &gt;&#160;</td><td class="memItemRight" vali
 <tr class="separator:a1114bf202eeb552941b3155c4f134e52 inherit pro_static_methods_class_h5_base_impl"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="abb98ae2673b761475fbd707c7e7a7f07" name="abb98ae2673b761475fbd707c7e7a7f07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb98ae2673b761475fbd707c7e7a7f07">&#9670;&#160;</a></span>generatePRESTKGeometry()</h2>
+<a id="a660478149f90d529686c2f80408e671a" name="a660478149f90d529686c2f80408e671a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a660478149f90d529686c2f80408e671a">&#9670;&#160;</a></span>generatePRESTKGeometry()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -680,6 +677,12 @@ static std::optional&lt; h5gt::File &gt;&#160;</td><td class="memItemRight" vali
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>orientation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>moveRec</em>, </td>
         </tr>
@@ -711,8 +714,8 @@ static std::optional&lt; h5gt::File &gt;&#160;</td><td class="memItemRight" vali
 
 </div>
 </div>
-<a id="ab2333b9da369d57b9f7d459e7e32a3c1" name="ab2333b9da369d57b9f7d459e7e32a3c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2333b9da369d57b9f7d459e7e32a3c1">&#9670;&#160;</a></span>generateSTKGeometry()</h2>
+<a id="a23a34819cbd64e9f653ecc383e4efc06" name="a23a34819cbd64e9f653ecc383e4efc06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23a34819cbd64e9f653ecc383e4efc06">&#9670;&#160;</a></span>generateSTKGeometry()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -761,6 +764,12 @@ static std::optional&lt; h5gt::File &gt;&#160;</td><td class="memItemRight" vali
           <td></td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>orientation</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

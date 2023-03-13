@@ -297,14 +297,12 @@ virtual <a class="el" href="struct_seis_param.html">SeisParam</a>&#160;</td><td 
 <tr class="memitem:ae051d434d46297f6c517710ff75405fb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#ae051d434d46297f6c517710ff75405fb">checkSampleLimits</a> (const size_t &amp;fromSampInd, size_t &amp;nSamp)=0</td></tr>
 <tr class="memdesc:ae051d434d46297f6c517710ff75405fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check <code>fromSampInd</code> and <code>nSamp</code> (passed by reference) and diminish <code>nSamp</code> to fit in data limits (if <code>fromSampInd</code> is inside limit)  <br /></td></tr>
 <tr class="separator:ae051d434d46297f6c517710ff75405fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0a967e6dd8c812ce356bc7c42aa8b2a"><td class="memItemLeft" align="right" valign="top"><a id="aa0a967e6dd8c812ce356bc7c42aa8b2a" name="aa0a967e6dd8c812ce356bc7c42aa8b2a"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>generatePRESTKGeometry</b> (double src_x0, double src_dx, size_t src_nx, double src_y0, double src_dy, size_t src_ny, double src_z, double rec_x0, double rec_dx, size_t rec_nx, double rec_y0, double rec_dy, size_t rec_ny, double rec_z, bool moveRec, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
-<tr class="memdesc:aa0a967e6dd8c812ce356bc7c42aa8b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient function to prepare geometry for <code>PRESTACK</code> data. <br /></td></tr>
-<tr class="separator:aa0a967e6dd8c812ce356bc7c42aa8b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89bbc32e4092666c14b07d01cfa96d21"><td class="memItemLeft" align="right" valign="top"><a id="a89bbc32e4092666c14b07d01cfa96d21" name="a89bbc32e4092666c14b07d01cfa96d21"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>generateSTKGeometry</b> (double x0, double dx, size_t nx, double y0, double dy, size_t ny, double z, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
-<tr class="memdesc:a89bbc32e4092666c14b07d01cfa96d21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient function to prepare geometry for <code>STACK</code> data. <br /></td></tr>
-<tr class="separator:a89bbc32e4092666c14b07d01cfa96d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7c796206d19a3f1f87e8a007794e784"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#ab7c796206d19a3f1f87e8a007794e784">generatePRESTKGeometry</a> (double src_x0, double src_dx, size_t src_nx, double src_y0, double src_dy, size_t src_ny, double src_z, double rec_x0, double rec_dx, size_t rec_nx, double rec_y0, double rec_dy, size_t rec_ny, double rec_z, double orientation, bool moveRec, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
+<tr class="memdesc:ab7c796206d19a3f1f87e8a007794e784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient function to prepare geometry for <code>PRESTACK</code> data.  <br /></td></tr>
+<tr class="separator:ab7c796206d19a3f1f87e8a007794e784"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a632ec6a03dda609e1e0773454d7ca5d2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a632ec6a03dda609e1e0773454d7ca5d2">generateSTKGeometry</a> (double x0, double dx, size_t nx, double y0, double dy, size_t ny, double z, double orientation, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
+<tr class="memdesc:a632ec6a03dda609e1e0773454d7ca5d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient function to prepare geometry for <code>STACK</code> data.  <br /></td></tr>
+<tr class="separator:a632ec6a03dda609e1e0773454d7ca5d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15d043a31683aa9fc186aa36a768dc92"><td class="memItemLeft" align="right" valign="top"><a id="a15d043a31683aa9fc186aa36a768dc92" name="a15d043a31683aa9fc186aa36a768dc92"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>setDomain</b> (const h5geo::Domain &amp;domain)=0</td></tr>
 <tr class="memdesc:a15d043a31683aa9fc186aa36a768dc92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set domain for the seismic (<code>TVD</code>, <code>TVDSS</code>, <code>TWT</code>, <code>OWT</code>) <br /></td></tr>
@@ -890,6 +888,238 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
 
 <p>Export seismic to <code><a class="el" href="class_h5_vol.html" title="Provides API to work with volumes.">H5Vol</a></code>. </p>
 <dl class="section note"><dt>Note</dt><dd>Selected traces must shape a rectangle. </dd></dl>
+
+</div>
+</div>
+<a id="ab7c796206d19a3f1f87e8a007794e784" name="ab7c796206d19a3f1f87e8a007794e784"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7c796206d19a3f1f87e8a007794e784">&#9670;&#160;</a></span>generatePRESTKGeometry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool H5Seis::generatePRESTKGeometry </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>src_x0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>src_dx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>src_nx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>src_y0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>src_dy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>src_ny</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>src_z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rec_x0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rec_dx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>rec_nx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rec_y0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rec_dy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>rec_ny</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rec_z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>orientation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>moveRec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>lengthUnits</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>doCoordTransform</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convenient function to prepare geometry for <code>PRESTACK</code> data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">orientation</td><td>counter clock angle (in radians) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a632ec6a03dda609e1e0773454d7ca5d2" name="a632ec6a03dda609e1e0773454d7ca5d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a632ec6a03dda609e1e0773454d7ca5d2">&#9670;&#160;</a></span>generateSTKGeometry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool H5Seis::generateSTKGeometry </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>x0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>nx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>y0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>ny</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>orientation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>lengthUnits</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>doCoordTransform</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convenient function to prepare geometry for <code>STACK</code> data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">orientation</td><td>counter clock angle (in radians) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

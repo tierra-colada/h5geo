@@ -803,6 +803,12 @@ H5GEO_EXPORT std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight"
 <tr class="memitem:aa78bb0f14d9c2e676213438a0150cb49"><td class="memItemLeft" align="right" valign="top"><a id="aa78bb0f14d9c2e676213438a0150cb49" name="aa78bb0f14d9c2e676213438a0150cb49"></a>
 H5GEO_EXPORT std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getRawTraceHeaderNames</b> ()</td></tr>
 <tr class="separator:aa78bb0f14d9c2e676213438a0150cb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab48084bf51f20806533da444b0deadb9"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#ab48084bf51f20806533da444b0deadb9">generatePRESTKGeometry</a> (<a class="el" href="class_h5_seis.html">H5Seis</a> *seis, double src_x0, double src_dx, size_t src_nx, double src_y0, double src_dy, size_t src_ny, double src_z, double rec_x0, double rec_dx, size_t rec_nx, double rec_y0, double rec_dy, size_t rec_ny, double rec_z, double orientation, bool moveRec)</td></tr>
+<tr class="memdesc:ab48084bf51f20806533da444b0deadb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">As the generated geometry may be pretty big we write it to <a class="el" href="class_h5_seis.html" title="Provides API to work with seismic.">H5Seis</a> object without returning any data.  <br /></td></tr>
+<tr class="separator:ab48084bf51f20806533da444b0deadb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab807adf828d3d749c6c9e190e25d8edd"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT std::map&lt; std::string, Eigen::VectorXd &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#ab807adf828d3d749c6c9e190e25d8edd">generateSTKGeometry</a> (double x0, double dx, size_t nx, double y0, double dy, size_t ny, double z, double orientation)</td></tr>
+<tr class="memdesc:ab807adf828d3d749c6c9e190e25d8edd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient function to generate STACK geometry.  <br /></td></tr>
+<tr class="separator:ab807adf828d3d749c6c9e190e25d8edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfed8d612ce0c98e15c0436766b907c1"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#acfed8d612ce0c98e15c0436766b907c1">compareStrings</a> (const std::string &amp;bigger, const std::string &amp;smaller, const CaseSensitivity &amp;caseSensitivity=CaseSensitivity::CASE_INSENSITIVE)</td></tr>
 <tr class="memdesc:acfed8d612ce0c98e15c0436766b907c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">compareStrings Return <code>true</code> if strings are equal.  <br /></td></tr>
 <tr class="separator:acfed8d612ce0c98e15c0436766b907c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -960,15 +966,15 @@ H5GEO_EXPORT SegyFormat&#160;</td><td class="memItemRight" valign="bottom"><b>ge
 <tr class="memitem:a75abcbf74ad8adf27a9f88f08049ab64"><td class="memItemLeft" align="right" valign="top"><a id="a75abcbf74ad8adf27a9f88f08049ab64" name="a75abcbf74ad8adf27a9f88f08049ab64"></a>
 H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGYTextHeader</b> (const std::string &amp;segy, char txtHdr[40][80], h5geo::TextEncoding encoding=static_cast&lt; h5geo::TextEncoding &gt;(0))</td></tr>
 <tr class="separator:a75abcbf74ad8adf27a9f88f08049ab64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fe4fad88bbbb092cd9fa10b36c1b95d"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a0fe4fad88bbbb092cd9fa10b36c1b95d">writeSEGYTextHeader</a> (const std::string &amp;segy, char txtHdr[40][80])</td></tr>
-<tr class="memdesc:a0fe4fad88bbbb092cd9fa10b36c1b95d"><td class="mdescLeft">&#160;</td><td class="mdescRight">create new file or open existing SEGY  <br /></td></tr>
-<tr class="separator:a0fe4fad88bbbb092cd9fa10b36c1b95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b18557e54f9964625a0de9cd8b84154"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a8b18557e54f9964625a0de9cd8b84154">writeSEGYTextHeader</a> (const std::string &amp;segy, char txtHdr[40][80], bool truncate)</td></tr>
+<tr class="memdesc:a8b18557e54f9964625a0de9cd8b84154"><td class="mdescLeft">&#160;</td><td class="mdescRight">create new file or open existing SEGY  <br /></td></tr>
+<tr class="separator:a8b18557e54f9964625a0de9cd8b84154"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73bafce521da391ab482b59b82db86b3"><td class="memItemLeft" align="right" valign="top"><a id="a73bafce521da391ab482b59b82db86b3" name="a73bafce521da391ab482b59b82db86b3"></a>
 H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGYBinHeader</b> (const std::string &amp;segy, double binHdr[30], h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0))</td></tr>
 <tr class="separator:a73bafce521da391ab482b59b82db86b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51c5638327161f85123d17debc6fcf6e"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a51c5638327161f85123d17debc6fcf6e">writeSEGYBinHeader</a> (const std::string &amp;segy, double binHdr[30])</td></tr>
-<tr class="memdesc:a51c5638327161f85123d17debc6fcf6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">create new file or open existing SEGY  <br /></td></tr>
-<tr class="separator:a51c5638327161f85123d17debc6fcf6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6db7a8979c8f096fbac9bc187b7f5603"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a6db7a8979c8f096fbac9bc187b7f5603">writeSEGYBinHeader</a> (const std::string &amp;segy, double binHdr[30], bool truncate)</td></tr>
+<tr class="memdesc:a6db7a8979c8f096fbac9bc187b7f5603"><td class="mdescLeft">&#160;</td><td class="mdescRight">create new file or open existing SEGY  <br /></td></tr>
+<tr class="separator:a6db7a8979c8f096fbac9bc187b7f5603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9ba350f9de597dfbe48903fa9213efe"><td class="memItemLeft" align="right" valign="top"><a id="ad9ba350f9de597dfbe48903fa9213efe" name="ad9ba350f9de597dfbe48903fa9213efe"></a>
 H5GEO_EXPORT double&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYSampRate</b> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0))</td></tr>
 <tr class="separator:ad9ba350f9de597dfbe48903fa9213efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1287,6 +1293,9 @@ template&lt;typename D &gt; </td></tr>
 <tr class="memitem:a59a63603ce9d9023e024ba29e6a6c46b"><td class="memTemplItemLeft" align="right" valign="top">Eigen::VectorX&lt; ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a59a63603ce9d9023e024ba29e6a6c46b">sort_rows_unique</a> (const Eigen::DenseBase&lt; DRaw &gt; &amp;M, Eigen::MatrixX&lt; TUval &gt; &amp;urows, Eigen::MatrixX2&lt; ptrdiff_t &gt; &amp;urows_from_size, const Eigen::DenseBase&lt; DSort &gt; &amp;M_sorted_)</td></tr>
 <tr class="memdesc:a59a63603ce9d9023e024ba29e6a6c46b"><td class="mdescLeft">&#160;</td><td class="mdescRight">sort_rows_unique also calculates M_sorted = M(ind, Eigen::all).  <br /></td></tr>
 <tr class="separator:a59a63603ce9d9023e024ba29e6a6c46b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac317678f58c99280d9e987f29ebf7637"><td class="memItemLeft" align="right" valign="top"><a id="ac317678f58c99280d9e987f29ebf7637" name="ac317678f58c99280d9e987f29ebf7637"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>calcGrid3D</b> (const Eigen::Ref&lt; Eigen::VectorXd &gt; &amp;x, const Eigen::Ref&lt; Eigen::VectorXd &gt; &amp;y, double z, Eigen::VectorXd &amp;x_loc, Eigen::VectorXd &amp;y_loc, Eigen::VectorXd &amp;z_loc)</td></tr>
+<tr class="separator:ac317678f58c99280d9e987f29ebf7637"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bcd93506cdf52099715992bfeee119f"><td class="memTemplParams" colspan="2"><a id="a9bcd93506cdf52099715992bfeee119f" name="a9bcd93506cdf52099715992bfeee119f"></a>
 template&lt;typename Scalar &gt; </td></tr>
 <tr class="memitem:a9bcd93506cdf52099715992bfeee119f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_getSurveyInfoFromSortedData</b> (const Eigen::Ref&lt; const Eigen::VectorX&lt; Scalar &gt; &gt; &amp;il, const Eigen::Ref&lt; const Eigen::VectorX&lt; Scalar &gt; &gt; &amp;xl, const Eigen::Ref&lt; const Eigen::VectorX&lt; Scalar &gt; &gt; &amp;x, const Eigen::Ref&lt; const Eigen::VectorX&lt; Scalar &gt; &gt; &amp;y, double &amp;origin_x, double &amp;origin_y, double &amp;orientation, double &amp;ilSpacing, double &amp;xlSpacing, bool &amp;isILReversed, bool &amp;isXLReversed, bool &amp;isPlanReversed)</td></tr>
@@ -2075,6 +2084,229 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ab48084bf51f20806533da444b0deadb9" name="ab48084bf51f20806533da444b0deadb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab48084bf51f20806533da444b0deadb9">&#9670;&#160;</a></span>generatePRESTKGeometry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool h5geo::generatePRESTKGeometry </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_h5_seis.html">H5Seis</a> *&#160;</td>
+          <td class="paramname"><em>seis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>src_x0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>src_dx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>src_nx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>src_y0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>src_dy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>src_ny</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>src_z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rec_x0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rec_dx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>rec_nx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rec_y0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rec_dy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>rec_ny</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rec_z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>orientation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>moveRec</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>As the generated geometry may be pretty big we write it to <a class="el" href="class_h5_seis.html" title="Provides API to work with seismic.">H5Seis</a> object without returning any data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">src_x0</td><td></td></tr>
+    <tr><td class="paramname">src_dx</td><td></td></tr>
+    <tr><td class="paramname">src_nx</td><td></td></tr>
+    <tr><td class="paramname">src_y0</td><td></td></tr>
+    <tr><td class="paramname">src_dy</td><td></td></tr>
+    <tr><td class="paramname">src_ny</td><td></td></tr>
+    <tr><td class="paramname">src_z</td><td></td></tr>
+    <tr><td class="paramname">rec_x0</td><td></td></tr>
+    <tr><td class="paramname">rec_dx</td><td></td></tr>
+    <tr><td class="paramname">rec_nx</td><td></td></tr>
+    <tr><td class="paramname">rec_y0</td><td></td></tr>
+    <tr><td class="paramname">rec_dy</td><td></td></tr>
+    <tr><td class="paramname">rec_ny</td><td></td></tr>
+    <tr><td class="paramname">rec_z</td><td></td></tr>
+    <tr><td class="paramname">orientation</td><td>counter clock (radians) </td></tr>
+    <tr><td class="paramname">moveRec</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><br  />
+ </dd></dl>
+
+</div>
+</div>
+<a id="ab807adf828d3d749c6c9e190e25d8edd" name="ab807adf828d3d749c6c9e190e25d8edd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab807adf828d3d749c6c9e190e25d8edd">&#9670;&#160;</a></span>generateSTKGeometry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt; std::string, Eigen::VectorXd &gt; h5geo::generateSTKGeometry </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>x0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>nx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>y0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>ny</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>orientation</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convenient function to generate STACK geometry. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x0</td><td></td></tr>
+    <tr><td class="paramname">dx</td><td></td></tr>
+    <tr><td class="paramname">nx</td><td></td></tr>
+    <tr><td class="paramname">y0</td><td></td></tr>
+    <tr><td class="paramname">dy</td><td></td></tr>
+    <tr><td class="paramname">ny</td><td></td></tr>
+    <tr><td class="paramname">z</td><td></td></tr>
+    <tr><td class="paramname">orientation</td><td>counter clock (radians) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>IL-XL sorted headers (normal plan) </dd></dl>
 
 </div>
 </div>
@@ -3860,8 +4092,8 @@ rows/cols are responsible for storing data (like tables) </p>
 
 </div>
 </div>
-<a id="a51c5638327161f85123d17debc6fcf6e" name="a51c5638327161f85123d17debc6fcf6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51c5638327161f85123d17debc6fcf6e">&#9670;&#160;</a></span>writeSEGYBinHeader()</h2>
+<a id="a6db7a8979c8f096fbac9bc187b7f5603" name="a6db7a8979c8f096fbac9bc187b7f5603"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6db7a8979c8f096fbac9bc187b7f5603">&#9670;&#160;</a></span>writeSEGYBinHeader()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3876,7 +4108,13 @@ rows/cols are responsible for storing data (like tables) </p>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>binHdr</em>[30]&#160;</td>
+          <td class="paramname"><em>binHdr</em>[30], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>truncate</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3891,6 +4129,7 @@ rows/cols are responsible for storing data (like tables) </p>
   <table class="params">
     <tr><td class="paramname">segy</td><td></td></tr>
     <tr><td class="paramname">binHdr</td><td></td></tr>
+    <tr><td class="paramname">truncate</td><td>discard the contents of the stream when opening file </td></tr>
   </table>
   </dd>
 </dl>
@@ -3899,8 +4138,8 @@ rows/cols are responsible for storing data (like tables) </p>
 
 </div>
 </div>
-<a id="a0fe4fad88bbbb092cd9fa10b36c1b95d" name="a0fe4fad88bbbb092cd9fa10b36c1b95d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0fe4fad88bbbb092cd9fa10b36c1b95d">&#9670;&#160;</a></span>writeSEGYTextHeader()</h2>
+<a id="a8b18557e54f9964625a0de9cd8b84154" name="a8b18557e54f9964625a0de9cd8b84154"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b18557e54f9964625a0de9cd8b84154">&#9670;&#160;</a></span>writeSEGYTextHeader()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3915,7 +4154,13 @@ rows/cols are responsible for storing data (like tables) </p>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">char&#160;</td>
-          <td class="paramname"><em>txtHdr</em>[40][80]&#160;</td>
+          <td class="paramname"><em>txtHdr</em>[40][80], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>truncate</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3930,6 +4175,7 @@ rows/cols are responsible for storing data (like tables) </p>
   <table class="params">
     <tr><td class="paramname">segy</td><td></td></tr>
     <tr><td class="paramname">txtHdr</td><td></td></tr>
+    <tr><td class="paramname">truncate</td><td>discard the contents of the stream when opening file </td></tr>
   </table>
   </dd>
 </dl>
