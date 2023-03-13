@@ -127,6 +127,10 @@ public:
 
 	/// \brief Get current vol's DataSet
   virtual std::optional<h5gt::DataSet> getVolD() const = 0;
+
+  virtual bool exportToSEGY(
+    const std::string& segyFile, 
+    std::function<void(double)> progressCallback = nullptr) = 0;
 };
 
 using H5Vol_ptr = std::unique_ptr<H5Vol, h5geo::ObjectDeleter>;

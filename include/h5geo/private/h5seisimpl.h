@@ -234,6 +234,7 @@ public:
       double rec_x0, double rec_dx, size_t rec_nx,
       double rec_y0, double rec_dy, size_t rec_ny,
       double rec_z,
+      double orientation,
       bool moveRec,
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
@@ -243,6 +244,7 @@ public:
       double x0, double dx, size_t nx,
       double y0, double dy, size_t ny,
       double z,
+      double orientation,
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) override;
 
@@ -307,13 +309,6 @@ public:
 protected:
   virtual Eigen::MatrixXd calcBoundaryStk2D();
   virtual Eigen::MatrixXd calcConvexHullBoundary();
-  virtual void calcGrid3D(
-      const Eigen::Ref<Eigen::VectorXd>& x,
-      const Eigen::Ref<Eigen::VectorXd>& y,
-      double z,
-      Eigen::VectorXd& x_loc,
-      Eigen::VectorXd& y_loc,
-      Eigen::VectorXd& z_loc);
 
 protected:
   h5gt::DataSet traceD, traceHeaderD;

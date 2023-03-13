@@ -174,7 +174,7 @@ bool readSEGYTextHeader(
 
 bool writeSEGYTextHeader(
     const std::string& segy,
-    char txtHdr[40][80])
+    char txtHdr[40][80], bool truncate)
 {
   // open file and overwrite
   int openFlag = std::ios::out | std::ios::binary;
@@ -182,6 +182,9 @@ bool writeSEGYTextHeader(
   // the file won't be created if `std::ios::in` is set
   if (isSEGY(segy))
     openFlag |= std::ios::in;
+  
+  if (truncate)
+    openFlag |= std::ios::trunc;
 
   std::ofstream file(segy, openFlag);
   if (!file.is_open())
@@ -254,7 +257,7 @@ bool readSEGYBinHeader(
 
 bool writeSEGYBinHeader(
     const std::string& segy,
-    double binHdr[30])
+    double binHdr[30], bool truncate)
 {
     // open file and overwrite
   int openFlag = std::ios::out | std::ios::binary;
@@ -262,6 +265,9 @@ bool writeSEGYBinHeader(
   // the file won't be created if `std::ios::in` is set
   if (isSEGY(segy))
     openFlag |= std::ios::in;
+
+  if (truncate)
+    openFlag |= std::ios::trunc;
 
   std::ofstream file(segy, openFlag);
   if (!file.is_open())

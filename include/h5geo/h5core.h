@@ -32,6 +32,8 @@
 #include <h5gt/H5DataSpace.hpp>
 #include <h5gt/H5Attribute.hpp>
 
+class H5Seis;
+
 #if CHAR_BIT != 8
 #error "unsupported char size"
 #endif
@@ -515,6 +517,53 @@ H5GEO_EXPORT std::optional<h5gt::DataSet> openDataSet(
 
 H5GEO_EXPORT std::vector<std::string> getRawBinHeaderNames();
 H5GEO_EXPORT std::vector<std::string> getRawTraceHeaderNames();
+
+/// \brief As the generated geometry may be pretty big we
+/// write it to H5Seis object without returning any data
+/// \param src_x0 
+/// \param src_dx 
+/// \param src_nx 
+/// \param src_y0 
+/// \param src_dy 
+/// \param src_ny 
+/// \param src_z 
+/// \param rec_x0 
+/// \param rec_dx 
+/// \param rec_nx 
+/// \param rec_y0 
+/// \param rec_dy 
+/// \param rec_ny 
+/// \param rec_z 
+/// \param orientation counter clock (radians)
+/// \param moveRec 
+/// \return 
+H5GEO_EXPORT bool generatePRESTKGeometry(
+      H5Seis* seis,
+      double src_x0, double src_dx, size_t src_nx,
+      double src_y0, double src_dy, size_t src_ny,
+      double src_z,
+      double rec_x0, double rec_dx, size_t rec_nx,
+      double rec_y0, double rec_dy, size_t rec_ny,
+      double rec_z,
+      double orientation,
+      bool moveRec);
+
+/// \brief Convenient function to generate STACK geometry.
+/// \param x0 
+/// \param dx 
+/// \param nx 
+/// \param y0 
+/// \param dy 
+/// \param ny 
+/// \param z 
+/// \param orientation counter clock (radians)
+/// \return IL-XL sorted headers (normal plan)
+H5GEO_EXPORT std::map<std::string, Eigen::VectorXd> 
+    generateSTKGeometry(
+        double x0, double dx, size_t nx,
+        double y0, double dy, size_t ny,
+        double z,
+        double orientation);
 
 /// \brief compareStrings Return `true` if strings are equal.
 /// \param bigger

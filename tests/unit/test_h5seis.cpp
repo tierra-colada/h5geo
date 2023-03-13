@@ -458,7 +458,7 @@ TEST_F(H5SeisFixture, generateGeometry){
   ASSERT_TRUE(seis->generateSTKGeometry(
                 src_x0, src_dx, src_nx,
                 src_y0, src_dy, src_ny,
-                src_z));
+                src_z, 0));
 
   Eigen::VectorXd cdp(6), cdpx(6), cdpy(6);
   cdp << 1, 2, 3, 4, 5, 6;
@@ -479,7 +479,7 @@ TEST_F(H5SeisFixture, generateGeometry){
                 src_z,
                 src_x0, src_dx, src_nx,
                 src_y0, src_dy, src_ny,
-                src_z,
+                src_z, 0,
                 true));
 }
 
@@ -496,6 +496,8 @@ TEST_F(H5SeisFixture, SEGY){
                     SEIS_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(seis != nullptr) << "CREATE_OR_OVERWRITE";
 
+  // is necessary to correctly set SAMP_RATE to segy file when writing it
+  seis->setTemporalUnits("microsecond");
   std::vector<std::string> txtHdr = seis->getTextHeader();
 
   ASSERT_TRUE(txtHdr[0].find("Don't worry about") != std::string::npos);
@@ -569,8 +571,8 @@ TEST_F(H5SeisFixture, SEGY){
   double binHdr_out[30] = { 0 };
   std::copy(std::begin(binHdr), std::end(binHdr), binHdr_out);
   
-  ASSERT_TRUE(h5geo::writeSEGYTextHeader(segy_out, textHdr_out));
-  ASSERT_TRUE(h5geo::writeSEGYBinHeader(segy_out, binHdr_out));
+  ASSERT_TRUE(h5geo::writeSEGYTextHeader(segy_out, textHdr_out, true));
+  ASSERT_TRUE(h5geo::writeSEGYBinHeader(segy_out, binHdr_out, false));
 
   Eigen::MatrixXd HDR = seis->getTraceHeader(0,nTrc).transpose();
   Eigen::MatrixXf TRACE = seis->getTrace(0,nTrc);

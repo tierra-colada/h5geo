@@ -409,6 +409,7 @@ public:
       const size_t& fromSampInd, size_t& nSamp) = 0;
 
   /// \brief Convenient function to prepare geometry for `PRESTACK` data
+  /// \param orientation counter clock angle (in radians)
   virtual bool generatePRESTKGeometry(
       double src_x0, double src_dx, size_t src_nx,
       double src_y0, double src_dy, size_t src_ny,
@@ -416,14 +417,17 @@ public:
       double rec_x0, double rec_dx, size_t rec_nx,
       double rec_y0, double rec_dy, size_t rec_ny,
       double rec_z,
+      double orientation,
       bool moveRec,
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
   /// \brief Convenient function to prepare geometry for `STACK` data
+  /// \param orientation counter clock angle (in radians)
   virtual bool generateSTKGeometry(
       double x0, double dx, size_t nx,
       double y0, double dy, size_t ny,
       double z,
+      double orientation,
       const std::string& lengthUnits = "",
       bool doCoordTransform = false) = 0;
 

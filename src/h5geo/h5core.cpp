@@ -1,4 +1,5 @@
 #include "../../include/h5geo/h5core.h"
+#include "../../include/h5geo/private/h5seisimpl.h"
 
 #define _USE_MATH_DEFINES   // should be before <cmath>, include 'pi' val
 
@@ -194,6 +195,227 @@ std::vector<std::string> getRawTraceHeaderNames()
     {"+ Shot Point3 Scalar	SPS	201	2"},
     {"+ Trace value measurement unit	TVMU	203	2"}
   };
+}
+
+void calcGrid3D(
+    const Eigen::Ref<Eigen::VectorXd>& x,
+    const Eigen::Ref<Eigen::VectorXd>& y,
+    double z,
+    Eigen::VectorXd& x_loc,
+    Eigen::VectorXd& y_loc,
+    Eigen::VectorXd& z_loc)
+{
+  if (x.size() < 1 || y.size() < 1)
+    return;
+
+  ptrdiff_t nx = x.size();
+  ptrdiff_t ny = y.size();
+
+  x_loc = Eigen::VectorXd::Zero(nx*ny);
+  y_loc = Eigen::VectorXd::Zero(nx*ny);
+  z_loc = Eigen::VectorXd::Zero(nx*ny);
+
+  ptrdiff_t idx = 0;
+  for (ptrdiff_t k = 0; k < ny; k++){
+    for (ptrdiff_t j = 0; j < nx; j++){
+      x_loc(idx) = x(j);
+      y_loc(idx) = y(k);
+      z_loc(idx) = z;
+      idx++;
+    }
+  }
+}
+
+bool generatePRESTKGeometry(
+      H5Seis* seis,
+      double src_x0, double src_dx, size_t src_nx,
+      double src_y0, double src_dy, size_t src_ny,
+      double src_z,
+      double rec_x0, double rec_dx, size_t rec_nx,
+      double rec_y0, double rec_dy, size_t rec_ny,
+      double rec_z,
+      double orientation,
+      bool moveRec)
+{
+  if (!seis)
+    return false;
+
+  Eigen::VectorXd src_x = Eigen::VectorXd::LinSpaced(src_nx, src_x0, src_x0+src_dx*(src_nx-1));
+  Eigen::VectorXd src_y = Eigen::VectorXd::LinSpaced(src_ny, src_y0, src_y0+src_dy*(src_ny-1));
+  Eigen::VectorXd src_xloc, src_yloc, src_zloc;
+  h5geo::calcGrid3D(src_x, src_y, src_z, src_xloc, src_yloc, src_zloc);
+  if (src_xloc.size() < 1 || src_yloc.size() < 1 || src_zloc.size() < 1)
+    return false;
+
+  Eigen::VectorXd rec_x = Eigen::VectorXd::LinSpaced(rec_nx, rec_x0, rec_x0+rec_dx*(rec_nx-1));
+  Eigen::VectorXd rec_y = Eigen::VectorXd::LinSpaced(rec_ny, rec_y0, rec_y0+rec_dy*(rec_ny-1));
+  Eigen::VectorXd rec_xloc, rec_yloc, rec_zloc;
+  h5geo::calcGrid3D(rec_x, rec_y, rec_z, rec_xloc, rec_yloc, rec_zloc);
+  if (rec_xloc.size() < 1 || rec_yloc.size() < 1 || rec_zloc.size() < 1)
+    return false;
+
+  size_t nShot = src_nx*src_ny;
+  size_t nRec = rec_nx*rec_ny;
+  size_t nTrc = nShot*nRec;
+  if (seis->getNTrc() != nTrc)
+    if (!seis->setNTrc(nTrc))
+      return false;
+
+  double src_xmin = src_x.minCoeff();
+  double src_ymin = src_y.minCoeff();
+
+  double rec_xmin = rec_x.minCoeff();
+  double rec_ymin = rec_y.minCoeff();
+  if (moveRec){
+    rec_xmin += src_xmin - src_x0;
+    rec_ymin += src_ymin - src_y0;
+  }
+
+  Eigen::VectorXd lind = Eigen::VectorXd::LinSpaced(nRec, (double)1, (double)nRec);
+  Eigen::VectorXd ones_arr = Eigen::VectorXd::Ones(nRec);
+
+  rec_x = rec_xloc;
+  rec_y = rec_yloc;
+  for (size_t i = 0; i < nShot; i++){
+    size_t fromTrc = i*nRec;
+    lind.array() += (double)nRec*bool(i);
+    src_x = ones_arr*src_xloc(i);
+    src_y = ones_arr*src_yloc(i);
+    if (moveRec){
+      double dx = src_xloc(i) - src_x0;
+      double dy = src_yloc(i) - src_y0;
+      rec_x = rec_xloc.array() + dx;
+      rec_y = rec_yloc.array() + dy;
+    }
+    Eigen::VectorXd cdp_x = (src_x+rec_x)/2;
+    Eigen::VectorXd cdp_y = (src_y+rec_y)/2;
+    Eigen::VectorXd il, xl;
+    if (moveRec){
+      if (rec_dy == 0 && src_dy == 0)
+        il = ones_arr;
+      else if (rec_dy == 0)
+        il = ((rec_y.array()-rec_ymin)/abs(src_dy)).rint() + 1;
+      else
+        il = ((rec_y.array()-rec_ymin)/abs(rec_dy)).rint() + 1;
+
+      if (rec_dx == 0 && src_dx == 0)
+        xl = ones_arr;
+      else if (rec_dx == 0)
+        xl = ((rec_x.array()-rec_xmin)/abs(src_dx)).rint() + 1;
+      else
+        xl = ((rec_x.array()-rec_xmin)/abs(rec_dx)).rint() + 1;
+    } else {
+      if (rec_dy == 0)
+        il = ones_arr;
+      else
+        il = ((rec_y.array()-rec_ymin)/abs(rec_dy)).rint() + 1;
+
+      if (rec_dx == 0)
+        xl = ones_arr;
+      else
+        xl = ((rec_x.array()-rec_xmin)/abs(rec_dx)).rint() + 1;
+    }
+
+    Eigen::VectorXd dx = rec_x-src_x;
+    Eigen::VectorXd dy = rec_y-src_y;
+    Eigen::VectorXd offset = (dx.array().square() + dy.array().square()).array().sqrt();
+    Eigen::VectorXd sp = ones_arr.array()+i;
+    Eigen::VectorXd ffid = sp;
+    Eigen::VectorXd src_x = ones_arr*src_xloc(i);
+    Eigen::VectorXd src_y = ones_arr*src_yloc(i);
+    Eigen::VectorXd ses = ones_arr*src_zloc(i);
+
+    // rotate coordinates
+    double x0 = std::min(src_xmin,rec_xmin);
+    double y0 = std::min(src_ymin,rec_ymin);
+    src_x = ((src_x.array()-x0)*cos(orientation)-
+             (src_y.array()-y0)*sin(orientation)).array()+x0;
+    src_y = ((src_y.array()-y0)*cos(orientation)+
+             (src_x.array()-x0)*sin(orientation)).array()+y0;
+    rec_x = ((rec_x.array()-x0)*cos(orientation)-
+             (rec_y.array()-y0)*sin(orientation)).array()+x0;
+    src_y = ((rec_y.array()-y0)*cos(orientation)+
+             (rec_x.array()-x0)*sin(orientation)).array()+y0;
+
+    seis->writeTraceHeader("SEQWL", lind, fromTrc);
+    seis->writeTraceHeader("SEQWR", lind, fromTrc);
+    seis->writeTraceHeader("TRCFLD", lind, fromTrc);
+    seis->writeTraceHeader("TRCID", ones_arr, fromTrc);
+    seis->writeTraceHeader("DU", ones_arr, fromTrc);
+    seis->writeTraceHeader("SAED", ones_arr, fromTrc);
+    seis->writeTraceHeader("SAC", ones_arr, fromTrc);
+    seis->writeTraceHeader("SP", sp, fromTrc);
+    seis->writeTraceHeader("FFID", ffid, fromTrc);
+    seis->writeTraceHeader("SRCX", src_x, fromTrc);
+    seis->writeTraceHeader("SRCY", src_y, fromTrc);
+    seis->writeTraceHeader("GRPX", rec_x, fromTrc);
+    seis->writeTraceHeader("GRPY", rec_y, fromTrc);
+    seis->writeTraceHeader("RGE", rec_zloc, fromTrc);
+    seis->writeTraceHeader("SES", ses, fromTrc);
+    seis->writeTraceHeader("CDP_X", cdp_x, fromTrc);
+    seis->writeTraceHeader("CDP_Y", cdp_y, fromTrc);
+    seis->writeTraceHeader("INLINE", il, fromTrc);
+    seis->writeTraceHeader("XLINE", xl, fromTrc);
+    seis->writeTraceHeader("DSREG", offset, fromTrc);
+  }
+
+  // update cdp numbers
+  Eigen::MatrixXd cdp_yx = seis->getXYTraceHeaders({"CDP_Y", "CDP_X"});
+  Eigen::VectorX<ptrdiff_t> cdp_yx_ind = h5geo::sort_rows(cdp_yx);
+  Eigen::VectorXd cdp = Eigen::VectorXd::LinSpaced(cdp_yx_ind.size(), (double)1, (double)cdp_yx_ind.size())(cdp_yx_ind);
+  seis->writeTraceHeader("CDP", cdp);
+  seis->setDataType(h5geo::SeisDataType::PRESTACK);
+  return true;
+}
+
+std::map<std::string, Eigen::VectorXd> 
+    generateSTKGeometry(
+        double x0, double dx, size_t nx,
+        double y0, double dy, size_t ny,
+        double z,
+        double orientation)
+{
+  Eigen::VectorXd x = Eigen::VectorXd::LinSpaced(nx, x0, x0+dx*(nx-1));
+  Eigen::VectorXd y = Eigen::VectorXd::LinSpaced(ny, y0, y0+dy*(ny-1));
+  Eigen::VectorXd xloc, yloc, zloc;
+  h5geo::calcGrid3D(x, y, z, xloc, yloc, zloc);
+  if (xloc.size() < 1 || yloc.size() < 1 || zloc.size() < 1)
+    return std::map<std::string, Eigen::VectorXd>();
+
+  Eigen::VectorXd xl = Eigen::VectorXd::LinSpaced(nx, (double)1, (double)nx);
+  Eigen::VectorXd il = Eigen::VectorXd::LinSpaced(ny, (double)1, (double)ny);
+  Eigen::VectorXd xlloc, illoc, notUsed;
+  h5geo::calcGrid3D(xl, il, 0, xlloc, illoc, notUsed);
+  if (xlloc.size() < 1 || illoc.size() < 1)
+    return std::map<std::string, Eigen::VectorXd>();
+
+  size_t nTrc = xloc.size();
+
+  Eigen::VectorXd lind = Eigen::VectorXd::LinSpaced(nTrc, (double)1, (double)nTrc);
+  Eigen::VectorXd ones_arr = Eigen::VectorXd::Ones(nTrc);
+
+  // rotate coordinates
+  xloc = ((xloc.array()-x0)*cos(orientation)-
+            (yloc.array()-y0)*sin(orientation)).array()+x0;
+  yloc = ((yloc.array()-y0)*cos(orientation)+
+            (xloc.array()-x0)*sin(orientation)).array()+y0;
+
+  std::map<std::string, Eigen::VectorXd> geom;
+  geom["SEQWL"] = lind;
+  geom["SEQWR"] = lind;
+  geom["TRCFLD"] = lind;
+  geom["CDP"] = lind;
+  geom["TRCID"] = ones_arr;
+  geom["DU"] = ones_arr;
+  geom["SAED"] = ones_arr;
+  geom["SAC"] = ones_arr;
+  geom["RGE"] = zloc;
+  geom["SES"] = zloc;
+  geom["CDP_X"] = xloc;
+  geom["CDP_Y"] = yloc;
+  geom["INLINE"] = illoc;
+  geom["XLINE"] = xlloc;
+  return geom;
 }
 
 bool compareStrings(

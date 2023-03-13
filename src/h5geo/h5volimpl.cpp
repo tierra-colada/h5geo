@@ -223,7 +223,7 @@ Eigen::MatrixXf H5VolImpl::getData(
       iZ0+nZ > dims[0])
     return Eigen::MatrixXf();
 
-  Eigen::MatrixXf data(nX, nY*nZ);
+  Eigen::MatrixXf data(nX*nY, nZ);
   opt->select({iZ0, iY0, iX0},
               {nZ, nY, nX}).read(data.data());
   if (!dataUnits.empty()){
@@ -448,4 +448,106 @@ H5VolImpl::getVolD() const
   std::string name = std::string{h5geo::detail::vol_data};
 
   return getDatasetOpt(objG, name);
+}
+
+bool H5VolImpl::exportToSEGY(
+    const std::string& segyFile, 
+    std::function<void(double)> progressCallback)
+{
+  char textHdr[40][80] = { " " };
+  if (!h5geo::writeSEGYTextHeader(segyFile, textHdr, true))
+    return false;
+
+  double binHdr[30] = { 0 };
+  // set sampRate
+  Eigen::VectorXd spacings = this->getSpacings();
+  if (spacings.size() != 3)
+    return false;
+
+  double sampRate = std::abs(spacings(2));
+  h5geo::Domain domain = this->getDomain();
+  if (domain == h5geo::Domain::TWT ||
+      domain == h5geo::Domain::OWT){
+    double tmp = std::abs(this->getSpacings("microsecond")[2]);
+    if (!std::isnan(tmp))
+      sampRate = tmp;
+  } else if (domain == h5geo::Domain::TVD ||
+             domain == h5geo::Domain::TVDSS) {
+    double tmp = std::abs(this->getSpacings("", "cm")[2]);
+    if (!std::isnan(tmp))
+      sampRate = tmp;
+  }
+  binHdr[5] = sampRate;
+  binHdr[6] = sampRate;
+  // set nSamp
+  size_t nX = this->getNX();
+  size_t nY = this->getNY();
+  size_t nZ = this->getNZ();
+  size_t nSamp = nZ;
+  binHdr[7] = double(nSamp);
+  binHdr[8] = double(nSamp);
+  // set SEGY format to IEEE
+  binHdr[9] = 5.0;
+  // fixed trace flag
+  binHdr[28] = 1.0;
+  if (!h5geo::writeSEGYBinHeader(segyFile, binHdr, false))
+    return false;
+
+  Eigen::VectorXd origin = this->getOrigin();
+  if (origin.size() != 3)
+    return false;
+
+  double orientation = this->getOrientation("radian");
+  if (std::isnan(orientation))
+    return false;
+  
+  std::map<std::string, Eigen::VectorXd> geom = 
+      h5geo::generateSTKGeometry(
+          origin(0),spacings(0),nX,
+          origin(1),spacings(1),nY,
+          0, orientation);
+
+  std::vector<std::string> keys;
+  for (auto const& p: geom)
+    keys.push_back(p.first);
+
+  if (keys.size() < 1 || 
+      geom[keys[0]].size() != nX*nY)
+    return false;
+
+  size_t N = 64;
+  VolParam p = this->getParam();
+  if (p.yChunkSize > 0 && p.yChunkSize < 100)
+    N = p.yChunkSize;
+
+  double progressOld = 0;
+  double progressNew = 0;
+  std::vector<std::string> trcHdrShortNames = h5geo::getTraceHeaderShortNames();
+  for (size_t i = 0; i < nY; i+=N){
+    if (progressCallback){
+      progressNew = i / (double)nY;
+      if (progressNew - progressOld >= 0.01){
+        progressCallback( progressNew );
+        progressOld = progressNew;
+      }
+    }
+    if (i+N > nY)
+      N = nY-i;
+
+    Eigen::MatrixXf TRACE = this->getData(0,i,0,nX,N,nZ).
+        transpose().
+        colwise().reverse();
+    Eigen::MatrixXd HDR = Eigen::MatrixXd::Zero(trcHdrShortNames.size(), TRACE.cols());
+    for (size_t j = 0; j < trcHdrShortNames.size(); j++){
+      if (std::find(keys.begin(), keys.end(),trcHdrShortNames[j])!=keys.end()){
+        HDR.row(j) = geom[trcHdrShortNames[j]](Eigen::seq(i,i+nX*N-1));
+      }
+    }
+    
+    h5geo::writeSEGYTraces(segyFile, HDR, TRACE);
+  }
+
+  if (progressCallback)
+    progressCallback( double(1) );
+  return true;
 }

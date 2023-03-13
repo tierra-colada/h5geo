@@ -85,6 +85,10 @@ public:
 
   virtual std::optional<h5gt::DataSet> getVolD() const override;
 
+  virtual bool exportToSEGY(
+    const std::string& segyFile, 
+    std::function<void(double)> progressCallback = nullptr) override;
+
   //----------- FRIEND CLASSES -----------
   friend class H5VolContainerImpl;
   friend class H5BaseObjectImpl<H5Vol>;

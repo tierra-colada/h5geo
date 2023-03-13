@@ -191,8 +191,12 @@ TEST_F(H5VolFixture, DISABLED_SEGY){
       184, 4,
       188, 4,
       192, 4, 
-      2, 0, 0,
+      -2, 0, 0, // samp rate is negative
       static_cast<h5geo::SegyFormat>(0),
       static_cast<h5geo::Endian>(0),
+      [](double progress) { std::cout << "Progress:\t" << progress << std::endl; }));
+
+  vol->setTemporalUnits("microsecond");
+  ASSERT_TRUE(vol->exportToSEGY("out.sgy", 
       [](double progress) { std::cout << "Progress:\t" << progress << std::endl; }));
 }

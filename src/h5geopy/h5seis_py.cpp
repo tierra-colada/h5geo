@@ -403,6 +403,7 @@ void H5Seis_py(
            py::arg("rec_x0"), py::arg("rec_dx"), py::arg("rec_nx"),
            py::arg("rec_y0"), py::arg("rec_dy"), py::arg("rec_ny"),
            py::arg("rec_z"),
+           py::arg("orientation"),
            py::arg("moveRec"),
            py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
@@ -410,6 +411,7 @@ void H5Seis_py(
            py::arg("x0"), py::arg("dx"), py::arg("nx"),
            py::arg("y0"), py::arg("dy"), py::arg("ny"),
            py::arg("z"),
+           py::arg("orientation"),
            py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"))
 

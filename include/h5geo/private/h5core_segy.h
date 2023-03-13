@@ -137,10 +137,11 @@ H5GEO_EXPORT bool readSEGYTextHeader(
 /// \brief create new file or open existing SEGY
 /// \param segy 
 /// \param txtHdr 
+/// \param truncate discard the contents of the stream when opening file
 /// \return 
 H5GEO_EXPORT bool writeSEGYTextHeader(
     const std::string& segy,
-    char txtHdr[40][80]);
+    char txtHdr[40][80], bool truncate);
 
 H5GEO_EXPORT bool readSEGYBinHeader(
     const std::string& segy,
@@ -149,10 +150,11 @@ H5GEO_EXPORT bool readSEGYBinHeader(
 /// \brief create new file or open existing SEGY
 /// \param segy 
 /// \param binHdr 
+/// \param truncate discard the contents of the stream when opening file
 /// \return 
 H5GEO_EXPORT bool writeSEGYBinHeader(
     const std::string& segy,
-    double binHdr[30]);
+    double binHdr[30], bool truncate);
 
 H5GEO_EXPORT double getSEGYSampRate(
     const std::string& segy, h5geo::Endian endian = static_cast<h5geo::Endian>(0));
