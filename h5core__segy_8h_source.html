@@ -210,98 +210,106 @@ $(function() {
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="keywordtype">char</span> txtHdr[40][80], h5geo::TextEncoding encoding = <span class="keyword">static_cast&lt;</span>h5geo::TextEncoding<span class="keyword">&gt;</span>(0));</div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>H5GEO_EXPORT <span class="keywordtype">bool</span> writeSEGYTextHeader(</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <span class="keywordtype">char</span> txtHdr[40][80]);</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>H5GEO_EXPORT <span class="keywordtype">bool</span> readSEGYBinHeader(</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>H5GEO_EXPORT <span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceh5geo.html#a0fe4fad88bbbb092cd9fa10b36c1b95d">writeSEGYTextHeader</a>(</div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keywordtype">double</span> binHdr[30], h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0));</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keywordtype">char</span> txtHdr[40][80]);</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>H5GEO_EXPORT <span class="keywordtype">bool</span> writeSEGYBinHeader(</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>H5GEO_EXPORT <span class="keywordtype">bool</span> readSEGYBinHeader(</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    ptrdiff_t binHdr[30]);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordtype">double</span> binHdr[30], h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0));</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>H5GEO_EXPORT <span class="keywordtype">double</span> getSEGYSampRate(</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keyword">const</span> std::string&amp; segy, h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0));</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>H5GEO_EXPORT <span class="keywordtype">size_t</span> getSEGYNSamp(</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keyword">const</span> std::string&amp; segy, h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0));</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>H5GEO_EXPORT <span class="keywordtype">size_t</span> getSEGYNTrc(</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <span class="keyword">const</span> std::string&amp; segy, <span class="keywordtype">size_t</span> nSamp = 0, h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0));</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>H5GEO_EXPORT Eigen::VectorX&lt;ptrdiff_t&gt; <a class="code hl_function" href="namespaceh5geo.html#a86c6a0120b5ff50c46efe23b0bf3ab13">readSEGYTraceHeader</a>(</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; hdrOffset,</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; hdrSize,</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    <span class="keywordtype">size_t</span> fromTrc = 0,</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="keywordtype">size_t</span> toTrc = std::numeric_limits&lt;size_t&gt;::max(),</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    <span class="keywordtype">size_t</span> nSamp = 0,</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keywordtype">size_t</span> nTrc = 0,</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0),</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; progressCallback = <span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>H5GEO_EXPORT <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceh5geo.html#aabf78a027655c71e561a66653d045da3">readSEGYTrace</a>(</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    std::ifstream&amp; file,</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    <span class="keywordtype">size_t</span> trcInd,</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    h5geo::SegyFormat format,</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    h5geo::Endian endian,</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    Eigen::Ref&lt;Eigen::VectorXf&gt; trace);</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>H5GEO_EXPORT Eigen::MatrixXf <a class="code hl_function" href="namespaceh5geo.html#a015a24f809753680afcacf9fa6f27f13">readSEGYTraces</a>(</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    <span class="keywordtype">size_t</span> fromSamp = 0,</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    <span class="keywordtype">size_t</span> toSamp = std::numeric_limits&lt;size_t&gt;::max(),</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    <span class="keywordtype">size_t</span> fromTrc = 0,</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    <span class="keywordtype">size_t</span> toTrc = std::numeric_limits&lt;size_t&gt;::max(),</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <span class="keywordtype">size_t</span> nSamp = 0,</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <span class="keywordtype">size_t</span> nTrc = 0,</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    h5geo::SegyFormat format = <span class="keyword">static_cast&lt;</span>h5geo::SegyFormat<span class="keyword">&gt;</span>(0),</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0),</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; progressCallback = <span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>H5GEO_EXPORT <span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceh5geo.html#a015a24f809753680afcacf9fa6f27f13">readSEGYTraces</a>(</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <a class="code hl_class" href="class_h5_seis.html">H5Seis</a>* seis,</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    <span class="keywordtype">bool</span> appendTraces = <span class="keyword">false</span>,</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    <span class="keywordtype">size_t</span> nSamp = 0,</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keywordtype">size_t</span> nTrc = 0,</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    h5geo::SegyFormat format = <span class="keyword">static_cast&lt;</span>h5geo::SegyFormat<span class="keyword">&gt;</span>(0),</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0),</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    std::vector&lt;std::string&gt; trcHdrNames = std::vector&lt;std::string&gt;(),</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    <span class="keywordtype">size_t</span> trcBuffer = 10000,</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    <span class="keywordtype">int</span> nThreads = -1,</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; progressCallback = <span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>H5GEO_EXPORT <span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceh5geo.html#adee4e47a95e8301f67408783ac123d35">readSEGYSTACK</a>(</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    <a class="code hl_class" href="class_h5_vol.html">H5Vol</a>* vol,</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; ilHdrOffset,</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; ilHdrSize,</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; xlHdrOffset,</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; xlHdrSize,</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; xHdrOffset,</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; xHdrSize,</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; yHdrOffset,</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; yHdrSize,</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    <span class="keywordtype">double</span> sampRate,</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="keywordtype">size_t</span> nSamp = 0,</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <span class="keywordtype">size_t</span> nTrc = 0,</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    h5geo::SegyFormat format = <span class="keyword">static_cast&lt;</span>h5geo::SegyFormat<span class="keyword">&gt;</span>(0),</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0),</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; progressCallback = <span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>}</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span><span class="preprocessor">#endif </span><span class="comment">// H5CORE_SEGY_H</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>H5GEO_EXPORT <span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceh5geo.html#a51c5638327161f85123d17debc6fcf6e">writeSEGYBinHeader</a>(</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordtype">double</span> binHdr[30]);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>H5GEO_EXPORT <span class="keywordtype">double</span> getSEGYSampRate(</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keyword">const</span> std::string&amp; segy, h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0));</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>H5GEO_EXPORT <span class="keywordtype">size_t</span> getSEGYNSamp(</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keyword">const</span> std::string&amp; segy, h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0));</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>H5GEO_EXPORT <span class="keywordtype">size_t</span> getSEGYNTrc(</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="keyword">const</span> std::string&amp; segy, <span class="keywordtype">size_t</span> nSamp = 0, h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0));</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>H5GEO_EXPORT Eigen::VectorX&lt;ptrdiff_t&gt; <a class="code hl_function" href="namespaceh5geo.html#a86c6a0120b5ff50c46efe23b0bf3ab13">readSEGYTraceHeader</a>(</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; hdrOffset,</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; hdrSize,</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <span class="keywordtype">size_t</span> fromTrc = 0,</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <span class="keywordtype">size_t</span> toTrc = std::numeric_limits&lt;size_t&gt;::max(),</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keywordtype">size_t</span> nSamp = 0,</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordtype">size_t</span> nTrc = 0,</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0),</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; progressCallback = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>H5GEO_EXPORT <span class="keywordtype">void</span> <a class="code hl_function" href="namespaceh5geo.html#aabf78a027655c71e561a66653d045da3">readSEGYTrace</a>(</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    std::ifstream&amp; file,</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keywordtype">size_t</span> trcInd,</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    h5geo::SegyFormat format,</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    h5geo::Endian endian,</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    Eigen::Ref&lt;Eigen::VectorXf&gt; trace);</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>H5GEO_EXPORT <span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceh5geo.html#abcc14bfbe41f97aae02f49f436177403">writeSEGYTraces</a>(</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    Eigen::Ref&lt;Eigen::MatrixXd&gt; HDR,</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    Eigen::Ref&lt;Eigen::MatrixXf&gt; TRACE);</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>H5GEO_EXPORT Eigen::MatrixXf <a class="code hl_function" href="namespaceh5geo.html#a015a24f809753680afcacf9fa6f27f13">readSEGYTraces</a>(</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    <span class="keywordtype">size_t</span> fromSamp = 0,</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <span class="keywordtype">size_t</span> toSamp = std::numeric_limits&lt;size_t&gt;::max(),</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    <span class="keywordtype">size_t</span> fromTrc = 0,</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    <span class="keywordtype">size_t</span> toTrc = std::numeric_limits&lt;size_t&gt;::max(),</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    <span class="keywordtype">size_t</span> nSamp = 0,</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    <span class="keywordtype">size_t</span> nTrc = 0,</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    h5geo::SegyFormat format = <span class="keyword">static_cast&lt;</span>h5geo::SegyFormat<span class="keyword">&gt;</span>(0),</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0),</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; progressCallback = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>H5GEO_EXPORT <span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceh5geo.html#a015a24f809753680afcacf9fa6f27f13">readSEGYTraces</a>(</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <a class="code hl_class" href="class_h5_seis.html">H5Seis</a>* seis,</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    <span class="keywordtype">bool</span> appendTraces = <span class="keyword">false</span>,</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <span class="keywordtype">size_t</span> nSamp = 0,</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keywordtype">size_t</span> nTrc = 0,</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    h5geo::SegyFormat format = <span class="keyword">static_cast&lt;</span>h5geo::SegyFormat<span class="keyword">&gt;</span>(0),</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0),</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    std::vector&lt;std::string&gt; trcHdrNames = std::vector&lt;std::string&gt;(),</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    <span class="keywordtype">size_t</span> trcBuffer = 10000,</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="keywordtype">int</span> nThreads = -1,</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; progressCallback = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>H5GEO_EXPORT <span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceh5geo.html#adee4e47a95e8301f67408783ac123d35">readSEGYSTACK</a>(</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    <a class="code hl_class" href="class_h5_vol.html">H5Vol</a>* vol,</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    <span class="keyword">const</span> std::string&amp; segy,</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; ilHdrOffset,</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; ilHdrSize,</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; xlHdrOffset,</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; xlHdrSize,</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; xHdrOffset,</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; xHdrSize,</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; yHdrOffset,</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; yHdrSize,</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    <span class="keywordtype">double</span> sampRate,</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    <span class="keywordtype">size_t</span> nSamp = 0,</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>    <span class="keywordtype">size_t</span> nTrc = 0,</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>    h5geo::SegyFormat format = <span class="keyword">static_cast&lt;</span>h5geo::SegyFormat<span class="keyword">&gt;</span>(0),</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>    h5geo::Endian endian = <span class="keyword">static_cast&lt;</span>h5geo::Endian<span class="keyword">&gt;</span>(0),</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; progressCallback = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> </div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>}</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span><span class="preprocessor">#endif </span><span class="comment">// H5CORE_SEGY_H</span></div>
 <div class="ttc" id="aclass_h5_seis_html"><div class="ttname"><a href="class_h5_seis.html">H5Seis</a></div><div class="ttdoc">Provides API to work with seismic.</div><div class="ttdef"><b>Definition:</b> h5seis.h:33</div></div>
 <div class="ttc" id="aclass_h5_vol_html"><div class="ttname"><a href="class_h5_vol.html">H5Vol</a></div><div class="ttdoc">Provides API to work with volumes.</div><div class="ttdef"><b>Definition:</b> h5vol.h:15</div></div>
 <div class="ttc" id="anamespaceh5geo_html"><div class="ttname"><a href="namespaceh5geo.html">h5geo</a></div><div class="ttdoc">Basic namespace.</div><div class="ttdef"><b>Definition:</b> h5base.h:29</div></div>
-<div class="ttc" id="anamespaceh5geo_html_a015a24f809753680afcacf9fa6f27f13"><div class="ttname"><a href="namespaceh5geo.html#a015a24f809753680afcacf9fa6f27f13">h5geo::readSEGYTraces</a></div><div class="ttdeci">H5GEO_EXPORT Eigen::MatrixXf readSEGYTraces(const std::string &amp;segy, size_t fromSamp=0, size_t toSamp=std::numeric_limits&lt; size_t &gt;::max(), size_t fromTrc=0, size_t toTrc=std::numeric_limits&lt; size_t &gt;::max(), size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::function&lt; void(double)&gt; progressCallback=nullptr)</div><div class="ttdoc">readSEGYTraces read traces</div><div class="ttdef"><b>Definition:</b> h5core_segy.cpp:417</div></div>
-<div class="ttc" id="anamespaceh5geo_html_a86c6a0120b5ff50c46efe23b0bf3ab13"><div class="ttname"><a href="namespaceh5geo.html#a86c6a0120b5ff50c46efe23b0bf3ab13">h5geo::readSEGYTraceHeader</a></div><div class="ttdeci">H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt; readSEGYTraceHeader(const std::string &amp;segy, const size_t &amp;hdrOffset, const size_t &amp;hdrSize, size_t fromTrc=0, size_t toTrc=std::numeric_limits&lt; size_t &gt;::max(), size_t nSamp=0, size_t nTrc=0, h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::function&lt; void(double)&gt; progressCallback=nullptr)</div><div class="ttdoc">readSEGYTraceHeader read selected header from all the traces (4 byte SEGY supported only)</div><div class="ttdef"><b>Definition:</b> h5core_segy.cpp:297</div></div>
-<div class="ttc" id="anamespaceh5geo_html_aabf78a027655c71e561a66653d045da3"><div class="ttname"><a href="namespaceh5geo.html#aabf78a027655c71e561a66653d045da3">h5geo::readSEGYTrace</a></div><div class="ttdeci">H5GEO_EXPORT void readSEGYTrace(std::ifstream &amp;file, size_t trcInd, h5geo::SegyFormat format, h5geo::Endian endian, Eigen::Ref&lt; Eigen::VectorXf &gt; trace)</div><div class="ttdoc">low level api. No any checks are done. User is responsible for that.</div><div class="ttdef"><b>Definition:</b> h5core_segy.cpp:389</div></div>
-<div class="ttc" id="anamespaceh5geo_html_adee4e47a95e8301f67408783ac123d35"><div class="ttname"><a href="namespaceh5geo.html#adee4e47a95e8301f67408783ac123d35">h5geo::readSEGYSTACK</a></div><div class="ttdeci">H5GEO_EXPORT bool readSEGYSTACK(H5Vol *vol, const std::string &amp;segy, const size_t &amp;ilHdrOffset, const size_t &amp;ilHdrSize, const size_t &amp;xlHdrOffset, const size_t &amp;xlHdrSize, const size_t &amp;xHdrOffset, const size_t &amp;xHdrSize, const size_t &amp;yHdrOffset, const size_t &amp;yHdrSize, double sampRate, size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::function&lt; void(double)&gt; progressCallback=nullptr)</div><div class="ttdoc">Read SEGY STACK data, i.e. nTrc should be equal to nil*nxl. After reading origin, spacings,...</div><div class="ttdef"><b>Definition:</b> h5core_segy.cpp:718</div></div>
+<div class="ttc" id="anamespaceh5geo_html_a015a24f809753680afcacf9fa6f27f13"><div class="ttname"><a href="namespaceh5geo.html#a015a24f809753680afcacf9fa6f27f13">h5geo::readSEGYTraces</a></div><div class="ttdeci">H5GEO_EXPORT Eigen::MatrixXf readSEGYTraces(const std::string &amp;segy, size_t fromSamp=0, size_t toSamp=std::numeric_limits&lt; size_t &gt;::max(), size_t fromTrc=0, size_t toTrc=std::numeric_limits&lt; size_t &gt;::max(), size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::function&lt; void(double)&gt; progressCallback=nullptr)</div><div class="ttdoc">readSEGYTraces read traces</div><div class="ttdef"><b>Definition:</b> h5core_segy.cpp:536</div></div>
+<div class="ttc" id="anamespaceh5geo_html_a0fe4fad88bbbb092cd9fa10b36c1b95d"><div class="ttname"><a href="namespaceh5geo.html#a0fe4fad88bbbb092cd9fa10b36c1b95d">h5geo::writeSEGYTextHeader</a></div><div class="ttdeci">H5GEO_EXPORT bool writeSEGYTextHeader(const std::string &amp;segy, char txtHdr[40][80])</div><div class="ttdoc">create new file or open existing SEGY</div><div class="ttdef"><b>Definition:</b> h5core_segy.cpp:175</div></div>
+<div class="ttc" id="anamespaceh5geo_html_a51c5638327161f85123d17debc6fcf6e"><div class="ttname"><a href="namespaceh5geo.html#a51c5638327161f85123d17debc6fcf6e">h5geo::writeSEGYBinHeader</a></div><div class="ttdeci">H5GEO_EXPORT bool writeSEGYBinHeader(const std::string &amp;segy, double binHdr[30])</div><div class="ttdoc">create new file or open existing SEGY</div><div class="ttdef"><b>Definition:</b> h5core_segy.cpp:255</div></div>
+<div class="ttc" id="anamespaceh5geo_html_a86c6a0120b5ff50c46efe23b0bf3ab13"><div class="ttname"><a href="namespaceh5geo.html#a86c6a0120b5ff50c46efe23b0bf3ab13">h5geo::readSEGYTraceHeader</a></div><div class="ttdeci">H5GEO_EXPORT Eigen::VectorX&lt; ptrdiff_t &gt; readSEGYTraceHeader(const std::string &amp;segy, const size_t &amp;hdrOffset, const size_t &amp;hdrSize, size_t fromTrc=0, size_t toTrc=std::numeric_limits&lt; size_t &gt;::max(), size_t nSamp=0, size_t nTrc=0, h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::function&lt; void(double)&gt; progressCallback=nullptr)</div><div class="ttdoc">readSEGYTraceHeader read selected header from all the traces (4 byte SEGY supported only)</div><div class="ttdef"><b>Definition:</b> h5core_segy.cpp:345</div></div>
+<div class="ttc" id="anamespaceh5geo_html_aabf78a027655c71e561a66653d045da3"><div class="ttname"><a href="namespaceh5geo.html#aabf78a027655c71e561a66653d045da3">h5geo::readSEGYTrace</a></div><div class="ttdeci">H5GEO_EXPORT void readSEGYTrace(std::ifstream &amp;file, size_t trcInd, h5geo::SegyFormat format, h5geo::Endian endian, Eigen::Ref&lt; Eigen::VectorXf &gt; trace)</div><div class="ttdoc">low level api. No any checks are done. User is responsible for that.</div><div class="ttdef"><b>Definition:</b> h5core_segy.cpp:437</div></div>
+<div class="ttc" id="anamespaceh5geo_html_abcc14bfbe41f97aae02f49f436177403"><div class="ttname"><a href="namespaceh5geo.html#abcc14bfbe41f97aae02f49f436177403">h5geo::writeSEGYTraces</a></div><div class="ttdeci">H5GEO_EXPORT bool writeSEGYTraces(const std::string &amp;segy, Eigen::Ref&lt; Eigen::MatrixXd &gt; HDR, Eigen::Ref&lt; Eigen::MatrixXf &gt; TRACE)</div><div class="ttdoc">writeSEGYTraces write traces and their headers to the end of SEGY file</div><div class="ttdef"><b>Definition:</b> h5core_segy.cpp:465</div></div>
+<div class="ttc" id="anamespaceh5geo_html_adee4e47a95e8301f67408783ac123d35"><div class="ttname"><a href="namespaceh5geo.html#adee4e47a95e8301f67408783ac123d35">h5geo::readSEGYSTACK</a></div><div class="ttdeci">H5GEO_EXPORT bool readSEGYSTACK(H5Vol *vol, const std::string &amp;segy, const size_t &amp;ilHdrOffset, const size_t &amp;ilHdrSize, const size_t &amp;xlHdrOffset, const size_t &amp;xlHdrSize, const size_t &amp;xHdrOffset, const size_t &amp;xHdrSize, const size_t &amp;yHdrOffset, const size_t &amp;yHdrSize, double sampRate, size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::function&lt; void(double)&gt; progressCallback=nullptr)</div><div class="ttdoc">Read SEGY STACK data, i.e. nTrc should be equal to nil*nxl. After reading origin, spacings,...</div><div class="ttdef"><b>Definition:</b> h5core_segy.cpp:837</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

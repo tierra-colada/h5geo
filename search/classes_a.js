@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['volparam_0',['VolParam',['../struct_vol_param.html',1,'']]]
+  ['traceheader_0',['TraceHeader',['../structh5geo_1_1_trace_header.html',1,'h5geo']]]
 ];
