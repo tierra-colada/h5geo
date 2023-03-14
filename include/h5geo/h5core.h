@@ -12,6 +12,7 @@
 #include "private/h5polyfit.h"
 #include "private/h5sort.h"
 
+#include <map>
 #include <type_traits>
 #include <string>
 #include <vector>
