@@ -425,9 +425,9 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>updatePKeySor
 <tr class="memitem:a03dbbf5cca5beadeb8c01305b09144c8"><td class="memItemLeft" align="right" valign="top">virtual Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a03dbbf5cca5beadeb8c01305b09144c8">calcBoundary</a> (const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false)=0</td></tr>
 <tr class="memdesc:a03dbbf5cca5beadeb8c01305b09144c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate <code>XY</code> boundary around the survey.  <br /></td></tr>
 <tr class="separator:a03dbbf5cca5beadeb8c01305b09144c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99c25cca8711de3d03d293bdf7b0ca35"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a99c25cca8711de3d03d293bdf7b0ca35">exportToVol</a> (<a class="el" href="class_h5_vol.html">H5Vol</a> *vol, const std::string &amp;xHeader=&quot;CDP_X&quot;, const std::string &amp;yHeader=&quot;CDP_Y&quot;, const std::string &amp;ilHeader=&quot;INLINE&quot;, const std::string &amp;xlHeader=&quot;XLINE&quot;, double ilMin=std::numeric_limits&lt; double &gt;::min(), double ilMax=std::numeric_limits&lt; double &gt;::max(), double xlMin=std::numeric_limits&lt; double &gt;::min(), double xlMax=std::numeric_limits&lt; double &gt;::max(), size_t fromSampInd=0, size_t nSamp=std::numeric_limits&lt; size_t &gt;::max())=0</td></tr>
-<tr class="memdesc:a99c25cca8711de3d03d293bdf7b0ca35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Export seismic to <code><a class="el" href="class_h5_vol.html" title="Provides API to work with volumes.">H5Vol</a></code>.  <br /></td></tr>
-<tr class="separator:a99c25cca8711de3d03d293bdf7b0ca35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a776db3fa8708fee3203c300641d345be"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a776db3fa8708fee3203c300641d345be">exportToVol</a> (<a class="el" href="class_h5_vol.html">H5Vol</a> *vol, const std::string &amp;xHeader=&quot;CDP_X&quot;, const std::string &amp;yHeader=&quot;CDP_Y&quot;, const std::string &amp;ilHeader=&quot;INLINE&quot;, const std::string &amp;xlHeader=&quot;XLINE&quot;, double ilMin=std::numeric_limits&lt; double &gt;::min(), double ilMax=std::numeric_limits&lt; double &gt;::max(), double xlMin=std::numeric_limits&lt; double &gt;::min(), double xlMax=std::numeric_limits&lt; double &gt;::max(), size_t fromSampInd=0, size_t nSamp=std::numeric_limits&lt; size_t &gt;::max(), std::function&lt; void(double)&gt; progressCallback=nullptr)=0</td></tr>
+<tr class="memdesc:a776db3fa8708fee3203c300641d345be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Export seismic to <code><a class="el" href="class_h5_vol.html" title="Provides API to work with volumes.">H5Vol</a></code>.  <br /></td></tr>
+<tr class="separator:a776db3fa8708fee3203c300641d345be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9e4ae4f6517e1bc7718718fbc61b778"><td class="memItemLeft" align="right" valign="top"><a id="ad9e4ae4f6517e1bc7718718fbc61b778" name="ad9e4ae4f6517e1bc7718718fbc61b778"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>exportToSEGY</b> (const std::string &amp;segyFile, size_t trcBuffer=10000, std::function&lt; void(double)&gt; progressCallback=nullptr)=0</td></tr>
 <tr class="separator:ad9e4ae4f6517e1bc7718718fbc61b778"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -798,8 +798,8 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
 
 </div>
 </div>
-<a id="a99c25cca8711de3d03d293bdf7b0ca35" name="a99c25cca8711de3d03d293bdf7b0ca35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99c25cca8711de3d03d293bdf7b0ca35">&#9670;&#160;</a></span>exportToVol()</h2>
+<a id="a776db3fa8708fee3203c300641d345be" name="a776db3fa8708fee3203c300641d345be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a776db3fa8708fee3203c300641d345be">&#9670;&#160;</a></span>exportToVol()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -871,7 +871,13 @@ If you plan to get <code>CDP-DSREG</code> data, you have to call <a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>nSamp</em> = <code>std::numeric_limits&lt;&#160;size_t&#160;&gt;::max()</code>&#160;</td>
+          <td class="paramname"><em>nSamp</em> = <code>std::numeric_limits&lt;&#160;size_t&#160;&gt;::max()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; void(double)&gt;&#160;</td>
+          <td class="paramname"><em>progressCallback</em> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
