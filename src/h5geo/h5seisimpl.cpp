@@ -2000,7 +2000,8 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
     double xlMin,
     double xlMax,
     size_t fromSampInd,
-    size_t nSamp)
+    size_t nSamp,
+    std::function<void(double)> progressCallback)
 {
   if (!vol)
     return false;
@@ -2086,9 +2087,23 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
     N = vp.nY;
   }
 
+  double progressOld = 0;
+  double progressNew = 0;
+
+  auto cbk = [&](const size_t& i, const size_t& I){
+    progressNew = i / (double)I;
+    // update callback only if the difference >= 1% than the previous value
+    if (progressNew - progressOld >= 0.01){
+      progressCallback( progressNew );
+      progressOld = progressNew;
+    }
+  };
+
   double sampRate = this->getSampRate();
   if (isXLReversed && isILReversed){
     for (size_t i = 0; i < nil; i+=N){
+      if (progressCallback)
+        cbk(i, nil);
       size_t i0 = i*nxl;
       size_t i1 = i0+nxl*N-1;
       if (i1 >= ind.size())
@@ -2112,6 +2127,8 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
     }
   } else if (isXLReversed){
     for (size_t i = 0; i < nil; i+=N){
+      if (progressCallback)
+        cbk(i, nil);
       size_t i0 = i*nxl;
       size_t i1 = i0+nxl*N-1;
       if (i1 >= ind.size())
@@ -2135,6 +2152,8 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
     }
   } else if (isILReversed){
     for (size_t i = 0; i < nil; i+=N){
+      if (progressCallback)
+        cbk(i, nil);
       size_t i0 = i*nxl;
       size_t i1 = i0+nxl*N-1;
       if (i1 >= ind.size())
@@ -2149,6 +2168,8 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
     }
   } else {
     for (size_t i = 0; i < nil; i+=N){
+      if (progressCallback)
+        cbk(i, nil);
       size_t i0 = i*nxl;
       size_t i1 = i0+nxl*N-1;
       if (i1 >= ind.size())
@@ -2193,6 +2214,9 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
   vol->setDataUnits(this->getDataUnits());
   vol->setNullValue(this->getNullValue());
   vol->setSpatialReference(this->getSpatialReference());
+
+  if (progressCallback)
+    progressCallback( double(1) );
 
   return true;
 }

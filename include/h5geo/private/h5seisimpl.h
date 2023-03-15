@@ -299,7 +299,8 @@ public:
       double xlMin = std::numeric_limits<double>::min(),
       double xlMax = std::numeric_limits<double>::max(),
       size_t fromSampInd = 0,
-      size_t nSamp = std::numeric_limits<size_t>::max()) override;
+      size_t nSamp = std::numeric_limits<size_t>::max(),
+      std::function<void(double)> progressCallback = nullptr) override;
 
   virtual bool exportToSEGY(
       const std::string& segyFile, 
