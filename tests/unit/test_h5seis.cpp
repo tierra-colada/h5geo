@@ -561,9 +561,9 @@ TEST_F(H5SeisFixture, SEGY){
 
   // TEST WRITE
   std::string segy_out = "out.sgy";
-  char textHdr_out[40][80] = { " " };
+  char txtHdr_out[40][80] = { " " };
   for (size_t i = 0; i < txtHdr.size(); i++)
-    std::strncpy(std::begin(textHdr_out[i]), txtHdr[i].c_str(), txtHdr[i].size());
+    std::strncpy(std::begin(txtHdr_out[i]), txtHdr[i].c_str(), std::min<size_t>(80,txtHdr[i].size()));
 
   double binHdr[30] = { 0 };
   ASSERT_TRUE(h5geo::readSEGYBinHeader(p.segyFiles[0], binHdr));
@@ -571,7 +571,7 @@ TEST_F(H5SeisFixture, SEGY){
   double binHdr_out[30] = { 0 };
   std::copy(std::begin(binHdr), std::end(binHdr), binHdr_out);
   
-  ASSERT_TRUE(h5geo::writeSEGYTextHeader(segy_out, textHdr_out, true));
+  ASSERT_TRUE(h5geo::writeSEGYTextHeader(segy_out, txtHdr_out, true));
   ASSERT_TRUE(h5geo::writeSEGYBinHeader(segy_out, binHdr_out, false));
 
   Eigen::MatrixXd HDR = seis->getTraceHeader(0,nTrc).transpose();

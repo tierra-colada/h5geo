@@ -2227,11 +2227,11 @@ bool H5SeisImpl::exportToSEGY(
     std::function<void(double)> progressCallback)
 {
   std::vector<std::string> txtHdr = this->getTextHeader();
-  char textHdr_out[40][80] = { " " };
+  char txtHdr_out[40][80] = { " " };
   for (size_t i = 0; i < std::min<size_t>(40, txtHdr.size()); i++)
-    std::strncpy(std::begin(textHdr_out[i]), txtHdr[i].c_str(), txtHdr[i].size());
+    std::strncpy(std::begin(txtHdr_out[i]), txtHdr[i].c_str(), std::min<size_t>(80,txtHdr[i].size()));
 
-  if (!h5geo::writeSEGYTextHeader(segyFile, textHdr_out, true))
+  if (!h5geo::writeSEGYTextHeader(segyFile, txtHdr_out, true))
     return false;
 
   double binHdr_out[30] = { 0 };
