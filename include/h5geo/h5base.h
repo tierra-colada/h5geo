@@ -61,7 +61,7 @@ struct BaseObjectParam{
   std::string temporalUnits; ///< all geo-object's `temporalUnits` data must follow it (if any)
   std::string angularUnits; ///< all geo-object's `angularUnits` data must follow it (if any)
   std::string dataUnits; ///< all geo-object's `dataUnits` data must follow it (if any)
-  double nullValue = NAN; ///< usually used for missed values
+  double nullValue = std::nan("nan"); ///< usually used for missed values
 };
 
 /// \struct PointsParam

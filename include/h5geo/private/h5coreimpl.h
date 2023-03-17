@@ -735,7 +735,7 @@ inline float readFloatAttribute(
     Object& object, const std::string& attrName,
     const std::string& unitsFrom,
     const std::string& unitsTo){
-  float value = NAN;
+  float value = std::nan("nan");
   readAttribute(object, attrName, value, unitsFrom, unitsTo);
   return value;
 }
@@ -750,7 +750,7 @@ inline double readDoubleAttribute(
     const std::string& unitsFrom,
     const std::string& unitsTo)
 {
-  double value = NAN;
+  double value = std::nan("nan");
   readAttribute(object, attrName, value, unitsFrom, unitsTo);
   return value;
 }

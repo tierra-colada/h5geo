@@ -528,15 +528,15 @@ double H5SeisImpl::getBinHeader(
     const std::string& unitsTo)
 {
   if (hdrName.empty())
-    return NAN;
+    return std::nan("nan");
 
   auto opt = getBinHeaderD();
   if (!opt.has_value())
-    return NAN;
+    return std::nan("nan");
 
   ptrdiff_t ind = getBinHeaderIndex(hdrName);
   if (ind < 0 || ind >= opt->getElementCount())
-    return NAN;
+    return std::nan("nan");
 
   double hdr;
   opt->select({size_t(ind)}, {1}).read(hdr);
@@ -1015,7 +1015,7 @@ double H5SeisImpl::getFirstSample(
         "DELRECT", trcInd, 1);
 
   if (firstSamp.size() == 0)
-    return NAN;
+    return std::nan("nan");
 
   if (!units.empty()){
     double coef;
@@ -1344,20 +1344,20 @@ double H5SeisImpl::getTraceHeaderMin(
     const std::string& unitsTo)
 {
   if (hdrName.empty())
-    return NAN;
+    return std::nan("nan");
 
   if (!traceHeaderD.hasAttribute("min"))
-    return NAN;
+    return std::nan("nan");
 
   auto attr = traceHeaderD.getAttribute("min");
   int ind = getTraceHeaderIndex(hdrName);
   if (ind < 0)
-    return NAN;
+    return std::nan("nan");
 
   std::vector<double> hdr;
   attr.read(hdr);
   if (ind >= hdr.size())
-    return NAN;
+    return std::nan("nan");
 
   if (!unitsFrom.empty() && !unitsTo.empty()){
     double coef = units::convert(
@@ -1375,21 +1375,21 @@ double H5SeisImpl::getTraceHeaderMax(
     const std::string& unitsTo)
 {
   if (hdrName.empty())
-    return NAN;
+    return std::nan("nan");
 
   if (!traceHeaderD.hasAttribute("max"))
-    return NAN;
+    return std::nan("nan");
 
   auto attr = traceHeaderD.getAttribute("max");
 
   int ind = getTraceHeaderIndex(hdrName);
   if (ind < 0)
-    return NAN;
+    return std::nan("nan");
 
   std::vector<double> hdr;
   attr.read(hdr);
   if (ind >= hdr.size())
-    return NAN;
+    return std::nan("nan");
 
   if (!unitsFrom.empty() && !unitsTo.empty()){
     double coef = units::convert(
