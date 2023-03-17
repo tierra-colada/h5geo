@@ -815,7 +815,7 @@ $(function() {
 <div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span>    Object&amp; <span class="keywordtype">object</span>, <span class="keyword">const</span> std::string&amp; attrName,</div>
 <div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span>    <span class="keyword">const</span> std::string&amp; unitsFrom,</div>
 <div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span>    <span class="keyword">const</span> std::string&amp; unitsTo){</div>
-<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span>  <span class="keywordtype">float</span> value = NAN;</div>
+<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span>  <span class="keywordtype">float</span> value = std::nan(<span class="stringliteral">&quot;nan&quot;</span>);</div>
 <div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span>  <a class="code hl_function" href="namespaceh5geo.html#ab46f46c072c82dc602887e4c54e4a010">readAttribute</a>(<span class="keywordtype">object</span>, attrName, value, unitsFrom, unitsTo);</div>
 <div class="line"><a id="l00740" name="l00740"></a><span class="lineno">  740</span>  <span class="keywordflow">return</span> value;</div>
 <div class="line"><a id="l00741" name="l00741"></a><span class="lineno">  741</span>}</div>
@@ -830,7 +830,7 @@ $(function() {
 <div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span>    <span class="keyword">const</span> std::string&amp; unitsFrom,</div>
 <div class="line"><a id="l00751" name="l00751"></a><span class="lineno">  751</span>    <span class="keyword">const</span> std::string&amp; unitsTo)</div>
 <div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span>{</div>
-<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span>  <span class="keywordtype">double</span> value = NAN;</div>
+<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span>  <span class="keywordtype">double</span> value = std::nan(<span class="stringliteral">&quot;nan&quot;</span>);</div>
 <div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span>  <a class="code hl_function" href="namespaceh5geo.html#ab46f46c072c82dc602887e4c54e4a010">readAttribute</a>(<span class="keywordtype">object</span>, attrName, value, unitsFrom, unitsTo);</div>
 <div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span>  <span class="keywordflow">return</span> value;</div>
 <div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>}</div>
