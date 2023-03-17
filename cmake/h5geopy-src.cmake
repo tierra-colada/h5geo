@@ -18,6 +18,8 @@ set(src_files_h5geopy
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5points_py.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5seis_py.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5seiscontainer_py.cpp
+  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5vol_py.cpp
+  ${CMAKE_SOURCE_DIR}/src/h5geopy/h5volcontainer_py.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5core_segy_py.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5sort_py.cpp
   ${CMAKE_SOURCE_DIR}/src/h5geopy/h5well_py.cpp

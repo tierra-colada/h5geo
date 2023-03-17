@@ -16,6 +16,7 @@ void WellParam_py(py::class_<WellParam, BaseObjectParam> &py_obj);
 void DevCurveParam_py(py::class_<DevCurveParam, BaseObjectParam> &py_obj);
 void LogCurveParam_py(py::class_<LogCurveParam, BaseObjectParam> &py_obj);
 void SeisParam_py(py::class_<SeisParam, BaseObjectParam> &py_obj);
+void VolParam_py(py::class_<VolParam, BaseObjectParam> &py_obj);
 
 template <class TBase>
 struct H5Base_py

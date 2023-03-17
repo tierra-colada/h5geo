@@ -9,13 +9,15 @@
 #include "../../include/h5geopy/h5easyhull_py.h"
 #include "../../include/h5geopy/h5geofunctions_py.h"
 #include "../../include/h5geopy/h5interpolation_py.h"
+#include "../../include/h5geopy/h5core_segy_py.h"
+#include "../../include/h5geopy/h5sort_py.h"
 #include "../../include/h5geopy/h5logcurve_py.h"
 #include "../../include/h5geopy/h5basepoints_py.h"
 #include "../../include/h5geopy/h5points_py.h"
 #include "../../include/h5geopy/h5seis_py.h"
-#include "../../include/h5geopy/h5core_segy_py.h"
 #include "../../include/h5geopy/h5seiscontainer_py.h"
-#include "../../include/h5geopy/h5sort_py.h"
+#include "../../include/h5geopy/h5vol_py.h"
+#include "../../include/h5geopy/h5volcontainer_py.h"
 #include "../../include/h5geopy/h5map_py.h"
 #include "../../include/h5geopy/h5mapcontainer_py.h"
 #include "../../include/h5geopy/h5well_py.h"
@@ -78,6 +80,7 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyDevCurveParam = py::class_<DevCurveParam, BaseObjectParam>(m, "DevCurveParam");
   auto pyLogCurveParam = py::class_<LogCurveParam, BaseObjectParam>(m, "LogCurveParam");
   auto pySeisParam = py::class_<SeisParam, BaseObjectParam>(m, "SeisParam");
+  auto pyVolParam = py::class_<VolParam, BaseObjectParam>(m, "VolParam");
   auto pyBase = py::class_<
       H5Base,
       H5BaseImpl<H5Base>,
@@ -229,6 +232,26 @@ PYBIND11_MODULE(_h5geo, m) {
       std::unique_ptr<H5Seis, ObjectDeleter>>
       (m, "H5Seis");
 
+  // VOLCONTAINER
+  auto pyVolContainer =
+      py::class_<
+      H5VolContainer,
+      H5VolContainerImpl,
+      H5BaseContainer,
+      H5Base,
+      std::unique_ptr<H5VolContainer, ObjectDeleter>>
+      (m, "H5VolContainer");
+
+  // VOL
+  auto pyVol =
+      py::class_<
+      H5Vol,
+      H5VolImpl,
+      H5BaseObject,
+      H5Base,
+      std::unique_ptr<H5Vol, ObjectDeleter>>
+      (m, "H5Vol");
+
   // WELLCONTAINER
   auto pyWellContainer =
       py::class_<
@@ -306,6 +329,7 @@ PYBIND11_MODULE(_h5geo, m) {
   DevCurveParam_py(pyDevCurveParam);
   LogCurveParam_py(pyLogCurveParam);
   SeisParam_py(pySeisParam);
+  VolParam_py(pyVolParam);
   H5Base_py pyBase_inst(pyBase);
 
   // BASECONTAINER
@@ -348,6 +372,12 @@ PYBIND11_MODULE(_h5geo, m) {
 
   // SEIS
   H5Seis_py(pySeis);
+
+// VOLCONTAINER
+  H5VolContainer_py(pyVolContainer);
+
+  // VOL
+  H5Vol_py(pyVol);
 
   // WELLCONTAINER
   H5WellContainer_py(pyWellContainer);

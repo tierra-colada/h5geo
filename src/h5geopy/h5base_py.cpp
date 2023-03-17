@@ -87,6 +87,26 @@ void SeisParam_py(py::class_<SeisParam, BaseObjectParam> &py_obj){
       .def_readwrite("segyFiles", &SeisParam::segyFiles);
 }
 
+void VolParam_py(py::class_<VolParam, BaseObjectParam> &py_obj){
+  py_obj
+      .def(py::init<>())
+      .def_readwrite("X0", &VolParam::X0)
+      .def_readwrite("Y0", &VolParam::Y0)
+      .def_readwrite("Z0", &VolParam::Z0)
+      .def_readwrite("dX", &VolParam::dX)
+      .def_readwrite("dY", &VolParam::dY)
+      .def_readwrite("dZ", &VolParam::dZ)
+      .def_readwrite("nX", &VolParam::nX)
+      .def_readwrite("nY", &VolParam::nY)
+      .def_readwrite("nZ", &VolParam::nZ)
+      .def_readwrite("orientation", &VolParam::orientation)
+      .def_readwrite("domain", &VolParam::domain)
+      .def_readwrite("xChunkSize", &VolParam::xChunkSize)
+      .def_readwrite("yChunkSize", &VolParam::yChunkSize)
+      .def_readwrite("zChunkSize", &VolParam::zChunkSize)
+      .def_readwrite("compression_level", &VolParam::compression_level);
+}
+
 void ObjectDeleter_py(py::class_<ObjectDeleter> &py_obj){
   py_obj
       .def("__call__", [](const ObjectDeleter& obj, H5Base * base) { obj(base); });
