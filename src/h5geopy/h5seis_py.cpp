@@ -1,4 +1,5 @@
 #include "../../include/h5geopy/h5seis_py.h"
+#include <h5geo/private/h5volimpl.h>
 
 namespace h5geopy {
 
@@ -469,6 +470,21 @@ void H5Seis_py(
            py::arg_v("lengthUnits", "", "str()"),
            py::arg_v("doCoordTransform", false, "False"),
            "calculate boundary of 2D or 3D seismic survey")
+
+      .def("exportToVol", &H5Seis::exportToVol,
+           py::arg("vol"),
+           py::arg_v("xHeader", "CDP_X", "CDP_X"),
+           py::arg_v("CDP_Y", "CDP_Y", "CDP_Y"),
+           py::arg_v("INLINE", "INLINE", "INLINE"),
+           py::arg_v("XLINE", "XLINE", "XLINE"),
+           py::arg_v("ilMin", std::numeric_limits<size_t>::min(), "sys.minint"),
+           py::arg_v("ilMax", std::numeric_limits<size_t>::max(), "sys.maxint"),
+           py::arg_v("xlMin", std::numeric_limits<size_t>::min(), "sys.minint"),
+           py::arg_v("xlMax", std::numeric_limits<size_t>::max(), "sys.maxint"),
+           py::arg_v("fromSampInd", 0, "0"),
+           py::arg_v("nSamp", std::numeric_limits<size_t>::max(), "sys.maxint"),
+           py::arg_v("progressCallback", nullptr, "None"),
+           "export seismic to Geo Volume")
 
       .def("exportToSEGY", &H5Seis::exportToSEGY,
            py::arg("segyFile"),
