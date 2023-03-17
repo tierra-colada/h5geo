@@ -96,33 +96,34 @@ $(function() {
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keywordtype">void</span> DevCurveParam_py(py::class_&lt;DevCurveParam, BaseObjectParam&gt; &amp;py_obj);</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keywordtype">void</span> LogCurveParam_py(py::class_&lt;LogCurveParam, BaseObjectParam&gt; &amp;py_obj);</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">void</span> SeisParam_py(py::class_&lt;SeisParam, BaseObjectParam&gt; &amp;py_obj);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> TBase&gt;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="structh5geopy_1_1_h5_base__py.html">   21</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structh5geopy_1_1_h5_base__py.html">H5Base_py</a></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>{</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <a class="code hl_struct" href="structh5geopy_1_1_h5_base__py.html">H5Base_py</a>(</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>      py::class_&lt;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>      <a class="code hl_class" href="class_h5_base.html">H5Base</a>,</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>      <a class="code hl_class" href="class_h5_base_impl.html">H5BaseImpl&lt;TBase&gt;</a>,</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>      std::unique_ptr&lt;H5Base, ObjectDeleter&gt;&gt;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>      &amp;py_obj)</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    py_obj</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        .def(<span class="stringliteral">&quot;clone&quot;</span>, &amp;<a class="code hl_function" href="class_h5_base.html#a7d3aa0641e10d1cb24111874fd8492c3">H5Base::clone</a>)</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        .def(<span class="stringliteral">&quot;Delete&quot;</span>, &amp;H5Base::Delete);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  }</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>};</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keywordtype">void</span> ObjectDeleter_py(py::class_&lt;ObjectDeleter&gt; &amp;py_obj);</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>} <span class="comment">// h5geopy</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keywordtype">void</span> VolParam_py(py::class_&lt;VolParam, BaseObjectParam&gt; &amp;py_obj);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> TBase&gt;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="structh5geopy_1_1_h5_base__py.html">   22</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structh5geopy_1_1_h5_base__py.html">H5Base_py</a></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>{</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  <a class="code hl_struct" href="structh5geopy_1_1_h5_base__py.html">H5Base_py</a>(</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>      py::class_&lt;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>      <a class="code hl_class" href="class_h5_base.html">H5Base</a>,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>      <a class="code hl_class" href="class_h5_base_impl.html">H5BaseImpl&lt;TBase&gt;</a>,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>      std::unique_ptr&lt;H5Base, ObjectDeleter&gt;&gt;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>      &amp;py_obj)</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    py_obj</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        .def(<span class="stringliteral">&quot;clone&quot;</span>, &amp;<a class="code hl_function" href="class_h5_base.html#a7d3aa0641e10d1cb24111874fd8492c3">H5Base::clone</a>)</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        .def(<span class="stringliteral">&quot;Delete&quot;</span>, &amp;H5Base::Delete);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  }</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>};</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keywordtype">void</span> ObjectDeleter_py(py::class_&lt;ObjectDeleter&gt; &amp;py_obj);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>} <span class="comment">// h5geopy</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#endif </span><span class="comment">// H5BASE_PY_H</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#endif </span><span class="comment">// H5BASE_PY_H</span></div>
 <div class="ttc" id="aclass_h5_base_html"><div class="ttname"><a href="class_h5_base.html">H5Base</a></div><div class="ttdoc">Base class for all geo-containers and geo-objects.</div><div class="ttdef"><b>Definition:</b> h5base.h:182</div></div>
 <div class="ttc" id="aclass_h5_base_html_a7d3aa0641e10d1cb24111874fd8492c3"><div class="ttname"><a href="class_h5_base.html#a7d3aa0641e10d1cb24111874fd8492c3">H5Base::clone</a></div><div class="ttdeci">virtual H5Base * clone()=0</div></div>
 <div class="ttc" id="aclass_h5_base_impl_html"><div class="ttname"><a href="class_h5_base_impl.html">H5BaseImpl</a></div><div class="ttdef"><b>Definition:</b> h5baseimpl.h:8</div></div>
-<div class="ttc" id="astructh5geopy_1_1_h5_base__py_html"><div class="ttname"><a href="structh5geopy_1_1_h5_base__py.html">h5geopy::H5Base_py</a></div><div class="ttdef"><b>Definition:</b> h5base_py.h:22</div></div>
+<div class="ttc" id="astructh5geopy_1_1_h5_base__py_html"><div class="ttname"><a href="structh5geopy_1_1_h5_base__py.html">h5geopy::H5Base_py</a></div><div class="ttdef"><b>Definition:</b> h5base_py.h:23</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
