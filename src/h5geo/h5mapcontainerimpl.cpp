@@ -26,7 +26,7 @@ H5Map* H5MapContainerImpl::openMap(
 
 H5Map* H5MapContainerImpl::createMap(
     std::string& name,
-    MapParam &p,
+    H5MapParam &p,
     h5geo::CreationType createFlag)
 {
   auto opt = createObject(
@@ -40,7 +40,7 @@ H5Map* H5MapContainerImpl::createMap(
 
 H5Map* H5MapContainerImpl::createMap(
     h5gt::Group group,
-    MapParam &p,
+    H5MapParam &p,
     h5geo::CreationType createFlag)
 {
   auto opt = createObject(

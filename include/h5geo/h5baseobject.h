@@ -29,44 +29,44 @@ public:
 
   virtual H5Points1* createPoints1(
       std::string& name,
-      PointsParam& p,
+      H5PointsParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Points1* createPoints1(
       h5gt::Group group,
-      PointsParam& p,
+      H5PointsParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Points2* createPoints2(
       std::string& name,
-      PointsParam& p,
+      H5PointsParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Points2* createPoints2(
       h5gt::Group group,
-      PointsParam& p,
+      H5PointsParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Points3* createPoints3(
       std::string& name,
-      PointsParam& p,
+      H5PointsParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Points3* createPoints3(
       h5gt::Group group,
-      PointsParam& p,
+      H5PointsParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Points4* createPoints4(
       std::string& name,
-      PointsParam& p,
+      H5PointsParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Points4* createPoints4(
       h5gt::Group group,
-      PointsParam& p,
+      H5PointsParam& p,
       h5geo::CreationType createFlag) = 0;
 
   virtual H5Horizon* createHorizon(
       std::string& name,
-      HorizonParam& p,
+      H5HorizonParam& p,
       h5geo::CreationType createFlag) = 0;
   virtual H5Horizon* createHorizon(
       h5gt::Group group,
-      HorizonParam& p,
+      H5HorizonParam& p,
       h5geo::CreationType createFlag) = 0;
 
 #ifdef H5GEO_USE_GDAL

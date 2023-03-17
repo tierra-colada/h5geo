@@ -27,7 +27,7 @@ We define well head coordinates, kelly bushing and uwi:
          return -1;
       }
 
-      WellParam p;
+      H5WellParam p;
       p.headX = 444363;
       p.headY = 7425880;
       p.kb = 50.88;
@@ -68,7 +68,7 @@ using minimum curvature method implemented in `h5deviation.h5 <https://github.co
 
 .. code:: c++
 
-   DevCurveParam p_devCurve;
+   H5DevCurveParam p_devCurve;
    p_devCurve.lengthUnits = "meter";
    p_devCurve.temporalUnits = "millisecond";
    p_devCurve.angularUnits = "degree";
@@ -143,7 +143,7 @@ The first column is ``MD`` and the second is ``VAL`` (value).
 
 .. code:: c++
 
-   LogCurveParam p_logCurve;
+   H5LogCurveParam p_logCurve;
    p_logCurve.lengthUnits = "meter";
    p_logCurve.dataUnits = "kg/m2";
 

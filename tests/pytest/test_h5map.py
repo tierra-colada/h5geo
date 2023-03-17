@@ -41,7 +41,7 @@ class test_h5map(unittest.TestCase):
         h5File = self.mapContainer.getH5File()
 
     mapContainer = None
-    p = h5geo.MapParam()
+    p = h5geo.H5MapParam()
     FILE_NAME = None
     MAP_NAME1 = None
     MAP_NAME2 = None

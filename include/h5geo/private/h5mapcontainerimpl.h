@@ -17,11 +17,11 @@ public:
       h5gt::Group group) override;
   virtual H5Map* createMap(
       std::string& name,
-      MapParam &p,
+      H5MapParam &p,
       h5geo::CreationType createFlag) override;
   virtual H5Map* createMap(
       h5gt::Group group,
-      MapParam &p,
+      H5MapParam &p,
       h5geo::CreationType createFlag) override;
 
   //----------- FRIEND CLASSES -----------

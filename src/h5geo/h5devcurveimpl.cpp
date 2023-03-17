@@ -295,10 +295,10 @@ std::string H5DevCurveImpl::getRelativeName(){
         h5geo::CaseSensitivity::CASE_INSENSITIVE);
 }
 
-DevCurveParam H5DevCurveImpl::getParam()
+H5DevCurveParam H5DevCurveImpl::getParam()
 {
-  DevCurveParam p;
-  // BaseObjectParam
+  H5DevCurveParam p;
+  // H5BaseObjectParam
   p.spatialReference = getSpatialReference();
   p.lengthUnits = getLengthUnits();
   p.temporalUnits = getTemporalUnits();

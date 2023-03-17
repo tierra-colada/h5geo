@@ -26,12 +26,12 @@ public:
 	/// \brief Create H5Seis
   virtual H5Seis* createSeis(
       std::string& name,
-      SeisParam& p,
+      H5SeisParam& p,
       h5geo::CreationType createFlag) = 0;
 	/// \brief Create H5Seis
   virtual H5Seis* createSeis(
       h5gt::Group group,
-      SeisParam& p,
+      H5SeisParam& p,
       h5geo::CreationType createFlag) = 0;
 };
 

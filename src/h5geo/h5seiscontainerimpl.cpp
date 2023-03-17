@@ -26,7 +26,7 @@ H5Seis* H5SeisContainerImpl::openSeis(
 
 H5Seis* H5SeisContainerImpl::createSeis(
     std::string& name,
-    SeisParam& p,
+    H5SeisParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = createObject(
@@ -40,7 +40,7 @@ H5Seis* H5SeisContainerImpl::createSeis(
 
 H5Seis* H5SeisContainerImpl::createSeis(
     h5gt::Group group,
-    SeisParam& p,
+    H5SeisParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = createObject(

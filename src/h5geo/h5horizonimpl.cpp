@@ -221,18 +221,18 @@ h5geo::Domain H5HorizonImpl::getDomain(){
           std::string{h5geo::detail::Domain});
 }
 
-HorizonParam
+H5HorizonParam
 H5HorizonImpl::getParam()
 {
-  HorizonParam p;
-  // BaseObjectParam
+  H5HorizonParam p;
+  // H5BaseObjectParam
   p.spatialReference = this->getSpatialReference();
   p.lengthUnits = this->getLengthUnits();
   p.temporalUnits = this->getTemporalUnits();
   p.angularUnits = this->getAngularUnits();
   p.dataUnits = this->getDataUnits();
 
-  // PointsParam
+  // H5PointsParam
   p.domain = this->getDomain();
   p.nPoints = this->getNPoints();
   p.components = this->getComponents();

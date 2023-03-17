@@ -79,7 +79,7 @@ public:
   virtual size_t getNY() override;
   virtual size_t getNZ() override;
 
-  virtual VolParam getParam() override;
+  virtual H5VolParam getParam() override;
 
   virtual H5VolContainer* openVolContainer() const override;
 

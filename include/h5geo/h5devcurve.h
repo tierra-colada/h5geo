@@ -90,7 +90,7 @@ public:
   virtual std::string getRelativeName() = 0;
 
 	/// \brief Get parameters that were used to create current dev curve
-  virtual DevCurveParam getParam() = 0;
+  virtual H5DevCurveParam getParam() = 0;
 
 	/// \brief Open H5WellContainer where current dev curve resides
   virtual H5WellContainer* openWellContainer() = 0;

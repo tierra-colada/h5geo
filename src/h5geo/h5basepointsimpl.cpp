@@ -78,18 +78,18 @@ H5BasePointsImpl<TBase>::getPointsD() const
 }
 
 template <typename TBase>
-PointsParam
+H5PointsParam
 H5BasePointsImpl<TBase>::getParam()
 {
-  PointsParam p;
-  // BaseObjectParam
+  H5PointsParam p;
+  // H5BaseObjectParam
   p.spatialReference = this->getSpatialReference();
   p.lengthUnits = this->getLengthUnits();
   p.temporalUnits = this->getTemporalUnits();
   p.angularUnits = this->getAngularUnits();
   p.dataUnits = this->getDataUnits();
 
-  // PointsParam
+  // H5PointsParam
   p.domain = this->getDomain();
   p.nPoints = this->getNPoints();
   return p;

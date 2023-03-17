@@ -1401,17 +1401,17 @@ double H5SeisImpl::getTraceHeaderMax(
   return hdr[ind];
 }
 
-SeisParam H5SeisImpl::getParam()
+H5SeisParam H5SeisImpl::getParam()
 {
-  SeisParam p;
-  // BaseObjectParam
+  H5SeisParam p;
+  // H5BaseObjectParam
   p.spatialReference = getSpatialReference();
   p.lengthUnits = getLengthUnits();
   p.temporalUnits = getTemporalUnits();
   p.angularUnits = getAngularUnits();
   p.dataUnits = getDataUnits();
 
-  // SeisParam
+  // H5SeisParam
   p.domain = getDomain();
   p.dataType = getDataType();
   p.surveyType = getSurveyType();
@@ -2075,7 +2075,7 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
   // N - number of slices written at once (usually 
   // should be equal to Y-chunkSize to acieve best IO speed)
   size_t N = 64;
-  VolParam vp = vol->getParam();
+  H5VolParam vp = vol->getParam();
   if (vp.yChunkSize > 0 &&
       vp.nY > 0 &&
       vp.yChunkSize < vp.nY){

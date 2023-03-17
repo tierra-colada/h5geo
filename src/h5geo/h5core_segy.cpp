@@ -953,7 +953,7 @@ bool readSEGYSTACK(
   // N - number of slices written at once (usually 
   // should be equal to Y-chunkSize to acieve best IO speed)
   size_t N = 64;
-  VolParam vp = vol->getParam();
+  H5VolParam vp = vol->getParam();
   if (vp.yChunkSize > 0 &&
       vp.nY > 0 &&
       vp.yChunkSize < vp.nY){

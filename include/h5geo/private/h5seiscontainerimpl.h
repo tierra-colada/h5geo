@@ -17,11 +17,11 @@ public:
       h5gt::Group group) override;
   virtual H5Seis* createSeis(
       std::string& name,
-      SeisParam& p,
+      H5SeisParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5Seis* createSeis(
       h5gt::Group group,
-      SeisParam& p,
+      H5SeisParam& p,
       h5geo::CreationType createFlag) override;
 
   //----------- FRIEND CLASSES -----------

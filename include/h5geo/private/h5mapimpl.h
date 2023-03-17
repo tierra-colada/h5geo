@@ -65,7 +65,7 @@ public:
   virtual size_t getNX() override;
   virtual size_t getNY() override;
 
-  virtual MapParam getParam() override;
+  virtual H5MapParam getParam() override;
 
   virtual H5MapContainer* openMapContainer() const override;
 

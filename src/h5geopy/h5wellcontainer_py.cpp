@@ -19,13 +19,13 @@ void H5WellContainer_py(
              &H5WellContainer::openWell))
       .def("createWell", py::overload_cast<
            std::string&,
-           WellParam&,
+           H5WellParam&,
            CreationType>(
              &H5WellContainer::createWell))
       .def("openWellByUWI", &H5WellContainer::openWellByUWI)
       .def("createWell", py::overload_cast<
            h5gt::Group,
-           WellParam&,
+           H5WellParam&,
            CreationType>(
              &H5WellContainer::createWell));
 }

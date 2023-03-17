@@ -30,7 +30,7 @@ the coordinates are given in ``millimeters``.
          return -1;
       }
 
-      MapParam p;
+      H5MapParam p;
       p.nX = 10;
       p.nY = 20;
       p.X0 = 0;
@@ -119,7 +119,7 @@ Lets generate such attribute map first:
 
 .. code:: c++
 
-   MapParam p_attrMap = p;
+   H5MapParam p_attrMap = p;
    p_attrMap.dataUnits = "feet/s"
 
    std::string attrMapName = "myAttrMap";

@@ -382,7 +382,7 @@ public:
       const std::string& unitsTo = "") = 0;
 
   /// \brief Get parameters that were used to create current seis
-  virtual SeisParam getParam() = 0;
+  virtual H5SeisParam getParam() = 0;
 
   /// \brief Check `fromTrc`, `nTrc` (passed by reference) and diminish
   /// `nTrc` to fit in data limits (if `fromTrc` is inside limit)

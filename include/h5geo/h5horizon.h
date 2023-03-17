@@ -66,7 +66,7 @@ public:
   virtual h5geo::Domain getDomain() = 0;
 
   /// \brief Get parameters that were used to create current points
-  virtual HorizonParam getParam() = 0;
+  virtual H5HorizonParam getParam() = 0;
 
   /// \brief Get current points DataSet
   virtual std::optional<h5gt::DataSet> getHorizonD() const = 0;

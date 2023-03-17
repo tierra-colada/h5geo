@@ -51,7 +51,7 @@ public:
   virtual std::string getRelativeName() = 0;
 
   /// \brief Get parameters that were used to create current log curve
-  virtual LogCurveParam getParam() = 0;
+  virtual H5LogCurveParam getParam() = 0;
 
   /// \brief Open H5WellContainer where current log curve resides
   virtual H5WellContainer* openWellContainer() = 0;

@@ -433,17 +433,17 @@ size_t H5MapImpl::getNY()
   return dims[0];
 }
 
-MapParam H5MapImpl::getParam()
+H5MapParam H5MapImpl::getParam()
 {
-  MapParam p;
-  // BaseObjectParam
+  H5MapParam p;
+  // H5BaseObjectParam
   p.spatialReference = getSpatialReference();
   p.lengthUnits = getLengthUnits();
   p.temporalUnits = getTemporalUnits();
   p.angularUnits = getAngularUnits();
   p.dataUnits = getDataUnits();
 
-  // MapParam
+  // H5MapParam
   Eigen::VectorXd origin = getOrigin();
   if (origin.size() == 2){
     p.X0 = origin(0);

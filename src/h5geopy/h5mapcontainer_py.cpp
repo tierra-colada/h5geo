@@ -19,12 +19,12 @@ void H5MapContainer_py(
              &H5MapContainer::openMap))
       .def("createMap", py::overload_cast<
            std::string&,
-           MapParam&,
+           H5MapParam&,
            CreationType>(
              &H5MapContainer::createMap))
       .def("createMap", py::overload_cast<
            h5gt::Group,
-           MapParam&,
+           H5MapParam&,
            CreationType>(
              &H5MapContainer::createMap));
 }

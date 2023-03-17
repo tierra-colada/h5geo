@@ -45,7 +45,7 @@ public:
   virtual std::map<std::string, size_t> getComponents() override;
   virtual h5geo::Domain getDomain() override;
 
-  virtual HorizonParam getParam() override;
+  virtual H5HorizonParam getParam() override;
 
   virtual std::optional<h5gt::DataSet> getHorizonD() const override;
 

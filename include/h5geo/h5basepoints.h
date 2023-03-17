@@ -31,7 +31,7 @@ public:
   virtual h5geo::Domain getDomain() = 0;
 
   /// \brief Get parameters that were used to create current points
-  virtual PointsParam getParam() = 0;
+  virtual H5PointsParam getParam() = 0;
 
   /// \brief Get current points DataSet
   virtual std::optional<h5gt::DataSet> getPointsD() const = 0;

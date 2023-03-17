@@ -31,7 +31,7 @@ public:
 
   virtual std::string getRelativeName() override;
 
-  virtual LogCurveParam getParam() override;
+  virtual H5LogCurveParam getParam() override;
 
   virtual H5WellContainer* openWellContainer() override;
   virtual H5Well* openWell() override;

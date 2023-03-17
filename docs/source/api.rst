@@ -90,15 +90,15 @@ one of the following method:
 
    H5Well* H5WellContainer::createWell(
       std::string& name,
-      WellParam& p,
+      H5WellParam& p,
       h5geo::CreationType createFlag)
 
    H5Well* H5WellContainer::createWell(
       h5gt::Group group,
-      WellParam& p,
+      H5WellParam& p,
       h5geo::CreationType createFlag)
 
-``WellParam`` inherites ``BaseObjectParam`` and defines parameters like:
+``H5WellParam`` inherites ``H5BaseObjectParam`` and defines parameters like:
 spatial reference, length/temporal/angular/data units, null value, uwi, kelly bushing and 
 well head coordinates.
 
@@ -148,7 +148,7 @@ The preffered way to create objects:
          return -1;
       }
 
-      WellParam p;
+      H5WellParam p;
       p.headX = 444363;
       p.headY = 7425880;
       p.kb = 50.88;

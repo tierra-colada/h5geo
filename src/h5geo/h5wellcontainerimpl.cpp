@@ -29,7 +29,7 @@ H5Well* H5WellContainerImpl::openWell(
 
 H5Well* H5WellContainerImpl::createWell(
     std::string& name,
-    WellParam& p,
+    H5WellParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = createObject(
@@ -43,7 +43,7 @@ H5Well* H5WellContainerImpl::createWell(
 
 H5Well* H5WellContainerImpl::createWell(
     h5gt::Group group,
-    WellParam& p,
+    H5WellParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = createObject(

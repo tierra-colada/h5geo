@@ -18,12 +18,12 @@ void H5SeisContainer_py(
            h5gt::Group>(
              &H5SeisContainer::openSeis))
       .def("createSeis", py::overload_cast<
-           std::string&, SeisParam&,
+           std::string&, H5SeisParam&,
            CreationType>(
              &H5SeisContainer::createSeis))
       .def("createSeis", py::overload_cast<
            h5gt::Group,
-           SeisParam&,
+           H5SeisParam&,
            CreationType>(
              &H5SeisContainer::createSeis));
 }

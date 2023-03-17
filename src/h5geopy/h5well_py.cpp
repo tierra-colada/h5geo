@@ -21,10 +21,10 @@ void H5Well_py(
       .def("openDevCurve", py::overload_cast<h5gt::Group>(&H5Well::openDevCurve))
       .def("openWellTops", &H5Well::openWellTops)
 
-      .def("createLogCurve", py::overload_cast<std::string&, std::string&, LogCurveParam&, CreationType>(&H5Well::createLogCurve))
-      .def("createLogCurve", py::overload_cast<h5gt::Group, LogCurveParam&, CreationType>(&H5Well::createLogCurve))
-      .def("createDevCurve", py::overload_cast<std::string&, DevCurveParam&, CreationType>(&H5Well::createDevCurve))
-      .def("createDevCurve", py::overload_cast<h5gt::Group, DevCurveParam&, CreationType>(&H5Well::createDevCurve))
+      .def("createLogCurve", py::overload_cast<std::string&, std::string&, H5LogCurveParam&, CreationType>(&H5Well::createLogCurve))
+      .def("createLogCurve", py::overload_cast<h5gt::Group, H5LogCurveParam&, CreationType>(&H5Well::createLogCurve))
+      .def("createDevCurve", py::overload_cast<std::string&, H5DevCurveParam&, CreationType>(&H5Well::createDevCurve))
+      .def("createDevCurve", py::overload_cast<h5gt::Group, H5DevCurveParam&, CreationType>(&H5Well::createDevCurve))
       .def("createWellTops", &H5Well::createWellTops)
 
       .def("setHeadCoord", &H5Well::setHeadCoord,

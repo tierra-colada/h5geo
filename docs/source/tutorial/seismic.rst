@@ -29,7 +29,7 @@ data type (stack or prestack), number of traces, number of samples etc:
          return -1;
       }
 
-      SeisParam p;
+      H5SeisParam p;
       p.domain = h5geo::Domain::OWT;
       p.lengthUnits = "millimeter";
       p.temporalUnits = "millisecond";
@@ -255,7 +255,7 @@ For 2D stack data it simply shows  ``CDP`` coordinates of traces.
    }
 
    std::string horizonName = "boundary";
-   HorizonParam p_hrz;
+   H5HorizonParam p_hrz;
    p_hrz.components["X"] = 0;
    p_hrz.components["Y"] = 1;
    p_hrz.nPoints = 10;
@@ -336,7 +336,7 @@ In **h5geo** you are allowed to do this at ``H5Seis`` creation time:
 
 .. code:: c++
 
-   SeisParam p_mapped = p;
+   H5SeisParam p_mapped = p;
    p_mapped.mapSEGY = true;
    p_mapped.segyFiles = {"file1.sgy", "file2.sgy", "file3.sgy"};
 

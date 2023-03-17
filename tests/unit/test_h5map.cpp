@@ -72,7 +72,7 @@ public:
 
 public:
   H5MapCnt_ptr mapContainer1, mapContainer2;
-  MapParam p;
+  H5MapParam p;
   std::string FILE_NAME1, FILE_NAME2, MAP_NAME1,  MAP_NAME2;
 };
 

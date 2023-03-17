@@ -433,7 +433,7 @@ template <typename TBase>
 std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewPoints(h5gt::Group &group, void* p, h5geo::ObjectType pointsType)
 {
-  PointsParam param = *(static_cast<PointsParam*>(p));
+  H5PointsParam param = *(static_cast<H5PointsParam*>(p));
 
   // try-catch can't handle this situation
   if (param.nPoints < 1 ||
@@ -519,7 +519,7 @@ template <typename TBase>
 std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewHorizon(h5gt::Group &group, void* p)
 {
-  HorizonParam param = *(static_cast<HorizonParam*>(p));
+  H5HorizonParam param = *(static_cast<H5HorizonParam*>(p));
 
   // try-catch can't handle this situation
   if (param.nPoints < 1 ||
@@ -582,7 +582,7 @@ template <typename TBase>
 std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewMap(h5gt::Group &group, void* p)
 {
-  MapParam param = *(static_cast<MapParam*>(p));
+  H5MapParam param = *(static_cast<H5MapParam*>(p));
 
   // try-catch can't handle this situation
   if (param.xChunkSize < 1 ||
@@ -656,7 +656,7 @@ template <typename TBase>
 std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewVol(h5gt::Group &group, void* p)
 {
-  VolParam param = *(static_cast<VolParam*>(p));
+  H5VolParam param = *(static_cast<H5VolParam*>(p));
 
   // try-catch can't handle this situation
   if (param.xChunkSize < 1 ||
@@ -732,7 +732,7 @@ template <typename TBase>
 std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewWell(h5gt::Group &group, void* p)
 {
-  WellParam param = *(static_cast<WellParam *>(p));
+  H5WellParam param = *(static_cast<H5WellParam *>(p));
   std::vector<double> head_coord({param.headY, param.headX});
 
   try {
@@ -780,7 +780,7 @@ template <typename TBase>
 std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewLogCurve(h5gt::Group &group, void* p)
 {
-  LogCurveParam param = *(static_cast<LogCurveParam*>(p));
+  H5LogCurveParam param = *(static_cast<H5LogCurveParam*>(p));
 
   // try-catch can't handle this situation
   if (param.chunkSize < 1)
@@ -832,7 +832,7 @@ template <typename TBase>
 std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewDevCurve(h5gt::Group &group, void* p)
 {
-  DevCurveParam param = *(static_cast<DevCurveParam*>(p));
+  H5DevCurveParam param = *(static_cast<H5DevCurveParam*>(p));
 
   // try-catch can't handle this situation
   if (param.chunkSize < 1)
@@ -905,7 +905,7 @@ template <typename TBase>
 std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewSeis(h5gt::Group &group, void* p)
 {
-  SeisParam param = *(static_cast<SeisParam*>(p));
+  H5SeisParam param = *(static_cast<H5SeisParam*>(p));
   // try-catch can't handle this situation
   if (param.trcChunk < 1 ||
       param.stdChunk < 1)

@@ -7,12 +7,12 @@ import sys
 _Shape = typing.Tuple[int, ...]
 
 __all__ = [
-    "BaseObjectParam",
+    "H5BaseObjectParam",
     "CaseSensitivity",
     "ContainerType",
     "CreationType",
     "Delimiter",
-    "DevCurveParam",
+    "H5DevCurveParam",
     "DevDataType",
     "Domain",
     "H5Base",
@@ -27,20 +27,20 @@ __all__ = [
     "H5SeisContainer",
     "H5Well",
     "H5WellContainer",
-    "LogCurveParam",
+    "H5LogCurveParam",
     "LogDataType",
-    "MapParam",
+    "H5MapParam",
     "MdAzIncl2ALL",
     "MdAzIncl2MdXYTvd",
     "ObjectDeleter",
     "ObjectType",
     "Point3",
     "Point3Array",
-    "PointsParam",
+    "H5PointsParam",
     "Endian",
     "SegyFormat",
     "SeisDataType",
-    "SeisParam",
+    "H5SeisParam",
     "SurveyType",
     "TrajectoryFormat",
     "TvdDxDy2ALL",
@@ -58,7 +58,7 @@ __all__ = [
     "TextEncoding",
     "WellDataType",
     "WellName",
-    "WellParam",
+    "H5WellParam",
     "WellType",
     "createMapContainer",
     "createMapContainerByName",
@@ -109,7 +109,7 @@ __all__ = [
 ]
 
 
-class BaseObjectParam():
+class H5BaseObjectParam():
     def __init__(self) -> None: ...
     @property
     def angularUnits(self) -> str:
@@ -309,7 +309,7 @@ class Delimiter():
     TABULATION: h5geopy._h5geo.Delimiter # value = <Delimiter.TABULATION: 1>
     __members__: dict # value = {'TABULATION': <Delimiter.TABULATION: 1>, 'SEMICOLON': <Delimiter.SEMICOLON: 2>, 'DOT': <Delimiter.DOT: 4>, 'SPACE': <Delimiter.SPACE: 8>, 'COMMA': <Delimiter.COMMA: 16>}
     pass
-class DevCurveParam(BaseObjectParam):
+class H5DevCurveParam(H5BaseObjectParam):
     def __init__(self) -> None: ...
     @property
     def chunkSize(self) -> int:
@@ -432,9 +432,9 @@ class H5BaseContainer(H5Base):
     def __eq__(self, arg0: H5BaseContainer) -> bool: ...
     def __ne__(self, arg0: H5BaseContainer) -> bool: ...
     @typing.overload
-    def createPoints(self, arg0: h5gtpy._h5gt.Group, arg1: PointsParam, arg2: CreationType) -> H5Points3: ...
+    def createPoints(self, arg0: h5gtpy._h5gt.Group, arg1: H5PointsParam, arg2: CreationType) -> H5Points3: ...
     @typing.overload
-    def createPoints(self, arg0: str, arg1: PointsParam, arg2: CreationType) -> H5Points3: ...
+    def createPoints(self, arg0: str, arg1: H5PointsParam, arg2: CreationType) -> H5Points3: ...
     def getH5File(self) -> h5gtpy._h5gt.File: ...
     def getObjGroupList(self, arg0: ObjectType) -> typing.List[h5gtpy._h5gt.Group]: ...
     def getObjNameList(self, arg0: ObjectType) -> typing.List[str]: ...
@@ -529,9 +529,9 @@ class H5Map(H5BaseObject, H5Base):
     pass
 class H5MapContainer(H5BaseContainer, H5Base):
     @typing.overload
-    def createMap(self, arg0: h5gtpy._h5gt.Group, arg1: MapParam, arg2: CreationType) -> H5Map: ...
+    def createMap(self, arg0: h5gtpy._h5gt.Group, arg1: H5MapParam, arg2: CreationType) -> H5Map: ...
     @typing.overload
-    def createMap(self, arg0: str, arg1: MapParam, arg2: CreationType) -> H5Map: ...
+    def createMap(self, arg0: str, arg1: H5MapParam, arg2: CreationType) -> H5Map: ...
     @typing.overload
     def openMap(self, arg0: h5gtpy._h5gt.Group) -> H5Map: ...
     @typing.overload
@@ -681,9 +681,9 @@ class H5Seis(H5BaseObject, H5Base):
     pass
 class H5SeisContainer(H5BaseContainer, H5Base):
     @typing.overload
-    def createSeis(self, arg0: h5gtpy._h5gt.Group, arg1: SeisParam, arg2: CreationType) -> H5Seis: ...
+    def createSeis(self, arg0: h5gtpy._h5gt.Group, arg1: H5SeisParam, arg2: CreationType) -> H5Seis: ...
     @typing.overload
-    def createSeis(self, arg0: str, arg1: SeisParam, arg2: CreationType) -> H5Seis: ...
+    def createSeis(self, arg0: str, arg1: H5SeisParam, arg2: CreationType) -> H5Seis: ...
     @typing.overload
     def openSeis(self, arg0: h5gtpy._h5gt.Group) -> H5Seis: ...
     @typing.overload
@@ -691,13 +691,13 @@ class H5SeisContainer(H5BaseContainer, H5Base):
     pass
 class H5Well(H5BaseObject, H5Base):
     @typing.overload
-    def createDevCurve(self, arg0: h5gtpy._h5gt.Group, arg1: DevCurveParam, arg2: CreationType) -> H5DevCurve: ...
+    def createDevCurve(self, arg0: h5gtpy._h5gt.Group, arg1: H5DevCurveParam, arg2: CreationType) -> H5DevCurve: ...
     @typing.overload
-    def createDevCurve(self, arg0: str, arg1: DevCurveParam, arg2: CreationType) -> H5DevCurve: ...
+    def createDevCurve(self, arg0: str, arg1: H5DevCurveParam, arg2: CreationType) -> H5DevCurve: ...
     @typing.overload
-    def createLogCurve(self, arg0: h5gtpy._h5gt.Group, arg1: LogCurveParam, arg2: CreationType) -> H5LogCurve: ...
+    def createLogCurve(self, arg0: h5gtpy._h5gt.Group, arg1: H5LogCurveParam, arg2: CreationType) -> H5LogCurve: ...
     @typing.overload
-    def createLogCurve(self, arg0: str, arg1: str, arg2: LogCurveParam, arg3: CreationType) -> H5LogCurve: ...
+    def createLogCurve(self, arg0: str, arg1: str, arg2: H5LogCurveParam, arg3: CreationType) -> H5LogCurve: ...
     def openActiveDevCurve(self) -> H5DevCurve: ...
     def getActiveDevG(self) -> typing.Optional[h5gtpy._h5gt.Group]: ...
     def getDevCurveGroupList(self) -> typing.List[h5gtpy._h5gt.Group]: ...
@@ -726,16 +726,16 @@ class H5Well(H5BaseObject, H5Base):
     pass
 class H5WellContainer(H5BaseContainer, H5Base):
     @typing.overload
-    def createWell(self, arg0: h5gtpy._h5gt.Group, arg1: WellParam, arg2: CreationType) -> H5Well: ...
+    def createWell(self, arg0: h5gtpy._h5gt.Group, arg1: H5WellParam, arg2: CreationType) -> H5Well: ...
     @typing.overload
-    def createWell(self, arg0: str, arg1: WellParam, arg2: CreationType) -> H5Well: ...
+    def createWell(self, arg0: str, arg1: H5WellParam, arg2: CreationType) -> H5Well: ...
     @typing.overload
     def openWell(self, arg0: h5gtpy._h5gt.Group) -> H5Well: ...
     @typing.overload
     def openWell(self, arg0: str) -> H5Well: ...
     def openWellByUWI(self, arg0: str) -> H5Well: ...
     pass
-class LogCurveParam(BaseObjectParam):
+class H5LogCurveParam(H5BaseObjectParam):
     def __init__(self) -> None: ...
     @property
     def chunkSize(self) -> int:
@@ -780,7 +780,7 @@ class LogDataType():
     VAL: h5geopy._h5geo.LogDataType # value = <LogDataType.VAL: 2>
     __members__: dict # value = {'MD': <LogDataType.MD: 1>, 'VAL': <LogDataType.VAL: 2>}
     pass
-class MapParam(BaseObjectParam):
+class H5MapParam(H5BaseObjectParam):
     def __init__(self) -> None: ...
     @property
     def X0(self) -> float:
@@ -1001,7 +1001,7 @@ class Point3Array():
     @typing.overload
     def pop(self, i: int) -> Point3: ...
     pass
-class PointsParam(BaseObjectParam):
+class H5PointsParam(H5BaseObjectParam):
     def __init__(self) -> None: ...
     @property
     def chunkSize(self) -> int:
@@ -1133,7 +1133,7 @@ class SeisDataType():
     STACK: h5geopy._h5geo.SeisDataType # value = <SeisDataType.STACK: 1>
     __members__: dict # value = {'STACK': <SeisDataType.STACK: 1>, 'PRESTACK': <SeisDataType.PRESTACK: 2>}
     pass
-class SeisParam(BaseObjectParam):
+class H5SeisParam(H5BaseObjectParam):
     def __init__(self) -> None: ...
     @property
     def dataType(self) -> SeisDataType:
@@ -1400,7 +1400,7 @@ class WellName():
     FROM_LAS: h5geopy._h5geo.WellName # value = <WellName.FROM_LAS: 0>
     __members__: dict # value = {'FROM_LAS': <WellName.FROM_LAS: 0>, 'FROM_FILE_NAME': <WellName.FROM_FILE_NAME: 1>}
     pass
-class WellParam(BaseObjectParam):
+class H5WellParam(H5BaseObjectParam):
     def __init__(self) -> None: ...
     @property
     def headX(self) -> float:

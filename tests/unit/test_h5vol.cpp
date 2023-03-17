@@ -75,7 +75,7 @@ public:
 
 public:
   H5VolCnt_ptr volContainer1, volContainer2;
-  VolParam p;
+  H5VolParam p;
   std::string FILE_NAME1, FILE_NAME2, VOL_NAME1,  VOL_NAME2;
 };
 

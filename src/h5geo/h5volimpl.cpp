@@ -385,17 +385,17 @@ size_t H5VolImpl::getNZ()
   return dims[0];
 }
 
-VolParam H5VolImpl::getParam()
+H5VolParam H5VolImpl::getParam()
 {
-  VolParam p;
-  // BaseObjectParam
+  H5VolParam p;
+  // H5BaseObjectParam
   p.spatialReference = getSpatialReference();
   p.lengthUnits = getLengthUnits();
   p.temporalUnits = getTemporalUnits();
   p.angularUnits = getAngularUnits();
   p.dataUnits = getDataUnits();
 
-  // VolParam
+  // H5VolParam
   Eigen::VectorXd origin = getOrigin();
   if (origin.size() == 3){
     p.X0 = origin(0);
@@ -516,7 +516,7 @@ bool H5VolImpl::exportToSEGY(
     return false;
 
   size_t N = 64;
-  VolParam p = this->getParam();
+  H5VolParam p = this->getParam();
   if (p.yChunkSize > 0 && p.yChunkSize < 100)
     N = p.yChunkSize;
 

@@ -26,7 +26,7 @@ H5Vol* H5VolContainerImpl::openVol(
 
 H5Vol* H5VolContainerImpl::createVol(
     std::string& name,
-    VolParam& p,
+    H5VolParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = createObject(
@@ -40,7 +40,7 @@ H5Vol* H5VolContainerImpl::createVol(
 
 H5Vol* H5VolContainerImpl::createVol(
     h5gt::Group group,
-    VolParam& p,
+    H5VolParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = createObject(

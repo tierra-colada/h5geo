@@ -26,12 +26,12 @@ public:
 	/// \brief Create H5Well
   virtual H5Well* createWell(
       std::string& name,
-      WellParam& p,
+      H5WellParam& p,
       h5geo::CreationType createFlag) = 0;
 	/// \brief Create H5Well
   virtual H5Well* createWell(
       h5gt::Group group,
-      WellParam& p,
+      H5WellParam& p,
       h5geo::CreationType createFlag) = 0;
 
 	/// \brief Find and open H5Well using its `UWI`

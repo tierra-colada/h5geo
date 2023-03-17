@@ -18,12 +18,12 @@ void H5VolContainer_py(
            h5gt::Group>(
              &H5VolContainer::openVol))
       .def("createVol", py::overload_cast<
-           std::string&, VolParam&,
+           std::string&, H5VolParam&,
            CreationType>(
              &H5VolContainer::createVol))
       .def("createVol", py::overload_cast<
            h5gt::Group,
-           VolParam&,
+           H5VolParam&,
            CreationType>(
              &H5VolContainer::createVol));
 }

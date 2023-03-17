@@ -52,7 +52,7 @@ public:
 
   virtual std::string getRelativeName() override;
 
-  virtual DevCurveParam getParam() override;
+  virtual H5DevCurveParam getParam() override;
 
   virtual H5WellContainer* openWellContainer() override;
   virtual H5Well* openWell() override;

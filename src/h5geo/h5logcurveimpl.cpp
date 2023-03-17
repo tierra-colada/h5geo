@@ -130,10 +130,10 @@ std::string H5LogCurveImpl::getRelativeName(){
         h5geo::CaseSensitivity::CASE_INSENSITIVE);
 }
 
-LogCurveParam H5LogCurveImpl::getParam()
+H5LogCurveParam H5LogCurveImpl::getParam()
 {
-  LogCurveParam p;
-  // BaseObjectParam
+  H5LogCurveParam p;
+  // H5BaseObjectParam
   p.spatialReference = getSpatialReference();
   p.lengthUnits = getLengthUnits();
   p.temporalUnits = getTemporalUnits();

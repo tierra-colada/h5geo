@@ -130,7 +130,7 @@ public:
   virtual size_t getNY() = 0;
 
 	/// \brief Get parameters that were used to create current map
-  virtual MapParam getParam() = 0;
+  virtual H5MapParam getParam() = 0;
 
 	/// \brief Open H5MapContainer where current map resides
   virtual H5MapContainer* openMapContainer() const = 0;

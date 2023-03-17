@@ -25,22 +25,22 @@ public:
   virtual H5LogCurve* createLogCurve(
       std::string& logType,
       std::string& logName,
-      LogCurveParam& p,
+      H5LogCurveParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5LogCurve* createLogCurve(
       h5gt::Group group,
-      LogCurveParam& p,
+      H5LogCurveParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5DevCurve* createDevCurve(
       std::string& devName,
-      DevCurveParam& p,
+      H5DevCurveParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5DevCurve* createDevCurve(
       h5gt::Group group,
-      DevCurveParam& p,
+      H5DevCurveParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5WellTops* createWellTops(
-      WellTopsParam& p,
+      H5WellTopsParam& p,
       h5geo::CreationType createFlag) override;
 
   virtual bool setHeadCoord(
@@ -69,7 +69,7 @@ public:
   virtual size_t getDevCurveCount() override;
   virtual size_t getLogCurveCount() override;
 
-  virtual WellParam getParam() override;
+  virtual H5WellParam getParam() override;
 
   virtual H5WellContainer* openWellContainer() override;
 

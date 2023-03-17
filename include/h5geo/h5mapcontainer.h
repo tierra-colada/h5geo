@@ -26,12 +26,12 @@ public:
 	/// \brief Create H5Map
   virtual H5Map* createMap(
       std::string& name,
-      MapParam &p,
+      H5MapParam &p,
       h5geo::CreationType createFlag) = 0;
 	/// \brief Create H5Map
   virtual H5Map* createMap(
       h5gt::Group group,
-      MapParam &p,
+      H5MapParam &p,
       h5geo::CreationType createFlag) = 0;
 };
 

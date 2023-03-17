@@ -17,11 +17,11 @@ public:
       h5gt::Group group) override;
   virtual H5Well* createWell(
       std::string& name,
-      WellParam& p,
+      H5WellParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5Well* createWell(
       h5gt::Group group,
-      WellParam& p,
+      H5WellParam& p,
       h5geo::CreationType createFlag) override;
 
   virtual H5Well* openWellByUWI(

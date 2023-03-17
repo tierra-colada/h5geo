@@ -51,11 +51,11 @@ class H5Points4;
 class H5WellTops;
 class H5Horizon;
 
-/// \struct BaseObjectParam
+/// \struct H5BaseObjectParam
 /// \brief Base class for object parameters
 ///
 /// Parameters are needed when creating geo-objects.
-struct BaseObjectParam{
+struct H5BaseObjectParam{
   std::string spatialReference; ///< usually in the form `authName:code` given by 'proj.db' (probably using `name` will also work)
   std::string lengthUnits; ///< all geo-object's `lengthUnits` data must follow it (if any)
   std::string temporalUnits; ///< all geo-object's `temporalUnits` data must follow it (if any)
@@ -64,38 +64,38 @@ struct BaseObjectParam{
   double nullValue = std::nan("nan"); ///< usually used for missed values
 };
 
-/// \struct PointsParam
+/// \struct H5PointsParam
 /// \brief Common class for creating H5Points1, H5Points2, H5Points3, H5Points4
 ///
 /// Points parameters are needed when creating any Points geo-object.
-struct PointsParam : public BaseObjectParam{
+struct H5PointsParam : public H5BaseObjectParam{
   h5geo::Domain domain;	///< time or depth (TWT, TVD etc)
   size_t nPoints; ///< number of points
   hsize_t chunkSize = 10; ///< see HDF5 chunking
 };
 
-/// \struct WellTopsParam
+/// \struct H5WellTopsParam
 /// \brief Class for creating H5WellTops
 ///
 /// WellTops parameters are needed when creating any WellTops geo-object.
-struct WellTopsParam : public PointsParam{};
+struct H5WellTopsParam : public H5PointsParam{};
 
-/// \struct HorizonParam
+/// \struct H5HorizonParam
 /// \brief Class for creating H5Horizon
 ///
 /// Horizon parameters are needed when creating any H5Horizon geo-object.
-struct HorizonParam : public BaseObjectParam{
+struct H5HorizonParam : public H5BaseObjectParam{
   h5geo::Domain domain;	///< time or depth (TWT, TVD etc)
   size_t nPoints; ///< number of points (columns within HDF5 DataSet)
   std::map<std::string, size_t> components; ///< component name and corresponding HDF5 row number
   hsize_t pointsChunkSize = 10; ///< see HDF5 chunking
 };
 
-/// \struct MapParam
+/// \struct H5MapParam
 /// \brief Class for creating H5Map
 ///
 /// Map parameters are needed when creating any Map geo-object.
-struct MapParam : public BaseObjectParam{
+struct H5MapParam : public H5BaseObjectParam{
   double X0; ///< X-coordinate of origin (upper-left corner of column-major Eigen matrix)
   double Y0; ///< Y-coordinate of origin (upper-left corner of column-major Eigen matrix)
   double X1; ///< X-coordinate of first point (upper-right corner of column-major Eigen matrix)
@@ -109,11 +109,11 @@ struct MapParam : public BaseObjectParam{
   hsize_t yChunkSize = 10; ///< see HDF5 chunking
 };
 
-/// \struct VolParam
+/// \struct H5VolParam
 /// \brief Class for creating H5Vol
 ///
 /// Vol parameters are needed when creating any Volume geo-object.
-struct VolParam : public BaseObjectParam{
+struct H5VolParam : public H5BaseObjectParam{
   double X0; ///< X-coordinate of origin
   double Y0; ///< Y-coordinate of origin
   double Z0; ///< Z-coordinate of origin
@@ -131,38 +131,38 @@ struct VolParam : public BaseObjectParam{
   unsigned compression_level = 6; ///< see HDF5 chunking and deflate
 };
 
-/// \struct WellParam
+/// \struct H5WellParam
 /// \brief Class for creating H5Well
 ///
 /// Well parameters are needed when creating any Well geo-object.
-struct WellParam : public BaseObjectParam{
+struct H5WellParam : public H5BaseObjectParam{
   double headX; ///< well head X-coordinate
   double headY; ///< well head Y-coordinate
   double kb = 0; ///< kelly bushing
   std::string uwi; /// Unique Well Identifier
 };
 
-/// \struct DevCurveParam
+/// \struct H5DevCurveParam
 /// \brief Class for creating H5DevCurve
 ///
 /// DevCurve parameters are needed when creating any DevCurve geo-object.
-struct DevCurveParam : public BaseObjectParam{
+struct H5DevCurveParam : public H5BaseObjectParam{
   hsize_t chunkSize = 10; ///< see HDF5 chunking
 };
 
-/// \struct LogCurveParam
+/// \struct H5LogCurveParam
 /// \brief Class for creating H5LogCurve
 ///
 /// LogCurve parameters are needed when creating any LogCurve geo-object.
-struct LogCurveParam : public BaseObjectParam{
+struct H5LogCurveParam : public H5BaseObjectParam{
   hsize_t chunkSize = 10; ///< see HDF5 chunking
 };
 
-/// \struct SeisParam
+/// \struct H5SeisParam
 /// \brief Class for creating H5Seis
 ///
 /// Seis parameters are needed when creating any Seis geo-object.
-struct SeisParam : public BaseObjectParam{
+struct H5SeisParam : public H5BaseObjectParam{
   h5geo::Domain domain; ///< time or depth (TWT, TVD etc)
   h5geo::SeisDataType dataType; ///< STACK or PRESTACK
   h5geo::SurveyType surveyType; ///< TWO_D or THREE_D

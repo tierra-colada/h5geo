@@ -115,7 +115,7 @@ H5WellTops* H5WellImpl::openWellTops()
 H5LogCurve* H5WellImpl::createLogCurve(
     std::string& logType,
     std::string& logName,
-    LogCurveParam& p,
+    H5LogCurveParam& p,
     h5geo::CreationType createFlag)
 {
   auto logG = getLogG();
@@ -155,7 +155,7 @@ H5LogCurve* H5WellImpl::createLogCurve(
 
 H5LogCurve* H5WellImpl::createLogCurve(
     h5gt::Group group,
-    LogCurveParam& p,
+    H5LogCurveParam& p,
     h5geo::CreationType createFlag)
 {
   auto logG = getLogG();
@@ -176,7 +176,7 @@ H5LogCurve* H5WellImpl::createLogCurve(
 
 H5DevCurve* H5WellImpl::createDevCurve(
     std::string& devName,
-    DevCurveParam& p,
+    H5DevCurveParam& p,
     h5geo::CreationType createFlag)
 {
   auto devG = getDevG();
@@ -200,7 +200,7 @@ H5DevCurve* H5WellImpl::createDevCurve(
 
 H5DevCurve* H5WellImpl::createDevCurve(
     h5gt::Group group,
-    DevCurveParam& p,
+    H5DevCurveParam& p,
     h5geo::CreationType createFlag)
 {
   auto devG = getDevG();
@@ -220,7 +220,7 @@ H5DevCurve* H5WellImpl::createDevCurve(
 }
 
 H5WellTops* H5WellImpl::createWellTops(
-    WellTopsParam& p,
+    H5WellTopsParam& p,
     h5geo::CreationType createFlag)
 {
   std::string name = std::string{h5geo::WELLTOPS};
@@ -434,16 +434,16 @@ size_t H5WellImpl::getLogCurveCount(){
   return getChildCount(logG.value(), h5geo::ObjectType::LOGCURVE, true);
 }
 
-WellParam H5WellImpl::getParam(){
-  WellParam p;
-  // BaseObjectParam
+H5WellParam H5WellImpl::getParam(){
+  H5WellParam p;
+  // H5BaseObjectParam
   p.spatialReference = getSpatialReference();
   p.lengthUnits = getLengthUnits();
   p.temporalUnits = getTemporalUnits();
   p.angularUnits = getAngularUnits();
   p.dataUnits = getDataUnits();
 
-  // WellParam
+  // H5WellParam
   Eigen::VectorXd headXY = getHeadCoord();
   if (headXY.size() == 2){
     p.headX = headXY(0);

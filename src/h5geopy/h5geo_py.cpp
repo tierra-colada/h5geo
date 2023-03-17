@@ -71,16 +71,16 @@ PYBIND11_MODULE(_h5geo, m) {
   auto pyObjectDeleter = py::class_<ObjectDeleter>(m, "ObjectDeleter");
 
   // BASE
-  auto pyBaseObjectParam = py::class_<BaseObjectParam>(m, "BaseObjectParam");
-  auto pyPointsParam = py::class_<PointsParam, BaseObjectParam>(m, "PointsParam");
-  auto pyWellTopsParam = py::class_<WellTopsParam, PointsParam, BaseObjectParam>(m, "WellTopsParam");
-  auto pyHorizonParam = py::class_<HorizonParam, BaseObjectParam>(m, "HorizonParam");
-  auto pyMapParam = py::class_<MapParam, BaseObjectParam>(m, "MapParam");
-  auto pyWellParam = py::class_<WellParam, BaseObjectParam>(m, "WellParam");
-  auto pyDevCurveParam = py::class_<DevCurveParam, BaseObjectParam>(m, "DevCurveParam");
-  auto pyLogCurveParam = py::class_<LogCurveParam, BaseObjectParam>(m, "LogCurveParam");
-  auto pySeisParam = py::class_<SeisParam, BaseObjectParam>(m, "SeisParam");
-  auto pyVolParam = py::class_<VolParam, BaseObjectParam>(m, "VolParam");
+  auto pyBaseObjectParam = py::class_<H5BaseObjectParam>(m, "H5BaseObjectParam");
+  auto pyPointsParam = py::class_<H5PointsParam, H5BaseObjectParam>(m, "H5PointsParam");
+  auto pyWellTopsParam = py::class_<H5WellTopsParam, H5PointsParam, H5BaseObjectParam>(m, "H5WellTopsParam");
+  auto pyHorizonParam = py::class_<H5HorizonParam, H5BaseObjectParam>(m, "H5HorizonParam");
+  auto pyMapParam = py::class_<H5MapParam, H5BaseObjectParam>(m, "H5MapParam");
+  auto pyWellParam = py::class_<H5WellParam, H5BaseObjectParam>(m, "H5WellParam");
+  auto pyDevCurveParam = py::class_<H5DevCurveParam, H5BaseObjectParam>(m, "H5DevCurveParam");
+  auto pyLogCurveParam = py::class_<H5LogCurveParam, H5BaseObjectParam>(m, "H5LogCurveParam");
+  auto pySeisParam = py::class_<H5SeisParam, H5BaseObjectParam>(m, "H5SeisParam");
+  auto pyVolParam = py::class_<H5VolParam, H5BaseObjectParam>(m, "H5VolParam");
   auto pyBase = py::class_<
       H5Base,
       H5BaseImpl<H5Base>,

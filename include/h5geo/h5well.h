@@ -52,28 +52,28 @@ public:
   virtual H5LogCurve* createLogCurve(
       std::string& logType,
       std::string& logName,
-      LogCurveParam& p,
+      H5LogCurveParam& p,
       h5geo::CreationType createFlag) = 0;
 	/// \brief Create H5LogCurve
   virtual H5LogCurve* createLogCurve(
       h5gt::Group group,
-      LogCurveParam& p,
+      H5LogCurveParam& p,
       h5geo::CreationType createFlag) = 0;
 	/// \brief Create H5DevCurve
   virtual H5DevCurve* createDevCurve(
       std::string& devName,
-      DevCurveParam& p,
+      H5DevCurveParam& p,
       h5geo::CreationType createFlag) = 0;
 	/// \brief Create H5DevCurve
   virtual H5DevCurve* createDevCurve(
       h5gt::Group group,
-      DevCurveParam& p,
+      H5DevCurveParam& p,
       h5geo::CreationType createFlag) = 0;
 	/// \brief Create H5WellTops
 	///
 	/// Created object uses `WELLTOPS` as name
   virtual H5WellTops* createWellTops(
-      WellTopsParam& p,
+      H5WellTopsParam& p,
       h5geo::CreationType createFlag) = 0;
 
 	/// \brief Set `XY` well head coordinates
@@ -127,7 +127,7 @@ public:
   virtual size_t getLogCurveCount() = 0;
 
 	/// \brief Get parameters that were used to create current well
-  virtual WellParam getParam() = 0;
+  virtual H5WellParam getParam() = 0;
 
 	/// \brief Open H5WellContainer where current well resides
   virtual H5WellContainer* openWellContainer() = 0;

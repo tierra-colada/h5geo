@@ -17,11 +17,11 @@ public:
       h5gt::Group group) override;
   virtual H5Vol* createVol(
       std::string& name,
-      VolParam& p,
+      H5VolParam& p,
       h5geo::CreationType createFlag) override;
   virtual H5Vol* createVol(
       h5gt::Group group,
-      VolParam& p,
+      H5VolParam& p,
       h5geo::CreationType createFlag) override;
 
   //----------- FRIEND CLASSES -----------

@@ -108,19 +108,19 @@ public:
 
 public:
   H5WellCnt_ptr wellContainer;
-  WellParam wellParam;
+  H5WellParam wellParam;
   std::string FILE_NAME, WELL_NAME, WELL_NAME2;
 
-  DevCurveParam devCurveParam;
+  H5DevCurveParam devCurveParam;
   std::string DEV_NAME;
 
-  LogCurveParam logCurveParam;
+  H5LogCurveParam logCurveParam;
   std::string LOG_TYPE, LOG_NAME;
 
   Eigen::MatrixXd MD_X_Y_Z_TVD_DX_DY_AZ_INCL;
   Eigen::MatrixXd LOG_MD_GR;
 
-  PointsParam pointsParam;
+  H5PointsParam pointsParam;
   std::string POINTS_NAME;
 };
 
@@ -701,7 +701,7 @@ TEST_F(H5WellFixture, wellTops){
           WELL_NAME, wellParam, h5geo::CreationType::CREATE_OR_OVERWRITE));
   ASSERT_TRUE(well != nullptr);
 
-  WellTopsParam p;
+  H5WellTopsParam p;
   p.nPoints = 10;
   p.chunkSize = 10;
   p.lengthUnits = "m";

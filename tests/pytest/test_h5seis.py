@@ -38,7 +38,7 @@ class test_h5seis(unittest.TestCase):
         h5File = self.seisContainer.getH5File()
 
     seisContainer = None
-    p = h5geo.SeisParam()
+    p = h5geo.H5SeisParam()
     FILE_NAME = None
     SEIS_NAME1 = None
     SEIS_NAME2 = None

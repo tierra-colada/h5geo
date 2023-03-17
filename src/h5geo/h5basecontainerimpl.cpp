@@ -106,7 +106,7 @@ H5Horizon* H5BaseContainerImpl<TBase>::openHorizon(
 template <typename TBase>
 H5Points1* H5BaseContainerImpl<TBase>::createPoints1(
     std::string& name,
-    PointsParam& p,
+    H5PointsParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(
@@ -121,7 +121,7 @@ H5Points1* H5BaseContainerImpl<TBase>::createPoints1(
 template <typename TBase>
 H5Points1* H5BaseContainerImpl<TBase>::createPoints1(
     h5gt::Group group,
-    PointsParam& p,
+    H5PointsParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(
@@ -136,7 +136,7 @@ H5Points1* H5BaseContainerImpl<TBase>::createPoints1(
 template <typename TBase>
 H5Points2* H5BaseContainerImpl<TBase>::createPoints2(
     std::string& name,
-    PointsParam& p,
+    H5PointsParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(
@@ -151,7 +151,7 @@ H5Points2* H5BaseContainerImpl<TBase>::createPoints2(
 template <typename TBase>
 H5Points2* H5BaseContainerImpl<TBase>::createPoints2(
     h5gt::Group group,
-    PointsParam& p,
+    H5PointsParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(
@@ -166,7 +166,7 @@ H5Points2* H5BaseContainerImpl<TBase>::createPoints2(
 template <typename TBase>
 H5Points3* H5BaseContainerImpl<TBase>::createPoints3(
     std::string& name,
-    PointsParam& p,
+    H5PointsParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(
@@ -181,7 +181,7 @@ H5Points3* H5BaseContainerImpl<TBase>::createPoints3(
 template <typename TBase>
 H5Points3* H5BaseContainerImpl<TBase>::createPoints3(
     h5gt::Group group,
-    PointsParam& p,
+    H5PointsParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(
@@ -196,7 +196,7 @@ H5Points3* H5BaseContainerImpl<TBase>::createPoints3(
 template <typename TBase>
 H5Points4* H5BaseContainerImpl<TBase>::createPoints4(
     std::string& name,
-    PointsParam& p,
+    H5PointsParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(
@@ -211,7 +211,7 @@ H5Points4* H5BaseContainerImpl<TBase>::createPoints4(
 template <typename TBase>
 H5Points4* H5BaseContainerImpl<TBase>::createPoints4(
     h5gt::Group group,
-    PointsParam& p,
+    H5PointsParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(
@@ -226,7 +226,7 @@ H5Points4* H5BaseContainerImpl<TBase>::createPoints4(
 template <typename TBase>
 H5Horizon* H5BaseContainerImpl<TBase>::createHorizon(
     std::string& name,
-    HorizonParam& p,
+    H5HorizonParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(
@@ -241,7 +241,7 @@ H5Horizon* H5BaseContainerImpl<TBase>::createHorizon(
 template <typename TBase>
 H5Horizon* H5BaseContainerImpl<TBase>::createHorizon(
     h5gt::Group group,
-    HorizonParam& p,
+    H5HorizonParam& p,
     h5geo::CreationType createFlag)
 {
   auto opt = H5BaseImpl<TBase>::createObject(

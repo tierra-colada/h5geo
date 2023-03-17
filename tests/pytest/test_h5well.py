@@ -27,19 +27,19 @@ class test_h5well(unittest.TestCase):
 
         trig = True
 
-        self.wellParam = h5geo.WellParam()
+        self.wellParam = h5geo.H5WellParam()
         self.wellParam.headX = 444363
         self.wellParam.headY = 7425880
         self.wellParam.kb = 50.88
         self.wellParam.uwi = 'my_uwi'
         self.wellParam.lengthUnits = 'meter'
 
-        self.devCurveParam = h5geo.DevCurveParam()
+        self.devCurveParam = h5geo.H5DevCurveParam()
         self.devCurveParam.lengthUnits = 'meter'
         self.devCurveParam.temporalUnits = 'msec'
         self.devCurveParam.angularUnits = 'degree'
 
-        self.logCurveParam = h5geo.LogCurveParam()
+        self.logCurveParam = h5geo.H5LogCurveParam()
         self.logCurveParam.lengthUnits = 'cm'
         self.logCurveParam.dataUnits = 'kg/m2'
 

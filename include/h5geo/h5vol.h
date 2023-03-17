@@ -120,7 +120,7 @@ public:
   virtual size_t getNZ() = 0;
 
 	/// \brief Get parameters that were used to create current map
-  virtual VolParam getParam() = 0;
+  virtual H5VolParam getParam() = 0;
 
 	/// \brief Open H5VolContainer where current vol resides
   virtual H5VolContainer* openVolContainer() const = 0;

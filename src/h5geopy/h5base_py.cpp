@@ -2,109 +2,109 @@
 
 namespace h5geopy {
 
-void BaseObjectParam_py(py::class_<BaseObjectParam> &py_obj){
+void BaseObjectParam_py(py::class_<H5BaseObjectParam> &py_obj){
   py_obj
       .def(py::init<>())
-      .def_readwrite("spatialReference", &MapParam::spatialReference)
-      .def_readwrite("lengthUnits", &MapParam::lengthUnits)
-      .def_readwrite("temporalUnits", &SeisParam::temporalUnits)
-      .def_readwrite("angularUnits", &SeisParam::angularUnits)
-      .def_readwrite("dataUnits", &SeisParam::dataUnits)
-      .def_readwrite("nullValue", &SeisParam::nullValue);
+      .def_readwrite("spatialReference", &H5MapParam::spatialReference)
+      .def_readwrite("lengthUnits", &H5MapParam::lengthUnits)
+      .def_readwrite("temporalUnits", &H5SeisParam::temporalUnits)
+      .def_readwrite("angularUnits", &H5SeisParam::angularUnits)
+      .def_readwrite("dataUnits", &H5SeisParam::dataUnits)
+      .def_readwrite("nullValue", &H5SeisParam::nullValue);
 }
 
-void PointsParam_py(py::class_<PointsParam, BaseObjectParam> &py_obj){
+void PointsParam_py(py::class_<H5PointsParam, H5BaseObjectParam> &py_obj){
   py_obj
       .def(py::init<>())
-      .def_readwrite("domain", &PointsParam::domain)
-      .def_readwrite("nPoints", &PointsParam::nPoints)
-      .def_readwrite("chunkSize", &PointsParam::chunkSize);
+      .def_readwrite("domain", &H5PointsParam::domain)
+      .def_readwrite("nPoints", &H5PointsParam::nPoints)
+      .def_readwrite("chunkSize", &H5PointsParam::chunkSize);
 }
 
-void WellTopsParam_py(py::class_<WellTopsParam, PointsParam, BaseObjectParam> &py_obj){
+void WellTopsParam_py(py::class_<H5WellTopsParam, H5PointsParam, H5BaseObjectParam> &py_obj){
   py_obj
       .def(py::init<>());
 }
 
-void HorizonParam_py(py::class_<HorizonParam, BaseObjectParam> &py_obj){
+void HorizonParam_py(py::class_<H5HorizonParam, H5BaseObjectParam> &py_obj){
   py_obj
       .def(py::init<>())
-      .def_readwrite("domain", &HorizonParam::domain)
-      .def_readwrite("nPoints", &HorizonParam::nPoints)
-      .def_readwrite("components", &HorizonParam::components)
-      .def_readwrite("chunkSize", &HorizonParam::pointsChunkSize);
+      .def_readwrite("domain", &H5HorizonParam::domain)
+      .def_readwrite("nPoints", &H5HorizonParam::nPoints)
+      .def_readwrite("components", &H5HorizonParam::components)
+      .def_readwrite("chunkSize", &H5HorizonParam::pointsChunkSize);
 }
 
-void MapParam_py(py::class_<MapParam, BaseObjectParam> &py_obj){
+void MapParam_py(py::class_<H5MapParam, H5BaseObjectParam> &py_obj){
   py_obj
       .def(py::init<>())
-      .def_readwrite("X0", &MapParam::X0)
-      .def_readwrite("Y0", &MapParam::Y0)
-      .def_readwrite("X1", &MapParam::X1)
-      .def_readwrite("Y1", &MapParam::Y1)
-      .def_readwrite("X2", &MapParam::X2)
-      .def_readwrite("Y2", &MapParam::Y2)
-      .def_readwrite("nX", &MapParam::nX)
-      .def_readwrite("nY", &MapParam::nY)
-      .def_readwrite("domain", &MapParam::domain)
-      .def_readwrite("xChunkSize", &MapParam::xChunkSize)
-      .def_readwrite("yChunkSize", &MapParam::yChunkSize);
+      .def_readwrite("X0", &H5MapParam::X0)
+      .def_readwrite("Y0", &H5MapParam::Y0)
+      .def_readwrite("X1", &H5MapParam::X1)
+      .def_readwrite("Y1", &H5MapParam::Y1)
+      .def_readwrite("X2", &H5MapParam::X2)
+      .def_readwrite("Y2", &H5MapParam::Y2)
+      .def_readwrite("nX", &H5MapParam::nX)
+      .def_readwrite("nY", &H5MapParam::nY)
+      .def_readwrite("domain", &H5MapParam::domain)
+      .def_readwrite("xChunkSize", &H5MapParam::xChunkSize)
+      .def_readwrite("yChunkSize", &H5MapParam::yChunkSize);
 }
 
-void WellParam_py(py::class_<WellParam, BaseObjectParam> &py_obj){
+void WellParam_py(py::class_<H5WellParam, H5BaseObjectParam> &py_obj){
   py_obj
       .def(py::init<>())
-      .def_readwrite("headX", &WellParam::headX)
-      .def_readwrite("headY", &WellParam::headY)
-      .def_readwrite("kb", &WellParam::kb)
-      .def_readwrite("uwi", &WellParam::uwi);
+      .def_readwrite("headX", &H5WellParam::headX)
+      .def_readwrite("headY", &H5WellParam::headY)
+      .def_readwrite("kb", &H5WellParam::kb)
+      .def_readwrite("uwi", &H5WellParam::uwi);
 }
 
-void DevCurveParam_py(py::class_<DevCurveParam, BaseObjectParam> &py_obj){
+void DevCurveParam_py(py::class_<H5DevCurveParam, H5BaseObjectParam> &py_obj){
   py_obj
       .def(py::init<>())
-      .def_readwrite("chunkSize", &DevCurveParam::chunkSize);
+      .def_readwrite("chunkSize", &H5DevCurveParam::chunkSize);
 }
 
-void LogCurveParam_py(py::class_<LogCurveParam, BaseObjectParam> &py_obj){
+void LogCurveParam_py(py::class_<H5LogCurveParam, H5BaseObjectParam> &py_obj){
   py_obj
       .def(py::init<>())
-      .def_readwrite("chunkSize", &LogCurveParam::chunkSize);
+      .def_readwrite("chunkSize", &H5LogCurveParam::chunkSize);
 }
 
-void SeisParam_py(py::class_<SeisParam, BaseObjectParam> &py_obj){
+void SeisParam_py(py::class_<H5SeisParam, H5BaseObjectParam> &py_obj){
   py_obj
       .def(py::init<>())
-      .def_readwrite("domain", &SeisParam::domain)
-      .def_readwrite("dataType", &SeisParam::dataType)
-      .def_readwrite("surveyType", &SeisParam::surveyType)
-      .def_readwrite("nTrc", &SeisParam::nTrc)
-      .def_readwrite("nSamp", &SeisParam::nSamp)
-      .def_readwrite("srd", &SeisParam::srd)
-      .def_readwrite("trcChunk", &SeisParam::trcChunk)
-      .def_readwrite("stdChunk", &SeisParam::stdChunk)
-      .def_readwrite("mapSEGY", &SeisParam::mapSEGY)
-      .def_readwrite("segyFiles", &SeisParam::segyFiles);
+      .def_readwrite("domain", &H5SeisParam::domain)
+      .def_readwrite("dataType", &H5SeisParam::dataType)
+      .def_readwrite("surveyType", &H5SeisParam::surveyType)
+      .def_readwrite("nTrc", &H5SeisParam::nTrc)
+      .def_readwrite("nSamp", &H5SeisParam::nSamp)
+      .def_readwrite("srd", &H5SeisParam::srd)
+      .def_readwrite("trcChunk", &H5SeisParam::trcChunk)
+      .def_readwrite("stdChunk", &H5SeisParam::stdChunk)
+      .def_readwrite("mapSEGY", &H5SeisParam::mapSEGY)
+      .def_readwrite("segyFiles", &H5SeisParam::segyFiles);
 }
 
-void VolParam_py(py::class_<VolParam, BaseObjectParam> &py_obj){
+void VolParam_py(py::class_<H5VolParam, H5BaseObjectParam> &py_obj){
   py_obj
       .def(py::init<>())
-      .def_readwrite("X0", &VolParam::X0)
-      .def_readwrite("Y0", &VolParam::Y0)
-      .def_readwrite("Z0", &VolParam::Z0)
-      .def_readwrite("dX", &VolParam::dX)
-      .def_readwrite("dY", &VolParam::dY)
-      .def_readwrite("dZ", &VolParam::dZ)
-      .def_readwrite("nX", &VolParam::nX)
-      .def_readwrite("nY", &VolParam::nY)
-      .def_readwrite("nZ", &VolParam::nZ)
-      .def_readwrite("orientation", &VolParam::orientation)
-      .def_readwrite("domain", &VolParam::domain)
-      .def_readwrite("xChunkSize", &VolParam::xChunkSize)
-      .def_readwrite("yChunkSize", &VolParam::yChunkSize)
-      .def_readwrite("zChunkSize", &VolParam::zChunkSize)
-      .def_readwrite("compression_level", &VolParam::compression_level);
+      .def_readwrite("X0", &H5VolParam::X0)
+      .def_readwrite("Y0", &H5VolParam::Y0)
+      .def_readwrite("Z0", &H5VolParam::Z0)
+      .def_readwrite("dX", &H5VolParam::dX)
+      .def_readwrite("dY", &H5VolParam::dY)
+      .def_readwrite("dZ", &H5VolParam::dZ)
+      .def_readwrite("nX", &H5VolParam::nX)
+      .def_readwrite("nY", &H5VolParam::nY)
+      .def_readwrite("nZ", &H5VolParam::nZ)
+      .def_readwrite("orientation", &H5VolParam::orientation)
+      .def_readwrite("domain", &H5VolParam::domain)
+      .def_readwrite("xChunkSize", &H5VolParam::xChunkSize)
+      .def_readwrite("yChunkSize", &H5VolParam::yChunkSize)
+      .def_readwrite("zChunkSize", &H5VolParam::zChunkSize)
+      .def_readwrite("compression_level", &H5VolParam::compression_level);
 }
 
 void ObjectDeleter_py(py::class_<ObjectDeleter> &py_obj){

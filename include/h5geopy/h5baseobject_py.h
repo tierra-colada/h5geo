@@ -31,44 +31,44 @@ struct H5BaseObject_py
 
         .def("createPoints1", py::overload_cast<
              std::string&,
-             PointsParam&,
+             H5PointsParam&,
              h5geo::CreationType>(&H5BaseObject::createPoints3))
         .def("createPoints1", py::overload_cast<
              h5gt::Group,
-             PointsParam&,
+             H5PointsParam&,
              h5geo::CreationType>(&H5BaseObject::createPoints3))
         .def("createPoints2", py::overload_cast<
              std::string&,
-             PointsParam&,
+             H5PointsParam&,
              h5geo::CreationType>(&H5BaseObject::createPoints3))
         .def("createPoints2", py::overload_cast<
              h5gt::Group,
-             PointsParam&,
+             H5PointsParam&,
              h5geo::CreationType>(&H5BaseObject::createPoints3))
         .def("createPoints3", py::overload_cast<
              std::string&,
-             PointsParam&,
+             H5PointsParam&,
              h5geo::CreationType>(&H5BaseObject::createPoints3))
         .def("createPoints3", py::overload_cast<
              h5gt::Group,
-             PointsParam&,
+             H5PointsParam&,
              h5geo::CreationType>(&H5BaseObject::createPoints3))
         .def("createPoints4", py::overload_cast<
              std::string&,
-             PointsParam&,
+             H5PointsParam&,
              h5geo::CreationType>(&H5BaseObject::createPoints3))
         .def("createPoints4", py::overload_cast<
              h5gt::Group,
-             PointsParam&,
+             H5PointsParam&,
              h5geo::CreationType>(&H5BaseObject::createPoints3))
 
         .def("createHorizon", py::overload_cast<
              std::string&,
-             HorizonParam&,
+             H5HorizonParam&,
              h5geo::CreationType>(&H5BaseObject::createHorizon))
         .def("createHorizon", py::overload_cast<
              h5gt::Group,
-             HorizonParam&,
+             H5HorizonParam&,
              h5geo::CreationType>(&H5BaseObject::createHorizon))
 
 

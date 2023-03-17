@@ -70,7 +70,7 @@ public:
 
 public:
   H5SeisCnt_ptr seisContainer, seisContainerBig;
-  SeisParam p;
+  H5SeisParam p;
   std::string FILE_NAME, FILE_NAME_BIG, SEIS_NAME1, SEIS_NAME2, SEIS_NAME3;
 };
 
@@ -418,7 +418,7 @@ TEST_F(H5SeisFixture, boundary){
   ASSERT_TRUE(boundary.size() > 0);
 
   std::string horizonName = "boundary";
-  HorizonParam p_hrz;
+  H5HorizonParam p_hrz;
   p_hrz.components["X"] = 0;
   p_hrz.components["Y"] = 1;
   p_hrz.nPoints = 10;
