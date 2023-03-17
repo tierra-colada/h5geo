@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['devcurveparam_0',['DevCurveParam',['../struct_dev_curve_param.html',1,'']]]
+  ['enablebitmaskoperators_0',['EnableBitMaskOperators',['../structh5geo_1_1_enable_bit_mask_operators.html',1,'h5geo']]]
 ];

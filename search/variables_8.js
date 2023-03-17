@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['orientation_0',['orientation',['../struct_vol_param.html#ac302f61d95972d0b85d808b1ff1e7cc4',1,'VolParam']]]
+  ['orientation_0',['orientation',['../struct_h5_vol_param.html#ace9cd2d7c1fce9696975ffccc0c62076',1,'H5VolParam']]]
 ];

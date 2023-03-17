@@ -294,7 +294,7 @@ $(function() {
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>      <span class="keyword">const</span> std::string&amp; unitsFrom = <span class="stringliteral">&quot;&quot;</span>,</div>
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>      <span class="keyword">const</span> std::string&amp; unitsTo = <span class="stringliteral">&quot;&quot;</span>) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>  <span class="keyword">virtual</span> <a class="code hl_struct" href="struct_seis_param.html">SeisParam</a> getParam() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>  <span class="keyword">virtual</span> <a class="code hl_struct" href="struct_h5_seis_param.html">H5SeisParam</a> getParam() <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> checkTraceLimits(</div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>      <span class="keyword">const</span> <span class="keywordtype">size_t</span>&amp; fromTrc, <span class="keywordtype">size_t</span>&amp; nTrc) <span class="keyword">override</span>;</div>
@@ -407,7 +407,7 @@ $(function() {
 <div class="ttc" id="aclass_h5_seis_impl_html_a660478149f90d529686c2f80408e671a"><div class="ttname"><a href="class_h5_seis_impl.html#a660478149f90d529686c2f80408e671a">H5SeisImpl::generatePRESTKGeometry</a></div><div class="ttdeci">virtual bool generatePRESTKGeometry(double src_x0, double src_dx, size_t src_nx, double src_y0, double src_dy, size_t src_ny, double src_z, double rec_x0, double rec_dx, size_t rec_nx, double rec_y0, double rec_dy, size_t rec_ny, double rec_z, double orientation, bool moveRec, const std::string &amp;lengthUnits=&quot;&quot;, bool doCoordTransform=false) override</div><div class="ttdef"><b>Definition:</b> h5seisimpl.cpp:1480</div></div>
 <div class="ttc" id="aclass_h5_vol_html"><div class="ttname"><a href="class_h5_vol.html">H5Vol</a></div><div class="ttdoc">Provides API to work with volumes.</div><div class="ttdef"><b>Definition:</b> h5vol.h:15</div></div>
 <div class="ttc" id="anamespaceh5geo_html_a9f0af163c71e1896918a87518a0da91c"><div class="ttname"><a href="namespaceh5geo.html#a9f0af163c71e1896918a87518a0da91c">h5geo::openSeis</a></div><div class="ttdeci">H5GEO_EXPORT H5Seis * openSeis(h5gt::Group group)</div><div class="ttdoc">Factory function for opening H5Seis.</div><div class="ttdef"><b>Definition:</b> h5baseimpl.cpp:2053</div></div>
-<div class="ttc" id="astruct_seis_param_html"><div class="ttname"><a href="struct_seis_param.html">SeisParam</a></div><div class="ttdoc">Class for creating H5Seis.</div><div class="ttdef"><b>Definition:</b> h5base.h:165</div></div>
+<div class="ttc" id="astruct_h5_seis_param_html"><div class="ttname"><a href="struct_h5_seis_param.html">H5SeisParam</a></div><div class="ttdoc">Class for creating H5Seis.</div><div class="ttdef"><b>Definition:</b> h5base.h:165</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

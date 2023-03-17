@@ -105,22 +105,22 @@ $(function() {
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">virtual</span> <a class="code hl_class" href="class_h5_log_curve.html">H5LogCurve</a>* createLogCurve(</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>      std::string&amp; logType,</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>      std::string&amp; logName,</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>      <a class="code hl_struct" href="struct_log_curve_param.html">LogCurveParam</a>&amp; p,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>      <a class="code hl_struct" href="struct_h5_log_curve_param.html">H5LogCurveParam</a>&amp; p,</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>      <a class="code hl_enumeration" href="namespaceh5geo.html#ae1134b6734f405c1f6b7ae0bf0177d7c">h5geo::CreationType</a> createFlag) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <span class="keyword">virtual</span> <a class="code hl_class" href="class_h5_log_curve.html">H5LogCurve</a>* createLogCurve(</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>      h5gt::Group group,</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>      <a class="code hl_struct" href="struct_log_curve_param.html">LogCurveParam</a>&amp; p,</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>      <a class="code hl_struct" href="struct_h5_log_curve_param.html">H5LogCurveParam</a>&amp; p,</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>      <a class="code hl_enumeration" href="namespaceh5geo.html#ae1134b6734f405c1f6b7ae0bf0177d7c">h5geo::CreationType</a> createFlag) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="keyword">virtual</span> <a class="code hl_class" href="class_h5_dev_curve.html">H5DevCurve</a>* createDevCurve(</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>      std::string&amp; devName,</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>      <a class="code hl_struct" href="struct_dev_curve_param.html">DevCurveParam</a>&amp; p,</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>      <a class="code hl_struct" href="struct_h5_dev_curve_param.html">H5DevCurveParam</a>&amp; p,</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>      <a class="code hl_enumeration" href="namespaceh5geo.html#ae1134b6734f405c1f6b7ae0bf0177d7c">h5geo::CreationType</a> createFlag) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keyword">virtual</span> <a class="code hl_class" href="class_h5_dev_curve.html">H5DevCurve</a>* createDevCurve(</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>      h5gt::Group group,</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>      <a class="code hl_struct" href="struct_dev_curve_param.html">DevCurveParam</a>&amp; p,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>      <a class="code hl_struct" href="struct_h5_dev_curve_param.html">H5DevCurveParam</a>&amp; p,</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>      <a class="code hl_enumeration" href="namespaceh5geo.html#ae1134b6734f405c1f6b7ae0bf0177d7c">h5geo::CreationType</a> createFlag) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <span class="keyword">virtual</span> <a class="code hl_class" href="class_h5_well_tops.html">H5WellTops</a>* createWellTops(</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>      <a class="code hl_struct" href="struct_well_tops_param.html">WellTopsParam</a>&amp; p,</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>      <a class="code hl_struct" href="struct_h5_well_tops_param.html">H5WellTopsParam</a>&amp; p,</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>      <a class="code hl_enumeration" href="namespaceh5geo.html#ae1134b6734f405c1f6b7ae0bf0177d7c">h5geo::CreationType</a> createFlag) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> setHeadCoord(</div>
@@ -149,7 +149,7 @@ $(function() {
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  <span class="keyword">virtual</span> <span class="keywordtype">size_t</span> getDevCurveCount() <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <span class="keyword">virtual</span> <span class="keywordtype">size_t</span> getLogCurveCount() <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keyword">virtual</span> <a class="code hl_struct" href="struct_well_param.html">WellParam</a> getParam() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keyword">virtual</span> <a class="code hl_struct" href="struct_h5_well_param.html">H5WellParam</a> getParam() <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  <span class="keyword">virtual</span> <a class="code hl_class" href="class_h5_well_container.html">H5WellContainer</a>* openWellContainer() <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
@@ -184,10 +184,10 @@ $(function() {
 <div class="ttc" id="aclass_h5_well_tops_impl_html"><div class="ttname"><a href="class_h5_well_tops_impl.html">H5WellTopsImpl</a></div><div class="ttdef"><b>Definition:</b> h5welltopsimpl.h:8</div></div>
 <div class="ttc" id="anamespaceh5geo_html_a6ab81e471bdb52aab555149a1349c4bb"><div class="ttname"><a href="namespaceh5geo.html#a6ab81e471bdb52aab555149a1349c4bb">h5geo::openWell</a></div><div class="ttdeci">H5GEO_EXPORT H5Well * openWell(h5gt::Group group)</div><div class="ttdoc">Factory function for opening H5Well.</div><div class="ttdef"><b>Definition:</b> h5baseimpl.cpp:2107</div></div>
 <div class="ttc" id="anamespaceh5geo_html_ae1134b6734f405c1f6b7ae0bf0177d7c"><div class="ttname"><a href="namespaceh5geo.html#ae1134b6734f405c1f6b7ae0bf0177d7c">h5geo::CreationType</a></div><div class="ttdeci">CreationType</div><div class="ttdef"><b>Definition:</b> h5enum.h:468</div></div>
-<div class="ttc" id="astruct_dev_curve_param_html"><div class="ttname"><a href="struct_dev_curve_param.html">DevCurveParam</a></div><div class="ttdoc">Class for creating H5DevCurve.</div><div class="ttdef"><b>Definition:</b> h5base.h:149</div></div>
-<div class="ttc" id="astruct_log_curve_param_html"><div class="ttname"><a href="struct_log_curve_param.html">LogCurveParam</a></div><div class="ttdoc">Class for creating H5LogCurve.</div><div class="ttdef"><b>Definition:</b> h5base.h:157</div></div>
-<div class="ttc" id="astruct_well_param_html"><div class="ttname"><a href="struct_well_param.html">WellParam</a></div><div class="ttdoc">Class for creating H5Well.</div><div class="ttdef"><b>Definition:</b> h5base.h:138</div></div>
-<div class="ttc" id="astruct_well_tops_param_html"><div class="ttname"><a href="struct_well_tops_param.html">WellTopsParam</a></div><div class="ttdoc">Class for creating H5WellTops.</div><div class="ttdef"><b>Definition:</b> h5base.h:81</div></div>
+<div class="ttc" id="astruct_h5_dev_curve_param_html"><div class="ttname"><a href="struct_h5_dev_curve_param.html">H5DevCurveParam</a></div><div class="ttdoc">Class for creating H5DevCurve.</div><div class="ttdef"><b>Definition:</b> h5base.h:149</div></div>
+<div class="ttc" id="astruct_h5_log_curve_param_html"><div class="ttname"><a href="struct_h5_log_curve_param.html">H5LogCurveParam</a></div><div class="ttdoc">Class for creating H5LogCurve.</div><div class="ttdef"><b>Definition:</b> h5base.h:157</div></div>
+<div class="ttc" id="astruct_h5_well_param_html"><div class="ttname"><a href="struct_h5_well_param.html">H5WellParam</a></div><div class="ttdoc">Class for creating H5Well.</div><div class="ttdef"><b>Definition:</b> h5base.h:138</div></div>
+<div class="ttc" id="astruct_h5_well_tops_param_html"><div class="ttname"><a href="struct_h5_well_tops_param.html">H5WellTopsParam</a></div><div class="ttdoc">Class for creating H5WellTops.</div><div class="ttdef"><b>Definition:</b> h5base.h:81</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

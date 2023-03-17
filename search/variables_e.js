@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['z0_0',['Z0',['../struct_vol_param.html#acd46a0c0c18d7df6f56cc036cfdb73f0',1,'VolParam']]],
-  ['zchunksize_1',['zChunkSize',['../struct_vol_param.html#a54ea3367e9c155ee7ecbcd804930f77c',1,'VolParam']]]
+  ['z0_0',['Z0',['../struct_h5_vol_param.html#a919023722316f9feda919374b9f8003b',1,'H5VolParam']]],
+  ['zchunksize_1',['zChunkSize',['../struct_h5_vol_param.html#a14ca64d98cf6de4fedf2d22d026f35de',1,'H5VolParam']]]
 ];

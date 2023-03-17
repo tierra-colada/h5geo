@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mapparam_0',['MapParam',['../struct_map_param.html',1,'']]]
+  ['traceheader_0',['TraceHeader',['../structh5geo_1_1_trace_header.html',1,'h5geo']]]
 ];

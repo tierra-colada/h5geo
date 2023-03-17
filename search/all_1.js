@@ -5,5 +5,5 @@ var searchData=
   ['addinternalattributemap_2',['addInternalAttributeMap',['../class_h5_map.html#a52d815ae84eec81d762247aa37ec3397',1,'H5Map']]],
   ['addpkeysort_3',['addPKeySort',['../class_h5_seis.html#a797b0a608865af106f45af39f304915f',1,'H5Seis']]],
   ['angleandradius_4',['angleAndRadius',['../namespaceh5geo.html#a75bfbd1d63a2bf34bf3d7f31f8df179d',1,'h5geo']]],
-  ['angularunits_5',['angularUnits',['../struct_base_object_param.html#a16f6b74108a97ad139b1879d476be5c9',1,'BaseObjectParam']]]
+  ['angularunits_5',['angularUnits',['../struct_h5_base_object_param.html#a595d4021a4524c2ec4a7ea2caad3a880',1,'H5BaseObjectParam']]]
 ];
