@@ -117,9 +117,11 @@ bool H5MapImpl::readRasterData(
   int nXSize = dsBand->GetXSize();
   int nYSize = dsBand->GetYSize();
   Eigen::MatrixXd m(nXSize, nYSize);
-  dsBand->RasterIO(GF_Read, 0, 0, nXSize, nYSize,
+  CPLErr status = dsBand->RasterIO(GF_Read, 0, 0, nXSize, nYSize,
                    m.data(), nXSize, nYSize, GDT_Float64,
                    0, 0);
+  if (status == CPLErr::CE_Failure || status == CPLErr::CE_Fatal)
+    return false;
   m.transposeInPlace();
   return this->writeData(m, dataUnits);
 }
