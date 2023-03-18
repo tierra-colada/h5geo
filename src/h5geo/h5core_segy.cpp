@@ -186,7 +186,7 @@ bool writeSEGYTextHeader(
   if (truncate)
     openFlag |= std::ios::trunc;
 
-  std::ofstream file(segy, openFlag);
+  std::ofstream file(segy, std::ios_base::openmode(openFlag));
   if (!file.is_open())
     return false;
 
@@ -269,7 +269,7 @@ bool writeSEGYBinHeader(
   if (truncate)
     openFlag |= std::ios::trunc;
 
-  std::ofstream file(segy, openFlag);
+  std::ofstream file(segy, std::ios_base::openmode(openFlag));
   if (!file.is_open())
     return false;
 
