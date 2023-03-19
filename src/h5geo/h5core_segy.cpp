@@ -936,7 +936,7 @@ bool readSEGYSTACK(
 
   // IL is sorted
   size_t nxl = 0;
-  for (ptrdiff_t i = 0; i < HDR_sorted.rows()-1; i++){
+  for (ptrdiff_t i = 0; i < HDR_sorted.rows(); i++){
     nxl += 1;
     if (HDR_sorted(i,0) != HDR_sorted(i+1,0))
       break;

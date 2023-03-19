@@ -2058,7 +2058,7 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
 
   // IL is sorted
   size_t nxl = 0;
-  for (ptrdiff_t i = 0; i < HDR.rows()-1; i++){
+  for (ptrdiff_t i = 0; i < HDR.rows(); i++){
     nxl += 1;
     if (HDR(i,0) != HDR(i+1,0))
       break;

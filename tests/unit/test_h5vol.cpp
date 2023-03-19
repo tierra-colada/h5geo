@@ -200,3 +200,29 @@ TEST_F(H5VolFixture, DISABLED_SEGY){
   ASSERT_TRUE(vol->exportToSEGY("out.sgy", 
       [](double progress) { std::cout << "Progress:\t" << progress << std::endl; }));
 }
+
+// prefix `DISABLED_` is to skip test
+TEST_F(H5VolFixture, DISABLED_SEGY_VIKING){
+  std::string segyFile = "D:/VikingGrabenPetrel/lsrtm_acoustic_0.1hz_time_3rd_shots.sgy";
+
+  H5Vol_ptr vol(
+        volContainer1->createVol(
+          VOL_NAME1, p, h5geo::CreationType::CREATE_OR_OVERWRITE));
+  ASSERT_TRUE(vol != nullptr);
+
+  ASSERT_TRUE(
+    vol->readSEGYSTACK(
+      segyFile,
+      188, 4,
+      192, 4, 
+      180, 4,
+      184, 4,
+      -2, 0, 0, // samp rate is negative
+      static_cast<h5geo::SegyFormat>(0),
+      static_cast<h5geo::Endian>(0),
+      [](double progress) { std::cout << "Progress:\t" << progress << std::endl; }));
+
+  vol->setTemporalUnits("microsecond");
+  ASSERT_TRUE(vol->exportToSEGY("out.sgy", 
+      [](double progress) { std::cout << "Progress:\t" << progress << std::endl; }));
+}

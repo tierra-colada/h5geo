@@ -735,12 +735,13 @@ bool _getSurveyInfoFromSortedData(
 
   // IL is sorted
   size_t nxl = 0;
-  for (ptrdiff_t i = 0; i < il.size()-1; i++){
+  for (ptrdiff_t i = 0; i < il.size(); i++){
     nxl += 1;
     if (il(i) != il(i+1))
       break;
   }
 
+  // nTrc must be equal to nxl*nil
   auto dv = std::div(il.size(), nxl);
   if (dv.rem != 0)
     return false;
