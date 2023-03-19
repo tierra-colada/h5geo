@@ -1,3 +1,15 @@
+# on Windows with python > 3.8 dependent dll are loaded with `add_dll_directory`
+from sys import platform, version_info
+if version_info >= (3, 8, 0) and platform == 'win32':
+  import os
+  if 'USE_PATH_FOR_H5GEO_PYTHON' in os.environ and 'PATH' in os.environ:
+    for p in os.environ['PATH'].split(';'):
+      if p:
+        try:
+          os.add_dll_directory(p)
+        except (FileNotFoundError, OSError):
+          continue
+
 ${PYTHON_INIT_PATH_VAR}
 
 from h5geopy import _h5geo as h5geo
