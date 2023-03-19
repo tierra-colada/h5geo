@@ -4,6 +4,8 @@
 #include <h5geo/h5map.h>
 #include <h5geo/h5seiscontainer.h>
 #include <h5geo/h5seis.h>
+#include <h5geo/h5volcontainer.h>
+#include <h5geo/h5vol.h>
 #include <h5geo/h5wellcontainer.h>
 #include <h5geo/h5well.h>
 #include <h5geo/h5devcurve.h>
