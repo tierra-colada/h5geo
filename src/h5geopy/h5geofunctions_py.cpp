@@ -133,6 +133,8 @@ void defineGeoFunctions(py::module_& m){
   m.def("openBaseContainerByName", &openBaseContainerByName);
   m.def("openSeisContainer", &openSeisContainer);
   m.def("openSeisContainerByName", &openSeisContainerByName);
+  m.def("openVolContainer", &openVolContainer);
+  m.def("openVolContainerByName", &openVolContainerByName);
   m.def("openMapContainer", &openMapContainer);
   m.def("openMapContainerByName", &openMapContainerByName);
   m.def("openWellContainer", &openWellContainer);
@@ -141,8 +143,8 @@ void defineGeoFunctions(py::module_& m){
   m.def("openObjectByName", &openObjectByName);
   m.def("openBaseObject", &openBaseObject);
   m.def("openBaseObjectByName", &openBaseObjectByName);
-  m.def("openSeis", &openSeis);
-  m.def("openSeisByName", &openSeisByName);
+  m.def("openVol", &openVol);
+  m.def("openVolByName", &openVolByName);
   m.def("openMap", &openMap);
   m.def("openMapByName", &openMapByName);
   m.def("openWell", &openWell);
@@ -174,6 +176,8 @@ void defineGeoFunctions(py::module_& m){
   m.def("createWellContainerByName", &createWellContainerByName);
   m.def("createSeisContainer", &createSeisContainer);
   m.def("createSeisContainerByName", &createSeisContainerByName);
+  m.def("createVolContainer", &createVolContainer);
+  m.def("createVolContainerByName", &createVolContainerByName);
 
   m.def("getGeoContainerType", &getGeoContainerType);
   m.def("getGeoObjectType", &getGeoObjectType);
@@ -187,6 +191,7 @@ void defineGeoFunctions(py::module_& m){
   m.def("isLogCurve", &isLogCurve);
   m.def("isDevCurve", &isDevCurve);
   m.def("isSeis", &isSeis);
+  m.def("isVol", &isVol);
   m.def("isPoints", &isPoints);
   m.def("isWellTops", &isWellTops);
 
