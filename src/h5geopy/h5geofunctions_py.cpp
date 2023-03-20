@@ -145,6 +145,8 @@ void defineGeoFunctions(py::module_& m){
   m.def("openObjectByName", &openObjectByName);
   m.def("openBaseObject", &openBaseObject);
   m.def("openBaseObjectByName", &openBaseObjectByName);
+  m.def("openSeis", &openSeis);
+  m.def("openSeisByName", &openSeisByName);
   m.def("openVol", &openVol);
   m.def("openVolByName", &openVolByName);
   m.def("openMap", &openMap);
