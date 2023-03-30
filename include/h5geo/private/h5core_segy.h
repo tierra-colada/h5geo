@@ -236,8 +236,8 @@ H5GEO_EXPORT Eigen::MatrixXf readSEGYTraces(
     h5geo::Endian endian = static_cast<h5geo::Endian>(0),
     std::function<void(double)> progressCallback = nullptr);
 
-/// \brief readSEGYTraces read and write SEGY traces and trace headers to
-/// H5Seis object using memory mapping technique (OpenMP enabled)
+/// \brief readSEGYTracesMMap read and write SEGY traces and trace headers to
+/// H5Seis object using Memory Mapping technique (OpenMP enabled)
 /// \param seis
 /// \param segy path to SEGY file
 /// \param appendTraces instead of overwriting existing H5Seis traces it simply
@@ -252,8 +252,9 @@ H5GEO_EXPORT Eigen::MatrixXf readSEGYTraces(
 /// \param trcBuffer number of traces per thread to read before writing them at once
 /// \param nThreads number of threads (to use all threads pass any number `<1`)
 /// \param progressCallback callback function of form `void foo(double progress)`
+/// \note Memory Mappings works only if the SEGY file resides on the internal hardware
 /// \return
-H5GEO_EXPORT bool readSEGYTraces(
+H5GEO_EXPORT bool readSEGYTracesMMap(
     H5Seis* seis,
     const std::string& segy,
     bool appendTraces = false,
@@ -266,7 +267,23 @@ H5GEO_EXPORT bool readSEGYTraces(
     int nThreads = -1,
     std::function<void(double)> progressCallback = nullptr);
 
-H5GEO_EXPORT bool readSEGY(
+/// \brief readSEGYTraces read and write SEGY traces and trace headers to
+/// H5Seis object using memory mapping technique (OpenMP enabled)
+/// \param seis
+/// \param segy path to SEGY file
+/// \param appendTraces instead of overwriting existing H5Seis traces it simply
+/// adds new traces at the end of array
+/// \param nSamp number of samples in SEGY (if 0 then try automatically detect)
+/// \param nTrc number of traces in SEGY (if 0 then try automatically detect)
+/// \param format SEGY format (ibm32, ieee32 or int4)
+/// \param endian Big or Little
+/// \param trcHdrNames use only those defined in 'getTraceHeaderShortNames',
+/// but you can change their order thus fix probably messed up trace header bytes
+/// (empty to use defined in 'getTraceHeaderShortNames' func)
+/// \param trcBuffer number of traces per thread to read before writing them at once
+/// \param progressCallback callback function of form `void foo(double progress)`
+/// \return
+H5GEO_EXPORT bool readSEGYTraces(
     H5Seis* seis,
     const std::string& segy,
     bool appendTraces = false,

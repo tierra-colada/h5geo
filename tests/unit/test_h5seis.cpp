@@ -528,7 +528,12 @@ TEST_F(H5SeisFixture, SEGY){
                 false, nSamp, nTrc, format, endian)); // for testing purpose I need to set value not less than 24 trc (10000) as OMP may save traces in different order
   Eigen::VectorXf trace2 = seis2->getTrace(trcInd);
   ASSERT_TRUE(trace.isApprox(trace2));
-
+  ASSERT_TRUE(h5geo::readSEGYTracesMMap(
+                seis2.get(),
+                TEST_DATA_DIR"/1.segy",
+                false, nSamp, nTrc, format, endian)); // for testing purpose I need to set value not less than 24 trc (10000) as OMP may save traces in different order
+  Eigen::VectorXf trace22 = seis2->getTrace(trcInd);
+  ASSERT_TRUE(trace.isApprox(trace22));
 
   // NOT MAPPED (read with H5Seis::methods)
   H5Seis_ptr seis3(seisContainer->createSeis(
@@ -612,7 +617,7 @@ TEST_F(H5SeisFixture, DISABLED_SEGY_BIG){
   seis2->readSEGYBinHeader(segy_big);
 
   std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-  seis2->readSEGYTraces(
+  seis2->readSEGYTracesMMap(
         {segy_big},
         std::vector<h5geo::SegyFormat>(),
         std::vector<h5geo::Endian>(),

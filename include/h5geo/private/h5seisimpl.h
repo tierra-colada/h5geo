@@ -28,6 +28,13 @@ public:
       std::vector<h5geo::Endian> endians = std::vector<h5geo::Endian>(),
       std::vector<std::vector<std::string>> trcHdrNamesArr = std::vector<std::vector<std::string>>(),
       size_t trcBuffer = 10000,
+      std::function<void(double)> progressCallback = nullptr) override;
+  virtual bool readSEGYTracesMMap(
+      const std::vector<std::string>& segyFiles,
+      std::vector<h5geo::SegyFormat> formats = std::vector<h5geo::SegyFormat>(),
+      std::vector<h5geo::Endian> endians = std::vector<h5geo::Endian>(),
+      std::vector<std::vector<std::string>> trcHdrNamesArr = std::vector<std::vector<std::string>>(),
+      size_t trcBuffer = 10000,
       int nThreads = -1,
       std::function<void(double)> progressCallback = nullptr) override;
 

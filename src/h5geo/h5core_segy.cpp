@@ -653,7 +653,7 @@ Eigen::MatrixXf readSEGYTraces(
   return TRACE;
 }
 
-bool readSEGYTraces(
+bool readSEGYTracesMMap(
     H5Seis* seis,
     const std::string& segy,
     bool appendTraces,
@@ -840,7 +840,7 @@ bool readSEGYTraces(
   return true;
 }
 
-bool readSEGY(
+bool readSEGYTraces(
     H5Seis* seis,
     const std::string& segy,
     bool appendTraces,

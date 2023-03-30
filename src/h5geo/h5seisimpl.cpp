@@ -51,7 +51,6 @@ bool H5SeisImpl::readSEGYTraces(
     std::vector<h5geo::Endian> endians,
     std::vector<std::vector<std::string>> trcHdrNamesArr,
     size_t trcBuffer,
-    int nThreads,
     std::function<void(double)> progressCallback)
 {
   if (segyFiles.empty())
@@ -93,6 +92,72 @@ bool H5SeisImpl::readSEGYTraces(
       appendTraces = false;
 
     bool val = h5geo::readSEGYTraces(
+          this,
+          segyFiles[i],
+          appendTraces,
+          0,
+          0,
+          formats[i],
+          endians[i],
+          trcHdrNamesArr[i],
+          trcBuffer,
+          progressCallback);
+
+    if (!val)
+      return false;
+  }
+
+  return true;
+}
+
+bool H5SeisImpl::readSEGYTracesMMap(
+    const std::vector<std::string>& segyFiles,
+    std::vector<h5geo::SegyFormat> formats,
+    std::vector<h5geo::Endian> endians,
+    std::vector<std::vector<std::string>> trcHdrNamesArr,
+    size_t trcBuffer,
+    int nThreads,
+    std::function<void(double)> progressCallback)
+{
+  if (segyFiles.empty())
+    return false;
+
+  if (formats.empty()){
+    formats.resize(segyFiles.size());
+    for (auto& format : formats){
+      format = static_cast<h5geo::SegyFormat>(0);
+    }
+  }
+
+  if (endians.empty()){
+    endians.resize(segyFiles.size());
+    for (auto& endian : endians){
+      endian = static_cast<h5geo::Endian>(0);
+    }
+  }
+
+  if (trcHdrNamesArr.empty()){
+    trcHdrNamesArr.resize(segyFiles.size());
+    for (auto& trcHdrNames : trcHdrNamesArr){
+      trcHdrNames = h5geo::getTraceHeaderShortNames();
+    }
+  }
+
+  if (formats.size() != segyFiles.size())
+    return false;
+
+  if (endians.size() != segyFiles.size())
+    return false;
+
+  if (trcHdrNamesArr.size() != segyFiles.size())
+    return false;
+
+  for (size_t i = 0; i < segyFiles.size(); i++){
+    bool appendTraces = true;
+    if (i == 0)
+      appendTraces = false;
+
+    bool val = h5geo::readSEGYTracesMMap(
           this,
           segyFiles[i],
           appendTraces,

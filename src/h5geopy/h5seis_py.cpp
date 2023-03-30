@@ -78,6 +78,13 @@ void H5Seis_py(
            py::arg_v("endians", std::vector<h5geo::Endian>(), "list()"),
            py::arg_v("trcHdrNames", std::vector<std::vector<std::string>>(), "list()"),
            py::arg_v("trcBuffer", 10000, "10000"),
+           py::arg_v("progressCallback", nullptr, "None"))
+      .def("readSEGYTracesMMap", &H5Seis::readSEGYTracesMMap,
+           py::arg("segyFiles"),
+           py::arg_v("formats", std::vector<h5geo::SegyFormat>(), "list()"),
+           py::arg_v("endians", std::vector<h5geo::Endian>(), "list()"),
+           py::arg_v("trcHdrNames", std::vector<std::vector<std::string>>(), "list()"),
+           py::arg_v("trcBuffer", 10000, "10000"),
            py::arg_v("nThreads", -1, "-1"),
            py::arg_v("progressCallback", nullptr, "None"))
 

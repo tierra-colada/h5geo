@@ -82,8 +82,19 @@ void defineSEGYFunctions(py::module_& m){
             H5Seis*, const std::string&, bool,
             size_t, size_t, h5geo::SegyFormat, 
             h5geo::Endian, std::vector<std::string>,
-            size_t, int, std::function<void(double)>>(
+            size_t, std::function<void(double)>>(
             &h5geo::readSEGYTraces),
+        py::arg("seis"),
+        py::arg("segy"),
+        py::arg_v("appendTraces", false, "False"),
+        py::arg_v("nSamp", 0, "0"),
+        py::arg_v("nTrc", 0, "0"),
+        py::arg_v("segyFormat", static_cast<h5geo::SegyFormat>(0), "_h5geo.SegyFormat(0)"),
+        py::arg_v("endian", static_cast<h5geo::Endian>(0), "_h5geo.Endian(0)"),
+        py::arg_v("trcHdrNames", std::vector<std::string>(), "list()"),
+        py::arg_v("trcBuffer", 10000, "10000"),
+        py::arg_v("progressCallback", nullptr, "None"));
+  m.def("readSEGYTracesMMap", &h5geo::readSEGYTracesMMap,
         py::arg("seis"),
         py::arg("segy"),
         py::arg_v("appendTraces", false, "False"),
