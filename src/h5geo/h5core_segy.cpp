@@ -951,49 +951,49 @@ bool readSEGYTraces(
       for (int i = 0; i < (sizeof(hdr.b0)/sizeof(*hdr.b0)); i++){
         if (ii >= HDR.cols())
           break;
-        HDR(j,mapHdr2origin[ii]) = (double)hdr.b0[i];
+        HDR(j,mapHdr2origin[ii]) = (double)to_native_endian(hdr.b0[i], endian);
         ii++;
       }
       for (int i = 0; i < (sizeof(hdr.b1)/sizeof(*hdr.b1)); i++){
         if (ii >= HDR.cols())
           break;
-        HDR(j,mapHdr2origin[ii]) = (double)hdr.b1[i];
+        HDR(j,mapHdr2origin[ii]) = (double)to_native_endian(hdr.b1[i], endian);
         ii++;
       }
       for (int i = 0; i < (sizeof(hdr.b2)/sizeof(*hdr.b2)); i++){
         if (ii >= HDR.cols())
           break;
-        HDR(j,mapHdr2origin[ii]) = (double)hdr.b2[i];
+        HDR(j,mapHdr2origin[ii]) = (double)to_native_endian(hdr.b2[i], endian);
         ii++;
       }
       for (int i = 0; i < (sizeof(hdr.b3)/sizeof(*hdr.b3)); i++){
         if (ii >= HDR.cols())
           break;
-        HDR(j,mapHdr2origin[ii]) = (double)hdr.b3[i];
+        HDR(j,mapHdr2origin[ii]) = (double)to_native_endian(hdr.b3[i], endian);
         ii++;
       }
       for (int i = 0; i < (sizeof(hdr.b4)/sizeof(*hdr.b4)); i++){
         if (ii >= HDR.cols())
           break;
-        HDR(j,mapHdr2origin[ii]) = (double)hdr.b4[i];
+        HDR(j,mapHdr2origin[ii]) = (double)to_native_endian(hdr.b4[i], endian);
         ii++;
       }
       for (int i = 0; i < (sizeof(hdr.b5)/sizeof(*hdr.b5)); i++){
         if (ii >= HDR.cols())
           break;
-        HDR(j,mapHdr2origin[ii]) = (double)hdr.b5[i];
+        HDR(j,mapHdr2origin[ii]) = (double)to_native_endian(hdr.b5[i], endian);
         ii++;
       }
       for (int i = 0; i < (sizeof(hdr.b6)/sizeof(*hdr.b6)); i++){
         if (ii >= HDR.cols())
           break;
-        HDR(j,mapHdr2origin[ii]) = (double)hdr.b6[i];
+        HDR(j,mapHdr2origin[ii]) = (double)to_native_endian(hdr.b6[i], endian);
         ii++;
       }
       for (int i = 0; i < (sizeof(hdr.b7)/sizeof(*hdr.b7)); i++){
         if (ii >= HDR.cols())
           break;
-        HDR(j,mapHdr2origin[ii]) = (double)hdr.b7[i];
+        HDR(j,mapHdr2origin[ii]) = (double)to_native_endian(hdr.b7[i], endian);
         ii++;
       }
 
