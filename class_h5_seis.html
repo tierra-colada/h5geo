@@ -104,9 +104,12 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGYTextH
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGYBinHeader</b> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0))=0</td></tr>
 <tr class="memdesc:abc2e5339d20e0ee5e1076159116ee004"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read binary header from <code>SEGY</code> file. <br /></td></tr>
 <tr class="separator:abc2e5339d20e0ee5e1076159116ee004"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafc6679b5ba73c51247b618e3520138c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#aafc6679b5ba73c51247b618e3520138c">readSEGYTraces</a> (const std::vector&lt; std::string &gt; &amp;segyFiles, std::vector&lt; h5geo::SegyFormat &gt; formats=std::vector&lt; h5geo::SegyFormat &gt;(), std::vector&lt; h5geo::Endian &gt; endians=std::vector&lt; h5geo::Endian &gt;(), std::vector&lt; std::vector&lt; std::string &gt; &gt; trcHdrNamesArr=std::vector&lt; std::vector&lt; std::string &gt; &gt;(), size_t trcBuffer=10000, int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr)=0</td></tr>
-<tr class="memdesc:aafc6679b5ba73c51247b618e3520138c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trace headers and trace data from <code>SEGY</code> file.  <br /></td></tr>
-<tr class="separator:aafc6679b5ba73c51247b618e3520138c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58564b764931ce9a08e2c1a1cdc9fc01"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a58564b764931ce9a08e2c1a1cdc9fc01">readSEGYTraces</a> (const std::vector&lt; std::string &gt; &amp;segyFiles, std::vector&lt; h5geo::SegyFormat &gt; formats=std::vector&lt; h5geo::SegyFormat &gt;(), std::vector&lt; h5geo::Endian &gt; endians=std::vector&lt; h5geo::Endian &gt;(), std::vector&lt; std::vector&lt; std::string &gt; &gt; trcHdrNamesArr=std::vector&lt; std::vector&lt; std::string &gt; &gt;(), size_t trcBuffer=10000, std::function&lt; void(double)&gt; progressCallback=nullptr)=0</td></tr>
+<tr class="memdesc:a58564b764931ce9a08e2c1a1cdc9fc01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trace headers and trace data from <code>SEGY</code> file.  <br /></td></tr>
+<tr class="separator:a58564b764931ce9a08e2c1a1cdc9fc01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a227ba612f8ea7b38ce356d176e19d3e6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h5_seis.html#a227ba612f8ea7b38ce356d176e19d3e6">readSEGYTracesMMap</a> (const std::vector&lt; std::string &gt; &amp;segyFiles, std::vector&lt; h5geo::SegyFormat &gt; formats=std::vector&lt; h5geo::SegyFormat &gt;(), std::vector&lt; h5geo::Endian &gt; endians=std::vector&lt; h5geo::Endian &gt;(), std::vector&lt; std::vector&lt; std::string &gt; &gt; trcHdrNamesArr=std::vector&lt; std::vector&lt; std::string &gt; &gt;(), size_t trcBuffer=10000, int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr)=0</td></tr>
+<tr class="memdesc:a227ba612f8ea7b38ce356d176e19d3e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trace headers and trace data from <code>SEGY</code> file using Memory Mapping.  <br /></td></tr>
+<tr class="separator:a227ba612f8ea7b38ce356d176e19d3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad48967e1b8f2f744799cd2bbbaaff843"><td class="memItemLeft" align="right" valign="top"><a id="ad48967e1b8f2f744799cd2bbbaaff843" name="ad48967e1b8f2f744799cd2bbbaaff843"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>writeTextHeader</b> (const char(&amp;txtHdr)[40][80])=0</td></tr>
 <tr class="memdesc:ad48967e1b8f2f744799cd2bbbaaff843"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write text header. <br /></td></tr>
@@ -2028,8 +2031,8 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
 
 </div>
 </div>
-<a id="aafc6679b5ba73c51247b618e3520138c" name="aafc6679b5ba73c51247b618e3520138c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aafc6679b5ba73c51247b618e3520138c">&#9670;&#160;</a></span>readSEGYTraces()</h2>
+<a id="a58564b764931ce9a08e2c1a1cdc9fc01" name="a58564b764931ce9a08e2c1a1cdc9fc01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58564b764931ce9a08e2c1a1cdc9fc01">&#9670;&#160;</a></span>readSEGYTraces()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2039,6 +2042,79 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
       <table class="memname">
         <tr>
           <td class="memname">virtual bool H5Seis::readSEGYTraces </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>segyFiles</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; h5geo::SegyFormat &gt;&#160;</td>
+          <td class="paramname"><em>formats</em> = <code>std::vector&lt;&#160;h5geo::SegyFormat&#160;&gt;()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; h5geo::Endian &gt;&#160;</td>
+          <td class="paramname"><em>endians</em> = <code>std::vector&lt;&#160;h5geo::Endian&#160;&gt;()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; std::string &gt; &gt;&#160;</td>
+          <td class="paramname"><em>trcHdrNamesArr</em> = <code>std::vector&lt;&#160;std::vector&lt;&#160;std::string&#160;&gt;&#160;&gt;()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>trcBuffer</em> = <code>10000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; void(double)&gt;&#160;</td>
+          <td class="paramname"><em>progressCallback</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read trace headers and trace data from <code>SEGY</code> file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">segyFiles</td><td>segy files to read traces and trace headers </td></tr>
+    <tr><td class="paramname">formats</td><td>segy format for each segy (empty to autodefine) </td></tr>
+    <tr><td class="paramname">endians</td><td>PC endian for each segy (empty to autodefine) </td></tr>
+    <tr><td class="paramname">trcHdrNamesArr</td><td>use only those defined in 'getTraceHeaderShortNames', but you can change their order thus fix probably messed up trace header bytes (empty to use defined in 'getTraceHeaderShortNames' func) </td></tr>
+    <tr><td class="paramname">trcBuffer</td><td>number of traces per thread to read before writing them at once </td></tr>
+    <tr><td class="paramname">progressCallback</td><td>callback function of form <code>void foo(double progress)</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a227ba612f8ea7b38ce356d176e19d3e6" name="a227ba612f8ea7b38ce356d176e19d3e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a227ba612f8ea7b38ce356d176e19d3e6">&#9670;&#160;</a></span>readSEGYTracesMMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool H5Seis::readSEGYTracesMMap </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
           <td class="paramname"><em>segyFiles</em>, </td>
@@ -2092,7 +2168,7 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
 </table>
 </div><div class="memdoc">
 
-<p>Read trace headers and trace data from <code>SEGY</code> file. </p>
+<p>Read trace headers and trace data from <code>SEGY</code> file using Memory Mapping. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">segyFiles</td><td>segy files to read traces and trace headers </td></tr>
@@ -2105,6 +2181,7 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Memory Mappings works only if the SEGY file resides on the internal hardware </dd></dl>
 
 </div>
 </div>

@@ -996,12 +996,12 @@ H5GEO_EXPORT size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getSEG
 <tr class="memitem:a015a24f809753680afcacf9fa6f27f13"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT Eigen::MatrixXf&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#a015a24f809753680afcacf9fa6f27f13">readSEGYTraces</a> (const std::string &amp;segy, size_t fromSamp=0, size_t toSamp=std::numeric_limits&lt; size_t &gt;::max(), size_t fromTrc=0, size_t toTrc=std::numeric_limits&lt; size_t &gt;::max(), size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::function&lt; void(double)&gt; progressCallback=nullptr)</td></tr>
 <tr class="memdesc:a015a24f809753680afcacf9fa6f27f13"><td class="mdescLeft">&#160;</td><td class="mdescRight">readSEGYTraces read traces  <br /></td></tr>
 <tr class="separator:a015a24f809753680afcacf9fa6f27f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad03289cd6f96ba6c704850c4b6299c8b"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#ad03289cd6f96ba6c704850c4b6299c8b">readSEGYTraces</a> (<a class="el" href="class_h5_seis.html">H5Seis</a> *seis, const std::string &amp;segy, bool appendTraces=false, size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::vector&lt; std::string &gt; trcHdrNames=std::vector&lt; std::string &gt;(), size_t trcBuffer=10000, int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr)</td></tr>
-<tr class="memdesc:ad03289cd6f96ba6c704850c4b6299c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">readSEGYTraces read and write SEGY traces and trace headers to <a class="el" href="class_h5_seis.html" title="Provides API to work with seismic.">H5Seis</a> object using memory mapping technique (OpenMP enabled)  <br /></td></tr>
-<tr class="separator:ad03289cd6f96ba6c704850c4b6299c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8177e1b9e33707fc79f920f1fdd0b9b"><td class="memItemLeft" align="right" valign="top"><a id="ab8177e1b9e33707fc79f920f1fdd0b9b" name="ab8177e1b9e33707fc79f920f1fdd0b9b"></a>
-H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGY</b> (<a class="el" href="class_h5_seis.html">H5Seis</a> *seis, const std::string &amp;segy, bool appendTraces=false, size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::vector&lt; std::string &gt; trcHdrNames=std::vector&lt; std::string &gt;(), size_t trcBuffer=10000, std::function&lt; void(double)&gt; progressCallback=nullptr)</td></tr>
-<tr class="separator:ab8177e1b9e33707fc79f920f1fdd0b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae4661790273b7b2bd1746262b051fd0"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#aae4661790273b7b2bd1746262b051fd0">readSEGYTracesMMap</a> (<a class="el" href="class_h5_seis.html">H5Seis</a> *seis, const std::string &amp;segy, bool appendTraces=false, size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::vector&lt; std::string &gt; trcHdrNames=std::vector&lt; std::string &gt;(), size_t trcBuffer=10000, int nThreads=-1, std::function&lt; void(double)&gt; progressCallback=nullptr)</td></tr>
+<tr class="memdesc:aae4661790273b7b2bd1746262b051fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">readSEGYTracesMMap read and write SEGY traces and trace headers to <a class="el" href="class_h5_seis.html" title="Provides API to work with seismic.">H5Seis</a> object using Memory Mapping technique (OpenMP enabled)  <br /></td></tr>
+<tr class="separator:aae4661790273b7b2bd1746262b051fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af15305d0296ff6c6b63efb0f607e039e"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#af15305d0296ff6c6b63efb0f607e039e">readSEGYTraces</a> (<a class="el" href="class_h5_seis.html">H5Seis</a> *seis, const std::string &amp;segy, bool appendTraces=false, size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::vector&lt; std::string &gt; trcHdrNames=std::vector&lt; std::string &gt;(), size_t trcBuffer=10000, std::function&lt; void(double)&gt; progressCallback=nullptr)</td></tr>
+<tr class="memdesc:af15305d0296ff6c6b63efb0f607e039e"><td class="mdescLeft">&#160;</td><td class="mdescRight">readSEGYTraces read and write SEGY traces and trace headers to <a class="el" href="class_h5_seis.html" title="Provides API to work with seismic.">H5Seis</a> object using memory mapping technique (OpenMP enabled)  <br /></td></tr>
+<tr class="separator:af15305d0296ff6c6b63efb0f607e039e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adee4e47a95e8301f67408783ac123d35"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceh5geo.html#adee4e47a95e8301f67408783ac123d35">readSEGYSTACK</a> (<a class="el" href="class_h5_vol.html">H5Vol</a> *vol, const std::string &amp;segy, const size_t &amp;ilHdrOffset, const size_t &amp;ilHdrSize, const size_t &amp;xlHdrOffset, const size_t &amp;xlHdrSize, const size_t &amp;xHdrOffset, const size_t &amp;xHdrSize, const size_t &amp;yHdrOffset, const size_t &amp;yHdrSize, double sampRate, size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::function&lt; void(double)&gt; progressCallback=nullptr)</td></tr>
 <tr class="memdesc:adee4e47a95e8301f67408783ac123d35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read SEGY STACK data, i.e. nTrc should be equal to nil*nxl. After reading origin, spacings, orientation, and angular units will be set.  <br /></td></tr>
 <tr class="separator:adee4e47a95e8301f67408783ac123d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3359,14 +3359,108 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ad03289cd6f96ba6c704850c4b6299c8b" name="ad03289cd6f96ba6c704850c4b6299c8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad03289cd6f96ba6c704850c4b6299c8b">&#9670;&#160;</a></span>readSEGYTraces() <span class="overload">[2/2]</span></h2>
+<a id="af15305d0296ff6c6b63efb0f607e039e" name="af15305d0296ff6c6b63efb0f607e039e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af15305d0296ff6c6b63efb0f607e039e">&#9670;&#160;</a></span>readSEGYTraces() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool h5geo::readSEGYTraces </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_h5_seis.html">H5Seis</a> *&#160;</td>
+          <td class="paramname"><em>seis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>segy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>appendTraces</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>nSamp</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>nTrc</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">h5geo::SegyFormat&#160;</td>
+          <td class="paramname"><em>format</em> = <code>static_cast&lt;h5geo::SegyFormat&gt;(0)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">h5geo::Endian&#160;</td>
+          <td class="paramname"><em>endian</em> = <code>static_cast&lt;h5geo::Endian&gt;(0)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::string &gt;&#160;</td>
+          <td class="paramname"><em>trcHdrNames</em> = <code>std::vector&lt;std::string&gt;()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>trcBuffer</em> = <code>10000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; void(double)&gt;&#160;</td>
+          <td class="paramname"><em>progressCallback</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>readSEGYTraces read and write SEGY traces and trace headers to <a class="el" href="class_h5_seis.html" title="Provides API to work with seismic.">H5Seis</a> object using memory mapping technique (OpenMP enabled) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">seis</td><td></td></tr>
+    <tr><td class="paramname">segy</td><td>path to SEGY file </td></tr>
+    <tr><td class="paramname">appendTraces</td><td>instead of overwriting existing <a class="el" href="class_h5_seis.html" title="Provides API to work with seismic.">H5Seis</a> traces it simply adds new traces at the end of array </td></tr>
+    <tr><td class="paramname">nSamp</td><td>number of samples in SEGY (if 0 then try automatically detect) </td></tr>
+    <tr><td class="paramname">nTrc</td><td>number of traces in SEGY (if 0 then try automatically detect) </td></tr>
+    <tr><td class="paramname">format</td><td>SEGY format (ibm32, ieee32 or int4) </td></tr>
+    <tr><td class="paramname">endian</td><td>Big or Little </td></tr>
+    <tr><td class="paramname">trcHdrNames</td><td>use only those defined in 'getTraceHeaderShortNames', but you can change their order thus fix probably messed up trace header bytes (empty to use defined in 'getTraceHeaderShortNames' func) </td></tr>
+    <tr><td class="paramname">trcBuffer</td><td>number of traces per thread to read before writing them at once </td></tr>
+    <tr><td class="paramname">progressCallback</td><td>callback function of form <code>void foo(double progress)</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="aae4661790273b7b2bd1746262b051fd0" name="aae4661790273b7b2bd1746262b051fd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae4661790273b7b2bd1746262b051fd0">&#9670;&#160;</a></span>readSEGYTracesMMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool h5geo::readSEGYTracesMMap </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_h5_seis.html">H5Seis</a> *&#160;</td>
           <td class="paramname"><em>seis</em>, </td>
@@ -3439,7 +3533,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>readSEGYTraces read and write SEGY traces and trace headers to <a class="el" href="class_h5_seis.html" title="Provides API to work with seismic.">H5Seis</a> object using memory mapping technique (OpenMP enabled) </p>
+<p>readSEGYTracesMMap read and write SEGY traces and trace headers to <a class="el" href="class_h5_seis.html" title="Provides API to work with seismic.">H5Seis</a> object using Memory Mapping technique (OpenMP enabled) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">seis</td><td></td></tr>
@@ -3456,6 +3550,7 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Memory Mappings works only if the SEGY file resides on the internal hardware </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
