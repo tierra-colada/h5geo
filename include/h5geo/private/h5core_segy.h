@@ -266,6 +266,18 @@ H5GEO_EXPORT bool readSEGYTraces(
     int nThreads = -1,
     std::function<void(double)> progressCallback = nullptr);
 
+H5GEO_EXPORT bool readSEGY(
+    H5Seis* seis,
+    const std::string& segy,
+    bool appendTraces = false,
+    size_t nSamp = 0,
+    size_t nTrc = 0,
+    h5geo::SegyFormat format = static_cast<h5geo::SegyFormat>(0),
+    h5geo::Endian endian = static_cast<h5geo::Endian>(0),
+    std::vector<std::string> trcHdrNames = std::vector<std::string>(),
+    size_t trcBuffer = 10000,
+    std::function<void(double)> progressCallback = nullptr);
+
 /// \brief Read SEGY STACK data, i.e. nTrc should be equal to nil*nxl.
 /// After reading origin, spacings, orientation, and angular units will be set.
 /// \param vol 

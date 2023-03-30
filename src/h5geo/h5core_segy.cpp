@@ -840,6 +840,202 @@ bool readSEGYTraces(
   return true;
 }
 
+bool readSEGY(
+    H5Seis* seis,
+    const std::string& segy,
+    bool appendTraces,
+    size_t nSamp,
+    size_t nTrc,
+    h5geo::SegyFormat format,
+    h5geo::Endian endian,
+    std::vector<std::string> trcHdrNames,
+    size_t trcBuffer,
+    std::function<void(double)> progressCallback)
+{
+  if (!seis || trcBuffer < 1)
+    return false;
+
+  if (std::string{magic_enum::enum_name(format)}.empty())
+    format = getSEGYFormat(segy, endian);
+
+  if (std::string{magic_enum::enum_name(endian)}.empty())
+    endian = getSEGYEndian(segy);
+
+  if (std::string{magic_enum::enum_name(format)}.empty() ||
+      std::string{magic_enum::enum_name(endian)}.empty())
+    return false;
+
+  if (nTrc < 1)
+    nTrc = getSEGYNTrc(segy, nSamp, endian);
+
+  if (nSamp < 1)
+    nSamp = getSEGYNSamp(segy, endian);
+
+  if (nSamp < 1 || nTrc < 1)
+    return false;
+
+  // must do the check as within OMP I cannot return 'false', only 'continue'
+  if (!isSEGY(segy))
+    return false;
+
+  std::ifstream file(segy, std::ifstream::binary | std::ifstream::in);
+  if (!file.is_open())
+    return false;
+
+  if (trcHdrNames.empty())
+    trcHdrNames = h5geo::getTraceHeaderShortNames();
+
+  std::vector<std::string> trcHdrNames_original = getTraceHeaderShortNames();
+  if (trcHdrNames.size() != trcHdrNames_original.size())
+    return false;
+
+  std::vector<size_t> mapHdr2origin(trcHdrNames.size());
+  for (size_t i = 0; i < trcHdrNames.size(); i++){
+    ptrdiff_t ind = find(trcHdrNames_original.begin(),
+                   trcHdrNames_original.end(),
+                   trcHdrNames[i]) - trcHdrNames_original.begin();
+    if (ind >= trcHdrNames.size()) {
+      return false;
+    }
+
+    mapHdr2origin[i] = ind;
+  }
+
+  size_t fromTrc = 0;
+  if (appendTraces)
+    fromTrc = seis->getNTrc();
+
+  seis->setNTrc(fromTrc+nTrc);
+  seis->setNSamp(nSamp);
+
+  Eigen::MatrixXd HDR;
+  Eigen::MatrixXf TRACE;
+  Eigen::VectorXd minHDRVec(78), maxHDRVec(78);
+  minHDRVec.fill(std::numeric_limits<double>::infinity());
+  maxHDRVec.fill(-std::numeric_limits<double>::infinity());
+
+  size_t bytesPerTrc = 4 * nSamp + 240;
+  size_t J = trcBuffer;
+  size_t N = nTrc / trcBuffer;
+  ptrdiff_t n_passed = 0;
+  double progressOld = 0;
+  double progressNew = 0;
+
+  TraceHeader hdr;
+  size_t skipBytesPerTrc = 4 * nSamp + 240 - nSamp*4;
+  file.seekg(3600, std::ios_base::beg);
+  for (ptrdiff_t n = 0; n <= N; n++) {
+    if (progressCallback){
+      progressNew = n_passed / (double)N;
+      // update callback only if the difference >= 1% than the previous value
+      if (progressNew - progressOld >= 0.01){
+        progressCallback( progressNew );
+        progressOld = progressNew;
+      }
+    }
+
+    if (n < N) {
+      J = trcBuffer;
+    } else {
+      J = nTrc - N * trcBuffer;
+    }
+
+    if (J == 0)
+      continue;
+
+    HDR.resize(J, 78);
+    TRACE.resize(nSamp, J);
+    for (size_t j = 0; j < J; j++) {
+      file.read(bit_cast<char *>(&hdr), sizeof(hdr));
+      int ii = 0;
+      for (int i = 0; i < (sizeof(hdr.b0)/sizeof(*hdr.b0)); i++){
+        if (ii >= HDR.cols())
+          break;
+        HDR(j,mapHdr2origin[ii]) = (double)hdr.b0[i];
+        ii++;
+      }
+      for (int i = 0; i < (sizeof(hdr.b1)/sizeof(*hdr.b1)); i++){
+        if (ii >= HDR.cols())
+          break;
+        HDR(j,mapHdr2origin[ii]) = (double)hdr.b1[i];
+        ii++;
+      }
+      for (int i = 0; i < (sizeof(hdr.b2)/sizeof(*hdr.b2)); i++){
+        if (ii >= HDR.cols())
+          break;
+        HDR(j,mapHdr2origin[ii]) = (double)hdr.b2[i];
+        ii++;
+      }
+      for (int i = 0; i < (sizeof(hdr.b3)/sizeof(*hdr.b3)); i++){
+        if (ii >= HDR.cols())
+          break;
+        HDR(j,mapHdr2origin[ii]) = (double)hdr.b3[i];
+        ii++;
+      }
+      for (int i = 0; i < (sizeof(hdr.b4)/sizeof(*hdr.b4)); i++){
+        if (ii >= HDR.cols())
+          break;
+        HDR(j,mapHdr2origin[ii]) = (double)hdr.b4[i];
+        ii++;
+      }
+      for (int i = 0; i < (sizeof(hdr.b5)/sizeof(*hdr.b5)); i++){
+        if (ii >= HDR.cols())
+          break;
+        HDR(j,mapHdr2origin[ii]) = (double)hdr.b5[i];
+        ii++;
+      }
+      for (int i = 0; i < (sizeof(hdr.b6)/sizeof(*hdr.b6)); i++){
+        if (ii >= HDR.cols())
+          break;
+        HDR(j,mapHdr2origin[ii]) = (double)hdr.b6[i];
+        ii++;
+      }
+      for (int i = 0; i < (sizeof(hdr.b7)/sizeof(*hdr.b7)); i++){
+        if (ii >= HDR.cols())
+          break;
+        HDR(j,mapHdr2origin[ii]) = (double)hdr.b7[i];
+        ii++;
+      }
+
+      if (format == h5geo::SegyFormat::FourByte_IBM) {
+        Eigen::VectorX<int> trace(TRACE.rows());
+        file.read(bit_cast<char *>(trace.data()), trace.size()*4);
+        for (size_t i = 0; i < TRACE.rows(); i++){
+          TRACE(i,j) = ibm2ieee(to_native_endian(trace(i), endian));
+        }
+      } else if (format == h5geo::SegyFormat::FourByte_integer) {
+        Eigen::VectorX<int> trace(TRACE.rows());
+        file.read(bit_cast<char *>(trace.data()), trace.size()*4);
+        for (size_t i = 0; i < TRACE.rows(); i++){
+          TRACE(i,j) = (float)to_native_endian(trace(i), endian);
+        }
+      } else if (format == h5geo::SegyFormat::FourByte_IEEE) {
+        file.read(bit_cast<char *>(TRACE.col(j).data()), TRACE.rows()*4);
+        for (size_t i = 0; i < TRACE.rows(); i++){
+          TRACE(i,j) = (float)to_native_endian(TRACE(i,j), endian);
+        }
+      }
+    }
+
+    seis->writeTraceHeader(HDR, fromTrc);
+    seis->writeTrace(TRACE, fromTrc);
+    fromTrc = fromTrc + J;
+    n_passed++;
+
+    for (ptrdiff_t i = 0; i < HDR.rows(); i++) {
+      for (ptrdiff_t j = 0; j < HDR.cols(); j++) {
+        minHDRVec(j) = std::min(minHDRVec(j), HDR(i, j));
+        maxHDRVec(j) = std::max(maxHDRVec(j), HDR(i, j));
+      }
+    }
+  }
+
+  if (progressCallback)
+    progressCallback( double(1) );
+
+  return true;
+}
+
 bool readSEGYSTACK(
     H5Vol* vol,
     const std::string& segy,
