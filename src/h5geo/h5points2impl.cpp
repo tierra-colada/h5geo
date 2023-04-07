@@ -108,13 +108,15 @@ bool H5Points2Impl<TBase>::transformPoints(
     else
       coordTrans.reset(this->createCoordinateTransformationToWriteData(
                          lengthUnitsFrom));
-    if (!coordTrans)
+
+    if (coordTrans){
+      for (auto& point : data)
+        coordTrans->Transform(1, &point.p[0], &point.p[1]);
+
+      return true;
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
       return false;
-
-    for (auto& point : data)
-      coordTrans->Transform(1, &point.p[0], &point.p[1]);
-
-    return true;
+    }
   }
 #endif
 

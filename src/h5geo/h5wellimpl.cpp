@@ -241,14 +241,15 @@ bool H5WellImpl::setHeadCoord(
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
-    if (!coordTrans)
+    if (coordTrans){
+      coordTrans->Transform(1, &v(0), &v(1));
+      return h5geo::overwriteAttribute(
+            objG,
+            std::string{h5geo::detail::head_coord},
+            v);
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
       return false;
-
-    coordTrans->Transform(1, &v(0), &v(1));
-    return h5geo::overwriteAttribute(
-          objG,
-          std::string{h5geo::detail::head_coord},
-          v);
+    }
   }
 #endif
 
@@ -312,18 +313,19 @@ Eigen::VectorXd H5WellImpl::getHeadCoord(
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
-    if (!coordTrans)
+    if (coordTrans){
+      Eigen::VectorXd v = h5geo::readDoubleEigenVecAttribute(
+            objG,
+            std::string{h5geo::detail::head_coord});
+
+      if (v.size() != 2)
+        return Eigen::VectorXd();
+
+      coordTrans->Transform(1, &v(0), &v(1));
+      return v;
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
       return Eigen::VectorXd();
-
-    Eigen::VectorXd v = h5geo::readDoubleEigenVecAttribute(
-          objG,
-          std::string{h5geo::detail::head_coord});
-
-    if (v.size() != 2)
-      return Eigen::VectorXd();
-
-    coordTrans->Transform(1, &v(0), &v(1));
-    return v;
+    }
   }
 #endif
 

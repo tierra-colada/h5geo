@@ -129,11 +129,13 @@ bool H5Points4Impl<TBase>::transformPoints(
     else
       coordTrans.reset(this->createCoordinateTransformationToWriteData(
                          lengthUnitsFrom));
-    if (!coordTrans)
-      return false;
 
-    for (auto& point : data)
-      coordTrans->Transform(1, &point.p[0], &point.p[1]);
+    if (coordTrans){
+      for (auto& point : data)
+        coordTrans->Transform(1, &point.p[0], &point.p[1]);
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
+      return false;
+    }
 
     double coef;
     if (!lengthUnitsFrom.empty() &&

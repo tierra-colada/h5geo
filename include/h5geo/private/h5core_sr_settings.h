@@ -16,6 +16,11 @@ namespace h5geo
 
 namespace sr {
 
+/// \brief If True then coord transform will be omited on failure.
+/// Otherwise invalid transformation will be given.
+/// Default value is False
+H5GEO_EXPORT void setIgnoreCoordTransformOnFailure(bool val);
+H5GEO_EXPORT bool getIgnoreCoordTransformOnFailure();
 
 /// \brief Set spatial reference from OGRSpatialReference.
 /// \param sr 

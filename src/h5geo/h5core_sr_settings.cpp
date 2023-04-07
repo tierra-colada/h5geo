@@ -17,6 +17,7 @@ namespace sr {
 
 namespace {
 
+bool ignoreCoordTransformOnFailure = false;
 OGRSpatialReference SpatialReference {};
 // GDAL sometimes is unable to retrieve AuthName, AuthCode and SRName 
 // info from OGRSpatialReference.
@@ -28,6 +29,14 @@ std::string TemporalUnits {};
 std::string Domain {};
 
 } // namespace
+
+void setIgnoreCoordTransformOnFailure(bool val){
+  ignoreCoordTransformOnFailure = val;
+}
+
+bool getIgnoreCoordTransformOnFailure(){
+  return ignoreCoordTransformOnFailure;
+}
 
 void setSpatialReference(OGRSpatialReference sr){
   SpatialReference = sr;

@@ -432,17 +432,18 @@ bool H5SeisImpl::writeXYTraceHeaders(
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
-    if (!coordTrans)
+    if (coordTrans){
+      coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
+      traceHeaderD.select({size_t(hdrInd_0), fromTrc},
+                          {(size_t)1,
+                          (size_t)xy.size()}).write_raw(xy.col(0).data());
+      traceHeaderD.select({size_t(hdrInd_1), fromTrc},
+                          {(size_t)1,
+                          (size_t)xy.size()}).write_raw(xy.col(1).data());
+      return true;
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
       return false;
-
-    coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
-    traceHeaderD.select({size_t(hdrInd_0), fromTrc},
-                        {(size_t)1,
-                         (size_t)xy.size()}).write_raw(xy.col(0).data());
-    traceHeaderD.select({size_t(hdrInd_1), fromTrc},
-                        {(size_t)1,
-                         (size_t)xy.size()}).write_raw(xy.col(1).data());
-    return true;
+    }
   }
 #endif
 
@@ -487,13 +488,14 @@ bool H5SeisImpl::writeXYTraceHeaders(
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
-    if (!coordTrans)
+    if (coordTrans){
+      coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
+      traceHeaderD.select(elSet_0).write_raw(xy.col(0).data());
+      traceHeaderD.select(elSet_1).write_raw(xy.col(1).data());
+      return true;
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
       return false;
-
-    coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
-    traceHeaderD.select(elSet_0).write_raw(xy.col(0).data());
-    traceHeaderD.select(elSet_1).write_raw(xy.col(1).data());
-    return true;
+    }
   }
 #endif
 
@@ -866,19 +868,20 @@ Eigen::MatrixXd H5SeisImpl::getXYTraceHeaders(
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
-    if (!coordTrans)
+    if (coordTrans){
+      xy.col(0) = this->getTraceHeader(
+            fromTrc, nTrc, hdrInd_0, 1);
+      xy.col(1) = this->getTraceHeader(
+            fromTrc, nTrc, hdrInd_1, 1);
+
+      if (xy.cols() != 2 || xy.rows() < 1)
+        return Eigen::MatrixXd();
+
+      coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
+      return xy;
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
       return Eigen::MatrixXd();
-
-    xy.col(0) = this->getTraceHeader(
-          fromTrc, nTrc, hdrInd_0, 1);
-    xy.col(1) = this->getTraceHeader(
-          fromTrc, nTrc, hdrInd_1, 1);
-
-    if (xy.cols() != 2 || xy.rows() < 1)
-      return Eigen::MatrixXd();
-
-    coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
-    return xy;
+    }
   }
 #endif
 
@@ -902,17 +905,18 @@ Eigen::MatrixXd H5SeisImpl::getXYTraceHeaders(
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
-    if (!coordTrans)
+    if (coordTrans){
+      Eigen::MatrixXd xy = this->getTraceHeader(
+            xyHdrNames, trcInd);
+
+      if (xy.cols() != 2 || xy.rows() < 1)
+        return Eigen::MatrixXd();
+
+      coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
+      return xy;
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
       return Eigen::MatrixXd();
-
-    Eigen::MatrixXd xy = this->getTraceHeader(
-          xyHdrNames, trcInd);
-
-    if (xy.cols() != 2 || xy.rows() < 1)
-      return Eigen::MatrixXd();
-
-    coordTrans->Transform(xy.rows(), xy.col(0).data(), xy.col(1).data());
-    return xy;
+    }
   }
 #endif
 
@@ -1557,11 +1561,12 @@ bool H5SeisImpl::generatePRESTKGeometry(
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
-    if (!coordTrans)
+    if (coordTrans){
+      coordTrans->Transform(1, &src_x0, &src_y0);
+      coordTrans->Transform(1, &rec_x0, &rec_y0);
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
       return false;
-
-    coordTrans->Transform(1, &src_x0, &src_y0);
-    coordTrans->Transform(1, &rec_x0, &rec_y0);
+    }
   }
 #endif
 
@@ -1604,10 +1609,11 @@ bool H5SeisImpl::generateSTKGeometry(
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnits));
-    if (!coordTrans)
+    if (coordTrans){
+      coordTrans->Transform(1, &x0, &y0);
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
       return false;
-
-    coordTrans->Transform(1, &x0, &y0);
+    }
   }
 #endif
 
@@ -2037,11 +2043,12 @@ Eigen::MatrixXd H5SeisImpl::calcBoundary(
 #ifdef H5GEO_USE_GDAL
   if (doCoordTransform){
     OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnits));
-    if (!coordTrans)
+    if (coordTrans){
+      coordTrans->Transform(boundary.rows(), boundary.col(0).data(), boundary.col(1).data());
+      return boundary;
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
       return Eigen::MatrixXd();
-
-    coordTrans->Transform(boundary.rows(), boundary.col(0).data(), boundary.col(1).data());
-    return boundary;
+    }
   }
 #endif
 

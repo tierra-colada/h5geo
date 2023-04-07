@@ -137,6 +137,8 @@ std::tuple<Eigen::MatrixXf, Eigen::MatrixXf> transformCoordToFW(
 void defineSRSettingsFunctions(py::module_& m_sr){
 //  m_sr.attr("SpatialReference")= &sr::SpatialReference;
 
+  m_sr.def("setIgnoreCoordTransformOnFailure", &sr::setIgnoreCoordTransformOnFailure);
+  m_sr.def("getIgnoreCoordTransformOnFailure", &sr::getIgnoreCoordTransformOnFailure);
   m_sr.def("setSpatialReference", &sr::setSpatialReference);
   m_sr.def("setSpatialReferenceFromUserInput", py::overload_cast<
            const std::string&>(

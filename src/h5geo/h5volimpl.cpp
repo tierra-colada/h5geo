@@ -117,14 +117,15 @@ bool H5VolImpl::setOrigin(
   }
 
 #ifdef H5GEO_USE_GDAL
-if (doCoordTransform){
-  // here we use `lengthUnitsTo` as `lengthUnitsFrom` as we already did units conversion
-  OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnitsTo));
-  if (!coordTrans)
-    return false;
-
-  coordTrans->Transform(1, &v(0), &v(1));
-}
+  if (doCoordTransform){
+    // here we use `lengthUnitsTo` as `lengthUnitsFrom` as we already did units conversion
+    OGRCT_ptr coordTrans(createCoordinateTransformationToWriteData(lengthUnitsTo));
+    if (coordTrans){
+      coordTrans->Transform(1, &v(0), &v(1));
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
+      return false;
+    }
+  }
 #endif
 
   return h5geo::overwriteAttribute(
@@ -287,10 +288,11 @@ Eigen::VectorXd H5VolImpl::getOrigin(
   if (doCoordTransform){
     // here we use `lengthUnitsFrom` as `lengthUnitsTo` as we already did units conversion
     OGRCT_ptr coordTrans(createCoordinateTransformationToReadData(lengthUnitsFrom));
-    if (!coordTrans)
+    if (coordTrans){
+      coordTrans->Transform(1, &v(0), &v(1));
+    } else if (!coordTrans && !h5geo::sr::getIgnoreCoordTransformOnFailure()){
       return Eigen::VectorXd();
-
-    coordTrans->Transform(1, &v(0), &v(1));
+    }
   }
 #endif
 
