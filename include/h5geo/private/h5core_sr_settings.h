@@ -28,8 +28,16 @@ H5GEO_EXPORT bool getIgnoreCoordTransformOnFailure();
 /// \note consider using other API through `std::string` to 
 /// avoid problems with returning back AuthName, AuthCode or SRName
 H5GEO_EXPORT void setSpatialReference(OGRSpatialReference sr);
+/// \brief 
+/// \param name 
+/// \return 
+/// \note Length and Angular units must be set separately before or after calling this
 H5GEO_EXPORT void setSpatialReferenceFromUserInput(
     const std::string& name);
+/// \brief 
+/// \param name 
+/// \return 
+/// \note Length and Angular units must be set separately before or after calling this
 H5GEO_EXPORT void setSpatialReferenceFromUserInput(
     const std::string& authName, const std::string& code);
 H5GEO_EXPORT OGRSpatialReference getSpatialReference();

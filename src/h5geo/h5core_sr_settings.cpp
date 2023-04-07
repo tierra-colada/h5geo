@@ -25,6 +25,11 @@ OGRSpatialReference SpatialReference {};
 std::string SRName {};
 std::string AuthName {};
 std::string AuthCode {};
+// even GDAL stores linear and angular units, if spatial reference is invalid
+// then GDAL gives 'unknown' length units and 'degree' angular units.
+// thus it is better to make a proxy variables to store these values
+std::string LengthUnits {};
+std::string AngularUnits {};
 std::string TemporalUnits {};
 std::string Domain {};
 
@@ -40,12 +45,32 @@ bool getIgnoreCoordTransformOnFailure(){
 
 void setSpatialReference(OGRSpatialReference sr){
   SpatialReference = sr;
+
+  // update length units
+  const char *lengthUnits = nullptr;
+  SpatialReference.GetLinearUnits(&lengthUnits);
+  if (lengthUnits){
+    LengthUnits = std::string(lengthUnits);
+  }
+
+  // update temporal units
+  const char *angularUnits = nullptr;
+  SpatialReference.GetAngularUnits(&angularUnits);
+  if (angularUnits){
+    AngularUnits = std::string(angularUnits);
+  }
 }
 
 void setSpatialReferenceFromUserInput(
     const std::string& name){
   SRName = name;
   SpatialReference.SetFromUserInput(name.c_str());
+
+  // update length units
+  h5geo::sr::setLengthUnits(LengthUnits);
+
+  // update angular units
+  h5geo::sr::setAngularUnits(AngularUnits);
 }
 
 void setSpatialReferenceFromUserInput(
@@ -53,6 +78,12 @@ void setSpatialReferenceFromUserInput(
   AuthName = authName;
   AuthCode = code;
   SpatialReference.SetFromUserInput((authName + ":" + code).c_str());
+
+  // update length units
+  h5geo::sr::setLengthUnits(LengthUnits);
+
+  // update angular units
+  h5geo::sr::setAngularUnits(AngularUnits);
 }
 
 OGRSpatialReference getSpatialReference(){
@@ -60,6 +91,7 @@ OGRSpatialReference getSpatialReference(){
 }
 
 void setLengthUnits(const std::string& units){
+  LengthUnits = units;
   double coef = units::convert(
       units::unit_from_string(units),
       units::unit_from_string("meter"));
@@ -67,6 +99,7 @@ void setLengthUnits(const std::string& units){
 }
 
 void setAngularUnits(const std::string& units){
+  AngularUnits = units;
   double coef = units::convert(
       units::unit_from_string(units),
       units::unit_from_string("radian"));
@@ -104,19 +137,21 @@ std::string getSRName(){
 }
 
 std::string getLengthUnits(){
-  const char *units = nullptr;
-  SpatialReference.GetLinearUnits(&units);
-  if (!units)
-    return std::string();
-  return std::string(units);
+  return LengthUnits;
+  // const char *units = nullptr;
+  // SpatialReference.GetLinearUnits(&units);
+  // if (!units)
+  //   return std::string();
+  // return std::string(units);
 }
 
 std::string getAngularUnits(){
-  const char *units = nullptr;
-  SpatialReference.GetAngularUnits(&units);
-  if (!units)
-    return std::string();
-  return std::string(units);
+  return AngularUnits;
+  // const char *units = nullptr;
+  // SpatialReference.GetAngularUnits(&units);
+  // if (!units)
+  //   return std::string();
+  // return std::string(units);
 }
 
 std::string getTemporalUnits(){
