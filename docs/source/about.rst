@@ -31,9 +31,6 @@ For now **h5geo** provides API to work with:
 * maps
 * points
 
-Originally the project was started as part of a free and open source geophysical platform 
-`Colada <https://github.com/tierra-colada/Colada>`_.
-
 License
 -------
 

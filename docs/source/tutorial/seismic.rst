@@ -235,7 +235,7 @@ Add Pkey ``CDP`` and then you are free to retrieve any ``CDP-...`` sorted data.
    Sorting idea is effetive only if the chosen PKey has many repeating values.
 
 Calculating XY boundary around the survey
---------------------------------------
+-----------------------------------------
 
 There is a convenient function to calculate XY boundary around survey.
 For 3D and 2D prestack data it uses convex hull algorithm.
