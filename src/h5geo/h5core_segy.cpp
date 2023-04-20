@@ -1194,7 +1194,7 @@ bool readSEGYSTACK(
       IL.transposeInPlace();          // switch X and Z axes
       if (sampRate < 0)
         IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
-      vol->writeData(IL, 0, i, 0, nxl, n_fact, nSamp);
+      vol->writeData(IL, 0, nil-(i+n_fact), 0, nxl, n_fact, nSamp);
     }
   } else if (isXLReversed){
     for (size_t i = 0; i < nil; i+=N){

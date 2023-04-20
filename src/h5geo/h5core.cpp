@@ -785,39 +785,36 @@ bool _getSurveyInfoFromSortedData(
     p2_XLr_ILr(1) = y(nxl-1);
   }
 
-  auto getOctantFromNonNegativeOrientation = [](double a)->int{
+  // angle must be in range [-180,180] degrees (don't make it [0,360] - it will require to reorder octants)
+  auto getOctantFromOrientation = [](double a)->int{
+    if (a >= -180 && a < -90)
+      return 3;
+    if (a >= -90 && a < 0)
+      return 4;
     if (a >= 0 && a < 90)
       return 1;
     if (a >= 90 && a < 180)
       return 2;
-    if (a >= 180 && a < 270)
-      return 3;
-    if (a >= 270 && a < 360)
-      return 4;
     return -1;
   };
 
-  // orientation to p1 and p2 respectively
+  // orientation to p1 and p2 respectively in range [-180,180] degrees (don't make it [0,360] - it will require to reorder octants)
   double orientation_XL_IL_p1 = 180*std::atan2(p1_XL_IL(1)-o_XL_IL(1), p1_XL_IL(0)-o_XL_IL(0))/M_PI;
-  if (orientation_XL_IL_p1 < 0)
-    orientation_XL_IL_p1 += 360;
   double orientation_XL_IL_p2 = 180*std::atan2(p2_XL_IL(1)-o_XL_IL(1), p2_XL_IL(0)-o_XL_IL(0))/M_PI;
-  if (orientation_XL_IL_p2 < 0)
-    orientation_XL_IL_p2 += 360;
 
   // to correctly define plan reversed and orientation we need to make 3D plan even if it is 2D
   if (nxl == 1){
     orientation_XL_IL_p1 = orientation_XL_IL_p2 + 90;
-    if (orientation_XL_IL_p1 > 0)
+    if (orientation_XL_IL_p1 > 180)
       orientation_XL_IL_p1 -= 360;
   } else if (nil == 1){
     orientation_XL_IL_p2 = orientation_XL_IL_p1 + 90;
-    if (orientation_XL_IL_p2 > 0)
+    if (orientation_XL_IL_p2 > 180)
       orientation_XL_IL_p2 -= 360;
   }
 
-  int octant_XL_IL_p1 = getOctantFromNonNegativeOrientation(orientation_XL_IL_p1);
-  int octant_XL_IL_p2 = getOctantFromNonNegativeOrientation(orientation_XL_IL_p2);
+  int octant_XL_IL_p1 = getOctantFromOrientation(orientation_XL_IL_p1);
+  int octant_XL_IL_p2 = getOctantFromOrientation(orientation_XL_IL_p2);
 
   // Plan reversed when p1 is ahead of p2
   isPlanReversed = false;
