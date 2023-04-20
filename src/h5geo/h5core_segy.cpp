@@ -1186,16 +1186,7 @@ bool readSEGYSTACK(
       if (i1 >= ind.size())
         i1 = ind.size()-1;
       size_t n_fact = (i1-i0+1)/nxl;
-      Eigen::VectorX<ptrdiff_t> ind_il(i1-i0+1);
-      size_t ii1 = ind_il.size()-1;
-      for (size_t n = 0; n < N; n++){
-        size_t i1 = i0+nxl-1;
-        if (i1 >= ind.size())
-          i1 = ind.size()-1;
-        size_t ii0 = ii1-nxl+1;
-        ind_il(Eigen::seq(ii0,ii1)) = ind(Eigen::seq(i1,i0,Eigen::fix<-1>));
-        ii1 = ii0-1;
-      }
+      Eigen::VectorX<ptrdiff_t> ind_il = ind(Eigen::seq(i1,i0,Eigen::fix<-1>));
       Eigen::MatrixXf IL(nSamp, ind_il.size());
       for (size_t j = 0; j < ind_il.size(); j++){
         h5geo::readSEGYTrace(file, ind_il(j), format, endian, IL.col(j));
@@ -1203,7 +1194,7 @@ bool readSEGYSTACK(
       IL.transposeInPlace();          // switch X and Z axes
       if (sampRate < 0)
         IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
-      vol->writeData(IL, 0, nil-(i+1), 0, nxl, n_fact, nSamp);
+      vol->writeData(IL, 0, i, 0, nxl, n_fact, nSamp);
     }
   } else if (isXLReversed){
     for (size_t i = 0; i < nil; i+=N){
@@ -1215,14 +1206,10 @@ bool readSEGYSTACK(
         i1 = ind.size()-1;
       size_t n_fact = (i1-i0+1)/nxl;
       Eigen::VectorX<ptrdiff_t> ind_il(i1-i0+1);
-      size_t ii1 = ind_il.size()-1;
-      for (size_t n = 0; n < N; n++){
-        size_t i1 = i0+nxl-1;
-        if (i1 >= ind.size())
-          i1 = ind.size()-1;
-        size_t ii0 = ii1-nxl+1;
-        ind_il(Eigen::seq(ii0,ii1)) = ind(Eigen::seq(i0,i1));
-        ii1 = ii0-1;
+      for (size_t n = 0; n < n_fact; n++){
+        size_t ii0 = nxl*n;
+        size_t ii1 = ii0+nxl-1;
+        ind_il(Eigen::seq(ii0,ii1)) = ind(Eigen::seq(i0+nxl*(n+1)-1,i0+nxl*n,Eigen::fix<-1>));
       }
       Eigen::MatrixXf IL(nSamp, ind_il.size());
       for (size_t j = 0; j < ind_il.size(); j++){
@@ -1231,7 +1218,7 @@ bool readSEGYSTACK(
       IL.transposeInPlace();          // switch X and Z axes
       if (sampRate < 0)
         IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
-      vol->writeData(IL, 0, nil-(i+1), 0, nxl, n_fact, nSamp);
+      vol->writeData(IL, 0, i, 0, nxl, n_fact, nSamp);
     }
   } else if (isILReversed){
     for (size_t i = 0; i < nil; i+=N){
@@ -1242,7 +1229,12 @@ bool readSEGYSTACK(
       if (i1 >= ind.size())
         i1 = ind.size()-1;
       size_t n_fact = (i1-i0+1)/nxl;
-      Eigen::VectorX<ptrdiff_t> ind_il = ind(Eigen::seq(i1,i0,Eigen::fix<-1>));
+      Eigen::VectorX<ptrdiff_t> ind_il(i1-i0+1);
+      for (size_t n = 0; n < n_fact; n++){
+        size_t ii0 = nxl*n;
+        size_t ii1 = ii0+nxl-1;
+        ind_il(Eigen::seq(ii0,ii1)) = ind(Eigen::seq(i1-nxl*(n+1)+1,i1-nxl*n));
+      }
       Eigen::MatrixXf IL(nSamp, ind_il.size());
       for (size_t j = 0; j < ind_il.size(); j++){
         h5geo::readSEGYTrace(file, ind_il(j), format, endian, IL.col(j));
@@ -1250,7 +1242,7 @@ bool readSEGYSTACK(
       IL.transposeInPlace();          // switch X and Z axes
       if (sampRate < 0)
         IL.rowwise().reverseInPlace();  // horizontal flip (Z axis flip)
-      vol->writeData(IL, 0, i, 0, nxl, n_fact, nSamp);
+      vol->writeData(IL, 0, nil-(i+n_fact), 0, nxl, n_fact, nSamp);
     }
   } else {
     for (size_t i = 0; i < nil; i+=N){

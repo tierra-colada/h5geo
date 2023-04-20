@@ -762,27 +762,27 @@ bool _getSurveyInfoFromSortedData(
   // if nxl == 1 then p1 == origin
   Eigen::Vector2d p1_XL_IL(o_XL_IL), p1_XLr_IL(o_XLr_IL), p1_XL_ILr(o_XL_ILr), p1_XLr_ILr(o_XLr_ILr);
   if (nxl > 1){
-    p1_XL_IL(0) = x(1);
-    p1_XL_IL(1) = y(1);
-    p1_XLr_IL(0) = x(nxl-2);
-    p1_XLr_IL(1) = y(nxl-2);
-    p1_XL_ILr(0) = x(last_ind-(nxl-2));
-    p1_XL_ILr(1) = y(last_ind-(nxl-2));
-    p1_XLr_ILr(0) = x(last_ind-1);
-    p1_XLr_ILr(1) = y(last_ind-1);
+    p1_XL_IL(0) = x(nxl-1);
+    p1_XL_IL(1) = y(nxl-1);
+    p1_XLr_IL(0) = x(0);
+    p1_XLr_IL(1) = y(0);
+    p1_XL_ILr(0) = x(last_ind);
+    p1_XL_ILr(1) = y(last_ind);
+    p1_XLr_ILr(0) = x(last_ind-(nxl-1));
+    p1_XLr_ILr(1) = y(last_ind-(nxl-1));
   }
 
   // if nil == 1 then p2 == origin
   Eigen::Vector2d p2_XL_IL(o_XL_IL), p2_XLr_IL(o_XLr_IL), p2_XL_ILr(o_XL_ILr), p2_XLr_ILr(o_XLr_ILr);
   if (nil > 1){
-    p2_XL_IL(0) = x(nxl);
-    p2_XL_IL(1) = y(nxl);
-    p2_XLr_IL(0) = x(2*nxl-1);
-    p2_XLr_IL(1) = y(2*nxl-1);
-    p2_XL_ILr(0) = x(last_ind-(2*nxl-1));
-    p2_XL_ILr(1) = y(last_ind-(2*nxl-1));
-    p2_XLr_ILr(0) = x(last_ind-nxl);
-    p2_XLr_ILr(1) = y(last_ind-nxl);
+    p2_XL_IL(0) = x(last_ind-(nxl-1));
+    p2_XL_IL(1) = y(last_ind-(nxl-1));
+    p2_XLr_IL(0) = x(last_ind);
+    p2_XLr_IL(1) = y(last_ind);
+    p2_XL_ILr(0) = x(0);
+    p2_XL_ILr(1) = y(0);
+    p2_XLr_ILr(0) = x(nxl-1);
+    p2_XLr_ILr(1) = y(nxl-1);
   }
 
   auto getOctantFromNonNegativeOrientation = [](double a)->int{
@@ -810,7 +810,7 @@ bool _getSurveyInfoFromSortedData(
     orientation_XL_IL_p1 = orientation_XL_IL_p2 + 90;
     if (orientation_XL_IL_p1 > 0)
       orientation_XL_IL_p1 -= 360;
-  } else if (nil = 1){
+  } else if (nil == 1){
     orientation_XL_IL_p2 = orientation_XL_IL_p1 + 90;
     if (orientation_XL_IL_p2 > 0)
       orientation_XL_IL_p2 -= 360;
@@ -844,7 +844,7 @@ bool _getSurveyInfoFromSortedData(
     isILReversed = false;
   }
 
-  // p1/p2 - second point on the first IL/XL
+  // p1/p2 - corner points (see picture in header file)
   Eigen::Vector2d p1, p2;
   if (!isXLReversed && !isILReversed){
     origin_x = o_XL_IL(0);
@@ -873,6 +873,20 @@ bool _getSurveyInfoFromSortedData(
   double p2_dx = p2(0)-origin_x;
   double p2_dy = p2(1)-origin_y;
 
+  // hypotenuse
+  ilSpacing = std::hypot(p1_dx, p1_dy);
+  xlSpacing = std::hypot(p2_dx, p2_dy);
+  if (nxl > 1)
+    ilSpacing /= double(nxl-1);
+  if (nil > 1)
+    xlSpacing /= double(nil-1);
+
+  // this is necessary as spacing can't be 0
+  if (ilSpacing == 0)
+    ilSpacing = 1;
+  if (xlSpacing == 0)
+    xlSpacing = 1;
+
   // orientation to p1 and p2 respectively
   double orientation1 = 180*std::atan2(p1_dy, p1_dx)/M_PI;
   double orientation2 = 180*std::atan2(p2_dy, p2_dx)/M_PI;
@@ -882,29 +896,6 @@ bool _getSurveyInfoFromSortedData(
   } else {
     orientation = orientation1;
   }
-
-  std::cout << "isILReversed: " << isILReversed << std::endl;
-  std::cout << "isXLReversed: " << isXLReversed << std::endl;
-  std::cout << "isPlanReversed: " << isPlanReversed << std::endl;
-
-  std::cout << "p1_dx: " << p1_dx << std::endl;
-  std::cout << "p1_dy: " << p1_dy << std::endl;
-  std::cout << "p2_dx: " << p2_dx << std::endl;
-  std::cout << "p2_dy: " << p2_dy << std::endl;
-
-  std::cout << "orientation: " << orientation << std::endl;
-  std::cout << "orientation1: " << orientation1 << std::endl;
-  std::cout << "orientation2: " << orientation2 << std::endl;
-
-  // hypotenuse
-  ilSpacing = std::hypot(p1_dx, p1_dy);
-  xlSpacing = std::hypot(p2_dx, p2_dy);
-
-  // this is necessary as spacing can't be set to 0
-  if (ilSpacing == 0)
-    ilSpacing = 1.0;
-  if (xlSpacing == 0)
-    xlSpacing = 1.0;
 
   return true;
 }
