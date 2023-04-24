@@ -1586,7 +1586,7 @@ bool H5SeisImpl::generatePRESTKGeometry(
     }
   }
 
-  return h5geo::generatePRESTKGeometry(
+  bool status = h5geo::generatePRESTKGeometry(
           this,
           src_x0, src_dx, src_nx,
           src_y0, src_dy, src_ny,
@@ -1596,6 +1596,10 @@ bool H5SeisImpl::generatePRESTKGeometry(
           rec_z,
           orientation,
           moveRec);
+  if (status)
+    this->updateTraceHeaderLimits();
+
+  return status;
 }
 
 bool H5SeisImpl::generateSTKGeometry(
@@ -1652,6 +1656,7 @@ bool H5SeisImpl::generateSTKGeometry(
     this->writeTraceHeader(key, geom[key]);
 
   this->setDataType(h5geo::SeisDataType::STACK);
+  this->updateTraceHeaderLimits();
   return true;
 }
 
