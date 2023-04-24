@@ -243,6 +243,9 @@ void defineGeoFunctions(py::module_& m){
         "Return: status, origin_x, origin_y, orientation, ilSpacing, xlSpacing, "
         "isILReversed, isXLReversed, isPlanReversed");
 
+  m.def("isStraightLine", py::overload_cast<const Eigen::Ref<const Eigen::VectorXf>&,const Eigen::Ref<const Eigen::VectorXf>&>(&isStraightLine));
+  m.def("isStraightLine", py::overload_cast<const Eigen::Ref<const Eigen::VectorXd>&,const Eigen::Ref<const Eigen::VectorXd>&>(&isStraightLine));
+
   #ifdef H5GEO_USE_GDAL
   // init GDAL readers
   m.def("GDALAllRegister", &GDALAllRegister,

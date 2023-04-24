@@ -1057,5 +1057,42 @@ bool getSurveyInfoFromUnsortedData(
         isPlanReversed);
 }
 
+template <typename Scalar>
+bool _isStraightLine(
+    const Eigen::Ref<const Eigen::VectorX<Scalar>>& x,
+    const Eigen::Ref<const Eigen::VectorX<Scalar>>& y)
+{
+  if (x.size() < 3 ||
+      y.size() < 3 ||
+      x.size() != y.size())
+    return true;
+
+  Scalar dx = x(1) - x(0);
+  Scalar dy = y(1) - y(0);
+  ptrdiff_t npts = x.size();
+  for (ptrdiff_t i = 2; i < npts; i++) {
+    Scalar dx1 = x(i) - x(0);
+    Scalar dy1 = y(i) - y(0);
+    if (std::abs<Scalar>(dx1*dy - dy1*dx) > std::numeric_limits<Scalar>::epsilon())
+      return false;
+  }
+
+  return true;
+}
+
+bool isStraightLine(
+    const Eigen::Ref<const Eigen::VectorXf>& x,
+    const Eigen::Ref<const Eigen::VectorXf>& y)
+{
+  return _isStraightLine(x,y);
+}
+
+bool isStraightLine(
+    const Eigen::Ref<const Eigen::VectorXd>& x,
+    const Eigen::Ref<const Eigen::VectorXd>& y)
+{
+  return _isStraightLine(x,y);
+}
+
 
 } // h5geo

@@ -826,6 +826,19 @@ H5GEO_EXPORT bool getSurveyInfoFromUnsortedData(
     bool &isXLReversed,
     bool &isPlanReversed);
 
+/// \brief check if all points lay on the same straight line
+/// taken from here: https://helloacm.com/algorithm-to-check-if-all-points-are-on-the-same-line/
+/// \param x 
+/// \param y 
+/// \return 
+H5GEO_EXPORT bool isStraightLine(
+    const Eigen::Ref<const Eigen::VectorXf>& x,
+    const Eigen::Ref<const Eigen::VectorXf>& y);
+
+H5GEO_EXPORT bool isStraightLine(
+    const Eigen::Ref<const Eigen::VectorXd>& x,
+    const Eigen::Ref<const Eigen::VectorXd>& y);
+
 
 template<typename Object,
          typename std::enable_if<
