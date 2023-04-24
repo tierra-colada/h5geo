@@ -693,76 +693,84 @@ $(function() {
 <div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span>    <span class="keywordtype">bool</span> &amp;isXLReversed,</div>
 <div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span>    <span class="keywordtype">bool</span> &amp;isPlanReversed);</div>
 <div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span> </div>
-<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span> </div>
-<div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Object,</div>
-<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
-<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span>           std::is_same&lt;Object, h5gt::File&gt;::value ||</div>
-<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span>           std::is_same&lt;Object, h5gt::Group&gt;::value ||</div>
-<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>           std::is_same&lt;Object, h5gt::DataSet&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
-<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span><span class="keywordtype">bool</span> deleteAllAttributes(Object&amp; <span class="keywordtype">object</span>);</div>
-<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span> </div>
-<div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Object,</div>
-<div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
-<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>           std::is_same&lt;Object, h5gt::File&gt;::value ||</div>
-<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>           std::is_same&lt;Object, h5gt::Group&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
-<div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span><span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceh5geo.html#a0dedd4dd5610d78b8c7f0ab3f976635d">unlinkContent</a>(Object&amp; <span class="keywordtype">object</span>);</div>
-<div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span> </div>
-<div class="line"><a id="l00851" name="l00851"></a><span class="lineno">  851</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span>Eigen::VectorX&lt;ptrdiff_t&gt; <a class="code hl_function" href="namespaceh5geo.html#ae581d216b77a0e425941bf384fbb1fc0">find_index</a>(</div>
-<div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span>    Eigen::DenseBase&lt;T&gt; <span class="keyword">const</span> &amp; M);</div>
-<div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span> </div>
-<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> D, <span class="keyword">typename</span> T,</div>
-<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
-<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span>           std::is_arithmetic&lt;T&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
-<div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span>h5gt::ElementSet rowCols2ElementSet(</div>
-<div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span>    <span class="keyword">const</span> T&amp; row,</div>
-<div class="line"><a id="l00860" name="l00860"></a><span class="lineno">  860</span>    <span class="keyword">const</span> Eigen::DenseBase&lt;D&gt;&amp; cols);</div>
-<div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span> </div>
-<div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> D, <span class="keyword">typename</span> T,</div>
-<div class="line"><a id="l00863" name="l00863"></a><span class="lineno">  863</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
-<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span>           std::is_arithmetic&lt;T&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
-<div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span>h5gt::ElementSet rowsCol2ElementSet(</div>
-<div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span>    <span class="keyword">const</span> Eigen::DenseBase&lt;D&gt;&amp; rows,</div>
-<div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span>    <span class="keyword">const</span> T&amp; col);</div>
-<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span> </div>
-<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> D&gt;</div>
-<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>h5gt::ElementSet <a class="code hl_function" href="namespaceh5geo.html#a1b0c379559c5f16c44b23bf274710b7b">rowsCols2ElementSet</a>(</div>
-<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>    <span class="keyword">const</span> Eigen::DenseBase&lt;D&gt;&amp; rows,</div>
-<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>    <span class="keyword">const</span> Eigen::DenseBase&lt;D&gt;&amp; cols);</div>
-<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span> </div>
-<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T,</div>
-<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
-<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span>           std::is_arithmetic&lt;T&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
-<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span>h5gt::ElementSet rowCols2ElementSet(</div>
-<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span>    <span class="keyword">const</span> T&amp; row,</div>
-<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>    <span class="keyword">const</span> std::vector&lt;T&gt;&amp; cols);</div>
-<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span> </div>
-<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T,</div>
-<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
-<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>           std::is_arithmetic&lt;T&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
-<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>h5gt::ElementSet rowsCol2ElementSet(</div>
-<div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>    <span class="keyword">const</span> std::vector&lt;T&gt;&amp; rows,</div>
-<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span>    <span class="keyword">const</span> T&amp; col);</div>
-<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span> </div>
-<div class="line"><a id="l00898" name="l00898"></a><span class="lineno">  898</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T,</div>
-<div class="line"><a id="l00899" name="l00899"></a><span class="lineno">  899</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
-<div class="line"><a id="l00900" name="l00900"></a><span class="lineno">  900</span>           std::is_arithmetic&lt;T&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
-<div class="line"><a id="l00901" name="l00901"></a><span class="lineno">  901</span>h5gt::ElementSet <a class="code hl_function" href="namespaceh5geo.html#a1b0c379559c5f16c44b23bf274710b7b">rowsCols2ElementSet</a>(</div>
-<div class="line"><a id="l00902" name="l00902"></a><span class="lineno">  902</span>    <span class="keyword">const</span> std::vector&lt;T&gt;&amp; rows,</div>
-<div class="line"><a id="l00903" name="l00903"></a><span class="lineno">  903</span>    <span class="keyword">const</span> std::vector&lt;T&gt;&amp; cols);</div>
-<div class="line"><a id="l00904" name="l00904"></a><span class="lineno">  904</span> </div>
-<div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span>} <span class="comment">// namespace h5geo</span></div>
-<div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span> </div>
-<div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span> </div>
-<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span><span class="preprocessor">#ifdef H5GEO_USE_GDAL</span></div>
-<div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span><span class="preprocessor">#include &quot;private/h5core_sr_settings.h&quot;</span></div>
-<div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span> </div>
-<div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span><span class="preprocessor">#include &quot;private/h5coreimpl.h&quot;</span></div>
-<div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span><span class="preprocessor">#include &quot;private/h5core_segy.h&quot;</span></div>
-<div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span> </div>
-<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span> </div>
-<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span><span class="preprocessor">#endif </span><span class="comment">// H5CORE_H</span></div>
+<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>H5GEO_EXPORT <span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceh5geo.html#a676f11539efd177cec8230581633b16a">isStraightLine</a>(</div>
+<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>    <span class="keyword">const</span> Eigen::Ref&lt;const Eigen::VectorXf&gt;&amp; x,</div>
+<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>    <span class="keyword">const</span> Eigen::Ref&lt;const Eigen::VectorXf&gt;&amp; y);</div>
+<div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span> </div>
+<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>H5GEO_EXPORT <span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceh5geo.html#a676f11539efd177cec8230581633b16a">isStraightLine</a>(</div>
+<div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span>    <span class="keyword">const</span> Eigen::Ref&lt;const Eigen::VectorXd&gt;&amp; x,</div>
+<div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span>    <span class="keyword">const</span> Eigen::Ref&lt;const Eigen::VectorXd&gt;&amp; y);</div>
+<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span> </div>
+<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span> </div>
+<div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Object,</div>
+<div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
+<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span>           std::is_same&lt;Object, h5gt::File&gt;::value ||</div>
+<div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span>           std::is_same&lt;Object, h5gt::Group&gt;::value ||</div>
+<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span>           std::is_same&lt;Object, h5gt::DataSet&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
+<div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span><span class="keywordtype">bool</span> deleteAllAttributes(Object&amp; <span class="keywordtype">object</span>);</div>
+<div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span> </div>
+<div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Object,</div>
+<div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
+<div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span>           std::is_same&lt;Object, h5gt::File&gt;::value ||</div>
+<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span>           std::is_same&lt;Object, h5gt::Group&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
+<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span><span class="keywordtype">bool</span> <a class="code hl_function" href="namespaceh5geo.html#a0dedd4dd5610d78b8c7f0ab3f976635d">unlinkContent</a>(Object&amp; <span class="keywordtype">object</span>);</div>
+<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span> </div>
+<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span>Eigen::VectorX&lt;ptrdiff_t&gt; <a class="code hl_function" href="namespaceh5geo.html#ae581d216b77a0e425941bf384fbb1fc0">find_index</a>(</div>
+<div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span>    Eigen::DenseBase&lt;T&gt; <span class="keyword">const</span> &amp; M);</div>
+<div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span> </div>
+<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> D, <span class="keyword">typename</span> T,</div>
+<div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
+<div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span>           std::is_arithmetic&lt;T&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
+<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span>h5gt::ElementSet rowCols2ElementSet(</div>
+<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>    <span class="keyword">const</span> T&amp; row,</div>
+<div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>    <span class="keyword">const</span> Eigen::DenseBase&lt;D&gt;&amp; cols);</div>
+<div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span> </div>
+<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> D, <span class="keyword">typename</span> T,</div>
+<div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
+<div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>           std::is_arithmetic&lt;T&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
+<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>h5gt::ElementSet rowsCol2ElementSet(</div>
+<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>    <span class="keyword">const</span> Eigen::DenseBase&lt;D&gt;&amp; rows,</div>
+<div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span>    <span class="keyword">const</span> T&amp; col);</div>
+<div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span> </div>
+<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> D&gt;</div>
+<div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span>h5gt::ElementSet <a class="code hl_function" href="namespaceh5geo.html#a1b0c379559c5f16c44b23bf274710b7b">rowsCols2ElementSet</a>(</div>
+<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>    <span class="keyword">const</span> Eigen::DenseBase&lt;D&gt;&amp; rows,</div>
+<div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>    <span class="keyword">const</span> Eigen::DenseBase&lt;D&gt;&amp; cols);</div>
+<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span> </div>
+<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T,</div>
+<div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
+<div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span>           std::is_arithmetic&lt;T&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
+<div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span>h5gt::ElementSet rowCols2ElementSet(</div>
+<div class="line"><a id="l00896" name="l00896"></a><span class="lineno">  896</span>    <span class="keyword">const</span> T&amp; row,</div>
+<div class="line"><a id="l00897" name="l00897"></a><span class="lineno">  897</span>    <span class="keyword">const</span> std::vector&lt;T&gt;&amp; cols);</div>
+<div class="line"><a id="l00898" name="l00898"></a><span class="lineno">  898</span> </div>
+<div class="line"><a id="l00899" name="l00899"></a><span class="lineno">  899</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T,</div>
+<div class="line"><a id="l00900" name="l00900"></a><span class="lineno">  900</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
+<div class="line"><a id="l00901" name="l00901"></a><span class="lineno">  901</span>           std::is_arithmetic&lt;T&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
+<div class="line"><a id="l00902" name="l00902"></a><span class="lineno">  902</span>h5gt::ElementSet rowsCol2ElementSet(</div>
+<div class="line"><a id="l00903" name="l00903"></a><span class="lineno">  903</span>    <span class="keyword">const</span> std::vector&lt;T&gt;&amp; rows,</div>
+<div class="line"><a id="l00904" name="l00904"></a><span class="lineno">  904</span>    <span class="keyword">const</span> T&amp; col);</div>
+<div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span> </div>
+<div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T,</div>
+<div class="line"><a id="l00912" name="l00912"></a><span class="lineno">  912</span>         <span class="keyword">typename</span> std::enable_if&lt;</div>
+<div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span>           std::is_arithmetic&lt;T&gt;::value&gt;::type* = <span class="keyword">nullptr</span>&gt;</div>
+<div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span>h5gt::ElementSet <a class="code hl_function" href="namespaceh5geo.html#a1b0c379559c5f16c44b23bf274710b7b">rowsCols2ElementSet</a>(</div>
+<div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>    <span class="keyword">const</span> std::vector&lt;T&gt;&amp; rows,</div>
+<div class="line"><a id="l00916" name="l00916"></a><span class="lineno">  916</span>    <span class="keyword">const</span> std::vector&lt;T&gt;&amp; cols);</div>
+<div class="line"><a id="l00917" name="l00917"></a><span class="lineno">  917</span> </div>
+<div class="line"><a id="l00918" name="l00918"></a><span class="lineno">  918</span>} <span class="comment">// namespace h5geo</span></div>
+<div class="line"><a id="l00919" name="l00919"></a><span class="lineno">  919</span> </div>
+<div class="line"><a id="l00920" name="l00920"></a><span class="lineno">  920</span> </div>
+<div class="line"><a id="l00921" name="l00921"></a><span class="lineno">  921</span><span class="preprocessor">#ifdef H5GEO_USE_GDAL</span></div>
+<div class="line"><a id="l00922" name="l00922"></a><span class="lineno">  922</span><span class="preprocessor">#include &quot;private/h5core_sr_settings.h&quot;</span></div>
+<div class="line"><a id="l00923" name="l00923"></a><span class="lineno">  923</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00924" name="l00924"></a><span class="lineno">  924</span> </div>
+<div class="line"><a id="l00925" name="l00925"></a><span class="lineno">  925</span><span class="preprocessor">#include &quot;private/h5coreimpl.h&quot;</span></div>
+<div class="line"><a id="l00926" name="l00926"></a><span class="lineno">  926</span><span class="preprocessor">#include &quot;private/h5core_segy.h&quot;</span></div>
+<div class="line"><a id="l00927" name="l00927"></a><span class="lineno">  927</span> </div>
+<div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span> </div>
+<div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span><span class="preprocessor">#endif </span><span class="comment">// H5CORE_H</span></div>
 <div class="ttc" id="aclass_h5_seis_html"><div class="ttname"><a href="class_h5_seis.html">H5Seis</a></div><div class="ttdoc">Provides API to work with seismic.</div><div class="ttdef"><b>Definition:</b> h5seis.h:33</div></div>
 <div class="ttc" id="anamespaceh5geo_html"><div class="ttname"><a href="namespaceh5geo.html">h5geo</a></div><div class="ttdoc">Basic namespace.</div><div class="ttdef"><b>Definition:</b> h5base.h:29</div></div>
 <div class="ttc" id="anamespaceh5geo_html_a0a3dd0fc58b43becbca4b2d7e03211a0"><div class="ttname"><a href="namespaceh5geo.html#a0a3dd0fc58b43becbca4b2d7e03211a0">h5geo::readFloatVecAttribute</a></div><div class="ttdeci">std::vector&lt; float &gt; readFloatVecAttribute(Object &amp;object, const std::string &amp;attrName, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)</div><div class="ttdoc">Read data from Attribute.</div><div class="ttdef"><b>Definition:</b> h5coreimpl.h:763</div></div>
@@ -780,6 +788,7 @@ $(function() {
 <div class="ttc" id="anamespaceh5geo_html_a4f39a30c83788206d76654b00a61c3f5"><div class="ttname"><a href="namespaceh5geo.html#a4f39a30c83788206d76654b00a61c3f5">h5geo::_readAttribute</a></div><div class="ttdeci">bool _readAttribute(Object &amp;holder, const std::string &amp;attrName, T *v, size_t nElem, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)</div><div class="ttdoc">Read data from Attribute.</div><div class="ttdef"><b>Definition:</b> h5coreimpl.h:322</div></div>
 <div class="ttc" id="anamespaceh5geo_html_a5b558176b6c85ebc83b3418efe2d8039"><div class="ttname"><a href="namespaceh5geo.html#a5b558176b6c85ebc83b3418efe2d8039">h5geo::writeDataToIndexedDataset</a></div><div class="ttdeci">bool writeDataToIndexedDataset(h5gt::DataSet &amp;dataset, const std::string &amp;attrName, const Eigen::DenseBase&lt; D &gt; &amp;v, bool resize)</div><div class="ttdoc">writeDataToIndexedDataset Try to write vector to dataset with attribute where attribute is a single v...</div><div class="ttdef"><b>Definition:</b> h5coreimpl.h:815</div></div>
 <div class="ttc" id="anamespaceh5geo_html_a5fafa609d359f48d71d6466cfcffc1e0"><div class="ttname"><a href="namespaceh5geo.html#a5fafa609d359f48d71d6466cfcffc1e0">h5geo::overwriteDataset</a></div><div class="ttdeci">bool overwriteDataset(Object &amp;node, const std::string &amp;datasetPath, Eigen::DenseBase&lt; D &gt; &amp;M, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)</div><div class="ttdoc">Create or overwrite DataSet.</div><div class="ttdef"><b>Definition:</b> h5coreimpl.h:175</div></div>
+<div class="ttc" id="anamespaceh5geo_html_a676f11539efd177cec8230581633b16a"><div class="ttname"><a href="namespaceh5geo.html#a676f11539efd177cec8230581633b16a">h5geo::isStraightLine</a></div><div class="ttdeci">H5GEO_EXPORT bool isStraightLine(const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;x, const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;y)</div><div class="ttdoc">check if all points lay on the same straight line taken from here: https://helloacm....</div><div class="ttdef"><b>Definition:</b> h5core.cpp:1083</div></div>
 <div class="ttc" id="anamespaceh5geo_html_a73210e188a372ac8d0ff28833d849317"><div class="ttname"><a href="namespaceh5geo.html#a73210e188a372ac8d0ff28833d849317">h5geo::getSurveyInfoFromSortedData</a></div><div class="ttdeci">H5GEO_EXPORT bool getSurveyInfoFromSortedData(const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;il, const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;xl, const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;x, const Eigen::Ref&lt; const Eigen::VectorXf &gt; &amp;y, double &amp;origin_x, double &amp;origin_y, double &amp;orientation, double &amp;ilSpacing, double &amp;xlSpacing, bool &amp;isILReversed, bool &amp;isXLReversed, bool &amp;isPlanReversed)</div><div class="ttdoc">getSurveyInfoFromSortedData It is assumed that il, xl, x, y are IL_XL sorted: ind=sort_rows(il_xl),...</div><div class="ttdef"><b>Definition:</b> h5core.cpp:948</div></div>
 <div class="ttc" id="anamespaceh5geo_html_a73c98492c94b704f04662b4a77d4cb93"><div class="ttname"><a href="namespaceh5geo.html#a73c98492c94b704f04662b4a77d4cb93">h5geo::overwriteResizableDataset</a></div><div class="ttdeci">bool overwriteResizableDataset(Object &amp;node, const std::string &amp;datasetPath, Eigen::DenseBase&lt; D &gt; &amp;M, const std::string &amp;unitsFrom=&quot;&quot;, const std::string &amp;unitsTo=&quot;&quot;)</div><div class="ttdoc">Resize and overwrite DataSet or create it if not exists.</div><div class="ttdef"><b>Definition:</b> h5coreimpl.h:81</div></div>
 <div class="ttc" id="anamespaceh5geo_html_a75b6f114f484fa13fb2730b95f922809"><div class="ttname"><a href="namespaceh5geo.html#a75b6f114f484fa13fb2730b95f922809">h5geo::splitPathToParentAndObj</a></div><div class="ttdeci">H5GEO_EXPORT std::string splitPathToParentAndObj(const std::string &amp;path, std::string &amp;objName)</div><div class="ttdoc">splitPathToParentAndObj Return path to parent and object name. E.g. if path = /a/s then it returns /a...</div><div class="ttdef"><b>Definition:</b> h5core.cpp:579</div></div>
