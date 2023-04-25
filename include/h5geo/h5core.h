@@ -830,14 +830,17 @@ H5GEO_EXPORT bool getSurveyInfoFromUnsortedData(
 /// taken from here: https://helloacm.com/algorithm-to-check-if-all-points-are-on-the-same-line/
 /// \param x 
 /// \param y 
+/// \param eps epsilon
 /// \return 
 H5GEO_EXPORT bool isStraightLine(
     const Eigen::Ref<const Eigen::VectorXf>& x,
-    const Eigen::Ref<const Eigen::VectorXf>& y);
+    const Eigen::Ref<const Eigen::VectorXf>& y,
+    float eps = std::numeric_limits<float>::epsilon());
 
 H5GEO_EXPORT bool isStraightLine(
     const Eigen::Ref<const Eigen::VectorXd>& x,
-    const Eigen::Ref<const Eigen::VectorXd>& y);
+    const Eigen::Ref<const Eigen::VectorXd>& y,
+    double eps = std::numeric_limits<double>::epsilon());
 
 
 template<typename Object,

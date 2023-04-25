@@ -1060,20 +1060,21 @@ bool getSurveyInfoFromUnsortedData(
 template <typename Scalar>
 bool _isStraightLine(
     const Eigen::Ref<const Eigen::VectorX<Scalar>>& x,
-    const Eigen::Ref<const Eigen::VectorX<Scalar>>& y)
+    const Eigen::Ref<const Eigen::VectorX<Scalar>>& y,
+    Scalar eps)
 {
   if (x.size() < 3 ||
       y.size() < 3 ||
       x.size() != y.size())
     return true;
 
-  Scalar dx = x(1) - x(0);
-  Scalar dy = y(1) - y(0);
+  Scalar dx = x(0) - x(1);
+  Scalar dy = y(0) - y(1);
   ptrdiff_t npts = x.size();
   for (ptrdiff_t i = 2; i < npts; i++) {
-    Scalar dx1 = x(i) - x(0);
-    Scalar dy1 = y(i) - y(0);
-    if (std::abs<Scalar>(dx1*dy - dy1*dx) > std::numeric_limits<Scalar>::epsilon())
+    Scalar dx1 = x(0) - x(i);
+    Scalar dy1 = y(0) - y(i);
+    if (std::abs<Scalar>(dx1*dy - dy1*dx) > eps)
       return false;
   }
 
@@ -1082,16 +1083,18 @@ bool _isStraightLine(
 
 bool isStraightLine(
     const Eigen::Ref<const Eigen::VectorXf>& x,
-    const Eigen::Ref<const Eigen::VectorXf>& y)
+    const Eigen::Ref<const Eigen::VectorXf>& y,
+    float eps)
 {
-  return _isStraightLine(x,y);
+  return _isStraightLine(x,y,eps);
 }
 
 bool isStraightLine(
     const Eigen::Ref<const Eigen::VectorXd>& x,
-    const Eigen::Ref<const Eigen::VectorXd>& y)
+    const Eigen::Ref<const Eigen::VectorXd>& y,
+    double eps)
 {
-  return _isStraightLine(x,y);
+  return _isStraightLine(x,y,eps);
 }
 
 
