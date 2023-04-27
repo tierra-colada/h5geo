@@ -334,7 +334,7 @@ bool generatePRESTKGeometry(
              (src_x.array()-x0)*sin(orientation)).array()+y0;
     rec_x = ((rec_x.array()-x0)*cos(orientation)-
              (rec_y.array()-y0)*sin(orientation)).array()+x0;
-    src_y = ((rec_y.array()-y0)*cos(orientation)+
+    rec_y = ((rec_y.array()-y0)*cos(orientation)+
              (rec_x.array()-x0)*sin(orientation)).array()+y0;
 
     seis->writeTraceHeader("SEQWL", lind, fromTrc);
