@@ -816,11 +816,11 @@ bool _getSurveyInfoFromSortedData(
   int octant_XL_IL_p1 = getOctantFromOrientation(orientation_XL_IL_p1);
   int octant_XL_IL_p2 = getOctantFromOrientation(orientation_XL_IL_p2);
 
-  // Plan reversed when p1 is ahead of p2
+  // Plan reversed when p1 is ahead of p2.
+  // 2D plan can also be reversed.
   isPlanReversed = false;
   if (octant_XL_IL_p1 >= octant_XL_IL_p2 &&
-      orientation_XL_IL_p2 - orientation_XL_IL_p1 < 0 &&
-      nil > 1 && nxl > 1)
+      orientation_XL_IL_p2 - orientation_XL_IL_p1 < 0)
     isPlanReversed = true;
 
   // XL reversed when XL_min corresponds to X_max
