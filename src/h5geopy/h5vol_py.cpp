@@ -88,7 +88,13 @@ void H5Vol_py(
       .def("exportToSEGY", &H5Vol::exportToSEGY,
            py::arg("segyFile"),
            py::arg_v("progressCallback", nullptr, "None"),
-           "export geo volume to SEGY");
+           "export geo volume to SEGY")
+
+      .def("recreateVolD", &H5Vol::recreateVolD,
+           py::arg("nX"), py::arg("nY"), py::arg("nZ"),
+           py::arg("xChunk"), py::arg("yChunk"), py::arg("zChunk"),
+           py::arg("compressionLevel"),
+           "Unlink and create new dataset");
 }
 
 

@@ -32,7 +32,7 @@ public:
 
   /// \brief Read SEGY STACK data, i.e. nTrc should be equal to nil*nxl.
   /// After reading origin, spacings, orientation, and angular units will be set.
-  /// \param segy 
+  /// \param segy
   /// \param ilHdrOffset INLINE offset in bytes
   /// \param ilHdrSize INLINE size in bytes
   /// \param xlHdrOffset XLINE offset in bytes
@@ -46,8 +46,8 @@ public:
   /// \param nTrc number of traces in SEGY (if 0 then try automatically detect)
   /// \param format SEGY format (ibm32, ieee32 or int4)
   /// \param endian Big or Little
-  /// \param progressCallback 
-  /// \return 
+  /// \param progressCallback
+  /// \return
   virtual bool readSEGYSTACK(
       const std::string& segy,
       const size_t& ilHdrOffset,
@@ -65,20 +65,20 @@ public:
       h5geo::Endian endian = static_cast<h5geo::Endian>(0),
       std::function<void(double)> progressCallback = nullptr) = 0;
 
-	/// \brief Set domain for the map (`TVD`, `TVDSS`, `TWT`, `OWT`)
+  /// \brief Set domain for the map (`TVD`, `TVDSS`, `TWT`, `OWT`)
   virtual bool setDomain(const h5geo::Domain& domain) = 0;
-	/// \brief Set coordinates of origin
+  /// \brief Set coordinates of origin
   virtual bool setOrigin(
       Eigen::Ref<Eigen::Vector3d> v,
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "",
       bool doCoordTransform = false) = 0;
-	/// \brief Set X,Y,Z unrotated spacings
+  /// \brief Set X,Y,Z unrotated spacings
   virtual bool setSpacings(
       Eigen::Ref<Eigen::Vector3d> v,
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "") = 0;
-	/// \brief Set XY plane orientation
+  /// \brief Set XY plane orientation
   virtual bool setOrientation(
       double val,
       const std::string& angularUnits = "") = 0;
@@ -98,42 +98,45 @@ public:
       const size_t& nZ,
       const std::string& dataUnits = "") = 0;
 
-	/// \brief Get domain (`TVD`, `TVDSS`, `TWT`, `OWT`)
+  /// \brief Get domain (`TVD`, `TVDSS`, `TWT`, `OWT`)
   virtual h5geo::Domain getDomain() = 0;
-	/// \brief Get coordinates of origin
+  /// \brief Get coordinates of origin
   virtual Eigen::VectorXd getOrigin(
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "",
       bool doCoordTransform = false) = 0;
-	/// \brief Get X,Y,Z unrotated spacings
+  /// \brief Get X,Y,Z unrotated spacings
   virtual Eigen::VectorXd getSpacings(
       const std::string& lengthUnits = "",
       const std::string& temporalUnits = "") = 0;
-	/// \brief Get XY plane orientation
+  /// \brief Get XY plane orientation
   virtual double getOrientation(
       const std::string& angularUnits = "") = 0;
-	/// \brief Get number of X values
+  /// \brief Get number of X values
   virtual size_t getNX() = 0;
-	/// \brief Get number of Y values
+  /// \brief Get number of Y values
   virtual size_t getNY() = 0;
-	/// \brief Get number of Z values
+  /// \brief Get number of Z values
   virtual size_t getNZ() = 0;
 
-	/// \brief Get parameters that were used to create current map
+  /// \brief Get parameters that were used to create current map
   virtual H5VolParam getParam() = 0;
 
-	/// \brief Open H5VolContainer where current vol resides
+  /// \brief Open H5VolContainer where current vol resides
   virtual H5VolContainer* openVolContainer() const = 0;
 
-	/// \brief Get current vol's DataSet
+  /// \brief Get current vol's DataSet
   virtual std::optional<h5gt::DataSet> getVolD() const = 0;
 
   virtual bool exportToSEGY(
-    const std::string& segyFile, 
-    std::function<void(double)> progressCallback = nullptr) = 0;
+      const std::string& segyFile,
+      std::function<void(double)> progressCallback = nullptr) = 0;
 
+  /// \brief Unlink and create new dataset without copying data
   virtual bool recreateVolD(
-    size_t xChunk, size_t yChunk, size_t zChunk, bool copyData) = 0;
+      size_t nX, size_t nY, size_t nZ,
+      size_t xChunk, size_t yChunk, size_t zChunk,
+      size_t compressionLevel) = 0;
 };
 
 using H5Vol_ptr = std::unique_ptr<H5Vol, h5geo::ObjectDeleter>;

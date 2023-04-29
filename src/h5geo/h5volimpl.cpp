@@ -555,28 +555,36 @@ bool H5VolImpl::exportToSEGY(
 }
 
 bool H5VolImpl::recreateVolD(
-  size_t xChunk, size_t yChunk, size_t zChunk, bool copyData)
+    size_t nX, size_t nY, size_t nZ,
+    size_t xChunk, size_t yChunk, size_t zChunk,
+    size_t compressionLevel)
 {
-  auto dsetOpt = this->getVolD();
-  if (!dsetOpt.has_value())
+  if (nX < 1 || nY < 1 || nZ < 1)
     return false;
 
-  H5VolParam param = this->getParam();
-  if (param.nX < 1 && param.nY < 1 && param.nZ < 1)
+  if (xChunk < 1 || yChunk < 1 || zChunk < 1)
     return false;
 
-  auto dsetCreateProps = dsetOpt->getCreateProps();
-  // dsetCreateProps
+  auto dsetOptOld = this->getVolD();
+  if (dsetOptOld.has_value())
+    dsetOptOld->unlink();
 
+  std::vector<size_t> count = {nZ, nY, nX};
+  std::vector<size_t> max_count = {h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED, h5gt::DataSpace::UNLIMITED};
+  std::vector<hsize_t> cdims = {xChunk, yChunk, zChunk};
+  h5gt::DataSetCreateProps props;
+  props.setChunk(cdims);
+  props.setDeflate(compressionLevel);
+  h5gt::DataSpace dataspace(count, max_count);
 
-  // if (dsetCreateProps.isChunked()){
-  //   std::vector<hsize_t> chunkSizeVec = dsetCreateProps.getChunk(dsetOpt->getDimensions().size());
-  //   if (chunkSizeVec.size() > 2){
-  //     p.xChunkSize = chunkSizeVec[2];
-  //     p.yChunkSize = chunkSizeVec[1];
-  //     p.zChunkSize = chunkSizeVec[0];
-  //   }
-  // }
+  try {
+    h5gt::Group group = this->getObjG();
+    group.createDataSet<float>(
+          std::string{h5geo::detail::vol_data},
+          dataspace, h5gt::LinkCreateProps(), props);
+  } catch (h5gt::Exception& err) {
+    return false;
+  }
 
   return true;
 }

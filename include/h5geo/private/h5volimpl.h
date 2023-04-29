@@ -90,7 +90,9 @@ public:
     std::function<void(double)> progressCallback = nullptr) override;
 
   virtual bool recreateVolD(
-    size_t xChunk, size_t yChunk, size_t zChunk, bool copyData) override;
+      size_t nX, size_t nY, size_t nZ,
+      size_t xChunk, size_t yChunk, size_t zChunk,
+      size_t compressionLevel) override;
 
   //----------- FRIEND CLASSES -----------
   friend class H5VolContainerImpl;
