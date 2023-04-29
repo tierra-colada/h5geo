@@ -89,6 +89,9 @@ public:
     const std::string& segyFile, 
     std::function<void(double)> progressCallback = nullptr) override;
 
+  virtual bool recreateVolD(
+    size_t xChunk, size_t yChunk, size_t zChunk, bool copyData) override;
+
   //----------- FRIEND CLASSES -----------
   friend class H5VolContainerImpl;
   friend class H5BaseObjectImpl<H5Vol>;

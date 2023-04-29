@@ -553,3 +553,30 @@ bool H5VolImpl::exportToSEGY(
     progressCallback( double(1) );
   return true;
 }
+
+bool H5VolImpl::recreateVolD(
+  size_t xChunk, size_t yChunk, size_t zChunk, bool copyData)
+{
+  auto dsetOpt = this->getVolD();
+  if (!dsetOpt.has_value())
+    return false;
+
+  H5VolParam param = this->getParam();
+  if (param.nX < 1 && param.nY < 1 && param.nZ < 1)
+    return false;
+
+  auto dsetCreateProps = dsetOpt->getCreateProps();
+  // dsetCreateProps
+
+
+  // if (dsetCreateProps.isChunked()){
+  //   std::vector<hsize_t> chunkSizeVec = dsetCreateProps.getChunk(dsetOpt->getDimensions().size());
+  //   if (chunkSizeVec.size() > 2){
+  //     p.xChunkSize = chunkSizeVec[2];
+  //     p.yChunkSize = chunkSizeVec[1];
+  //     p.zChunkSize = chunkSizeVec[0];
+  //   }
+  // }
+
+  return true;
+}

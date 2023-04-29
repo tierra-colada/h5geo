@@ -131,6 +131,9 @@ public:
   virtual bool exportToSEGY(
     const std::string& segyFile, 
     std::function<void(double)> progressCallback = nullptr) = 0;
+
+  virtual bool recreateVolD(
+    size_t xChunk, size_t yChunk, size_t zChunk, bool copyData) = 0;
 };
 
 using H5Vol_ptr = std::unique_ptr<H5Vol, h5geo::ObjectDeleter>;
