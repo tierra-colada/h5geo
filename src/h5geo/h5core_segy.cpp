@@ -1143,13 +1143,24 @@ bool readSEGYSTACK(
     return false;
 
   size_t nil = dv.quot;
-  if (!vol->resize(nxl, nil, nSamp))
+
+  // Recreate volume dataset with optimal chunking.
+  // Without this 2D volume may work extremely slow.
+  H5VolParam vp = vol->getParam();
+  vp.nX = nxl;
+  vp.nY = nil;
+  vp.nZ = nSamp;
+  vp.xChunkSize = std::min(vp.xChunkSize, nxl);
+  vp.yChunkSize = std::min(vp.yChunkSize, nil);
+  vp.zChunkSize = std::min(vp.zChunkSize, nSamp);
+  if (!vol->recreateVolD(vp.nX, vp.nY, vp.nZ, 
+      vp.xChunkSize, vp.yChunkSize, vp.zChunkSize,
+      vp.compression_level))
     return false;
 
   // N - number of slices written at once (usually 
   // should be equal to Y-chunkSize to acieve best IO speed)
   size_t N = 64;
-  H5VolParam vp = vol->getParam();
   if (vp.yChunkSize > 0 &&
       vp.nY > 0 &&
       vp.yChunkSize < vp.nY){

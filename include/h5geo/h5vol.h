@@ -136,7 +136,7 @@ public:
   virtual bool recreateVolD(
       size_t nX, size_t nY, size_t nZ,
       size_t xChunk, size_t yChunk, size_t zChunk,
-      size_t compressionLevel) = 0;
+      unsigned compressionLevel) = 0;
 };
 
 using H5Vol_ptr = std::unique_ptr<H5Vol, h5geo::ObjectDeleter>;

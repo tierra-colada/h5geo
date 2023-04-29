@@ -92,7 +92,7 @@ public:
   virtual bool recreateVolD(
       size_t nX, size_t nY, size_t nZ,
       size_t xChunk, size_t yChunk, size_t zChunk,
-      size_t compressionLevel) override;
+      unsigned compressionLevel) override;
 
   //----------- FRIEND CLASSES -----------
   friend class H5VolContainerImpl;

@@ -557,7 +557,7 @@ bool H5VolImpl::exportToSEGY(
 bool H5VolImpl::recreateVolD(
     size_t nX, size_t nY, size_t nZ,
     size_t xChunk, size_t yChunk, size_t zChunk,
-    size_t compressionLevel)
+    unsigned compressionLevel)
 {
   if (nX < 1 || nY < 1 || nZ < 1)
     return false;
