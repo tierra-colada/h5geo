@@ -1150,9 +1150,10 @@ bool readSEGYSTACK(
   vp.nX = nxl;
   vp.nY = nil;
   vp.nZ = nSamp;
-  vp.xChunkSize = std::min(vp.xChunkSize, nxl);
-  vp.yChunkSize = std::min(vp.yChunkSize, nil);
-  vp.zChunkSize = std::min(vp.zChunkSize, nSamp);
+  // explicitly specify template (with gcc may fail without it)
+  vp.xChunkSize = std::min<size_t>(vp.xChunkSize, nxl);
+  vp.yChunkSize = std::min<size_t>(vp.yChunkSize, nil);
+  vp.zChunkSize = std::min<size_t>(vp.zChunkSize, nSamp);
   if (!vol->recreateVolD(vp.nX, vp.nY, vp.nZ, 
       vp.xChunkSize, vp.yChunkSize, vp.zChunkSize,
       vp.compression_level))
