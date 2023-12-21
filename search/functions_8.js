@@ -3,7 +3,7 @@ var searchData=
   ['interp1monotonic_0',['interp1Monotonic',['../namespaceh5geo.html#a23cd33ddc973d3067d43da9a78966ad2',1,'h5geo']]],
   ['isactive_1',['isActive',['../class_h5_dev_curve.html#a55538c25cc585b7afb83cfe270658789',1,'H5DevCurve']]],
   ['isdevcurve_2',['isDevCurve',['../namespaceh5geo.html#a507e346260320511be75d59c6f6f7cbd',1,'h5geo']]],
-  ['isequal_3',['isEqual',['../class_h5_base_container.html#a6e140b75debe7397224b898aee035fe0',1,'H5BaseContainer::isEqual()'],['../class_h5_base_object.html#a98b0a0ab9e49743101511a65af7091c4',1,'H5BaseObject::isEqual()'],['../class_h5_base_container_impl.html#ad0bd40751c310d69524af3c0f415d124',1,'H5BaseContainerImpl::isEqual()']]],
+  ['isequal_3',['isequal',['../class_h5_base_container.html#a6e140b75debe7397224b898aee035fe0',1,'H5BaseContainer::isEqual()'],['../class_h5_base_object.html#a98b0a0ab9e49743101511a65af7091c4',1,'H5BaseObject::isEqual()'],['../class_h5_base_container_impl.html#ad0bd40751c310d69524af3c0f415d124',1,'H5BaseContainerImpl::isEqual()']]],
   ['isgeocontainer_4',['isGeoContainer',['../namespaceh5geo.html#a2b1447f7c33c537150a829bc71c7e32c',1,'h5geo']]],
   ['isgeocontainerbytype_5',['isGeoContainerByType',['../namespaceh5geo.html#a13fe3b7c8c93aa18ed83888fa9bee6dc',1,'h5geo']]],
   ['isgeoobject_6',['isGeoObject',['../namespaceh5geo.html#a59bb5c6fe56498abfc9c461391560544',1,'h5geo']]],
@@ -18,7 +18,7 @@ var searchData=
   ['ispoints4_15',['isPoints4',['../namespaceh5geo.html#acad6e39827c72e32a2197898713d497a',1,'h5geo']]],
   ['isseis_16',['isSeis',['../namespaceh5geo.html#aa8902183e680e18559fa895d40a8024d',1,'h5geo']]],
   ['isstraightline_17',['isStraightLine',['../namespaceh5geo.html#aee894bff811da0f4703a9f092abeb0fd',1,'h5geo']]],
-  ['issuccessor_18',['isSuccessor',['../class_h5_base_impl.html#a830b25c5f3a2980472c7519f1dcae0b5',1,'H5BaseImpl::isSuccessor(const std::string &amp;parent, const std::string &amp;child)'],['../class_h5_base_impl.html#a5d60320ab47f6b2a529492ddf86adec7',1,'H5BaseImpl::isSuccessor(const h5gt::Group &amp;parentG, const h5gt::Group &amp;childG)']]],
+  ['issuccessor_18',['issuccessor',['../class_h5_base_impl.html#a830b25c5f3a2980472c7519f1dcae0b5',1,'H5BaseImpl::isSuccessor(const std::string &amp;parent, const std::string &amp;child)'],['../class_h5_base_impl.html#a5d60320ab47f6b2a529492ddf86adec7',1,'H5BaseImpl::isSuccessor(const h5gt::Group &amp;parentG, const h5gt::Group &amp;childG)']]],
   ['isvol_19',['isVol',['../namespaceh5geo.html#af1b64622cf9ec812435f20b5e4aaa793',1,'h5geo']]],
   ['iswell_20',['isWell',['../namespaceh5geo.html#aff926b93bead063cb99720af43278c77',1,'h5geo']]],
   ['iswelltops_21',['isWellTops',['../namespaceh5geo.html#aa56fe0489dbceb5ebcb21da782bab4a1',1,'h5geo']]]
