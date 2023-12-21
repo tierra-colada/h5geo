@@ -111,13 +111,13 @@ if(H5GEO_USE_GDAL)
 
   foreach(_lib ${GDAL_LIBS})
     if(EXISTS ${_lib})
-      target_link_libraries(GDAL::GDAL INTERFACE ${_lib})
+      target_link_libraries(GDAL::GDAL PRIVATE ${_lib})
     endif()
   endforeach()
 
   if(IS_DIRECTORY ${GDAL_LIBS_DIR})
     file(GLOB GDAL_LIBS "${GDAL_LIBS_DIR}/lib*")
-    target_link_libraries(GDAL::GDAL INTERFACE ${GDAL_LIBS})
+    target_link_libraries(GDAL::GDAL PRIVATE ${GDAL_LIBS})
   endif()
 
   target_link_libraries(h5geo PRIVATE GDAL::GDAL)
