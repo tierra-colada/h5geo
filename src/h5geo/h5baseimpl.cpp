@@ -733,7 +733,7 @@ std::optional<h5gt::Group>
 H5BaseImpl<TBase>::createNewWell(h5gt::Group &group, void* p)
 {
   H5WellParam param = *(static_cast<H5WellParam *>(p));
-  std::vector<double> head_coord({param.headY, param.headX});
+  std::vector<double> head_coord({param.headX, param.headY});
 
   try {
 
