@@ -164,8 +164,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ada11769a3d3088d79f3b0d8c8088a50d" id="r_ada11769a3d3088d79f3b0d8c8088a50d"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; h5gt::DataSet &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada11769a3d3088d79f3b0d8c8088a50d">getVolD</a> () const override</td></tr>
 <tr class="memdesc:ada11769a3d3088d79f3b0d8c8088a50d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current vol's DataSet.  <br /></td></tr>
 <tr class="separator:ada11769a3d3088d79f3b0d8c8088a50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b848f97477ecd8916a76546945da97c" id="r_a7b848f97477ecd8916a76546945da97c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b848f97477ecd8916a76546945da97c">exportToSEGY</a> (const std::string &amp;segyFile, std::function&lt; void(double)&gt; progressCallback=nullptr) override</td></tr>
-<tr class="separator:a7b848f97477ecd8916a76546945da97c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e1ca9e1cbb70a16a5e7ecb2dfe6b275" id="r_a6e1ca9e1cbb70a16a5e7ecb2dfe6b275"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e1ca9e1cbb70a16a5e7ecb2dfe6b275">exportToSEGY</a> (const std::string &amp;segyFile, h5geo::Endian endian=h5geo::Endian::Big, std::function&lt; void(double)&gt; progressCallback=nullptr) override</td></tr>
+<tr class="separator:a6e1ca9e1cbb70a16a5e7ecb2dfe6b275"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0879692456ddb22510c1e9f34a2aa19b" id="r_a0879692456ddb22510c1e9f34a2aa19b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0879692456ddb22510c1e9f34a2aa19b">recreateVolD</a> (size_t nX, size_t nY, size_t nZ, size_t xChunk, size_t yChunk, size_t zChunk, unsigned compressionLevel) override</td></tr>
 <tr class="memdesc:a0879692456ddb22510c1e9f34a2aa19b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlink and create new dataset without copying data.  <br /></td></tr>
 <tr class="separator:a0879692456ddb22510c1e9f34a2aa19b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -375,8 +375,8 @@ h5gt::Group&#160;</td><td class="memItemRight" valign="bottom"><b>objG</b></td><
 <tr class="separator:ac70d6517f5c83edd473166b3fee04830 inherit pro_attribs_class_h5_base_object_impl"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7b848f97477ecd8916a76546945da97c" name="a7b848f97477ecd8916a76546945da97c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b848f97477ecd8916a76546945da97c">&#9670;&#160;</a></span>exportToSEGY()</h2>
+<a id="a6e1ca9e1cbb70a16a5e7ecb2dfe6b275" name="a6e1ca9e1cbb70a16a5e7ecb2dfe6b275"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e1ca9e1cbb70a16a5e7ecb2dfe6b275">&#9670;&#160;</a></span>exportToSEGY()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -388,6 +388,11 @@ h5gt::Group&#160;</td><td class="memItemRight" valign="bottom"><b>objG</b></td><
           <td class="memname">bool H5VolImpl::exportToSEGY </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>segyFile</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">h5geo::Endian</td>          <td class="paramname"><span class="paramname"><em>endian</em></span><span class="paramdefsep"> = </span><span class="paramdefval">h5geo::Endian::Big</span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

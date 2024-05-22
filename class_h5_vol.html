@@ -167,9 +167,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4a17586538692445d561fce517e356ea" id="r_a4a17586538692445d561fce517e356ea"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; h5gt::DataSet &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a17586538692445d561fce517e356ea">getVolD</a> () const =0</td></tr>
 <tr class="memdesc:a4a17586538692445d561fce517e356ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current vol's DataSet.  <br /></td></tr>
 <tr class="separator:a4a17586538692445d561fce517e356ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3085af8d51e5419599857b02c6918330" id="r_a3085af8d51e5419599857b02c6918330"><td class="memItemLeft" align="right" valign="top"><a id="a3085af8d51e5419599857b02c6918330" name="a3085af8d51e5419599857b02c6918330"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>exportToSEGY</b> (const std::string &amp;segyFile, std::function&lt; void(double)&gt; progressCallback=nullptr)=0</td></tr>
-<tr class="separator:a3085af8d51e5419599857b02c6918330"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae16e969a3781c134fc254f5761c4d06f" id="r_ae16e969a3781c134fc254f5761c4d06f"><td class="memItemLeft" align="right" valign="top"><a id="ae16e969a3781c134fc254f5761c4d06f" name="ae16e969a3781c134fc254f5761c4d06f"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>exportToSEGY</b> (const std::string &amp;segyFile, h5geo::Endian endian=h5geo::Endian::Big, std::function&lt; void(double)&gt; progressCallback=nullptr)=0</td></tr>
+<tr class="separator:ae16e969a3781c134fc254f5761c4d06f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a798865327273fc9951c694cb3cfe7bf0" id="r_a798865327273fc9951c694cb3cfe7bf0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a798865327273fc9951c694cb3cfe7bf0">recreateVolD</a> (size_t nX, size_t nY, size_t nZ, size_t xChunk, size_t yChunk, size_t zChunk, unsigned compressionLevel)=0</td></tr>
 <tr class="memdesc:a798865327273fc9951c694cb3cfe7bf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlink and create new dataset without copying data.  <br /></td></tr>
 <tr class="separator:a798865327273fc9951c694cb3cfe7bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
