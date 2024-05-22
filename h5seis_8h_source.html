@@ -412,13 +412,14 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> exportToSEGY(</div>
 <div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span>      <span class="keyword">const</span> std::string&amp; segyFile, </div>
 <div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span>      <span class="keywordtype">size_t</span> trcBuffer = 10000, </div>
-<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>      std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; progressCallback = <span class="keyword">nullptr</span>) = 0;</div>
-<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>};</div>
+<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>      h5geo::Endian endian = h5geo::Endian::Big,</div>
+<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>      std::function&lt;<span class="keywordtype">void</span>(<span class="keywordtype">double</span>)&gt; progressCallback = <span class="keyword">nullptr</span>) = 0;</div>
+<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>};</div>
 </div>
-<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span> </div>
-<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span><span class="keyword">using </span>H5Seis_ptr = std::unique_ptr&lt;H5Seis, h5geo::ObjectDeleter&gt;;</div>
-<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span> </div>
-<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span><span class="preprocessor">#endif </span><span class="comment">// H5SEIS_H</span></div>
+<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span> </div>
+<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span><span class="keyword">using </span>H5Seis_ptr = std::unique_ptr&lt;H5Seis, h5geo::ObjectDeleter&gt;;</div>
+<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span> </div>
+<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span><span class="preprocessor">#endif </span><span class="comment">// H5SEIS_H</span></div>
 <div class="ttc" id="aclass_h5_base_object_html"><div class="ttname"><a href="class_h5_base_object.html">H5BaseObject</a></div><div class="ttdoc">Base class for geo-objects.</div><div class="ttdef"><b>Definition</b> h5baseobject.h:13</div></div>
 <div class="ttc" id="aclass_h5_seis_container_html"><div class="ttname"><a href="class_h5_seis_container.html">H5SeisContainer</a></div><div class="ttdoc">A container built around HDF5 file and used for storing and manipulating H5Seis objects.</div><div class="ttdef"><b>Definition</b> h5seiscontainer.h:15</div></div>
 <div class="ttc" id="aclass_h5_seis_html"><div class="ttname"><a href="class_h5_seis.html">H5Seis</a></div><div class="ttdoc">Provides API to work with seismic.</div><div class="ttdef"><b>Definition</b> h5seis.h:33</div></div>

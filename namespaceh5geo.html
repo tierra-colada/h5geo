@@ -964,6 +964,22 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a92b48dab09e69e22ce5e978c201aff6f" id="r_a92b48dab09e69e22ce5e978c201aff6f"><td class="memTemplParams" colspan="2">template&lt;typename Scalar , typename II , typename OI &gt; </td></tr>
 <tr class="memitem:a92b48dab09e69e22ce5e978c201aff6f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a92b48dab09e69e22ce5e978c201aff6f">bswap</a> (II begin, II end, OI dest)</td></tr>
 <tr class="separator:a92b48dab09e69e22ce5e978c201aff6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc7d3f18a70ceb3cf4f4702981a85c2f" id="r_afc7d3f18a70ceb3cf4f4702981a85c2f"><td class="memTemplParams" colspan="2"><a id="afc7d3f18a70ceb3cf4f4702981a85c2f" name="afc7d3f18a70ceb3cf4f4702981a85c2f"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:afc7d3f18a70ceb3cf4f4702981a85c2f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>to_big_endian</b> (T val, h5geo::Endian fromEndian)</td></tr>
+<tr class="separator:afc7d3f18a70ceb3cf4f4702981a85c2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae69de789a5061ed0e674cd30c41f2644" id="r_ae69de789a5061ed0e674cd30c41f2644"><td class="memTemplParams" colspan="2"><a id="ae69de789a5061ed0e674cd30c41f2644" name="ae69de789a5061ed0e674cd30c41f2644"></a>
+template&lt;typename Scalar , typename II , typename OI &gt; </td></tr>
+<tr class="memitem:ae69de789a5061ed0e674cd30c41f2644"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>to_big_endian</b> (II begin, II end, OI dest, h5geo::Endian fromEndian)</td></tr>
+<tr class="separator:ae69de789a5061ed0e674cd30c41f2644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1779a830475122a2be5b18f113924d1" id="r_af1779a830475122a2be5b18f113924d1"><td class="memTemplParams" colspan="2"><a id="af1779a830475122a2be5b18f113924d1" name="af1779a830475122a2be5b18f113924d1"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:af1779a830475122a2be5b18f113924d1"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>to_little_endian</b> (T val, h5geo::Endian fromEndian)</td></tr>
+<tr class="separator:af1779a830475122a2be5b18f113924d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d16aa77a8694174d78b1ccfa29a3214" id="r_a2d16aa77a8694174d78b1ccfa29a3214"><td class="memTemplParams" colspan="2"><a id="a2d16aa77a8694174d78b1ccfa29a3214" name="a2d16aa77a8694174d78b1ccfa29a3214"></a>
+template&lt;typename Scalar , typename II , typename OI &gt; </td></tr>
+<tr class="memitem:a2d16aa77a8694174d78b1ccfa29a3214"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>to_little_endian</b> (II begin, II end, OI dest, h5geo::Endian fromEndian)</td></tr>
+<tr class="separator:a2d16aa77a8694174d78b1ccfa29a3214"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d1026c87a242cee4fd7d0970d9598e7" id="r_a0d1026c87a242cee4fd7d0970d9598e7"><td class="memTemplParams" colspan="2"><a id="a0d1026c87a242cee4fd7d0970d9598e7" name="a0d1026c87a242cee4fd7d0970d9598e7"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a0d1026c87a242cee4fd7d0970d9598e7"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>to_native_endian</b> (T val, h5geo::Endian fromEndian)</td></tr>
@@ -993,9 +1009,9 @@ H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGY
 <tr class="memitem:a73bafce521da391ab482b59b82db86b3" id="r_a73bafce521da391ab482b59b82db86b3"><td class="memItemLeft" align="right" valign="top"><a id="a73bafce521da391ab482b59b82db86b3" name="a73bafce521da391ab482b59b82db86b3"></a>
 H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><b>readSEGYBinHeader</b> (const std::string &amp;segy, double binHdr[30], h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0))</td></tr>
 <tr class="separator:a73bafce521da391ab482b59b82db86b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6db7a8979c8f096fbac9bc187b7f5603" id="r_a6db7a8979c8f096fbac9bc187b7f5603"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6db7a8979c8f096fbac9bc187b7f5603">writeSEGYBinHeader</a> (const std::string &amp;segy, double binHdr[30], bool truncate)</td></tr>
-<tr class="memdesc:a6db7a8979c8f096fbac9bc187b7f5603"><td class="mdescLeft">&#160;</td><td class="mdescRight">create new file or open existing SEGY  <br /></td></tr>
-<tr class="separator:a6db7a8979c8f096fbac9bc187b7f5603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0a23a320fe1417c3b21e9957e79bf82" id="r_af0a23a320fe1417c3b21e9957e79bf82"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0a23a320fe1417c3b21e9957e79bf82">writeSEGYBinHeader</a> (const std::string &amp;segy, double binHdr[30], bool truncate, h5geo::Endian endian=h5geo::Endian::Big)</td></tr>
+<tr class="memdesc:af0a23a320fe1417c3b21e9957e79bf82"><td class="mdescLeft">&#160;</td><td class="mdescRight">create new file or open existing SEGY  <br /></td></tr>
+<tr class="separator:af0a23a320fe1417c3b21e9957e79bf82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9ba350f9de597dfbe48903fa9213efe" id="r_ad9ba350f9de597dfbe48903fa9213efe"><td class="memItemLeft" align="right" valign="top"><a id="ad9ba350f9de597dfbe48903fa9213efe" name="ad9ba350f9de597dfbe48903fa9213efe"></a>
 H5GEO_EXPORT double&#160;</td><td class="memItemRight" valign="bottom"><b>getSEGYSampRate</b> (const std::string &amp;segy, h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0))</td></tr>
 <tr class="separator:ad9ba350f9de597dfbe48903fa9213efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1011,9 +1027,9 @@ H5GEO_EXPORT size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getSEG
 <tr class="memitem:aabf78a027655c71e561a66653d045da3" id="r_aabf78a027655c71e561a66653d045da3"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aabf78a027655c71e561a66653d045da3">readSEGYTrace</a> (std::ifstream &amp;file, size_t trcInd, h5geo::SegyFormat format, h5geo::Endian endian, Eigen::Ref&lt; Eigen::VectorXf &gt; trace)</td></tr>
 <tr class="memdesc:aabf78a027655c71e561a66653d045da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">low level api. No any checks are done. User is responsible for that.  <br /></td></tr>
 <tr class="separator:aabf78a027655c71e561a66653d045da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcc14bfbe41f97aae02f49f436177403" id="r_abcc14bfbe41f97aae02f49f436177403"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abcc14bfbe41f97aae02f49f436177403">writeSEGYTraces</a> (const std::string &amp;segy, Eigen::Ref&lt; Eigen::MatrixXd &gt; HDR, Eigen::Ref&lt; Eigen::MatrixXf &gt; TRACE)</td></tr>
-<tr class="memdesc:abcc14bfbe41f97aae02f49f436177403"><td class="mdescLeft">&#160;</td><td class="mdescRight">writeSEGYTraces write traces and their headers to the end of SEGY file  <br /></td></tr>
-<tr class="separator:abcc14bfbe41f97aae02f49f436177403"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa62d8f57b18c304585ef76ab5723bf79" id="r_aa62d8f57b18c304585ef76ab5723bf79"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa62d8f57b18c304585ef76ab5723bf79">writeSEGYTraces</a> (const std::string &amp;segy, Eigen::Ref&lt; Eigen::MatrixXd &gt; HDR, Eigen::Ref&lt; Eigen::MatrixXf &gt; TRACE, h5geo::Endian endian=h5geo::Endian::Big)</td></tr>
+<tr class="memdesc:aa62d8f57b18c304585ef76ab5723bf79"><td class="mdescLeft">&#160;</td><td class="mdescRight">writeSEGYTraces write traces and their headers to the end of SEGY file  <br /></td></tr>
+<tr class="separator:aa62d8f57b18c304585ef76ab5723bf79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a015a24f809753680afcacf9fa6f27f13" id="r_a015a24f809753680afcacf9fa6f27f13"><td class="memItemLeft" align="right" valign="top">H5GEO_EXPORT Eigen::MatrixXf&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a015a24f809753680afcacf9fa6f27f13">readSEGYTraces</a> (const std::string &amp;segy, size_t fromSamp=0, size_t toSamp=std::numeric_limits&lt; size_t &gt;::max(), size_t fromTrc=0, size_t toTrc=std::numeric_limits&lt; size_t &gt;::max(), size_t nSamp=0, size_t nTrc=0, h5geo::SegyFormat format=static_cast&lt; h5geo::SegyFormat &gt;(0), h5geo::Endian endian=static_cast&lt; h5geo::Endian &gt;(0), std::function&lt; void(double)&gt; progressCallback=nullptr)</td></tr>
 <tr class="memdesc:a015a24f809753680afcacf9fa6f27f13"><td class="mdescLeft">&#160;</td><td class="mdescRight">readSEGYTraces read traces  <br /></td></tr>
 <tr class="separator:a015a24f809753680afcacf9fa6f27f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3863,8 +3879,8 @@ rows/cols are responsible for storing data (like tables) </p>
 
 </div>
 </div>
-<a id="a6db7a8979c8f096fbac9bc187b7f5603" name="a6db7a8979c8f096fbac9bc187b7f5603"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6db7a8979c8f096fbac9bc187b7f5603">&#9670;&#160;</a></span>writeSEGYBinHeader()</h2>
+<a id="af0a23a320fe1417c3b21e9957e79bf82" name="af0a23a320fe1417c3b21e9957e79bf82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0a23a320fe1417c3b21e9957e79bf82">&#9670;&#160;</a></span>writeSEGYBinHeader()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3882,7 +3898,12 @@ rows/cols are responsible for storing data (like tables) </p>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>truncate</em></span>&#160;)</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>truncate</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">h5geo::Endian</td>          <td class="paramname"><span class="paramname"><em>endian</em></span><span class="paramdefsep"> = </span><span class="paramdefval">h5geo::Endian::Big</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -3939,8 +3960,8 @@ rows/cols are responsible for storing data (like tables) </p>
 
 </div>
 </div>
-<a id="abcc14bfbe41f97aae02f49f436177403" name="abcc14bfbe41f97aae02f49f436177403"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abcc14bfbe41f97aae02f49f436177403">&#9670;&#160;</a></span>writeSEGYTraces()</h2>
+<a id="aa62d8f57b18c304585ef76ab5723bf79" name="aa62d8f57b18c304585ef76ab5723bf79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa62d8f57b18c304585ef76ab5723bf79">&#9670;&#160;</a></span>writeSEGYTraces()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3958,7 +3979,12 @@ rows/cols are responsible for storing data (like tables) </p>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Ref&lt; Eigen::MatrixXf &gt;</td>          <td class="paramname"><span class="paramname"><em>TRACE</em></span>&#160;)</td>
+          <td class="paramtype">Eigen::Ref&lt; Eigen::MatrixXf &gt;</td>          <td class="paramname"><span class="paramname"><em>TRACE</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">h5geo::Endian</td>          <td class="paramname"><span class="paramname"><em>endian</em></span><span class="paramdefsep"> = </span><span class="paramdefval">h5geo::Endian::Big</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
