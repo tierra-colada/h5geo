@@ -454,6 +454,7 @@ H5VolImpl::getVolD() const
 
 bool H5VolImpl::exportToSEGY(
     const std::string& segyFile, 
+    h5geo::Endian endian,
     std::function<void(double)> progressCallback)
 {
   char textHdr[40][80] = { " " };
@@ -492,7 +493,7 @@ bool H5VolImpl::exportToSEGY(
   binHdr[9] = 5.0;
   // fixed trace flag
   binHdr[28] = 1.0;
-  if (!h5geo::writeSEGYBinHeader(segyFile, binHdr, false))
+  if (!h5geo::writeSEGYBinHeader(segyFile, binHdr, false, endian))
     return false;
 
   Eigen::VectorXd origin = this->getOrigin();
@@ -546,7 +547,7 @@ bool H5VolImpl::exportToSEGY(
       }
     }
     
-    h5geo::writeSEGYTraces(segyFile, HDR, TRACE);
+    h5geo::writeSEGYTraces(segyFile, HDR, TRACE, endian);
   }
 
   if (progressCallback)

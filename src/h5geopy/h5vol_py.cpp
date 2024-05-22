@@ -87,6 +87,7 @@ void H5Vol_py(
 
       .def("exportToSEGY", &H5Vol::exportToSEGY,
            py::arg("segyFile"),
+           py::arg_v("endian", h5geo::Endian::Big, "_h5geo.Endian.Big"),
            py::arg_v("progressCallback", nullptr, "None"),
            "export geo volume to SEGY")
 

@@ -130,6 +130,7 @@ public:
 
   virtual bool exportToSEGY(
       const std::string& segyFile,
+      h5geo::Endian endian = h5geo::Endian::Big,
       std::function<void(double)> progressCallback = nullptr) = 0;
 
   /// \brief Unlink and create new dataset without copying data
