@@ -332,6 +332,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a797b0a608865af106f45af39f304915f" id="r_a797b0a608865af106f45af39f304915f"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a797b0a608865af106f45af39f304915f">addPKeySort</a> (const std::string &amp;pKeyName)=0</td></tr>
 <tr class="memdesc:a797b0a608865af106f45af39f304915f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare sorting.  <br /></td></tr>
 <tr class="separator:a797b0a608865af106f45af39f304915f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05124d7995d8c80da59f4e51ce7ba9a2" id="r_a05124d7995d8c80da59f4e51ce7ba9a2"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05124d7995d8c80da59f4e51ce7ba9a2">updateTraceHeaderSampRate</a> ()=0</td></tr>
+<tr class="memdesc:a05124d7995d8c80da59f4e51ce7ba9a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set trace header samp rate from binary header.  <br /></td></tr>
+<tr class="separator:a05124d7995d8c80da59f4e51ce7ba9a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee7a01940013704ff163e8cb47542210" id="r_aee7a01940013704ff163e8cb47542210"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee7a01940013704ff163e8cb47542210">updateTraceHeaderNSamp</a> ()=0</td></tr>
+<tr class="memdesc:aee7a01940013704ff163e8cb47542210"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set trace header number of samples from binary header.  <br /></td></tr>
+<tr class="separator:aee7a01940013704ff163e8cb47542210"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91f77c870fb2379fc0e6b2cba077fa5e" id="r_a91f77c870fb2379fc0e6b2cba077fa5e"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_h5_seis_container.html">H5SeisContainer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a91f77c870fb2379fc0e6b2cba077fa5e">openSeisContainer</a> ()=0</td></tr>
 <tr class="memdesc:a91f77c870fb2379fc0e6b2cba077fa5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open <a class="el" href="class_h5_seis_container.html" title="A container built around HDF5 file and used for storing and manipulating H5Seis objects.">H5SeisContainer</a> where current seismic resides.  <br /></td></tr>
 <tr class="separator:a91f77c870fb2379fc0e6b2cba077fa5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3510,6 +3516,64 @@ That is done intensionally to keep <code>trcInd</code> size and returned number 
 <p>Calculate and write min/max trace headers. </p>
 
 <p>Implemented in <a class="el" href="class_h5_seis_impl.html#a2c3f80c1a378e872a3930616d7fd890f">H5SeisImpl</a>.</p>
+
+</div>
+</div>
+<a id="aee7a01940013704ff163e8cb47542210" name="aee7a01940013704ff163e8cb47542210"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee7a01940013704ff163e8cb47542210">&#9670;&#160;</a></span>updateTraceHeaderNSamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool H5Seis::updateTraceHeaderNSamp </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set trace header number of samples from binary header. </p>
+
+<p>Implemented in <a class="el" href="class_h5_seis_impl.html#a523495c393c6f72dd14e13ff79b597c7">H5SeisImpl</a>.</p>
+
+</div>
+</div>
+<a id="a05124d7995d8c80da59f4e51ce7ba9a2" name="a05124d7995d8c80da59f4e51ce7ba9a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05124d7995d8c80da59f4e51ce7ba9a2">&#9670;&#160;</a></span>updateTraceHeaderSampRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool H5Seis::updateTraceHeaderSampRate </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set trace header samp rate from binary header. </p>
+
+<p>Implemented in <a class="el" href="class_h5_seis_impl.html#a74f42c6c7094141124e05b975a81cce2">H5SeisImpl</a>.</p>
 
 </div>
 </div>
