@@ -449,6 +449,9 @@ void H5Seis_py(
       .def("addPKeySort", &H5Seis::addPKeySort,
            py::arg("pKeyName"))
 
+      .def("updateTraceHeaderSampRate", &H5Seis::updateTraceHeaderSampRate)
+      .def("updateTraceHeaderNSamp", &H5Seis::updateTraceHeaderNSamp)
+
       .def("openSeisContainer", &H5Seis::openSeisContainer)
 
       .def("getTextHeaderD", &H5Seis::getTextHeaderD)
@@ -496,6 +499,7 @@ void H5Seis_py(
       .def("exportToSEGY", &H5Seis::exportToSEGY,
            py::arg("segyFile"),
            py::arg_v("trcBuffer", 10000, "10000"),
+           py::arg_v("endian", h5geo::Endian::Big, "_h5geo.Endian.Big"),
            py::arg_v("progressCallback", nullptr, "None"),
            "export seismic to SEGY");
 }

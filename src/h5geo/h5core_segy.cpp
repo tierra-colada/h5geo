@@ -257,7 +257,8 @@ bool readSEGYBinHeader(
 
 bool writeSEGYBinHeader(
     const std::string& segy,
-    double binHdr[30], bool truncate)
+    double binHdr[30], bool truncate,
+    h5geo::Endian endian)
 {
     // open file and overwrite
   int openFlag = std::ios::out | std::ios::binary;
@@ -287,6 +288,13 @@ bool writeSEGYBinHeader(
   for (int i = 0; i < (sizeof(hdr.b2)/sizeof(*hdr.b2)); i++){
     hdr.b2[i] = (short)binHdr[ii];
     ii++;
+  }
+
+  if ((endian == h5geo::Endian::Big && O32_HOST_ORDER == O32_LITTLE_ENDIAN) ||
+        (endian == h5geo::Endian::Little && O32_HOST_ORDER == O32_BIG_ENDIAN)){
+      bswap<int>(std::begin(hdr.b0), std::end(hdr.b0), std::begin(hdr.b0));
+      bswap<short>(std::begin(hdr.b1), std::end(hdr.b1), std::begin(hdr.b1));
+      bswap<int>(std::begin(hdr.b2), std::end(hdr.b2), std::begin(hdr.b2));
   }
 
   file.write(bit_cast<char *>(&hdr), sizeof(hdr));
@@ -471,7 +479,8 @@ void readSEGYTrace(
 bool writeSEGYTraces(
     const std::string& segy,
     Eigen::Ref<Eigen::MatrixXd> HDR,
-    Eigen::Ref<Eigen::MatrixXf> TRACE)
+    Eigen::Ref<Eigen::MatrixXf> TRACE,
+    h5geo::Endian endian)
 {
   // to open file without truncating it I have to pass both `std::ios::in | std::ios::out`
   std::ofstream file(segy, std::ios::in | std::ios::out | std::ios::binary | std::ios::ate);
@@ -533,8 +542,26 @@ bool writeSEGYTraces(
       ii++;
     }
 
-    file.write(bit_cast<char *>(&hdr), sizeof(hdr));
-    file.write(bit_cast<char *>(TRACE.col(j).data()), TRACE.rows()*4);
+    if ((endian == h5geo::Endian::Big && O32_HOST_ORDER == O32_LITTLE_ENDIAN) ||
+        (endian == h5geo::Endian::Little && O32_HOST_ORDER == O32_BIG_ENDIAN)){
+      bswap<int>(std::begin(hdr.b0), std::end(hdr.b0), std::begin(hdr.b0));
+      bswap<short>(std::begin(hdr.b1), std::end(hdr.b1), std::begin(hdr.b1));
+      bswap<int>(std::begin(hdr.b2), std::end(hdr.b2), std::begin(hdr.b2));
+      bswap<short>(std::begin(hdr.b3), std::end(hdr.b3), std::begin(hdr.b3));
+      bswap<int>(std::begin(hdr.b4), std::end(hdr.b4), std::begin(hdr.b4));
+      bswap<short>(std::begin(hdr.b5), std::end(hdr.b5), std::begin(hdr.b5));
+      bswap<int>(std::begin(hdr.b6), std::end(hdr.b6), std::begin(hdr.b6));
+      bswap<short>(std::begin(hdr.b7), std::end(hdr.b7), std::begin(hdr.b7));
+
+      Eigen::VectorXf trc(TRACE.rows());
+      bswap<float>(std::begin(TRACE.col(j)), std::end(TRACE.col(j)), std::begin(trc));
+
+      file.write(bit_cast<char *>(&hdr), sizeof(hdr));
+      file.write(bit_cast<char *>(trc.data()), trc.rows()*4);
+    } else {
+      file.write(bit_cast<char *>(&hdr), sizeof(hdr));
+      file.write(bit_cast<char *>(TRACE.col(j).data()), TRACE.rows()*4);
+    }
   }
   return true;
 }

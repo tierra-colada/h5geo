@@ -2330,6 +2330,7 @@ bool H5SeisImpl::exportToVol(H5Vol* vol,
 bool H5SeisImpl::exportToSEGY(
     const std::string& segyFile, 
     size_t trcBuffer, 
+    h5geo::Endian endian,
     std::function<void(double)> progressCallback)
 {
   std::vector<std::string> txtHdr = this->getTextHeader();
@@ -2371,7 +2372,7 @@ bool H5SeisImpl::exportToSEGY(
   binHdr_out[9] = 5.0;
   // fixed trace flag
   binHdr_out[28] = 1.0;
-  if (!h5geo::writeSEGYBinHeader(segyFile, binHdr_out, false))
+  if (!h5geo::writeSEGYBinHeader(segyFile, binHdr_out, false, endian))
     return false;
 
   double progressOld = 0;
@@ -2391,7 +2392,7 @@ bool H5SeisImpl::exportToSEGY(
     for (size_t j = 0; j < trcHdrShortNames.size(); j++){
       HDR.row(j) = this->getTraceHeader(trcHdrShortNames[j],i,trcBuffer);
     }
-    h5geo::writeSEGYTraces(segyFile, HDR, TRACE);
+    h5geo::writeSEGYTraces(segyFile, HDR, TRACE, endian);
   }
 
   if (progressCallback)

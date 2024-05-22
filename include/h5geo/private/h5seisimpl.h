@@ -315,6 +315,7 @@ public:
   virtual bool exportToSEGY(
       const std::string& segyFile, 
       size_t trcBuffer = 10000, 
+      h5geo::Endian endian = h5geo::Endian::Big,
       std::function<void(double)> progressCallback = nullptr) override;
 
 protected:

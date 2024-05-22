@@ -95,6 +95,36 @@ inline void bswap(II begin, II end, OI dest) {
 }
 
 template <typename T>
+inline T to_big_endian(T val, h5geo::Endian fromEndian) {
+  if (fromEndian == h5geo::Endian::Little){
+    return bswap(val);
+  }
+  return val;
+}
+
+template <typename Scalar, typename II, typename OI>
+inline void to_big_endian(II begin, II end, OI dest, h5geo::Endian fromEndian) {
+  if (fromEndian == h5geo::Endian::Little){
+    bswap<Scalar>(begin, end, dest);
+  }
+}
+
+template <typename T>
+inline T to_little_endian(T val, h5geo::Endian fromEndian) {
+  if (fromEndian == h5geo::Endian::Big){
+    return bswap(val);
+  }
+  return val;
+}
+
+template <typename Scalar, typename II, typename OI>
+inline void to_little_endian(II begin, II end, OI dest, h5geo::Endian fromEndian) {
+  if (fromEndian == h5geo::Endian::Big){
+    bswap<Scalar>(begin, end, dest);
+  }
+}
+
+template <typename T>
 inline T to_native_endian(T val, h5geo::Endian fromEndian) {
   if (O32_HOST_ORDER == O32_LITTLE_ENDIAN){
     if (fromEndian == h5geo::Endian::Big){
@@ -154,7 +184,8 @@ H5GEO_EXPORT bool readSEGYBinHeader(
 /// \return 
 H5GEO_EXPORT bool writeSEGYBinHeader(
     const std::string& segy,
-    double binHdr[30], bool truncate);
+    double binHdr[30], bool truncate, 
+    h5geo::Endian endian = h5geo::Endian::Big);
 
 H5GEO_EXPORT double getSEGYSampRate(
     const std::string& segy, h5geo::Endian endian = static_cast<h5geo::Endian>(0));
@@ -210,7 +241,8 @@ H5GEO_EXPORT void readSEGYTrace(
 H5GEO_EXPORT bool writeSEGYTraces(
     const std::string& segy,
     Eigen::Ref<Eigen::MatrixXd> HDR,
-    Eigen::Ref<Eigen::MatrixXf> TRACE);
+    Eigen::Ref<Eigen::MatrixXf> TRACE,
+    h5geo::Endian endian = h5geo::Endian::Big);
 
 /// \brief readSEGYTraces read traces
 /// \param segy path to SEGY file
