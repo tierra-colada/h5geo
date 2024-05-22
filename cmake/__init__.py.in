@@ -9,6 +9,10 @@ if version_info >= (3, 8, 0) and platform == 'win32':
           os.add_dll_directory(p)
         except (FileNotFoundError, OSError):
           continue
+else:
+  # PyBind11 submodule somehow may not load the dependecy library (see: https://github.com/pybind/pybind11/discussions/5131)
+  from ctypes import *
+  lib = cdll.LoadLibrary('libh5geo.so')
 
 ${PYTHON_INIT_PATH_VAR}
 
