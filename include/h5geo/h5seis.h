@@ -480,6 +480,11 @@ public:
   /// If you plan to get `CDP-DSREG` data, you have to call H5Seis::addPKeySort("CDP") first.
   virtual bool addPKeySort(const std::string& pKeyName) = 0;
 
+  /// \brief Set trace header samp rate from binary header
+  virtual bool updateTraceHeaderSampRate() = 0;
+  /// \brief Set trace header number of samples from binary header
+  virtual bool updateTraceHeaderNSamp() = 0;
+
   /// \brief Open H5SeisContainer where current seismic resides
   virtual H5SeisContainer* openSeisContainer() = 0;
 

@@ -271,6 +271,9 @@ public:
   virtual bool removePKeySort(const std::string& pKeyName) override;
   virtual bool addPKeySort(const std::string& pKeyName) override;
 
+  virtual bool updateTraceHeaderSampRate() override;
+  virtual bool updateTraceHeaderNSamp() override;
+
   virtual H5SeisContainer* openSeisContainer() override;
 
   virtual std::optional<h5gt::DataSet> getTextHeaderD() override;

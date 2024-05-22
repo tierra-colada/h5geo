@@ -1596,8 +1596,11 @@ bool H5SeisImpl::generatePRESTKGeometry(
           rec_z,
           orientation,
           moveRec);
-  if (status)
+  if (status){
+    this->updateTraceHeaderSampRate();
+    this->updateTraceHeaderNSamp();
     this->updateTraceHeaderLimits();
+  }
 
   return status;
 }
@@ -1656,6 +1659,8 @@ bool H5SeisImpl::generateSTKGeometry(
     this->writeTraceHeader(key, geom[key]);
 
   this->setDataType(h5geo::SeisDataType::STACK);
+  this->updateTraceHeaderSampRate();
+  this->updateTraceHeaderNSamp();
   this->updateTraceHeaderLimits();
   return true;
 }
@@ -1828,6 +1833,30 @@ bool H5SeisImpl::addPKeySort(const std::string& pKeyName){
 
   objG.flush();
   return true;
+}
+
+bool H5SeisImpl::updateTraceHeaderSampRate(){
+  // set sampRate
+  double sampRate = std::abs(this->getSampRate());
+  h5geo::Domain domain = this->getDomain();
+  if (domain == h5geo::Domain::TWT ||
+      domain == h5geo::Domain::OWT){
+    double tmp = std::abs(this->getSampRate("microsecond"));
+    if (!std::isnan(tmp))
+      sampRate = tmp;
+  } else if (domain == h5geo::Domain::TVD ||
+             domain == h5geo::Domain::TVDSS) {
+    double tmp = std::abs(this->getSampRate("cm"));
+    if (!std::isnan(tmp))
+      sampRate = tmp;
+  }
+  Eigen::VectorXd v = Eigen::VectorXd::Ones(this->getNTrc())*sampRate;
+  return this->writeTraceHeader("SI", v, 0);
+}
+
+bool H5SeisImpl::updateTraceHeaderNSamp(){
+  Eigen::VectorXd v = Eigen::VectorXd::Ones(this->getNTrc())*this->getNSamp();
+  return this->writeTraceHeader("NSMP", v, 0);
 }
 
 H5SeisContainer* H5SeisImpl::openSeisContainer(){
