@@ -2,9 +2,9 @@ var searchData=
 [
   ['interp1monotonic_0',['interp1Monotonic',['../namespaceh5geo.html#a23cd33ddc973d3067d43da9a78966ad2',1,'h5geo']]],
   ['introduction_1',['Introduction',['../index.html',1,'']]],
-  ['isactive_2',['isActive',['../class_h5_dev_curve.html#a55538c25cc585b7afb83cfe270658789',1,'H5DevCurve']]],
+  ['isactive_2',['isActive',['../class_h5_dev_curve.html#a55538c25cc585b7afb83cfe270658789',1,'H5DevCurve::isActive()'],['../class_h5_dev_curve_impl.html#ad4c13cc4daffcdd9e102b18ba558578d',1,'H5DevCurveImpl::isActive()']]],
   ['isdevcurve_3',['isDevCurve',['../namespaceh5geo.html#a507e346260320511be75d59c6f6f7cbd',1,'h5geo']]],
-  ['isequal_4',['isEqual',['../class_h5_base_container.html#a6e140b75debe7397224b898aee035fe0',1,'H5BaseContainer::isEqual()'],['../class_h5_base_object.html#a98b0a0ab9e49743101511a65af7091c4',1,'H5BaseObject::isEqual()'],['../class_h5_base_container_impl.html#ad0bd40751c310d69524af3c0f415d124',1,'H5BaseContainerImpl::isEqual()']]],
+  ['isequal_4',['isEqual',['../class_h5_base_container.html#a6e140b75debe7397224b898aee035fe0',1,'H5BaseContainer::isEqual()'],['../class_h5_base_object.html#a98b0a0ab9e49743101511a65af7091c4',1,'H5BaseObject::isEqual()'],['../class_h5_base_container_impl.html#ad0bd40751c310d69524af3c0f415d124',1,'H5BaseContainerImpl::isEqual()'],['../class_h5_base_object_impl.html#ae06313dc85b6ef222bdd5375b6c7a391',1,'H5BaseObjectImpl::isEqual()']]],
   ['isgeocontainer_5',['isGeoContainer',['../namespaceh5geo.html#a2b1447f7c33c537150a829bc71c7e32c',1,'h5geo']]],
   ['isgeocontainerbytype_6',['isGeoContainerByType',['../namespaceh5geo.html#a13fe3b7c8c93aa18ed83888fa9bee6dc',1,'h5geo']]],
   ['isgeoobject_7',['isGeoObject',['../namespaceh5geo.html#a59bb5c6fe56498abfc9c461391560544',1,'h5geo']]],
